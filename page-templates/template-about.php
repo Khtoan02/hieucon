@@ -23,6 +23,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
     
+    <?php wp_head(); ?>
     <script>
         tailwind.config = {
             theme: {
