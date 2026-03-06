@@ -40,3 +40,4 @@ spl_autoload_register( function ( $class ) {
 
 // Include các tệp cấu hình (Config) 
 require_once HIEUCON_THEME_DIR . '/app/config/setup.php';
+require_once HIEUCON_THEME_DIR . '/app/config/tracking.php';
