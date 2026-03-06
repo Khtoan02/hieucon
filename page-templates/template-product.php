@@ -159,7 +159,7 @@
                     <span class="font-serif italic text-navy text-base md:text-lg">Hiểu con từ gốc, yêu thương trọn vẹn.</span>
                 </div>
                 <div class="text-sm font-medium text-navy/50 text-center md:text-right">
-                    &copy; 2026 Cộng đồng Hiểu Con Từ Gốc.<br class="md:hidden" /> All rights reserved.
+                    &copy; <?php echo date('Y'); ?> Cộng đồng Hiểu Con Từ Gốc.<br class="md:hidden" /> All rights reserved.
                 </div>
             </div>
         </div>
