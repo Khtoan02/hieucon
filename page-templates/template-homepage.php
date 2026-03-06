@@ -85,11 +85,11 @@
         opacity: 0.6;
     }
 </style>
-    <!-- Hero Section (Full-width Cover Image) -->
-    <section class="w-full relative bg-white/10">
-        <img src="https://hieu-con.dawnbridge.vn/wp-content/uploads/2026/03/Section-1.jpg" alt="Ảnh bìa Hiểu Con Từ Gốc" class="w-full h-auto max-h-[65vh] object-cover object-top block shadow-md">
+    <!-- Hero Section (Full-width Display Image) -->
+    <section class="w-full relative bg-[#FFF9F0]">
+        <img src="https://hieu-con.dawnbridge.vn/wp-content/uploads/2026/03/Section-1.jpg" alt="Ảnh bìa Hiểu Con Từ Gốc" class="w-full h-auto object-contain block mx-auto">
         <!-- Lớp phủ nhẹ ở đáy ảnh để hòa quyện với nền -->
-        <div class="absolute bottom-0 left-0 w-full h-24 bg-gradient-to-t from-[#FFF9F0] to-transparent"></div>
+        <div class="absolute bottom-0 left-0 w-full h-12 md:h-24 lg:h-32 bg-gradient-to-t from-[#FFF9F0] to-transparent pointer-events-none"></div>
     </section>
 
     <!-- Welcome Message Section (Editorial Style) -->
