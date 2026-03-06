@@ -96,6 +96,15 @@
             width: 100%;
             height: 20px;
         }
+
+        /* Ẩn scrollbar cho slider */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none; /* IE and Edge */
+            scrollbar-width: none; /* Firefox */
+        }
     </style>
     <?php wp_head(); ?>
 </head>
@@ -134,49 +143,72 @@
                         </button>
                         
                         <!-- Dropdown Panel -->
-                        <div class="absolute top-full left-1/2 -translate-x-1/2 pt-4 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform translate-y-3 group-hover:translate-y-0 w-[800px] xl:w-[900px] z-50">
-                            <div class="mega-bridge glass-megamenu rounded-[2rem] shadow-premium p-6 xl:p-8 flex gap-6 xl:gap-8 relative overflow-hidden">
+                        <div class="absolute top-full left-1/2 -translate-x-1/2 pt-4 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform translate-y-3 group-hover:translate-y-0 w-[850px] xl:w-[980px] z-50">
+                            <div class="mega-bridge glass-megamenu rounded-[2rem] shadow-premium p-6 xl:p-8 flex gap-4 xl:gap-6 relative overflow-hidden">
                                 
                                 <i data-lucide="sparkles" class="absolute -bottom-6 -right-6 w-32 h-32 text-navy/5 rotate-12 pointer-events-none" aria-hidden="true"></i>
 
-                                <!-- Cột 1 -->
-                                <div class="w-[40%] border-r border-navy/10 pr-6 xl:pr-8 flex flex-col">
-                                    <span class="text-secondary font-extrabold text-[10px] xl:text-[11px] uppercase tracking-widest mb-4 flex items-center gap-2">
-                                        <i data-lucide="star" class="w-4 h-4 fill-secondary/20" aria-hidden="true"></i> Sản phẩm tâm điểm
-                                    </span>
+                                <!-- Cột 1: Thông tin & Trích dẫn -->
+                                <div class="w-[30%] border-r border-navy/10 pr-6 flex flex-col z-10 relative">
+                                    <h4 class="font-serif font-bold text-navy text-xl xl:text-2xl mb-4 leading-tight">Y Sinh Cốt Lõi</h4>
                                     
-                                    <a href="#" class="block bg-gradient-to-br from-white to-[#f8fafc] rounded-[1.5rem] p-5 xl:p-6 border border-white hover:border-secondary/30 hover:shadow-elegant transition-all duration-300 outline-none focus-visible:ring-2 focus-visible:ring-secondary group/featured relative overflow-hidden flex-grow">
-                                        <div class="absolute top-0 right-0 w-24 h-24 bg-gradient-to-bl from-secondary/10 to-transparent rounded-bl-[3rem] transition-transform duration-500 group-hover/featured:scale-150"></div>
-                                        <div class="w-12 h-12 xl:w-14 xl:h-14 bg-secondary/10 text-secondary rounded-2xl flex items-center justify-center mb-4 group-hover/featured:-translate-y-1 transition-transform duration-300 shadow-sm">
-                                            <i data-lucide="flask-conical" class="w-6 h-6 xl:w-7 xl:h-7" aria-hidden="true"></i>
-                                        </div>
-                                        <h5 class="font-serif font-bold text-lg xl:text-xl text-navy mb-2 group-hover/featured:text-secondary transition-colors leading-tight">Combo Y Sinh Cốt Lõi</h5>
-                                        <p class="text-[13px] xl:text-[15px] text-navy/70 font-medium leading-relaxed mb-4">Liệu trình cân bằng đường ruột, hỗ trợ tiêu hóa chuẩn khoa học.</p>
-                                        <span class="inline-flex items-center gap-2 text-xs xl:text-sm font-bold text-navy group-hover/featured:text-secondary transition-colors">
-                                            Tìm hiểu thêm <i data-lucide="arrow-right" class="w-3 h-3 xl:w-4 xl:h-4 group-hover/featured:translate-x-1 transition-transform" aria-hidden="true"></i>
-                                        </span>
+                                    <div class="p-6 bg-gradient-to-br from-secondary/5 to-[#FFF9F0] rounded-2xl border border-secondary/10 relative overflow-hidden mb-6 flex-grow flex flex-col justify-center">
+                                        <i data-lucide="quote" class="absolute right-3 top-3 w-16 h-16 text-secondary/5 rotate-12" aria-hidden="true"></i>
+                                        <p class="text-[14px] xl:text-[15px] text-navy/80 font-medium italic relative z-10 leading-relaxed font-serif">
+                                            "Sức khỏe bền vững bắt nguồn từ việc thiết lập lại sự cân bằng toàn thân, từ gốc rễ tế bào."
+                                        </p>
+                                    </div>
+
+                                    <a href="/san-pham" class="group/btn flex items-center justify-center gap-3 text-white bg-navy hover:bg-secondary font-bold text-[14px] p-4 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 w-full uppercase tracking-wider">
+                                        <i data-lucide="layout-grid" class="w-4 h-4"></i> Xem tất cả sản phẩm
                                     </a>
                                 </div>
-                                
-                                <!-- Cột 2 -->
-                                <div class="w-[30%] border-r border-navy/10 pr-4 pl-2">
-                                    <span class="text-navy/40 font-extrabold text-[10px] xl:text-[11px] uppercase tracking-widest mb-4 block">Danh mục chuyên sâu</span>
-                                    <ul class="space-y-3 xl:space-y-4">
-                                        <li><a href="#" class="group/link flex items-center gap-3 text-navy/80 hover:text-navy transition-colors p-1 -ml-1 rounded-xl"><div class="bg-white p-2 rounded-xl shadow-sm border border-navy/5 text-navy/40 group-hover/link:text-secondary"><i data-lucide="pill" class="w-4 h-4"></i></div><span class="font-bold text-[13px] xl:text-[15px]">Vi chất & Enzyme</span></a></li>
-                                        <li><a href="#" class="group/link flex items-center gap-3 text-navy/80 hover:text-navy transition-colors p-1 -ml-1 rounded-xl"><div class="bg-white p-2 rounded-xl shadow-sm border border-navy/5 text-navy/40 group-hover/link:text-secondary"><i data-lucide="leaf" class="w-4 h-4"></i></div><span class="font-bold text-[13px] xl:text-[15px]">Thực phẩm ăn kiêng</span></a></li>
-                                        <li><a href="#" class="group/link flex items-center gap-3 text-navy/80 hover:text-navy transition-colors p-1 -ml-1 rounded-xl"><div class="bg-white p-2 rounded-xl shadow-sm border border-navy/5 text-navy/40 group-hover/link:text-secondary"><i data-lucide="shield-plus" class="w-4 h-4"></i></div><span class="font-bold text-[13px] xl:text-[15px]">Hỗ trợ miễn dịch</span></a></li>
-                                        <li><a href="#" class="group/link flex items-center gap-3 text-navy/80 hover:text-navy transition-colors p-1 -ml-1 rounded-xl"><div class="bg-white p-2 rounded-xl shadow-sm border border-navy/5 text-navy/40 group-hover/link:text-secondary"><i data-lucide="brain" class="w-4 h-4"></i></div><span class="font-bold text-[13px] xl:text-[15px]">Dưỡng chất não bộ</span></a></li>
-                                    </ul>
-                                </div>
 
-                                <!-- Cột 3 -->
-                                <div class="w-[30%] pl-2">
-                                    <span class="text-navy/40 font-extrabold text-[10px] xl:text-[11px] uppercase tracking-widest mb-4 block">Hỗ trợ phụ huynh</span>
-                                    <ul class="space-y-3 xl:space-y-4">
-                                        <li><a href="#" class="group/link flex items-center gap-3 text-navy/80 hover:text-navy transition-colors p-1 -ml-1 rounded-xl"><div class="bg-white p-2 rounded-xl shadow-sm border border-navy/5 text-navy/40 group-hover/link:text-primary"><i data-lucide="book-heart" class="w-4 h-4"></i></div><span class="font-bold text-[13px] xl:text-[15px]">Sách hướng dẫn</span></a></li>
-                                        <li><a href="#" class="group/link flex items-center gap-3 text-navy/80 hover:text-navy transition-colors p-1 -ml-1 rounded-xl"><div class="bg-white p-2 rounded-xl shadow-sm border border-navy/5 text-navy/40 group-hover/link:text-primary"><i data-lucide="monitor-play" class="w-4 h-4"></i></div><span class="font-bold text-[13px] xl:text-[15px]">Khóa học online</span></a></li>
-                                        <li><a href="#" class="group/link flex items-center gap-3 text-navy/80 hover:text-navy transition-colors p-1 -ml-1 rounded-xl"><div class="bg-white p-2 rounded-xl shadow-sm border border-navy/5 text-navy/40 group-hover/link:text-primary"><i data-lucide="puzzle" class="w-4 h-4"></i></div><span class="font-bold text-[13px] xl:text-[15px]">Đồ chơi trị liệu</span></a></li>
-                                    </ul>
+                                <!-- Cột 2: Product Slider -->
+                                <div class="w-[70%] pl-6 flex flex-col z-10 relative overflow-hidden">
+                                    <div class="flex justify-between items-center mb-4 pr-1">
+                                        <span class="text-secondary font-extrabold text-[11px] uppercase tracking-widest flex items-center gap-2">
+                                            <i data-lucide="star" class="w-4 h-4 fill-secondary/20" aria-hidden="true"></i> Sản phẩm nổi bật
+                                        </span>
+                                        <div class="flex gap-2">
+                                            <button id="mega-prev" class="w-8 h-8 flex items-center justify-center rounded-full bg-white border border-navy/10 hover:border-secondary/40 hover:text-secondary text-navy/40 transition-colors shadow-sm outline-none" aria-label="Lùi lại"><i data-lucide="chevron-left" class="w-5 h-5"></i></button>
+                                            <button id="mega-next" class="w-8 h-8 flex items-center justify-center rounded-full bg-white border border-navy/10 hover:border-secondary/40 hover:text-secondary text-navy/40 transition-colors shadow-sm outline-none" aria-label="Tiếp theo"><i data-lucide="chevron-right" class="w-5 h-5"></i></button>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Slider -->
+                                    <div id="mega-slider" class="flex gap-5 overflow-x-auto snap-x snap-mandatory scroll-smooth pb-4 no-scrollbar">
+                                        <?php
+                                        // Danh sách sản phẩm tinh
+                                        $mega_products_data = [
+                                            ['title' => 'Miwako A+', 'slug' => 'miwako-a', 'img' => 'https://res.cloudinary.com/dirjpbi3s/image/upload/v1767867139/A_yzi6wk.png', 'desc' => 'Lon 700g - 750.000₫'],
+                                            ['title' => 'Miwako', 'slug' => 'miwako', 'img' => 'https://statics.pancake.vn/web-media/47/72/37/5e/6a5a4c3c211b04c61cba1dd9586672a65c317ff5caec49342bdade7c-w:1652-h:1629-l:3980831-t:image/png.png', 'desc' => 'Lon 700g - 725.000₫'],
+                                            ['title' => 'CareMIL', 'slug' => 'caremil', 'img' => 'https://res.cloudinary.com/dirjpbi3s/image/upload/v1767867139/Care_Milk_goeehp.png', 'desc' => 'Lon 800g - 960.000₫'],
+                                            ['title' => 'DawnBridge NuraFix', 'slug' => 'dawnbridge-nurafix', 'img' => 'https://www.dawnbridge.com.my/wp-content/uploads/2023/08/3D-NURA-FIX_MALAYSIA-DEC24.png', 'desc' => 'Hộp 30 gói, mỗi gói 30g - 800.000₫'],
+                                            ['title' => 'Heilusan Omega-3', 'slug' => 'heilusan-omega-3', 'img' => 'https://res.cloudinary.com/dirjpbi3s/image/upload/v1767867139/Helusan_ydqh4i.png', 'desc' => '1 hộp/120 viên - 396.000₫'],
+                                            ['title' => 'Folate 400 mcg', 'slug' => 'folate-400-mcg', 'img' => 'https://res.cloudinary.com/dirjpbi3s/image/upload/v1767867139/Folate_gxa2ro.png', 'desc' => '1 hộp/30 viên - 360.000₫'],
+                                            ['title' => 'Neurocard Max', 'slug' => 'neurocard-max', 'img' => 'https://res.cloudinary.com/dirjpbi3s/image/upload/v1767867139/Neroucard_Max_zf1grp.png', 'desc' => '1 hộp/6 vỉ x 10 viên - 594.000₫'],
+                                            ['title' => 'Dawn Bridge ProbioACE', 'slug' => 'probioace', 'img' => 'https://res.cloudinary.com/dirjpbi3s/image/upload/v1767867140/ProbioACE_eufmi8.png', 'desc' => '1 hộp/20 gói x 2g - 900.000₫'],
+                                            ['title' => 'BISUMI 120B', 'slug' => 'bisumi', 'img' => 'https://res.cloudinary.com/dirjpbi3s/image/upload/v1767867138/Bisumi_b8hwar.png', 'desc' => '1 hộp/20 gói x 2g - 390.000₫'],
+                                            ['title' => 'DawnBridge Nura-Zen', 'slug' => 'dawnbridge-nura-zen', 'img' => 'https://www.dawnbridge.com.my/wp-content/uploads/2023/08/3D-NURA-ZEN_MALAYSIA-DEC24.png', 'desc' => 'Hộp 30 gói, mỗi gói 30g - 800.000₫'],
+                                            ['title' => 'DawnBridge Botani9', 'slug' => 'dawnbridge-botani9', 'img' => 'https://www.dawnbridge.com.my/wp-content/uploads/2023/08/3D-BOTANI9_MALAYSIA-DEC24.png', 'desc' => 'Hộp 30 gói, mỗi gói 30g - 960.000₫'],
+                                            ['title' => 'Obibebe', 'slug' => 'obibebe', 'img' => 'https://res.cloudinary.com/dirjpbi3s/image/upload/v1767867139/Obibebe_ytxvzs.png', 'desc' => 'Chăm sóc toàn diện'],
+                                        ];
+                                        
+                                        foreach ($mega_products_data as $product) :
+                                        ?>
+                                        <a href="/<?php echo esc_attr($product['slug']); ?>" class="shrink-0 w-[240px] snap-start bg-gradient-to-br from-white to-[#f8fafc] rounded-[1.5rem] p-4 border border-white hover:border-secondary/30 hover:shadow-elegant transition-all duration-300 group/card relative overflow-hidden flex flex-col">
+                                            <div class="w-full h-[140px] bg-white rounded-xl mb-4 overflow-hidden shadow-sm flex items-center justify-center p-2 relative">
+                                                 <img src="<?php echo esc_url($product['img']); ?>" alt="<?php echo esc_attr($product['title']); ?>" class="w-full h-full object-contain group-hover/card:scale-110 transition-transform duration-500">
+                                            </div>
+                                            <h5 class="font-serif font-bold text-lg text-navy mb-1.5 group-hover/card:text-secondary transition-colors leading-tight line-clamp-1"><?php echo esc_html($product['title']); ?></h5>
+                                            <p class="text-[12px] text-navy/60 leading-relaxed mb-4 flex-grow line-clamp-2"><?php echo esc_html($product['desc']); ?></p>
+                                            <span class="text-[11px] font-bold text-navy flex items-center gap-1 group-hover/card:text-secondary uppercase tracking-wider mt-auto">
+                                                Xem chi tiết <i data-lucide="arrow-right" class="w-3 h-3 group-hover/card:translate-x-1 transition-transform"></i>
+                                            </span>
+                                        </a>
+                                        <?php endforeach; ?>
+                                    </div>
                                 </div>
                                 
                             </div>
@@ -242,15 +274,25 @@
                         <span class="flex items-center gap-3"><i data-lucide="box" class="w-4 h-4 text-navy/40"></i> Sản phẩm</span>
                         <i data-lucide="chevron-down" class="w-4 h-4 text-navy/40 transition-transform duration-300" id="mobile-products-icon"></i>
                     </button>
-                    <div id="mobile-products-content" class="hidden flex-col gap-3 pl-4 py-4 bg-white/60 rounded-2xl mb-4 border border-white shadow-[inset_0_2px_4px_rgba(0,0,0,0.02)]">
-                        <span class="text-secondary font-extrabold text-[10px] uppercase tracking-widest mb-1 px-3">Tâm điểm</span>
-                        <a href="#" class="text-navy font-bold text-sm flex items-center gap-3 px-3 py-2.5 bg-white border border-secondary/20 shadow-sm rounded-xl hover:text-secondary">
-                            <i data-lucide="flask-conical" class="w-4 h-4 text-secondary"></i> Combo Y Sinh Cốt Lõi
-                        </a>
-                        <div class="w-full h-px bg-navy/5 my-1.5"></div>
-                        <span class="text-navy/40 font-extrabold text-[10px] uppercase tracking-widest mb-1 px-3 mt-1">Danh mục</span>
-                        <a href="#" class="text-navy/80 font-bold text-[15px] flex items-center gap-3 px-3 py-2"><i data-lucide="pill" class="w-4 h-4 text-navy/30"></i> Vi chất & Enzyme</a>
-                        <a href="#" class="text-navy/80 font-bold text-[15px] flex items-center gap-3 px-3 py-2"><i data-lucide="leaf" class="w-4 h-4 text-navy/30"></i> Thực phẩm ăn kiêng</a>
+                    <div id="mobile-products-content" class="hidden flex-col gap-3 pl-4 py-4 bg-white/60 rounded-2xl mb-4 border border-white shadow-[inset_0_2px_4px_rgba(0,0,0,0.02)] pt-5 overflow-hidden">
+                        <span class="text-secondary font-extrabold text-[10px] uppercase tracking-widest mb-1 px-3">Tâm điểm y sinh</span>
+                        <!-- Mobile Slider Products -->
+                        <div class="flex gap-3 overflow-x-auto no-scrollbar snap-x snap-mandatory px-3 -mx-3 pb-2 pt-1">
+                            <?php
+                            foreach ($mega_products_data as $product) :
+                            ?>
+                            <a href="/<?php echo esc_attr($product['slug']); ?>" class="shrink-0 w-[200px] snap-start bg-white border border-secondary/10 shadow-sm rounded-xl p-3 hover:border-secondary transition-colors group/mcard flex flex-col">
+                                <div class="w-full h-[120px] bg-[#f8fafc] rounded-lg mb-3 flex items-center justify-center overflow-hidden relative p-2">
+                                    <img src="<?php echo esc_url($product['img']); ?>" class="w-full h-full object-contain group-hover/mcard:scale-105 transition-transform">
+                                </div>
+                                <span class="text-navy font-bold text-sm mb-1 leading-tight line-clamp-1"><?php echo esc_html($product['title']); ?></span>
+                                <span class="text-secondary text-[11px] font-bold flex items-center gap-1 mt-auto">Khám phá <i data-lucide="arrow-right" class="w-3 h-3"></i></span>
+                            </a>
+                            <?php endforeach; ?>
+                        </div>
+                        
+                        <div class="w-full h-px bg-navy/5 my-2 flex-shrink-0"></div>
+                        <a href="/san-pham" class="text-navy/80 font-bold text-[14px] flex items-center gap-3 px-3 py-2 hover:text-navy"><i data-lucide="box" class="w-4 h-4 text-navy/30"></i> Xem tất cả sản phẩm</a>
                     </div>
                 </div>
             </div>
@@ -326,6 +368,21 @@
                     if (productsIcon) productsIcon.classList.remove('rotate-180');
                     productsToggle.setAttribute('aria-expanded', 'false');
                 }
+            });
+        }
+
+        // Mega menu slider logic
+        const megaSlider = document.getElementById('mega-slider');
+        const megaPrev = document.getElementById('mega-prev');
+        const megaNext = document.getElementById('mega-next');
+
+        if (megaSlider && megaNext && megaPrev) {
+            // Scroll bằng độ rộng của 1 card (240px + 20px gap = 260px)
+            megaNext.addEventListener('click', () => {
+                megaSlider.scrollBy({ left: 260, behavior: 'smooth' });
+            });
+            megaPrev.addEventListener('click', () => {
+                megaSlider.scrollBy({ left: -260, behavior: 'smooth' });
             });
         }
     </script>
