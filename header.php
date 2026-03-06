@@ -119,11 +119,11 @@
                 
                 <!-- 1. Logo & Brand -->
                 <a href="<?php echo home_url('/'); ?>" class="flex items-center gap-3 cursor-pointer group shrink-0 outline-none focus-visible:ring-2 focus-visible:ring-secondary rounded-xl p-1">
-                    <div class="bg-navy text-white p-2.5 rounded-full shadow-md transition-all duration-500 group-hover:scale-105 group-hover:shadow-lg flex items-center justify-center">
+                    <div class="transition-all duration-500 group-hover:scale-105 flex items-center justify-center">
                         <?php if ( has_site_icon() ) : ?>
-                            <img src="<?php echo get_site_icon_url(96); ?>" alt="<?php bloginfo('name'); ?>" class="w-5 h-5 lg:w-6 lg:h-6 rounded-full object-cover bg-white">
+                            <img src="<?php echo esc_url(get_site_icon_url(96)); ?>" alt="<?php bloginfo('name'); ?>" class="w-10 h-10 lg:w-12 lg:h-12 rounded-xl object-cover shadow-sm bg-white">
                         <?php else : ?>
-                            <i data-lucide="dna" class="w-5 h-5 lg:w-6 lg:h-6" aria-hidden="true"></i>
+                            <div class="w-10 h-10 lg:w-12 lg:h-12 bg-navy text-white flex items-center justify-center rounded-xl shadow-sm"><i data-lucide="dna" class="w-6 h-6" aria-hidden="true"></i></div>
                         <?php endif; ?>
                     </div>
                     <div class="flex flex-col justify-center">

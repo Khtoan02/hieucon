@@ -205,7 +205,7 @@
                 card.style.animationDelay = `${index * 0.05}s`;
                 card.className = 'glass-card rounded-[2rem] overflow-hidden flex flex-col h-full hover:-translate-y-2 transition-transform duration-500 shadow-soft hover:shadow-elegant group fade-in';
                 
-                const catLabel = categories[product.category];
+                // Không dùng danh mục
 
                 // Scale logic xử lý ảnh
                 const imgTransform = product.imageScale ? `transform: scale(${product.imageScale}); transform-origin: center;` : '';
