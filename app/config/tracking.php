@@ -9,18 +9,30 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-// 1. Theo dõi lượt xem trang (Page Views)
+// 1. Theo dõi lượt xem trang (Page Views) và Người xem duy nhất (Unique Views)
 function hieucon_track_page_view() {
     if ( is_single() || is_page() ) {
         global $post;
-        // Tăng lượt xem
+        
+        // Tăng lượt xem tổng (Raw views)
         $views = get_post_meta( $post->ID, '_hieucon_page_views', true );
         $views = $views ? intval( $views ) + 1 : 1;
         update_post_meta( $post->ID, '_hieucon_page_views', $views );
+
+        // Theo dõi người xem duy nhất (Unique Views) dựa trên Cookie 30 ngày
+        $cookie_name = 'hieucon_viewed_' . $post->ID;
+        if ( ! isset( $_COOKIE[ $cookie_name ] ) ) {
+            $unique_views = get_post_meta( $post->ID, '_hieucon_unique_views', true );
+            $unique_views = $unique_views ? intval( $unique_views ) + 1 : 1;
+            update_post_meta( $post->ID, '_hieucon_unique_views', $unique_views );
+            
+            // Set cookie lưu 30 ngày cho trình duyệt
+            setcookie( $cookie_name, '1', time() + 30 * DAY_IN_SECONDS, COOKIEPATH, COOKIE_DOMAIN );
+        }
     }
 }
-// Chạy hàm đếm view ngay khi WP render thẻ head
-add_action( 'wp_head', 'hieucon_track_page_view' );
+// Chạy hàm đếm view ngay khi template_redirect (trước khi gửi header để setcookie)
+add_action( 'template_redirect', 'hieucon_track_page_view' );
 
 // 2. Điểm cuối AJAX cho Lượt Click ra (Click-out)
 function hieucon_track_click_ajax() {
@@ -74,6 +86,7 @@ function hieucon_add_tracking_columns( $columns ) {
         if ( $key == 'date' ) {
             // Chèn vào trước cột Ngày tháng (date)
             $new_columns['page_views'] = 'Lượt xem';
+            $new_columns['unique_views'] = 'Người xem';
             $new_columns['click_outs'] = 'Click ra (Out)';
         }
         $new_columns[$key] = $title;
@@ -89,6 +102,10 @@ function hieucon_show_tracking_columns( $column_name, $post_id ) {
         $views = get_post_meta( $post_id, '_hieucon_page_views', true );
         echo $views ? '<strong>' . esc_html( $views ) . '</strong>' : '0';
     }
+    if ( $column_name == 'unique_views' ) {
+        $unique_views = get_post_meta( $post_id, '_hieucon_unique_views', true );
+        echo $unique_views ? '<strong style="color:#2271b1;">' . esc_html( $unique_views ) . '</strong>' : '0';
+    }
     if ( $column_name == 'click_outs' ) {
         $clicks = get_post_meta( $post_id, '_hieucon_page_clicks', true );
         echo $clicks ? '<strong style="color:#d63638;">' . esc_html( $clicks ) . '</strong>' : '0';
@@ -100,6 +117,7 @@ add_action( 'manage_posts_custom_column', 'hieucon_show_tracking_columns', 10, 2
 // 6. Cho phép sắp xếp (Sort) theo cột lượt xem và click
 function hieucon_sortable_tracking_columns( $columns ) {
     $columns['page_views'] = 'page_views';
+    $columns['unique_views'] = 'unique_views';
     $columns['click_outs'] = 'click_outs';
     return $columns;
 }
@@ -115,6 +133,10 @@ function hieucon_tracking_orderby( $query ) {
 
     if ( 'page_views' == $orderby ) {
         $query->set( 'meta_key', '_hieucon_page_views' );
+        $query->set( 'orderby', 'meta_value_num' );
+    }
+    if ( 'unique_views' == $orderby ) {
+        $query->set( 'meta_key', '_hieucon_unique_views' );
         $query->set( 'orderby', 'meta_value_num' );
     }
     if ( 'click_outs' == $orderby ) {
