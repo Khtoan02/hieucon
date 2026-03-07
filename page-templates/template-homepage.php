@@ -373,4 +373,5 @@
             strokeWidth: 1.5
         });
     </script>
+    <?php wp_footer(); ?>
 </body>

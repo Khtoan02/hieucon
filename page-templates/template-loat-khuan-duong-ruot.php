@@ -78,6 +78,7 @@
         
         #rainbow-suggestion { min-height: 100px; transition: opacity 0.3s; }
     </style>
+    <?php wp_head(); ?>
 </head>
 <body class="antialiased min-h-screen bg-gradient-to-br from-sky-50 via-blue-50 to-teal-50 text-slate-800 relative">
     <!-- Global Medical/Nature Patterns (DNA & Cells) for entire page -->
@@ -200,21 +201,36 @@
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 relative z-10">
                     <div class="mechanism-card p-5 md:p-8 rounded-[1.25rem] md:rounded-[2rem] bg-white/95 backdrop-blur-xl border border-rose-100 hover:bg-white hover:shadow-[0_20px_40px_rgba(225,29,72,0.1)] transition-all duration-500 group overflow-hidden shadow-[0_10px_20px_rgba(203,213,225,0.2)]" onclick="app.toggleMechanism(this)">
                         <div class="w-12 h-12 md:w-16 md:h-16 bg-gradient-to-tr from-rose-100 to-red-50 text-rose-500 rounded-full flex items-center justify-center text-xl md:text-3xl mb-3 md:mb-6 shadow-[inset_0_2px_10px_rgba(225,29,72,0.1)] group-hover:scale-110 transition-transform duration-500">&#9889;</div>
-                        <h3 class="text-lg md:text-2xl font-bold text-slate-800 mb-2 md:mb-3 text-left">Suy kiệt năng lượng</h3>
+                        <div class="flex items-center justify-between mb-2 md:mb-3">
+                            <h3 class="text-lg md:text-2xl font-bold text-slate-800 text-left">Suy kiệt năng lượng</h3>
+                            <div class="w-8 h-8 rounded-full bg-rose-50 flex items-center justify-center animate-bounce group-[.active]:rotate-180 transition-transform duration-300 flex-shrink-0 ml-2">
+                                <svg class="w-5 h-5 text-rose-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+                            </div>
+                        </div>
                         <div class="mechanism-details border-t border-rose-100/50 pt-3 md:pt-4 md:mt-2">
                             <p class="text-[13px] md:text-sm text-slate-600 font-medium leading-relaxed">Hại khuẩn cướp vitamin/khoáng chất làm <strong>Ty thể</strong> suy yếu. Trẻ thiếu ATP (năng lượng) dẫn đến mệt mỏi, cáu gắt triền miên.</p>
                         </div>
                     </div>
                     <div class="mechanism-card p-5 md:p-8 rounded-[1.25rem] md:rounded-[2rem] bg-white/95 backdrop-blur-xl border border-rose-100 hover:bg-white hover:shadow-[0_20px_40px_rgba(225,29,72,0.1)] transition-all duration-500 group overflow-hidden shadow-[0_10px_20px_rgba(203,213,225,0.2)]" onclick="app.toggleMechanism(this)">
                         <div class="w-12 h-12 md:w-16 md:h-16 bg-gradient-to-tr from-rose-100 to-red-50 text-rose-500 rounded-full flex items-center justify-center text-xl md:text-3xl mb-3 md:mb-6 shadow-[inset_0_2px_10px_rgba(225,29,72,0.1)] group-hover:scale-110 transition-transform duration-500">&#129514;</div>
-                        <h3 class="text-lg md:text-2xl font-bold text-slate-800 mb-2 md:mb-3 text-left">Độc tố nội sinh</h3>
+                        <div class="flex items-center justify-between mb-2 md:mb-3">
+                            <h3 class="text-lg md:text-2xl font-bold text-slate-800 text-left">Độc tố nội sinh</h3>
+                            <div class="w-8 h-8 rounded-full bg-rose-50 flex items-center justify-center animate-bounce group-[.active]:rotate-180 transition-transform duration-300 flex-shrink-0 ml-2">
+                                <svg class="w-5 h-5 text-rose-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+                            </div>
+                        </div>
                         <div class="mechanism-details border-t border-rose-100/50 pt-3 md:pt-4 md:mt-2">
                             <p class="text-[13px] md:text-sm text-slate-600 font-medium leading-relaxed">Chất thải p-cresol và Acetaldehyde xuyên qua niêm mạc ruột viêm, đi thẳng vào máu và thấm qua hàng rào lên não.</p>
                         </div>
                     </div>
                     <div class="mechanism-card p-5 md:p-8 rounded-[1.25rem] md:rounded-[2rem] bg-white/95 backdrop-blur-xl border border-rose-100 hover:bg-white hover:shadow-[0_20px_40px_rgba(225,29,72,0.1)] transition-all duration-500 group overflow-hidden shadow-[0_10px_20px_rgba(203,213,225,0.2)]" onclick="app.toggleMechanism(this)">
                         <div class="w-12 h-12 md:w-16 md:h-16 bg-gradient-to-tr from-rose-100 to-red-50 text-rose-500 rounded-full flex items-center justify-center text-xl md:text-3xl mb-3 md:mb-6 shadow-[inset_0_2px_10px_rgba(225,29,72,0.1)] group-hover:scale-110 transition-transform duration-500">&#129496;</div>
-                        <h3 class="text-lg md:text-2xl font-bold text-slate-800 mb-2 md:mb-3 text-left">Say độc tính</h3>
+                        <div class="flex items-center justify-between mb-2 md:mb-3">
+                            <h3 class="text-lg md:text-2xl font-bold text-slate-800 text-left">Say độc tính</h3>
+                            <div class="w-8 h-8 rounded-full bg-rose-50 flex items-center justify-center animate-bounce group-[.active]:rotate-180 transition-transform duration-300 flex-shrink-0 ml-2">
+                                <svg class="w-5 h-5 text-rose-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+                            </div>
+                        </div>
                         <div class="mechanism-details border-t border-rose-100/50 pt-3 md:pt-4 md:mt-2">
                             <p class="text-[13px] md:text-sm text-slate-600 font-medium leading-relaxed">Tắc nghẽn các thụ thể thần kinh, gây nên trạng thái đờ đẫn, lăng xăng vô thức, mất kiểm soát như đang say rượu.</p>
                         </div>
@@ -322,12 +338,17 @@
                     
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 relative z-10">
                         <!-- Food Item 1 -->
-                        <div class="food-card p-8 rounded-[2rem] cursor-pointer bg-white border border-slate-100 text-slate-800 hover:-translate-y-2 shadow-[0_5px_15px_rgba(15,23,42,0.05)] hover:shadow-[0_20px_30px_rgba(251,191,36,0.15)] transition-all duration-300" onclick="app.toggleFood(this)">
+                        <div class="food-card group p-8 rounded-[2rem] cursor-pointer bg-white border border-slate-100 text-slate-800 hover:-translate-y-2 shadow-[0_5px_15px_rgba(15,23,42,0.05)] hover:shadow-[0_20px_30px_rgba(251,191,36,0.15)] transition-all duration-300" onclick="app.toggleFood(this)">
                             <div class="flex justify-between items-start mb-6">
                                 <span class="text-5xl filter drop-shadow-sm">&#127820;</span>
                                 <span class="bg-amber-100 text-amber-800 border border-amber-300 text-[10px] px-3 py-1 rounded-full font-bold uppercase tracking-widest shadow-sm">Siêu cấp</span>
                             </div>
-                            <h5 class="text-xl font-extrabold text-slate-900 mb-2">Chuối Xanh</h5>
+                            <div class="flex items-center justify-between mb-2">
+                                <h5 class="text-xl font-extrabold text-slate-900 leading-none">Chuối Xanh</h5>
+                                <div class="w-8 h-8 rounded-full bg-slate-50 flex items-center justify-center animate-bounce group-[.active]:rotate-180 transition-transform duration-300">
+                                    <svg class="w-4 h-4 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+                                </div>
+                            </div>
                             <p class="text-xs text-amber-600 font-bold tracking-wide">Nguồn tinh bột kháng dồi dào.</p>
                             <div class="food-details mt-5 pt-5 border-t border-slate-100">
                                 <p class="text-sm text-slate-500 leading-relaxed font-medium">
@@ -336,12 +357,17 @@
                             </div>
                         </div>
                         <!-- Food Item 2 -->
-                        <div class="food-card p-8 rounded-[2rem] cursor-pointer bg-white border border-slate-100 text-slate-800 hover:-translate-y-2 shadow-[0_5px_15px_rgba(15,23,42,0.05)] hover:shadow-[0_20px_30px_rgba(148,163,184,0.15)] transition-all duration-300" onclick="app.toggleFood(this)">
+                        <div class="food-card group p-8 rounded-[2rem] cursor-pointer bg-white border border-slate-100 text-slate-800 hover:-translate-y-2 shadow-[0_5px_15px_rgba(15,23,42,0.05)] hover:shadow-[0_20px_30px_rgba(148,163,184,0.15)] transition-all duration-300" onclick="app.toggleFood(this)">
                             <div class="flex justify-between items-start mb-6">
                                 <span class="text-5xl filter drop-shadow-sm">&#129476;</span>
                                 <span class="bg-slate-100 text-slate-600 border border-slate-300 text-[10px] px-3 py-1 rounded-full font-bold uppercase tracking-widest shadow-sm">Gia vị nền</span>
                             </div>
-                            <h5 class="text-xl font-extrabold text-slate-900 mb-2">Hành & Tỏi</h5>
+                            <div class="flex items-center justify-between mb-2">
+                                <h5 class="text-xl font-extrabold text-slate-900 leading-none">Hành & Tỏi</h5>
+                                <div class="w-8 h-8 rounded-full bg-slate-50 flex items-center justify-center animate-bounce group-[.active]:rotate-180 transition-transform duration-300">
+                                    <svg class="w-4 h-4 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+                                </div>
+                            </div>
                             <p class="text-xs text-slate-500 font-bold tracking-wide">Giàu Inulin thuần tự nhiên.</p>
                             <div class="food-details mt-5 pt-5 border-t border-slate-100">
                                 <p class="text-sm text-slate-500 leading-relaxed font-medium">
@@ -350,12 +376,17 @@
                             </div>
                         </div>
                         <!-- Food Item 3 -->
-                        <div class="food-card p-8 rounded-[2rem] cursor-pointer bg-white border border-slate-100 text-slate-800 hover:-translate-y-2 shadow-[0_5px_15px_rgba(15,23,42,0.05)] hover:shadow-[0_20px_30px_rgba(52,211,153,0.15)] transition-all duration-300" onclick="app.toggleFood(this)">
+                        <div class="food-card group p-8 rounded-[2rem] cursor-pointer bg-white border border-slate-100 text-slate-800 hover:-translate-y-2 shadow-[0_5px_15px_rgba(15,23,42,0.05)] hover:shadow-[0_20px_30px_rgba(52,211,153,0.15)] transition-all duration-300" onclick="app.toggleFood(this)">
                             <div class="flex justify-between items-start mb-6">
                                 <span class="text-5xl filter drop-shadow-sm">&#129361;</span>
                                 <span class="bg-emerald-100 text-emerald-800 border border-emerald-300 text-[10px] px-3 py-1 rounded-full font-bold uppercase tracking-widest shadow-sm">Cao cấp</span>
                             </div>
-                            <h5 class="text-xl font-extrabold text-slate-900 mb-2">Măng Tây</h5>
+                            <div class="flex items-center justify-between mb-2">
+                                <h5 class="text-xl font-extrabold text-slate-900 leading-none">Măng Tây</h5>
+                                <div class="w-8 h-8 rounded-full bg-slate-50 flex items-center justify-center animate-bounce group-[.active]:rotate-180 transition-transform duration-300">
+                                    <svg class="w-4 h-4 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+                                </div>
+                            </div>
                             <p class="text-xs text-emerald-600 font-bold tracking-wide">Đa dạng hóa hệ vi sinh.</p>
                             <div class="food-details mt-5 pt-5 border-t border-slate-100">
                                 <p class="text-sm text-slate-500 leading-relaxed font-medium">
@@ -364,12 +395,17 @@
                             </div>
                         </div>
                         <!-- Food Item 4 -->
-                        <div class="food-card p-8 rounded-[2rem] cursor-pointer bg-white border border-slate-100 text-slate-800 hover:-translate-y-2 shadow-[0_5px_15px_rgba(15,23,42,0.05)] hover:shadow-[0_20px_30px_rgba(96,165,250,0.15)] transition-all duration-300" onclick="app.toggleFood(this)">
+                        <div class="food-card group p-8 rounded-[2rem] cursor-pointer bg-white border border-slate-100 text-slate-800 hover:-translate-y-2 shadow-[0_5px_15px_rgba(15,23,42,0.05)] hover:shadow-[0_20px_30px_rgba(96,165,250,0.15)] transition-all duration-300" onclick="app.toggleFood(this)">
                             <div class="flex justify-between items-start mb-6">
                                 <span class="text-5xl filter drop-shadow-sm">&#127794;</span>
                                 <span class="bg-blue-100 text-blue-800 border border-blue-300 text-[10px] px-3 py-1 rounded-full font-bold uppercase tracking-widest shadow-sm">Hỗ trợ</span>
                             </div>
-                            <h5 class="text-xl font-extrabold text-slate-900 mb-2">Các loại Hạt</h5>
+                            <div class="flex items-center justify-between mb-2">
+                                <h5 class="text-xl font-extrabold text-slate-900 leading-none">Các loại Hạt</h5>
+                                <div class="w-8 h-8 rounded-full bg-slate-50 flex items-center justify-center animate-bounce group-[.active]:rotate-180 transition-transform duration-300">
+                                    <svg class="w-4 h-4 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+                                </div>
+                            </div>
                             <p class="text-xs text-blue-600 font-bold tracking-wide">Zinc & Omega thực vật.</p>
                             <div class="food-details mt-5 pt-5 border-t border-slate-100">
                                 <p class="text-sm text-slate-500 leading-relaxed font-medium">
@@ -473,11 +509,11 @@
             charts: {},
             isDysbiosis: false,
             rainbowData: {
-                red: { title: "Màu Đỏ (Chống Viêm)", foods: "Cà chua, củ dền, dâu tây, ớt chuông đỏ.", benefit: "Giàu Lycopene bảo vệ tế bào và dập tắt các ổ viêm niêm mạc." },
-                orange: { title: "Màu Cam (Miễn Dịch)", foods: "Cà rốt, bí đỏ, khoai lang cam.", benefit: "Cung cấp Beta-carotene tăng cường hàng rào bảo vệ miễn dịch." },
-                yellow: { title: "Màu Vàng (Tiêu Hóa)", foods: "Ớt chuông vàng, ngô, dứa.", benefit: "Hỗ trợ enzyme tiêu hóa, giảm áp lực cho đường ruột đang tổn thương." },
-                green: { title: "Màu Xanh (Lợi Khuẩn)", foods: "Măng tây, bông cải xanh, rau cải xoăn.", benefit: "Thức ăn cao cấp cho chủng Bifidobacterium để sản sinh Butyrate." },
-                purple: { title: "Màu Tím (Não Bộ)", foods: "Bắp cải tím, việt quất, cà tím.", benefit: "Chứa Anthocyanin bảo vệ thần kinh khỏi sự tấn công của độc tố." }
+                red: { title: "Màu Đỏ (Chống Viêm)", colorClass: "text-red-500", foods: "Cà chua, củ dền, dâu tây, ớt chuông đỏ.", benefit: "Giàu Lycopene bảo vệ tế bào và dập tắt các ổ viêm niêm mạc." },
+                orange: { title: "Màu Cam (Miễn Dịch)", colorClass: "text-orange-500", foods: "Cà rốt, bí đỏ, khoai lang cam.", benefit: "Cung cấp Beta-carotene tăng cường hàng rào bảo vệ miễn dịch." },
+                yellow: { title: "Màu Vàng (Tiêu Hóa)", colorClass: "text-amber-500", foods: "Ớt chuông vàng, ngô, dứa.", benefit: "Hỗ trợ enzyme tiêu hóa, giảm áp lực cho đường ruột đang tổn thương." },
+                green: { title: "Màu Xanh (Lợi Khuẩn)", colorClass: "text-emerald-500", foods: "Măng tây, bông cải xanh, rau cải xoăn.", benefit: "Thức ăn cao cấp cho chủng Bifidobacterium để sản sinh Butyrate." },
+                purple: { title: "Màu Tím (Não Bộ)", colorClass: "text-purple-500", foods: "Bắp cải tím, việt quất, cà tím.", benefit: "Chứa Anthocyanin bảo vệ thần kinh khỏi sự tấn công của độc tố." }
             },
 
             init: function() {
@@ -492,7 +528,7 @@
                 display.style.opacity = 0;
                 setTimeout(() => {
                     display.innerHTML = `
-                        <h5 class="font-bold text-amber-400 mb-1 text-base tracking-tight">${data.title}</h5>
+                        <h5 class="font-bold ${data.colorClass} mb-1 text-base tracking-tight">${data.title}</h5>
                         <p class="text-slate-800 text-xs mb-1"><strong>Thực phẩm:</strong> ${data.foods}</p>
                         <p class="text-stone-400 text-[11px] leading-snug italic">${data.benefit}</p>
                     `;
@@ -641,4 +677,5 @@
 
         window.onload = () => app.init();
     </script>
+    <?php wp_footer(); ?>
 </body>
