@@ -1,18 +1,9 @@
 <?php
 /**
- * Template Name: Trang Giới Thiệu
+ * Template Name: Trang Dinh dưỡng giấc ngủ
  * 
  * @package Hieucon
- * 
- * ĐÂY LÀ FILE ĐỐI TƯỢNG ĐỂ WORDPRESS NHẬN DIỆN MẪU TRANG.
- * File này chỉ đóng vai trò như một "Router" (Đường dẫn yêu cầu) 
- * để gọi đến Controller xử lý, không nên viết HTML ở đây.
  */
-
-// Chuyển hướng xử lý sang Controller (Giả sử bạn sẽ tạo About_Controller)
-// \Hieucon\Controller\About_Controller::render();
-
-// Để demo tạm thời trước khi bạn tạo Controller, mình gọi View thẳng:
 ?>
 
 <head>
