@@ -70,7 +70,10 @@
         .cta-link:hover { transform: translateY(-4px); filter: brightness(1.05); }
 
         /* Rainbow Interaction */
-        .rainbow-grid div { height: 60px; border-radius: 12px; transition: all 0.2s; cursor: pointer; border: 2px solid transparent; }
+        .rainbow-grid div { height: 45px; border-radius: 8px; transition: all 0.2s; cursor: pointer; border: 2px solid transparent; }
+        @media (min-width: 768px) {
+            .rainbow-grid div { height: 60px; border-radius: 12px; }
+        }
         .rainbow-grid div:hover, .rainbow-grid div.active { transform: scale(1.05); border-color: white; box-shadow: 0 8px 16px rgba(0,0,0,0.4); }
         
         #rainbow-suggestion { min-height: 100px; transition: opacity 0.3s; }
@@ -130,47 +133,48 @@
 
     <main>
         <!-- Section 1: Introduction -->
-        <section id="intro" class="section-reveal py-24 bg-transparent relative z-10 w-full overflow-hidden">
+        <section id="intro" class="section-reveal py-10 md:py-16 lg:py-24 bg-transparent relative z-10 w-full overflow-hidden">
             <!-- Ambient Glow -->
             <div class="absolute top-20 left-1/2 -translate-x-1/2 w-[30rem] h-[30rem] bg-sky-200/30 rounded-full filter blur-[100px] pointer-events-none"></div>
 
-            <div class="max-w-5xl mx-auto px-6 text-center relative z-10">
-                <div class="journey-dot mb-8">
-                    <span class="w-14 h-14 bg-gradient-to-tr from-slate-700 to-slate-900 text-white rounded-full inline-flex items-center justify-center font-serif italic text-2xl shadow-[0_0_20px_rgba(15,23,42,0.3)] border-2 border-white">1</span>
+            <div class="max-w-5xl mx-auto px-4 sm:px-6 text-center relative z-10">
+                <div class="journey-dot mb-6 md:mb-8">
+                    <span class="w-12 h-12 md:w-14 md:h-14 bg-gradient-to-tr from-slate-700 to-slate-900 text-white rounded-full inline-flex items-center justify-center font-serif italic text-xl md:text-2xl shadow-[0_0_20px_rgba(15,23,42,0.3)] border-2 border-white">1</span>
                 </div>
-                <h2 class="text-4xl md:text-5xl font-extrabold text-slate-800 mb-6 leading-tight drop-shadow-sm">Thấu hiểu "Hệ sinh thái" bên trong con</h2>
-                <p class="text-lg text-slate-600 leading-relaxed mb-16 font-medium max-w-3xl mx-auto">
+                <h2 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold text-slate-800 mb-4 md:mb-6 leading-tight drop-shadow-sm px-2">Thấu hiểu "Hệ sinh thái" bên trong con</h2>
+                <p class="text-sm sm:text-base md:text-lg text-slate-600 leading-relaxed mb-8 md:mb-16 font-medium max-w-3xl mx-auto px-2 md:px-4">
                     Mọi hành vi "bất thường" của con đều là tiếng kêu cứu từ một hệ sinh thái đang bị tàn phá. Tự kỷ là một tình trạng sinh lý học phức tạp, không phải là khiếm khuyết tâm lý.
                 </p>
                 
-                <div class="bg-white/90 backdrop-blur-xl rounded-[2.5rem] p-10 border border-sky-100 shadow-[0_15px_40px_rgba(14,165,233,0.08)]">
-                    <div class="flex flex-col md:flex-row items-center gap-10">
-                        <div class="w-full md:w-1/2">
-                            <div class="chart-container">
+                </-- Shape Section1 --/>
+                <div class="bg-white/90 backdrop-blur-xl rounded-[1.5rem] md:rounded-[2.5rem] p-4 sm:p-6 md:p-10 border border-sky-100 shadow-[0_15px_40px_rgba(14,165,233,0.08)]">
+                    <div class="flex flex-col md:flex-row items-center gap-4 sm:gap-6 md:gap-10">
+                        <div class="w-full md:w-1/2 flex items-center justify-center">
+                            <div class="chart-container w-[160px] h-[160px] sm:w-[220px] sm:h-[220px] md:w-full md:h-auto">
                                 <canvas id="gutStateChart"></canvas>
                             </div>
                         </div>
-                        <div class="w-full md:w-1/2 text-left space-y-4">
-                            <div class="inline-block px-4 py-1.5 rounded-full bg-emerald-100 text-emerald-800 font-bold text-sm tracking-wide border border-emerald-200 shadow-sm" id="state-badge">Trạng thái: Cân Bằng</div>
-                            <h3 class="text-2xl font-bold text-slate-800" id="state-title">Hệ Sinh Thái Khỏe Mạnh</h3>
-                            <p class="text-sm text-slate-500 mb-4" id="state-desc" style="min-height: 40px;">Tỷ lệ lợi khuẩn áp đảo giúp màng ruột toàn vẹn, hấp thu tốt dinh dưỡng và ngăn chặn độc tố lên não.</p>
+                        <div class="w-full md:w-1/2 text-left space-y-3 md:space-y-4 pt-2 md:pt-0">
+                            <div class="inline-block px-3 py-1 md:px-4 md:py-1.5 rounded-full bg-emerald-100 text-emerald-800 font-bold text-[11px] md:text-sm tracking-wide border border-emerald-200 shadow-sm" id="state-badge">Trạng thái: Cân Bằng</div>
+                            <h3 class="text-lg sm:text-xl md:text-2xl font-bold text-slate-800 leading-tight" id="state-title">Hệ Sinh Thái Khỏe Mạnh</h3>
+                            <p class="text-[13px] sm:text-sm text-slate-500 mb-2 md:mb-4 leading-relaxed" id="state-desc" style="min-height: 48px;">Tỷ lệ lợi khuẩn áp đảo giúp màng ruột toàn vẹn, hấp thu tốt dinh dưỡng và ngăn chặn độc tố lên não.</p>
                             
-                            <div class="space-y-4 bg-slate-50/80 p-6 rounded-2xl border border-slate-100 mb-4">
+                            <div class="space-y-2.5 sm:space-y-3 md:space-y-4 bg-slate-50/80 p-4 sm:p-5 md:p-6 rounded-[1rem] md:rounded-2xl border border-slate-100 mb-2 md:mb-4">
                                 <div class="flex items-center justify-between transition-all" id="row-loi-khuan">
-                                    <div class="flex items-center gap-3"><span class="w-4 h-4 rounded-full shadow-inner transition-colors duration-300" id="color-loi-khuan" style="background-color: #059669;"></span> <span class="text-slate-700 font-bold">Lợi Khuẩn</span></div>
-                                    <span class="font-extrabold text-xl text-slate-900 transition-all duration-300" id="stat-loi-khuan">85%</span>
+                                    <div class="flex items-center gap-2 md:gap-3"><span class="w-3.5 h-3.5 md:w-4 md:h-4 rounded-full shadow-inner transition-colors duration-300" id="color-loi-khuan" style="background-color: #059669;"></span> <span class="text-[13px] md:text-base text-slate-700 font-bold">Lợi Khuẩn</span></div>
+                                    <span class="font-extrabold text-base md:text-xl text-slate-900 transition-all duration-300" id="stat-loi-khuan">85%</span>
                                 </div>
                                 <div class="flex items-center justify-between transition-all" id="row-hai-khuan">
-                                    <div class="flex items-center gap-3"><span class="w-4 h-4 rounded-full shadow-inner transition-colors duration-300" id="color-hai-khuan" style="background-color: #d6d3d1;"></span> <span class="text-slate-700 font-bold">Hại Khuẩn</span></div>
-                                    <span class="font-extrabold text-xl text-slate-900 transition-all duration-300" id="stat-hai-khuan">10%</span>
+                                    <div class="flex items-center gap-2 md:gap-3"><span class="w-3.5 h-3.5 md:w-4 md:h-4 rounded-full shadow-inner transition-colors duration-300" id="color-hai-khuan" style="background-color: #d6d3d1;"></span> <span class="text-[13px] md:text-base text-slate-700 font-bold">Hại Khuẩn</span></div>
+                                    <span class="font-extrabold text-base md:text-xl text-slate-900 transition-all duration-300" id="stat-hai-khuan">10%</span>
                                 </div>
                                 <div class="flex items-center justify-between transition-all" id="row-nam-men">
-                                    <div class="flex items-center gap-3"><span class="w-4 h-4 rounded-full shadow-inner transition-colors duration-300" id="color-nam-men" style="background-color: #fda4af;"></span> <span class="text-slate-700 font-bold">Nấm Men</span></div>
-                                    <span class="font-extrabold text-xl text-slate-900 transition-all duration-300" id="stat-nam-men">5%</span>
+                                    <div class="flex items-center gap-2 md:gap-3"><span class="w-3.5 h-3.5 md:w-4 md:h-4 rounded-full shadow-inner transition-colors duration-300" id="color-nam-men" style="background-color: #fda4af;"></span> <span class="text-[13px] md:text-base text-slate-700 font-bold">Nấm Men</span></div>
+                                    <span class="font-extrabold text-base md:text-xl text-slate-900 transition-all duration-300" id="stat-nam-men">5%</span>
                                 </div>
                             </div>
 
-                            <button onclick="app.toggleState()" class="px-6 py-3 bg-gradient-to-r from-slate-800 to-slate-900 text-white text-sm font-bold rounded-full hover:from-slate-700 hover:to-slate-800 transition-all flex items-center space-x-2 w-full justify-center md:justify-start md:w-auto mt-2 shadow-md hover:shadow-lg">
+                            <button onclick="app.toggleState()" class="px-5 py-2.5 md:px-6 md:py-3 bg-gradient-to-r from-slate-800 to-slate-900 text-white text-[13px] md:text-sm font-bold rounded-full hover:from-slate-700 hover:to-slate-800 transition-all flex items-center space-x-2 w-full justify-center md:justify-start md:w-auto mt-2 md:mt-0 shadow-sm hover:shadow-md">
                                 <span id="btn-text">Mô phỏng Loạn Khuẩn</span>
                                 <span>&#8646;</span>
                             </button>
@@ -181,38 +185,38 @@
         </section>
 
         <!-- Section 2: Chaos -->
-        <section id="chaos" class="section-reveal py-24 bg-rose-50/50 backdrop-blur-sm border-y border-rose-100/50 relative z-10">
-            <div class="max-w-6xl mx-auto px-6 relative z-10">
-                <div class="text-center mb-16 relative">
+        <section id="chaos" class="section-reveal py-10 md:py-16 lg:py-24 bg-rose-50/50 backdrop-blur-sm border-y border-rose-100/50 relative z-10 w-full overflow-hidden">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 relative z-10">
+                <div class="text-center mb-8 md:mb-16 relative">
                     <!-- Glow -->
                     <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[15rem] h-[8rem] bg-rose-200/50 blur-[50px] rounded-full pointer-events-none"></div>
 
-                    <div class="journey-dot mb-8 relative z-10">
-                        <span class="w-14 h-14 bg-gradient-to-tr from-rose-500 to-red-400 text-white rounded-full inline-flex items-center justify-center font-serif italic text-2xl shadow-[0_0_20px_rgba(244,63,94,0.4)] border-2 border-white">2</span>
+                    <div class="journey-dot mb-6 md:mb-8 relative z-10">
+                        <span class="w-12 h-12 md:w-14 md:h-14 bg-gradient-to-tr from-rose-500 to-red-400 text-white rounded-full inline-flex items-center justify-center font-serif italic text-xl md:text-2xl shadow-[0_0_20px_rgba(244,63,94,0.4)] border-2 border-white">2</span>
                     </div>
-                    <h2 class="text-4xl md:text-5xl font-extrabold text-slate-800 mb-4 relative z-10 drop-shadow-sm">Khi "Kẻ cướp" chiếm quyền điều khiển</h2>
+                    <h2 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold text-slate-800 mb-3 md:mb-4 relative z-10 drop-shadow-sm px-2">Khi "Kẻ cướp" chiếm quyền điều khiển</h2>
                 </div>
 
-                <div class="grid md:grid-cols-3 gap-8 relative z-10">
-                    <div class="mechanism-card p-8 rounded-[2rem] bg-white/95 backdrop-blur-xl border border-rose-100 hover:bg-white hover:shadow-[0_20px_40px_rgba(225,29,72,0.1)] transition-all duration-500 group overflow-hidden shadow-[0_10px_20px_rgba(203,213,225,0.2)]" onclick="app.toggleMechanism(this)">
-                        <div class="w-16 h-16 bg-gradient-to-tr from-rose-100 to-red-50 text-rose-500 rounded-full flex items-center justify-center text-3xl mb-6 shadow-[inset_0_2px_10px_rgba(225,29,72,0.1)] group-hover:scale-110 transition-transform duration-500">&#9889;</div>
-                        <h3 class="text-2xl font-bold text-slate-800 mb-3 text-center md:text-left">Suy kiệt năng lượng</h3>
-                        <div class="mechanism-details border-t border-rose-100/50 pt-4 mt-2">
-                            <p class="text-sm text-slate-600 font-medium leading-relaxed">Hại khuẩn cướp vitamin/khoáng chất làm <strong>Ty thể</strong> suy yếu. Trẻ thiếu ATP (năng lượng) dẫn đến mệt mỏi, cáu gắt triền miên.</p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 relative z-10">
+                    <div class="mechanism-card p-5 md:p-8 rounded-[1.25rem] md:rounded-[2rem] bg-white/95 backdrop-blur-xl border border-rose-100 hover:bg-white hover:shadow-[0_20px_40px_rgba(225,29,72,0.1)] transition-all duration-500 group overflow-hidden shadow-[0_10px_20px_rgba(203,213,225,0.2)]" onclick="app.toggleMechanism(this)">
+                        <div class="w-12 h-12 md:w-16 md:h-16 bg-gradient-to-tr from-rose-100 to-red-50 text-rose-500 rounded-full flex items-center justify-center text-xl md:text-3xl mb-3 md:mb-6 shadow-[inset_0_2px_10px_rgba(225,29,72,0.1)] group-hover:scale-110 transition-transform duration-500">&#9889;</div>
+                        <h3 class="text-lg md:text-2xl font-bold text-slate-800 mb-2 md:mb-3 text-left">Suy kiệt năng lượng</h3>
+                        <div class="mechanism-details border-t border-rose-100/50 pt-3 md:pt-4 md:mt-2">
+                            <p class="text-[13px] md:text-sm text-slate-600 font-medium leading-relaxed">Hại khuẩn cướp vitamin/khoáng chất làm <strong>Ty thể</strong> suy yếu. Trẻ thiếu ATP (năng lượng) dẫn đến mệt mỏi, cáu gắt triền miên.</p>
                         </div>
                     </div>
-                    <div class="mechanism-card p-8 rounded-[2rem] bg-white/95 backdrop-blur-xl border border-rose-100 hover:bg-white hover:shadow-[0_20px_40px_rgba(225,29,72,0.1)] transition-all duration-500 group overflow-hidden shadow-[0_10px_20px_rgba(203,213,225,0.2)]" onclick="app.toggleMechanism(this)">
-                        <div class="w-16 h-16 bg-gradient-to-tr from-rose-100 to-red-50 text-rose-500 rounded-full flex items-center justify-center text-3xl mb-6 shadow-[inset_0_2px_10px_rgba(225,29,72,0.1)] group-hover:scale-110 transition-transform duration-500">&#129514;</div>
-                        <h3 class="text-2xl font-bold text-slate-800 mb-3 text-center md:text-left">Độc tố nội sinh</h3>
-                        <div class="mechanism-details border-t border-rose-100/50 pt-4 mt-2">
-                            <p class="text-sm text-slate-600 font-medium leading-relaxed">Chất thải p-cresol và Acetaldehyde xuyên qua niêm mạc ruột viêm, đi thẳng vào máu và thấm qua hàng rào lên não.</p>
+                    <div class="mechanism-card p-5 md:p-8 rounded-[1.25rem] md:rounded-[2rem] bg-white/95 backdrop-blur-xl border border-rose-100 hover:bg-white hover:shadow-[0_20px_40px_rgba(225,29,72,0.1)] transition-all duration-500 group overflow-hidden shadow-[0_10px_20px_rgba(203,213,225,0.2)]" onclick="app.toggleMechanism(this)">
+                        <div class="w-12 h-12 md:w-16 md:h-16 bg-gradient-to-tr from-rose-100 to-red-50 text-rose-500 rounded-full flex items-center justify-center text-xl md:text-3xl mb-3 md:mb-6 shadow-[inset_0_2px_10px_rgba(225,29,72,0.1)] group-hover:scale-110 transition-transform duration-500">&#129514;</div>
+                        <h3 class="text-lg md:text-2xl font-bold text-slate-800 mb-2 md:mb-3 text-left">Độc tố nội sinh</h3>
+                        <div class="mechanism-details border-t border-rose-100/50 pt-3 md:pt-4 md:mt-2">
+                            <p class="text-[13px] md:text-sm text-slate-600 font-medium leading-relaxed">Chất thải p-cresol và Acetaldehyde xuyên qua niêm mạc ruột viêm, đi thẳng vào máu và thấm qua hàng rào lên não.</p>
                         </div>
                     </div>
-                    <div class="mechanism-card p-8 rounded-[2rem] bg-white/95 backdrop-blur-xl border border-rose-100 hover:bg-white hover:shadow-[0_20px_40px_rgba(225,29,72,0.1)] transition-all duration-500 group overflow-hidden shadow-[0_10px_20px_rgba(203,213,225,0.2)]" onclick="app.toggleMechanism(this)">
-                        <div class="w-16 h-16 bg-gradient-to-tr from-rose-100 to-red-50 text-rose-500 rounded-full flex items-center justify-center text-3xl mb-6 shadow-[inset_0_2px_10px_rgba(225,29,72,0.1)] group-hover:scale-110 transition-transform duration-500">&#129496;</div>
-                        <h3 class="text-2xl font-bold text-slate-800 mb-3 text-center md:text-left">Say độc tính</h3>
-                        <div class="mechanism-details border-t border-rose-100/50 pt-4 mt-2">
-                            <p class="text-sm text-slate-600 font-medium leading-relaxed">Tắc nghẽn các thụ thể thần kinh, gây nên trạng thái đờ đẫn, lăng xăng vô thức, mất kiểm soát như đang say rượu.</p>
+                    <div class="mechanism-card p-5 md:p-8 rounded-[1.25rem] md:rounded-[2rem] bg-white/95 backdrop-blur-xl border border-rose-100 hover:bg-white hover:shadow-[0_20px_40px_rgba(225,29,72,0.1)] transition-all duration-500 group overflow-hidden shadow-[0_10px_20px_rgba(203,213,225,0.2)]" onclick="app.toggleMechanism(this)">
+                        <div class="w-12 h-12 md:w-16 md:h-16 bg-gradient-to-tr from-rose-100 to-red-50 text-rose-500 rounded-full flex items-center justify-center text-xl md:text-3xl mb-3 md:mb-6 shadow-[inset_0_2px_10px_rgba(225,29,72,0.1)] group-hover:scale-110 transition-transform duration-500">&#129496;</div>
+                        <h3 class="text-lg md:text-2xl font-bold text-slate-800 mb-2 md:mb-3 text-left">Say độc tính</h3>
+                        <div class="mechanism-details border-t border-rose-100/50 pt-3 md:pt-4 md:mt-2">
+                            <p class="text-[13px] md:text-sm text-slate-600 font-medium leading-relaxed">Tắc nghẽn các thụ thể thần kinh, gây nên trạng thái đờ đẫn, lăng xăng vô thức, mất kiểm soát như đang say rượu.</p>
                         </div>
                     </div>
                 </div>
@@ -220,36 +224,36 @@
         </section>
 
         <!-- Section 3: Hope -->
-        <section id="hope" class="section-reveal py-24 bg-transparent relative z-10">
+        <section id="hope" class="section-reveal py-16 md:py-24 bg-transparent relative z-10 w-full overflow-hidden">
             <!-- Ambient Glow -->
             <div class="absolute bottom-20 right-0 w-[40rem] h-[40rem] bg-emerald-200/20 rounded-full filter blur-[120px] pointer-events-none"></div>
 
             <div class="max-w-6xl mx-auto px-6 relative z-10">
-                <div class="grid lg:grid-cols-2 gap-16 items-center">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
                     <div>
                         <div class="journey-dot mb-8">
                             <span class="w-14 h-14 bg-gradient-to-tr from-emerald-500 to-teal-400 text-white rounded-full inline-flex items-center justify-center font-serif italic text-2xl shadow-[0_0_20px_rgba(16,185,129,0.4)] border-2 border-white">3</span>
                         </div>
-                        <h2 class="text-4xl md:text-5xl font-extrabold text-slate-800 mb-6 drop-shadow-sm">Butyrate: Vệ sĩ thầm lặng</h2>
-                        <p class="text-lg text-slate-600 mb-10 font-medium leading-relaxed">Vũ khí mạnh nhất của lợi khuẩn để kích hoạt cơ chế tự hàn gắn tổn thương màng ruột và dọn dẹp não bộ.</p>
-                        <div class="space-y-8">
-                            <div class="flex items-start gap-5 p-6 bg-white/60 backdrop-blur-md rounded-[1.5rem] border border-emerald-100 shadow-[0_5px_15px_rgba(16,185,129,0.05)] hover:-translate-y-1 transition-transform">
-                                <span class="text-emerald-500 text-3xl filter drop-shadow-sm">&#10004;</span>
+                        <h2 class="text-3xl md:text-4xl lg:text-5xl font-extrabold text-slate-800 mb-4 md:mb-6 drop-shadow-sm">Butyrate: Vệ sĩ thầm lặng</h2>
+                        <p class="text-base md:text-lg text-slate-600 mb-8 md:mb-10 font-medium leading-relaxed">Vũ khí mạnh nhất của lợi khuẩn để kích hoạt cơ chế tự hàn gắn tổn thương màng ruột và dọn dẹp não bộ.</p>
+                        <div class="space-y-6 md:space-y-8">
+                            <div class="flex items-start gap-4 md:gap-5 p-5 md:p-6 bg-white/60 backdrop-blur-md rounded-[1.5rem] border border-emerald-100 shadow-[0_5px_15px_rgba(16,185,129,0.05)] hover:-translate-y-1 transition-transform">
+                                <span class="text-emerald-500 text-2xl md:text-3xl filter drop-shadow-sm">&#10004;</span>
                                 <div>
-                                    <h4 class="font-extrabold text-slate-800 text-lg mb-1">Hàn gắn màng ruột</h4>
+                                    <h4 class="font-extrabold text-slate-800 text-base md:text-lg mb-1">Hàn gắn màng ruột</h4>
                                     <p class="text-sm text-slate-500 font-medium">Cấp năng lượng độc quyền cho tế bào biểu mô sinh sôi, giúp đóng chặt lại các lỗ rò rỉ.</p>
                                 </div>
                             </div>
-                            <div class="flex items-start gap-5 p-6 bg-white/60 backdrop-blur-md rounded-[1.5rem] border border-emerald-100 shadow-[0_5px_15px_rgba(16,185,129,0.05)] hover:-translate-y-1 transition-transform">
-                                <span class="text-emerald-500 text-3xl filter drop-shadow-sm">&#10004;</span>
+                            <div class="flex items-start gap-4 md:gap-5 p-5 md:p-6 bg-white/60 backdrop-blur-md rounded-[1.5rem] border border-emerald-100 shadow-[0_5px_15px_rgba(16,185,129,0.05)] hover:-translate-y-1 transition-transform">
+                                <span class="text-emerald-500 text-2xl md:text-3xl filter drop-shadow-sm">&#10004;</span>
                                 <div>
-                                    <h4 class="font-extrabold text-slate-800 text-lg mb-1">Chống viêm thần kinh</h4>
+                                    <h4 class="font-extrabold text-slate-800 text-base md:text-lg mb-1">Chống viêm thần kinh</h4>
                                     <p class="text-sm text-slate-500 font-medium">Khả năng đặc biệt vượt qua hàng rào máu não, xoa dịu các ổ viêm sưng, trả lại sự tỉnh táo.</p>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="bg-white/95 backdrop-blur-xl p-10 rounded-[2.5rem] border border-emerald-100 shadow-[0_15px_40px_rgba(16,185,129,0.1)] relative overflow-hidden group">
+                    <div class="bg-white/95 backdrop-blur-xl p-6 md:p-10 rounded-[2rem] md:rounded-[2.5rem] border border-emerald-100 shadow-[0_15px_40px_rgba(16,185,129,0.1)] relative overflow-hidden group">
                         <div class="absolute inset-0 bg-gradient-to-br from-emerald-50/50 to-transparent pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                         <h4 class="text-center font-bold text-slate-800 mb-8 uppercase tracking-widest text-sm">Biểu đồ hồi phục màng ruột</h4>
                         <div class="chart-container relative z-10" style="height: 250px;">
@@ -265,58 +269,58 @@
         </section>
 
         <!-- Section 4: Action (LIGHT MEDICAL BLUE THEME) -->
-        <section id="action" class="section-reveal py-24 bg-sky-100/50 backdrop-blur-sm border-t border-sky-200/50 text-slate-800 overflow-hidden relative shadow-[inset_0_10px_30px_rgba(14,165,233,0.05)] z-10">
+        <section id="action" class="section-reveal py-16 md:py-24 bg-sky-100/50 backdrop-blur-sm border-t border-sky-200/50 text-slate-800 overflow-hidden relative shadow-[inset_0_10px_30px_rgba(14,165,233,0.05)] z-10">
             <!-- Medical Blue Ambient Glows -->
             <div class="absolute top-0 -left-40 w-[30rem] h-[30rem] bg-sky-200/40 rounded-full filter blur-[100px] pointer-events-none"></div>
             <div class="absolute bottom-0 -right-40 w-[30rem] h-[30rem] bg-teal-200/40 rounded-full filter blur-[100px] pointer-events-none"></div>
             
-            <div class="max-w-6xl mx-auto px-6 relative z-10">
-                <div class="text-center mb-20 relative">
+            <div class="max-w-6xl mx-auto px-6 relative z-10 w-full">
+                <div class="text-center mb-16 md:mb-20 relative">
                     <!-- Glow behind heading -->
                     <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[20rem] h-[10rem] bg-white/70 blur-[60px] rounded-full pointer-events-none"></div>
                     
                     <div class="journey-dot mb-8 relative z-10">
                         <span class="w-14 h-14 bg-gradient-to-tr from-sky-400 to-blue-300 text-white rounded-full inline-flex items-center justify-center font-serif italic text-2xl shadow-[0_0_20px_rgba(56,189,248,0.4)] border-2 border-white">4</span>
                     </div>
-                    <h2 class="text-4xl md:text-5xl font-extrabold mb-6 text-slate-800 drop-shadow-sm relative z-10">Nghệ thuật phục hồi hệ sinh thái</h2>
-                    <p class="text-slate-600 max-w-2xl mx-auto text-lg leading-relaxed font-medium relative z-10">
+                    <h2 class="text-3xl md:text-4xl lg:text-5xl font-extrabold mb-4 md:mb-6 text-slate-800 drop-shadow-sm relative z-10 px-2">Nghệ thuật phục hồi hệ sinh thái</h2>
+                    <p class="text-slate-600 max-w-2xl mx-auto text-base md:text-lg leading-relaxed font-medium relative z-10 px-4">
                         Đừng chỉ tập trung tiêu diệt vi khuẩn xấu. Hãy học cách <span class="text-amber-600 font-bold border-b-2 border-amber-300 pb-0.5">"Cải tạo đất"</span> và <span class="text-emerald-600 font-bold border-b-2 border-emerald-300 pb-0.5">"Bón phân"</span> để khu vườn bên trong con tự chữa lành.
                     </p>
                 </div>
 
                 <!-- Concept Toolkit - High Contrast Cards -->
-                <div class="grid md:grid-cols-3 gap-8 mb-24 relative">
-                    <div class="p-8 rounded-[2rem] bg-white/95 backdrop-blur-xl border border-sky-100 hover:bg-white hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(56,189,248,0.15)] transition-all duration-500 group overflow-hidden shadow-[0_10px_20px_rgba(203,213,225,0.3)] relative">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 mb-20 md:mb-24 relative">
+                    <div class="p-6 md:p-8 rounded-[1.5rem] md:rounded-[2rem] bg-white/95 backdrop-blur-xl border border-sky-100 hover:bg-white hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(56,189,248,0.15)] transition-all duration-500 group overflow-hidden shadow-[0_10px_20px_rgba(203,213,225,0.3)] relative">
                         <div class="absolute -right-6 -top-6 text-amber-500/5 text-9xl pointer-events-none transform -rotate-12 font-bold">&#127793;</div>
-                        <div class="text-amber-500 text-6xl mb-6 relative z-10 filter drop-shadow hover:scale-110 transition-transform duration-500">&#127793;</div>
-                        <h4 class="text-2xl font-extrabold mb-3 text-slate-800 relative z-10">Bón Phân <span class="text-amber-600 text-lg font-bold block mt-1">(Prebiotics)</span></h4>
+                        <div class="text-amber-500 text-5xl md:text-6xl mb-4 md:mb-6 relative z-10 filter drop-shadow hover:scale-110 transition-transform duration-500">&#127793;</div>
+                        <h4 class="text-xl md:text-2xl font-extrabold mb-2 md:mb-3 text-slate-800 relative z-10">Bón Phân <span class="text-amber-600 text-base md:text-lg font-bold block mt-1">(Prebiotics)</span></h4>
                         <p class="text-sm text-slate-500 leading-relaxed relative z-10 font-medium">Cung cấp thức ăn chuyên biệt để lợi khuẩn nội sinh tự sản xuất Butyrate. Đây là bước quan trọng nhất.</p>
                     </div>
-                    <div class="p-8 rounded-[2rem] bg-white/95 backdrop-blur-xl border border-sky-100 hover:bg-white hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(52,211,153,0.15)] transition-all duration-500 group overflow-hidden shadow-[0_10px_20px_rgba(203,213,225,0.3)] relative">
+                    <div class="p-6 md:p-8 rounded-[1.5rem] md:rounded-[2rem] bg-white/95 backdrop-blur-xl border border-sky-100 hover:bg-white hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(52,211,153,0.15)] transition-all duration-500 group overflow-hidden shadow-[0_10px_20px_rgba(203,213,225,0.3)] relative">
                         <div class="absolute -right-6 -top-6 text-emerald-500/5 text-9xl pointer-events-none transform -rotate-12 font-bold">&#127793;</div>
-                        <div class="text-emerald-500 text-6xl mb-6 relative z-10 filter drop-shadow hover:scale-110 transition-transform duration-500">&#127793;</div>
-                        <h4 class="text-2xl font-extrabold mb-3 text-slate-800 relative z-10">Gieo Hạt <span class="text-emerald-600 text-lg font-bold block mt-1">(Probiotics)</span></h4>
+                        <div class="text-emerald-500 text-5xl md:text-6xl mb-4 md:mb-6 relative z-10 filter drop-shadow hover:scale-110 transition-transform duration-500">&#127793;</div>
+                        <h4 class="text-xl md:text-2xl font-extrabold mb-2 md:mb-3 text-slate-800 relative z-10">Gieo Hạt <span class="text-emerald-600 text-base md:text-lg font-bold block mt-1">(Probiotics)</span></h4>
                         <p class="text-sm text-slate-500 leading-relaxed relative z-10 font-medium">Bổ sung chủng vi khuẩn mới. Chỉ phát huy tác dụng khi "đất" đã đủ dưỡng chất từ bước 1.</p>
                     </div>
-                    <div class="p-8 rounded-[2rem] bg-white/95 backdrop-blur-xl border border-sky-100 hover:bg-white hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(96,165,250,0.15)] transition-all duration-500 group overflow-hidden shadow-[0_10px_20px_rgba(203,213,225,0.3)] relative">
+                    <div class="p-6 md:p-8 rounded-[1.5rem] md:rounded-[2rem] bg-white/95 backdrop-blur-xl border border-sky-100 hover:bg-white hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(96,165,250,0.15)] transition-all duration-500 group overflow-hidden shadow-[0_10px_20px_rgba(203,213,225,0.3)] relative">
                         <div class="absolute -right-6 -top-6 text-blue-500/5 text-9xl pointer-events-none transform -rotate-12 font-bold">&#127793;</div>
-                        <div class="text-blue-500 text-6xl mb-6 relative z-10 filter drop-shadow hover:scale-110 transition-transform duration-500">&#127793;</div>
-                        <h4 class="text-2xl font-extrabold mb-3 text-slate-800 relative z-10">Cải Tạo Đất <span class="text-blue-600 text-lg font-bold block mt-1">(Polyphenols)</span></h4>
+                        <div class="text-blue-500 text-5xl md:text-6xl mb-4 md:mb-6 relative z-10 filter drop-shadow hover:scale-110 transition-transform duration-500">&#127793;</div>
+                        <h4 class="text-xl md:text-2xl font-extrabold mb-2 md:mb-3 text-slate-800 relative z-10">Cải Tạo Đất <span class="text-blue-600 text-base md:text-lg font-bold block mt-1">(Polyphenols)</span></h4>
                         <p class="text-sm text-slate-500 leading-relaxed relative z-10 font-medium">Dùng hợp chất chống oxy hóa từ thực phẩm đa sắc màu để bảo vệ tế bào và đa dạng hóa chủng vi khuẩn.</p>
                     </div>
                 </div>
 
                 <!-- Food Directory - Elevated Cards -->
-                <div class="mb-24 relative">
-                    <div class="flex items-center justify-center gap-4 mb-10">
-                        <div class="h-px bg-gradient-to-r from-transparent to-sky-400 w-20"></div>
-                        <h3 class="text-2xl font-bold text-sky-600 text-center uppercase tracking-[0.1em]">Danh mục thực phẩm</h3>
-                        <div class="h-px bg-gradient-to-l from-transparent to-sky-400 w-20"></div>
+                <div class="mb-20 md:mb-24 relative">
+                    <div class="flex items-center justify-center gap-2 md:gap-4 mb-8 md:mb-10">
+                        <div class="h-px bg-gradient-to-r from-transparent to-sky-400 w-12 md:w-20"></div>
+                        <h3 class="text-xl md:text-2xl font-bold text-sky-600 text-center uppercase tracking-[0.1em]">Danh mục thực phẩm</h3>
+                        <div class="h-px bg-gradient-to-l from-transparent to-sky-400 w-12 md:w-20"></div>
                     </div>
                     <!-- Background highlight for food cards -->
                     <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90%] h-[120%] bg-white/40 blur-[50px] rounded-[4rem] pointer-events-none z-0"></div>
                     
-                    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 relative z-10">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 relative z-10">
                         <!-- Food Item 1 -->
                         <div class="food-card p-8 rounded-[2rem] cursor-pointer bg-white border border-slate-100 text-slate-800 hover:-translate-y-2 shadow-[0_5px_15px_rgba(15,23,42,0.05)] hover:shadow-[0_20px_30px_rgba(251,191,36,0.15)] transition-all duration-300" onclick="app.toggleFood(this)">
                             <div class="flex justify-between items-start mb-6">
@@ -377,89 +381,89 @@
                 </div>
 
                 <!-- Rainbow Diet & Chart -->
-                <div class="grid lg:grid-cols-2 gap-10 items-stretch mb-24 relative z-10">
-                    <div class="bg-white/80 backdrop-blur-3xl p-10 rounded-[2.5rem] border border-white shadow-[0_15px_40px_rgba(14,165,233,0.08)] relative overflow-hidden flex flex-col h-full">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-10 items-stretch mb-20 md:mb-24 relative z-10">
+                    <div class="bg-white/80 backdrop-blur-3xl p-6 md:p-10 rounded-[2rem] md:rounded-[2.5rem] border border-white shadow-[0_15px_40px_rgba(14,165,233,0.08)] relative overflow-hidden flex flex-col h-full">
                         <div class="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent pointer-events-none"></div>
-                        <h4 class="text-3xl font-bold mb-4 text-slate-800">"Ăn chiếc cầu vồng"</h4>
-                        <p class="text-slate-500 text-sm leading-relaxed mb-8 flex-grow font-medium">
+                        <h4 class="text-2xl md:text-3xl font-bold mb-4 text-slate-800 text-center md:text-left">"Ăn chiếc cầu vồng"</h4>
+                        <p class="text-slate-500 text-sm md:text-base leading-relaxed mb-8 flex-grow font-medium text-center md:text-left">
                             Mỗi sắc màu thực vật đại diện cho một nhóm <span class="text-amber-500 font-bold border-b border-amber-300/50">Polyphenol</span> thiết yếu. Hãy phối hợp từ 3 sắc màu để khai mở sức mạnh phục hồi.
                         </p>
-                        <div class="rainbow-grid grid grid-cols-5 gap-3 mb-8">
-                            <div class="bg-gradient-to-b from-red-400 to-red-500 shadow-[0_2px_10px_rgba(239,68,68,0.3)] border border-red-300 transform hover:-translate-y-1 hover:scale-105 transition-all" onmouseover="app.showRainbowInfo('red')" onclick="app.showRainbowInfo('red')"></div>
-                            <div class="bg-gradient-to-b from-orange-400 to-orange-500 shadow-[0_2px_10px_rgba(249,115,22,0.3)] border border-orange-300 transform hover:-translate-y-1 hover:scale-105 transition-all" onmouseover="app.showRainbowInfo('orange')" onclick="app.showRainbowInfo('orange')"></div>
-                            <div class="bg-gradient-to-b from-yellow-300 to-amber-400 shadow-[0_2px_10px_rgba(245,158,11,0.3)] border border-yellow-200 transform hover:-translate-y-1 hover:scale-105 transition-all" onmouseover="app.showRainbowInfo('yellow')" onclick="app.showRainbowInfo('yellow')"></div>
-                            <div class="bg-gradient-to-b from-emerald-400 to-emerald-500 shadow-[0_2px_10px_rgba(16,185,129,0.3)] border border-emerald-300 transform hover:-translate-y-1 hover:scale-105 transition-all" onmouseover="app.showRainbowInfo('green')" onclick="app.showRainbowInfo('green')"></div>
-                            <div class="bg-gradient-to-b from-purple-400 to-purple-500 shadow-[0_2px_10px_rgba(168,85,247,0.3)] border border-purple-300 transform hover:-translate-y-1 hover:scale-105 transition-all" onmouseover="app.showRainbowInfo('purple')" onclick="app.showRainbowInfo('purple')"></div>
+                        <div class="rainbow-grid grid grid-cols-5 gap-2 md:gap-3 mb-6 md:mb-8">
+                            <div class="bg-gradient-to-b from-red-400 to-red-500 shadow-[0_2px_10px_rgba(239,68,68,0.3)] border border-red-300 transform md:hover:-translate-y-1 hover:scale-105 transition-all" onclick="app.showRainbowInfo('red')"></div>
+                            <div class="bg-gradient-to-b from-orange-400 to-orange-500 shadow-[0_2px_10px_rgba(249,115,22,0.3)] border border-orange-300 transform md:hover:-translate-y-1 hover:scale-105 transition-all" onclick="app.showRainbowInfo('orange')"></div>
+                            <div class="bg-gradient-to-b from-yellow-300 to-amber-400 shadow-[0_2px_10px_rgba(245,158,11,0.3)] border border-yellow-200 transform md:hover:-translate-y-1 hover:scale-105 transition-all" onclick="app.showRainbowInfo('yellow')"></div>
+                            <div class="bg-gradient-to-b from-emerald-400 to-emerald-500 shadow-[0_2px_10px_rgba(16,185,129,0.3)] border border-emerald-300 transform md:hover:-translate-y-1 hover:scale-105 transition-all" onclick="app.showRainbowInfo('green')"></div>
+                            <div class="bg-gradient-to-b from-purple-400 to-purple-500 shadow-[0_2px_10px_rgba(168,85,247,0.3)] border border-purple-300 transform md:hover:-translate-y-1 hover:scale-105 transition-all" onclick="app.showRainbowInfo('purple')"></div>
                         </div>
-                        <div id="rainbow-display" class="bg-slate-50 border border-slate-200 rounded-2xl p-6 min-h-[140px] flex flex-col justify-center transition-all shadow-inner relative overflow-hidden">
+                        <div id="rainbow-display" class="bg-slate-50 border border-slate-200 rounded-2xl p-5 md:p-6 min-h-[140px] flex flex-col justify-center transition-all shadow-inner relative overflow-hidden">
                             <div id="rainbow-suggestion" class="opacity-100 transition-opacity duration-300 text-center relative z-10">
-                                <p class="text-slate-400 text-sm italic tracking-wide">Chạm vào một dải màu để giải mã điều kỳ diệu.</p>
+                                <p class="text-slate-400 text-xs md:text-sm italic tracking-wide">Chạm vào một dải màu để giải mã điều kỳ diệu.</p>
                             </div>
                         </div>
                     </div>
-                    <div class="bg-white/80 backdrop-blur-3xl p-10 rounded-[2.5rem] border border-white shadow-[0_15px_40px_rgba(14,165,233,0.08)] flex flex-col h-full items-center justify-center relative overflow-hidden">
+                    <div class="bg-white/80 backdrop-blur-3xl p-6 md:p-10 rounded-[2rem] md:rounded-[2.5rem] border border-white shadow-[0_15px_40px_rgba(14,165,233,0.08)] flex flex-col h-full items-center justify-center relative overflow-hidden">
                         <div class="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent pointer-events-none"></div>
-                        <h4 class="text-slate-700 text-center font-bold text-sm mb-6 uppercase tracking-[0.2em] relative z-10">Tỷ lệ Prebiotics</h4>
-                        <div class="chart-container relative z-10 w-full flex-grow flex items-center bg-transparent rounded-[2rem] p-4" style="min-height: 250px;">
+                        <h4 class="text-slate-700 text-center font-bold text-sm mb-4 uppercase tracking-[0.2em] relative z-10">Tỷ lệ Prebiotics</h4>
+                        <div class="chart-container relative z-10 w-full flex-grow flex items-center bg-transparent rounded-[2rem] p-2 md:p-4" style="min-height: 250px;">
                             <canvas id="prebioticChart"></canvas>
                         </div>
                     </div>
                 </div>
 
                 <!-- Protocol Message -->
-                <div class="max-w-4xl mx-auto bg-amber-50/90 backdrop-blur-xl border-2 border-amber-300 p-12 rounded-[2.5rem] text-center shadow-[0_20px_50px_rgba(245,158,11,0.1)] relative overflow-hidden my-16">
-                    <div class="absolute top-0 right-0 w-48 h-48 bg-amber-200/30 blur-[40px] rounded-full pointer-events-none"></div>
-                    <div class="absolute bottom-0 left-0 w-48 h-48 bg-amber-100/40 blur-[40px] rounded-full pointer-events-none"></div>
-                    <h4 class="text-3xl font-extrabold text-amber-600 mb-6 relative z-10 drop-shadow-sm">&#9888; Quy tắc "Nhỏ và Chậm"</h4>
-                    <p class="text-slate-600 leading-relaxed mb-10 text-lg max-w-2xl mx-auto relative z-10 font-bold border-l-4 border-amber-400 pl-4 text-left inline-block">
+                <div class="max-w-4xl mx-auto bg-amber-50/90 backdrop-blur-xl border-2 border-amber-300 p-8 md:p-12 rounded-[2rem] md:rounded-[2.5rem] text-center shadow-[0_20px_50px_rgba(245,158,11,0.1)] relative overflow-hidden my-12 md:my-16">
+                    <div class="absolute top-0 right-0 w-32 h-32 md:w-48 md:h-48 bg-amber-200/30 blur-[40px] rounded-full pointer-events-none"></div>
+                    <div class="absolute bottom-0 left-0 w-32 h-32 md:w-48 md:h-48 bg-amber-100/40 blur-[40px] rounded-full pointer-events-none"></div>
+                    <h4 class="text-2xl md:text-3xl font-extrabold text-amber-600 mb-4 md:mb-6 relative z-10 drop-shadow-sm">&#9888; Quy tắc "Nhỏ và Chậm"</h4>
+                    <p class="text-sm md:text-lg text-slate-600 leading-relaxed mb-8 md:mb-10 max-w-2xl mx-auto relative z-10 font-bold border-l-4 border-amber-400 pl-4 text-left inline-block">
                         Đường ruột đang gánh chịu tổn thương cần thời gian thích nghi. Đừng ép trẻ lượng lớn dồn dập ngay từ đầu để tránh sinh khí gây áp lực.
                     </p>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 relative z-10 w-full">
-                        <div class="p-6 bg-white border border-slate-100 rounded-[1.5rem] text-[12px] uppercase font-bold text-slate-700 tracking-wider flex flex-col items-center group shadow-sm transition-transform hover:-translate-y-1 cursor-default hover:shadow-md">
-                            <span class="block text-4xl mb-4 filter drop-shadow-sm group-hover:scale-110 transition-transform">&#128301;</span>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 relative z-10 w-full">
+                        <div class="p-4 md:p-6 bg-white border border-slate-100 rounded-[1.5rem] text-[11px] md:text-[12px] uppercase font-bold text-slate-700 tracking-wider flex items-center md:flex-col md:justify-center gap-4 md:gap-0 group shadow-sm transition-transform md:hover:-translate-y-1 cursor-default hover:shadow-md text-left md:text-center">
+                            <span class="block text-3xl md:text-4xl md:mb-4 filter drop-shadow-sm group-hover:scale-110 transition-transform">&#128301;</span>
                             Quan sát phân hằng ngày
                         </div>
-                        <div class="p-6 bg-white border border-slate-100 rounded-[1.5rem] text-[12px] uppercase font-bold text-slate-700 tracking-wider flex flex-col items-center group shadow-sm transition-transform hover:-translate-y-1 cursor-default hover:shadow-md">
-                            <span class="block text-4xl mb-4 filter drop-shadow-sm group-hover:scale-110 transition-transform">&#128338;</span>
+                        <div class="p-4 md:p-6 bg-white border border-slate-100 rounded-[1.5rem] text-[11px] md:text-[12px] uppercase font-bold text-slate-700 tracking-wider flex items-center md:flex-col md:justify-center gap-4 md:gap-0 group shadow-sm transition-transform md:hover:-translate-y-1 cursor-default hover:shadow-md text-left md:text-center">
+                            <span class="block text-3xl md:text-4xl md:mb-4 filter drop-shadow-sm group-hover:scale-110 transition-transform">&#128338;</span>
                             Tăng vi liều mỗi 3 ngày
                         </div>
-                        <div class="p-6 bg-white border border-slate-100 rounded-[1.5rem] text-[12px] uppercase font-bold text-slate-700 tracking-wider flex flex-col items-center group shadow-sm transition-transform hover:-translate-y-1 cursor-default hover:shadow-md">
-                            <span class="block text-4xl mb-4 filter drop-shadow-sm group-hover:scale-110 transition-transform">&#128203;</span>
+                        <div class="p-4 md:p-6 bg-white border border-slate-100 rounded-[1.5rem] text-[11px] md:text-[12px] uppercase font-bold text-slate-700 tracking-wider flex items-center md:flex-col md:justify-center gap-4 md:gap-0 group shadow-sm transition-transform md:hover:-translate-y-1 cursor-default hover:shadow-md text-left md:text-center">
+                            <span class="block text-3xl md:text-4xl md:mb-4 filter drop-shadow-sm group-hover:scale-110 transition-transform">&#128203;</span>
                             Lưu cấu trúc nhật ký
                         </div>
                     </div>
                 </div>
 
                 <!-- Social Links -->
-                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mt-16 relative z-10">
-                    <a href="https://www.facebook.com/groups/tukylaroiloantoanthan" target="_blank" class="cta-link p-6 rounded-[2rem] bg-white border border-slate-200 text-center flex flex-col items-center shadow-[0_5px_15px_rgba(0,0,0,0.05)] hover:-translate-y-2 hover:shadow-[0_15px_30px_rgba(59,89,152,0.15)] hover:border-[#3b5998]/50 transition-all group overflow-hidden relative">
-                        <span class="text-4xl mb-3 transition-transform drop-shadow-sm group-hover:scale-110">&#128101;</span>
-                        <span class="font-extrabold text-xs uppercase text-[#3b5998] tracking-wider mt-2">Group Chuyên sâu</span>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mt-12 md:mt-16 relative z-10">
+                    <a href="https://www.facebook.com/groups/tukylaroiloantoanthan" target="_blank" class="cta-link p-4 md:p-6 rounded-[1.5rem] md:rounded-[2rem] bg-white border border-slate-200 text-center flex flex-col items-center shadow-[0_5px_15px_rgba(0,0,0,0.05)] hover:-translate-y-2 hover:shadow-[0_15px_30px_rgba(59,89,152,0.15)] hover:border-[#3b5998]/50 transition-all group overflow-hidden relative">
+                        <span class="text-3xl md:text-4xl mb-2 md:mb-3 transition-transform drop-shadow-sm group-hover:scale-110">&#128101;</span>
+                        <span class="font-extrabold text-[10px] md:text-xs uppercase text-[#3b5998] tracking-wider mt-1 md:mt-2">Group Chuyên sâu</span>
                     </a>
-                    <a href="https://zalo.me/g/vmgfxy834" target="_blank" class="cta-link p-6 rounded-[2rem] bg-white border border-slate-200 text-center flex flex-col items-center shadow-[0_5px_15px_rgba(0,0,0,0.05)] hover:-translate-y-2 hover:shadow-[0_15px_30px_rgba(0,104,255,0.15)] hover:border-[#0068ff]/50 transition-all group overflow-hidden relative">
-                        <span class="text-4xl mb-3 transition-transform drop-shadow-sm group-hover:scale-110">&#128172;</span>
-                        <span class="font-extrabold text-xs uppercase text-[#0068ff] tracking-wider mt-2">Cộng đồng Zalo</span>
+                    <a href="https://zalo.me/g/vmgfxy834" target="_blank" class="cta-link p-4 md:p-6 rounded-[1.5rem] md:rounded-[2rem] bg-white border border-slate-200 text-center flex flex-col items-center shadow-[0_5px_15px_rgba(0,0,0,0.05)] hover:-translate-y-2 hover:shadow-[0_15px_30px_rgba(0,104,255,0.15)] hover:border-[#0068ff]/50 transition-all group overflow-hidden relative">
+                        <span class="text-3xl md:text-4xl mb-2 md:mb-3 transition-transform drop-shadow-sm group-hover:scale-110">&#128172;</span>
+                        <span class="font-extrabold text-[10px] md:text-xs uppercase text-[#0068ff] tracking-wider mt-1 md:mt-2">Cộng đồng Zalo</span>
                     </a>
-                    <a href="https://www.facebook.com/trolynamkhanh" target="_blank" class="cta-link p-6 rounded-[2rem] bg-white border border-slate-200 text-center flex flex-col items-center shadow-[0_5px_15px_rgba(0,0,0,0.05)] hover:-translate-y-2 hover:shadow-[0_15px_30px_rgba(100,116,139,0.15)] hover:border-slate-400 transition-all group overflow-hidden relative">
-                        <span class="text-4xl mb-3 transition-transform drop-shadow-sm group-hover:scale-110">&#128100;</span>
-                        <span class="font-extrabold text-xs uppercase text-slate-600 tracking-wider mt-2">Trợ lý Cá nhân</span>
+                    <a href="https://www.facebook.com/trolynamkhanh" target="_blank" class="cta-link p-4 md:p-6 rounded-[1.5rem] md:rounded-[2rem] bg-white border border-slate-200 text-center flex flex-col items-center shadow-[0_5px_15px_rgba(0,0,0,0.05)] hover:-translate-y-2 hover:shadow-[0_15px_30px_rgba(100,116,139,0.15)] hover:border-slate-400 transition-all group overflow-hidden relative">
+                        <span class="text-3xl md:text-4xl mb-2 md:mb-3 transition-transform drop-shadow-sm group-hover:scale-110">&#128100;</span>
+                        <span class="font-extrabold text-[10px] md:text-xs uppercase text-slate-600 tracking-wider mt-1 md:mt-2">Trợ lý Cá nhân</span>
                     </a>
-                    <a href="tel:0988717107" class="cta-link p-6 rounded-[2rem] bg-amber-50 border border-amber-200 text-center flex flex-col items-center shadow-[0_5px_15px_rgba(0,0,0,0.05)] hover:-translate-y-2 hover:shadow-[0_15px_30px_rgba(245,158,11,0.15)] hover:border-amber-400 transition-all group overflow-hidden relative">
-                        <span class="text-4xl mb-3 transition-transform drop-shadow-sm group-hover:scale-110">&#9990;</span>
-                        <span class="font-extrabold text-[10px] sm:text-xs uppercase text-amber-600 tracking-wider mt-2">Hotline: 0988.717.107</span>
-                    </a>
+                    <a href="tel:0988717107" class="cta-link p-4 md:p-6 rounded-[1.5rem] md:rounded-[2rem] bg-amber-50 border border-amber-200 text-center flex flex-col items-center shadow-[0_5px_15px_rgba(0,0,0,0.05)] hover:-translate-y-2 hover:shadow-[0_15px_30px_rgba(245,158,11,0.15)] hover:border-amber-400 transition-all group overflow-hidden relative">
+                        <span class="text-3xl md:text-4xl mb-2 md:mb-3 transition-transform drop-shadow-sm group-hover:scale-110">&#9990;</span>
+                        <span class="font-extrabold text-[10px] sm:text-xs uppercase text-amber-600 tracking-wider mt-1 md:mt-2">Hotline: 0988.717.107</span>
+                     </a>
                 </div>
             </div>
         </section>
     </main>
 
-    <footer class="bg-white/80 backdrop-blur-xl py-24 border-t border-sky-100 relative z-10">
+    <footer class="bg-white/80 backdrop-blur-xl py-12 md:py-24 border-t border-sky-100 relative z-10">
         <div class="max-w-4xl mx-auto px-6 text-center">
-            <h2 class="text-3xl md:text-4xl font-extrabold text-slate-800 mb-6 drop-shadow-sm">Hành trình này bạn không đơn độc</h2>
-            <p class="text-slate-500 mb-12 font-medium text-lg max-w-2xl mx-auto">Kiên nhẫn nuôi dưỡng "khu vườn" bên trong con là sự hy sinh vĩ đại nhất của cha mẹ để trả lại cho con một tương lai tỉnh táo.</p>
-            <div class="text-[10px] text-slate-400 uppercase tracking-widest mb-4 font-bold">Tuyên bố miễn trừ trách nhiệm y khoa</div>
-            <p class="text-[11px] text-slate-400 leading-relaxed max-w-2xl mx-auto font-medium">
-                Nội dung hoàn toàn dựa trên phân tích khoa học thực chứng và cơ chế sinh hóa nội sinh. Thông tin không thay thế cho chẩn đoán chuyên nghiệp. Mọi thay đổi về chế độ ăn cần sự giám sát của bác sĩ chuyên khoa hoặc chuyên gia dinh dưỡng.
+            <h2 class="text-2xl md:text-3xl lg:text-4xl font-extrabold text-slate-800 mb-4 md:mb-6 drop-shadow-sm">Hành trình này bạn không đơn độc</h2>
+            <p class="text-sm md:text-lg text-slate-500 mb-8 md:mb-12 font-medium max-w-2xl mx-auto px-4">Kiên nhẫn nuôi dưỡng "khu vườn" bên trong con là sự hy sinh vĩ đại nhất của cha mẹ để trả lại cho con một tương lai tỉnh táo.</p>
+            <div class="text-[9px] md:text-[10px] text-slate-400 uppercase tracking-widest mb-3 md:mb-4 font-bold">Tuyên bố miễn trừ trách nhiệm y khoa</div>
+            <p class="text-[10px] md:text-[11px] text-slate-400 leading-relaxed max-w-2xl mx-auto font-medium px-4">
+                Nội dung hoàn toàn dựa trên phân tích khoa học thực chứng và cơ chế sinh hóa nội sinh. Thông tin không thay thế cho chẩn đoán chuyên nghiệp. Mọi thay đổi về chế độ ăn cần sự giám sát của bác sĩ chuyên khoa.
             </p>
         </div>
     </footer>
@@ -489,7 +493,7 @@
                 setTimeout(() => {
                     display.innerHTML = `
                         <h5 class="font-bold text-amber-400 mb-1 text-base tracking-tight">${data.title}</h5>
-                        <p class="text-white text-xs mb-1"><strong>Thực phẩm:</strong> ${data.foods}</p>
+                        <p class="text-slate-800 text-xs mb-1"><strong>Thực phẩm:</strong> ${data.foods}</p>
                         <p class="text-stone-400 text-[11px] leading-snug italic">${data.benefit}</p>
                     `;
                     display.style.opacity = 1;
