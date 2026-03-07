@@ -519,7 +519,7 @@
                         </li>
                         <li class="flex items-center">
                             <span class="text-xl mr-3">📞</span>
-                            <span><strong>Hotline/Zalo:</strong> 0985.391.881</span>
+                            <span><strong>Hotline/Zalo:</strong> <span onclick="navigator.clipboard.writeText('0985391881'); alert('Đã copy số điện thoại: 0985.391.881');" class="text-brand-light hover:text-white cursor-pointer transition underline" title="Nhấn để copy">0985.391.881</span></span>
                         </li>
                         <li class="flex items-center">
                             <span class="text-xl mr-3">💬</span>
