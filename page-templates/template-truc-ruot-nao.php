@@ -51,7 +51,7 @@
             </div>
             <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-dark mb-6 leading-tight font-heading">
                 Giải mã bí ẩn: <br>
-                <span class="text-primary">Trục Ruột - Não</span> ở trẻ tự kỷ
+                <span class="text-primary">Trục NÃO - RUỘT</span> ở trẻ tự kỷ
             </h1>
             <div class="max-w-3xl mx-auto mb-10 text-left md:text-center space-y-4">
                 <p class="text-lg md:text-xl text-gray-700 leading-relaxed">
@@ -89,7 +89,7 @@
                         Nhưng thực tế, cơ thể con đang cố gắng lên tiếng. Rất nhiều em bé tự kỷ cùng lúc gặp phải một chuỗi các vấn đề thể chất: <span class="font-semibold text-orange-600 bg-orange-100 px-1 rounded">Táo bón dài ngày, tiêu chảy, phân sống, viêm da, giấc ngủ chập chờn, và những cơn bùng nổ cảm xúc (meltdown) không rõ nguyên nhân.</span>
                     </p>
                     <p class="text-lg text-gray-700 leading-relaxed">
-                        Tất cả những điều này không phải là sự trùng hợp ngẫu nhiên. Chúng được kết nối với nhau qua một "đường cao tốc" thông tin cực kỳ bận rộn trong cơ thể chúng ta: <strong>Trục Ruột - Não</strong>. Nếu đường ruột của con đang "kêu cứu", não bộ của con cũng sẽ không thể nào yên tĩnh để học hỏi và tập trung.
+                        Tất cả những điều này không phải là sự trùng hợp ngẫu nhiên. Chúng được kết nối với nhau qua một "đường cao tốc" thông tin cực kỳ bận rộn trong cơ thể chúng ta: <strong>Trục NÃO - RUỘT</strong>. Nếu đường ruột của con đang "kêu cứu", não bộ của con cũng sẽ không thể nào yên tĩnh để học hỏi và tập trung.
                     </p>
                 </div>
             </div>
@@ -100,7 +100,7 @@
     <section class="py-20 bg-slate-50">
         <div class="max-w-6xl mx-auto px-6">
             <div class="text-center mb-16">
-                <h2 class="text-3xl md:text-4xl font-bold text-dark mb-4 font-heading text-primary">Trục Ruột - Não hoạt động ra sao?</h2>
+                <h2 class="text-3xl md:text-4xl font-bold text-dark mb-4 font-heading text-primary">Trục NÃO - RUỘT hoạt động ra sao?</h2>
                 <p class="text-gray-600 max-w-2xl mx-auto text-lg">Hãy tưởng tượng cơ thể con như một ngôi nhà, trong đó Não bộ là "Vị chỉ huy" trên tầng thượng, còn Đường ruột là "Nhà máy điện" ở tầng trệt. Hai nơi này nói chuyện với nhau liên tục 24/7.</p>
             </div>
 
@@ -286,7 +286,27 @@
                     </div>
                     <div class="text-gray-600 text-sm space-y-3 leading-relaxed">
                         <p>Với trẻ chỉ ăn cơm trắng hoặc bánh mì, đừng đột ngột bắt con ăn rau. Hãy dùng cách "Bắc cầu" (Food Chaining) - đi từ món con thích sang món mới một cách từ từ, không dọa nạt.</p>
-                        <p><strong>Ví dụ:</strong> Con thích ăn khoai tây chiên giòn. Bước 1: Giới thiệu khoai lang chiên giòn (cùng độ giòn, hơi khác màu). Bước 2: Chuyển sang khoai lang nướng (mềm hơn một chút). Bước 3: Khoai lang luộc. Bước 4: Khoai lang nghiền trộn một ít bơ/sữa.</p>
+                        <div class="mt-4 mb-2 p-5 bg-purple-50 rounded-2xl border border-purple-100">
+                            <p class="font-semibold text-purple-900 mb-4 flex items-center"><i class="ph-fill ph-lightbulb text-purple-500 mr-2 text-lg"></i>Ví dụ thực tế: Con đang chỉ thích ăn khoai tây chiên giòn.</p>
+                            <ul class="space-y-4 relative before:absolute before:top-4 before:bottom-4 before:left-[11px] before:w-0.5 before:bg-purple-200 ml-1">
+                                <li class="flex items-start gap-4 relative z-10">
+                                    <span class="w-6 h-6 shrink-0 rounded-full bg-purple-500 text-white flex items-center justify-center text-xs font-bold ring-4 ring-purple-50 mt-0.5">1</span>
+                                    <span class="text-gray-700 mt-0.5">Giới thiệu <strong>khoai lang chiên giòn</strong> (cùng độ giòn, hơi khác màu).</span>
+                                </li>
+                                <li class="flex items-start gap-4 relative z-10">
+                                    <span class="w-6 h-6 shrink-0 rounded-full bg-purple-500 text-white flex items-center justify-center text-xs font-bold ring-4 ring-purple-50 mt-0.5">2</span>
+                                    <span class="text-gray-700 mt-0.5">Chuyển sang <strong>khoai lang nướng</strong> (mềm hơn một chút).</span>
+                                </li>
+                                <li class="flex items-start gap-4 relative z-10">
+                                    <span class="w-6 h-6 shrink-0 rounded-full bg-purple-500 text-white flex items-center justify-center text-xs font-bold ring-4 ring-purple-50 mt-0.5">3</span>
+                                    <span class="text-gray-700 mt-0.5">Cho con làm quen với <strong>khoai lang luộc</strong>.</span>
+                                </li>
+                                <li class="flex items-start gap-4 relative z-10">
+                                    <span class="w-6 h-6 shrink-0 rounded-full bg-purple-500 text-white flex items-center justify-center text-xs font-bold ring-4 ring-purple-50 mt-0.5">4</span>
+                                    <span class="text-gray-700 mt-0.5">Tiến tới <strong>khoai lang nghiền</strong> trộn một ít bơ/sữa (kết cấu mới).</span>
+                                </li>
+                            </ul>
+                        </div>
                         <p>Hãy nhớ, bữa ăn phải là niềm vui. Tiếng khóc, sự căng thẳng sẽ lập tức kích hoạt hệ thần kinh đóng sập dạ dày lại, khiến đồ ăn không thể tiêu hóa được.</p>
                     </div>
                 </div>
@@ -312,7 +332,7 @@
                     Nuôi dạy một em bé có rối loạn phổ tự kỷ là một hành trình dài đầy yêu thương nhưng cũng không ít nước mắt. Có những đêm ba mẹ thức trắng nhìn con đau bụng quấy khóc, có những bữa ăn kéo dài hàng giờ đồng hồ trong bế tắc.
                 </p>
                 <p class="font-medium text-white">
-                    Nhưng khi hiểu được gốc rễ của vấn đề nằm ở Trục Ruột - Não, chúng ta đã có thêm một chiếc chìa khóa hy vọng. Nếu trẻ có biểu hiện sụt cân, tiêu hóa kém kéo dài hoặc các cơn bùng nổ không thuyên giảm, đừng tự gồng gánh một mình. Hãy để các chuyên gia và cộng đồng đồng hành cùng gia đình.
+                    Nhưng khi hiểu được gốc rễ của vấn đề nằm ở Trục NÃO - RUỘT, chúng ta đã có thêm một chiếc chìa khóa hy vọng. Nếu trẻ có biểu hiện sụt cân, tiêu hóa kém kéo dài hoặc các cơn bùng nổ không thuyên giảm, đừng tự gồng gánh một mình. Hãy để các chuyên gia và cộng đồng đồng hành cùng gia đình.
                 </p>
             </div>
 
