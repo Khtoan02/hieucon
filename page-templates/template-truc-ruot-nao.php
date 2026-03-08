@@ -1,6 +1,6 @@
 <?php
 /**
- * Template Name: Trang Sương mù não và nấm Candida
+ * Template Name: Trang Trục Ruột Não
  * 
  * @package Hieucon
  */
