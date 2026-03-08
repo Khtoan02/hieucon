@@ -368,8 +368,7 @@
             </div>
             
             <p class="text-gray-400 text-sm mt-12">
-                *Tài liệu được chuyển ngữ và biên soạn dựa trên kiến thức lâm sàng của chuyên gia dinh dưỡng Brittyn Coleman (Autism Dietitian).<br>
-                © 2026 Bản quyền thuộc về Cộng đồng Hiểu con từ Gốc. Lan tỏa tri thức - Chữa lành cùng con.
+                © 2026 Hiểu con từ Gốc - Tự kỷ là Rối loạn toàn thân
             </p>
         </div>
     </section>
