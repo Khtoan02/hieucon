@@ -359,7 +359,7 @@
                             <i class="ph-fill ph-phone-call"></i>
                         </div>
                         <div>
-                            <h4 class="text-white font-bold text-sm mb-1">Hotline tư vấn khẩn cấp</h4>
+                            <h4 class="text-white font-bold text-sm mb-1">Hotline tư vấn</h4>
                             <p class="text-amber-300 text-lg font-bold tracking-wider mb-1">0988.717.107</p>
                             <p class="text-amber-300 text-lg font-bold tracking-wider">0985.391.881</p>
                         </div>
