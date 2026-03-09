@@ -46,6 +46,35 @@ require_once HIEUCON_THEME_DIR . '/app/config/theme-options.php';
 // Add Pancake Livechat script to all pages
 function hieucon_add_pancake_livechat() {
     ?>
+    <style>
+    /* Chống tràn màn hình điện thoại cho Box Chat Pancake */
+    @media (max-width: 768px) {
+        iframe[id^="pancake-chat-plugin"],
+        div[id^="pancake-"] iframe,
+        iframe[src*="chat-plugin.pancake.vn"] {
+            max-height: 65vh !important; /* Giới hạn chiều cao 65% màn hình */
+            max-width: 85vw !important;  /* Giới hạn chiều ngang 85% */
+            bottom: 15px !important;     /* Cách đáy màn hình */
+            right: 15px !important;      /* Cách lề phải */
+            left: auto !important;
+            top: auto !important;
+            border-radius: 16px !important;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.2) !important;
+            margin: 0 !important;
+        }
+        
+        /* Ngăn div bao ngoài của plugin tràn full 100% nếu có */
+        div[id^="pancake-chat-plugin"] {
+            max-height: 65vh !important;
+            max-width: 85vw !important;
+            bottom: 15px !important;
+            right: 15px !important;
+            left: auto !important;
+            top: auto !important;
+            background: transparent !important;
+        }
+    }
+    </style>
     <script src="https://chat-plugin.pancake.vn/main/auto?page_id=web_hieucontugoc"></script>
     <?php
 }
