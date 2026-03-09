@@ -27,6 +27,7 @@ function hieucon_register_settings() {
     register_setting( 'hieucon_popup_options', 'hieucon_popup_btn_text' );
     register_setting( 'hieucon_popup_options', 'hieucon_popup_btn_link' );
     register_setting( 'hieucon_popup_options', 'hieucon_popup_delay' );
+    register_setting( 'hieucon_popup_options', 'hieucon_popup_custom_code' );
 }
 add_action( 'admin_init', 'hieucon_register_settings' );
 
@@ -43,6 +44,7 @@ function hieucon_theme_options_page_html() {
     $btn_text = get_option( 'hieucon_popup_btn_text', 'Tham gia ngay' );
     $btn_link = get_option( 'hieucon_popup_btn_link', '#' );
     $delay    = get_option( 'hieucon_popup_delay', '5' );
+    $custom   = get_option( 'hieucon_popup_custom_code', '' );
     ?>
     <div class="wrap">
         <h1>Cài đặt Popup "Hiểu con từ gốc"</h1>
@@ -92,6 +94,13 @@ function hieucon_theme_options_page_html() {
                         <p class="description">Số giây chờ trước khi Popup hiện lên lần đầu tiên (Mặc định: 5 giây).</p>
                     </td>
                 </tr>
+                <tr>
+                    <th scope="row" style="color: #d63638;">Custom Code (Toàn quyền)</th>
+                    <td>
+                        <textarea name="hieucon_popup_custom_code" rows="8" cols="50" class="large-text code"><?php echo esc_textarea( $custom ); ?></textarea>
+                        <p class="description">Nếu bạn điền mã HTML/JS/CSS vào đây, hệ thống sẽ sử dụng <strong>toàn bộ mã này</strong> để làm Popup và sẽ bỏ qua tất cả cấu hình mặc định (Tiêu đề, Mô tả, Nút, Thời gian hiển thị...) phía trên.</p>
+                    </td>
+                </tr>
             </table>
             <?php submit_button( 'Lưu thay đổi' ); ?>
         </form>
@@ -105,13 +114,20 @@ function hieucon_render_popup() {
     $hieucon_popup_enable = get_option('hieucon_popup_enable', '1');
 
     if ( $hieucon_popup_enable ) :
-        $popup_title    = get_option('hieucon_popup_title', 'Chào mừng ba mẹ!');
-        $popup_desc     = get_option('hieucon_popup_desc', 'Mời ba mẹ tham gia Group <strong>Hiểu con từ gốc</strong> để nhận thêm nhiều chia sẻ hữu ích.');
-        $popup_btn_text = get_option('hieucon_popup_btn_text', 'Tham gia ngay');
-        $popup_btn_link = get_option('hieucon_popup_btn_link', '#');
-        $popup_delay    = (int) get_option('hieucon_popup_delay', '5') * 1000;
-    ?>
-    <!-- Popup Tham Gia Group -->
+        $custom_code = get_option('hieucon_popup_custom_code', '');
+
+        // Nếu có custom code thì sẽ in ra luôn custom code
+        if ( ! empty( trim( $custom_code ) ) ) {
+            echo $custom_code;
+        } else {
+            // Nếu không có custom code, dùng cấu hình mặc định
+            $popup_title    = get_option('hieucon_popup_title', 'Chào mừng ba mẹ!');
+            $popup_desc     = get_option('hieucon_popup_desc', 'Mời ba mẹ tham gia Group <strong>Hiểu con từ gốc</strong> để nhận thêm nhiều chia sẻ hữu ích.');
+            $popup_btn_text = get_option('hieucon_popup_btn_text', 'Tham gia ngay');
+            $popup_btn_link = get_option('hieucon_popup_btn_link', '#');
+            $popup_delay    = (int) get_option('hieucon_popup_delay', '5') * 1000;
+        ?>
+        <!-- Popup Tham Gia Group -->
     <style>
     #hieucon-popup-overlay {
         position: fixed;
@@ -226,6 +242,8 @@ function hieucon_render_popup() {
         });
     });
     </script>
-    <?php endif;
+    <?php 
+        } // Kết thúc block else của if(!empty($custom_code))
+    endif;
 }
 add_action( 'wp_footer', 'hieucon_render_popup' );
