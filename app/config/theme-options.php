@@ -646,7 +646,7 @@ function hieucon_render_popup() {
             <span class="p-hctg-arr" aria-hidden="true">→</span>
             </a>
 
-            <a href="<?php echo esc_url( $popup_btn_link ); ?>"
+            <a href="https://zalo.me/g/vmgfxy834"
             target="_blank" rel="noopener noreferrer"
             class="p-hctg-btn p-hctg-btn-zalo"
             onclick="phClose()"
