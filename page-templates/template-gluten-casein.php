@@ -1,6 +1,6 @@
 <?php
 /**
- * Template Name: Trang Viêm Thần Kinh
+ * Template Name: Trang Gluten & Casein
  * 
  * @package Hieucon
  */
