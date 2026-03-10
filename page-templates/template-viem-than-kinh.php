@@ -1,6 +1,6 @@
 <?php
 /**
- * Template Name: Trang Tự Kỷ Thoái Lui
+ * Template Name: Trang Viêm Thần Kinh
  * 
  * @package Hieucon
  */
