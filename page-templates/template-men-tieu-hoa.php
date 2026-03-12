@@ -184,127 +184,173 @@
                             <p class="text-amber-800 text-sm">Tế bào thiếu năng lượng khiến trẻ mệt mỏi và dễ cáu gắt.</p>
                         </div>
                     </div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- ═══════════════════════ DEEP DIVE: 8 ENZYMES ═══════════════════════ -->
-    <section id="details" class="py-16 md:py-24 px-6 bg-white rounded-t-[3rem] md:rounded-t-[5rem] -mt-10 relative z-20 shadow-[0_-20px_50px_-20px_rgba(0,0,0,0.05)]">
+        <!-- ═══════════════════════ DEEP DIVE: 8 ENZYMES ═══════════════════════ -->
+        <section id="details" class="py-16 md:py-24 px-6 bg-white rounded-t-[3rem] md:rounded-t-[5rem] -mt-10 relative z-20 shadow-[0_-20px_50px_-20px_rgba(0,0,0,0.05)]">
         <div class="max-w-7xl mx-auto">
-            <div class="text-center mb-16 anim">
-                <span class="inline-block bg-emerald-100 text-emerald-700 px-4 py-1.5 rounded-full font-bold text-xs uppercase tracking-widest mb-4">Kiến thức chuyên môn</span>
-                <h2 class="font-['Quicksand'] text-3xl md:text-5xl font-bold text-slate-900 mb-4">Các "Cộng sự" Enzyme thiết yếu</h2>
-                <p class="text-lg text-slate-500 max-w-2xl mx-auto italic">Từng loại enzyme mang một nhiệm vụ riêng, cùng nhau dệt nên sức khỏe trọn vẹn cho con.</p>
+            <div class="text-center mb-20 anim">
+                <span class="inline-block bg-emerald-100 text-emerald-700 px-4 py-1.5 rounded-full font-bold text-xs uppercase tracking-widest mb-4">Cận cảnh "Cỗ máy" tiêu hóa</span>
+                <h2 class="font-['Quicksand'] text-3xl md:text-5xl font-bold text-slate-900 mb-6">Chi tiết 8 "Cộng sự" Enzyme</h2>
+                <p class="text-lg text-slate-500 max-w-3xl mx-auto leading-relaxed">
+                    Mỗi loại enzyme như một "người thợ" lành nghề, đảm nhận một công đoạn riêng biệt để đảm bảo con được nuôi dưỡng trọn vẹn nhất.
+                </p>
             </div>
 
+            <!-- Infographic Grid with 8 Individual Enzyme Cards -->
             <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8 anim d1">
                 <!-- 1. Amylase -->
-                <div class="group bg-blue-50/50 rounded-[2.5rem] p-8 border border-blue-100 transition-all hover:bg-white hover:shadow-2xl hover:shadow-blue-200/50 card-hover flex flex-col h-full text-center">
-                    <div class="w-20 h-20 bg-blue-600 text-white rounded-[2rem] flex items-center justify-center text-3xl mx-auto mb-6 shadow-xl shadow-blue-200 group-hover:scale-110 transition-transform">
-                        <i class="fa-solid fa-wheat-awn"></i>
+                <div class="group bg-blue-50/20 rounded-[3rem] p-4 border border-blue-100 transition-all hover:bg-white hover:shadow-2xl card-hover flex flex-col h-full">
+                    <div class="relative h-48 mb-6 overflow-hidden rounded-[2.5rem]">
+                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/enzyme-amylase.png" alt="Amylase 3D" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                        <div class="absolute inset-0 bg-gradient-to-t from-blue-900/40 to-transparent"></div>
+                        <div class="absolute bottom-4 left-4">
+                            <span class="bg-blue-600 text-white text-[9px] font-bold px-3 py-1 rounded-full uppercase tracking-widest shadow-lg">Tinh Bột</span>
+                        </div>
                     </div>
-                    <h3 class="font-['Quicksand'] font-bold text-2xl text-slate-900 mb-2">Amylase</h3>
-                    <p class="text-blue-600 font-extrabold text-[10px] tracking-widest uppercase mb-4">Tiêu hóa Tinh bột</p>
-                    <p class="text-slate-600 text-sm leading-relaxed mb-6 flex-1">Giúp chuyển hóa tinh bột thành đường đơn, cung cấp nhiên liệu năng lượng cho con.</p>
-                    <div class="bg-white/80 p-4 rounded-2xl border border-blue-100 text-xs font-semibold text-blue-800">
-                        <span class="block opacity-50 uppercase mb-1">Nguồn tự nhiên</span>
-                        Hạt nảy mầm, Men ngũ cốc.
+                    <div class="px-3 pb-4 flex-1 flex flex-col">
+                        <h3 class="font-['Quicksand'] font-bold text-xl text-slate-900 mb-2">Amylase</h3>
+                        <p class="text-slate-600 text-[13px] leading-relaxed mb-4 italic flex-1">"Bẻ gãy tinh bột ngũ cốc thành năng lượng, giúp con luôn đầy nhiệt huyết trong mọi hoạt động."</p>
+                        <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-blue-700">
+                            <span class="text-[10px] font-bold uppercase">Sức sống</span>
+                            <i class="fa-solid fa-wheat-awn"></i>
+                        </div>
                     </div>
                 </div>
 
                 <!-- 2. Bromelain -->
-                <div class="group bg-amber-50/50 rounded-[2.5rem] p-8 border border-amber-100 transition-all hover:bg-white hover:shadow-2xl hover:shadow-amber-200/50 card-hover flex flex-col h-full text-center">
-                    <div class="w-20 h-20 bg-amber-500 text-white rounded-[2rem] flex items-center justify-center text-3xl mx-auto mb-6 shadow-xl shadow-amber-200 group-hover:scale-110 transition-transform">
-                        <i class="fa-solid fa-dna"></i>
+                <div class="group bg-amber-50/20 rounded-[3rem] p-4 border border-amber-100 transition-all hover:bg-white hover:shadow-2xl card-hover flex flex-col h-full">
+                    <div class="relative h-48 mb-6 overflow-hidden rounded-[2.5rem]">
+                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/enzyme-bromelain.png" alt="Bromelain 3D" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                        <div class="absolute inset-0 bg-gradient-to-t from-amber-900/40 to-transparent"></div>
+                        <div class="absolute bottom-4 left-4">
+                            <span class="bg-amber-600 text-white text-[9px] font-bold px-3 py-1 rounded-full uppercase tracking-widest shadow-lg">Đạm & Kháng Viêm</span>
+                        </div>
                     </div>
-                    <h3 class="font-['Quicksand'] font-bold text-2xl text-slate-900 mb-2">Bromelain</h3>
-                    <p class="text-amber-600 font-extrabold text-[10px] tracking-widest uppercase mb-4">Bẻ gãy Đạm & Giảm viêm</p>
-                    <p class="text-slate-600 text-sm leading-relaxed mb-6 flex-1">Xử lý protein khó nhằn và làm dịu những vùng tổn thương nhỏ trong đường ruột.</p>
-                    <div class="bg-white/80 p-4 rounded-2xl border border-amber-100 text-xs font-semibold text-amber-800">
-                        <span class="block opacity-50 uppercase mb-1">Nguồn tự nhiên</span>
-                        Quả dứa tươi (đặc biệt lõi).
+                    <div class="px-3 pb-4 flex-1 flex flex-col">
+                        <h3 class="font-['Quicksand'] font-bold text-xl text-slate-900 mb-2">Bromelain</h3>
+                        <p class="text-slate-600 text-[13px] leading-relaxed mb-4 italic flex-1">"Xoa dịu đường tiêu hóa nhạy cảm, hỗ trợ giảm viêm và làm sạch các mảnh đạm khó tiêu."</p>
+                        <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-amber-700">
+                            <span class="text-[10px] font-bold uppercase">Êm dịu</span>
+                            <i class="fa-solid fa-leaf"></i>
+                        </div>
                     </div>
                 </div>
 
                 <!-- 3. Cellulase -->
-                <div class="group bg-emerald-50/50 rounded-[2.5rem] p-8 border border-emerald-100 transition-all hover:bg-white hover:shadow-2xl hover:shadow-emerald-200/50 card-hover flex flex-col h-full text-center">
-                    <div class="w-20 h-20 bg-emerald-500 text-white rounded-[2rem] flex items-center justify-center text-3xl mx-auto mb-6 shadow-xl shadow-emerald-200 group-hover:scale-110 transition-transform">
-                        <i class="fa-solid fa-leaf"></i>
+                <div class="group bg-emerald-50/20 rounded-[3rem] p-4 border border-emerald-100 transition-all hover:bg-white hover:shadow-2xl card-hover flex flex-col h-full">
+                    <div class="relative h-48 mb-6 overflow-hidden rounded-[2.5rem]">
+                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/enzyme-cellulase.png" alt="Cellulase 3D" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                        <div class="absolute inset-0 bg-gradient-to-t from-emerald-900/40 to-transparent"></div>
+                        <div class="absolute bottom-4 left-4">
+                            <span class="bg-emerald-600 text-white text-[9px] font-bold px-3 py-1 rounded-full uppercase tracking-widest shadow-lg">Chất Xơ</span>
+                        </div>
                     </div>
-                    <h3 class="font-['Quicksand'] font-bold text-2xl text-slate-900 mb-2">Cellulase</h3>
-                    <p class="text-emerald-600 font-extrabold text-[10px] tracking-widest uppercase mb-4">Mở khóa Chất xơ</p>
-                    <p class="text-slate-600 text-sm leading-relaxed mb-6 flex-1">Giúp con hấp thu trọn vẹn những dưỡng chất ẩn sâu trong lớp màng thực vật.</p>
-                    <div class="bg-white/80 p-4 rounded-2xl border border-emerald-100 text-xs font-semibold text-emerald-800">
-                        <span class="block opacity-50 uppercase mb-1">Nguồn tự nhiên</span>
-                        Rau hữu cơ, trái cây tươi.
+                    <div class="px-3 pb-4 flex-1 flex flex-col">
+                        <h3 class="font-['Quicksand'] font-bold text-xl text-slate-900 mb-2">Cellulase</h3>
+                        <p class="text-slate-600 text-[13px] leading-relaxed mb-4 italic flex-1">"Mở khóa dưỡng chất ẩn sâu trong màng xơ thực vật, tối ưu hấp thu vitamin từ rau củ quả."</p>
+                        <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-emerald-700">
+                            <span class="text-[10px] font-bold uppercase">Vitamin</span>
+                            <i class="fa-solid fa-carrot"></i>
+                        </div>
                     </div>
                 </div>
 
                 <!-- 4. Glucoamylase -->
-                <div class="group bg-indigo-50/50 rounded-[2.5rem] p-8 border border-indigo-100 transition-all hover:bg-white hover:shadow-2xl hover:shadow-indigo-200/50 card-hover flex flex-col h-full text-center">
-                    <div class="w-20 h-20 bg-indigo-600 text-white rounded-[2rem] flex items-center justify-center text-3xl mx-auto mb-6 shadow-xl shadow-indigo-200 group-hover:scale-110 transition-transform">
-                        <i class="fa-solid fa-bolt-lightning"></i>
+                <div class="group bg-indigo-50/20 rounded-[3rem] p-4 border border-indigo-100 transition-all hover:bg-white hover:shadow-2xl card-hover flex flex-col h-full">
+                    <div class="relative h-48 mb-6 overflow-hidden rounded-[2.5rem]">
+                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/enzyme-glucoamylase.png" alt="Glucoamylase 3D" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                        <div class="absolute inset-0 bg-gradient-to-t from-indigo-900/40 to-transparent"></div>
+                        <div class="absolute bottom-4 left-4">
+                            <span class="bg-indigo-600 text-white text-[9px] font-bold px-3 py-1 rounded-full uppercase tracking-widest shadow-lg">Sức Bền</span>
+                        </div>
                     </div>
-                    <h3 class="font-['Quicksand'] font-bold text-2xl text-slate-900 mb-2">Glucoamylase</h3>
-                    <p class="text-indigo-600 font-extrabold text-[10px] tracking-widest uppercase mb-4">Năng lượng bền bỉ</p>
-                    <p class="text-slate-600 text-sm leading-relaxed mb-6 flex-1">Duy trì nồng độ glucose ổn định, hỗ trợ tối ưu cho các hoạt động của não bộ.</p>
-                    <div class="bg-white/80 p-4 rounded-2xl border border-indigo-100 text-xs font-semibold text-indigo-800">
-                        <span class="block opacity-50 uppercase mb-1">Nguồn tự nhiên</span>
-                        Thực phẩm lên men sạch.
-                    </div>
-                </div>
-
-                <!-- Row 2 -->
-                <div class="group bg-orange-50/50 rounded-[2.5rem] p-8 border border-orange-100 transition-all hover:bg-white hover:shadow-2xl hover:shadow-orange-200/50 card-hover flex flex-col h-full text-center">
-                    <div class="w-20 h-20 bg-orange-500 text-white rounded-[2rem] flex items-center justify-center text-3xl mx-auto mb-6 shadow-xl shadow-orange-200 group-hover:scale-110 transition-transform">
-                        <i class="fa-solid fa-cubes-stacked"></i>
-                    </div>
-                    <h3 class="font-['Quicksand'] font-bold text-2xl text-slate-900 mb-2">Invertase</h3>
-                    <p class="text-orange-600 font-extrabold text-[10px] tracking-widest uppercase mb-4">Chuyển hóa Đường</p>
-                    <p class="text-slate-600 text-sm leading-relaxed mb-6 flex-1">Cân bằng các loại đường phức tạp, hạn chế tình trạng lên men kỵ khí gây bứt rứt.</p>
-                    <div class="bg-white/80 p-4 rounded-2xl border border-orange-100 text-xs font-semibold text-orange-800">
-                        <span class="block opacity-50 uppercase mb-1">Nguồn tự nhiên</span>
-                        Mật ong nguyên chất.
+                    <div class="px-3 pb-4 flex-1 flex flex-col">
+                        <h3 class="font-['Quicksand'] font-bold text-xl text-slate-900 mb-2">Glucoamylase</h3>
+                        <p class="text-slate-600 text-[13px] leading-relaxed mb-4 italic flex-1">"Hoàn tất quá trình bóc tách tinh bột chuỗi dài, cung cấp nguồn năng lượng bền bỉ cho cả ngày."</p>
+                        <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-indigo-700">
+                            <span class="text-[10px] font-bold uppercase">Bền bỉ</span>
+                            <i class="fa-solid fa-battery-full"></i>
+                        </div>
                     </div>
                 </div>
 
-                <div class="group bg-rose-50/50 rounded-[2.5rem] p-8 border border-rose-100 transition-all hover:bg-white hover:shadow-2xl hover:shadow-rose-200/50 card-hover flex flex-col h-full text-center">
-                    <div class="w-20 h-20 bg-rose-500 text-white rounded-[2rem] flex items-center justify-center text-3xl mx-auto mb-6 shadow-xl shadow-rose-200 group-hover:scale-110 transition-transform">
-                        <i class="fa-solid fa-glass-water"></i>
+                <!-- 5. Invertase -->
+                <div class="group bg-orange-50/20 rounded-[3rem] p-4 border border-orange-100 transition-all hover:bg-white hover:shadow-2xl card-hover flex flex-col h-full">
+                    <div class="relative h-48 mb-6 overflow-hidden rounded-[2.5rem]">
+                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/enzyme-invertase.png" alt="Invertase 3D" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                        <div class="absolute inset-0 bg-gradient-to-t from-orange-900/40 to-transparent"></div>
+                        <div class="absolute bottom-4 left-4">
+                            <span class="bg-orange-600 text-white text-[9px] font-bold px-3 py-1 rounded-full uppercase tracking-widest shadow-lg">Đường Mía</span>
+                        </div>
                     </div>
-                    <h3 class="font-['Quicksand'] font-bold text-2xl text-slate-900 mb-2">Lactase</h3>
-                    <p class="text-rose-600 font-extrabold text-[10px] tracking-widest uppercase mb-4">Êm đẹp cùng Sữa</p>
-                    <p class="text-slate-600 text-sm leading-relaxed mb-6 flex-1">Phân giải đường sữa, giúp con tránh được những khó chịu tiêu hóa không đáng có.</p>
-                    <div class="bg-white/80 p-4 rounded-2xl border border-rose-100 text-xs font-semibold text-rose-800">
-                        <span class="block opacity-50 uppercase mb-1">Nguồn tự nhiên</span>
-                        Lợi khuẩn Bifido.
-                    </div>
-                </div>
-
-                <div class="group bg-cyan-50/50 rounded-[2.5rem] p-8 border border-cyan-100 transition-all hover:bg-white hover:shadow-2xl hover:shadow-cyan-200/50 card-hover flex flex-col h-full text-center">
-                    <div class="w-20 h-20 bg-cyan-500 text-white rounded-[2rem] flex items-center justify-center text-3xl mx-auto mb-6 shadow-xl shadow-cyan-200 group-hover:scale-110 transition-transform">
-                        <i class="fa-solid fa-droplet"></i>
-                    </div>
-                    <h3 class="font-['Quicksand'] font-bold text-2xl text-slate-900 mb-2">Lipase</h3>
-                    <p class="text-cyan-600 font-extrabold text-[10px] tracking-widest uppercase mb-4">Hấp thụ Chất béo</p>
-                    <p class="text-slate-600 text-sm leading-relaxed mb-6 flex-1">Xử lý chất béo để nuôi dưỡng hệ thần kinh và hấp thu trọn vẹn Vitamin tan trong dầu.</p>
-                    <div class="bg-white/80 p-4 rounded-2xl border border-cyan-100 text-xs font-semibold text-cyan-800">
-                        <span class="block opacity-50 uppercase mb-1">Nguồn tự nhiên</span>
-                        Quả bơ, Hạt hướng dương.
+                    <div class="px-3 pb-4 flex-1 flex flex-col">
+                        <h3 class="font-['Quicksand'] font-bold text-xl text-slate-900 mb-2">Invertase</h3>
+                        <p class="text-slate-600 text-[13px] leading-relaxed mb-4 italic flex-1">"Phòng ngừa quá trình lên men thối của đường mía trong ruột, giúp con luôn thoải mái, êm bụng."</p>
+                        <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-orange-700">
+                            <span class="text-[10px] font-bold uppercase">Ổn định</span>
+                            <i class="fa-solid fa-honey-pot"></i>
+                        </div>
                     </div>
                 </div>
 
-                <div class="group bg-purple-50/50 rounded-[2.5rem] p-8 border border-purple-100 transition-all hover:bg-white hover:shadow-2xl hover:shadow-purple-200/50 card-hover flex flex-col h-full text-center">
-                    <div class="w-20 h-20 bg-purple-600 text-white rounded-[2rem] flex items-center justify-center text-3xl mx-auto mb-6 shadow-xl shadow-purple-200 group-hover:scale-110 transition-transform">
-                        <i class="fa-solid fa-scissors"></i>
+                <!-- 6. Lactase -->
+                <div class="group bg-rose-50/20 rounded-[3rem] p-4 border border-rose-100 transition-all hover:bg-white hover:shadow-2xl card-hover flex flex-col h-full">
+                    <div class="relative h-48 mb-6 overflow-hidden rounded-[2.5rem]">
+                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/enzyme-lactase.png" alt="Lactase 3D" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                        <div class="absolute inset-0 bg-gradient-to-t from-rose-900/40 to-transparent"></div>
+                        <div class="absolute bottom-4 left-4">
+                            <span class="bg-rose-600 text-white text-[9px] font-bold px-3 py-1 rounded-full uppercase tracking-widest shadow-lg">Đường Sữa</span>
+                        </div>
                     </div>
-                    <h3 class="font-['Quicksand'] font-bold text-2xl text-slate-900 mb-2">Protease</h3>
-                    <p class="text-purple-600 font-extrabold text-[10px] tracking-widest uppercase mb-4">Bẻ gãy Đạm lạ</p>
-                    <p class="text-slate-600 text-sm leading-relaxed mb-6 flex-1">Phòng ngừa rò rỉ ruột và các phản ứng viêm do đạm chưa tiêu hóa hết gây ra.</p>
-                    <div class="bg-white/80 p-4 rounded-2xl border border-purple-100 text-xs font-semibold text-purple-800">
-                        <span class="block opacity-50 uppercase mb-1">Nguồn tự nhiên</span>
-                        Đu đủ, Quả Kiwi.
+                    <div class="px-3 pb-4 flex-1 flex flex-col">
+                        <h3 class="font-['Quicksand'] font-bold text-xl text-slate-900 mb-2">Lactase</h3>
+                        <p class="text-slate-600 text-[13px] leading-relaxed mb-4 italic flex-1">"Hóa giải rào cản từ sữa, ngăn ngừa tiêu chảy và quấy khóc ban đêm do bất dung nạp lactose."</p>
+                        <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-rose-700">
+                            <span class="text-[10px] font-bold uppercase">Ngủ ngon</span>
+                            <i class="fa-solid fa-moon"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 7. Lipase -->
+                <div class="group bg-cyan-50/20 rounded-[3rem] p-4 border border-cyan-100 transition-all hover:bg-white hover:shadow-2xl card-hover flex flex-col h-full">
+                    <div class="relative h-48 mb-6 overflow-hidden rounded-[2.5rem]">
+                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/enzyme-lipase.png" alt="Lipase 3D" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                        <div class="absolute inset-0 bg-gradient-to-t from-cyan-900/40 to-transparent"></div>
+                        <div class="absolute bottom-4 left-4">
+                            <span class="bg-cyan-600 text-white text-[9px] font-bold px-3 py-1 rounded-full uppercase tracking-widest shadow-lg">Chất Béo</span>
+                        </div>
+                    </div>
+                    <div class="px-3 pb-4 flex-1 flex flex-col">
+                        <h3 class="font-['Quicksand'] font-bold text-xl text-slate-900 mb-2">Lipase</h3>
+                        <p class="text-slate-600 text-[13px] leading-relaxed mb-4 italic flex-1">"Chìa khóa hấp thụ DHA và các vitamin tan trong dầu, xây dựng nền tảng vững chắc cho não bộ."</p>
+                        <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-cyan-700">
+                            <span class="text-[10px] font-bold uppercase">Trí não</span>
+                            <i class="fa-solid fa-brain"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 8. Protease -->
+                <div class="group bg-purple-50/20 rounded-[3rem] p-4 border border-purple-100 transition-all hover:bg-white hover:shadow-2xl card-hover flex flex-col h-full">
+                    <div class="relative h-48 mb-6 overflow-hidden rounded-[2.5rem]">
+                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/enzyme-protease.png" alt="Protease 3D" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                        <div class="absolute inset-0 bg-gradient-to-t from-purple-900/40 to-transparent"></div>
+                        <div class="absolute bottom-4 left-4">
+                            <span class="bg-purple-600 text-white text-[9px] font-bold px-3 py-1 rounded-full uppercase tracking-widest shadow-lg">Đạm & Bảo Vệ</span>
+                        </div>
+                    </div>
+                    <div class="px-3 pb-4 flex-1 flex flex-col">
+                        <h3 class="font-['Quicksand'] font-bold text-xl text-slate-900 mb-2">Protease</h3>
+                        <p class="text-slate-600 text-[13px] leading-relaxed mb-4 italic flex-1">"Lá chắn thép ngăn ngừa đạm lạ xâm nhập mạch máu, bảo vệ tối đa niêm mạc thành ruột con."</p>
+                        <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-purple-700">
+                            <span class="text-[10px] font-bold uppercase">Lá chắn</span>
+                            <i class="fa-solid fa-shield-halved"></i>
+                        </div>
                     </div>
                 </div>
             </div>
