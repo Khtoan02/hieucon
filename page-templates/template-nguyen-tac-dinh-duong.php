@@ -25,13 +25,17 @@
                         heading: ['Quicksand', 'sans-serif'],
                     },
                     colors: {
-                        teal: {
-                            50:  '#f0fdfa',
-                            100: '#ccfbf1',
-                            600: '#0d9488',
-                            700: '#0f766e',
-                            800: '#115e59',
-                            900: '#134e4a',
+                        emerald: {
+                            50:  '#f0fdf4',
+                            100: '#dcfce7',
+                            500: '#10b981',
+                            600: '#059669',
+                            700: '#047857',
+                        },
+                        sky: {
+                            400: '#38bdf8',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
                         },
                         amber: {
                             400: '#fbbf24',
@@ -52,7 +56,7 @@
         /* Reading progress */
         #reading-progress {
             position: fixed; top: 0; left: 0; height: 3px; width: 0%;
-            background: linear-gradient(to right, #0f766e, #fbbf24);
+            background: linear-gradient(to right, #10b981, #0ea5e9);
             z-index: 9999; transition: width 0.1s linear;
         }
 
@@ -69,15 +73,15 @@
 
         /* Card hover */
         .card-lift { transition: transform 0.3s cubic-bezier(.4,0,.2,1), box-shadow 0.3s ease; }
-        .card-lift:hover { transform: translateY(-6px); box-shadow: 0 20px 48px -10px rgba(15,118,110,0.18); }
+        .card-lift:hover { transform: translateY(-6px); box-shadow: 0 20px 48px -10px rgba(16,185,129,0.15); }
 
         /* Tab active/inactive */
-        .tab-active   { background: #0f766e; color: #fff; border-color: #0f766e; }
+        .tab-active   { background: #10b981; color: #fff; border-color: #10b981; }
         .tab-inactive { background: #fff; color: #374151; border-color: #d1d5db; }
-        .tab-inactive:hover { border-color: #0f766e; color: #0f766e; }
+        .tab-inactive:hover { border-color: #10b981; color: #10b981; }
 
         /* Pill tabs */
-        .pill-on  { background: #0f766e; color: #fff; }
+        .pill-on  { background: #10b981; color: #fff; }
         .pill-off { background: #f5f5f4; color: #57534e; }
         .pill-off:hover { background: #e7e5e4; }
 
@@ -91,8 +95,8 @@
         /* Section label */
         .section-label {
             display: inline-block;
-            background: rgba(15,118,110,0.1);
-            color: #0f766e;
+            background: rgba(16,185,129,0.1);
+            color: #059669;
             font-size: 0.7rem;
             font-weight: 800;
             letter-spacing: 0.12em;
@@ -115,7 +119,7 @@
             top: 56px;
             bottom: -24px;
             width: 2px;
-            background: linear-gradient(to bottom, #0f766e33, transparent);
+            background: linear-gradient(to bottom, #10b98133, transparent);
         }
         .step-line:last-child::before { display: none; }
 
@@ -132,56 +136,56 @@
 <!-- ═══════════════════════════════════════════════════════ -->
 <!--  HERO                                                    -->
 <!-- ═══════════════════════════════════════════════════════ -->
-<header class="relative overflow-hidden" style="background: linear-gradient(135deg, #134e4a 0%, #0f766e 45%, #0d9488 100%);">
+<header class="relative overflow-hidden" style="background: linear-gradient(135deg, #10b981 0%, #0ea5e9 100%);">
 
     <!-- Decorative circles -->
-    <div class="absolute top-0 right-0 w-[500px] h-[500px] rounded-full bg-white/5 -translate-y-1/3 translate-x-1/4 pointer-events-none"></div>
-    <div class="absolute bottom-0 left-0 w-[380px] h-[380px] rounded-full bg-white/5 translate-y-1/3 -translate-x-1/4 pointer-events-none"></div>
+    <div class="absolute top-0 right-0 w-[500px] h-[500px] rounded-full bg-white/10 -translate-y-1/3 translate-x-1/4 pointer-events-none"></div>
+    <div class="absolute bottom-0 left-0 w-[380px] h-[380px] rounded-full bg-white/10 translate-y-1/3 -translate-x-1/4 pointer-events-none"></div>
     <!-- Floating icon -->
-    <div class="absolute top-10 right-16 text-white/6 pointer-events-none hidden xl:block" style="animation: float 6s ease-in-out infinite; font-size: 200px;">
+    <div class="absolute top-10 right-16 text-white/10 pointer-events-none hidden xl:block" style="animation: float 6s ease-in-out infinite; font-size: 200px;">
         <i class="fa-solid fa-seedling"></i>
     </div>
 
-    <div class="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 py-20 md:py-28 relative z-10 text-center">
+    <div class="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 py-20 md:py-32 relative z-10 text-center">
 
         <!-- Badge -->
-        <div class="anim inline-flex items-center gap-2 py-1.5 px-5 rounded-full bg-white/15 text-white font-semibold text-xs sm:text-sm mb-6 backdrop-blur-sm border border-white/20">
+        <div class="anim inline-flex items-center gap-2 py-1.5 px-5 rounded-full bg-white/20 text-white font-semibold text-xs sm:text-sm mb-6 backdrop-blur-sm border border-white/30">
             <span class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
             HIỂU CON TỪ GỐC &nbsp;·&nbsp; Y SINH THỰC CHỨNG
         </div>
 
-        <h1 class="font-heading text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-white leading-tight mb-5 anim d1">
+        <h1 class="font-heading text-4xl sm:text-5xl md:text-6xl font-extrabold text-white leading-tight mb-6 anim d1">
             Nguyên tắc Dinh dưỡng<br>
-            <span class="text-amber-300">Giúp Phục hồi Đường ruột</span>
+            <span class="text-amber-300">Phục hồi Đường ruột</span>
         </h1>
 
-        <p class="text-base sm:text-lg md:text-xl text-teal-100 max-w-3xl mx-auto mb-10 leading-relaxed anim d2">
-            Áp dụng dinh dưỡng y sinh để phục hồi hệ vi sinh, cung cấp vi chất tự nhiên và ổn định tinh thần thông qua <strong class="text-white">Thực phẩm toàn phần (Whole Foods)</strong>.
+        <p class="text-base sm:text-lg md:text-xl text-emerald-50 max-w-3xl mx-auto mb-10 leading-relaxed anim d2">
+            Lộ trình dinh dưỡng y sinh cá nhân hóa, giúp phục hồi hệ vi sinh và khơi dậy nguồn năng lượng tự nhiên thông qua <strong class="text-white">Thực phẩm toàn phần (Whole Foods)</strong>.
         </p>
 
         <!-- CTA Buttons -->
-        <div class="flex flex-col sm:flex-row justify-center gap-3 anim d3">
-            <a href="#tong-quan" class="bg-amber-400 hover:bg-amber-300 text-gray-900 px-8 py-3.5 rounded-full font-bold text-base shadow-lg hover:shadow-xl transition-all flex items-center justify-center gap-2 hover:-translate-y-0.5">
-                Khám phá ngay <i class="fa-solid fa-arrow-down animate-bounce"></i>
+        <div class="flex flex-col sm:flex-row justify-center gap-4 anim d3">
+            <a href="#tong-quan" class="bg-amber-400 hover:bg-amber-300 text-slate-900 px-8 py-4 rounded-full font-bold text-lg shadow-xl shadow-amber-900/20 transition-all flex items-center justify-center gap-2 hover:-translate-y-0.5">
+                Khám phá ngay <i class="fa-solid fa-arrow-down-long animate-bounce"></i>
             </a>
-            <a href="#lien-he" class="bg-white/15 hover:bg-white/25 text-white px-8 py-3.5 rounded-full font-bold text-base backdrop-blur-sm border border-white/30 transition-all flex items-center justify-center gap-2 hover:-translate-y-0.5">
+            <a href="#lien-he" class="bg-white/10 hover:bg-white/20 text-white px-8 py-4 rounded-full font-bold text-lg border border-white/30 backdrop-blur-sm transition-all flex items-center justify-center gap-2 hover:-translate-y-0.5">
                 Tôi cần hỗ trợ <i class="fa-solid fa-headset"></i>
             </a>
         </div>
 
         <!-- Stats Row -->
         <div class="mt-14 flex flex-wrap justify-center gap-4 anim d4">
-            <div class="bg-white/10 backdrop-blur-sm border border-white/15 rounded-2xl px-8 py-4 text-center">
-                <div class="text-3xl font-extrabold text-amber-300 font-heading mb-0.5">3</div>
-                <div class="text-xs text-teal-100 font-medium uppercase tracking-wider">Trụ cột<br>phục hồi</div>
+            <div class="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl px-8 py-5 text-center min-w-[140px]">
+                <div class="text-3xl font-extrabold text-amber-300 font-heading mb-1">3</div>
+                <div class="text-[10px] text-emerald-50 font-bold uppercase tracking-widest">Trụ cột<br>phục hồi</div>
             </div>
-            <div class="bg-white/10 backdrop-blur-sm border border-white/15 rounded-2xl px-8 py-4 text-center">
-                <div class="text-2xl font-extrabold text-amber-300 font-heading mb-0.5">GFCFSF</div>
-                <div class="text-xs text-teal-100 font-medium uppercase tracking-wider">Nguyên tắc<br>ăn uống</div>
+            <div class="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl px-8 py-5 text-center min-w-[140px]">
+                <div class="text-2xl font-extrabold text-amber-300 font-heading mb-1">GFCFSF</div>
+                <div class="text-[10px] text-emerald-50 font-bold uppercase tracking-widest">Nguyên tắc<br>ăn uống</div>
             </div>
-            <div class="bg-white/10 backdrop-blur-sm border border-white/15 rounded-2xl px-8 py-4 text-center">
-                <div class="text-3xl font-extrabold text-amber-300 font-heading mb-0.5">100%</div>
-                <div class="text-xs text-teal-100 font-medium uppercase tracking-wider">Thực phẩm<br>tự nhiên</div>
+            <div class="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl px-8 py-5 text-center min-w-[140px]">
+                <div class="text-3xl font-extrabold text-amber-300 font-heading mb-1">100%</div>
+                <div class="text-[10px] text-emerald-50 font-bold uppercase tracking-widest">Thực phẩm<br>tự nhiên</div>
             </div>
         </div>
     </div>
@@ -197,39 +201,51 @@
 <!-- ═══════════════════════════════════════════════════════ -->
 <!--  SECTION 1: Tổng quan                                   -->
 <!-- ═══════════════════════════════════════════════════════ -->
-<section id="tong-quan" class="py-16 md:py-20 bg-slate-50">
+<section id="tong-quan" class="py-16 md:py-24 bg-slate-50/50">
     <div class="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12">
 
-        <!-- Split layout: dark panel + light panel -->
-        <div class="flex flex-col lg:flex-row items-stretch gap-0 rounded-2xl lg:rounded-3xl overflow-hidden shadow-xl border border-slate-200 anim">
-            <div class="lg:w-[45%] relative overflow-hidden p-8 sm:p-10 lg:p-12 flex flex-col justify-center" style="background: linear-gradient(135deg, #134e4a 0%, #0f766e 100%);">
-                <div class="absolute -right-6 -bottom-6 text-white/8 text-[160px] pointer-events-none">
+        <!-- Split layout: light panel + chart panel -->
+        <div class="flex flex-col lg:flex-row items-stretch gap-0 rounded-[3rem] overflow-hidden shadow-2xl border border-slate-200 anim">
+            <div class="lg:w-[45%] relative overflow-hidden p-8 sm:p-10 lg:p-14 flex flex-col justify-center bg-gradient-to-br from-emerald-600 to-emerald-700">
+                <div class="absolute -right-10 -bottom-10 text-white/5 text-[200px] pointer-events-none">
                     <i class="fa-solid fa-leaf"></i>
                 </div>
                 <div class="relative z-10">
-                    <span class="inline-flex items-center gap-2 bg-white/15 text-white text-xs font-bold uppercase tracking-widest px-3 py-1.5 rounded-full mb-5">
-                        <i class="fa-solid fa-circle-info text-amber-300"></i> Tổng quan
+                    <span class="inline-flex items-center gap-2 bg-white/10 text-white text-[10px] font-bold uppercase tracking-widest px-3 py-1.5 rounded-full mb-6 border border-white/20">
+                        <i class="fa-solid fa-circle-info text-amber-300"></i> Ý nghĩa thực tiễn
                     </span>
-                    <h2 class="font-heading text-2xl sm:text-3xl font-bold text-white mb-5 leading-tight">Dinh dưỡng y sinh không đồng nghĩa với chi phí đắt đỏ</h2>
-                    <p class="text-teal-100 leading-relaxed text-sm sm:text-base mb-6">
-                        Khi hệ tiêu hóa bị viêm và quá tải do những thức ăn khó tiêu, cơ thể thường phản ứng bằng sự bứt rứt, kém tập trung. Đây là dấu hiệu cho thấy đường ruột đang phải tiếp nhận nguồn thức ăn không phù hợp.
+                    <h2 class="font-heading text-2xl sm:text-3xl font-extrabold text-white mb-6 leading-tight text-shadow-sm">Dinh dưỡng y sinh thực tế và tiết kiệm</h2>
+                    <p class="text-emerald-50 leading-relaxed text-sm sm:text-base mb-8 opacity-90">
+                        Chăm sóc dinh dưỡng cho con không nhất thiết phải tốn kém. Bằng cách hiểu đúng về thực phẩm toàn phần bản địa, chúng ta không chỉ tối ưu chi phí mà còn tạo điều kiện tốt nhất để niêm mạc ruột con được chữa lành tự nhiên.
                     </p>
-                    <div class="bg-white/10 border border-white/15 rounded-xl p-4">
-                        <div class="flex items-start gap-3">
-                            <i class="fa-solid fa-star text-amber-400 mt-0.5 flex-shrink-0"></i>
-                            <p class="text-teal-50 text-sm leading-relaxed">
-                                Việc chăm sóc dinh dưỡng hoàn toàn có thể thực hiện bằng những <strong class="text-white">thực phẩm tự nhiên, quen thuộc tại địa phương</strong>. Hiểu đúng về cách cơ thể hấp thu dưỡng chất sẽ giúp tối ưu hóa chi phí, đồng thời phục hồi lớp niêm mạc ruột hiệu quả.
-                            </p>
+                    <div class="bg-white/10 border border-white/10 rounded-2xl p-5 backdrop-blur-sm">
+                        <div class="flex items-start gap-4 text-emerald-50 text-sm leading-relaxed">
+                            <i class="fa-solid fa-lightbulb text-amber-300 text-lg mt-0.5"></i>
+                            <p>Ưu tiên thực phẩm địa phương theo mùa giúp đảm bảo lượng dưỡng chất tươi mới nhất cho cơ thể.</p>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="lg:w-[55%] bg-white p-6 sm:p-8 flex flex-col justify-center">
-                <h3 class="font-heading text-lg font-bold text-slate-700 mb-1">Biến thiên Đường huyết</h3>
-                <p class="text-xs text-slate-400 mb-4">Carb tinh chế gây biến động mạnh — tạo môi trường cho Candida sinh độc tố Acetaldehyde</p>
-                <div class="chart-wrap">
+            <div class="lg:w-[55%] bg-white p-8 sm:p-12 flex flex-col justify-center">
+                <div class="mb-8">
+                    <h3 class="font-heading text-xl font-bold text-slate-800 mb-1">Biểu đồ Cân bằng Đường huyết</h3>
+                    <p class="text-xs text-slate-500 font-medium italic">So sánh tác động của hai nhóm thực phẩm đối với năng lượng cơ thể</p>
+                </div>
+
+                <div class="chart-wrap" style="height: 280px;">
                     <canvas id="bloodSugarChart"></canvas>
+                </div>
+
+                <div class="mt-8 flex flex-wrap items-center justify-center gap-6">
+                    <div class="flex items-center gap-2">
+                        <span class="w-3 h-3 rounded-full bg-emerald-500 shadow-sm shadow-emerald-200"></span>
+                        <span class="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Thực phẩm Toàn phần (Gợi ý)</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <span class="w-3 h-3 rounded-full bg-rose-500 shadow-sm shadow-rose-200"></span>
+                        <span class="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Tinh chế (Cần hạn chế)</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -239,82 +255,57 @@
 <!-- ═══════════════════════════════════════════════════════ -->
 <!--  SECTION 2: 3 Trụ cột                                   -->
 <!-- ═══════════════════════════════════════════════════════ -->
-<section class="py-16 md:py-20 bg-white relative overflow-hidden">
-    <!-- Bg blobs -->
-    <div class="absolute top-0 right-0 w-[300px] h-[300px] rounded-full bg-teal-50 blur-[80px] -translate-y-1/2 translate-x-1/4 pointer-events-none"></div>
-    <div class="absolute bottom-0 left-0 w-[250px] h-[250px] rounded-full bg-amber-50 blur-[80px] translate-y-1/2 -translate-x-1/4 pointer-events-none"></div>
+<section class="py-16 md:py-24 bg-white relative overflow-hidden">
+    <!-- Background accents -->
+    <div class="absolute top-1/2 left-0 w-96 h-96 bg-emerald-50 rounded-full blur-[100px] -translate-x-1/2 -translate-y-1/2 pointer-events-none opacity-60"></div>
 
     <div class="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 relative z-10">
-        <div class="text-center mb-12 anim">
-            <span class="section-label">Ba trụ cột phục hồi</span>
-            <h2 class="font-heading text-2xl sm:text-3xl md:text-4xl font-bold text-slate-800 mb-3">
-                Xây dựng nền tảng sức khỏe đường ruột
+        <div class="text-center mb-16 anim">
+            <span class="section-label">Lộ trình phục hồi</span>
+            <h2 class="font-heading text-3xl md:text-4xl lg:text-5xl font-extrabold text-slate-900 mb-4">
+                Ba trụ cột dinh dưỡng nền tảng
             </h2>
-            <p class="text-slate-500 max-w-2xl mx-auto text-base sm:text-lg">
-                Ba nguyên tắc cốt lõi để phục hồi tình trạng viêm và rò rỉ ruột — áp dụng theo thứ tự từ loại trừ đến bổ sung.
+            <p class="text-slate-500 max-w-2xl mx-auto text-lg leading-relaxed">
+                Nguyên lý vàng để hồi sinh hệ tiêu hóa và vá lành "rò rỉ ruột" một cách bền vững.
             </p>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
 
             <!-- Pillar 1 -->
-            <div class="bg-white rounded-2xl lg:rounded-3xl overflow-hidden shadow-md border border-slate-200 card-lift group anim d1">
-                <div class="py-5 px-7 flex items-center gap-4 relative overflow-hidden" style="background: linear-gradient(135deg, #be123c, #e11d48);">
-                    <div class="absolute right-0 top-0 text-white/10 text-[80px] pointer-events-none"><i class="fa-solid fa-ban"></i></div>
-                    <div class="w-14 h-14 bg-white rounded-full flex items-center justify-center shadow-lg shrink-0 relative z-10">
-                        <span class="font-heading font-extrabold text-2xl" style="color:#e11d48">1</span>
-                    </div>
-                    <h3 class="font-heading text-lg font-bold text-white relative z-10">Loại trừ Tác nhân</h3>
+            <div class="bg-white rounded-3xl p-8 shadow-xl shadow-slate-100 border border-slate-100 card-lift group anim d1 relative">
+                <div class="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-2xl flex items-center justify-center text-2xl font-black mb-6 group-hover:bg-emerald-500 group-hover:text-white transition-all duration-300">
+                    01
                 </div>
-                <div class="p-7">
-                    <div class="w-12 h-12 rounded-xl flex items-center justify-center mb-4 shadow-sm" style="background:#fff1f2">
-                        <i class="fa-solid fa-circle-xmark text-2xl" style="color:#e11d48"></i>
-                    </div>
-                    <div class="inline-block bg-red-50 text-red-700 text-xs font-bold px-3 py-1 rounded-full mb-3 uppercase tracking-wide">GFCFSF Protocol</div>
-                    <p class="text-slate-600 text-sm leading-relaxed">
-                        Áp dụng chế độ <strong class="text-red-600">GFCFSF</strong> (Không lúa mì, Không sữa động vật, Không đậu nành). Những protein khó tiêu này khi lọt qua các khe hở trên thành ruột sẽ tạo ra các chất gây ảnh hưởng tiêu cực đến não bộ, dẫn đến rối loạn hành vi và khiến tình trạng viêm kéo dài.
-                    </p>
-                </div>
+                <h3 class="font-heading text-xl font-bold text-slate-800 mb-4">Loại trừ Tác nhân</h3>
+                <div class="inline-block bg-indigo-50 text-indigo-700 text-[10px] font-bold px-3 py-1 rounded-full mb-4 uppercase tracking-widest">Protocol GFCFSF</div>
+                <p class="text-slate-600 text-sm leading-relaxed">
+                    Tạm dừng <strong class="text-emerald-600">Lúa mì, Sữa động vật & Đậu nành</strong>. Những protein này dễ gây viêm và tạo gánh nặng cho hệ thống thần kinh khi đường ruột chưa phục hồi.
+                </p>
             </div>
 
             <!-- Pillar 2 -->
-            <div class="bg-white rounded-2xl lg:rounded-3xl overflow-hidden shadow-md border border-slate-200 card-lift group anim d2">
-                <div class="py-5 px-7 flex items-center gap-4 relative overflow-hidden" style="background: linear-gradient(135deg, #0369a1, #0ea5e9);">
-                    <div class="absolute right-0 top-0 text-white/10 text-[80px] pointer-events-none"><i class="fa-solid fa-weight-scale"></i></div>
-                    <div class="w-14 h-14 bg-white rounded-full flex items-center justify-center shadow-lg shrink-0 relative z-10">
-                        <span class="font-heading font-extrabold text-2xl text-sky-600">2</span>
-                    </div>
-                    <h3 class="font-heading text-lg font-bold text-white relative z-10">Giảm tải Áp lực</h3>
+            <div class="bg-white rounded-3xl p-8 shadow-xl shadow-slate-100 border border-slate-100 card-lift group anim d2 relative">
+                <div class="w-16 h-16 bg-sky-100 text-sky-600 rounded-2xl flex items-center justify-center text-2xl font-black mb-6 group-hover:bg-sky-500 group-hover:text-white transition-all duration-300">
+                    02
                 </div>
-                <div class="p-7">
-                    <div class="w-12 h-12 rounded-xl flex items-center justify-center mb-4 shadow-sm" style="background:#f0f9ff">
-                        <i class="fa-solid fa-fire-flame-simple text-2xl text-sky-500"></i>
-                    </div>
-                    <div class="inline-block bg-sky-50 text-sky-700 text-xs font-bold px-3 py-1 rounded-full mb-3 uppercase tracking-wide">Nấu chín kỹ</div>
-                    <p class="text-slate-600 text-sm leading-relaxed">
-                        Ưu tiên thực phẩm được nấu chín kỹ (ninh, hầm) để thức ăn được mềm và dễ hấp thu. Điều này giúp giảm bớt gánh nặng cho dạ dày và tuyến tụy, đặc biệt ở những người đang bị thiếu hụt men tiêu hóa.
-                    </p>
-                </div>
+                <h3 class="font-heading text-xl font-bold text-slate-800 mb-4">Giảm tải Áp lực</h3>
+                <div class="inline-block bg-sky-50 text-sky-700 text-[10px] font-bold px-3 py-1 rounded-full mb-4 uppercase tracking-widest">Ninh hầm kỹ</div>
+                <p class="text-slate-600 text-sm leading-relaxed">
+                    Ưu tiên thực phẩm <strong class="text-sky-600">ninh hầm chín tới</strong> để thức ăn mềm mại, dễ bẻ gãy, giúp hệ tiêu hóa đang nhạy cảm dễ dàng hấp thụ dưỡng chất mà không tốn nhiều năng lượng.
+                </p>
             </div>
 
             <!-- Pillar 3 -->
-            <div class="bg-white rounded-2xl lg:rounded-3xl overflow-hidden shadow-md border border-slate-200 card-lift group anim d3">
-                <div class="py-5 px-7 flex items-center gap-4 relative overflow-hidden" style="background: linear-gradient(135deg, #0f766e, #0d9488);">
-                    <div class="absolute right-0 top-0 text-white/10 text-[80px] pointer-events-none"><i class="fa-solid fa-plus"></i></div>
-                    <div class="w-14 h-14 bg-white rounded-full flex items-center justify-center shadow-lg shrink-0 relative z-10">
-                        <span class="font-heading font-extrabold text-2xl text-teal-700">3</span>
-                    </div>
-                    <h3 class="font-heading text-lg font-bold text-white relative z-10">Cung cấp Dưỡng chất</h3>
+            <div class="bg-white rounded-3xl p-8 shadow-xl shadow-slate-100 border border-slate-100 card-lift group anim d3 relative">
+                <div class="w-16 h-16 bg-amber-100 text-amber-600 rounded-2xl flex items-center justify-center text-2xl font-black mb-6 group-hover:bg-amber-500 group-hover:text-white transition-all duration-300">
+                    03
                 </div>
-                <div class="p-7">
-                    <div class="w-12 h-12 rounded-xl flex items-center justify-center mb-4 shadow-sm" style="background:#f0fdfa">
-                        <i class="fa-solid fa-capsules text-2xl text-teal-600"></i>
-                    </div>
-                    <div class="inline-block bg-teal-50 text-teal-700 text-xs font-bold px-3 py-1 rounded-full mb-3 uppercase tracking-wide">L-glutamine</div>
-                    <p class="text-slate-600 text-sm leading-relaxed">
-                        Lớp niêm mạc ruột cần được phục hồi liên tục. Cơ thể cần được cung cấp các axit amin (như <strong class="text-teal-700">L-glutamine</strong>), vitamin và khoáng chất tự nhiên để tự vá lại các tổn thương và duy trì các hoạt động chuyển hóa khỏe mạnh.
-                    </p>
-                </div>
+                <h3 class="font-heading text-xl font-bold text-slate-800 mb-4">Vá lành Niêm mạc</h3>
+                <div class="inline-block bg-amber-50 text-amber-700 text-[10px] font-bold px-3 py-1 rounded-full mb-4 uppercase tracking-widest">Dưỡng chất y sinh</div>
+                <p class="text-slate-600 text-sm leading-relaxed">
+                    Cung cấp <strong class="text-amber-600">L-glutamine & Vitamin tự nhiên</strong> để vá lại các tế bào biểu mô ruột, khép kín các khe hở và tái lập lớp hàng rào bảo vệ vững chắc cho cơ thể.
+                </p>
             </div>
         </div>
     </div>
@@ -381,9 +372,9 @@
                 <!-- Right: Dynamic content -->
                 <div class="lg:col-span-3 p-6 sm:p-10 flex flex-col justify-center min-h-[320px]">
                     <div class="mb-2">
-                        <div class="inline-block bg-teal-50 text-teal-700 text-xs font-extrabold px-3 py-1 rounded-full uppercase tracking-widest mb-3" id="bio-badge">Methylation</div>
+                        <div class="inline-block bg-emerald-50 text-emerald-700 text-xs font-extrabold px-3 py-1 rounded-full uppercase tracking-widest mb-3" id="bio-badge">Methylation</div>
                     </div>
-                    <h3 class="font-heading text-xl sm:text-2xl font-bold text-teal-800 mb-4 leading-snug fade-in" id="bio-title">
+                    <h3 class="font-heading text-xl sm:text-2xl font-bold text-emerald-800 mb-4 leading-snug fade-in" id="bio-title">
                         Chu trình Methyl hóa (Methylation)
                     </h3>
                     <p class="text-slate-600 leading-relaxed text-sm sm:text-base fade-in" id="bio-desc">
@@ -392,9 +383,9 @@
                     <div class="mt-6 p-4 bg-slate-50 rounded-xl border border-slate-100">
                         <p class="text-xs font-extrabold text-slate-400 uppercase tracking-widest mb-2.5">Co-factor chính</p>
                         <div class="flex flex-wrap gap-2" id="bio-tags">
-                            <span class="bg-teal-100 text-teal-800 text-xs font-bold px-3 py-1 rounded-full">Folate — Rau xanh đậm</span>
-                            <span class="bg-teal-100 text-teal-800 text-xs font-bold px-3 py-1 rounded-full">B12 — Đạm động vật</span>
-                            <span class="bg-teal-100 text-teal-800 text-xs font-bold px-3 py-1 rounded-full">Vitamin B6</span>
+                            <span class="bg-emerald-100 text-emerald-800 text-xs font-bold px-3 py-1 rounded-full">Folate — Rau xanh đậm</span>
+                            <span class="bg-emerald-100 text-emerald-800 text-xs font-bold px-3 py-1 rounded-full">B12 — Đạm động vật</span>
+                            <span class="bg-emerald-100 text-emerald-800 text-xs font-bold px-3 py-1 rounded-full">Vitamin B6</span>
                         </div>
                     </div>
                 </div>
@@ -501,10 +492,10 @@
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 anim d1">
             <!-- Step 1 -->
             <div class="step-line bg-white rounded-2xl p-7 shadow-md border border-slate-200 card-lift">
-                <div class="w-14 h-14 rounded-2xl flex items-center justify-center mb-5 shadow-sm" style="background:#f0fdfa;">
-                    <i class="fa-solid fa-seedling text-2xl text-teal-600"></i>
+                <div class="w-14 h-14 rounded-2xl flex items-center justify-center mb-5 shadow-sm" style="background:#f0fdf4;">
+                    <i class="fa-solid fa-seedling text-2xl text-emerald-600"></i>
                 </div>
-                <div class="inline-block bg-teal-50 text-teal-700 text-xs font-extrabold px-2 py-0.5 rounded-full mb-3 uppercase tracking-wide">Nguyên tắc 1</div>
+                <div class="inline-block bg-emerald-50 text-emerald-700 text-xs font-extrabold px-2 py-0.5 rounded-full mb-3 uppercase tracking-wide">Nguyên tắc 1</div>
                 <h3 class="font-heading text-lg font-bold text-slate-800 mb-3">Đa dạng theo mùa vụ</h3>
                 <p class="text-slate-500 text-sm leading-relaxed">Ưu tiên thực phẩm địa phương theo mùa để đảm bảo lượng dưỡng chất dồi dào và hạn chế tối đa tồn dư hóa chất bảo vệ thực vật.</p>
             </div>
@@ -531,14 +522,14 @@
         </div>
 
         <!-- Golden rule box -->
-        <div class="mt-8 rounded-2xl p-6 sm:p-8 anim d2" style="background: #0f766e;">
+        <div class="mt-8 rounded-2xl p-6 sm:p-8 anim d2" style="background: linear-gradient(135deg, #059669 0%, #047857 100%); transition: all 0.3s ease;">
             <div class="flex items-start gap-5">
                 <div class="w-12 h-12 bg-white/15 rounded-xl flex items-center justify-center shrink-0 text-amber-400 text-2xl">
                     <i class="fa-solid fa-triangle-exclamation"></i>
                 </div>
                 <div>
                     <h4 class="font-heading text-lg font-bold text-white mb-2">Nguyên tắc vàng: "Chậm và Ít"</h4>
-                    <p class="text-teal-100 text-sm leading-relaxed">
+                    <p class="text-emerald-50 text-sm leading-relaxed">
                         Chế độ ăn cần được điều chỉnh cho phù hợp với từng người và nên duy trì <strong class="text-white">Nhật ký ăn uống</strong> để theo dõi phản ứng. Đường ruột đang hồi phục rất nhạy cảm — ép dung nạp lượng lớn đột ngột giống như đổ dồn gạch vào một bức tường chưa khô vữa. Lưu ý rằng phương pháp này không thay thế hoàn toàn cho các hướng dẫn y tế chuyên sâu.
                     </p>
                 </div>
@@ -551,75 +542,58 @@
 <!--  SECTION 6: CTA / Liên hệ                              -->
 <!-- ═══════════════════════════════════════════════════════ -->
 <section id="lien-he" class="relative overflow-hidden">
-    <div class="py-16 md:py-20" style="background: linear-gradient(135deg, #0a1931 0%, #0f1f3d 50%, #0c3547 100%);">
-        <!-- Glow blobs -->
-        <div class="absolute top-0 right-1/4 w-[500px] h-[500px] rounded-full blur-[120px] pointer-events-none" style="background:rgba(15,118,110,0.12)"></div>
-        <div class="absolute bottom-0 left-1/4 w-[400px] h-[400px] rounded-full blur-[120px] pointer-events-none" style="background:rgba(217,119,6,0.08)"></div>
+    <div class="py-20 md:py-28 bg-[#0f172a] text-white overflow-hidden relative">
+        <!-- Decoration -->
+        <div class="absolute top-0 right-0 w-[600px] h-[600px] bg-emerald-500/10 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/2"></div>
+        <div class="absolute bottom-0 left-0 w-[600px] h-[600px] bg-sky-500/10 rounded-full blur-[120px] translate-y-1/2 -translate-x-1/2"></div>
 
         <div class="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 relative z-10">
-            <div class="text-center mb-12 anim">
-                <h2 class="font-heading text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4">Cùng bạn hiểu con từ Gốc</h2>
-                <p class="text-slate-300 text-base sm:text-lg max-w-3xl mx-auto leading-relaxed">
-                    Chế độ dinh dưỡng y sinh là hành trình dài. Nếu bạn cần đồng hành, tư vấn hoặc giải đáp thắc mắc — hãy kết nối với chúng tôi.
+            <div class="text-center mb-16 anim">
+                <h2 class="font-heading text-3xl md:text-5xl font-extrabold mb-6">Đồng hành cùng gia đình bạn</h2>
+                <p class="text-slate-400 text-lg max-w-2xl mx-auto leading-relaxed">
+                    Dinh dưỡng là chìa khóa của sự phục hồi. Hãy liên hệ để được hỗ trợ chuyên sâu và cá nhân hóa lộ trình cho con.
                 </p>
             </div>
 
-            <!-- Contact Cards -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-12 anim d1">
-                <a href="tel:0988717107"
-                   class="bg-white/10 hover:bg-teal-600 border border-white/10 hover:border-teal-500 text-white p-6 rounded-2xl transition-all duration-300 flex items-center gap-4 group backdrop-blur-sm hover:-translate-y-1 hover:shadow-[0_0_30px_rgba(13,148,136,0.3)]">
-                    <div class="w-12 h-12 bg-white/10 group-hover:bg-white/20 rounded-xl flex items-center justify-center shrink-0 transition-colors">
-                        <i class="fa-solid fa-phone text-xl"></i>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-20 anim d1">
+                <a href="tel:0988717107" class="group bg-slate-800/50 hover:bg-emerald-600 border border-slate-700 p-8 rounded-[2.5rem] transition-all duration-500 flex flex-col items-center text-center">
+                    <div class="w-16 h-16 bg-emerald-500/20 group-hover:bg-white/20 rounded-2xl flex items-center justify-center text-emerald-400 group-hover:text-white mb-6 text-2xl transition-all">
+                        <i class="fa-solid fa-phone"></i>
                     </div>
-                    <div class="min-w-0">
-                        <span class="font-heading font-bold text-base block">0988.717.107</span>
-                        <span class="text-sm text-slate-400 group-hover:text-teal-100 transition-colors">Hotline tư vấn</span>
-                    </div>
+                    <h4 class="font-bold text-xl mb-2">0988.717.107</h4>
+                    <span class="text-sm text-slate-500 group-hover:text-white/70">Hotline tư vấn</span>
                 </a>
 
-                <a href="https://www.facebook.com/groups/tukylaroiloantoanthan" target="_blank" rel="noopener"
-                   class="bg-white/10 hover:bg-[#1877F2] border border-white/10 hover:border-[#1877F2] text-white p-6 rounded-2xl transition-all duration-300 flex items-center gap-4 group backdrop-blur-sm hover:-translate-y-1 hover:shadow-[0_0_30px_rgba(24,119,242,0.3)]">
-                    <div class="w-12 h-12 bg-white/10 group-hover:bg-white/20 rounded-xl flex items-center justify-center shrink-0 transition-colors">
-                        <i class="fa-brands fa-facebook text-xl"></i>
+                <a href="https://www.facebook.com/groups/tukylaroiloantoanthan" target="_blank" class="group bg-slate-800/50 hover:bg-blue-600 border border-slate-700 p-8 rounded-[2.5rem] transition-all duration-500 flex flex-col items-center text-center">
+                    <div class="w-16 h-16 bg-blue-500/20 group-hover:bg-white/20 rounded-2xl flex items-center justify-center text-blue-400 group-hover:text-white mb-6 text-2xl transition-all">
+                        <i class="fa-brands fa-facebook"></i>
                     </div>
-                    <div class="min-w-0">
-                        <span class="font-heading font-bold text-base block">Cộng đồng</span>
-                        <span class="text-sm text-slate-400 group-hover:text-blue-100 transition-colors">Hiểu con từ Gốc</span>
-                    </div>
+                    <h4 class="font-bold text-xl mb-2">Cộng đồng FB</h4>
+                    <span class="text-sm text-slate-500 group-hover:text-white/70">Hiểu con từ Gốc</span>
                 </a>
 
-                <a href="https://zalo.me/g/vmgfxy834" target="_blank" rel="noopener"
-                   class="bg-white/10 hover:bg-[#0068FF] border border-white/10 hover:border-[#0068FF] text-white p-6 rounded-2xl transition-all duration-300 flex items-center gap-4 group backdrop-blur-sm hover:-translate-y-1 hover:shadow-[0_0_30px_rgba(0,104,255,0.3)]">
-                    <div class="w-12 h-12 bg-white/10 group-hover:bg-white/20 rounded-xl flex items-center justify-center shrink-0 transition-colors">
-                        <i class="fa-solid fa-comment-dots text-xl"></i>
+                <a href="https://zalo.me/g/vmgfxy834" target="_blank" class="group bg-slate-800/50 hover:bg-sky-500 border border-slate-700 p-8 rounded-[2.5rem] transition-all duration-500 flex flex-col items-center text-center">
+                    <div class="w-16 h-16 bg-sky-500/20 group-hover:bg-white/20 rounded-2xl flex items-center justify-center text-sky-400 group-hover:text-white mb-6 text-2xl transition-all">
+                        <i class="fa-solid fa-comment-dots"></i>
                     </div>
-                    <div class="min-w-0">
-                        <span class="font-heading font-bold text-base block">Nhóm Zalo</span>
-                        <span class="text-sm text-slate-400 group-hover:text-blue-100 transition-colors">Giải đáp nhanh</span>
-                    </div>
+                    <h4 class="font-bold text-xl mb-2">Nhóm Zalo</h4>
+                    <span class="text-sm text-slate-500 group-hover:text-white/70">Hỏi đáp trực tiếp</span>
                 </a>
 
-                <a href="https://www.facebook.com/trolynamkhanh" target="_blank" rel="noopener"
-                   class="bg-white/10 hover:bg-emerald-600 border border-white/10 hover:border-emerald-500 text-white p-6 rounded-2xl transition-all duration-300 flex items-center gap-4 group backdrop-blur-sm hover:-translate-y-1 hover:shadow-[0_0_30px_rgba(16,185,129,0.3)]">
-                    <div class="w-12 h-12 bg-white/10 group-hover:bg-white/20 rounded-xl flex items-center justify-center shrink-0 transition-colors">
-                        <i class="fa-solid fa-headset text-xl"></i>
+                <a href="https://www.facebook.com/trolynamkhanh" target="_blank" class="group bg-slate-800/50 hover:bg-indigo-600 border border-slate-700 p-8 rounded-[2.5rem] transition-all duration-500 flex flex-col items-center text-center">
+                    <div class="w-16 h-16 bg-indigo-500/20 group-hover:bg-white/20 rounded-2xl flex items-center justify-center text-indigo-400 group-hover:text-white mb-6 text-2xl transition-all">
+                        <i class="fa-solid fa-user-doctor"></i>
                     </div>
-                    <div class="min-w-0">
-                        <span class="font-heading font-bold text-base block">Trợ lý Nam Khánh</span>
-                        <span class="text-sm text-slate-400 group-hover:text-emerald-100 transition-colors">Kết nối trực tiếp</span>
-                    </div>
+                    <h4 class="font-bold text-xl mb-2">Trợ lý Chuyên môn</h4>
+                    <span class="text-sm text-slate-500 group-hover:text-white/70">Kết nối 1:1</span>
                 </a>
             </div>
 
-            <!-- Disclaimer -->
-            <div class="border-t border-white/10 pt-8 anim d2">
-                <div class="bg-white/5 rounded-2xl p-5 sm:p-6 backdrop-blur-sm border border-white/5 mb-6 max-w-5xl mx-auto">
-                    <p class="text-slate-400 text-xs sm:text-sm leading-relaxed text-center">
-                        <strong class="text-slate-300">⚠️ TUYÊN BỐ MIỄN TRỪ TRÁCH NHIỆM:</strong> Tài liệu này được biên soạn nhằm mục đích cung cấp thông tin khoa học và giáo dục cộng đồng. Nội dung văn bản không mang tính chất chẩn đoán bệnh và không thay thế cho các phương pháp điều trị được chỉ định bởi bác sĩ chuyên môn. Mọi quyết định thay đổi chế độ dinh dưỡng cần được tham khảo ý kiến của các chuyên gia y tế.
-                    </p>
-                </div>
-                <p class="text-center text-slate-500 text-sm">© <?php echo date('Y'); ?> Hiểu con từ Gốc — Tự kỷ là Rối loạn toàn thân</p>
+            <!-- Bottom Note -->
+            <div class="bg-gradient-to-r from-emerald-900/30 to-sky-900/30 rounded-3xl p-8 border border-white/5 text-center text-xs text-slate-400 max-w-4xl mx-auto italic font-medium">
+                <i class="fa-solid fa-circle-info mr-2 text-emerald-500"></i> Lời nhắn gửi: Tài liệu này nhằm nâng cao nhận thức cộng đồng và không thay thế chẩn đoán y khoa chuyên sâu. Hãy luôn lắng nghe con và tham vấn chuyên gia.
             </div>
+            <p class="text-center mt-12 text-slate-600 text-[10px] uppercase tracking-widest font-bold">© 2026 Hiểu con từ Gốc — Tình yêu song hành cùng trí tuệ</p>
         </div>
     </div>
 </section>
@@ -653,35 +627,43 @@ document.addEventListener('DOMContentLoaded', () => {
     new Chart(document.getElementById('bloodSugarChart').getContext('2d'), {
         type: 'line',
         data: {
-            labels: ['0h','1h','2h','3h','4h'],
+            labels: ['Trước ăn', 'Sau 1h', 'Sau 2h', 'Sau 3h', 'Sau 4h'],
             datasets: [
                 {
-                    label: 'Carb Tinh chế (Gây biến động)',
-                    data: [90,180,70,85,90],
-                    borderColor: '#ef4444',
-                    backgroundColor: 'rgba(239,68,68,0.08)',
-                    borderWidth: 2.5, tension: 0.4, fill: true,
-                    pointBackgroundColor: '#ef4444', pointRadius: 4
+                    label: 'Carb Tinh chế',
+                    data: [90, 180, 70, 85, 90],
+                    borderColor: '#f43f5e',
+                    backgroundColor: 'rgba(244,63,94,0.05)',
+                    borderWidth: 3, tension: 0.45, fill: true,
+                    pointBackgroundColor: '#fff', pointBorderColor: '#f43f5e', pointBorderWidth: 2, pointRadius: 4
                 },
                 {
-                    label: 'Thực phẩm Toàn phần (Ổn định)',
-                    data: [90,110,105,95,90],
-                    borderColor: '#0f766e',
-                    backgroundColor: 'rgba(15,118,110,0.08)',
-                    borderWidth: 2.5, tension: 0.4, fill: true,
-                    borderDash: [6,4],
-                    pointBackgroundColor: '#0f766e', pointRadius: 4
+                    label: 'Thực phẩm Toàn phần',
+                    data: [90, 110, 105, 95, 90],
+                    borderColor: '#10b981',
+                    backgroundColor: 'rgba(16,185,129,0.05)',
+                    borderWidth: 3, tension: 0.45, fill: true,
+                    pointBackgroundColor: '#fff', pointBorderColor: '#10b981', pointBorderWidth: 2, pointRadius: 4
                 }
             ]
         },
         options: {
             responsive: true, maintainAspectRatio: false,
             plugins: {
-                legend: { position: 'bottom', labels: { boxWidth: 12, font: { size: 11 }, padding: 16 } },
-                tooltip: { mode: 'index', intersect: false }
+                legend: { display: false },
+                tooltip: {
+                    mode: 'index', intersect: false,
+                    backgroundColor: 'rgba(255,255,255,0.95)',
+                    titleColor: '#1e293b', bodyColor: '#475569',
+                    borderColor: '#e2e8f0', borderWidth: 1
+                }
             },
             scales: {
-                y: { title: { display: true, text: 'Đường huyết (mg/dL)', font: { size: 11 } }, min: 50, max: 200, grid: { color: 'rgba(0,0,0,0.04)' } },
+                y: {
+                    title: { display: true, text: 'Chỉ số Đường huyết', font: { size: 10, weight: '700' } },
+                    min: 50, max: 200,
+                    grid: { color: 'rgba(0,0,0,0.03)' }
+                },
                 x: { grid: { display: false } }
             }
         }
@@ -692,7 +674,7 @@ document.addEventListener('DOMContentLoaded', () => {
         type: 'bar',
         data: {
             labels: ['Thiếu Co-factor','Đủ Co-factor'],
-            datasets: [{ data: [35,100], backgroundColor: ['#d1d5db','#0f766e'], borderRadius: 8 }]
+            datasets: [{ data: [35,100], backgroundColor: ['#e2e8f0','#10b981'], borderRadius: 8 }]
         },
         options: {
             responsive: true, maintainAspectRatio: false,
@@ -743,7 +725,7 @@ function updateBiochem(key) {
     titleEl.textContent = d.title;
     descEl.textContent  = d.desc;
     document.getElementById('bio-tags').innerHTML = d.tags.map(t =>
-        `<span class="bg-teal-100 text-teal-800 text-xs font-bold px-3 py-1 rounded-full">${t}</span>`
+        `<span class="bg-emerald-100 text-emerald-800 text-xs font-bold px-3 py-1 rounded-full">${t}</span>`
     ).join('');
 }
 
