@@ -500,7 +500,7 @@ footer strong{color:rgba(255,255,255,.65)}
     <div class="next-grid">
       <div class="ncard"><div class="nicon ifb">📘</div><h4>Đọc thêm kiến thức nền tảng</h4><p>Cộng đồng Facebook<br><strong>Hiểu con từ Gốc</strong><br>Tự kỷ là Rối loạn toàn thân</p><a href="#" class="btn-ch">Tham gia cộng đồng →</a></div>
       <div class="ncard"><div class="nicon iza">💬</div><h4>Theo dõi cập nhật gần hơn</h4><p>Group Zalo<br><strong>Hiểu con từ Gốc</strong><br>Tự kỷ là Rối loạn toàn thân</p><a href="#" class="btn-ch">Vào Group Zalo →</a></div>
-      <div class="ncard"><div class="nicon img">✉️</div><h4>Nhắn tin để được hỗ trợ</h4><p>Trợ lý Nam Khánh<br>Hỗ trợ trực tiếp qua Page</p><a href="#" class="btn-ch">Nhắn Page →</a></div>
+      <div class="ncard"><div class="nicon img">✉️</div><h4>Nhắn tin để được hỗ trợ</h4><p>Hỗ trợ trực tiếp qua Page</p><a href="https://m.me/884864428052710?ref=2531960" target="_blank" class="btn-ch">Nhắn Page →</a></div>
       <div class="ncard"><div class="nicon iph">📞</div><h4>Trao đổi nhanh qua Zalo</h4><p>Hotline / Zalo<br><strong>0988.71.71.07</strong></p><a href="tel:0988717107" class="btn-ch">Liên hệ ngay →</a></div>
     </div>
   </div>
@@ -599,7 +599,7 @@ function toInfo(act){
   } else {
     document.getElementById('ib').className='ibadge isend';document.getElementById('ib').textContent='📨 Gửi cho trợ lý';
     document.getElementById('iform-title').textContent='Để gửi kết quả để được tư vấn';
-    document.getElementById('iform-ctx').textContent='Cha mẹ để lại thông tin để trợ lý Nam Khánh nhận kết quả và hỗ trợ, tư vấn trực tiếp qua Zalo.';
+    document.getElementById('iform-ctx').textContent='Cha mẹ để lại thông tin để nhận kết quả và hỗ trợ, tư vấn trực tiếp qua Zalo.';
     const b=document.getElementById('sbtn');b.textContent='📨 Gửi kết quả cho trợ lý';b.className='sub-btn sub-send';
   }
   document.getElementById('fn').value='';document.getElementById('fp').value='';
@@ -689,7 +689,7 @@ ${scH}
 
 <div style="margin-top:32px;padding-top:14px;border-top:1px solid #e2d8cc;font-size:10.5px;color:#8a9e97;line-height:1.6">
   <strong style="color:#4a5e57">Lưu ý:</strong> Kết quả này không phải chẩn đoán y tế. Checklist dựa trên bài nói chuyện <em>"Neuro-inflammation in Autism Spectrum Disorders"</em> của Michael W. Elice, MD.<br>
-  Để được hỗ trợ: <strong style="color:#4a5e57">Trợ lý Nam Khánh — 0988.71.71.07</strong>
+  Để được hỗ trợ: <strong style="color:#4a5e57">Hỗ trợ chuyên môn - 0988.71.71.07</strong>
 </div>
 </body></html>`;
 
@@ -712,9 +712,12 @@ ${scH}
 }
 
 function fakeSend(name,phone){
-  document.getElementById('gen-msg').textContent='Đang gửi kết quả…';
+  document.getElementById('gen-msg').textContent='Đang chuyển hướng đến Messenger…';
   document.getElementById('gen').classList.add('show');
-  setTimeout(()=>{document.getElementById('gen').classList.remove('show');showSuccess('send')},1800);
+  setTimeout(()=>{
+    document.getElementById('gen').classList.remove('show');
+    window.location.href = 'https://m.me/884864428052710?ref=2531960';
+  },1800);
 }
 
 function showSuccess(type){
