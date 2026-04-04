@@ -1771,12 +1771,12 @@
 
     <!-- VIEW 3: SUCCESS -->
     <div class="modal-view" id="v-success">
-      <div class="mv-success">
-        <span class="sicon" id="sicon"></span>
-        <h3 id="stitle"></h3>
+      <div class="mv-success" style="padding-bottom:32px">
+        <span class="sicon" id="sicon">🖼️</span>
+        <h3 id="stitle">Ảnh kết quả đã sẵn sàng!</h3>
         <p id="sbody"></p>
-        <div class="sactions">
-          <a class="btn-messenger" href="https://m.me/884864428052710?ref=1002533683" target="_blank" id="btn-messenger" style="display:none">
+        <div class="sactions" style="padding:0 32px">
+          <a class="btn-messenger" href="https://m.me/884864428052710?ref=1002533683" target="_blank" id="btn-messenger">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M12 2C6.477 2 2 6.145 2 11.243c0 2.916 1.407 5.52 3.604 7.24V22l3.29-1.791C9.874 20.399 10.922 20.5 12 20.5c5.523 0 10-4.145 10-9.257C22 6.145 17.523 2 12 2zm1.007 12.46l-2.55-2.71-4.974 2.71 5.468-5.804 2.612 2.71 4.913-2.71-5.469 5.804z"/></svg>
             Gửi kết quả tư vấn qua Messenger
           </a>
@@ -2058,20 +2058,40 @@
       backgroundColor: '#ffffff',
       logging: false
     }).then(function(canvas) {
-      document.body.removeChild(card);
-      document.getElementById('gen').classList.remove('show');
+      canvas.toBlob(function(blob) {
+        document.body.removeChild(card);
+        document.getElementById('gen').classList.remove('show');
 
-      // Tải ảnh xuống
-      var link = document.createElement('a');
-      link.download = 'ket-qua-checklist-hieuconfigoc.png';
-      link.href = canvas.toDataURL('image/png');
-      link.click();
+        var isMobile = /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent);
+        var file = new File([blob], "ket-qua-checklist.png", { type: "image/png" });
 
-      // Sau khi tải, mở modal thành công với nút Messenger
-      document.getElementById('btn-messenger').style.display = 'flex';
-      showSuccess('img');
+        var showEnd = function() {
+          document.getElementById('sbody').innerHTML = `Ảnh kết quả đã được xử lý xong cho <strong>${uName}</strong>.<br><br>Nếu muốn được hỗ trợ tư vấn trực tiếp, cha mẹ hãy nhắn tin cho chúng tôi qua Messenger bên dưới nhé.`;
+          ['pc', 'pn', 'pf'].forEach(function(id) { document.getElementById(id).classList.add('on') });
+          toView('success');
+        };
 
-      ['pc', 'pn', 'pf'].forEach(function(id) { document.getElementById(id).classList.add('on') });
+        if (isMobile && navigator.canShare && navigator.canShare({ files: [file] })) {
+          // Ngã rẽ 1: Mobile - dùng Web Share API mở menu chia sẻ/lưu native của HĐH
+          navigator.share({
+            files: [file],
+            title: 'Kết quả Checklist',
+            text: 'Mời bạn xem kết quả checklist'
+          }).then(function() {
+            showEnd();
+          }).catch(function(err) {
+            console.log('User cancelled share or error: ', err);
+            showEnd(); 
+          });
+        } else {
+          // Ngã rẽ 2: PC/Desktop (hoặc trình duyệt cũ) - Auto download qua thẻ <a> inline
+          var link = document.createElement('a');
+          link.download = 'ket-qua-checklist.png';
+          link.href = URL.createObjectURL(blob);
+          link.click();
+          showEnd();
+        }
+      }, "image/png");
     }).catch(function(err) {
       console.error('html2canvas error', err);
       document.body.removeChild(card);
@@ -2080,13 +2100,6 @@
     });
   }
 
-
-  function showSuccess(type) {
-    document.getElementById('sicon').textContent = '🖼️';
-    document.getElementById('stitle').textContent = 'Ảnh kết quả đã tải xuống!';
-    document.getElementById('sbody').innerHTML = `Ảnh kết quả đã được lưu về thiết bị của <strong>${uName}</strong>.<br><br>Nếu muốn được tư vấn thêm, cha mẹ có thể nhắn tin cho chúng tôi qua Messenger bên dưới.`;
-    toView('success');
-  }
 
   function closeModal() {
     document.getElementById('modal').classList.remove('open');
