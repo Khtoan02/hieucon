@@ -1775,6 +1775,16 @@
         <span class="sicon" id="sicon">🖼️</span>
         <h3 id="stitle">Ảnh kết quả đã sẵn sàng!</h3>
         <p id="sbody"></p>
+        <div id="result-img-wrap" style="display:none;margin:16px -32px 20px;">
+          <img id="result-img" src="" alt="Ảnh kết quả" style="width:100%;display:block;">
+          <div style="background:#f0f9f0;border:1.5px solid #a8d8a8;border-radius:10px;margin:12px 16px 0;padding:14px 16px;text-align:left">
+            <div style="font-size:14px;font-weight:700;color:#2d6a2d;margin-bottom:6px">📲 Cách lưu ảnh về điện thoại:</div>
+            <div style="font-size:13.5px;color:#3a5e3a;line-height:1.7">
+              ① <strong>Nhấn giữ</strong> vào ảnh bên trên<br>
+              ② Chọn <strong>"Đầu lưu phương tiện"</strong> hoặc <strong>"Lưu ảnh"</strong>
+            </div>
+          </div>
+        </div>
         <div class="sactions" style="padding:0 32px">
           <a class="btn-messenger" href="https://m.me/884864428052710?ref=1002533683" target="_blank" id="btn-messenger">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M12 2C6.477 2 2 6.145 2 11.243c0 2.916 1.407 5.52 3.604 7.24V22l3.29-1.791C9.874 20.399 10.922 20.5 12 20.5c5.523 0 10-4.145 10-9.257C22 6.145 17.523 2 12 2zm1.007 12.46l-2.55-2.71-4.974 2.71 5.468-5.804 2.612 2.71 4.913-2.71-5.469 5.804z"/></svg>
@@ -2064,6 +2074,7 @@
 
         var isMobile = /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent);
         var file = new File([blob], "ket-qua-checklist.png", { type: "image/png" });
+        var dataUrl = canvas.toDataURL('image/png');
 
         var showEnd = function() {
           document.getElementById('sbody').innerHTML = `Ảnh kết quả đã được xử lý xong cho <strong>${uName}</strong>.<br><br>Nếu muốn được hỗ trợ tư vấn trực tiếp, cha mẹ hãy nhắn tin cho chúng tôi qua Messenger bên dưới nhé.`;
@@ -2071,20 +2082,34 @@
           toView('success');
         };
 
-        if (isMobile && navigator.canShare && navigator.canShare({ files: [file] })) {
-          // Ngã rẽ 1: Mobile - dùng Web Share API mở menu chia sẻ/lưu native của HĐH
-          navigator.share({
-            files: [file],
-            title: 'Kết quả Checklist',
-            text: 'Mời bạn xem kết quả checklist'
-          }).then(function() {
-            showEnd();
-          }).catch(function(err) {
-            console.log('User cancelled share or error: ', err);
-            showEnd(); 
-          });
+        var showFallback = function() {
+          document.getElementById('stitle').textContent = 'Ảnh kết quả đã sẵn sàng!';
+          document.getElementById('sbody').innerHTML = `Ảnh kết quả của <strong>${uName}</strong> đã được tạo. Hãy <strong>nhấn giữ</strong> vào ảnh bên dưới để lưu về điện thoại nhé.`;
+          document.getElementById('result-img').src = dataUrl;
+          document.getElementById('result-img-wrap').style.display = 'block';
+          ['pc', 'pn', 'pf'].forEach(function(id) { document.getElementById(id).classList.add('on') });
+          toView('success');
+        };
+
+        if (isMobile) {
+          if (navigator.canShare && navigator.canShare({ files: [file] })) {
+            // Mobile có hỗ trợ Web Share API (Safari, Chrome xịn)
+            navigator.share({
+              files: [file],
+              title: 'Kết quả Checklist',
+              text: 'Mời bạn xem kết quả checklist'
+            }).then(function() {
+              showEnd();
+            }).catch(function(err) {
+              console.log('Share failed or cancelled: ', err);
+              showFallback(); // Dự phòng khi Share thất bại/Huỷ bỏ
+            });
+          } else {
+            // Mobile (Cốc Cốc, trình duyệt in-app) không hỗ trợ share tệp
+            showFallback();
+          }
         } else {
-          // Ngã rẽ 2: PC/Desktop (hoặc trình duyệt cũ) - Auto download qua thẻ <a> inline
+          // PC/Desktop (Auto download)
           var link = document.createElement('a');
           link.download = 'ket-qua-checklist.png';
           link.href = URL.createObjectURL(blob);
