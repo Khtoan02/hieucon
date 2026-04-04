@@ -879,14 +879,9 @@
     margin-bottom: 20px
   }
 
-  .ipdf {
-    background: #e8f0fe;
-    color: #3d5af1
-  }
-
-  .isend {
-    background: #e6f4ea;
-    color: #1e7e34
+  .iimg {
+    background: #fff3e0;
+    color: #e65100
   }
 
   .field-group {
@@ -951,26 +946,41 @@
     gap: 10px
   }
 
-  .sub-pdf {
-    background: #3d5af1;
+  .sub-img {
+    background: var(--tc);
     color: white;
-    box-shadow: 0 8px 24px rgba(61, 90, 241, .3)
+    box-shadow: 0 8px 24px rgba(201, 122, 85, .35)
   }
 
-  .sub-pdf:hover {
-    background: #2d47d4;
+  .sub-img:hover {
+    background: var(--tc-dark);
     transform: translateY(-2px)
   }
 
-  .sub-send {
-    background: var(--sage);
+  .btn-messenger {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    width: 100%;
+    padding: 16px;
+    border-radius: 100px;
+    border: none;
+    background: #0084ff;
     color: white;
-    box-shadow: 0 8px 24px rgba(122, 158, 135, .35)
+    font-family: 'Be Vietnam Pro', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all .3s ease;
+    box-shadow: 0 8px 24px rgba(0, 132, 255, .3)
   }
 
-  .sub-send:hover {
-    background: #648a72;
-    transform: translateY(-2px)
+  .btn-messenger:hover {
+    background: #006acc;
+    transform: translateY(-2px);
+    box-shadow: 0 12px 32px rgba(0, 132, 255, .4)
   }
 
   .field-legal {
@@ -1732,20 +1742,10 @@
           </div>
         </div>
         <div class="modal-actions">
-          <button class="act-btn pri" onclick="toInfo('pdf')">
-            <div class="ai w">📥</div>
-            <div class="at"><span class="at-title">Tải kết quả dạng PDF</span><span class="at-sub">Lưu kết quả</span>
+          <button class="act-btn pri" onclick="toInfo('img')">
+            <div class="ai w">🖼️</div>
+            <div class="at"><span class="at-title">Tải ảnh kết quả</span><span class="at-sub">Lưu về điện thoại ngay</span>
             </div>
-          </button>
-          <button class="act-btn sec" onclick="toInfo('send')">
-            <div class="ai d">📨</div>
-            <div class="at"><span class="at-title">Gửi kết quả để được tư vấn</span><span class="at-sub">Nhận tư vấn và
-                hỗ trợ trực tiếp</span></div>
-          </button>
-          <button class="act-btn ghost" onclick="ghostView()">
-            <div class="ai g">👁</div>
-            <div class="at"><span class="at-title">Chỉ xem trên trang</span><span class="at-sub">Không cần để lại thông
-                tin — xem ngay bên dưới</span></div>
           </button>
         </div>
       </div>
@@ -1776,12 +1776,10 @@
         <h3 id="stitle"></h3>
         <p id="sbody"></p>
         <div class="sactions">
-          <button class="act-btn pri" onclick="closeModal()" style="justify-content:center">
-            <div class="at" style="text-align:center"><span class="at-title">Xem hướng đi tiếp theo</span></div>
-          </button>
-          <button class="act-btn ghost" onclick="closeModal()" style="justify-content:center">
-            <div class="at" style="text-align:center"><span class="at-title">Đóng</span></div>
-          </button>
+          <a class="btn-messenger" href="https://m.me/884864428052710?ref=1002533683" target="_blank" id="btn-messenger" style="display:none">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M12 2C6.477 2 2 6.145 2 11.243c0 2.916 1.407 5.52 3.604 7.24V22l3.29-1.791C9.874 20.399 10.922 20.5 12 20.5c5.523 0 10-4.145 10-9.257C22 6.145 17.523 2 12 2zm1.007 12.46l-2.55-2.71-4.974 2.71 5.468-5.804 2.612 2.71 4.913-2.71-5.469 5.804z"/></svg>
+            Gửi kết quả tư vấn qua Messenger
+          </a>
         </div>
       </div>
     </div>
@@ -1845,6 +1843,7 @@
   </div>
 </footer>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" integrity="sha512-BNaRQnYJYiPSqHHDb58B0yaPfCu+Wgds8Gp/gU33kqBtgNS4tSPHuGibyoeqMV/TJlSKda6FXzoEyYGjTe+vXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script>
   /* ── Cookie helpers ── */
   function setCookie(name, val, days) { const d = new Date(); d.setTime(d.getTime() + days * 864e5); document.cookie = name + '=' + encodeURIComponent(val) + ';expires=' + d.toUTCString() + ';path=/;SameSite=Lax' }
@@ -1948,18 +1947,11 @@
 
   function toInfo(act) {
     action = act;
-    if (act === 'pdf') {
-      document.getElementById('ib').className = 'ibadge ipdf'; document.getElementById('ib').textContent = '📥 Tải kết quả PDF';
-      document.getElementById('iform-title').textContent = 'Để tải file kết quả';
-      document.getElementById('iform-ctx').textContent = 'Cha mẹ để lại thông tin để tải file PDF kết quả checklist — có thể in và mang theo khi gặp bác sĩ hoặc chuyên gia.';
-      const b = document.getElementById('sbtn'); b.textContent = '📥 Tải PDF ngay'; b.className = 'sub-btn sub-pdf';
-    } else {
-      document.getElementById('ib').className = 'ibadge isend'; document.getElementById('ib').textContent = '📨 Gửi cho trợ lý';
-      document.getElementById('iform-title').textContent = 'Để gửi kết quả để được tư vấn';
-      document.getElementById('iform-ctx').textContent = 'Cha mẹ để lại thông tin để nhận kết quả và hỗ trợ, tư vấn trực tiếp qua Zalo.';
-      const b = document.getElementById('sbtn'); b.textContent = '📨 Gửi kết quả'; b.className = 'sub-btn sub-send';
-    }
-    document.getElementById('fn').value = ''; document.getElementById('fp').value = '';
+    document.getElementById('ib').className = 'ibadge iimg'; document.getElementById('ib').textContent = '🖼️ Tải ảnh kết quả';
+    document.getElementById('iform-title').textContent = 'Điền thông tin để tải ảnh';
+    document.getElementById('iform-ctx').textContent = 'Cha mẹ điền Tên và Số điện thoại — thông tin sẽ hiển thị trên ảnh kết quả và giúp chúng tôi liên hệ hỗ trợ nếu cần.';
+    const b = document.getElementById('sbtn'); b.textContent = '🖼️ Tải ảnh ngay'; b.className = 'sub-btn sub-img';
+    document.getElementById('fn').value = uName || ''; document.getElementById('fp').value = uPhone || '';
     toView('info');
   }
 
@@ -1986,19 +1978,16 @@
       await updateTracker(false);
     } catch (e) { console.error('Tracking failed', e); }
 
-    if (action === 'pdf') {
-      document.getElementById('gen-msg').textContent = 'Đang tạo báo cáo kết quả...';
-      setTimeout(() => { genPDF(n, p); }, 400);
-    } else {
-      fakeSend(n, p);
-    }
+    document.getElementById('gen-msg').textContent = 'Đang tạo ảnh kết quả...';
+    setTimeout(() => { genImage(n, p); }, 400);
   }
   function errField(id) { const e = document.getElementById(id); e.classList.add('err'); e.focus(); setTimeout(() => e.classList.remove('err'), 2000) }
 
-  /* ── PDF: sử dụng window.print() với #print-area đã có sẵn ── */
-  function genPDF(name, phone) {
+  /* ── IMAGE: dùng html2canvas để tạo và tải ảnh ── */
+  function buildImageCard(name, phone) {
     var badge = document.getElementById('rb');
-    var bc = badge.className.includes('bl') ? 'low' : badge.className.includes('bm') ? 'mid' : 'high';
+    var bc = badge.className.includes('bl') ? '#3a7a50' : badge.className.includes('bm') ? '#c07a35' : '#b85a35';
+    var bcBg = badge.className.includes('bl') ? '#e8f5ec' : badge.className.includes('bm') ? '#fff3e8' : '#fdeee8';
     var btext = badge.textContent;
     var rtitle = document.getElementById('rt').textContent;
     var rbody = document.getElementById('rbody').textContent;
@@ -2006,85 +1995,96 @@
     var rgs = document.getElementById('rgs').textContent;
     var now = new Date().toLocaleDateString('vi-VN');
 
-    // Score rows HTML (dùng print CSS classes)
     var scRows = '';
     for (var i = 0; i < scores.length; i++) {
       var s = scores[i];
       var lbl = GN[i].split(' & ')[0].split(' – ')[0];
-      scRows += '<div class="psrow"><div class="pslab">' + lbl + '</div><div class="psbg"><div class="psfill" style="width:' + s.pt + '%;background-color:' + GC[i] + ' !important"></div></div><div class="psct">' + s.ch + '/' + s.mx + '</div></div>';
+      scRows += '<div style="display:grid;grid-template-columns:110px 1fr 38px;align-items:center;gap:8px;margin-bottom:8px">' +
+        '<div style="font-size:12px;color:#4a5e57;text-align:right">' + lbl + '</div>' +
+        '<div style="height:8px;background:#f0e9dc;border-radius:4px;overflow:hidden">' +
+          '<div style="height:100%;width:' + s.pt + '%;background:' + GC[i] + ';border-radius:4px"></div>' +
+        '</div>' +
+        '<div style="font-size:11px;color:#8a9e97;text-align:right">' + s.ch + '/' + s.mx + '</div>' +
+      '</div>';
     }
 
-    // Danh sách dấu hiệu đã tick
     var blistH = '';
     for (var g = 0; g < 6; g++) {
       var its = document.querySelectorAll('#g' + g + ' input:checked');
       if (its.length) {
-        blistH += '<div class="pgname">' + GN[g] + '</div>';
+        blistH += '<div style="font-size:13px;font-weight:700;color:#2d3a35;margin:12px 0 4px;padding-bottom:4px;border-bottom:1px solid #e2d8cc">' + GN[g] + '</div>';
         for (var j = 0; j < its.length; j++) {
-          blistH += '<div class="pitem">' + its[j].dataset.lb + '</div>';
+          blistH += '<div style="font-size:12px;color:#4a5e57;padding:3px 0 3px 16px;position:relative"><span style="position:absolute;left:0;color:#7a9e87;font-weight:700">✓</span>' + its[j].dataset.lb + '</div>';
         }
       }
     }
     if (!blistH) blistH = '<p style="color:#8a9e97;font-style:italic;font-size:12px">Chưa có dấu hiệu nào được ghi nhận.</p>';
 
-    // Fill #pdf-content
-    document.getElementById('pdf-content').innerHTML =
-      '<div class="ph">' +
-      '<div class="plr"><span class="plogo">Hiểu con từ Gốc</span><span class="pdate">Ngày: ' + now + '</span></div>' +
-      '<div class="ptitle">Báo cáo Kết quả Checklist</div>' +
-      '<div class="psub">Dấu hiệu Viêm hệ thần kinh ở trẻ tự kỷ</div>' +
-      '<div class="pinforow"><div>Phụ huynh: <strong>' + name + '</strong></div><div>SĐT: <strong>' + phone + '</strong></div></div>' +
-      '<span class="pbadge ' + bc + '">' + btext + '</span>' +
-      '<div class="prtitle">' + rtitle + '</div>' +
-      '<div class="prbody">' + rbody + '</div>' +
+    var card = document.createElement('div');
+    card.style.cssText = 'width:600px;background:white;font-family:Arial,sans-serif;padding:0;border-radius:16px;overflow:hidden;box-shadow:0 8px 32px rgba(0,0,0,0.15);position:fixed;left:-9999px;top:0;z-index:-1';
+    card.innerHTML =
+      '<div style="background:linear-gradient(135deg,#2d3a35 0%,#3d5249 100%);padding:28px 32px 24px">' +
+        '<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px">' +
+          '<span style="font-size:12px;color:rgba(255,255,255,0.55);font-style:italic">Hiểu con từ Gốc</span>' +
+          '<span style="font-size:11px;color:rgba(255,255,255,0.4)">Ngày: ' + now + '</span>' +
+        '</div>' +
+        '<div style="font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:rgba(255,255,255,0.5);margin-bottom:6px">KẾT QUẢ CHECKLIST</div>' +
+        '<div style="font-size:20px;font-weight:700;color:white;line-height:1.3;margin-bottom:8px">' + rtitle + '</div>' +
+        '<div style="display:inline-block;padding:5px 14px;border-radius:100px;font-size:12px;font-weight:700;background:' + bcBg + ';color:' + bc + ';margin-bottom:10px">' + btext + '</div>' +
+        '<div style="font-size:13px;color:rgba(255,255,255,0.6);margin-top:6px">Phụ huynh: <strong style="color:rgba(255,255,255,0.9)">' + name + '</strong> · SĐT: <strong style="color:rgba(255,255,255,0.9)">' + phone + '</strong></div>' +
       '</div>' +
-      '<div class="pstitle">Tổng quan theo từng nhóm <span style="float:right;font-weight:400;color:#8a9e97">' + rtotal + ' · ' + rgs + '</span></div>' +
-      scRows +
-      '<div style="margin-top:16px">' +
-      '<div class="pstitle">Chi tiết dấu hiệu ghi nhận</div>' +
-      blistH +
-      '</div>' +
-      '<div class="pfooter">' +
-      '<strong>Lưu ý:</strong> Kết quả mang tính tham khảo, không thay thế chẩn đoán y tế chuyên môn.<br>' +
-      'Hỗ trợ: 0988.71.71.07 | dawnbridge.care' +
+      '<div style="padding:24px 32px">' +
+        '<div style="font-size:13px;color:#4a5e57;line-height:1.7;padding:14px 16px;background:#f5e6d3;border-radius:8px;border-left:3px solid #e8a882;margin-bottom:20px">' + rbody + '</div>' +
+        '<div style="font-size:13px;font-weight:700;color:#2d3a35;margin-bottom:12px;padding-bottom:6px;border-bottom:1px solid #e2d8cc">Tổng quan theo từng nhóm <span style="float:right;font-weight:400;color:#8a9e97">' + rtotal + ' · ' + rgs + '</span></div>' +
+        scRows +
+        '<div style="margin-top:16px">' +
+          '<div style="font-size:13px;font-weight:700;color:#2d3a35;margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid #e2d8cc">Chi tiết dấu hiệu ghi nhận</div>' +
+          blistH +
+        '</div>' +
+        '<div style="margin-top:20px;padding-top:14px;border-top:1px solid #e2d8cc;font-size:10px;color:#8a9e97;line-height:1.6">' +
+          '<strong>Lưu ý:</strong> Kết quả mang tính tham khảo, không thay thế chẩn đoán y tế chuyên môn.<br>Hỗ trợ: 0988.71.71.07 | dawnbridge.care' +
+        '</div>' +
       '</div>';
-
-    // Ẩn spinner, đóng modal trước khi print
-    document.getElementById('gen').classList.remove('show');
-    document.getElementById('modal').classList.remove('open');
-    document.body.style.overflow = '';
-
-    // Gọi print sau 200ms để DOM kip render
-    setTimeout(function () {
-      window.print();
-      // Sau khi print xong, xóa nội dung và hiện post sections
-      setTimeout(function () {
-        document.getElementById('pdf-content').innerHTML = '';
-        ['pc', 'pn', 'pf'].forEach(function (id) { document.getElementById(id).classList.add('on') });
-        showSuccess('pdf');
-      }, 1000);
-    }, 200);
+    return card;
   }
 
-  function fakeSend(name, phone) {
-    document.getElementById('gen-msg').textContent = 'Đang chuyển hướng đến Messenger…';
-    document.getElementById('gen').classList.add('show');
-    setTimeout(() => {
+  function genImage(name, phone) {
+    var card = buildImageCard(name, phone);
+    document.body.appendChild(card);
+
+    html2canvas(card, {
+      scale: 2,
+      useCORS: true,
+      backgroundColor: '#ffffff',
+      logging: false
+    }).then(function(canvas) {
+      document.body.removeChild(card);
       document.getElementById('gen').classList.remove('show');
-      window.location.href = 'https://m.me/884864428052710?ref=1002533683';
-    }, 1800);
+
+      // Tải ảnh xuống
+      var link = document.createElement('a');
+      link.download = 'ket-qua-checklist-hieuconfigoc.png';
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+
+      // Sau khi tải, mở modal thành công với nút Messenger
+      document.getElementById('btn-messenger').style.display = 'flex';
+      showSuccess('img');
+
+      ['pc', 'pn', 'pf'].forEach(function(id) { document.getElementById(id).classList.add('on') });
+    }).catch(function(err) {
+      console.error('html2canvas error', err);
+      document.body.removeChild(card);
+      document.getElementById('gen').classList.remove('show');
+      alert('Không thể tạo ảnh. Vui lòng thử tải lại trang.');
+    });
   }
+
 
   function showSuccess(type) {
-    if (type === 'pdf') {
-      document.getElementById('sicon').textContent = '📥';
-      document.getElementById('stitle').textContent = 'File PDF đã tải xuống!';
-      document.getElementById('sbody').innerHTML = `File <strong>PDF kết quả</strong> đã được tải về máy của cha mẹ.<br><br>Cảm ơn <strong>${uName}</strong> đã dành thời gian đối chiếu! Cha mẹ có thể in file này để mang theo khi gặp bác sĩ hoặc chuyên gia.`;
-    } else {
-      document.getElementById('sicon').textContent = '✅';
-      document.getElementById('stitle').textContent = 'Đã gửi kết quả thành công!';
-      document.getElementById('sbody').innerHTML = `Trợ lý Nam Khánh đã nhận được kết quả của <strong>${uName}</strong>.<br><br>Sẽ liên hệ lại qua <strong>${uPhone}</strong> trong thời gian sớm nhất để hỗ trợ cha mẹ.`;
-    }
+    document.getElementById('sicon').textContent = '🖼️';
+    document.getElementById('stitle').textContent = 'Ảnh kết quả đã tải xuống!';
+    document.getElementById('sbody').innerHTML = `Ảnh kết quả đã được lưu về thiết bị của <strong>${uName}</strong>.<br><br>Nếu muốn được tư vấn thêm, cha mẹ có thể nhắn tin cho chúng tôi qua Messenger bên dưới.`;
     toView('success');
   }
 
@@ -2097,11 +2097,6 @@
 
   document.getElementById('modal').addEventListener('click', function (e) { if (e.target === this) closeModal() });
 
-  function ghostView() {
-    tr_method = 'just_viewed';
-    updateTracker();
-    closeModal();
-  }
 
   /* ── Empathy animation ── */
   const lis = document.querySelectorAll('.empathy-list li');
