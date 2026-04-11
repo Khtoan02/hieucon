@@ -1836,7 +1836,7 @@
       <div class="ncard">
         <div class="nicon iph">📞</div>
         <h4>Trao đổi nhanh qua Zalo</h4>
-        <p>Hotline / Zalo<br><strong>0988.71.71.07</strong></p><a href="tel:0988717107" class="btn-ch">Liên hệ ngay
+        <p>Hotline / Zalo<br><strong>098 539 1881</strong></p><a href="tel:098 539 1881" class="btn-ch">Liên hệ ngay
           →</a>
       </div>
     </div>
@@ -2052,7 +2052,7 @@
           blistH +
         '</div>' +
         '<div style="margin-top:20px;padding-top:14px;border-top:1px solid #e2d8cc;font-size:10px;color:#8a9e97;line-height:1.6">' +
-          '<strong>Lưu ý:</strong> Kết quả mang tính tham khảo, không thay thế chẩn đoán y tế chuyên môn.<br>Hỗ trợ: 0988.71.71.07 | dawnbridge.care' +
+          '<strong>Lưu ý:</strong> Kết quả mang tính tham khảo, không thay thế chẩn đoán y tế chuyên môn.<br>Hỗ trợ: 098 539 1881 | dawnbridge.care' +
         '</div>' +
       '</div>';
     return card;
