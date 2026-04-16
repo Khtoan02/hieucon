@@ -5,7 +5,6 @@
  * @package Hieucon
  */
 ?>
-<?php wp_head(); ?>
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -45,6 +44,7 @@
             bottom: 0;
         }
     </style>
+    <?php wp_head(); ?>
 </head>
 <body class="text-slate-800 bg-purple-50/30">
 

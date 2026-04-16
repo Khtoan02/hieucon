@@ -38,9 +38,9 @@
         .bg-pattern { background-image: radial-gradient(#CBD5E0 1px, transparent 1px); background-size: 20px 20px; }
         .glass-card { background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.2); }
     </style>
-</head>
     <?php wp_head(); ?>
-<body class="bg-slate-50 antialiased selection:bg-primary selection:text-white">
+</head>
+    <body class="bg-slate-50 antialiased selection:bg-primary selection:text-white">
 
     <!-- Hero Section -->
     <header class="relative bg-gradient-to-br from-blue-50 to-green-50 overflow-hidden pt-20 pb-24 border-b border-gray-100">

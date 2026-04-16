@@ -66,8 +66,8 @@
             .infographic-line::after { display: none; }
         }
     </style>
+    <?php wp_head(); ?>
 </head>
-<?php wp_head(); ?>
 <body class="bg-purple-50 antialiased overflow-x-hidden">
 
     <!-- Hero Section -->

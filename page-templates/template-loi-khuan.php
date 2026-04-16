@@ -5,7 +5,6 @@
  * @package Hieucon
  */
 ?>
-<?php wp_head(); ?>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -91,6 +90,7 @@
         .blob-1 { top: -10%; left: -10%; width: 400px; height: 400px; background: #ccfbf1; }
         .blob-2 { bottom: -10%; right: -10%; width: 300px; height: 300px; background: #bae6fd; }
     </style>
+    <?php wp_head(); ?>
 </head>
 
 <body class="font-sans text-gray-800 bg-gray-50 flex flex-col min-h-screen antialiased">

@@ -5,7 +5,6 @@
  * @package Hieucon
  */
 ?>
-<?php wp_head(); ?>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -97,6 +96,7 @@
             box-shadow: 0 20px 50px -12px rgba(0,0,0,0.15);
         }
     </style>
+    <?php wp_head(); ?>
 </head>
 
 <body class="bg-white text-gray-800 antialiased overflow-x-hidden">

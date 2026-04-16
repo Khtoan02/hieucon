@@ -5,7 +5,6 @@
  * @package Hieucon
  */
 ?>
-<?php wp_head(); ?>
 <!DOCTYPE html>
 <html lang="vi">
 
@@ -127,6 +126,7 @@
         .behavior-btn i { width: 16px; height: 16px; flex-shrink: 0; color: #94a3b8; }
         .behavior-btn.active i { color: #2563eb; }
     </style>
+    <?php wp_head(); ?>
 </head>
 
 <body class="bg-slate-50 text-slate-800 antialiased">
