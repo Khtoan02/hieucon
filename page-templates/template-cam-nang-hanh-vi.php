@@ -193,16 +193,16 @@
 
             <!-- No results message -->
             <p id="no-results" class="text-sm text-slate-400 px-3 py-2 hidden">Không tìm thấy kết quả.</p>
-        </nav>
 
-        <!-- Footer -->
-        <div class="p-4 bg-slate-50 border-t border-slate-100">
-            <a href="https://www.facebook.com/groups/tukylaroiloantoanthan"
-               target="_blank" rel="noopener noreferrer"
-               class="flex items-center gap-2 text-sm text-brand-600 hover:text-brand-800 font-semibold">
-                <i data-lucide="heart" class="w-4 h-4"></i> Cộng đồng hỗ trợ
-            </a>
-        </div>
+            <!-- Community link -->
+            <div class="pt-3 mt-1 border-t border-slate-100">
+                <a href="https://www.facebook.com/groups/tukylaroiloantoanthan"
+                   target="_blank" rel="noopener noreferrer"
+                   class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-pink-600 hover:bg-pink-50 transition-colors">
+                    <i data-lucide="heart" class="w-4 h-4 shrink-0"></i> Cộng đồng hỗ trợ
+                </a>
+            </div>
+        </nav>
     </aside>
 
     <!-- ═══════════════════════════════════════════════════════════
