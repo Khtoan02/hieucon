@@ -1,6 +1,6 @@
 <?php
 /**
- * Template Name: Trang Hiểu Đúng Để Đồng Hành Cùng Con
+ * Template Name: Trang Cẩm Nang Hành Vi
  * 
  * @package Hieucon
  */
