@@ -129,7 +129,7 @@
     </style>
 </head>
 
-<body class="bg-slate-50 text-slate-800 antialiased overflow-x-hidden">
+<body class="bg-slate-50 text-slate-800 antialiased">
 
     <!-- ═══════════════════════════════════════════════════════════
          SIDEBAR OVERLAY (mobile)
@@ -139,11 +139,16 @@
          onclick="closeSidebar()"></div>
 
     <!-- ═══════════════════════════════════════════════════════════
+         APP WRAPPER — sidebar + content must be siblings in flex
+    ═══════════════════════════════════════════════════════════ -->
+    <div class="flex h-screen overflow-hidden">
+
+    <!-- ═══════════════════════════════════════════════════════════
          SIDEBAR
     ═══════════════════════════════════════════════════════════ -->
     <aside id="sidebar"
-           class="fixed inset-y-0 left-0 z-50 w-72 bg-white shadow-xl flex flex-col
-                  -translate-x-full lg:translate-x-0 lg:static lg:flex-shrink-0">
+           class="fixed inset-y-0 left-0 z-50 w-72 flex-shrink-0 bg-white shadow-xl flex flex-col
+                  -translate-x-full lg:relative lg:translate-x-0 lg:inset-auto">
 
         <!-- Logo -->
         <div class="p-6 bg-brand-600 text-white flex items-center justify-between">
@@ -201,27 +206,22 @@
     </aside>
 
     <!-- ═══════════════════════════════════════════════════════════
-         MOBILE HEADER
+         RIGHT COLUMN (mobile header + main content)
     ═══════════════════════════════════════════════════════════ -->
-    <div class="lg:hidden fixed top-0 left-0 right-0 h-16 bg-brand-600 text-white flex items-center justify-between px-4 z-40 shadow-md">
-        <div class="flex items-center gap-3">
-            <button onclick="openSidebar()" class="p-1 hover:bg-brand-700 rounded-md">
-                <i data-lucide="menu" class="w-6 h-6"></i>
-            </button>
-            <span class="font-bold text-lg">Wiki Tự Kỷ</span>
+    <div class="flex-1 flex flex-col min-w-0 overflow-hidden">
+
+        <!-- Mobile header -->
+        <div class="lg:hidden flex-shrink-0 h-16 bg-brand-600 text-white flex items-center justify-between px-4 shadow-md z-40">
+            <div class="flex items-center gap-3">
+                <button onclick="openSidebar()" class="p-1 hover:bg-brand-700 rounded-md">
+                    <i data-lucide="menu" class="w-6 h-6"></i>
+                </button>
+                <span class="font-bold text-lg">Wiki Tự Kỷ</span>
+            </div>
         </div>
-    </div>
 
-    <!-- ═══════════════════════════════════════════════════════════
-         MAIN CONTENT WRAPPER
-    ═══════════════════════════════════════════════════════════ -->
-    <div class="flex min-h-screen lg:flex">
-
-        <!-- Sidebar spacer for desktop -->
-        <div class="hidden lg:block w-72 shrink-0"></div>
-
-        <!-- Main -->
-        <main class="flex-1 overflow-y-auto bg-slate-50 pt-16 lg:pt-0">
+        <!-- Main scrollable -->
+        <main class="flex-1 overflow-y-auto bg-slate-50">
             <div class="max-w-4xl mx-auto p-6 md:p-10 pb-24">
 
                 <!-- ─────────────────────────────────────────
@@ -829,6 +829,10 @@
         });
     });
     </script>
+
+        </main><!-- /main scrollable -->
+    </div><!-- /right column -->
+    </div><!-- /app wrapper -->
 
 <?php wp_footer(); ?>
 </body>
