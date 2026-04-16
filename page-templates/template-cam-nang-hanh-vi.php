@@ -154,7 +154,7 @@
         <div class="p-6 bg-brand-600 text-white flex items-center justify-between">
             <div>
                 <h1 class="text-xl font-bold tracking-tight">Hiểu Con Từ Gốc</h1>
-                <p class="text-brand-200 text-sm mt-1">Wiki Hành Vi Tự Kỷ</p>
+                <p class="text-brand-200 text-sm mt-1">Cẩm nang hành vi</p>
             </div>
             <button onclick="closeSidebar()" class="lg:hidden text-white hover:text-brand-200 p-1">
                 <i data-lucide="x" class="w-6 h-6"></i>
