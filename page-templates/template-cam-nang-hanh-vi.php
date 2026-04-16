@@ -1,6 +1,6 @@
 <?php
 /**
- * Template Name: Trang Cẩm Nang Hành Vi
+ * Template Name: Trang CẨM NANG THẤU HIỂU HÀNH VI
  * 
  * @package Hieucon
  */
@@ -154,7 +154,7 @@
         <div class="p-6 bg-brand-600 text-white flex items-center justify-between">
             <div>
                 <h1 class="text-xl font-bold tracking-tight">Hiểu Con Từ Gốc</h1>
-                <p class="text-brand-200 text-sm mt-1">Cẩm nang hành vi</p>
+                <p class="text-brand-200 text-sm mt-1">CẨM NANG THẤU HIỂU HÀNH VI</p>
             </div>
             <button onclick="closeSidebar()" class="lg:hidden text-white hover:text-brand-200 p-1">
                 <i data-lucide="x" class="w-6 h-6"></i>
@@ -231,7 +231,7 @@
                     <!-- Hero card -->
                     <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden mb-8 anim">
                         <div class="bg-gradient-to-r from-brand-600 to-indigo-600 px-8 py-12 text-white text-center">
-                            <h2 class="text-3xl md:text-4xl font-extrabold mb-4">Wiki Thấu Hiểu Hành Vi</h2>
+                            <h2 class="text-3xl md:text-4xl font-extrabold mb-4">CẨM NANG THẤU HIỂU HÀNH VI</h2>
                             <p class="text-brand-100 text-lg max-w-2xl mx-auto leading-relaxed">
                                 Thay vì hỏi <em>"Làm sao để con ngừng hành vi này?"</em>, hãy cùng nhau tìm câu trả lời cho câu hỏi:<br>
                                 <strong class="text-white text-xl mt-2 block">"Hành vi này đang giúp con điều gì?"</strong>
