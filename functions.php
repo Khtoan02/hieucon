@@ -80,3 +80,70 @@ function hieucon_add_pancake_livechat() {
     <?php
 }
 add_action('wp_footer', 'hieucon_add_pancake_livechat', 999);
+
+/**
+ * Output Open Graph meta tags for social sharing (Facebook, Zalo, Telegram...)
+ * Automatically picks up the page's Featured Image, title, and excerpt.
+ */
+function hieucon_og_meta_tags() {
+    if ( ! is_singular() ) return;
+
+    global $post;
+    setup_postdata( $post );
+
+    // --- Title ---
+    $title = get_the_title( $post );
+
+    // --- Description: excerpt hoặc trimmed content ---
+    $description = '';
+    if ( ! empty( $post->post_excerpt ) ) {
+        $description = wp_strip_all_tags( $post->post_excerpt );
+    } else {
+        $description = wp_trim_words( wp_strip_all_tags( $post->post_content ), 30, '...' );
+    }
+
+    // --- Image: featured image → fallback logo site ---
+    $image_url = '';
+    if ( has_post_thumbnail( $post ) ) {
+        $image_url = get_the_post_thumbnail_url( $post, 'large' );
+    } else {
+        // Fallback: custom_logo hoặc site icon
+        $custom_logo_id = get_theme_mod( 'custom_logo' );
+        if ( $custom_logo_id ) {
+            $logo_data = wp_get_attachment_image_src( $custom_logo_id, 'full' );
+            if ( $logo_data ) $image_url = $logo_data[0];
+        }
+        if ( ! $image_url ) {
+            $image_url = get_site_icon_url( 512 );
+        }
+    }
+
+    // --- URL ---
+    $url = get_permalink( $post );
+
+    // --- Site name ---
+    $site_name = get_bloginfo( 'name' );
+
+    // Output
+    echo "\n<!-- Open Graph / Social Sharing -->\n";
+    echo '<meta property="og:type"        content="article" />' . "\n";
+    echo '<meta property="og:site_name"   content="' . esc_attr( $site_name ) . '" />' . "\n";
+    echo '<meta property="og:url"         content="' . esc_url( $url ) . '" />' . "\n";
+    echo '<meta property="og:title"       content="' . esc_attr( $title ) . '" />' . "\n";
+    echo '<meta property="og:description" content="' . esc_attr( $description ) . '" />' . "\n";
+    if ( $image_url ) {
+        echo '<meta property="og:image"       content="' . esc_url( $image_url ) . '" />' . "\n";
+        echo '<meta property="og:image:width"  content="1200" />' . "\n";
+        echo '<meta property="og:image:height" content="630" />' . "\n";
+    }
+    // Twitter Card
+    echo '<meta name="twitter:card"        content="summary_large_image" />' . "\n";
+    echo '<meta name="twitter:title"       content="' . esc_attr( $title ) . '" />' . "\n";
+    echo '<meta name="twitter:description" content="' . esc_attr( $description ) . '" />' . "\n";
+    if ( $image_url ) {
+        echo '<meta name="twitter:image"   content="' . esc_url( $image_url ) . '" />' . "\n";
+    }
+    echo "<!-- / Open Graph -->\n";
+}
+add_action( 'wp_head', 'hieucon_og_meta_tags', 1 );
+
