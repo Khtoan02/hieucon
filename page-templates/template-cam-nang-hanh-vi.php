@@ -5,7 +5,7 @@
  * @package Hieucon
  */
 ?>
-<?php get_header(); ?>
+<?php wp_head(); ?>
 <!DOCTYPE html>
 <html lang="vi">
 
@@ -833,5 +833,3 @@
 <?php wp_footer(); ?>
 </body>
 </html>
-
-<?php get_footer(); ?>
