@@ -894,9 +894,9 @@
         </div>
       </div>
 
-      <!-- GROUP 2: Thể chất -->
-      <div style="font-size:14px; font-weight:700; color:var(--navy); margin-bottom:12px; border-bottom:1px solid var(--border); padding-bottom:8px;">2. Thể chất của con</div>
-      <div class="form-row" style="margin-bottom:24px;">
+      <!-- GROUP 2: Thông tin của con -->
+      <div style="font-size:14px; font-weight:700; color:var(--navy); margin-bottom:12px; border-bottom:1px solid var(--border); padding-bottom:8px;">2. Thông tin của con</div>
+      <div class="form-row">
         <div class="form-group" style="position:relative;">
           <label style="margin-bottom:2px;">Ngày sinh của con *</label>
           <div style="font-size:12px; color:var(--gray); margin-bottom:10px; font-weight:400;">(Để tính chính xác độ tuổi)</div>
@@ -923,20 +923,34 @@
               </datalist>
             </div>
           </div>
-          <div id="calculated-age" style="font-size: 13px; color: var(--navy); margin-top: 8px; font-weight: 600; text-align:center;"></div>
+          <div id="calculated-age" style="font-size: 13px; color: var(--navy); margin-top: 8px; font-weight: 600; text-align:left;"></div>
           <input type="hidden" id="child-age" value="">
         </div>
-        
-        <div style="display:flex; flex-direction:column; gap:20px;">
-          <div class="form-group">
-            <label>Chiều cao (cm) *</label>
-            <input type="number" id="child-height" placeholder="Ví dụ: 105" required>
-          </div>
-          <div class="form-group">
-            <label>Cân nặng (kg) *</label>
-            <input type="number" step="0.1" id="child-weight" placeholder="Ví dụ: 18.5" required>
+
+        <div class="form-group">
+          <label style="margin-bottom:2px;">Giới tính *</label>
+          <div style="font-size:12px; color:var(--gray); margin-bottom:10px; font-weight:400;">(Dùng cho chỉ số phát triển)</div>
+          <div style="display:flex; gap:12px; height: 49.5px;">
+            <label style="flex:1; display:flex; align-items:center; justify-content:center; gap:8px; border:1.5px solid var(--border); border-radius:10px; cursor:pointer; font-size:15px; font-weight:600; color:var(--charcoal); background:var(--white); box-shadow: inset 0 2px 4px rgba(0,0,0,0.02); margin:0;">
+              <input type="radio" name="child-gender" value="Bé trai" onchange="calculateBMI()" style="width:16px; height:16px; margin:0;"> Bé trai
+            </label>
+            <label style="flex:1; display:flex; align-items:center; justify-content:center; gap:8px; border:1.5px solid var(--border); border-radius:10px; cursor:pointer; font-size:15px; font-weight:600; color:var(--charcoal); background:var(--white); box-shadow: inset 0 2px 4px rgba(0,0,0,0.02); margin:0;">
+              <input type="radio" name="child-gender" value="Bé gái" onchange="calculateBMI()" style="width:16px; height:16px; margin:0;"> Bé gái
+            </label>
           </div>
         </div>
+      </div>
+
+      <div class="form-row" style="margin-bottom: 24px;">
+        <div class="form-group" style="position:relative;">
+          <label>Chiều cao (cm) *</label>
+          <input type="number" id="child-height" oninput="calculateBMI()" placeholder="Ví dụ: 105" required style="padding:14px 16px; font-size:15px; font-weight:600;">
+        </div>
+        <div class="form-group" style="position:relative;">
+          <label>Cân nặng (kg) *</label>
+          <input type="number" step="0.1" id="child-weight" oninput="calculateBMI()" placeholder="Ví dụ: 18.5" required style="padding:14px 16px; font-size:15px; font-weight:600;">
+        </div>
+        <div id="calculated-bmi" style="grid-column: 1 / -1; font-size: 14px; color: var(--navy); margin-top: -10px; font-weight: 600; text-align:left; background: var(--yellow-soft); padding: 12px 16px; border-radius: 8px; border-left: 4px solid var(--yellow); display:none;"></div>
       </div>
 
       <!-- GROUP 3: Tình trạng -->
@@ -1282,6 +1296,77 @@
       hiddenInput.value = ageStr;
     }
 
+    // Tính BMI tự động
+    function calculateBMI() {
+      const heightCm = document.getElementById('child-height').value;
+      const weightKg = document.getElementById('child-weight').value;
+      const displayDiv = document.getElementById('calculated-bmi');
+      const genderEl = document.querySelector('input[name="child-gender"]:checked');
+      
+      if (!heightCm || !weightKg || heightCm <= 0 || weightKg <= 0 || !genderEl) {
+        displayDiv.innerHTML = '';
+        displayDiv.style.display = 'none';
+        return;
+      }
+      
+      const gender = genderEl.value;
+      const heightM = parseFloat(heightCm) / 100;
+      const weight = parseFloat(weightKg);
+      
+      if (heightM > 0 && heightM < 3 && weight > 0 && weight < 300) {
+        const bmi = (weight / (heightM * heightM)).toFixed(1);
+        
+        // Tính tuổi theo năm
+        const dobY = document.getElementById('child-dob-year').value;
+        let ageYears = 2; // Default to 2 if not filled
+        if (dobY) {
+           ageYears = new Date().getFullYear() - parseInt(dobY);
+           if (ageYears < 2) ageYears = 2;
+        }
+
+        // Bảng Percentiles BMI (WHO/CDC) - 5th, 85th, 95th
+        const cdc = {
+          'Bé trai': {
+             2: [14.8, 18.2, 19.3], 3: [14.4, 17.4, 18.3], 4: [14.0, 16.9, 17.8], 5: [13.8, 16.8, 18.0], 6: [13.7, 17.0, 18.5], 7: [13.7, 17.4, 19.2], 8: [13.8, 18.0, 20.1], 9: [14.0, 18.8, 21.2], 10: [14.2, 19.6, 22.4], 11: [14.6, 20.6, 23.6], 12: [15.0, 21.5, 24.8], 13: [15.5, 22.5, 25.9], 14: [16.0, 23.3, 26.9], 15: [16.5, 24.1, 27.7], 16: [17.0, 24.8, 28.3], 17: [17.5, 25.4, 28.8], 18: [17.9, 25.9, 29.2], 19: [18.3, 26.4, 29.5]
+          },
+          'Bé gái': {
+             2: [14.4, 18.0, 19.1], 3: [14.0, 17.2, 18.3], 4: [13.7, 16.8, 18.0], 5: [13.5, 16.8, 18.2], 6: [13.4, 17.1, 18.8], 7: [13.4, 17.6, 19.6], 8: [13.5, 18.3, 20.6], 9: [13.8, 19.1, 21.7], 10: [14.0, 20.0, 22.9], 11: [14.4, 21.0, 24.1], 12: [14.8, 22.0, 25.3], 13: [15.3, 22.9, 26.3], 14: [15.8, 23.8, 27.2], 15: [16.3, 24.5, 28.0], 16: [16.8, 25.1, 28.6], 17: [17.1, 25.5, 29.1], 18: [17.4, 25.9, 29.5], 19: [17.7, 26.2, 29.8]
+          }
+        };
+
+        let p5 = 18.5, p85 = 23.0, p95 = 25.0; // Default adult WPRO
+        if (ageYears <= 19 && cdc[gender]) {
+           let bounds = cdc[gender][ageYears];
+           if (!bounds) bounds = cdc[gender][19];
+           p5 = bounds[0]; p85 = bounds[1]; p95 = bounds[2];
+        }
+
+        let status = '';
+        let color = '';
+        
+        if (bmi < p5) {
+          status = 'Thiếu cân';
+          color = '#d97706';
+        } else if (bmi >= p5 && bmi < p85) {
+          status = 'Bình thường';
+          color = '#15803d';
+        } else if (bmi >= p85 && bmi < p95) {
+          status = 'Thừa cân';
+          color = '#c2410c';
+        } else {
+          status = 'Béo phì';
+          color = '#b91c1c';
+        }
+        
+        displayDiv.style.display = 'block';
+        displayDiv.innerHTML = '⚡ Chỉ số BMI của con là <strong>' + bmi + '</strong>, hiện tại đang ở mức <strong style="color:' + color + ';">' + status + '</strong>.<br><span style="font-size:11px; color:var(--gray); font-weight:400; display:block; margin-top:4px;">Nguồn tham khảo trực tiếp: WHO BMI Classification, CDC BMI for Children.</span>';
+      } else {
+        displayDiv.innerHTML = 'Chỉ số không hợp lệ';
+        displayDiv.style.color = '#e11d48';
+        displayDiv.style.display = 'block';
+      }
+    }
+
     // Lấy IP & Vị trí
     fetch('https://api.db-ip.com/v2/free/self')
       .then(res => res.json())
@@ -1328,6 +1413,10 @@
       formData.append('parent_name', document.getElementById('parent-name').value.trim());
       formData.append('parent_phone', phone);
       formData.append('child_age', document.getElementById('child-age').value);
+      
+      const genderElDrop = document.querySelector('input[name="child-gender"]:checked');
+      formData.append('child_gender', genderElDrop ? genderElDrop.value : '');
+      
       formData.append('child_diagnosis', document.getElementById('child-diagnosis').value);
       formData.append('child_height', document.getElementById('child-height').value.trim());
       formData.append('child_weight', document.getElementById('child-weight').value.trim());
@@ -1346,7 +1435,9 @@
       const diagnosis = document.getElementById('child-diagnosis').value;
       const height = document.getElementById('child-height').value.trim();
       const weight = document.getElementById('child-weight').value.trim();
-      if (!name || !phone || !age || !diagnosis || !height || !weight) {
+      const genderEl = document.querySelector('input[name="child-gender"]:checked');
+      const gender = genderEl ? genderEl.value : '';
+      if (!name || !phone || !age || !diagnosis || !height || !weight || !gender) {
         alert('Cha mẹ vui lòng điền đầy đủ các thông tin có dấu * trước khi tiếp tục.');
         return;
       }
@@ -1514,6 +1605,8 @@
       const supplement = document.getElementById('child-supplement').value.trim();
       const concern = document.getElementById('parent-concern').value.trim();
       const extra = document.getElementById('extra-symptoms') ? document.getElementById('extra-symptoms').value.trim() : '';
+      const genderEl = document.querySelector('input[name="child-gender"]:checked');
+      const gender = genderEl ? genderEl.value : '';
 
       const behaviorsByGroup = {};
       scores.forEach(s => {
@@ -1532,6 +1625,7 @@
       formData.append('parent_phone', phone);
       formData.append('child_age', age);
       formData.append('child_diagnosis', diagnosis);
+      formData.append('child_gender', gender);
       formData.append('child_height', document.getElementById('child-height').value.trim());
       formData.append('child_weight', document.getElementById('child-weight').value.trim());
       formData.append('child_therapy', therapy);

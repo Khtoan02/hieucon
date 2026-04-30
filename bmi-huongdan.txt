@@ -1,0 +1,44 @@
+TÀI LIỆU HƯỚNG DẪN THIẾT KẾ CHỨC NĂNG TÍNH TOÁN BMI
+1. Xác định Nguồn Kiến thức chuẩn (Source of Truth)
+Để ứng dụng có độ tin cậy cao, đội ngũ cần tuân thủ các quy chuẩn y tế sau:
+Người lớn (≥ 20 tuổi): Sử dụng tiêu chuẩn của WHO (Tổ chức Y tế Thế giới). Riêng tại Việt Nam, nên ưu tiên tiêu chuẩn IDIs & WPRO (dành cho người Châu Á).
+Trẻ em & Thanh thiếu niên (2 - 19 tuổi): Sử dụng biểu đồ tăng trưởng Percentile của WHO hoặc CDC (Trung tâm kiểm soát bệnh tật Hoa Kỳ).
+Nguồn tham khảo trực tiếp: WHO BMI Classification, CDC BMI for Children.
+2. Đặc tả thuật toán và Logic xử lý
+Bước 1: Thu thập dữ liệu đầu vào (Input)
+Hệ thống cần thu thập 4 thông số:
+Ngày sinh: Để tính tuổi chính xác (Tuổi = Ngày hiện tại - Ngày sinh).
+Giới tính: Nam/Nữ (Bắt buộc cho trẻ em, dùng để tham khảo/thống kê cho người lớn).
+Chiều cao: Đơn vị cm hoặc m.
+Cân nặng: Đơn vị kg.
+Bước 2: Tính toán chỉ số BMI cơ bản
+
+Bước 3: Phân loại kết quả (Logic phân nhánh)
+Nhánh A: Người trưởng thành (Tuổi ≥ 20)
+Không phân biệt giới tính, so sánh trực tiếp với bảng ngưỡng (Thresholds):
+BMI (Châu Á - IDIs & WPRO)	Phân loại	Cảnh báo sức khỏe
+< 18.5	Gầy	Thấp
+18.5 – 22.9	Bình thường	Trung bình
+23.0 – 24.9	Thừa cân	Cao
+25.0 – 29.9	Béo phì độ I	Rất cao
+≥ 30.0	Béo phì độ II	Nguy hiểm
+Nhánh B: Trẻ em và Thanh thiếu niên (2 ≤ Tuổi < 20)
+Logic: So sánh chỉ số BMI vừa tính được với giá trị Percentile cùng độ tuổi và giới tính.
+Dưới bách phân vị thứ 5 (Percentile < 5th): Thiếu cân.
+Từ 5th đến dưới 85th: Cân nặng bình thường.
+Từ 85th đến dưới 95th: Thừa cân.
+Từ 95th trở lên: Béo phì.
+Lưu ý lập trình: Cần lưu trữ bảng dữ liệu CSV/JSON của CDC/WHO về các mốc Percentile theo từng tháng tuổi.
+3. Yêu cầu kỹ thuật đối với Dev
+Kiểm soát dữ liệu (Validation)
+Giới hạn thực tế: Chiều cao (50cm - 250cm), Cân nặng (2kg - 300kg).
+Xử lý số thập phân: Kết quả BMI luôn làm tròn đến 1 chữ số thập phân (ví dụ: 22.4).
+Xử lý đơn vị: Tự động chuyển đổi cm sang m trước khi tính.
+Giao diện người dùng (UI/UX)
+Sử dụng thanh trượt (Slider) hoặc input số có nút tăng giảm để nhập nhanh chiều cao/cân nặng.
+Hiển thị kết quả bằng biểu đồ màu (Gauge Chart): Xanh lá (Bình thường), Vàng (Thừa cân), Đỏ (Béo phì) để người dùng dễ hình dung.
+4. Các trường hợp loại trừ (Edge Cases) - Cần ghi chú cho người dùng
+Lập trình viên cần hiển thị một câu thông báo (Disclaimer) rằng kết quả BMI có thể không chính xác cho:
+Phụ nữ đang mang thai hoặc cho con bú.
+Vận động viên chuyên nghiệp (nhiều cơ bắp).
+Người già bị teo cơ hoặc người có bệnh lý phù nề.

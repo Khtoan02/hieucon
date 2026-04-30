@@ -15,6 +15,7 @@ function hieucon_install_dh_checklist_table() {
         parent_name varchar(255) NOT NULL DEFAULT '',
         parent_phone varchar(50) NOT NULL DEFAULT '',
         child_age varchar(50) NOT NULL DEFAULT '',
+        child_gender varchar(20) DEFAULT NULL,
         child_height varchar(20) DEFAULT NULL,
         child_weight varchar(20) DEFAULT NULL,
         child_diagnosis varchar(255) NOT NULL DEFAULT '',
@@ -52,6 +53,9 @@ function hieucon_install_dh_checklist_table() {
     }
     if ( ! in_array( 'child_weight', $existing_cols ) ) {
         $wpdb->query( "ALTER TABLE $table_name ADD COLUMN child_weight varchar(20) DEFAULT NULL AFTER child_height" );
+    }
+    if ( ! in_array( 'child_gender', $existing_cols ) ) {
+        $wpdb->query( "ALTER TABLE $table_name ADD COLUMN child_gender varchar(20) DEFAULT NULL AFTER child_age" );
     }
 }
 add_action('after_setup_theme', 'hieucon_install_dh_checklist_table');
@@ -227,6 +231,7 @@ function hieucon_dh_submit_checklist() {
     $parent_name = isset($_POST['parent_name']) ? sanitize_text_field($_POST['parent_name']) : '';
     $parent_phone = isset($_POST['parent_phone']) ? sanitize_text_field($_POST['parent_phone']) : '';
     $child_age = isset($_POST['child_age']) ? sanitize_text_field($_POST['child_age']) : '';
+    $child_gender = isset($_POST['child_gender']) ? sanitize_text_field($_POST['child_gender']) : '';
     $child_height = isset($_POST['child_height']) ? sanitize_text_field($_POST['child_height']) : '';
     $child_weight = isset($_POST['child_weight']) ? sanitize_text_field($_POST['child_weight']) : '';
     $child_diagnosis = isset($_POST['child_diagnosis']) ? sanitize_text_field($_POST['child_diagnosis']) : '';
@@ -242,6 +247,7 @@ function hieucon_dh_submit_checklist() {
         'parent_name' => $parent_name,
         'parent_phone' => $parent_phone,
         'child_age' => $child_age,
+        'child_gender' => $child_gender,
         'child_height' => $child_height,
         'child_weight' => $child_weight,
         'child_diagnosis' => $child_diagnosis,
@@ -399,13 +405,23 @@ function hieucon_dh_public_checklist_result() {
     $table_name = $wpdb->prefix . 'hieucon_dh_checklists';
     $row = $wpdb->get_row($wpdb->prepare("SELECT * FROM $table_name WHERE user_code = %s", $code));
 
-    get_header();
-
     if (!$row) {
+        get_header();
         echo '<div style="padding:40px; text-align:center; font-family:sans-serif; color:#b91c1c;">Không tìm thấy kết quả cho mã hồ sơ này.</div>';
         get_footer();
         exit;
     }
+
+    // Fix 404 status and set page title
+    global $wp_query;
+    $wp_query->is_404 = false;
+    status_header(200);
+    
+    add_filter('pre_get_document_title', function() use ($row) {
+        return esc_html($row->parent_name) . ' - Kết quả Checklist';
+    }, 999);
+
+    get_header();
 
         $name       = esc_html($row->parent_name ?: 'Ẩn danh');
         $phone_disp = esc_html($row->parent_phone);
@@ -437,7 +453,11 @@ function hieucon_dh_public_checklist_result() {
         .dashboard-header {
           background: var(--navy);
           color: var(--white);
-          padding: 16px 24px;
+        }
+        .dashboard-header-inner {
+          max-width: 1200px;
+          margin: 0 auto;
+          padding: 16px 20px;
           display: flex;
           justify-content: space-between;
           align-items: center;
@@ -590,8 +610,13 @@ function hieucon_dh_public_checklist_result() {
       </style>
 
       <div class="dashboard-header">
-        <h1>DocumentingHope Analytics</h1>
-        <span class="badge">Bản Ghi Nhận Dấu Hiệu</span>
+        <div class="dashboard-header-inner">
+          <div>
+            <h1 style="margin-bottom: 4px; margin-top: 0;">DocumentingHope Check list</h1>
+            <div style="font-size: 13px; font-weight: 400; opacity: 0.9;">Nguồn tham khảo: DocumentingHope.com</div>
+          </div>
+          <span class="badge">Bản Ghi Nhận Dấu Hiệu</span>
+        </div>
       </div>
 
       <div class="dashboard-container">
@@ -617,12 +642,76 @@ function hieucon_dh_public_checklist_result() {
                 <h3><?php echo esc_html($row->child_age); ?></h3>
               </div>
               <div class="info-item">
+                <p>Giới tính</p>
+                <h3><?php echo esc_html($row->child_gender ? $row->child_gender : '---'); ?></h3>
+              </div>
+              <div class="info-item">
                 <p>Chiều cao</p>
                 <h3><?php echo esc_html($row->child_height ? $row->child_height . ' cm' : '---'); ?></h3>
               </div>
               <div class="info-item">
                 <p>Cân nặng</p>
                 <h3><?php echo esc_html($row->child_weight ? $row->child_weight . ' kg' : '---'); ?></h3>
+              </div>
+              <div class="info-item">
+                <p>Chỉ số BMI</p>
+                <?php
+                  $bmi_text = '---';
+                  $bmi_color = 'var(--charcoal)';
+                  if ($row->child_height && $row->child_weight) {
+                      $h_m = floatval($row->child_height) / 100;
+                      $w = floatval($row->child_weight);
+                      if ($h_m > 0 && $h_m < 3 && $w > 0 && $w < 300) {
+                          $bmi = round($w / ($h_m * $h_m), 1);
+                          
+                          // Logic tính BMI chuẩn theo tuổi và giới tính (Percentile WHO/CDC)
+                          $status = '';
+                          $bmi_color = '';
+                          $ageYears = 2;
+                          // Parse age from string (e.g. "3 tuổi 2 tháng" or "18 tháng tuổi")
+                          if (preg_match('/(\d+)\s*tuổi/', $row->child_age, $matches)) {
+                              $ageYears = intval($matches[1]);
+                          } elseif (preg_match('/(\d+)\s*tháng/', $row->child_age, $matches)) {
+                              $ageYears = floor(intval($matches[1]) / 12);
+                          }
+                          if ($ageYears < 2) $ageYears = 2;
+                          if ($ageYears > 19) $ageYears = 19;
+
+                          $gender = $row->child_gender;
+                          
+                          $cdc = [
+                              'Bé trai' => [
+                                  2=>[14.8, 18.2, 19.3], 3=>[14.4, 17.4, 18.3], 4=>[14.0, 16.9, 17.8], 5=>[13.8, 16.8, 18.0], 6=>[13.7, 17.0, 18.5], 7=>[13.7, 17.4, 19.2], 8=>[13.8, 18.0, 20.1], 9=>[14.0, 18.8, 21.2], 10=>[14.2, 19.6, 22.4], 11=>[14.6, 20.6, 23.6], 12=>[15.0, 21.5, 24.8], 13=>[15.5, 22.5, 25.9], 14=>[16.0, 23.3, 26.9], 15=>[16.5, 24.1, 27.7], 16=>[17.0, 24.8, 28.3], 17=>[17.5, 25.4, 28.8], 18=>[17.9, 25.9, 29.2], 19=>[18.3, 26.4, 29.5]
+                              ],
+                              'Bé gái' => [
+                                  2=>[14.4, 18.0, 19.1], 3=>[14.0, 17.2, 18.3], 4=>[13.7, 16.8, 18.0], 5=>[13.5, 16.8, 18.2], 6=>[13.4, 17.1, 18.8], 7=>[13.4, 17.6, 19.6], 8=>[13.5, 18.3, 20.6], 9=>[13.8, 19.1, 21.7], 10=>[14.0, 20.0, 22.9], 11=>[14.4, 21.0, 24.1], 12=>[14.8, 22.0, 25.3], 13=>[15.3, 22.9, 26.3], 14=>[15.8, 23.8, 27.2], 15=>[16.3, 24.5, 28.0], 16=>[16.8, 25.1, 28.6], 17=>[17.1, 25.5, 29.1], 18=>[17.4, 25.9, 29.5], 19=>[17.7, 26.2, 29.8]
+                              ]
+                          ];
+
+                          $p5 = 18.5; $p85 = 23.0; $p95 = 25.0; // Fallback
+                          if (isset($cdc[$gender][$ageYears])) {
+                              $bounds = $cdc[$gender][$ageYears];
+                              $p5 = $bounds[0]; $p85 = $bounds[1]; $p95 = $bounds[2];
+                          }
+
+                          if ($bmi < $p5) {
+                              $status = 'Thiếu cân';
+                              $bmi_color = '#d97706'; // Vàng đậm
+                          } elseif ($bmi >= $p5 && $bmi < $p85) {
+                              $status = 'Bình thường';
+                              $bmi_color = '#15803d'; // Xanh lá
+                          } elseif ($bmi >= $p85 && $bmi < $p95) {
+                              $status = 'Thừa cân';
+                              $bmi_color = '#c2410c'; // Cam
+                          } else {
+                              $status = 'Béo phì';
+                              $bmi_color = '#b91c1c'; // Đỏ
+                          }
+                          $bmi_text = $bmi . ' (' . $status . ')';
+                      }
+                  }
+                ?>
+                <h3 style="color: <?php echo $bmi_color; ?>"><?php echo esc_html($bmi_text); ?></h3>
               </div>
             </div>
             <div class="disclaimer">
@@ -636,7 +725,7 @@ function hieucon_dh_public_checklist_result() {
           <div class="panel">
             <h2 class="panel-title">Các vấn đề cần ưu tiên</h2>
             <div style="font-size:12px; color:#b91c1c; background:#fef2f2; padding:8px 12px; border-radius:6px; margin-bottom:16px; border:1px solid #fecaca;">
-              ⚠️ <strong>Lưu ý:</strong> 3 nhóm vấn đề có tỷ lệ cao nhất dưới đây cần được quan tâm và hỗ trợ sớm.
+              ⚠️ <strong>Lưu ý:</strong> Màu đỏ là ba nhóm vấn đề con cần được quan tâm hỗ trợ sớm.
             </div>
             <?php 
             $count = 0;
@@ -666,7 +755,7 @@ function hieucon_dh_public_checklist_result() {
           <div style="text-align:center; margin-top:16px;">
             <a href="https://m.me/884864428052710?ref=1002533683" target="_blank" style="display:inline-block; width:100%; background:var(--navy); color:var(--white); font-weight:700; padding:12px; border-radius:8px; text-decoration:none; font-size:14px; margin-bottom:12px;">💬 Liên hệ chuyên gia</a>
             
-            <button onclick="copyResultLink()" style="display:inline-block; width:100%; background:#f8fafc; color:var(--navy); font-weight:700; padding:12px; border-radius:8px; border:1px solid var(--border); font-size:14px; cursor:pointer; font-family:'Be Vietnam Pro', sans-serif; transition: background 0.2s;">🔗 Lưu kết quả</button>
+            <button onclick="copyResultLink()" style="display:inline-block; width:100%; background:#f8fafc; color:var(--navy); font-weight:700; padding:12px; border-radius:8px; border:1px solid var(--border); font-size:14px; cursor:pointer; font-family:'Be Vietnam Pro', sans-serif; transition: background 0.2s;">🔗 Link kết quả</button>
             <p style="font-size:11.5px; color:var(--gray); margin:6px 0 0;">(Copy link kết quả để gửi cho chuyên gia tư vấn)</p>
           </div>
         </div>
