@@ -611,7 +611,7 @@ function hieucon_dh_public_checklist_result() {
 
       <div class="dashboard-header">
         <div class="dashboard-header-inner" style="justify-content: center; text-align: center;">
-          <h1 style="margin: 0; font-size: 16px; font-weight: 600;">Bảng ghi dấu hiệu dựa trên dữ liệu phụ huynh cung cấp.</h1>
+          <h1 style="margin: 0; font-size: 16px; font-weight: 600;">BẢNG GHI DẤU HIỆU DỰA TRÊN DỮ LIỆU PHỤ HUYNH CUNG CẤP</h1>
         </div>
       </div>
 
