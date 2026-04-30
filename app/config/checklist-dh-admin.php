@@ -610,12 +610,8 @@ function hieucon_dh_public_checklist_result() {
       </style>
 
       <div class="dashboard-header">
-        <div class="dashboard-header-inner">
-          <div>
-            <h1 style="margin-bottom: 4px; margin-top: 0;">DocumentingHope Check list</h1>
-            <div style="font-size: 13px; font-weight: 400; opacity: 0.9;">Nguồn tham khảo: DocumentingHope.com</div>
-          </div>
-          <span class="badge">Bản Ghi Nhận Dấu Hiệu</span>
+        <div class="dashboard-header-inner" style="justify-content: center; text-align: center;">
+          <h1 style="margin: 0; font-size: 16px; font-weight: 600;">Bảng ghi dấu hiệu dựa trên dữ liệu phụ huynh cung cấp.</h1>
         </div>
       </div>
 
@@ -790,7 +786,7 @@ function hieucon_dh_public_checklist_result() {
           </div>
           <?php endif; ?>
           
-          <p style="text-align:center; font-size:12px; color:var(--gray); margin-top:24px;">© <?php echo date('Y'); ?> DocumentingHope Analytics.</p>
+          <p style="text-align:center; font-size:12px; color:var(--gray); margin-top:24px;">© <?php echo date('Y'); ?> Hiểu Con Từ Gốc.</p>
         </div>
       </div>
 
