@@ -1011,8 +1011,8 @@
     </div>
     <div class="result-grid" id="result-grid"></div>
     <div class="cta-box">
-      <h3>Đặt lịch tư vấn miễn phí</h3>
-      <p>Chuyên gia sẽ phân tích kết quả kiểm tra và đưa ra định hướng hỗ trợ cụ thể cho con - hoàn toàn miễn phí, không
+      <h3>Đặt lịch tư vấn </h3>
+      <p>Chuyên gia sẽ phân tích kết quả kiểm tra và đưa ra định hướng hỗ trợ cụ thể cho con - hoàn toàn , không
         ràng buộc.</p>
       <div class="cta-form">
         <input type="tel" placeholder="Số điện thoại / Zalo của bạn" id="cta-phone">
@@ -1663,7 +1663,7 @@
     function submitCTA() {
       const phone = document.getElementById('cta-phone').value.trim();
       if (!phone) { alert('Vui lòng nhập số điện thoại để đặt lịch.'); return; }
-      alert(`Cảm ơn cha mẹ! Chuyên gia sẽ liên hệ qua số ${phone} trong vòng 24 giờ để tư vấn miễn phí. Mã hồ sơ của con là: ${userCode}`);
+      alert(`Cảm ơn cha mẹ! Chuyên gia sẽ liên hệ qua số ${phone} trong vòng 24 giờ để tư vấn . Mã hồ sơ của con là: ${userCode}`);
       
       if (typeof fbq !== 'undefined') {
         fbq('track', 'Contact');
