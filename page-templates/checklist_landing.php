@@ -835,10 +835,7 @@
   <div class="hero" id="hero-section">
     <div class="hero-badge">🧩 Công cụ đánh giá miễn phí</div>
     <h1>Bảng Kiểm Tra Toàn Diện<br><span>Sức Khỏe Toàn Thân</span> Của Con</h1>
-    <p>Được xây dựng dựa trên tài liệu tham khảo từ <a href="https://documentinghope.com/" target="_blank"
-        rel="noopener noreferrer"
-        style="color:var(--yellow);text-decoration:underline;font-weight:500;">documentinghope.com</a>. Giúp cha mẹ nhìn
-      rõ bức tranh toàn thân về con trong 10 phút.</p>
+    <p>Được xây dựng dựa trên tài liệu tham khảo từ Documenting Hope. </br>Giúp cha mẹ nhìn rõ bức tranh toàn thân về con trong 10 phút.</p>
     <div class="hero-stats">
       <div class="stat"><span class="stat-num">11</span><span class="stat-label">Nhóm triệu chứng</span></div>
       <div class="stat"><span class="stat-num">100+</span><span class="stat-label">Dấu hiệu cụ thể</span></div>
@@ -1027,8 +1024,7 @@
     <div class="disclaimer">
       <strong>Lưu ý quan trọng:</strong> Bảng kiểm tra này là công cụ hỗ trợ nhận diện dấu hiệu, không thay thế chẩn
       đoán lâm sàng hoặc tư vấn y tế chuyên nghiệp. Mọi quyết định can thiệp cho trẻ cần được thảo luận với bác sĩ hoặc
-      chuyên gia có chuyên môn phù hợp. Tài liệu tham khảo: <a href="https://documentinghope.com/" target="_blank"
-        rel="noopener noreferrer" style="color:var(--gray);text-decoration:underline;">documentinghope.com</a>
+      chuyên gia có chuyên môn phù hợp. Tài liệu tham khảo: Documenting Hope
     </div>
   </div>
 
