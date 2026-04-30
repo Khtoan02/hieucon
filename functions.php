@@ -86,7 +86,7 @@ function hieucon_add_pancake_livechat()
     <script src="https://chat-plugin.pancake.vn/main/auto?page_id=web_hieucontugoc"></script>
     <?php
 }
-add_action('wp_footer', 'hieucon_add_pancake_livechat', 999);
+// add_action('wp_footer', 'hieucon_add_pancake_livechat', 999);
 
 /**
  * Output Open Graph meta tags for social sharing (Facebook, Zalo, Telegram...)
