@@ -11,7 +11,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bảng Kiểm Tra Toàn Diện – Nam Khánh</title>
+  <title>Bảng Kiểm Tra Toàn Diện - Nam Khánh</title>
   <link
     href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Be+Vietnam+Pro:wght@300;400;500;600&display=swap"
     rel="stylesheet">
@@ -881,7 +881,9 @@
           <div class="section-subtitle">Giúp chuyên gia tư vấn hiểu ngữ cảnh trước buổi gặp</div>
         </div>
       </div>
-      <div class="form-row">
+      <!-- GROUP 1: Liên hệ -->
+      <div style="font-size:14px; font-weight:700; color:var(--navy); margin-bottom:12px; border-bottom:1px solid var(--border); padding-bottom:8px;">1. Thông tin liên hệ</div>
+      <div class="form-row" style="margin-bottom:24px;">
         <div class="form-group">
           <label>Tên cha / mẹ *</label>
           <input type="text" id="parent-name" placeholder="Họ và tên">
@@ -891,19 +893,55 @@
           <input type="tel" id="parent-phone" placeholder="0xxx xxx xxx">
         </div>
       </div>
-      <div class="form-row">
-        <div class="form-group">
-          <label>Tuổi của con *</label>
-          <select id="child-age">
-            <option value="">-- Chọn --</option>
-            <option>Dưới 2 tuổi</option>
-            <option>2 – 3 tuổi</option>
-            <option>3 – 5 tuổi</option>
-            <option>5 – 7 tuổi</option>
-            <option>7 – 10 tuổi</option>
-            <option>Trên 10 tuổi</option>
-          </select>
+
+      <!-- GROUP 2: Thể chất -->
+      <div style="font-size:14px; font-weight:700; color:var(--navy); margin-bottom:12px; border-bottom:1px solid var(--border); padding-bottom:8px;">2. Thể chất của con</div>
+      <div class="form-row" style="margin-bottom:24px;">
+        <div class="form-group" style="position:relative;">
+          <label style="margin-bottom:2px;">Ngày sinh của con *</label>
+          <div style="font-size:12px; color:var(--gray); margin-bottom:10px; font-weight:400;">(Để tính chính xác độ tuổi)</div>
+          <div style="display:flex; border: 1.5px solid var(--border); border-radius: 10px; overflow: hidden; background: var(--white); box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);">
+            <div style="flex:1; border-right: 1px solid var(--border); position: relative;">
+              <div style="position:absolute; top:4px; left:0; right:0; text-align:center; font-size:9px; font-weight:700; color:var(--gray); text-transform:uppercase; letter-spacing:0.5px; pointer-events:none;">Ngày</div>
+              <input type="text" inputmode="numeric" list="dob-days" id="child-dob-day" oninput="calculateAge()" placeholder="DD" style="width:100%; border:none; padding:18px 8px 8px; text-align:center; font-weight:600; font-size:15px; outline:none; background:transparent; color:var(--charcoal);">
+              <datalist id="dob-days">
+                <?php for($i=1; $i<=31; $i++) { echo '<option value="'.$i.'">'; } ?>
+              </datalist>
+            </div>
+            <div style="flex:1; border-right: 1px solid var(--border); position: relative;">
+              <div style="position:absolute; top:4px; left:0; right:0; text-align:center; font-size:9px; font-weight:700; color:var(--gray); text-transform:uppercase; letter-spacing:0.5px; pointer-events:none;">Tháng</div>
+              <input type="text" inputmode="numeric" list="dob-months" id="child-dob-month" oninput="calculateAge()" placeholder="MM" style="width:100%; border:none; padding:18px 8px 8px; text-align:center; font-weight:600; font-size:15px; outline:none; background:transparent; color:var(--charcoal);">
+              <datalist id="dob-months">
+                <?php for($i=1; $i<=12; $i++) { echo '<option value="'.$i.'">'; } ?>
+              </datalist>
+            </div>
+            <div style="flex:1.2; position: relative;">
+              <div style="position:absolute; top:4px; left:0; right:0; text-align:center; font-size:9px; font-weight:700; color:var(--gray); text-transform:uppercase; letter-spacing:0.5px; pointer-events:none;">Năm</div>
+              <input type="text" inputmode="numeric" list="dob-years" id="child-dob-year" oninput="calculateAge()" placeholder="YYYY" style="width:100%; border:none; padding:18px 8px 8px; text-align:center; font-weight:600; font-size:15px; outline:none; background:transparent; color:var(--charcoal);">
+              <datalist id="dob-years">
+                <?php $curYear = date('Y'); for($i=$curYear; $i>=($curYear-20); $i--) { echo '<option value="'.$i.'">'; } ?>
+              </datalist>
+            </div>
+          </div>
+          <div id="calculated-age" style="font-size: 13px; color: var(--navy); margin-top: 8px; font-weight: 600; text-align:center;"></div>
+          <input type="hidden" id="child-age" value="">
         </div>
+        
+        <div style="display:flex; flex-direction:column; gap:20px;">
+          <div class="form-group">
+            <label>Chiều cao (cm) *</label>
+            <input type="number" id="child-height" placeholder="Ví dụ: 105" required>
+          </div>
+          <div class="form-group">
+            <label>Cân nặng (kg) *</label>
+            <input type="number" step="0.1" id="child-weight" placeholder="Ví dụ: 18.5" required>
+          </div>
+        </div>
+      </div>
+
+      <!-- GROUP 3: Tình trạng -->
+      <div style="font-size:14px; font-weight:700; color:var(--navy); margin-bottom:12px; border-bottom:1px solid var(--border); padding-bottom:8px;">3. Tình trạng & Can thiệp</div>
+      <div class="form-row">
         <div class="form-group">
           <label>Chẩn đoán hiện tại *</label>
           <select id="child-diagnosis">
@@ -915,15 +953,15 @@
             <option>Khác</option>
           </select>
         </div>
-      </div>
-      <div class="form-row">
         <div class="form-group">
           <label>Con đang được can thiệp gì?</label>
           <input type="text" id="child-therapy" placeholder="ABA, ngôn ngữ, vật lý trị liệu...">
         </div>
-        <div class="form-group">
+      </div>
+      <div class="form-row">
+        <div class="form-group" style="grid-column: 1 / -1;">
           <label>Đang dùng sản phẩm hỗ trợ nào không?</label>
-          <input type="text" id="child-supplement" placeholder="Vitamin, men vi sinh...">
+          <input type="text" id="child-supplement" placeholder="Vitamin, men vi sinh, Omega-3...">
         </div>
       </div>
       <div class="form-group">
@@ -963,7 +1001,7 @@
     <div class="result-grid" id="result-grid"></div>
     <div class="cta-box">
       <h3>Đặt lịch tư vấn miễn phí</h3>
-      <p>Chuyên gia sẽ phân tích kết quả kiểm tra và đưa ra định hướng hỗ trợ cụ thể cho con – hoàn toàn miễn phí, không
+      <p>Chuyên gia sẽ phân tích kết quả kiểm tra và đưa ra định hướng hỗ trợ cụ thể cho con - hoàn toàn miễn phí, không
         ràng buộc.</p>
       <div class="cta-form">
         <input type="tel" placeholder="Số điện thoại / Zalo của bạn" id="cta-phone">
@@ -990,25 +1028,25 @@
         desc: 'Khả năng di chuyển, giữ thăng bằng và vận động tay',
         items: [
           { main: 'Con dễ bị ngã khi chạy, leo cầu thang hoặc di chuyển', example: 'Cha mẹ thấy con vấp té thường xuyên hơn bạn cùng tuổi' },
-          { main: 'Con giữ thăng bằng kém – hay lảo đảo, không đứng vững trên một chân', example: 'Khi đứng một chân hoặc đi trên bề mặt không bằng phẳng' },
+          { main: 'Con giữ thăng bằng kém - hay lảo đảo, không đứng vững trên một chân', example: 'Khi đứng một chân hoặc đi trên bề mặt không bằng phẳng' },
           { main: 'Con gặp khó khăn khi đi trên bề mặt gồ ghề, cầu thang, vỉa hè', example: 'Cần người dắt tay mỗi khi lên xuống cầu thang' },
-          { main: 'Con khéo léo tay kém – khó cầm bút, cắt kéo, xếp hình', example: 'Bút rớt nhiều, không tô màu đúng viền được' },
+          { main: 'Con khéo léo tay kém - khó cầm bút, cắt kéo, xếp hình', example: 'Bút rớt nhiều, không tô màu đúng viền được' },
           { main: 'Con đi nhón gót (toe walking) thường xuyên', example: 'Đi bằng đầu ngón chân thay vì cả bàn chân' },
-          { main: 'Cơ bắp con yếu, trương lực cơ thấp – con hay ngồi dựa, khòm lưng', example: 'Khó giữ lưng thẳng khi ngồi học hoặc ngồi ăn' },
+          { main: 'Cơ bắp con yếu, trương lực cơ thấp - con hay ngồi dựa, khòm lưng', example: 'Khó giữ lưng thẳng khi ngồi học hoặc ngồi ăn' },
           { main: 'Con hay ngồi kiểu chữ W (hai gót ra ngoài, hai đầu gối vào trong)', example: 'Tư thế ngồi chơi quen thuộc của con trên sàn' },
           { main: 'Dáng đi của con trông khác biệt so với bạn bè cùng tuổi', example: 'Đi bước ngắn, không xoay hông, cứng người' },
         ]
       },
       {
         id: 'miengHong',
-        name: 'Vận động miệng – họng',
+        name: 'Vận động miệng - họng',
         icon: '👄',
         desc: 'Khả năng nhai, nuốt, nói và phát âm',
         items: [
           { main: 'Con chảy nước dãi nhiều dù đã qua giai đoạn mọc răng', example: 'Áo con thường bị ướt vì dãi, nhất là khi tập trung' },
           { main: 'Con hay bị sặc hoặc ho khi ăn uống', example: 'Sặc nước, ho khi uống sữa hoặc ăn thức ăn lỏng' },
-          { main: 'Con khó khăn khi nuốt – có vẻ sợ hoặc tránh nuốt', example: 'Ngậm thức ăn lâu trong miệng, chần chừ trước khi nuốt' },
-          { main: 'Con né tránh thức ăn cần nhai nhiều – thích thức ăn mềm, xay nhuyễn', example: 'Từ chối thịt, rau sống; chỉ ăn cháo, súp, bánh mềm' },
+          { main: 'Con khó khăn khi nuốt - có vẻ sợ hoặc tránh nuốt', example: 'Ngậm thức ăn lâu trong miệng, chần chừ trước khi nuốt' },
+          { main: 'Con né tránh thức ăn cần nhai nhiều - thích thức ăn mềm, xay nhuyễn', example: 'Từ chối thịt, rau sống; chỉ ăn cháo, súp, bánh mềm' },
           { main: 'Con nhai không kỹ hoặc nhồi đầy miệng khi ăn', example: 'Nhét nhiều thức ăn vào cùng lúc, nuốt vội' },
           { main: 'Con phát âm không rõ, khó hiểu khi nói chuyện', example: 'Người ngoài gia đình khó hiểu con đang nói gì' },
           { main: 'Con chậm nói hoặc vốn từ ít hơn so với bạn cùng tuổi', example: 'Ít hơn 50 từ lúc 2 tuổi, hoặc không ghép được câu 2 từ lúc 2,5 tuổi' },
@@ -1021,10 +1059,10 @@
         desc: 'Tình trạng đường ruột và tiêu hóa hàng ngày',
         items: [
           { main: 'Con hay nôn hoặc buồn nôn không rõ nguyên nhân', example: 'Nôn sau ăn hoặc buổi sáng sớm dù không bị bệnh' },
-          { main: 'Con bị trào ngược axit – hay ợ chua, khó chịu vùng thượng vị', example: 'Hay đặt tay lên ngực, cáu kỉnh sau khi ăn' },
-          { main: 'Con táo bón mãn tính – đi cầu ít hơn 3 lần/tuần', example: 'Phân cứng, khó đi, thường đau khi đi' },
+          { main: 'Con bị trào ngược axit - hay ợ chua, khó chịu vùng thượng vị', example: 'Hay đặt tay lên ngực, cáu kỉnh sau khi ăn' },
+          { main: 'Con táo bón mãn tính - đi cầu ít hơn 3 lần/tuần', example: 'Phân cứng, khó đi, thường đau khi đi' },
           { main: 'Con tiêu chảy mãn tính hoặc phân lỏng thường xuyên', example: 'Tiêu chảy kéo dài nhiều tuần, không liên quan đến bệnh cấp tính' },
-          { main: 'Con cực kỳ kén ăn – chỉ ăn được dưới 10 loại thức ăn', example: 'Từ chối thử bất kỳ món mới nào, ăn đi ăn lại một vài món nhất định' },
+          { main: 'Con cực kỳ kén ăn - chỉ ăn được dưới 10 loại thức ăn', example: 'Từ chối thử bất kỳ món mới nào, ăn đi ăn lại một vài món nhất định' },
           { main: 'Con hay đau bụng, ôm bụng hoặc tỏ ra khó chịu vùng bụng', example: 'Cong người, không chịu ngồi yên, cáu kỉnh khi đụng vào bụng' },
           { main: 'Phân của con có chất nhầy hoặc thức ăn chưa tiêu hóa', example: 'Nhìn thấy rõ mảnh rau, thịt nguyên vẹn trong phân' },
           { main: 'Phân của con có màu bất thường (trắng, vàng mù tạt, đen)', example: 'Màu phân thay đổi không giải thích được' },
@@ -1039,13 +1077,13 @@
         icon: '🎯',
         desc: 'Cách con phản ứng với thế giới xung quanh qua các giác quan',
         items: [
-          { main: 'Con quá nhạy cảm với âm thanh – bịt tai, khóc hoặc hoảng loạn khi nghe tiếng ồn', example: 'Hoảng sợ với tiếng máy hút bụi, tiếng còi xe, tiếng đông người' },
-          { main: 'Con tránh tiếp xúc cơ thể – không muốn được ôm, hôn hoặc chạm vào', example: 'Giật mình hoặc đẩy ra khi người khác chạm vào' },
-          { main: 'Con nhạy cảm quá mức với mùi – từ chối ăn hoặc rời khỏi phòng vì mùi', example: 'Bịt mũi, nôn ói hoặc không vào bếp khi đang nấu ăn' },
-          { main: 'Con tìm kiếm áp lực sâu – thích được bóp chặt, leo trèo, đè lên đồ vật', example: 'Tự lăn vào gối, chui dưới nệm, thích đeo ba lô nặng' },
+          { main: 'Con quá nhạy cảm với âm thanh - bịt tai, khóc hoặc hoảng loạn khi nghe tiếng ồn', example: 'Hoảng sợ với tiếng máy hút bụi, tiếng còi xe, tiếng đông người' },
+          { main: 'Con tránh tiếp xúc cơ thể - không muốn được ôm, hôn hoặc chạm vào', example: 'Giật mình hoặc đẩy ra khi người khác chạm vào' },
+          { main: 'Con nhạy cảm quá mức với mùi - từ chối ăn hoặc rời khỏi phòng vì mùi', example: 'Bịt mũi, nôn ói hoặc không vào bếp khi đang nấu ăn' },
+          { main: 'Con tìm kiếm áp lực sâu - thích được bóp chặt, leo trèo, đè lên đồ vật', example: 'Tự lăn vào gối, chui dưới nệm, thích đeo ba lô nặng' },
           { main: 'Con dễ bị phân tán chú ý bởi âm thanh hoặc hình ảnh xung quanh', example: 'Không giữ được chú ý quá 2-3 phút khi có yếu tố xung quanh' },
-          { main: 'Con chỉ ăn những kết cấu thức ăn nhất định – từ chối thức ăn có kết cấu khác', example: 'Chỉ ăn đồ giòn hoặc chỉ ăn đồ mềm, không thể trộn kết cấu' },
-          { main: 'Con dường như không cảm nhận được đau – bị ngã, bị thương nhưng không khóc', example: 'Đầu gối chảy máu nhưng con vẫn tiếp tục chơi như không có chuyện' },
+          { main: 'Con chỉ ăn những kết cấu thức ăn nhất định - từ chối thức ăn có kết cấu khác', example: 'Chỉ ăn đồ giòn hoặc chỉ ăn đồ mềm, không thể trộn kết cấu' },
+          { main: 'Con dường như không cảm nhận được đau - bị ngã, bị thương nhưng không khóc', example: 'Đầu gối chảy máu nhưng con vẫn tiếp tục chơi như không có chuyện' },
           { main: 'Con không có phản xạ sợ nguy hiểm tự nhiên', example: 'Không sợ độ cao, không sợ lửa nóng, chạy ra đường không nhìn xe' },
         ]
       },
@@ -1057,10 +1095,10 @@
         items: [
           { main: 'Con chưa có ngôn ngữ lời nói hoặc rất ít từ', example: 'Trên 2 tuổi nhưng không nói được từ nào rõ ràng' },
           { main: 'Con nói chậm so với bạn cùng tuổi', example: 'Ít từ hơn hoặc chưa ghép được câu theo cột mốc phát triển' },
-          { main: 'Con không thể diễn đạt nhu cầu bằng lời – phải kéo tay, chỉ hoặc khóc', example: 'Muốn nước nhưng không nói được, chỉ kéo tay cha mẹ ra tủ lạnh' },
+          { main: 'Con không thể diễn đạt nhu cầu bằng lời - phải kéo tay, chỉ hoặc khóc', example: 'Muốn nước nhưng không nói được, chỉ kéo tay cha mẹ ra tủ lạnh' },
           { main: 'Con không hiểu những chỉ dẫn đơn giản', example: 'Nói "cầm áo lên" hoặc "đi lấy giày" nhưng con không phản ứng' },
-          { main: 'Con khó để người khác hiểu khi nói – phát âm không rõ', example: 'Người ngoài gia đình không hiểu được con đang nói gì' },
-          { main: 'Con nhắc lại từ hoặc câu vừa nghe thay vì trả lời (echolalia)', example: 'Hỏi "con có muốn ăn không?" – con nhắc lại "con có muốn ăn không?"' },
+          { main: 'Con khó để người khác hiểu khi nói - phát âm không rõ', example: 'Người ngoài gia đình không hiểu được con đang nói gì' },
+          { main: 'Con nhắc lại từ hoặc câu vừa nghe thay vì trả lời (echolalia)', example: 'Hỏi "con có muốn ăn không?" - con nhắc lại "con có muốn ăn không?"' },
         ]
       },
       {
@@ -1069,10 +1107,10 @@
         icon: '🧠',
         desc: 'Khả năng tập trung, ghi nhớ và tiếp thu của con',
         items: [
-          { main: 'Con thiếu tập trung, không chú ý – ánh mắt hay lơ đãng', example: 'Gọi tên nhiều lần mới quay lại, dễ quên chỉ dẫn vừa nói' },
-          { main: 'Con luôn trong trạng thái chuyển động – không ngồi yên được', example: 'Chạy, nhảy, leo trèo liên tục ngay cả khi cần ngồi yên' },
+          { main: 'Con thiếu tập trung, không chú ý - ánh mắt hay lơ đãng', example: 'Gọi tên nhiều lần mới quay lại, dễ quên chỉ dẫn vừa nói' },
+          { main: 'Con luôn trong trạng thái chuyển động - không ngồi yên được', example: 'Chạy, nhảy, leo trèo liên tục ngay cả khi cần ngồi yên' },
           { main: 'Con khó tập trung làm một việc trong thời gian dài', example: 'Bỏ dở hoạt động sau 1-2 phút để chuyển sang việc khác' },
-          { main: 'Con xử lý thông tin chậm – cần nhiều thời gian để phản ứng', example: 'Hỏi xong phải đợi 10-15 giây con mới trả lời hoặc phản ứng' },
+          { main: 'Con xử lý thông tin chậm - cần nhiều thời gian để phản ứng', example: 'Hỏi xong phải đợi 10-15 giây con mới trả lời hoặc phản ứng' },
           { main: 'Con gặp khó khăn khi giải quyết vấn đề đơn giản', example: 'Không biết mở hộp, không biết xếp hình đơn giản theo tuổi' },
           { main: 'Con chậm phát triển toàn diện so với cột mốc chuẩn', example: 'Nhiều kỹ năng chậm hơn bạn cùng tuổi 6 tháng trở lên' },
           { main: 'Con đã từng có biểu hiện động kinh hoặc co giật', example: 'Dù chỉ một lần, kể cả dạng vắng ý thức nhẹ' },
@@ -1084,13 +1122,13 @@
         icon: '🤝',
         desc: 'Cách con kết nối với người khác và điều tiết cảm xúc',
         items: [
-          { main: 'Con không phản ứng khi được gọi tên – như không nghe thấy', example: 'Gọi tên 3-4 lần ở khoảng cách gần con mới quay lại' },
+          { main: 'Con không phản ứng khi được gọi tên - như không nghe thấy', example: 'Gọi tên 3-4 lần ở khoảng cách gần con mới quay lại' },
           { main: 'Con thu mình vào thế giới riêng, ít tương tác với xung quanh', example: 'Chơi một mình trong góc riêng, không quan tâm đến người xung quanh' },
           { main: 'Con tránh giao tiếp mắt hoặc nhìn lướt qua rất nhanh', example: 'Khi nói chuyện, ánh mắt con nhìn ra chỗ khác thay vì nhìn vào mắt người đối diện' },
           { main: 'Con ít hoặc không có nhu cầu chơi cùng bạn bè', example: 'Thích chơi một mình hơn, không tìm đến bạn để chơi' },
           { main: 'Con có hành vi ám ảnh lặp đi lặp lại (xoay đồ vật, lắc người, vỗ tay)', example: 'Quay bánh xe, xếp đồ vật thành hàng, lắc người liên tục' },
           { main: 'Con gắn bó bất thường với một đồ vật cụ thể', example: 'Không thể rời bỏ một món đồ nhất định, khóc dữ dội khi mất món đó' },
-          { main: 'Con cực kỳ kháng cự với thay đổi – khó chuyển từ hoạt động này sang hoạt động khác', example: 'Khủng hoảng dữ dội khi thay đổi lịch sinh hoạt, đường đi, bàn ăn' },
+          { main: 'Con cực kỳ kháng cự với thay đổi - khó chuyển từ hoạt động này sang hoạt động khác', example: 'Khủng hoảng dữ dội khi thay đổi lịch sinh hoạt, đường đi, bàn ăn' },
           { main: 'Con có cơn bùng phát cảm xúc dữ dội không tương xứng với nguyên nhân', example: 'Khóc ăn vạ kéo dài 30-60 phút vì những lý do nhỏ' },
           { main: 'Con quan tâm cực đoan đến một chủ đề cụ thể', example: 'Chỉ nói về xe lửa / khủng long / con số và không quan tâm chủ đề khác' },
         ]
@@ -1117,7 +1155,7 @@
         desc: 'Khả năng chống đỡ bệnh tật và các dấu hiệu miễn dịch bất thường',
         items: [
           { main: 'Con hay bị chảy nước mũi mãn tính dù không bị cảm', example: 'Mũi chảy hoặc nghẹt quanh năm, không liên quan đến bệnh cụ thể' },
-          { main: 'Con ốm liên tục – bị bệnh nhiều hơn 6-8 lần/năm', example: 'Hầu như tháng nào cũng phải nghỉ học vì bệnh' },
+          { main: 'Con ốm liên tục - bị bệnh nhiều hơn 6-8 lần/năm', example: 'Hầu như tháng nào cũng phải nghỉ học vì bệnh' },
           { main: 'Con bị viêm tai giữa tái phát nhiều lần', example: 'Viêm tai 3 lần trở lên trong một năm' },
           { main: 'Con bị nhiễm liên cầu khuẩn (viêm họng liên cầu) tái phát', example: 'Viêm họng có mủ điều trị khỏi rồi lại tái phát' },
           { main: 'Con bị viêm xoang tái phát nhiều lần trong năm', example: 'Điều trị khỏi rồi lại tái phát trong vài tuần' },
@@ -1146,14 +1184,14 @@
         icon: '⚡',
         desc: 'Các dấu hiệu liên quan đến năng lượng tế bào và chức năng ti thể',
         items: [
-          { main: 'Con mệt mỏi, li bì quá mức – không tương xứng với hoạt động trong ngày', example: 'Ngủ xong vẫn mệt, không có năng lượng chơi như bạn bè' },
+          { main: 'Con mệt mỏi, li bì quá mức - không tương xứng với hoạt động trong ngày', example: 'Ngủ xong vẫn mệt, không có năng lượng chơi như bạn bè' },
           { main: 'Con ngủ rất nhiều hoặc rất khó thức dậy buổi sáng', example: 'Phải lay gọi rất lâu, cáu kỉnh và mất định hướng sau khi thức dậy' },
-          { main: 'Con mất đi kỹ năng đã biết – ngôn ngữ, vận động, xã hội', example: 'Từng nói được 10 từ nay không nói nữa; từng biết đi nay đi lại khó' },
+          { main: 'Con mất đi kỹ năng đã biết - ngôn ngữ, vận động, xã hội', example: 'Từng nói được 10 từ nay không nói nữa; từng biết đi nay đi lại khó' },
           { main: 'Tâm trạng và hành vi con thay đổi rõ ràng theo thời điểm trong ngày', example: 'Buổi sáng tốt, buổi chiều hoặc tối lại kém hơn nhiều và không giải thích được' },
           { main: 'Con được chẩn đoán hoặc nghi ngờ có vấn đề tuyến giáp, rối loạn tâm trạng', example: 'Chẩn đoán lưỡng cực, rối loạn cảm xúc từ nhỏ' },
           { main: 'Trong gia đình có 2 con trở lên có dấu hiệu tự kỷ hoặc chậm phát triển', example: 'Anh chị em ruột cũng có chẩn đoán tương tự' },
           { main: 'Con có vòng đầu nhỏ hơn chuẩn hoặc giảm tương đối theo thời gian', example: 'Bác sĩ đã nhận xét về kích thước đầu khi khám' },
-          { main: 'Con phát triển chậm về chiều cao và cân nặng – dưới đường chuẩn kéo dài', example: 'Biểu đồ tăng trưởng dưới -2 SD trong nhiều lần đo' },
+          { main: 'Con phát triển chậm về chiều cao và cân nặng - dưới đường chuẩn kéo dài', example: 'Biểu đồ tăng trưởng dưới -2 SD trong nhiều lần đo' },
           { main: 'Con từng có phản ứng bất thường với gây mê hoặc gây tê', example: 'Tỉnh dậy sau phẫu thuật khó khăn hơn bình thường hoặc có biểu hiện lạ' },
           { main: 'Kết quả xét nghiệm máu của con có chỉ số bất thường không rõ nguyên nhân', example: 'Bác sĩ có đề cập đến chỉ số bất thường nhưng chưa giải thích được' },
         ]
@@ -1188,6 +1226,60 @@
     const params = new URLSearchParams(window.location.search);
     for (const [key, value] of params.entries()) {
       if (key.startsWith('utm_')) deepTracker.utms[key] = value;
+    }
+
+    // Tính tuổi tự động
+    function calculateAge() {
+      const d = document.getElementById('child-dob-day').value;
+      const m = document.getElementById('child-dob-month').value;
+      const y = document.getElementById('child-dob-year').value;
+      const displayDiv = document.getElementById('calculated-age');
+      const hiddenInput = document.getElementById('child-age');
+      
+      if (!d || !m || !y) {
+        displayDiv.innerText = '';
+        hiddenInput.value = '';
+        return;
+      }
+
+      const dob = new Date(y, m - 1, d);
+      const today = new Date();
+      
+      // Kiểm tra ngày hợp lệ (ví dụ tháng 2 không có ngày 30)
+      if (dob.getFullYear() != y || dob.getMonth() != m - 1 || dob.getDate() != d) {
+        displayDiv.innerText = 'Ngày sinh không tồn tại';
+        displayDiv.style.color = '#e11d48';
+        hiddenInput.value = '';
+        return;
+      }
+      
+      let months = (today.getFullYear() - dob.getFullYear()) * 12;
+      months -= dob.getMonth();
+      months += today.getMonth();
+      
+      if (today.getDate() < dob.getDate()) {
+        months--;
+      }
+      
+      if (months < 0) {
+        displayDiv.innerText = 'Ngày sinh chưa hợp lệ';
+        displayDiv.style.color = '#e11d48';
+        hiddenInput.value = '';
+        return;
+      }
+      
+      let ageStr = '';
+      if (months < 24) {
+        ageStr = months + ' tháng tuổi';
+      } else {
+        const years = Math.floor(months / 12);
+        const extraMonths = months % 12;
+        ageStr = years + ' tuổi ' + (extraMonths > 0 ? extraMonths + ' tháng' : '');
+      }
+      
+      displayDiv.innerText = 'Tuổi của con: ' + ageStr;
+      displayDiv.style.color = 'var(--navy)';
+      hiddenInput.value = ageStr;
     }
 
     // Lấy IP & Vị trí
@@ -1237,6 +1329,8 @@
       formData.append('parent_phone', phone);
       formData.append('child_age', document.getElementById('child-age').value);
       formData.append('child_diagnosis', document.getElementById('child-diagnosis').value);
+      formData.append('child_height', document.getElementById('child-height').value.trim());
+      formData.append('child_weight', document.getElementById('child-weight').value.trim());
       formData.append('time_spent', timeSpent);
       formData.append('device_info', navigator.userAgent);
       formData.append('deep_analytics', JSON.stringify(da));
@@ -1250,7 +1344,9 @@
       const phone = document.getElementById('parent-phone').value.trim();
       const age = document.getElementById('child-age').value;
       const diagnosis = document.getElementById('child-diagnosis').value;
-      if (!name || !phone || !age || !diagnosis) {
+      const height = document.getElementById('child-height').value.trim();
+      const weight = document.getElementById('child-weight').value.trim();
+      if (!name || !phone || !age || !diagnosis || !height || !weight) {
         alert('Cha mẹ vui lòng điền đầy đủ các thông tin có dấu * trước khi tiếp tục.');
         return;
       }
@@ -1436,6 +1532,8 @@
       formData.append('parent_phone', phone);
       formData.append('child_age', age);
       formData.append('child_diagnosis', diagnosis);
+      formData.append('child_height', document.getElementById('child-height').value.trim());
+      formData.append('child_weight', document.getElementById('child-weight').value.trim());
       formData.append('child_therapy', therapy);
       formData.append('child_supplement', supplement);
       formData.append('parent_concern', concern);

@@ -15,6 +15,8 @@ function hieucon_install_dh_checklist_table() {
         parent_name varchar(255) NOT NULL DEFAULT '',
         parent_phone varchar(50) NOT NULL DEFAULT '',
         child_age varchar(50) NOT NULL DEFAULT '',
+        child_height varchar(20) DEFAULT NULL,
+        child_weight varchar(20) DEFAULT NULL,
         child_diagnosis varchar(255) NOT NULL DEFAULT '',
         child_therapy text DEFAULT NULL,
         child_supplement text DEFAULT NULL,
@@ -44,6 +46,12 @@ function hieucon_install_dh_checklist_table() {
     }
     if ( ! in_array( 'deep_analytics', $existing_cols ) ) {
         $wpdb->query( "ALTER TABLE $table_name ADD COLUMN deep_analytics longtext DEFAULT NULL AFTER device_info" );
+    }
+    if ( ! in_array( 'child_height', $existing_cols ) ) {
+        $wpdb->query( "ALTER TABLE $table_name ADD COLUMN child_height varchar(20) DEFAULT NULL AFTER child_age" );
+    }
+    if ( ! in_array( 'child_weight', $existing_cols ) ) {
+        $wpdb->query( "ALTER TABLE $table_name ADD COLUMN child_weight varchar(20) DEFAULT NULL AFTER child_height" );
     }
 }
 add_action('after_setup_theme', 'hieucon_install_dh_checklist_table');
@@ -219,6 +227,8 @@ function hieucon_dh_submit_checklist() {
     $parent_name = isset($_POST['parent_name']) ? sanitize_text_field($_POST['parent_name']) : '';
     $parent_phone = isset($_POST['parent_phone']) ? sanitize_text_field($_POST['parent_phone']) : '';
     $child_age = isset($_POST['child_age']) ? sanitize_text_field($_POST['child_age']) : '';
+    $child_height = isset($_POST['child_height']) ? sanitize_text_field($_POST['child_height']) : '';
+    $child_weight = isset($_POST['child_weight']) ? sanitize_text_field($_POST['child_weight']) : '';
     $child_diagnosis = isset($_POST['child_diagnosis']) ? sanitize_text_field($_POST['child_diagnosis']) : '';
     $child_therapy = isset($_POST['child_therapy']) ? sanitize_text_field($_POST['child_therapy']) : '';
     $child_supplement = isset($_POST['child_supplement']) ? sanitize_text_field($_POST['child_supplement']) : '';
@@ -232,6 +242,8 @@ function hieucon_dh_submit_checklist() {
         'parent_name' => $parent_name,
         'parent_phone' => $parent_phone,
         'child_age' => $child_age,
+        'child_height' => $child_height,
+        'child_weight' => $child_weight,
         'child_diagnosis' => $child_diagnosis,
         'child_therapy' => $child_therapy,
         'child_supplement' => $child_supplement,
@@ -604,26 +616,50 @@ function hieucon_dh_public_checklist_result() {
                 <p>Tuổi của con</p>
                 <h3><?php echo esc_html($row->child_age); ?></h3>
               </div>
+              <div class="info-item">
+                <p>Chiều cao</p>
+                <h3><?php echo esc_html($row->child_height ? $row->child_height . ' cm' : '---'); ?></h3>
+              </div>
+              <div class="info-item">
+                <p>Cân nặng</p>
+                <h3><?php echo esc_html($row->child_weight ? $row->child_weight . ' kg' : '---'); ?></h3>
+              </div>
             </div>
             <div class="disclaimer">
-              <strong>Lưu ý:</strong> Dữ liệu do phụ huynh cung cấp. Không phải là chẩn đoán y tế.
+              <strong>Lưu ý:</strong> Bảng đánh giá dựa trên dữ liệu phụ huynh cung cấp. Không thay thế chẩn đoán y tế chuyên khoa.
             </div>
           </div>
 
-          <?php if (!empty($scores)): ?>
+          <?php if (!empty($scores)): 
+            usort($scores, function($a, $b) { return $b['pct'] <=> $a['pct']; });
+          ?>
           <div class="panel">
-            <h2 class="panel-title">Tỷ lệ theo nhóm</h2>
-            <?php foreach ($scores as $sg): ?>
-              <div class="score-item">
+            <h2 class="panel-title">Các vấn đề cần ưu tiên</h2>
+            <div style="font-size:12px; color:#b91c1c; background:#fef2f2; padding:8px 12px; border-radius:6px; margin-bottom:16px; border:1px solid #fecaca;">
+              ⚠️ <strong>Lưu ý:</strong> 3 nhóm vấn đề có tỷ lệ cao nhất dưới đây cần được quan tâm và hỗ trợ sớm.
+            </div>
+            <?php 
+            $count = 0;
+            foreach ($scores as $sg): 
+              $is_top = ($count < 3 && $sg['pct'] > 0);
+              $bar_color = $is_top ? '#e11d48' : 'var(--navy)';
+              $wrap_style = $is_top ? 'background:#fff1f2; padding:10px 12px; border-radius:8px; border:1px dashed #fda4af; margin-bottom:12px;' : 'margin-bottom:14px;';
+              $text_color = $is_top ? '#be123c' : 'inherit';
+              $icon = $is_top ? '🚨 ' : '';
+            ?>
+              <div class="score-item" style="<?php echo $wrap_style; ?>">
                 <div class="score-header">
-                  <span><?php echo esc_html($sg['name']); ?></span>
-                  <span style="color:var(--navy);"><?php echo intval($sg['ticked']).'/'.intval($sg['total']); ?></span>
+                  <span style="color:<?php echo $text_color; ?>; font-weight:<?php echo $is_top ? '700' : '600'; ?>;"><?php echo $icon . esc_html($sg['name']); ?></span>
+                  <span style="color:<?php echo $bar_color; ?>; font-weight:700;"><?php echo intval($sg['ticked']).'/'.intval($sg['total']); ?> (<?php echo intval($sg['pct']); ?>%)</span>
                 </div>
                 <div class="score-bar-bg">
-                  <div class="score-bar-fill" style="width:<?php echo intval($sg['pct']); ?>%;"></div>
+                  <div class="score-bar-fill" style="width:<?php echo intval($sg['pct']); ?>%; background:<?php echo $bar_color; ?>;"></div>
                 </div>
               </div>
-            <?php endforeach; ?>
+            <?php 
+              $count++;
+            endforeach; 
+            ?>
           </div>
           <?php endif; ?>
 
