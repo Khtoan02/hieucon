@@ -833,7 +833,7 @@
 
   <!-- HERO -->
   <div class="hero" id="hero-section">
-    <div class="hero-badge">🧩 Công cụ đánh giá miễn phí</div>
+    <div class="hero-badge">🧩 Công cụ đánh giá</div>
     <h1>Bảng Kiểm Tra Toàn Diện<br><span>Sức Khỏe Toàn Thân</span> Của Con</h1>
     <p>Được xây dựng dựa trên tài liệu tham khảo từ Documenting Hope. </br>Giúp cha mẹ nhìn rõ bức tranh toàn thân về con trong 10 phút.</p>
     <div class="hero-stats">
@@ -860,7 +860,7 @@
         </div>
         <div class="intro-step">
           <div class="intro-step-num">3</div>
-          <p>Nhận kết quả & đặt lịch tư vấn miễn phí</p>
+          <p>Nhận kết quả & đặt lịch tư vấn</p>
         </div>
       </div>
     </div>
