@@ -1040,11 +1040,11 @@
           { main: 'Con dễ bị ngã khi chạy, leo cầu thang hoặc di chuyển', example: 'Cha mẹ thấy con vấp té thường xuyên hơn bạn cùng tuổi' },
           { main: 'Con giữ thăng bằng kém - hay lảo đảo, không đứng vững trên một chân', example: 'Khi đứng một chân hoặc đi trên bề mặt không bằng phẳng' },
           { main: 'Con gặp khó khăn khi đi trên bề mặt gồ ghề, cầu thang, vỉa hè', example: 'Cần người dắt tay mỗi khi lên xuống cầu thang' },
-          { main: 'Con khéo léo tay kém - khó cầm bút, cắt kéo, xếp hình', example: 'Bút rớt nhiều, không tô màu đúng viền được' },
+          { main: 'Con vận động tinh kém - khó khăn với việc cầm bút, dùng kéo, xâu hạt, xếp hình..', example: 'Bút rớt nhiều, không tô màu đúng viền được' },
           { main: 'Con đi nhón gót (toe walking) thường xuyên', example: 'Đi bằng đầu ngón chân thay vì cả bàn chân' },
           { main: 'Cơ bắp con yếu, trương lực cơ thấp - con hay ngồi dựa, khòm lưng', example: 'Khó giữ lưng thẳng khi ngồi học hoặc ngồi ăn' },
           { main: 'Con hay ngồi kiểu chữ W (hai gót ra ngoài, hai đầu gối vào trong)', example: 'Tư thế ngồi chơi quen thuộc của con trên sàn' },
-          { main: 'Dáng đi của con trông khác biệt so với bạn bè cùng tuổi', example: 'Đi bước ngắn, không xoay hông, cứng người' },
+          { main: 'Dáng đi của con trông khác biệt so với bạn bè cùng tuổi', example: 'Đi bước ngắn, cơ thể lắc lư sang hai bên, cứng nhắc như robot, đi lóng ngóng, hay vấp ngã' },
         ]
       },
       {
@@ -1053,13 +1053,13 @@
         icon: '👄',
         desc: 'Khả năng nhai, nuốt, nói và phát âm',
         items: [
-          { main: 'Con chảy nước dãi nhiều dù đã qua giai đoạn mọc răng', example: 'Áo con thường bị ướt vì dãi, nhất là khi tập trung' },
-          { main: 'Con hay bị sặc hoặc ho khi ăn uống', example: 'Sặc nước, ho khi uống sữa hoặc ăn thức ăn lỏng' },
-          { main: 'Con khó khăn khi nuốt - có vẻ sợ hoặc tránh nuốt', example: 'Ngậm thức ăn lâu trong miệng, chần chừ trước khi nuốt' },
-          { main: 'Con né tránh thức ăn cần nhai nhiều - thích thức ăn mềm, xay nhuyễn', example: 'Từ chối thịt, rau sống; chỉ ăn cháo, súp, bánh mềm' },
-          { main: 'Con nhai không kỹ hoặc nhồi đầy miệng khi ăn', example: 'Nhét nhiều thức ăn vào cùng lúc, nuốt vội' },
-          { main: 'Con phát âm không rõ, khó hiểu khi nói chuyện', example: 'Người ngoài gia đình khó hiểu con đang nói gì' },
-          { main: 'Con chậm nói hoặc vốn từ ít hơn so với bạn cùng tuổi', example: 'Ít hơn 50 từ lúc 2 tuổi, hoặc không ghép được câu 2 từ lúc 2,5 tuổi' },
+          { main: 'Con gặp khó khăn với việc nhai nuốt, sợ nuốt', example: 'Ngậm thức ăn lâu trong miệng, hay tít nước nhả bã hoặc không chịu nuốt..' },
+          { main: 'Con né tránh thức ăn cần nhai nhiều - thích thức ăn mềm, xay nhuyễn', example: 'Không thích/từ chối thức ăn nguyên miếng, dai, thích ăn cháo, súp, cơm xay..' },
+          { main: 'Con hay nuốt chửng, dễ bị ọe, nghẹn khi ăn', example: 'Trẻ thường nhai qua loa hoặc bỏ qua bước nhai, nuốt chửng thức ăn, đưa thức ăn lợn cợn vào miệng là nôn trớ, dễ nôn trớ' },
+          { main: 'Trẻ gặp khó khăn khi thực hiện các cử động môi/lưỡi', example: 'Khi được yêu cầu bắt chước động tác thè lưỡi liếm quanh miệng, chu môi, phồng má, thổi..trẻ tỏ ra lóng ngóng, không làm được' },
+          { main: 'Hội chứng mất điều khiển lời nói chủ ý (CAS)', example: 'Trẻ biết mình muốn nói gì nhưng lại không thể điều khiển môi, miệng, lưỡi tạo ra lời nói rõ ràng' },
+          { main: 'Nói ngọng, phát âm thiếu hơi, không rõ nghĩa', example: 'Trẻ nói rất nhỏ, không ngữ điệu, không rõ ràng' },
+          { main: 'Tìm kiếm cảm giác miệng', example: 'Trẻ hay cắn, nhai mọi thứ, hay nghiến răng..' },
         ]
       },
       {
@@ -1068,17 +1068,11 @@
         icon: '🫁',
         desc: 'Tình trạng đường ruột và tiêu hóa hàng ngày',
         items: [
-          { main: 'Con hay nôn hoặc buồn nôn không rõ nguyên nhân', example: 'Nôn sau ăn hoặc buổi sáng sớm dù không bị bệnh' },
-          { main: 'Con bị trào ngược axit - hay ợ chua, khó chịu vùng thượng vị', example: 'Hay đặt tay lên ngực, cáu kỉnh sau khi ăn' },
-          { main: 'Con táo bón mãn tính - đi cầu ít hơn 3 lần/tuần', example: 'Phân cứng, khó đi, thường đau khi đi' },
-          { main: 'Con tiêu chảy mãn tính hoặc phân lỏng thường xuyên', example: 'Tiêu chảy kéo dài nhiều tuần, không liên quan đến bệnh cấp tính' },
-          { main: 'Con cực kỳ kén ăn - chỉ ăn được dưới 10 loại thức ăn', example: 'Từ chối thử bất kỳ món mới nào, ăn đi ăn lại một vài món nhất định' },
-          { main: 'Con hay đau bụng, ôm bụng hoặc tỏ ra khó chịu vùng bụng', example: 'Cong người, không chịu ngồi yên, cáu kỉnh khi đụng vào bụng' },
-          { main: 'Phân của con có chất nhầy hoặc thức ăn chưa tiêu hóa', example: 'Nhìn thấy rõ mảnh rau, thịt nguyên vẹn trong phân' },
-          { main: 'Phân của con có màu bất thường (trắng, vàng mù tạt, đen)', example: 'Màu phân thay đổi không giải thích được' },
-          { main: 'Phân có mùi rất khai hoặc khó chịu bất thường', example: 'Người nhà nhận ra ngay mùi khác lạ' },
-          { main: 'Con từ chối uống nước, ít uống nước trong ngày', example: 'Uống dưới 500ml/ngày, phải ép mới uống' },
-          { main: 'Con tăng cân rất chậm hoặc không tăng cân dù ăn bình thường', example: 'Cân nặng dưới đường chuẩn trên biểu đồ tăng trưởng' },
+          { main: 'Con táo bón mãn tính & hành vi nín nhịn', example: 'Trẻ đi vệ sinh ít hơn 3 lần/tuần; phân lỗn nhỗn từng cục như phân dê, hoặc to, cứng, hoặc bị chảy máu, nứt kẽ hậu môn..' },
+          { main: 'Đi ngoài sau ăn, phân sống hoặc nhầy', example: 'Trẻ đi vệ sinh sau khi ăn 15-30 phút, phân vẫn lợn cợn thức ăn chưa tiêu hóa hết' },
+          { main: 'Phân có mùi rất khai hoặc khó chịu bất thường', example: 'Thối, khắm, tanh, chua...' },
+          { main: 'Con bị trao ngược axit - hay ợ chua', example: 'Trẻ thường ợ chua, đặt tay lên ngực, tì/ép chặt bụng vào vật cứng, đang ngủ nửa đêm tỉnh dậy gào khóc không dỗ được, cáu kỉnh sau khi ăn, hãy uống éo hoặc ưỡn con người ra sau' },
+          { main: 'Con ăn những thứ không phải thực phẩm', example: 'đất cát, nhai giấy, đồ chơi.. đồ không phải thức ăn' },
         ]
       },
       {
@@ -1087,14 +1081,11 @@
         icon: '🎯',
         desc: 'Cách con phản ứng với thế giới xung quanh qua các giác quan',
         items: [
-          { main: 'Con quá nhạy cảm với âm thanh - bịt tai, khóc hoặc hoảng loạn khi nghe tiếng ồn', example: 'Hoảng sợ với tiếng máy hút bụi, tiếng còi xe, tiếng đông người' },
-          { main: 'Con tránh tiếp xúc cơ thể - không muốn được ôm, hôn hoặc chạm vào', example: 'Giật mình hoặc đẩy ra khi người khác chạm vào' },
-          { main: 'Con nhạy cảm quá mức với mùi - từ chối ăn hoặc rời khỏi phòng vì mùi', example: 'Bịt mũi, nôn ói hoặc không vào bếp khi đang nấu ăn' },
-          { main: 'Con tìm kiếm áp lực sâu - thích được bóp chặt, leo trèo, đè lên đồ vật', example: 'Tự lăn vào gối, chui dưới nệm, thích đeo ba lô nặng' },
-          { main: 'Con dễ bị phân tán chú ý bởi âm thanh hoặc hình ảnh xung quanh', example: 'Không giữ được chú ý quá 2-3 phút khi có yếu tố xung quanh' },
-          { main: 'Con chỉ ăn những kết cấu thức ăn nhất định - từ chối thức ăn có kết cấu khác', example: 'Chỉ ăn đồ giòn hoặc chỉ ăn đồ mềm, không thể trộn kết cấu' },
-          { main: 'Con dường như không cảm nhận được đau - bị ngã, bị thương nhưng không khóc', example: 'Đầu gối chảy máu nhưng con vẫn tiếp tục chơi như không có chuyện' },
-          { main: 'Con không có phản xạ sợ nguy hiểm tự nhiên', example: 'Không sợ độ cao, không sợ lửa nóng, chạy ra đường không nhìn xe' },
+          { main: 'Con quá nhạy cảm với âm thanh', example: 'Bịt tai, khóc, hoảng loạn khi nghe tiếng ồn LỚN.' },
+          { main: 'Con nhạy cảm quá mức với mùi', example: 'Trẻ thường đưa đồ vật lên ngửi trước khi tương tác, từ chối thức ăn/đồ chơi/môi trường có mùi lạ, hoặc có thể nôn, ọe với mùi mới.' },
+          { main: 'Con tìm kiếm áp lực sâu', example: '(ôm chặt, đắp chăn nặng,  quấn chăn, hay chui vào không gian hẹp (khe tủ, gầm bàn...) hoặc hay đóng cửa sầm sầm, ôm gì, hay đâm sầm, đánh mạnh người khác' },
+          { main: 'Trẻ gặp vấn đề về vận động', example: 'Thăng bằng ví dụ chạy nhảy liên tục, xoay tròn liên tục mà không chóng mặt hoặc sợ/thích độ cao, thang cuốn, xích đu, cầu trượt, sợ bị nhấc bổng lên cao' },
+          { main: 'Trẻ gặp vấn đề về thị giác', example: 'Trẻ thích nhìn các chuyển động, ánh sáng sặc sỡ (ví dụ: thích nhìn quạt trần quay, nhìn bằng góc mắt, nhìn ánh sáng nhấp nháy, dễ bị mất tập trung ở nơi nhiều ánh sáng..)' },
         ]
       },
       {
@@ -1109,6 +1100,9 @@
           { main: 'Con không hiểu những chỉ dẫn đơn giản', example: 'Nói "cầm áo lên" hoặc "đi lấy giày" nhưng con không phản ứng' },
           { main: 'Con khó để người khác hiểu khi nói - phát âm không rõ', example: 'Người ngoài gia đình không hiểu được con đang nói gì' },
           { main: 'Con nhắc lại từ hoặc câu vừa nghe thay vì trả lời (echolalia)', example: 'Hỏi "con có muốn ăn không?" - con nhắc lại "con có muốn ăn không?"' },
+          { main: 'Con gặp khó khăn về khả năng hiểu', example: 'Điếc chọn lọc (ba mẹ gọi nhiều lần không quay lại nhưng lại phản xạ ngay với thông tin yêu thích), không hiểu chuỗi mệnh lệnh nhiều bước, không biết đùa.' },
+          { main: 'Trẻ bị thoái lui về ngôn ngữ', example: 'Con giảm dần khả năng ngôn ngữ khi lớn lên.' },
+          { main: 'Trẻ né tránh giao tiếp mắt', example: 'Không nhìn vào người đối diện khi nói chuyện hoặc chỉ nhìn chằm chằm vào miệng người nói.' },
         ]
       },
       {
@@ -1124,6 +1118,9 @@
           { main: 'Con gặp khó khăn khi giải quyết vấn đề đơn giản', example: 'Không biết mở hộp, không biết xếp hình đơn giản theo tuổi' },
           { main: 'Con chậm phát triển toàn diện so với cột mốc chuẩn', example: 'Nhiều kỹ năng chậm hơn bạn cùng tuổi 6 tháng trở lên' },
           { main: 'Con đã từng có biểu hiện động kinh hoặc co giật', example: 'Dù chỉ một lần, kể cả dạng vắng ý thức nhẹ' },
+          { main: 'Tập trung thái quá', example: 'Con không thể ngồi yên 5 phút để làm nhiệm vụ theo yêu cầu của cô giáo, nhưng lại có thể ngồi rất lâu để làm việc mình thích.' },
+          { main: 'Trẻ gặp vấn đề về trí nhớ', example: 'Có thể nhớ máy móc (bài hát, tên các phương tiện...) tốt nhưng lại dễ quên các kiến thức, kỹ năng dạy hàng ngày.' },
+          { main: 'Trẻ gặp vấn đề về khái quát thông tin', example: 'Trẻ có thể nhớ những thứ quen thuộc ở nhà, lớp nhưng khi đến môi trường mới lại không nhận ra hoặc biết cách thực hiện.' },
         ]
       },
       {
