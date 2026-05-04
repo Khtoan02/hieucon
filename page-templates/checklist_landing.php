@@ -835,7 +835,28 @@
   <div class="hero" id="hero-section">
     <div class="hero-badge">🧩 Công cụ đánh giá</div>
     <h1>Bảng Kiểm Tra Toàn Diện<br><span>Sức Khỏe Toàn Thân</span> Của Con</h1>
-    <p>Được xây dựng dựa trên tài liệu tham khảo từ Documenting Hope. </br>Giúp cha mẹ nhìn rõ bức tranh toàn thân về con trong 10 phút.</p>
+    <p style="margin-bottom: 24px;">Được xây dựng dựa trên tài liệu tham khảo từ Documenting Hope. </br>Giúp cha mẹ nhìn rõ bức tranh toàn thân về con trong 10 phút.</p>
+    <div style="background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; padding: 16px 20px; max-width: 680px; margin: 0 auto 40px; text-align: left; font-size: 13px; line-height: 1.5; color: rgba(255, 255, 255, 0.8);">
+      <h3 style="color: rgba(255, 255, 255, 0.9); font-family: 'Be Vietnam Pro', sans-serif; font-size: 14px; font-weight: 600; margin-bottom: 8px; display: flex; align-items: center; gap: 6px;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="opacity: 0.7;"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg>
+        Về Documenting Hope (Hoa Kỳ)
+      </h3>
+      <p style="margin: 0 0 8px 0 !important; max-width: 100% !important; opacity: 1 !important; font-size: 13px !important; font-weight: 300 !important; color: inherit;">Documenting Hope là tổ chức nghiên cứu phi lợi nhuận hàng đầu tại Mỹ, chuyên tìm kiếm giải pháp hồi phục tận gốc cho trẻ em gặp các vấn đề về phát triển (như tự kỷ, ADHD, chậm phát triển...).</p>
+      <ul style="list-style: none; padding: 0; margin: 0;">
+        <li style="margin-bottom: 6px; display: flex; align-items: flex-start; gap: 6px;">
+          <span style="opacity: 0.5; font-size: 10px; margin-top: 3px;">●</span> 
+          <span><strong>Khoa học thực chứng:</strong> Quy tụ đội ngũ bác sĩ nhi khoa và các chuyên gia đa ngành để xây dựng các tiêu chuẩn đánh giá sức khỏe toàn diện.</span>
+        </li>
+        <li style="margin-bottom: 6px; display: flex; align-items: flex-start; gap: 6px;">
+          <span style="opacity: 0.5; font-size: 10px; margin-top: 3px;">●</span> 
+          <span><strong>Cái nhìn đa chiều:</strong> Không chỉ đánh giá hành vi, tổ chức tập trung vào mối liên hệ giữa dinh dưỡng, môi trường và các biểu hiện sức khỏe bên trong của trẻ.</span>
+        </li>
+        <li style="display: flex; align-items: flex-start; gap: 6px;">
+          <span style="opacity: 0.5; font-size: 10px; margin-top: 3px;">●</span> 
+          <span><strong>Triết lý nhân văn:</strong> Khẳng định mỗi đứa trẻ đều có cơ hội cải thiện vượt bậc nếu được xác định đúng "điểm nghẽn" và hỗ trợ kịp thời.</span>
+        </li>
+      </ul>
+    </div>
     <div class="hero-stats">
       <div class="stat"><span class="stat-num">11</span><span class="stat-label">Nhóm triệu chứng</span></div>
       <div class="stat"><span class="stat-num">100+</span><span class="stat-label">Dấu hiệu cụ thể</span></div>
@@ -856,7 +877,7 @@
         </div>
         <div class="intro-step">
           <div class="intro-step-num">2</div>
-          <p>Tick các dấu hiệu quan sát được ở con</p>
+          <p>Chọn các dấu hiệu quan sát được ở con</p>
         </div>
         <div class="intro-step">
           <div class="intro-step-num">3</div>

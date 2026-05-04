@@ -649,66 +649,7 @@ function hieucon_dh_public_checklist_result() {
                 <p>Cân nặng</p>
                 <h3><?php echo esc_html($row->child_weight ? $row->child_weight . ' kg' : '---'); ?></h3>
               </div>
-              <div class="info-item">
-                <p>Chỉ số BMI</p>
-                <?php
-                  $bmi_text = '---';
-                  $bmi_color = 'var(--charcoal)';
-                  if ($row->child_height && $row->child_weight) {
-                      $h_m = floatval($row->child_height) / 100;
-                      $w = floatval($row->child_weight);
-                      if ($h_m > 0 && $h_m < 3 && $w > 0 && $w < 300) {
-                          $bmi = round($w / ($h_m * $h_m), 1);
-                          
-                          // Logic tính BMI chuẩn theo tuổi và giới tính (Percentile WHO/CDC)
-                          $status = '';
-                          $bmi_color = '';
-                          $ageYears = 2;
-                          // Parse age from string (e.g. "3 tuổi 2 tháng" or "18 tháng tuổi")
-                          if (preg_match('/(\d+)\s*tuổi/', $row->child_age, $matches)) {
-                              $ageYears = intval($matches[1]);
-                          } elseif (preg_match('/(\d+)\s*tháng/', $row->child_age, $matches)) {
-                              $ageYears = floor(intval($matches[1]) / 12);
-                          }
-                          if ($ageYears < 2) $ageYears = 2;
-                          if ($ageYears > 19) $ageYears = 19;
 
-                          $gender = $row->child_gender;
-                          
-                          $cdc = [
-                              'Bé trai' => [
-                                  2=>[14.8, 18.2, 19.3], 3=>[14.4, 17.4, 18.3], 4=>[14.0, 16.9, 17.8], 5=>[13.8, 16.8, 18.0], 6=>[13.7, 17.0, 18.5], 7=>[13.7, 17.4, 19.2], 8=>[13.8, 18.0, 20.1], 9=>[14.0, 18.8, 21.2], 10=>[14.2, 19.6, 22.4], 11=>[14.6, 20.6, 23.6], 12=>[15.0, 21.5, 24.8], 13=>[15.5, 22.5, 25.9], 14=>[16.0, 23.3, 26.9], 15=>[16.5, 24.1, 27.7], 16=>[17.0, 24.8, 28.3], 17=>[17.5, 25.4, 28.8], 18=>[17.9, 25.9, 29.2], 19=>[18.3, 26.4, 29.5]
-                              ],
-                              'Bé gái' => [
-                                  2=>[14.4, 18.0, 19.1], 3=>[14.0, 17.2, 18.3], 4=>[13.7, 16.8, 18.0], 5=>[13.5, 16.8, 18.2], 6=>[13.4, 17.1, 18.8], 7=>[13.4, 17.6, 19.6], 8=>[13.5, 18.3, 20.6], 9=>[13.8, 19.1, 21.7], 10=>[14.0, 20.0, 22.9], 11=>[14.4, 21.0, 24.1], 12=>[14.8, 22.0, 25.3], 13=>[15.3, 22.9, 26.3], 14=>[15.8, 23.8, 27.2], 15=>[16.3, 24.5, 28.0], 16=>[16.8, 25.1, 28.6], 17=>[17.1, 25.5, 29.1], 18=>[17.4, 25.9, 29.5], 19=>[17.7, 26.2, 29.8]
-                              ]
-                          ];
-
-                          $p5 = 18.5; $p85 = 23.0; $p95 = 25.0; // Fallback
-                          if (isset($cdc[$gender][$ageYears])) {
-                              $bounds = $cdc[$gender][$ageYears];
-                              $p5 = $bounds[0]; $p85 = $bounds[1]; $p95 = $bounds[2];
-                          }
-
-                          if ($bmi < $p5) {
-                              $status = 'Thiếu cân';
-                              $bmi_color = '#d97706'; // Vàng đậm
-                          } elseif ($bmi >= $p5 && $bmi < $p85) {
-                              $status = 'Bình thường';
-                              $bmi_color = '#15803d'; // Xanh lá
-                          } elseif ($bmi >= $p85 && $bmi < $p95) {
-                              $status = 'Thừa cân';
-                              $bmi_color = '#c2410c'; // Cam
-                          } else {
-                              $status = 'Béo phì';
-                              $bmi_color = '#b91c1c'; // Đỏ
-                          }
-                          $bmi_text = $bmi . ' (' . $status . ')';
-                      }
-                  }
-                ?>
-                <h3 style="color: <?php echo $bmi_color; ?>"><?php echo esc_html($bmi_text); ?></h3>
-              </div>
             </div>
             <div class="disclaimer">
               <strong>Lưu ý:</strong> Bảng đánh giá dựa trên dữ liệu phụ huynh cung cấp. Không thay thế chẩn đoán y tế chuyên khoa.
