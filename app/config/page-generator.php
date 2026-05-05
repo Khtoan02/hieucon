@@ -8,12 +8,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 function hieucon_add_page_generator_menu() {
-    add_theme_page(
+    add_menu_page(
         'Tạo Trang Mẫu',
         'Tạo Trang Mẫu',
         'manage_options',
         'hieucon-page-generator',
-        'hieucon_page_generator_html'
+        'hieucon_page_generator_html',
+        'dashicons-admin-page',
+        65
     );
 }
 add_action( 'admin_menu', 'hieucon_add_page_generator_menu' );

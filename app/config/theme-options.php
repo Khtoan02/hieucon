@@ -9,12 +9,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 // Thêm menu cài đặt vào admin
 function hieucon_add_theme_options_page() {
-    add_theme_page(
+    add_menu_page(
         'Cài đặt Popup',          // Page title
         'Cài đặt Popup',          // Menu title
         'manage_options',         // Capability
         'hieucon-popup-settings', // Menu slug
-        'hieucon_theme_options_page_html' // Callback function
+        'hieucon_theme_options_page_html', // Callback function
+        'dashicons-format-chat',
+        66
     );
 }
 add_action( 'admin_menu', 'hieucon_add_theme_options_page' );
