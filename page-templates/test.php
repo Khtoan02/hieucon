@@ -1,377 +1,294 @@
-<?php
-/* Template Name: Bài Viết: Tại Sao Trẻ Tự Kỷ Không Phản Ứng Khi Gọi Tên */
-get_header(); 
-?>
-
-<!-- Import Fonts -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-<!-- Tích hợp Tailwind CSS qua CDN -->
-<script src="https://cdn.tailwindcss.com"></script>
-<script>
-  tailwind.config = {
-    theme: {
-      extend: {
-        colors: {
-          navy: '#002795',
-          yellow: '#FFD154',
-          cream: '#FAF9F6',
-          bgAlt: '#f4f4f0',
-          dark: '#3D3D3D',
-          textMuted: '#555555',
-        },
-        fontFamily: {
-          oswald: ['Oswald', 'sans-serif'],
-          quicksand: ['Quicksand', 'sans-serif'],
-        },
-        boxShadow: {
-          'card': '0 8px 24px rgba(0, 39, 149, 0.08)',
-        }
-      }
-    }
-  }
-</script>
-
-<div class="font-quicksand text-dark bg-cream text-base leading-relaxed overflow-x-hidden">
+<?php /* Template Name: Van_Dong_Tho_Va_Tinh_O_Tre_Tu_Ky_Landing */ ?>
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vận động thô và tinh ở trẻ tự kỷ có điểm gì khác biệt?</title>
+    <meta name="description" content="Tìm hiểu nguyên nhân khoa học đằng sau những khó khăn về vận động thô và tinh ở trẻ tự kỷ. Hướng dẫn cha mẹ các bài tập an toàn giúp con tự tin hơn mỗi ngày.">
     
+    <!-- Google Fonts: Oswald (Headings) & Quicksand (Body) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        navy: '#002795',
+                        yellow: '#FFD154',
+                        cream: '#FAF9F6',
+                        'text-dark': '#3D3D3D',
+                        'text-soft': '#555555'
+                    },
+                    fontFamily: {
+                        oswald: ['Oswald', 'sans-serif'],
+                        quicksand: ['Quicksand', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Smooth scrolling & Accordion Animation */
+        html { scroll-behavior: smooth; }
+        details > summary { list-style: none; }
+        details > summary::-webkit-details-marker { display: none; }
+        details[open] summary ~ * { animation: sweep .3s ease-in-out; }
+        @keyframes sweep {
+            0%    {opacity: 0; margin-top: -10px}
+            100%  {opacity: 1; margin-top: 0px}
+        }
+    </style>
+</head>
+<body class="font-quicksand text-text-dark bg-white antialiased leading-relaxed">
+
     <!-- HERO SECTION -->
-    <header class="relative py-16 md:py-24 px-5 text-center bg-bgAlt overflow-hidden border-b border-gray-200">
-        <!-- Glowing Blobs -->
-        <div class="absolute w-[300px] h-[300px] md:w-[400px] md:h-[400px] rounded-full blur-[60px] md:blur-[80px] opacity-60 bg-[radial-gradient(circle,#FFD154_0%,transparent_70%)] -top-[50px] -left-[50px] md:-top-[100px] md:-left-[100px] z-0"></div>
-        <div class="absolute w-[300px] h-[300px] md:w-[400px] md:h-[400px] rounded-full blur-[60px] md:blur-[80px] opacity-60 bg-[radial-gradient(circle,rgba(0,39,149,0.15)_0%,transparent_70%)] -bottom-[100px] -right-[50px] md:-bottom-[150px] md:-right-[100px] z-0"></div>
-        
-        <div class="relative z-10 max-w-4xl mx-auto">
-            <div class="flex flex-wrap gap-2.5 justify-center mb-6">
-                <span class="bg-yellow/20 text-navy px-4 py-1.5 rounded-full text-sm font-semibold border border-yellow">Dấu hiệu nhận biết tự kỷ sớm</span>
-                <span class="bg-yellow/20 text-navy px-4 py-1.5 rounded-full text-sm font-semibold border border-yellow">Trẻ không quay đầu khi gọi tên</span>
-                <span class="bg-yellow/20 text-navy px-4 py-1.5 rounded-full text-sm font-semibold border border-yellow">Cách dạy trẻ tương tác</span>
-            </div>
-            <h1 class="font-oswald text-navy text-3xl md:text-5xl leading-tight mb-6">Tại Sao Trẻ Tự Kỷ Không Phản Ứng Khi Gọi Tên Và Cha Mẹ Cần Làm Gì Để Kết Nối?</h1>
-            <div class="text-lg text-textMuted bg-white/80 p-6 md:p-8 rounded-xl backdrop-blur-md shadow-sm">
-                Khoảnh khắc cha mẹ gọi tên nhưng con mải mê với đồ chơi, không hề ngoảnh lại luôn mang đến sự lo lắng tột độ. Đi thẳng vào vấn đề: <strong class="text-dark">Trẻ tự kỷ không phản ứng khi gọi tên hoàn toàn không phải vì con cố tình lờ đi</strong>, và phần lớn các bé đều có thính lực bình thường. Đây là một đặc điểm cốt lõi thuộc về thần kinh nhận thức.
-            </div>
+    <header class="bg-navy py-24 md:py-32 px-6 text-center">
+        <div class="max-w-4xl mx-auto">
+            <h1 class="font-oswald text-4xl md:text-5xl uppercase font-bold text-cream leading-tight mb-8">
+                VẬN ĐỘNG THÔ VÀ TINH Ở TRẺ TỰ KỶ CÓ ĐIỂM GÌ KHÁC BIỆT?
+            </h1>
+            <p class="text-lg md:text-xl text-cream/90 max-w-3xl mx-auto mb-10 font-medium leading-relaxed">
+                Khi con thường xuyên lóng ngóng, hay vấp ngã hay gặp khó khăn khi cầm bút, xin đừng vội trách mắng. Trẻ không lười biếng hay vụng về do bản tính, con chỉ đang nỗ lực điều khiển một hệ thần kinh hoạt động theo cách rất riêng. Hãy cùng thấu hiểu nguyên nhân khoa học và tìm ra phương pháp đồng hành an toàn giúp con tự tin hơn mỗi ngày.
+            </p>
+            <a href="https://hieucontugoc.online/bang-kiem-tra-suc-khoe-toan-dien/" class="bg-yellow text-navy font-bold px-8 py-4 rounded-full shadow-lg hover:scale-105 hover:shadow-xl transition-all block w-fit mx-auto text-lg uppercase tracking-wide">
+                Đánh Giá Sức Khỏe Vận Động Cho Con
+            </a>
         </div>
     </header>
 
-    <div class="max-w-[1000px] mx-auto px-5 py-12 md:py-16">
-        
-        <!-- SECTION 1: CƠ CHẾ -->
-        <section class="mb-16">
-            <h2 class="font-oswald text-navy text-2xl md:text-4xl leading-tight mt-8 relative">1. Giải Mã Cơ Chế Thần Kinh: Vì Sao Con Lơ Đễnh?</h2>
-            <div class="w-14 h-1 rounded bg-yellow my-4"></div>
-            <p class="mb-6">Khi thấy con lơ đễnh, phản xạ đầu tiên của nhiều phụ huynh là đưa con đi đo thính lực. Tuy nhiên, sự đứt gãy thực sự nằm ở cách não bộ xử lý thông tin chứ không phải màng nhĩ.</p>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 mt-8">
-                <!-- Card 1 -->
-                <div class="group h-[320px] md:h-[350px] [perspective:1000px] bg-transparent cursor-pointer">
-                    <div class="relative w-full h-full text-center transition-transform duration-700 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
-                        <!-- Front -->
-                        <div class="absolute w-full h-full [backface-visibility:hidden] rounded-xl p-6 md:p-8 flex flex-col justify-center items-center shadow-card bg-white border-2 border-bgAlt">
-                            <div class="text-5xl mb-4">🦻</div>
-                            <h3 class="font-oswald text-navy text-xl md:text-2xl mb-2">Khả năng "Phát Hiện"</h3>
-                            <p class="text-sm text-textMuted">Chạm/Hover để xem sự khác biệt giữa Nghe và Hiểu</p>
-                        </div>
-                        <!-- Back -->
-                        <div class="absolute w-full h-full [backface-visibility:hidden] rounded-xl p-6 md:p-8 flex flex-col justify-center items-start shadow-card bg-navy text-white [transform:rotateY(180deg)] text-left">
-                            <h3 class="font-oswald text-yellow text-xl md:text-2xl mb-3">Đứt gãy khâu "Đánh Giá"</h3>
-                            <p class="text-sm md:text-base text-white/90">Giai đoạn 1 (Ghi nhận âm thanh): Trẻ làm rất tốt.<br><br>Giai đoạn 2 (Đánh giá ý nghĩa): Hệ thống phần thưởng thần kinh của trẻ không coi tên gọi là tín hiệu xã hội đủ hấp dẫn để ngắt quãng sự tập trung vào đồ vật hiện tại.</p>
-                        </div>
-                    </div>
+    <main>
+        <!-- SECTION 1: NHỮNG KHÁC BIỆT (BG-WHITE) -->
+        <section class="bg-white py-16 md:py-24 px-6">
+            <div class="max-w-6xl mx-auto">
+                <div class="text-center mb-16 max-w-3xl mx-auto">
+                    <h2 class="font-oswald text-3xl md:text-4xl font-bold text-navy mb-6">Những khác biệt trong kỹ năng vận động thường gặp ở trẻ phát triển thần kinh khác biệt</h2>
+                    <p class="text-lg text-text-soft">Sự phát triển thể chất của trẻ tự kỷ đôi khi không đi theo một đường thẳng giống như các mốc phát triển thông thường. Việc hiểu rõ những khác biệt này là bước đầu tiên để cha mẹ đồng hành cùng con bằng tình yêu thương thay vì sự kỳ vọng khiên cưỡng.</p>
                 </div>
-                <!-- Card 2 -->
-                <div class="group h-[320px] md:h-[350px] [perspective:1000px] bg-transparent cursor-pointer">
-                    <div class="relative w-full h-full text-center transition-transform duration-700 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
-                        <!-- Front -->
-                        <div class="absolute w-full h-full [backface-visibility:hidden] rounded-xl p-6 md:p-8 flex flex-col justify-center items-center shadow-card bg-white border-2 border-bgAlt">
-                            <div class="text-5xl mb-4">🧠</div>
-                            <h3 class="font-oswald text-navy text-xl md:text-2xl mb-2">Sóng điện não đồ (ERP)</h3>
-                            <p class="text-sm text-textMuted">Sự thật ẩn giấu trong não bộ khi nghe tên gọi</p>
-                        </div>
-                        <!-- Back -->
-                        <div class="absolute w-full h-full [backface-visibility:hidden] rounded-xl p-6 md:p-8 flex flex-col justify-center items-start shadow-card bg-navy text-white [transform:rotateY(180deg)] text-left">
-                            <h3 class="font-oswald text-yellow text-xl md:text-2xl mb-3">Con nghe, nhưng không tương tác</h3>
-                            <p class="text-sm md:text-base text-white/90">Nghiên cứu về sóng N100 và biên độ sóng P3 chỉ ra: Bộ não trẻ <strong class="text-white">vẫn nhận diện được âm thanh tên mình</strong>. Tuy nhiên, thay vì quay lại, con dùng tài nguyên não bộ để tập trung mạnh hơn vào các vật thể trực quan xung quanh.</p>
-                        </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- Card 1 -->
+                    <div class="bg-cream rounded-2xl p-8 shadow-md hover:shadow-lg transition-shadow border border-gray-100">
+                        <div class="text-5xl mb-6">🏃‍♂️</div>
+                        <h3 class="font-oswald text-xl font-bold text-navy mb-4">Dấu hiệu nhận biết con đang gặp khó khăn với các bài tập vận động thô</h3>
+                        <p class="text-text-dark">Con có thể bước đi với tư thế cứng nhắc, hay nhón gót, lóng ngóng khi bắt bóng hoặc sợ hãi khi leo trèo. Thách thức trong việc duy trì thăng bằng khiến trẻ dễ bị vấp ngã ngay cả trên những bề mặt bằng phẳng.</p>
+                    </div>
+                    <!-- Card 2 -->
+                    <div class="bg-cream rounded-2xl p-8 shadow-md hover:shadow-lg transition-shadow border border-gray-100">
+                        <div class="text-5xl mb-6">✍️</div>
+                        <h3 class="font-oswald text-xl font-bold text-navy mb-4">Cách quan sát những thách thức trong kỹ năng vận động tinh qua sinh hoạt hàng ngày</h3>
+                        <p class="text-text-dark">Việc điều khiển nhóm cơ nhỏ tiêu tốn nhiều năng lượng. Con gặp khó khăn khi cầm thìa xúc cơm, tự cài khuy áo, buộc dây giày hoặc cầm bút với tư thế gượng gạo, ấn bút quá mạnh khiến tay nhanh mỏi.</p>
+                    </div>
+                    <!-- Card 3 -->
+                    <div class="bg-cream rounded-2xl p-8 shadow-md hover:shadow-lg transition-shadow border border-gray-100">
+                        <div class="text-5xl mb-6">💔</div>
+                        <h3 class="font-oswald text-xl font-bold text-navy mb-4">Sự vụng về vô ý và những hiểu lầm từ người xung quanh khiến trẻ dễ bị tổn thương</h3>
+                        <p class="text-text-dark">Trẻ thường bị dán nhãn là "hậu đậu" hay "lười biếng" khi làm rơi vỡ đồ đạc. Những lời trách mắng vô tình không giúp trẻ tiến bộ mà còn làm suy giảm lòng tự trọng, khiến con dần thu mình và sợ hãi vận động.</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- SECTION 2: TIMELINE -->
-        <section class="mb-16">
-            <h2 class="font-oswald text-navy text-2xl md:text-4xl leading-tight mt-8 relative">2. Cột Mốc Vàng: Trẻ Không Phản Ứng Ở Tháng Thứ Mấy Là "Cờ Đỏ"?</h2>
-            <div class="w-14 h-1 rounded bg-yellow my-4"></div>
-            <p class="mb-6">Triệu chứng này là một chỉ báo dự báo cực kỳ mạnh mẽ nếu được đặt đúng vào mốc thời gian phát triển.</p>
-
-            <div class="relative pl-10 md:pl-12 my-10">
-                <!-- Vertical Line -->
-                <div class="absolute left-[15px] top-0 bottom-0 w-[2px] bg-yellow"></div>
-                
-                <!-- Nodes -->
-                <div class="relative mb-8 bg-white p-5 md:p-6 rounded-xl shadow-card">
-                    <div class="absolute -left-[45px] md:-left-[49px] top-5 w-8 h-8 bg-cream border-2 border-yellow rounded-full flex items-center justify-center text-sm z-10">🌱</div>
-                    <h3 class="font-oswald text-navy text-xl mb-3 flex flex-wrap items-center gap-2.5">
-                        6 - 9 Tháng Tuổi 
-                        <span class="bg-navy/10 font-quicksand text-sm px-3 py-1 rounded-full text-navy font-semibold">Phát triển tự nhiên</span>
-                    </h3>
-                    <p class="text-textMuted">Khao khát tương tác xã hội đã được lập trình. Trẻ sơ sinh từ 6 tháng đã bắt đầu ghi nhớ và có nhận thức về âm thanh tên gọi của mình, đặc biệt là giọng mẹ.</p>
+        <!-- SECTION 2: NGUYÊN NHÂN KHOA HỌC (BG-CREAM) -->
+        <section class="bg-cream py-16 md:py-24 px-6">
+            <div class="max-w-6xl mx-auto">
+                <div class="text-center mb-16 max-w-3xl mx-auto">
+                    <h2 class="font-oswald text-3xl md:text-4xl font-bold text-navy mb-6">Giải mã nguyên nhân khoa học khiến con lóng ngóng và khó phối hợp cơ thể</h2>
+                    <p class="text-lg text-text-soft">Những biểu hiện vụng về hoàn toàn không xuất phát từ việc con thiếu cố gắng. Khoa học đã chứng minh sự khác biệt sâu sắc trong cấu trúc hệ thần kinh tác động trực tiếp đến cách con điều khiển cơ thể.</p>
                 </div>
 
-                <div class="relative mb-8 bg-white p-5 md:p-6 rounded-xl shadow-card">
-                    <div class="absolute -left-[45px] md:-left-[49px] top-5 w-8 h-8 bg-cream border-2 border-yellow rounded-full flex items-center justify-center text-sm z-10">⚠️</div>
-                    <h3 class="font-oswald text-navy text-xl mb-3 flex flex-wrap items-center gap-2.5">
-                        Quanh mốc 9 Tháng 
-                        <span class="bg-[#fff8e1] font-quicksand text-sm px-3 py-1 rounded-full text-[#f57f17] font-semibold">Điểm gãy xuất hiện</span>
-                    </h3>
-                    <p class="text-textMuted">Phản xạ quay đầu tìm kiếm nguồn phát âm thanh đáng lẽ phải định hình rõ rệt. Nhưng phân tích dữ liệu chứng minh: trẻ tự kỷ tạo ra một sự nới rộng khác biệt rõ ràng từ thời điểm này.</p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- Card 1 -->
+                    <div class="bg-white rounded-2xl p-8 shadow-md border-t-4 border-yellow">
+                        <div class="text-4xl mb-4">🧠</div>
+                        <h3 class="font-oswald text-xl font-bold text-navy mb-4">Khái niệm rối loạn phối hợp vận động và sự hiện diện phổ biến trong phổ tự kỷ</h3>
+                        <p class="text-text-dark text-sm md:text-base">Nhiều trẻ gặp tình trạng Dyspraxia - rào cản thần kinh khiến não bộ khó truyền đạt thông điệp trơn tru đến cơ bắp. Con rất thông minh, hiểu luật chơi nhưng lại lóng ngóng không thể thực hiện động tác vật lý theo ý muốn.</p>
+                    </div>
+                    <!-- Card 2 -->
+                    <div class="bg-white rounded-2xl p-8 shadow-md border-t-4 border-yellow">
+                        <div class="text-4xl mb-4">🧩</div>
+                        <h3 class="font-oswald text-xl font-bold text-navy mb-4">Rào cản trong việc lập kế hoạch vận động được lý giải từ góc nhìn thần kinh học</h3>
+                        <p class="text-text-dark text-sm md:text-base">Lập kế hoạch vận động (Motor planning) là khả năng hình dung và tổ chức chuyển động. Ở trẻ tự kỷ, quá trình này bị gián đoạn, buộc con phải suy nghĩ có ý thức về từng bước nhỏ, dẫn đến phản ứng chậm chạp và ngập ngừng.</p>
+                    </div>
+                    <!-- Card 3 -->
+                    <div class="bg-white rounded-2xl p-8 shadow-md border-t-4 border-yellow">
+                        <div class="text-4xl mb-4">⚖️</div>
+                        <h3 class="font-oswald text-xl font-bold text-navy mb-4">Sự khác biệt trong quá trình xử lý cảm giác làm ảnh hưởng đến khả năng kiểm soát cơ bắp</h3>
+                        <p class="text-text-dark text-sm md:text-base">Hệ cảm nhận bản thể và tiền đình giúp nhận thức cơ thể trong không gian. Khi rối loạn, con không cảm nhận rõ cơ thể đang ở đâu, dẫn đến va vấp hoặc dùng lực quá mạnh/yếu khi tương tác với đồ vật và con người.</p>
+                    </div>
                 </div>
 
-                <div class="relative mb-8 bg-white p-5 md:p-6 rounded-xl shadow-card">
-                    <div class="absolute -left-[45px] md:-left-[49px] top-5 w-8 h-8 bg-cream border-2 border-yellow rounded-full flex items-center justify-center text-sm z-10">🚩</div>
-                    <h3 class="font-oswald text-navy text-xl mb-3 flex flex-wrap items-center gap-2.5">
-                        Mốc 12 Tháng 
-                        <span class="bg-[#ffebee] font-quicksand text-sm px-3 py-1 rounded-full text-[#c62828] font-semibold">Cờ Đỏ (Red Flag)</span>
-                    </h3>
-                    <p class="text-textMuted">Sự vắng mặt phản xạ duy trì đến 12 tháng được Tổ chức Autism Speaks và CDC khẳng định là một <strong class="text-dark">báo động đỏ</strong>. Trẻ có thể không bập bẹ, không chỉ trỏ và phớt lờ hoàn toàn tiếng gọi.</p>
+                <div class="mt-16 text-center">
+                    <a href="https://hieucontugoc.online/bang-kiem-tra-suc-khoe-toan-dien/" class="bg-yellow text-navy font-bold px-8 py-4 rounded-full shadow-lg hover:scale-105 hover:shadow-xl transition-all block w-fit mx-auto text-lg uppercase tracking-wide">
+                        Làm Bài Test Kiểm Tra Ngay Cho Con
+                    </a>
                 </div>
             </div>
         </section>
 
-        <!-- SECTION 3: SO SÁNH -->
-        <section class="mb-16">
-            <h2 class="font-oswald text-navy text-2xl md:text-4xl leading-tight mt-8 relative">3. Phân Biệt Tự Kỷ Với Các Nguyên Nhân Khác</h2>
-            <div class="w-14 h-1 rounded bg-yellow my-4"></div>
-            <p class="mb-6">Dù là dấu hiệu kinh điển, y khoa vẫn yêu cầu chẩn đoán phân biệt kỹ lưỡng để tránh hoảng loạn.</p>
+        <!-- SECTION 3: PHƯƠNG PHÁP ĐỒNG HÀNH (BG-WHITE) -->
+        <section class="bg-white py-16 md:py-24 px-6">
+            <div class="max-w-5xl mx-auto">
+                <div class="text-center mb-16">
+                    <h2 class="font-oswald text-3xl md:text-4xl font-bold text-navy mb-6">Phương pháp đồng hành cùng con vượt qua rào cản thể chất tại nhà an toàn</h2>
+                    <p class="text-lg text-text-soft">Thay vì thúc ép con phải đạt được các mốc chuẩn mực, cha mẹ hãy biến các bài tập can thiệp thành những trò chơi nhỏ, vui vẻ và không áp lực.</p>
+                </div>
 
-            <div class="grid grid-cols-1 gap-5 mt-8">
-                <div class="bg-navy/5 rounded-xl border-l-4 border-navy p-6 shadow-sm">
-                    <h4 class="font-oswald text-xl text-dark mb-2 flex items-center gap-2">👁️ Phổ Tự Kỷ (ASD)</h4>
-                    <p class="text-textMuted">Phớt lờ tiếng gọi nhưng lại có thể giật mình, bịt tai la hét trước tiếng máy sấy tóc, máy hút bụi (quá mẫn cảm thính giác). Thiếu vắng nỗ lực giao tiếp bù đắp.</p>
-                </div>
-                <div class="bg-white rounded-xl border-l-4 border-gray-200 p-6 shadow-sm">
-                    <h4 class="font-oswald text-xl text-dark mb-2 flex items-center gap-2">🦻 Suy Giảm Thính Lực</h4>
-                    <p class="text-textMuted">Không phản ứng với cả tiếng gọi lẫn các tiếng ồn môi trường xung quanh. Thường được loại trừ bằng bài đo thính lực lâm sàng đầu tiên.</p>
-                </div>
-                <div class="bg-white rounded-xl border-l-4 border-gray-200 p-6 shadow-sm">
-                    <h4 class="font-oswald text-xl text-dark mb-2 flex items-center gap-2">⚡ Tăng Động Giảm Chú Ý (ADHD)</h4>
-                    <p class="text-textMuted">Sự lơ đễnh thường chỉ bộc lộ rõ rệt khi trẻ đạt 18 tháng tuổi trở lên (trong khi tự kỷ suy giảm từ 9-12 tháng).</p>
-                </div>
-                <div class="bg-white rounded-xl border-l-4 border-gray-200 p-6 shadow-sm">
-                    <h4 class="font-oswald text-xl text-dark mb-2 flex items-center gap-2">🗣️ Chậm Phát Triển Ngôn Ngữ (DLD)</h4>
-                    <p class="text-textMuted">Có thể chậm quay đầu nhưng vẫn biết dùng ngôn ngữ hình thể. Con cố gắng giao tiếp bằng ánh mắt và cử chỉ tay để bù đắp việc không nói được.</p>
+                <div class="space-y-12">
+                    <!-- Item 1 -->
+                    <div class="flex flex-col md:flex-row items-start gap-8 bg-cream p-8 rounded-2xl">
+                        <div class="bg-navy text-yellow font-oswald text-4xl font-bold w-16 h-16 rounded-full flex items-center justify-center flex-shrink-0 shadow-md">1</div>
+                        <div>
+                            <h3 class="font-oswald text-2xl font-bold text-navy mb-4">Gợi ý các hoạt động phát triển vận động thô giúp con tăng cường thăng bằng và sức mạnh</h3>
+                            <ul class="space-y-3 text-text-dark">
+                                <li class="flex items-start gap-3"><span class="text-navy font-bold mt-1">✓</span> <strong>Trò chơi mô phỏng động vật:</strong> Khuyến khích con bò như gấu, nhảy như ếch để phát triển sức mạnh cơ lõi (core strength).</li>
+                                <li class="flex items-start gap-3"><span class="text-navy font-bold mt-1">✓</span> <strong>Đi bộ trên vệt băng dính:</strong> Dán đường băng dính màu trên sàn nhà, cùng con chơi trò đi thăng bằng giúp hỗ trợ hệ tiền đình.</li>
+                                <li class="flex items-start gap-3"><span class="text-navy font-bold mt-1">✓</span> <strong>Ném và bắt gối:</strong> Sử dụng gối mềm ném qua lại, giúp con không sợ hãi nếu bắt trượt và tăng cường phối hợp tay mắt.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Item 2 -->
+                    <div class="flex flex-col md:flex-row items-start gap-8 bg-cream p-8 rounded-2xl">
+                        <div class="bg-navy text-yellow font-oswald text-4xl font-bold w-16 h-16 rounded-full flex items-center justify-center flex-shrink-0 shadow-md">2</div>
+                        <div>
+                            <h3 class="font-oswald text-2xl font-bold text-navy mb-4">Các trò chơi nhỏ giọt hỗ trợ hoàn thiện kỹ năng vận động tinh một cách khéo léo</h3>
+                            <ul class="space-y-3 text-text-dark">
+                                <li class="flex items-start gap-3"><span class="text-navy font-bold mt-1">✓</span> <strong>Chơi với đất nặn (Play-dough):</strong> Nhào, bóp, tạo hình giúp tăng cường sức mạnh các nhóm cơ nhỏ ở ngón tay và bàn tay.</li>
+                                <li class="flex items-start gap-3"><span class="text-navy font-bold mt-1">✓</span> <strong>Gắp hạt bằng nhíp:</strong> Yêu cầu con gắp và phân loại hạt bông màu sắc giúp phát triển kỹ năng cầm nắm ba ngón (tiền đề cầm bút).</li>
+                                <li class="flex items-start gap-3"><span class="text-navy font-bold mt-1">✓</span> <strong>Xâu hạt vòng cỡ lớn:</strong> Hoạt động đòi hỏi sự phối hợp nhịp nhàng giữa cả hai tay và mắt bằng dây dù và hạt lỗ to.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Item 3 -->
+                    <div class="flex flex-col md:flex-row items-start gap-8 bg-cream p-8 rounded-2xl">
+                        <div class="bg-navy text-yellow font-oswald text-4xl font-bold w-16 h-16 rounded-full flex items-center justify-center flex-shrink-0 shadow-md">3</div>
+                        <div>
+                            <h3 class="font-oswald text-2xl font-bold text-navy mb-4">Vai trò của các chuyên gia trị liệu hoạt động trong hành trình can thiệp sớm cho trẻ</h3>
+                            <p class="text-text-dark">Dù sự đồng hành của gia đình là vô giá, góc nhìn chuyên môn từ các chuyên gia trị liệu hoạt động (OT) là một bước đệm vững chắc. Chuyên gia sẽ đánh giá chính xác con gặp khó khăn ở hệ thống cảm giác hay nhóm cơ nào, từ đó thiết kế lộ trình can thiệp cá nhân hóa mà cha mẹ khó tự xây dựng tại nhà.</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <!-- JOINT ATTENTION INFO CTA -->
-        <div class="bg-bgAlt text-dark border-l-4 border-yellow p-8 md:p-10 rounded-xl text-left my-10">
-            <h3 class="font-oswald text-navy text-2xl mb-4">🧩 Sự Thiếu Hụt Chú Ý Chung (Joint Attention)</h3>
-            <p class="mb-4">Bản chất của việc không đáp ứng tên gọi là sự đổ vỡ của <strong class="text-dark">Chú ý chung</strong> (khả năng 2 người cùng tập trung vào 1 đồ vật). Khi không phản hồi lại tên, con sẽ không tham gia vào việc chỉ ngón trỏ khoe đồ chơi hay nhìn theo hướng tay mẹ chỉ, làm ngưng trệ quá trình học từ vựng.</p>
-            <p class="mb-6 italic text-textMuted">Bài viết này chỉ là một mảnh ghép. Hãy dùng Bảng kiểm tra toàn diện để nhìn thấy bức tranh đầy đủ hơn:</p>
-            <a href="https://hieucontugoc.online/bang-kiem-tra-suc-khoe-toan-dien/" class="inline-block bg-yellow text-navy px-8 py-3 rounded-full font-oswald text-lg transition-transform duration-200 hover:-translate-y-1 hover:shadow-[0_6px_16px_rgba(255,209,84,0.4)]" target="_blank" rel="noopener">Làm Bảng Kiểm Tra Sức Khỏe Toàn Diện</a>
+        <!-- SECTION 4: FAQ (BG-CREAM) -->
+        <section class="bg-cream py-16 md:py-24 px-6">
+            <div class="max-w-4xl mx-auto">
+                <div class="text-center mb-12">
+                    <h2 class="font-oswald text-3xl md:text-4xl font-bold text-navy mb-4">Giải đáp những trăn trở phổ biến của phụ huynh về thể chất của trẻ tự kỷ</h2>
+                    <p class="text-lg text-text-soft">Việc nuôi dạy một đứa trẻ phát triển thần kinh khác biệt mang đến nhiều lo âu. Dưới đây là những giải đáp tận tâm dành cho cha mẹ.</p>
+                </div>
+
+                <div class="space-y-4">
+                    <details class="group bg-white rounded-xl shadow-sm border border-gray-100">
+                        <summary class="font-oswald text-navy text-lg p-6 cursor-pointer font-semibold flex justify-between items-center hover:text-yellow transition-colors">
+                            Trẻ tự kỷ có thể bắt kịp đà phát triển vận động như trẻ bình thường không?
+                            <span class="text-2xl group-open:rotate-45 transition-transform duration-300">+</span>
+                        </summary>
+                        <div class="px-6 pb-6 text-text-dark border-t border-gray-50 pt-4 mt-2">
+                            Mỗi đứa trẻ là một cá thể độc lập với tốc độ phát triển riêng. Nhiều trẻ tự kỷ, thông qua sự đồng hành kiên nhẫn của gia đình và các can thiệp trị liệu hoạt động phù hợp, hoàn toàn có thể cải thiện đáng kể kỹ năng vận động, tự chủ trong sinh hoạt và tham gia các hoạt động thể chất an toàn.
+                        </div>
+                    </details>
+
+                    <details class="group bg-white rounded-xl shadow-sm border border-gray-100">
+                        <summary class="font-oswald text-navy text-lg p-6 cursor-pointer font-semibold flex justify-between items-center hover:text-yellow transition-colors">
+                            Cha mẹ nên làm gì khi con liên tục né tránh các môn thể thao ở trường học?
+                            <span class="text-2xl group-open:rotate-45 transition-transform duration-300">+</span>
+                        </summary>
+                        <div class="px-6 pb-6 text-text-dark border-t border-gray-50 pt-4 mt-2">
+                            Sự né tránh thường bắt nguồn từ nỗi sợ hãi thất bại hoặc quá tải cảm giác (tiếng ồn, ánh sáng). Cha mẹ không nên ép buộc. Hãy trò chuyện với giáo viên để điều chỉnh bài tập, đồng thời giới thiệu các hoạt động ít áp lực cạnh tranh ở nhà như bơi lội, đạp xe hoặc yoga.
+                        </div>
+                    </details>
+
+                    <details class="group bg-white rounded-xl shadow-sm border border-gray-100">
+                        <summary class="font-oswald text-navy text-lg p-6 cursor-pointer font-semibold flex justify-between items-center hover:text-yellow transition-colors">
+                            Sự vụng về của con có tự hết khi lớn lên hay bắt buộc phải can thiệp y khoa?
+                            <span class="text-2xl group-open:rotate-45 transition-transform duration-300">+</span>
+                        </summary>
+                        <div class="px-6 pb-6 text-text-dark border-t border-gray-50 pt-4 mt-2">
+                            Sự khó khăn do khác biệt thần kinh hiếm khi tự động biến mất. Tuy nhiên, nếu được can thiệp sớm qua trị liệu hoạt động (OT), con sẽ học được các "chiến lược bù đắp" và rèn luyện cơ bắp. Can thiệp không nhằm "chữa khỏi" tự kỷ, mà trao cho con công cụ để tự lập.
+                        </div>
+                    </details>
+
+                    <details class="group bg-white rounded-xl shadow-sm border border-gray-100">
+                        <summary class="font-oswald text-navy text-lg p-6 cursor-pointer font-semibold flex justify-between items-center hover:text-yellow transition-colors">
+                            Làm sao để phân biệt giữa thái độ lười biếng và sự khó khăn vận động thực sự?
+                            <span class="text-2xl group-open:rotate-45 transition-transform duration-300">+</span>
+                        </summary>
+                        <div class="px-6 pb-6 text-text-dark border-t border-gray-50 pt-4 mt-2">
+                            Một đứa trẻ lười biếng vẫn có thể thực hiện hành động trơn tru nếu có phần thưởng. Ngược lại, trẻ gặp khó khăn vận động thực sự sẽ thể hiện sự gượng gạo, sai tư thế hoặc nhanh chóng mệt mỏi, cáu gắt ngay cả khi con rất muốn tham gia.
+                        </div>
+                    </details>
+
+                    <details class="group bg-white rounded-xl shadow-sm border border-gray-100">
+                        <summary class="font-oswald text-navy text-lg p-6 cursor-pointer font-semibold flex justify-between items-center hover:text-yellow transition-colors">
+                            Khi nào gia đình cần đưa con đến gặp chuyên gia trị liệu hoạt động?
+                            <span class="text-2xl group-open:rotate-45 transition-transform duration-300">+</span>
+                        </summary>
+                        <div class="px-6 pb-6 text-text-dark border-t border-gray-50 pt-4 mt-2">
+                            Khi rào cản thể chất ảnh hưởng trực tiếp đến chất lượng sống: con thường xuyên vấp ngã nguy hiểm, không thể tự thực hiện kỹ năng tự phục vụ cơ bản (xúc ăn, mặc quần áo) đúng lứa tuổi, hoặc sự tự ti khiến con thu mình, từ chối giao tiếp xã hội.
+                        </div>
+                    </details>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA FINAL -->
+        <section class="bg-white py-16 px-6 text-center">
+            <div class="max-w-3xl mx-auto border-t border-gray-200 pt-16">
+                <h2 class="font-oswald text-3xl font-bold text-navy mb-6">Đồng Hành Cùng Con Bắt Đầu Từ Việc Thấu Hiểu</h2>
+                <p class="text-text-dark mb-8 text-lg">Đừng để những lo lắng cản bước hành trình yêu thương. Hãy thực hiện ngay bảng đánh giá để có cái nhìn tổng quan nhất về tình trạng vận động và sức khỏe toàn diện của con.</p>
+                <a href="https://hieucontugoc.online/bang-kiem-tra-suc-khoe-toan-dien/" class="bg-yellow text-navy font-bold px-8 py-4 rounded-full shadow-lg hover:scale-105 hover:shadow-xl transition-all block w-fit mx-auto text-lg uppercase tracking-wide">
+                    NHẬN BẢNG CHECKLIST ĐÁNH GIÁ NGAY
+                </a>
+            </div>
+        </section>
+
+        <!-- DISCLAIMER SECTION -->
+        <section class="bg-gray-100 pb-12 pt-12 px-6 text-center">
+            <div class="max-w-4xl mx-auto">
+                <p class="text-text-soft text-sm italic">
+                    "Bài viết mang tính tham khảo, không thay thế chẩn đoán hay tư vấn y khoa. Nếu bạn lo lắng về sự phát triển của con, hãy gặp chuyên gia có chứng chỉ để được đánh giá trực tiếp."
+                </p>
+            </div>
+        </section>
+    </main>
+
+    <!-- FOOTER / SOURCES -->
+    <footer class="bg-gray-100 py-12 px-6 border-t border-gray-200">
+        <div class="max-w-6xl mx-auto">
+            <h4 class="font-oswald text-xl font-bold text-navy mb-6">Danh sách 20 nguồn tài liệu tham khảo khoa học và cộng đồng:</h4>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-3 text-sm text-text-soft">
+                <p>[1] Verywell Health: Dấu hiệu và sự phát triển vận động ở trẻ tự kỷ (verywellhealth.com/motor-clumsiness-in-autism-260154)</p>
+                <p>[2] Healthline: Mối liên hệ giữa tự kỷ và khó khăn vận động (healthline.com/health/autism/motor-skills)</p>
+                <p>[3] Spectrum News: Giải thích sự khác biệt trong chức năng vận động ở trẻ tự kỷ (spectrumnews.org)</p>
+                <p>[4] Raising Children Network: Sự phát triển thể chất và vận động (raisingchildren.net.au)</p>
+                <p>[5] WebMD: Nhận diện các triệu chứng thể chất của phổ tự kỷ (webmd.com/brain/autism)</p>
+                <p>[6] Autism Speaks: Kỹ năng vận động ở trẻ tự kỷ (autismspeaks.org)</p>
+                <p>[7] Understood: Những điều phụ huynh cần biết về kỹ năng vận động (understood.org)</p>
+                <p>[8] CDC: Nhận biết các cột mốc phát triển và dấu hiệu sớm (cdc.gov/ncbddd/autism)</p>
+                <p>[9] Child Mind Institute: Tự kỷ và những thách thức trong vận động thô/tinh (childmind.org)</p>
+                <p>[10] National Autistic Society: Rối loạn phối hợp vận động (Dyspraxia) và tự kỷ (autism.org.uk)</p>
+                <p>[11] Your Kids Table: Hỗ trợ kỹ năng vận động tinh cho trẻ tự kỷ tại nhà (yourkidstable.com)</p>
+                <p>[12] Harkla: Tự kỷ và sự phát triển kỹ năng vận động (harkla.co)</p>
+                <p>[13] North Shore Pediatric Therapy: Khác biệt trong lập kế hoạch vận động ở trẻ tự kỷ (nspt4kids.com)</p>
+                <p>[14] The OT Toolbox: Tổng quan về can thiệp vận động qua góc nhìn trị liệu (theottoolbox.com)</p>
+                <p>[15] Pathways: Các mốc vận động thô/tinh cần lưu ý (pathways.org)</p>
+                <p>[16] The Mighty: "Sự hậu đậu" và kỹ năng vận động qua lăng kính người tự kỷ (themighty.com)</p>
+                <p>[17] Thinking Person's Guide to Autism: Hiểu về sự khác biệt vận động thay vì phán xét (thinkingautismguide.com)</p>
+                <p>[18] Autistic Not Weird: Thách thức vận động thô và sự tự tin của trẻ (autisticnotweird.com)</p>
+                <p>[19] Neuroclastic: Giải mã chứng mất tự dụng (Apraxia) và lập kế hoạch vận động (neuroclastic.com)</p>
+                <p>[20] AANE: Hỗ trợ những thách thức thể chất vô hình của tự kỷ (aane.org)</p>
+            </div>
         </div>
+    </footer>
 
-        <!-- INTERACTIVE CHECKLIST -->
-        <section class="bg-white border-2 border-dashed border-yellow rounded-xl p-6 md:p-10 my-16 text-center">
-            <h2 class="font-oswald text-navy text-2xl md:text-3xl mb-4">Kiểm Tra Nhanh: Mức Độ Tương Tác Của Con</h2>
-            <p class="text-textMuted">Đánh dấu vào các biểu hiện bạn quan sát thấy ở trẻ trong 1 tuần qua:</p>
-            
-            <div class="text-left max-w-2xl mx-auto flex flex-col gap-4 mt-8">
-                <label class="flex items-start gap-3 p-4 bg-bgAlt rounded-lg cursor-pointer hover:bg-yellow/10 transition-colors">
-                    <input type="checkbox" class="chk-eval mt-1 w-5 h-5 accent-navy">
-                    <span class="text-dark font-medium">Trẻ có giật mình với tiếng ồn lớn (máy sấy, hút bụi) nhưng lờ đi khi được gọi tên?</span>
-                </label>
-                <label class="flex items-start gap-3 p-4 bg-bgAlt rounded-lg cursor-pointer hover:bg-yellow/10 transition-colors">
-                    <input type="checkbox" class="chk-eval mt-1 w-5 h-5 accent-navy">
-                    <span class="text-dark font-medium">Khi quay lại (nếu có), trẻ tránh nhìn trực tiếp vào mắt người gọi?</span>
-                </label>
-                <label class="flex items-start gap-3 p-4 bg-bgAlt rounded-lg cursor-pointer hover:bg-yellow/10 transition-colors">
-                    <input type="checkbox" class="chk-eval mt-1 w-5 h-5 accent-navy">
-                    <span class="text-dark font-medium">Trẻ hiếm khi dùng ngón tay trỏ để chỉ vào đồ vật muốn khoe với mẹ?</span>
-                </label>
-                <label class="flex items-start gap-3 p-4 bg-bgAlt rounded-lg cursor-pointer hover:bg-yellow/10 transition-colors">
-                    <input type="checkbox" class="chk-eval mt-1 w-5 h-5 accent-navy" value="2">
-                    <span class="text-dark font-medium">Trẻ đã bước qua tháng thứ 12 nhưng gần như không bao giờ phản ứng với tên gọi?</span>
-                </label>
-            </div>
-
-            <div id="eval-result" class="mt-8 p-5 rounded-lg font-semibold bg-[#e8f5e9] text-[#2e7d32] transition-all duration-300 block">
-                Hãy tick vào các ô trên để xem đánh giá sơ bộ dựa trên hành vi của con.
-            </div>
-        </section>
-
-        <!-- SECTION 4: 3 BƯỚC CAN THIỆP -->
-        <section class="mb-16">
-            <h2 class="font-oswald text-navy text-2xl md:text-4xl leading-tight mt-8 relative">4. Quy Trình 3 Bước Can Thiệp Hành Vi (ABA) Tại Nhà</h2>
-            <div class="w-14 h-1 rounded bg-yellow my-4"></div>
-            <p class="mb-6">Cảm giác bất lực là điều dễ hiểu. Nhưng kỹ năng này hoàn toàn có thể rèn luyện thông qua Phân tích Hành vi Ứng dụng (ABA).</p>
-
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
-                <div class="bg-white p-6 md:p-8 rounded-xl relative overflow-hidden shadow-card border-t-4 border-navy">
-                    <div class="absolute -bottom-6 right-2 font-oswald text-[8rem] text-navy opacity-5 leading-none pointer-events-none">1</div>
-                    <h3 class="font-oswald text-navy text-xl mb-4">Ngừng Gắn Tên Với Mệnh Lệnh</h3>
-                    <ul class="list-disc pl-5 text-textMuted text-sm space-y-2">
-                        <li>Tuyệt đối không dùng tên con để la mắng (VD: "Bi, không ném đồ!").</li>
-                        <li>Việc này khiến não bộ đánh đồng tên gọi với sự kiện khó chịu (aversive stimulus), kích hoạt cơ chế phớt lờ tự vệ.</li>
-                        <li>Trong 1-2 tuần đầu: Dùng đại từ chung chung hoặc chạm nhẹ để điều hướng. "Thanh lọc" ký ức tiêu cực.</li>
-                    </ul>
-                </div>
-                <div class="bg-white p-6 md:p-8 rounded-xl relative overflow-hidden shadow-card border-t-4 border-navy">
-                    <div class="absolute -bottom-6 right-2 font-oswald text-[8rem] text-navy opacity-5 leading-none pointer-events-none">2</div>
-                    <h3 class="font-oswald text-navy text-xl mb-4">Kỹ Thuật Ghép Nối (Pairing)</h3>
-                    <ul class="list-disc pl-5 text-textMuted text-sm space-y-2">
-                        <li>Mục tiêu: Xây dựng lộ trình thần kinh <strong class="text-dark">Tên gọi = Điều tuyệt vời</strong>.</li>
-                        <li>Chuẩn bị phần thưởng vô điều kiện con cực thích (đồ chơi phát sáng, miếng bánh, trò cù lét).</li>
-                        <li>Ở cự ly gần, gọi tên vui tươi. Ngay lúc con liếc mắt, lập tức trao thưởng. Nếu không quay, chạm nhẹ vai hỗ trợ (prompting).</li>
-                    </ul>
-                </div>
-                <div class="bg-white p-6 md:p-8 rounded-xl relative overflow-hidden shadow-card border-t-4 border-navy">
-                    <div class="absolute -bottom-6 right-2 font-oswald text-[8rem] text-navy opacity-5 leading-none pointer-events-none">3</div>
-                    <h3 class="font-oswald text-navy text-xl mb-4">Khái Quát Hóa Dữ Liệu</h3>
-                    <ul class="list-disc pl-5 text-textMuted text-sm space-y-2">
-                        <li>Ghi chép tỷ lệ quay đầu mỗi ngày để theo dõi.</li>
-                        <li>Khi đã quen ở cự ly gần, giãn cách từ từ: 2 mét, 5 mét, rồi ở phòng khác.</li>
-                        <li><strong class="text-dark">Quan trọng:</strong> Cha mẹ cần duy trì trạng thái bình tĩnh (Window of Tolerance) làm mỏ neo cảm xúc an toàn cho con.</li>
-                    </ul>
-                </div>
-            </div>
-        </section>
-
-        <!-- SECTION 5: FAQ -->
-        <section class="mb-16 mt-10">
-            <h2 class="font-oswald text-navy text-2xl md:text-4xl leading-tight relative">Câu Hỏi Thường Gặp (FAQ)</h2>
-            <div class="w-14 h-1 rounded bg-yellow my-4"></div>
-            
-            <div class="mt-8 space-y-4">
-                <!-- FAQ Item 1 -->
-                <div class="faq-item bg-white rounded-lg shadow-sm overflow-hidden">
-                    <button class="faq-question w-full text-left p-5 font-oswald text-lg text-navy flex justify-between items-center cursor-pointer">
-                        Trẻ tự kỷ không phản ứng khi gọi tên có phải do bị điếc không?
-                        <span class="faq-icon text-2xl text-yellow transition-transform duration-300">+</span>
-                    </button>
-                    <div class="faq-answer max-h-0 overflow-hidden transition-all duration-300 px-5 bg-bgAlt">
-                        <p class="pb-5 text-textMuted">Đa số trường hợp là không. Trẻ tự kỷ thường có thính lực cơ học hoàn toàn bình thường. Sự lơ đễnh xuất phát từ việc não bộ không gán "ưu tiên xã hội" cho tiếng gọi. Trẻ có thể lờ đi tên mình nhưng lại nhạy bén hoặc bịt tai hoảng sợ trước tiếng ồn của máy hút bụi.</p>
-                    </div>
-                </div>
-
-                <!-- FAQ Item 2 -->
-                <div class="faq-item bg-white rounded-lg shadow-sm overflow-hidden">
-                    <button class="faq-question w-full text-left p-5 font-oswald text-lg text-navy flex justify-between items-center cursor-pointer">
-                        Nếu gọi mãi con không quay lại, tôi có nên hét lên không?
-                        <span class="faq-icon text-2xl text-yellow transition-transform duration-300">+</span>
-                    </button>
-                    <div class="faq-answer max-h-0 overflow-hidden transition-all duration-300 px-5 bg-bgAlt">
-                        <p class="pb-5 text-textMuted">Tuyệt đối không. Việc hét lên hoặc tăng âm lượng đột ngột sẽ biến tên gọi thành một sự đe dọa. Trẻ sẽ càng trốn tránh và phớt lờ. Thay vào đó, hãy tiến lại gần, vỗ nhẹ vào vai con và sử dụng tông giọng vui tươi.</p>
-                    </div>
-                </div>
-
-                <!-- FAQ Item 3 -->
-                <div class="faq-item bg-white rounded-lg shadow-sm overflow-hidden">
-                    <button class="faq-question w-full text-left p-5 font-oswald text-lg text-navy flex justify-between items-center cursor-pointer">
-                        Ở độ tuổi nào việc lờ đi tiếng gọi đáng lo ngại?
-                        <span class="faq-icon text-2xl text-yellow transition-transform duration-300">+</span>
-                    </button>
-                    <div class="faq-answer max-h-0 overflow-hidden transition-all duration-300 px-5 bg-bgAlt">
-                        <p class="pb-5 text-textMuted">Trẻ sơ sinh bình thường phản xạ với âm thanh ở tháng thứ 6. Điểm gãy của trẻ tự kỷ bộc lộ rõ từ 9-12 tháng. Vắng mặt kỹ năng này ở mốc 12 tháng là "cờ đỏ" yêu cầu can thiệp ngay.</p>
-                    </div>
-                </div>
-
-                <!-- FAQ Item 4 -->
-                <div class="faq-item bg-white rounded-lg shadow-sm overflow-hidden">
-                    <button class="faq-question w-full text-left p-5 font-oswald text-lg text-navy flex justify-between items-center cursor-pointer">
-                        Tại sao đôi lúc con vẫn quay lại nhưng thường xuyên phớt lờ?
-                        <span class="faq-icon text-2xl text-yellow transition-transform duration-300">+</span>
-                    </button>
-                    <div class="faq-answer max-h-0 overflow-hidden transition-all duration-300 px-5 bg-bgAlt">
-                        <p class="pb-5 text-textMuted">Điều này rất phổ biến. Trẻ thường chỉ quay lại khi tiếng gọi vô tình gắn liền với món đồ chơi/đồ ăn con đang khao khát lúc đó. Sự thiếu ổn định này chính là đặc tính của rối loạn xử lý ưu tiên xã hội.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- REFERENCES & DISCLAIMER -->
-        <footer class="text-sm text-gray-500 mt-16 pt-6 border-t border-gray-200">
-            <p><strong class="text-dark">Tuyên bố miễn trừ trách nhiệm:</strong> Toàn bộ thông tin được đúc kết từ báo cáo khoa học (PubMed, PLoS ONE) và tổ chức sức khỏe (CDC, Autism Speaks). Nội dung mang sứ mệnh giáo dục, không thay thế chẩn đoán y khoa. Hãy tìm kiếm sự tham vấn từ bác sĩ chuyên khoa nếu có dấu hiệu bất thường.</p>
-            <details class="mt-4 cursor-pointer group">
-                <summary class="text-navy font-semibold outline-none group-hover:text-yellow transition-colors">Xem nguồn tài liệu trích dẫn y khoa</summary>
-                <ul class="mt-3 list-disc pl-5 space-y-1">
-                    <li>Miller M, et al. "Response to name in infants developing autism spectrum disorder: a prospective study." The Journal of Pediatrics (2017).</li>
-                    <li>Nijhof AD, et al. "Neural responses to hearing the own name in school-aged children with and without autism." PubMed (2024).</li>
-                    <li>Tổ chức Autism Speaks. "Signs of Autism - By 12 months".</li>
-                    <li>Conine DE, et al. "Evaluating a screening-to-intervention model with caregiver training for response to name..." Journal of Applied Behavior Analysis (2025).</li>
-                </ul>
-            </details>
-        </footer>
-    </div>
-</div>
-
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // ACCORDION LOGIC (Updated for Tailwind classes)
-        const faqItems = document.querySelectorAll('.faq-item');
-        
-        faqItems.forEach(item => {
-            const question = item.querySelector('.faq-question');
-            const answer = item.querySelector('.faq-answer');
-            const icon = item.querySelector('.faq-icon');
-
-            question.addEventListener('click', () => {
-                const isOpen = answer.classList.contains('max-h-[500px]');
-
-                // Close all others
-                faqItems.forEach(otherItem => {
-                    const otherAnswer = otherItem.querySelector('.faq-answer');
-                    const otherIcon = otherItem.querySelector('.faq-icon');
-                    otherAnswer.classList.remove('max-h-[500px]');
-                    otherAnswer.classList.add('max-h-0');
-                    otherIcon.classList.remove('rotate-45');
-                });
-
-                // Toggle current
-                if (!isOpen) {
-                    answer.classList.remove('max-h-0');
-                    answer.classList.add('max-h-[500px]');
-                    icon.classList.add('rotate-45');
-                }
-            });
-        });
-
-        // INTERACTIVE CHECKLIST LOGIC (Updated for Tailwind classes)
-        const checkboxes = document.querySelectorAll('.chk-eval');
-        const resultBox = document.getElementById('eval-result');
-
-        function calculateScore() {
-            let score = 0;
-            let checkedCount = 0;
-            
-            checkboxes.forEach(chk => {
-                if(chk.checked) {
-                    score += parseInt(chk.value || 1); // default value 1 if not specified
-                    checkedCount++;
-                }
-            });
-
-            // Base Tailwind classes for the box
-            const baseClasses = "mt-8 p-5 rounded-lg font-semibold transition-all duration-300 block ";
-
-            if (checkedCount === 0) {
-                resultBox.className = baseClasses + 'bg-[#e8f5e9] text-[#2e7d32]';
-                resultBox.innerHTML = "Hãy tick vào các ô trên để xem đánh giá sơ bộ dựa trên hành vi của con.";
-            } else if (score >= 3) {
-                resultBox.className = baseClasses + 'bg-[#ffebee] text-[#c62828]';
-                resultBox.innerHTML = "⚠️ <strong class='text-dark'>CỜ ĐỎ:</strong> Các dấu hiệu cho thấy sự thiếu hụt rõ rệt trong 'Chú ý chung' và phản xạ xã hội. Bạn nên đưa bé đi đánh giá chuyên sâu với bác sĩ nhi thần kinh sớm nhất có thể.";
-            } else if (score >= 1) {
-                resultBox.className = baseClasses + 'bg-[#fff8e1] text-[#f57f17]';
-                resultBox.innerHTML = "👀 <strong class='text-dark'>CẦN LƯU Ý:</strong> Bé đang có biểu hiện trễ nhịp trong giao tiếp. Hãy bắt đầu áp dụng ngay 'Quy trình 3 Bước Can thiệp (Pairing)' tại nhà và theo dõi sát sao.";
-            }
-        }
-
-        checkboxes.forEach(chk => {
-            chk.addEventListener('change', calculateScore);
-        });
-    });
-</script>
-
-<?php get_footer(); ?>
+</body>
+</html>
