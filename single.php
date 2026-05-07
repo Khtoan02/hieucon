@@ -105,6 +105,7 @@ get_header(); ?>
                                 box-shadow: 0 10px 40px -10px rgba(10, 25, 49, 0.15);
                                 margin: 2.5rem auto;
                                 width: 100%;
+                                max-width: 100% !important;
                                 aspect-ratio: 16 / 9;
                                 object-fit: cover;
                                 display: block;
@@ -113,11 +114,14 @@ get_header(); ?>
                             .single-content figure, .single-content .wp-caption {
                                 position: relative;
                                 margin: 2.5rem auto;
-                                width: 100%;
+                                width: 100% !important;
+                                max-width: 100% !important;
+                                height: auto;
                             }
 
                             .single-content figure img, .single-content .wp-caption img {
                                 margin: 0;
+                                width: 100%;
                             }
 
                             .single-content figcaption, .single-content .wp-caption-text {
