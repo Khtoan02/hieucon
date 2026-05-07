@@ -314,7 +314,9 @@
     </header>
 
     <script>
-        lucide.createIcons({ strokeWidth: 1.5 });
+        document.addEventListener('DOMContentLoaded', () => {
+            lucide.createIcons({ strokeWidth: 1.5 });
+        });
 
         // Sticky Header
         const header = document.getElementById('main-header');
