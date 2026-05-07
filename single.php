@@ -101,15 +101,52 @@ get_header(); ?>
                             }
 
                             .single-content img {
-                                border-radius: 1rem;
-                                box-shadow: 0 10px 40px -10px rgba(10, 25, 49, 0.08);
-                                margin: 2rem auto;
-                                height: auto;
-                                max-width: 100%;
+                                border-radius: 1.25rem;
+                                box-shadow: 0 10px 40px -10px rgba(10, 25, 49, 0.15);
+                                margin: 2.5rem auto;
+                                width: 100%;
+                                aspect-ratio: 16 / 9;
+                                object-fit: cover;
+                                display: block;
+                            }
+
+                            .single-content figure, .single-content .wp-caption {
+                                position: relative;
+                                margin: 2.5rem auto;
+                                width: 100%;
+                            }
+
+                            .single-content figure img, .single-content .wp-caption img {
+                                margin: 0;
+                            }
+
+                            .single-content figcaption, .single-content .wp-caption-text {
+                                position: absolute;
+                                bottom: 1.25rem;
+                                left: 50%;
+                                transform: translateX(-50%);
+                                background: rgba(255, 255, 255, 0.65);
+                                backdrop-filter: blur(12px);
+                                -webkit-backdrop-filter: blur(12px);
+                                border: 1px solid rgba(255, 255, 255, 0.8);
+                                color: #0A1931;
+                                font-size: 0.875rem;
+                                font-weight: 700;
+                                padding: 0.5rem 1.5rem;
+                                border-radius: 999px;
+                                box-shadow: 0 8px 30px -5px rgba(10, 25, 49, 0.2);
+                                text-align: center;
+                                max-width: 85%;
+                                z-index: 10;
+                                text-shadow: 0 1px 2px rgba(255,255,255,0.8);
+                                display: -webkit-box;
+                                -webkit-line-clamp: 2;
+                                -webkit-box-orient: vertical;
+                                overflow: hidden;
                             }
                             
-                            .single-content img.alignleft { float: left; margin-right: 1.5rem; margin-bottom: 1.5rem; }
-                            .single-content img.alignright { float: right; margin-left: 1.5rem; margin-bottom: 1.5rem; }
+                            .single-content img.alignleft { float: left; margin-right: 1.5rem; margin-bottom: 1.5rem; width: 50%; aspect-ratio: auto; }
+                            .single-content img.alignright { float: right; margin-left: 1.5rem; margin-bottom: 1.5rem; width: 50%; aspect-ratio: auto; }
                             .single-content img.aligncenter { display: block; margin-left: auto; margin-right: auto; }
                         </style>
 

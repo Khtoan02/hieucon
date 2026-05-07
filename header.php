@@ -19,6 +19,30 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Nunito:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
     
+    <!-- Tự động khởi tạo Open Graph Meta Tags cho Social Media -->
+    <?php
+    $og_title = is_singular() ? get_the_title() : get_bloginfo('name');
+    $og_desc = is_singular() && has_excerpt() ? wp_strip_all_tags(get_the_excerpt()) : get_bloginfo('description');
+    $og_url = is_singular() ? get_permalink() : home_url('/');
+    
+    // Hình ảnh mặc định nếu bài viết không có ảnh đại diện (Lấy ảnh bìa trang chủ)
+    $default_og_image = 'https://hieucontugoc.online/wp-content/uploads/2026/05/2.jpg';
+    $og_image = has_post_thumbnail() ? get_the_post_thumbnail_url(get_the_ID(), 'large') : $default_og_image;
+    ?>
+    <meta property="og:title" content="<?php echo esc_attr($og_title); ?>">
+    <meta property="og:description" content="<?php echo esc_attr($og_desc); ?>">
+    <meta property="og:url" content="<?php echo esc_url($og_url); ?>">
+    <meta property="og:image" content="<?php echo esc_url($og_image); ?>">
+    <meta property="og:type" content="<?php echo is_single() ? 'article' : 'website'; ?>">
+    <meta property="og:site_name" content="<?php echo esc_attr(get_bloginfo('name')); ?>">
+    
+    <!-- Twitter Cards -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="<?php echo esc_attr($og_title); ?>">
+    <meta name="twitter:description" content="<?php echo esc_attr($og_desc); ?>">
+    <meta name="twitter:image" content="<?php echo esc_url($og_image); ?>">
+    <!-- Kết thúc Open Graph -->
+
     <script>
         tailwind.config = {
             theme: {
