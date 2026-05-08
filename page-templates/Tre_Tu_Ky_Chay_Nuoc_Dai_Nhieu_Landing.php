@@ -1,6 +1,6 @@
 <?php /* Template Name: Tre_Tu_Ky_Chay_Nuoc_Dai_Nhieu_Landing */ ?>
-<?php get_header(); ?>
 
+<?php get_header(); ?>
 <!-- Landing Page Fonts -->
 <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
 
