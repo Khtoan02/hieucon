@@ -258,7 +258,8 @@
             </div>
         </div>
     </footer>
-</body>
 
 <?php get_footer(); ?>
+</body>
+
 </html>
