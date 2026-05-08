@@ -50,7 +50,7 @@
     <!-- HERO SECTION -->
     <header class="bg-navy py-24 md:py-32 px-6 text-center">
         <div class="max-w-4xl mx-auto">
-            <h1 class="font-oswald text-4xl md:text-5xl uppercase font-bold text-cream leading-tight mb-8">
+            <h1 class="font-oswald text-4xl md:text-5xl uppercase font-bold text-cream leading-tight mb-8 line-height-2">
                 VẬN ĐỘNG THÔ VÀ TINH Ở TRẺ TỰ KỶ CÓ ĐIỂM GÌ KHÁC BIỆT?
             </h1>
             <p class="text-lg md:text-xl text-cream/90 max-w-3xl mx-auto mb-10 font-medium leading-relaxed">
