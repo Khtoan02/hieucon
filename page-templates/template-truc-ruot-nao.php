@@ -393,5 +393,4 @@
         </div>
     </section>
 
-</body>
-    <?php wp_footer(); ?>
+<?php get_footer(); ?>

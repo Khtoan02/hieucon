@@ -536,8 +536,5 @@ Template Name: Trang Van Dong Kinh
     <script>
         lucide.createIcons();
     </script>
-</body>
-
-</html>
 
 <?php get_footer(); ?>

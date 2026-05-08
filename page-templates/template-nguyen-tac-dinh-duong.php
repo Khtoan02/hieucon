@@ -797,5 +797,4 @@ function updateMeal(key, btn) {
 }
 </script>
 
-<?php wp_footer(); ?>
-</body>
+<?php get_footer(); ?>

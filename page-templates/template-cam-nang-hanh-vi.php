@@ -834,6 +834,4 @@
     </div><!-- /right column -->
     </div><!-- /app wrapper -->
 
-<?php wp_footer(); ?>
-</body>
-</html>
+<?php get_footer(); ?>

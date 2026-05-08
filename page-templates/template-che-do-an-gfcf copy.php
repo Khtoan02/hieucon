@@ -356,6 +356,5 @@
             });
         });
     </script>
-</body>
-</html>
-<?php wp_footer(); ?>
+
+<?php get_footer(); ?>

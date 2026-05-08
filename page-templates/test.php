@@ -290,5 +290,4 @@
         </div>
     </footer>
 
-</body>
-</html>
+<?php get_footer(); ?>
