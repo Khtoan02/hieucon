@@ -36,6 +36,11 @@
         html { scroll-behavior: smooth; }
         * { -webkit-tap-highlight-color: transparent; }
         
+        h1, h2, h3, h4, h5, h6 { 
+            font-family: 'Oswald', sans-serif; 
+            line-height: 1.4 !important; 
+        }
+        
         /* SVG cho Dấu cộng/Dấu trừ Accordion */
         details > summary { list-style: none; }
         details > summary::-webkit-details-marker { display: none; }

@@ -44,6 +44,7 @@
         h5,
         h6 {
             font-family: 'Oswald', sans-serif;
+            line-height: 1.4 !important;
         }
 
         .text-justify {

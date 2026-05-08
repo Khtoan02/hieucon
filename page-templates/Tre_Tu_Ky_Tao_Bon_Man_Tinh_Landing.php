@@ -29,7 +29,10 @@
     </script>
     <style>
         body { font-family: 'Quicksand', sans-serif; color: #3D3D3D; scroll-behavior: smooth; }
-        h1, h2, h3 { font-family: 'Oswald', sans-serif; }
+        h1, h2, h3, h4, h5, h6 { 
+            font-family: 'Oswald', sans-serif; 
+            line-height: 1.4 !important; 
+        }
         .cta-button {
             background-color: #FFD154;
             color: #002795;
