@@ -1,31 +1,55 @@
 <?php /* Template Name: Phan_Bat_Thuong_Tre_Tu_Ky_Landing */ ?>
-<?php get_header(); ?>
-<!-- Landing Page Fonts -->
-<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-<!-- Landing Page Styles -->
-<style>
-    html { scroll-behavior: smooth; }
-    details > summary { list-style: none; }
-    details > summary::-webkit-details-marker { display: none; }
-    details[open] summary ~ * { animation: sweep .3s ease-in-out; }
-    @keyframes sweep {
-        0%    {opacity: 0; margin-top: -10px}
-        100%  {opacity: 1; margin-top: 0px}
-    }
-    .landing-wrapper h1, .landing-wrapper h2, .landing-wrapper h3, .landing-wrapper h4, .landing-wrapper h5, .landing-wrapper h6 { 
-        font-family: 'Oswald', sans-serif; 
-        line-height: 1.4 !important; 
-    }
-    .font-oswald { font-family: 'Oswald', sans-serif !important; }
-    .font-quicksand { font-family: 'Quicksand', sans-serif !important; }
-    /* Reset text color for landing page */
-    .landing-wrapper {
-        font-family: 'Quicksand', sans-serif;
-        color: #3D3D3D;
-        background-color: #FAF9F6;
-    }
-</style>
+<?php get_header(); ?>
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phân bất thường ở trẻ tự kỷ và cách chăm sóc sức khỏe ruột</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        navy: '#002795',
+                        yellow: '#FFD154',
+                        cream: '#FAF9F6',
+                        'text-dark': '#3D3D3D',
+                        'text-soft': '#555555'
+                    },
+                    fontFamily: {
+                        oswald: ['Oswald', 'sans-serif'],
+                        quicksand: ['Quicksand', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Quicksand', sans-serif; color: #3D3D3D; scroll-behavior: smooth; }
+        h1, h2, h3 { font-family: 'Oswald', sans-serif; }
+        .cta-button {
+            background-color: #FFD154;
+            color: #002795;
+            font-weight: 700;
+            padding: 1rem 2rem;
+            border-radius: 9999px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s;
+            display: inline-block;
+            text-align: center;
+        }
+        .cta-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
 <body class="bg-white">
 
     <header class="bg-navy py-24 md:py-32 px-6 text-center text-cream">
