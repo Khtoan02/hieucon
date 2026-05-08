@@ -4,18 +4,14 @@
  * 
  * @package Hieucon
  */
+get_header();
 ?>
-<!DOCTYPE html>
-<html lang="vi">
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bảng Kiểm Tra Toàn Diện - Nam Khánh</title>
-  <link
+<!-- Landing Page Head Assets -->
+<link
     href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Be+Vietnam+Pro:wght@300;400;500;600&display=swap"
     rel="stylesheet">
-  <style>
+<style>
     :root {
       --navy: #002795;
       --navy-light: #1a3a8c;
@@ -826,12 +822,8 @@
     }
   </style>
 
-  <?php wp_head(); ?>
-</head>
-
-<body>
-
-  <!-- HERO -->
+<div class="landing-checklist-wrapper antialiased relative z-10 bg-[var(--cream)] text-[var(--charcoal)] font-['Be_Vietnam_Pro',_sans-serif]">
+<!-- HERO -->
   <div class="hero" id="hero-section">
     <div class="hero-badge">🧩 Công cụ đánh giá</div>
     <h1>Bảng Kiểm Tra Toàn Diện<br><span>Sức Khỏe Toàn Thân</span> Của Con</h1>
@@ -1618,5 +1610,8 @@
       }
     }
   </script>
+
+
+</div>
 
 <?php get_footer(); ?>
