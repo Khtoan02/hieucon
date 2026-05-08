@@ -192,7 +192,7 @@
     <section class="py-20 md:py-28 px-6 bg-white">
         <div class="max-w-4xl mx-auto">
             <h2 class="text-navy text-3xl md:text-4xl font-semibold text-center mb-16">
-                Câu hỏi thường gặp về tình trạng sức khỏe đường ruột ở trẻ tự kỷ
+                Câu hỏi thường gặp về sức khỏe đường ruột ở trẻ tự kỷ
             </h2>
             <div class="space-y-4">
                 <details class="group bg-cream rounded-2xl shadow-sm">
