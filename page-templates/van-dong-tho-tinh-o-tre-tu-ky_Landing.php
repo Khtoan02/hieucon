@@ -43,6 +43,11 @@
             0%    {opacity: 0; margin-top: -10px}
             100%  {opacity: 1; margin-top: 0px}
         }
+        
+        h1, h2, h3, h4, h5, h6 { 
+            font-family: 'Oswald', sans-serif; 
+            line-height: 1.4 !important; 
+        }
     </style>
 </head>
 <body class="font-quicksand text-text-dark bg-white antialiased leading-relaxed">
