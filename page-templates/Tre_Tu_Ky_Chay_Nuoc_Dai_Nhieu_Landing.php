@@ -33,7 +33,7 @@
     <section class="bg-[#002795] text-[#FAF9F6] py-24 md:py-32 px-6 text-center">
         <div class="max-w-4xl mx-auto">
             <h1 class="font-oswald text-[#FAF9F6] text-4xl md:text-6xl font-bold leading-tight tracking-wide mb-8">
-                NGUYÊN NHÂN VÀ GIẢI PHÁP: TRẺ TỰ KỶ CHẢY NƯỚC DÃI NHIỀU
+                NGUYÊN NHÂN VÀ GIẢI PHÁP </br> TRẺ TỰ KỶ CHẢY NƯỚC DÃI NHIỀU
             </h1>
             <p class="font-quicksand text-lg md:text-xl max-w-3xl mx-auto mt-6 text-blue-100 leading-relaxed mb-10">
                 Hành trình nuôi dưỡng và đồng hành cùng một em bé phát triển khác biệt chưa bao giờ là điều dễ dàng. Việc con liên tục chảy dãi không phải lỗi do cha mẹ chăm sóc không tốt, mà thường bắt nguồn từ khó khăn sinh lý và cảm giác.
