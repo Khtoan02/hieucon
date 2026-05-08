@@ -11,30 +11,6 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
-    
-
-<style>
-    html { scroll-behavior: smooth; }
-    details > summary { list-style: none; }
-    details > summary::-webkit-details-marker { display: none; }
-    details[open] summary ~ * { animation: sweep .3s ease-in-out; }
-    @keyframes sweep {
-        0%    {opacity: 0; margin-top: -10px}
-        100%  {opacity: 1; margin-top: 0px}
-    }
-    .landing-wrapper h1, .landing-wrapper h2, .landing-wrapper h3, .landing-wrapper h4, .landing-wrapper h5, .landing-wrapper h6 { 
-        font-family: 'Oswald', sans-serif; 
-        line-height: 1.4 !important; 
-    }
-    .font-oswald { font-family: 'Oswald', sans-serif !important; }
-    .font-quicksand { font-family: 'Quicksand', sans-serif !important; }
-    /* Reset text color for landing page */
-    .landing-wrapper {
-        font-family: 'Quicksand', sans-serif;
-        color: #3D3D3D;
-        background-color: #FAF9F6;
-    }
-</style>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -108,7 +84,8 @@
     </script>
     <style>
         body { font-family: 'Quicksand', sans-serif; color: #3D3D3D; }
-        h1, h2, h3, h4, h5, h6, .font-oswald { font-family: 'Oswald', sans-serif; }
+        h1, h2, h3, h4, h5, h6, .font-oswald { font-family: 'Oswald', sans-serif; 
+        line-height: 1.4 !important; }
         details > summary { list-style: none; }
         details > summary::-webkit-details-marker { display: none; }
     </style>
