@@ -56,7 +56,7 @@
     <header class="bg-navy py-24 md:py-32 px-6 text-center text-cream">
         <div class="max-w-5xl mx-auto">
             <h1 class="text-4xl md:text-6xl font-bold leading-tight mb-8 tracking-wide">
-                GIẢI MÃ DẤU HIỆU PHÂN BẤT THƯỜNG Ở TRẺ TỰ KỶ VÀ CÁCH CHĂM SÓC HỆ TIÊU HÓA CHO CON
+                GIẢI MÃ PHÂN BẤT THƯỜNG ĐỂ CHĂM SÓC ĐƯỜNG RUỘT TRẺ TỰ KỶ
             </h1>
             <p class="font-quicksand text-lg md:text-xl max-w-3xl mx-auto mb-10 text-cream/90 leading-relaxed">
                 Những cơn quấy khóc hay hành vi cáu gắt đôi khi không phải đặc điểm của hội chứng tự kỷ, mà là tiếng kêu cứu từ một hệ tiêu hóa đang chịu nhiều tổn thương thầm lặng.
