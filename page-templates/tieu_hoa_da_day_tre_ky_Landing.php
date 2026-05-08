@@ -7,7 +7,6 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -41,12 +40,12 @@
 </head>
 <body class="bg-cream">
 
-    <main class="overflow-hidden">
+    <main class="overflow-x-hidden">
         <!-- Hero Section -->
         <section class="hero-pattern py-24 md:py-32 relative text-cream px-6">
             <div class="absolute inset-0 bg-gradient-to-r from-navy via-navy/90 to-transparent"></div>
             <div class="max-w-7xl mx-auto relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                <div data-aos="fade-right" data-aos-duration="1000">
+                <div>
                     <span class="inline-block py-1 px-3 rounded-full bg-yellow text-navy text-sm font-bold tracking-wider mb-6">HIỂU CON TỪ GỐC</span>
                     <h1 class="font-oswald text-4xl md:text-5xl lg:text-6xl leading-tight mb-8">
                         TIÊU HÓA DẠ DÀY TRẺ TỰ KỶ VÀ NHỮNG NỖI ĐAU <span class="text-yellow">THẦM LẶNG</span>
@@ -60,7 +59,7 @@
                         </a>
                     </div>
                 </div>
-                <div class="relative hidden lg:block" data-aos="fade-left" data-aos-duration="1000" data-aos-delay="200">
+                <div class="relative hidden lg:block">
                     <div class="absolute inset-0 bg-yellow rounded-full blur-[100px] opacity-20"></div>
                     <img src="https://images.unsplash.com/photo-1434494878577-86c23bcb06b9?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Sức khỏe tiêu hóa" class="rounded-[2rem] shadow-2xl relative z-10 border-4 border-white/10 w-full object-cover h-[500px]">
                     <div class="absolute -bottom-8 -left-8 bg-white text-navy p-6 rounded-2xl shadow-xl z-20 animate-bounce" style="animation-duration: 3s;">
@@ -74,17 +73,17 @@
         <!-- Thấu Hiểu Section -->
         <section class="bg-white py-20 md:py-28 px-6">
             <div class="max-w-7xl mx-auto">
-                <div class="text-center mb-16" data-aos="fade-up">
+                <div class="text-center mb-16">
                     <h2 class="font-oswald text-3xl md:text-5xl text-navy leading-snug">Thấu hiểu những khó khăn<br>con đang âm thầm chịu đựng</h2>
                     <div class="w-24 h-1 bg-yellow mx-auto mt-6 rounded-full"></div>
                 </div>
                 
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-                    <div class="relative" data-aos="fade-up-right">
+                    <div class="relative">
                         <img src="https://images.unsplash.com/photo-1544126592-807ade215a0b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Mẹ và bé" class="rounded-[2rem] shadow-xl object-cover h-[450px] w-full">
                         <div class="absolute inset-0 rounded-[2rem] bg-navy/10"></div>
                     </div>
-                    <div class="space-y-8" data-aos="fade-up-left">
+                    <div class="space-y-8">
                         <div class="space-y-6 text-lg text-text-soft leading-relaxed">
                             <p class="text-xl font-medium text-navy">
                                 Sự nhạy cảm của trẻ tự kỷ không chỉ dừng lại ở các giác quan bên ngoài mà còn nằm sâu bên trong cơ thể. 
@@ -114,14 +113,14 @@
             <div class="absolute bottom-0 left-0 w-64 h-64 bg-navy/10 rounded-full blur-[80px]"></div>
             
             <div class="max-w-7xl mx-auto relative z-10">
-                <div class="text-center mb-16" data-aos="fade-up">
+                <div class="text-center mb-16">
                     <h2 class="font-oswald text-3xl md:text-5xl text-navy mb-4">Những rắc rối đường ruột</h2>
                     <p class="text-text-soft text-lg max-w-2xl mx-auto">Khiến con mệt mỏi và dễ cáu gắt mỗi ngày</p>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     <!-- Cards -->
-                    <div class="bg-white rounded-3xl p-8 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-300 border border-navy/5 flex flex-col group" data-aos="fade-up" data-aos-delay="100">
+                    <div class="bg-white rounded-3xl p-8 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-300 border border-navy/5 flex flex-col group">
                         <div class="w-16 h-16 bg-cream rounded-2xl flex items-center justify-center text-3xl mb-6 group-hover:bg-yellow group-hover:scale-110 transition-all duration-300">💩</div>
                         <h3 class="font-oswald text-2xl text-navy mb-4">Táo bón kéo dài</h3>
                         <p class="text-text-soft flex-grow leading-relaxed">
@@ -129,7 +128,7 @@
                         </p>
                     </div>
 
-                    <div class="bg-white rounded-3xl p-8 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-300 border border-navy/5 flex flex-col group" data-aos="fade-up" data-aos-delay="200">
+                    <div class="bg-white rounded-3xl p-8 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-300 border border-navy/5 flex flex-col group">
                         <div class="w-16 h-16 bg-cream rounded-2xl flex items-center justify-center text-3xl mb-6 group-hover:bg-yellow group-hover:scale-110 transition-all duration-300">💧</div>
                         <h3 class="font-oswald text-2xl text-navy mb-4">Tiêu chảy mãn tính</h3>
                         <p class="text-text-soft flex-grow leading-relaxed">
@@ -137,7 +136,7 @@
                         </p>
                     </div>
 
-                    <div class="bg-white rounded-3xl p-8 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-300 border border-navy/5 flex flex-col group" data-aos="fade-up" data-aos-delay="300">
+                    <div class="bg-white rounded-3xl p-8 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-300 border border-navy/5 flex flex-col group">
                         <div class="w-16 h-16 bg-cream rounded-2xl flex items-center justify-center text-3xl mb-6 group-hover:bg-yellow group-hover:scale-110 transition-all duration-300">🔥</div>
                         <h3 class="font-oswald text-2xl text-navy mb-4">Trào ngược axit</h3>
                         <p class="text-text-soft flex-grow leading-relaxed">
@@ -145,7 +144,7 @@
                         </p>
                     </div>
 
-                    <div class="bg-white rounded-3xl p-8 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-300 border border-navy/5 flex flex-col group" data-aos="fade-up" data-aos-delay="400">
+                    <div class="bg-white rounded-3xl p-8 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-300 border border-navy/5 flex flex-col group">
                         <div class="w-16 h-16 bg-cream rounded-2xl flex items-center justify-center text-3xl mb-6 group-hover:bg-yellow group-hover:scale-110 transition-all duration-300">🎈</div>
                         <h3 class="font-oswald text-2xl text-navy mb-4">Đầy hơi căng chướng</h3>
                         <p class="text-text-soft flex-grow leading-relaxed">
@@ -153,7 +152,7 @@
                         </p>
                     </div>
 
-                    <div class="bg-white rounded-3xl p-8 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-300 border border-navy/5 flex flex-col group" data-aos="fade-up" data-aos-delay="500">
+                    <div class="bg-white rounded-3xl p-8 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-300 border border-navy/5 flex flex-col group">
                         <div class="w-16 h-16 bg-cream rounded-2xl flex items-center justify-center text-3xl mb-6 group-hover:bg-yellow group-hover:scale-110 transition-all duration-300">😖</div>
                         <h3 class="font-oswald text-2xl text-navy mb-4">Đau bụng âm ỉ</h3>
                         <p class="text-text-soft flex-grow leading-relaxed">
@@ -161,7 +160,7 @@
                         </p>
                     </div>
 
-                    <div class="bg-white rounded-3xl p-8 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-300 border border-navy/5 flex flex-col group" data-aos="fade-up" data-aos-delay="600">
+                    <div class="bg-white rounded-3xl p-8 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-300 border border-navy/5 flex flex-col group">
                         <div class="w-16 h-16 bg-cream rounded-2xl flex items-center justify-center text-3xl mb-6 group-hover:bg-yellow group-hover:scale-110 transition-all duration-300">🔍</div>
                         <h3 class="font-oswald text-2xl text-navy mb-4">Phân bất thường</h3>
                         <p class="text-text-soft flex-grow leading-relaxed">
@@ -175,12 +174,12 @@
         <!-- Thách Thức Section -->
         <section class="bg-white py-20 md:py-28 px-6">
             <div class="max-w-7xl mx-auto">
-                <div class="text-center mb-16" data-aos="fade-up">
+                <div class="text-center mb-16">
                     <h2 class="font-oswald text-3xl md:text-5xl text-navy leading-snug">Thách thức nuôi dưỡng<br>và hấp thu dinh dưỡng</h2>
                 </div>
                 
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-stretch">
-                    <div class="bg-cream p-10 md:p-12 rounded-[2.5rem] shadow-sm relative overflow-hidden group" data-aos="fade-right">
+                    <div class="bg-cream p-10 md:p-12 rounded-[2.5rem] shadow-sm relative overflow-hidden group">
                         <div class="absolute top-0 right-0 w-32 h-32 bg-yellow/20 rounded-full -mr-16 -mt-16 transition-transform group-hover:scale-150 duration-500"></div>
                         <div class="relative z-10">
                             <h3 class="font-oswald text-3xl text-navy mb-6">Giải pháp cho trẻ kén ăn cực đoan</h3>
@@ -193,7 +192,7 @@
                         </div>
                     </div>
                     
-                    <div class="bg-navy p-10 md:p-12 rounded-[2.5rem] text-cream shadow-2xl relative overflow-hidden" data-aos="fade-left">
+                    <div class="bg-navy p-10 md:p-12 rounded-[2.5rem] text-cream shadow-2xl relative overflow-hidden">
                         <img src="https://images.unsplash.com/photo-1516627145497-ae6968895b74?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Bé uống nước" class="absolute inset-0 w-full h-full object-cover opacity-20 mix-blend-overlay">
                         <div class="relative z-10">
                             <h3 class="font-oswald text-3xl text-yellow mb-6">Cải thiện thói quen uống nước</h3>
@@ -217,7 +216,7 @@
         </section>
 
         <!-- CTA Section -->
-        <section class="py-24 px-6 relative" data-aos="zoom-in">
+        <section class="py-24 px-6 relative">
             <div class="absolute inset-0">
                 <img src="https://images.unsplash.com/photo-1502086223501-7ea6ecd79368?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80" alt="Background" class="w-full h-full object-cover">
                 <div class="absolute inset-0 bg-navy/80 backdrop-blur-sm"></div>
@@ -238,13 +237,13 @@
         <!-- FAQ Section -->
         <section class="bg-cream py-20 md:py-28 px-6">
             <div class="max-w-3xl mx-auto">
-                <div class="text-center mb-16" data-aos="fade-up">
+                <div class="text-center mb-16">
                     <h2 class="font-oswald text-3xl md:text-5xl text-navy leading-tight">Giải đáp trăn trở thường gặp</h2>
                     <p class="text-text-soft mt-4 text-lg">Những thắc mắc từ các bậc cha mẹ về hệ tiêu hóa của con</p>
                 </div>
                 
                 <div class="space-y-5">
-                    <details class="group bg-white rounded-2xl shadow-sm hover:shadow-md transition-all duration-300 border border-navy/5" data-aos="fade-up" data-aos-delay="100">
+                    <details class="group bg-white rounded-2xl shadow-sm hover:shadow-md transition-all duration-300 border border-navy/5">
                         <summary class="font-oswald text-navy text-lg md:text-xl p-6 cursor-pointer font-semibold list-none flex justify-between items-center group-open:bg-navy group-open:text-white rounded-2xl transition-colors">
                             Vì sao trẻ tự kỷ dễ mắc bệnh tiêu hóa hơn?
                             <span class="text-2xl group-open:rotate-45 transition-transform duration-300 bg-cream group-open:bg-white/20 text-navy group-open:text-white w-10 h-10 flex items-center justify-center rounded-full">+</span>
@@ -254,7 +253,7 @@
                         </div>
                     </details>
 
-                    <details class="group bg-white rounded-2xl shadow-sm hover:shadow-md transition-all duration-300 border border-navy/5" data-aos="fade-up" data-aos-delay="200">
+                    <details class="group bg-white rounded-2xl shadow-sm hover:shadow-md transition-all duration-300 border border-navy/5">
                         <summary class="font-oswald text-navy text-lg md:text-xl p-6 cursor-pointer font-semibold list-none flex justify-between items-center group-open:bg-navy group-open:text-white rounded-2xl transition-colors">
                             Chế độ ăn kiêng có cải thiện hành vi không?
                             <span class="text-2xl group-open:rotate-45 transition-transform duration-300 bg-cream group-open:bg-white/20 text-navy group-open:text-white w-10 h-10 flex items-center justify-center rounded-full">+</span>
@@ -264,7 +263,7 @@
                         </div>
                     </details>
 
-                    <details class="group bg-white rounded-2xl shadow-sm hover:shadow-md transition-all duration-300 border border-navy/5" data-aos="fade-up" data-aos-delay="300">
+                    <details class="group bg-white rounded-2xl shadow-sm hover:shadow-md transition-all duration-300 border border-navy/5">
                         <summary class="font-oswald text-navy text-lg md:text-xl p-6 cursor-pointer font-semibold list-none flex justify-between items-center group-open:bg-navy group-open:text-white rounded-2xl transition-colors">
                             Làm sao biết con đau bụng hay hành vi rập khuôn?
                             <span class="text-2xl group-open:rotate-45 transition-transform duration-300 bg-cream group-open:bg-white/20 text-navy group-open:text-white w-10 h-10 flex items-center justify-center rounded-full">+</span>
@@ -274,7 +273,7 @@
                         </div>
                     </details>
 
-                    <details class="group bg-white rounded-2xl shadow-sm hover:shadow-md transition-all duration-300 border border-navy/5" data-aos="fade-up" data-aos-delay="400">
+                    <details class="group bg-white rounded-2xl shadow-sm hover:shadow-md transition-all duration-300 border border-navy/5">
                         <summary class="font-oswald text-navy text-lg md:text-xl p-6 cursor-pointer font-semibold list-none flex justify-between items-center group-open:bg-navy group-open:text-white rounded-2xl transition-colors">
                             Có nên tự ý bổ sung men vi sinh cho con?
                             <span class="text-2xl group-open:rotate-45 transition-transform duration-300 bg-cream group-open:bg-white/20 text-navy group-open:text-white w-10 h-10 flex items-center justify-center rounded-full">+</span>
@@ -284,7 +283,7 @@
                         </div>
                     </details>
 
-                    <details class="group bg-white rounded-2xl shadow-sm hover:shadow-md transition-all duration-300 border border-navy/5" data-aos="fade-up" data-aos-delay="500">
+                    <details class="group bg-white rounded-2xl shadow-sm hover:shadow-md transition-all duration-300 border border-navy/5">
                         <summary class="font-oswald text-navy text-lg md:text-xl p-6 cursor-pointer font-semibold list-none flex justify-between items-center group-open:bg-navy group-open:text-white rounded-2xl transition-colors">
                             Giúp con vượt qua nỗi sợ ngồi bô khi táo bón?
                             <span class="text-2xl group-open:rotate-45 transition-transform duration-300 bg-cream group-open:bg-white/20 text-navy group-open:text-white w-10 h-10 flex items-center justify-center rounded-full">+</span>
@@ -353,12 +352,5 @@
         </div>
     </footer>
     
-    <script>
-        AOS.init({
-            once: true,
-            offset: 50,
-            duration: 800,
-            easing: 'ease-out-cubic',
-        });
-    </script>
+
 <?php get_footer() ?>
