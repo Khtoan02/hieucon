@@ -93,7 +93,7 @@
                     </div>
                     <div class="relative">
                         <div class="bg-navy/5 rounded-full p-12">
-                            <img src="https://img.freepik.com/free-vector/human-internal-organ-with-stomach_1308-102922.jpg" alt="Hệ tiêu hóa trẻ em" class="rounded-2xl mix-blend-multiply">
+                            <img src="https://hieucontugoc.online/wp-content/uploads/2026/05/Hình_minh_họa_một_dường_202605081420.jpeg" alt="Hệ tiêu hóa trẻ em" class="rounded-2xl mix-blend-multiply">
                         </div>
                     </div>
                 </div>
