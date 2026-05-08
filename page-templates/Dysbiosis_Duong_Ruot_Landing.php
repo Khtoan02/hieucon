@@ -58,7 +58,7 @@
 
     <header class="bg-navy py-24 md:py-32 px-6 text-center">
         <div class="max-w-4xl mx-auto">
-            <h1 class="font-oswald text-cream text-4xl md:text-6xl leading-tight mb-8">
+            <h1 class="font-oswald text-cream text-4xl md:text-6xl leading-tight mb-8 font-bold">
                 GIẢI THÍCH ĐƠN GIẢN VỀ TÌNH TRẠNG DYSBIOSIS ĐƯỜNG RUỘT Ở TRẺ TỰ KỶ
             </h1>
             <p class="text-cream text-lg md:text-xl font-quicksand max-w-3xl mx-auto mb-10 opacity-90">
