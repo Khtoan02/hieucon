@@ -36,7 +36,7 @@
         /* Tùy chỉnh ẩn mũi tên mặc định của details/summary */
         details > summary { list-style: none; }
         details > summary::-webkit-details-marker { display: none; }
-        
+
         body { font-family: 'Quicksand', sans-serif; color: #3D3D3D; scroll-behavior: smooth; }
         h1, h2, h3 { font-family: 'Oswald', sans-serif; 
         line-height: 1.4 !important; }
@@ -63,7 +63,7 @@
         <section class="bg-navy text-cream py-24 md:py-32 px-6 text-center">
             <div class="max-w-4xl mx-auto">
                 <h1 class="font-oswald text-4xl md:text-5xl uppercase font-bold leading-tight md:leading-tight mb-8">
-                    VÌ SAO TRẺ TỰ KỶ HAY ĐAU BỤNG KHÔNG RÕ NGUYÊN NHÂN VÀ CÁCH CHA MẸ ĐỒNG HÀNH CÙNG CON
+                    VÌ SAO TRẺ TỰ KỶ HAY ĐAU BỤNG KHÔNG RÕ NGUYÊN NHÂN
                 </h1>
                 <p class="text-lg md:text-xl max-w-3xl mx-auto mb-10 text-cream/90">
                     Làm cha mẹ của một em bé có rối loạn phổ tự kỷ là một hành trình đòi hỏi sự kiên nhẫn và tình yêu thương vô bờ bến. Có lẽ không ít lần, bạn cảm thấy xót xa và hoang mang khi thấy con khóc lóc, cáu gắt hoặc gồng mình mà không rõ lý do. Thực tế, trẻ tự kỷ hay đau bụng không rõ nguyên nhân là một tình trạng rất phổ biến nhưng lại thường bị hiểu lầm. Hãy cùng giải mã tiếng kêu cứu thầm lặng của cơ thể con.
