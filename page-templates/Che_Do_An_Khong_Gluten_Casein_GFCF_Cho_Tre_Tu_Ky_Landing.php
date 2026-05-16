@@ -1,49 +1,41 @@
 <?php /* Template Name: Che_Do_An_Khong_Gluten_Casein_GFCF_Cho_Tre_Tu_Ky_Landing */ ?>
 <?php get_header(); ?>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chế độ ăn không gluten casein (GFCF) cho trẻ tự kỷ có đáng thử?</title>
-    <meta name="description" content="Cha mẹ hoang mang về chế độ ăn không gluten casein (GFCF) cho trẻ tự kỷ? Khám phá góc nhìn y khoa thấu cảm giúp con cải thiện tiêu hóa và hành vi an toàn.">
+
+<!-- SEO & Tailwind Config riêng cho trang Landing này -->
+<title>Chế độ ăn không gluten casein (GFCF) cho trẻ tự kỷ có đáng thử?</title>
+<meta name="description" content="Cha mẹ hoang mang về chế độ ăn không gluten casein (GFCF) cho trẻ tự kỷ? Khám phá góc nhìn y khoa thấu cảm giúp con cải thiện tiêu hóa và hành vi an toàn.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script>
+  tailwind.config.theme.extend.colors = {
+    ...tailwind.config.theme.extend.colors,
+    navy: '#002795',
+    yellow: '#FFD154',
+    cream: '#FAF9F6',
+    'text-dark': '#3D3D3D',
+    'text-soft': '#555555'
+  };
+  tailwind.config.theme.extend.fontFamily = {
+    ...tailwind.config.theme.extend.fontFamily,
+    oswald: ['Oswald', 'sans-serif'],
+    quicksand: ['Quicksand', 'sans-serif']
+  };
+</script>
+<style>
+    h1, h2, h3, h4, h5, h6, .font-oswald { font-family: 'Oswald', sans-serif; 
+    line-height: 1.4 !important; }
+    body { font-family: 'Quicksand', sans-serif; color: #3D3D3D; }
     
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            colors: {
-              navy: '#002795',
-              yellow: '#FFD154',
-              cream: '#FAF9F6',
-              'text-dark': '#3D3D3D',
-              'text-soft': '#555555'
-            },
-            fontFamily: {
-              oswald: ['Oswald', 'sans-serif'],
-              quicksand: ['Quicksand', 'sans-serif']
-            }
-          }
-        }
-      }
-    </script>
-    <style>
-        h1, h2, h3, h4, h5, h6, .font-oswald { font-family: 'Oswald', sans-serif; 
-        line-height: 1.4 !important; }
-        body { font-family: 'Quicksand', sans-serif; color: #3D3D3D; }
-        
-        /* Tùy chỉnh mũi tên của Accordion (FAQ) */
-        details > summary { list-style: none; }
-        details > summary::-webkit-details-marker { display: none; }
-        details[open] summary ~ * { animation: sweep .3s ease-in-out; }
-        @keyframes sweep {
-            0%    {opacity: 0; transform: translateY(-10px)}
-            100%  {opacity: 1; transform: translateY(0)}
-        }
-    </style>
-</head>
-<body class="font-quicksand text-text-dark bg-white antialiased leading-relaxed">
+    /* Tùy chỉnh mũi tên của Accordion (FAQ) */
+    details > summary { list-style: none; }
+    details > summary::-webkit-details-marker { display: none; }
+    details[open] summary ~ * { animation: sweep .3s ease-in-out; }
+    @keyframes sweep {
+        0%    {opacity: 0; transform: translateY(-10px)}
+        100%  {opacity: 1; transform: translateY(0)}
+    }
+</style>
+
 
     <!-- Hero Section -->
     <section class="bg-navy text-cream py-24 md:py-32 px-6 text-center">

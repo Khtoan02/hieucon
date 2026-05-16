@@ -104,5 +104,14 @@
         lucide.createIcons({ strokeWidth: 1.5 });
     }
 </script>
+
+<!-- Custom Footer Code (Theme Settings) -->
+<?php
+$footer_code = get_option('hieucon_custom_footer_code', '');
+if (!empty(trim($footer_code))) {
+    echo $footer_code . "\n";
+}
+?>
+
 </body>
 </html>
