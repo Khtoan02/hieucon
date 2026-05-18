@@ -28,29 +28,44 @@
     }
 </style>
 
-<div class="landing-wrapper antialiased leading-relaxed relative z-10 bg-white">
-<!-- Hero Section -->
-    <section class="bg-[#002795] py-24 md:py-32 px-6">
-        <div class="max-w-4xl mx-auto text-center">
-            <h1 class="text-4xl md:text-5xl font-oswald font-bold text-[#FAF9F6] uppercase leading-tight mb-8">
-                LẮNG NGHE TIẾNG GỌI TỪ CHIẾC BỤNG ĐAU KHI TRẺ TỰ KỶ TIÊU CHẢY MÃN TÍNH
-            </h1>
-            <p class="font-quicksand text-lg md:text-xl text-[#FAF9F6] max-w-3xl mx-auto leading-relaxed mb-10">
-                Hành trình làm cha mẹ của một em bé phát triển thần kinh khác biệt vốn dĩ đã có nhiều đêm thức trắng. Sự
+<!-- HERO SECTION -->
+    <section class="relative bg-navy pt-32 pb-24 md:pt-40 md:pb-32 px-6 overflow-hidden" id="hero-section">
+        <div class="absolute top-0 left-0 w-full h-full overflow-hidden z-0">
+            <div class="absolute -top-24 -left-24 w-96 h-96 bg-[#2563eb] rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-[blob_7s_infinite]"></div>
+            <div class="absolute top-1/4 -right-24 w-96 h-96 bg-yellow rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-[blob_7s_infinite_2s]"></div>
+        </div>
+        
+        <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center relative z-10">
+            <div class="text-left">
+                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[rgba(255,255,255,0.1)] backdrop-blur-md border border-solid border-[rgba(255,255,255,0.2)] text-cream text-sm font-semibold mb-6">
+                    <span class="w-2 h-2 rounded-full bg-yellow animate-pulse"></span>
+                    Góc Nhìn Chuyên Gia
+                </div>
+                <h1 class="font-oswald text-4xl md:text-5xl lg:text-5xl font-bold leading-tight mb-6 text-white tracking-wide uppercase">
+                    LẮNG NGHE TIẾNG GỌI TỪ CHIẾC BỤNG ĐAU KHI TRẺ TỰ KỶ TIÊU CHẢY MÃN TÍNH
+                </h1>
+                <p class="font-quicksand text-lg md:text-xl leading-relaxed text-[rgba(250,249,246,0.9)] mb-8 font-light">
+                    Hành trình làm cha mẹ của một em bé phát triển thần kinh khác biệt vốn dĩ đã có nhiều đêm thức trắng. Sự
                 vất vả ấy lại càng nhân lên gấp bội khi bạn phải chứng kiến con mình đi ngoài phân lỏng ngày qua ngày.
                 Tình trạng trẻ tự kỷ tiêu chảy mãn tính không chỉ đơn thuần là một vấn đề về hệ bài tiết, mà nó còn là
                 tiếng kêu cứu từ một cơ thể đang chịu nhiều tổn thương nhưng lại thiếu đi ngôn ngữ để diễn đạt.
-                <br><br>
+                
                 Khi con liên tục cáu gắt, đập phá đồ đạc hay bứt rứt không yên, nhiều cha mẹ dễ rơi vào vòng lặp mệt mỏi
                 và nghĩ rằng con đang "ăn vạ" hoặc biểu hiện "hành vi tự kỷ". Thế nhưng, sự thật thường xót xa hơn rất
                 nhiều. Những cơn cuộn thắt trong ruột, cảm giác sôi bụng và sự mệt mỏi kéo dài do mất nước đang bào mòn
                 năng lượng của con. Đừng để con phải đơn độc chịu đựng những cơn đau vô hình.
-            </p>
-            <a href="https://hieucontugoc.online/bang-kiem-tra-suc-khoe-toan-dien/"
-                class="bg-[#FFD154] text-[#002795] font-bold px-8 py-4 rounded-full shadow-lg hover:scale-105 hover:shadow-xl transition-all block w-fit mx-auto text-lg uppercase tracking-wide">
-                BẮT ĐẦU KIỂM TRA SỨC KHỎE TOÀN DIỆN
-            </a>
+                </p>
+                <a href="https://hieucontugoc.online/bang-kiem-tra-suc-khoe-toan-dien/" class="inline-block bg-yellow text-navy font-bold px-8 py-4 rounded-full shadow-lg hover:scale-105 hover:shadow-xl transition-all text-lg">
+                    BẮT ĐẦU KIỂM TRA SỨC KHỎE TOÀN DIỆN
+                </a>
+            </div>
+            
+            <div class="relative hidden lg:block">
+                <div class="absolute inset-0 bg-[rgba(255,209,84,0.2)] rounded-3xl transform rotate-2 scale-105"></div>
+                <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/vat_ly_tri_lieu_hero_vi_1779077058220.png" alt="Hero Image" class="relative rounded-3xl shadow-[0_25px_50px_-12px_rgba(0,0,0,0.25)] border border-solid border-[rgba(255,255,255,0.1)] object-cover w-full h-auto" />
+            </div>
         </div>
+    </section>
     </section>
 
     <!-- Section 1: Dấu hiệu cảnh báo -->

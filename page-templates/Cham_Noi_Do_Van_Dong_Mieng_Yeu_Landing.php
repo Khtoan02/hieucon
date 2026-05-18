@@ -71,7 +71,7 @@
             
             <div class="relative hidden lg:block">
                 <div class="absolute inset-0 bg-[rgba(255,209,84,0.2)] rounded-3xl transform rotate-2 scale-105"></div>
-                <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/oral_motor_weakness_hero_img_1779078815111.png" alt="Hero Image" class="relative rounded-3xl shadow-[0_25px_50px_-12px_rgba(0,0,0,0.25)] border border-solid border-[rgba(255,255,255,0.1)] object-cover w-full h-auto" />
+                <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/cham_noi_hero_vi_2_1779080644785.png" alt="Hero Image" class="relative rounded-3xl shadow-[0_25px_50px_-12px_rgba(0,0,0,0.25)] border border-solid border-[rgba(255,255,255,0.1)] object-cover w-full h-auto" />
             </div>
         </div>
     </section>
@@ -172,20 +172,25 @@
                 </p>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-                <div class="bg-cream rounded-2xl p-8 shadow-sm">
-                    <div class="text-4xl mb-4">🎈</div>
-                    <h3 class="text-xl md:text-2xl text-navy font-bold mb-4">Cải thiện sức mạnh cơ hàm thông qua các bài tập thổi bong bóng và nhai an toàn</h3>
-                    <p class="text-text-dark leading-relaxed">
-                        Tại nhà, mẹ có thể biến trị liệu thành giờ chơi. Thổi bong bóng, thổi còi, hay dùng ống hút uống sinh tố đặc buộc môi khép chặt và dùng lực hơi từ bụng [15]. Cung cấp đồ nhai silicon (chewy tubes) giúp cơ hàm hoạt động liên tục, xây dựng lại trương lực cơ đã mất, chuẩn bị cho khẩu hình miệng [12].
-                    </p>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div class="space-y-8">
+                    <div class="bg-cream rounded-2xl p-8 shadow-sm">
+                        <div class="text-4xl mb-4">🎈</div>
+                        <h3 class="text-xl md:text-2xl text-navy font-bold mb-4">Cải thiện sức mạnh cơ hàm thông qua các bài tập thổi bong bóng và nhai an toàn</h3>
+                        <p class="text-text-dark leading-relaxed">
+                            Tại nhà, mẹ có thể biến trị liệu thành giờ chơi. Thổi bong bóng, thổi còi, hay dùng ống hút uống sinh tố đặc buộc môi khép chặt và dùng lực hơi từ bụng [15]. Cung cấp đồ nhai silicon (chewy tubes) giúp cơ hàm hoạt động liên tục, xây dựng lại trương lực cơ đã mất, chuẩn bị cho khẩu hình miệng [12].
+                        </p>
+                    </div>
+                    <div class="bg-cream rounded-2xl p-8 shadow-sm">
+                        <div class="text-4xl mb-4">💆</div>
+                        <h3 class="text-xl md:text-2xl text-navy font-bold mb-4">Đánh thức cảm giác vùng miệng bằng massage nhẹ nhàng giúp con tự tin hơn khi bật âm</h3>
+                        <p class="text-text-dark leading-relaxed">
+                            Nhiều trẻ yếu cơ miệng bị rối loạn cảm giác (quá nhạy cảm hoặc kém nhạy cảm) [16]. Massage vùng mặt bằng bàn chải silicon mềm mại giúp điều hòa thần kinh cảm giác. Các động tác vuốt ve gò má, ấn nhẹ quanh viền môi gửi tín hiệu tích cực về não bộ, đánh thức các nhóm cơ đang "ngủ quên" [19].
+                        </p>
+                    </div>
                 </div>
-                <div class="bg-cream rounded-2xl p-8 shadow-sm">
-                    <div class="text-4xl mb-4">💆</div>
-                    <h3 class="text-xl md:text-2xl text-navy font-bold mb-4">Đánh thức cảm giác vùng miệng bằng massage nhẹ nhàng giúp con tự tin hơn khi bật âm</h3>
-                    <p class="text-text-dark leading-relaxed">
-                        Nhiều trẻ yếu cơ miệng bị rối loạn cảm giác (quá nhạy cảm hoặc kém nhạy cảm) [16]. Massage vùng mặt bằng bàn chải silicon mềm mại giúp điều hòa thần kinh cảm giác. Các động tác vuốt ve gò má, ấn nhẹ quanh viền môi gửi tín hiệu tích cực về não bộ, đánh thức các nhóm cơ đang "ngủ quên" [19].
-                    </p>
+                <div class="relative hidden lg:block rounded-3xl overflow-hidden shadow-xl border border-gray-100 h-full">
+                    <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/oral_motor_therapy_hero_img_1779078827681.png" alt="Phương pháp Oral Motor Therapy" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500" />
                 </div>
             </div>
         </div>

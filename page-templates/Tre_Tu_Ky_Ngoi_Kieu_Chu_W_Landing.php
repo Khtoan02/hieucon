@@ -43,33 +43,33 @@
 
 <main>
     <!-- HERO SECTION -->
-    <section class="relative bg-navy pt-32 pb-24 md:pt-40 md:pb-32 px-6 overflow-hidden">
+    <!-- HERO SECTION -->
+    <section class="relative bg-navy pt-32 pb-24 md:pt-40 md:pb-32 px-6 overflow-hidden" id="hero-section">
         <div class="absolute top-0 left-0 w-full h-full overflow-hidden z-0">
-            <div class="absolute -top-24 -left-24 w-96 h-96 bg-blue-600 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob"></div>
-            <div class="absolute top-1/4 -right-24 w-96 h-96 bg-yellow rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
+            <div class="absolute -top-24 -left-24 w-96 h-96 bg-[#2563eb] rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-[blob_7s_infinite]"></div>
+            <div class="absolute top-1/4 -right-24 w-96 h-96 bg-yellow rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-[blob_7s_infinite_2s]"></div>
         </div>
         
         <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center relative z-10">
-            <div>
-                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-cream text-sm font-semibold mb-6">
+            <div class="text-left">
+                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[rgba(255,255,255,0.1)] backdrop-blur-md border border-solid border-[rgba(255,255,255,0.2)] text-cream text-sm font-semibold mb-6">
                     <span class="w-2 h-2 rounded-full bg-yellow animate-pulse"></span>
                     Góc Nhìn Chuyên Gia
                 </div>
-                <h1 class="font-oswald text-4xl md:text-5xl font-bold leading-tight uppercase mb-6 text-white tracking-wide">
-                    GIẢI MÃ LÝ DO TRẺ TỰ KỶ THÍCH NGỒI KIỂU CHỮ W <br class="hidden md:block">VÀ CÁCH CHA MẸ ĐIỀU CHỈNH AN TOÀN
+                <h1 class="font-oswald text-4xl md:text-5xl lg:text-5xl font-bold leading-tight mb-6 text-white tracking-wide uppercase">
+                    GIẢI MÃ LÝ DO TRẺ TỰ KỶ THÍCH NGỒI KIỂU CHỮ W VÀ CÁCH CHA MẸ ĐIỀU CHỈNH AN TOÀN
                 </h1>
-                <p class="font-quicksand text-lg md:text-xl leading-relaxed text-cream/90 mb-10 opacity-90 font-light">
+                <p class="font-quicksand text-lg md:text-xl leading-relaxed text-[rgba(250,249,246,0.9)] mb-8 font-light">
                     Khi thấy con liên tục gập hai chân ra phía sau tạo thành hình chữ W, nhiều cha mẹ không khỏi hoang mang và lo lắng. Liệu tư thế này có làm hỏng cấu trúc xương của con, hay đây là một biểu hiện kỳ lạ không thể thay đổi? Sự thật là, hiện tượng trẻ tự kỷ ngồi kiểu chữ w rất phổ biến và hoàn toàn có thể lý giải bằng góc nhìn khoa học. Bài viết này sẽ giúp cha mẹ tìm hiểu gốc rễ vấn đề và cách điều chỉnh nhẹ nhàng nhất.
                 </p>
-                <div class="flex flex-col sm:flex-row gap-4">
-                    <a href="https://hieucontugoc.online/bang-kiem-tra-suc-khoe-toan-dien/" class="bg-yellow text-navy font-bold px-8 py-4 rounded-xl shadow-lg hover:-translate-y-1 hover:shadow-xl transition-all text-center uppercase tracking-wide inline-block">
-                        Thực Hiện Bảng Kiểm Tra Sức Khỏe Toàn Diện Cho Con
-                    </a>
-                </div>
+                <a href="https://hieucontugoc.online/bang-kiem-tra-suc-khoe-toan-dien/" class="inline-block bg-yellow text-navy font-bold px-8 py-4 rounded-full shadow-lg hover:scale-105 hover:shadow-xl transition-all text-lg">
+                    Thực Hiện Bảng Kiểm Tra Sức Khỏe Toàn Diện Cho Con
+                </a>
             </div>
+            
             <div class="relative hidden lg:block">
-                <div class="absolute inset-0 bg-gradient-to-tr from-yellow/20 to-transparent rounded-3xl transform rotate-3 scale-105"></div>
-                <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/w_sitting_hero_1779070304460.png" alt="Trẻ ngồi kiểu chữ W" class="relative rounded-3xl shadow-2xl border border-white/10 object-cover w-full h-auto" />
+                <div class="absolute inset-0 bg-[rgba(255,209,84,0.2)] rounded-3xl transform rotate-2 scale-105"></div>
+                <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/choking_hero_img_1779078758367.png" alt="Hero Image" class="relative rounded-3xl shadow-[0_25px_50px_-12px_rgba(0,0,0,0.25)] border border-solid border-[rgba(255,255,255,0.1)] object-cover w-full h-auto" />
             </div>
         </div>
     </section>

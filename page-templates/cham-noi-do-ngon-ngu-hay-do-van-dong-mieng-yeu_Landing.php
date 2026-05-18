@@ -68,7 +68,7 @@
             
             <div class="relative hidden lg:block">
                 <div class="absolute inset-0 bg-[rgba(255,209,84,0.2)] rounded-3xl transform rotate-2 scale-105"></div>
-                <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/oral_motor_weakness_hero_img_1779078815111.png" alt="Hero Image" class="relative rounded-3xl shadow-[0_25px_50px_-12px_rgba(0,0,0,0.25)] border border-solid border-[rgba(255,255,255,0.1)] object-cover w-full h-auto" />
+                <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/cham_noi_hero_vi_1_1779080631890.png" alt="Hero Image" class="relative rounded-3xl shadow-[0_25px_50px_-12px_rgba(0,0,0,0.25)] border border-solid border-[rgba(255,255,255,0.1)] object-cover w-full h-auto" />
             </div>
         </div>
     </section>
@@ -105,36 +105,38 @@
                 Để tìm ra đáp án cho việc con chậm bật âm, chúng ta cần phân định rõ ràng hai khái niệm thường bị đánh đồng: ngôn ngữ (language) và lời nói (speech). Dù thường đi song hành, nhưng chúng lại do các hệ thống khác nhau trong cơ thể đảm nhiệm [8].
             </p>
             
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-stretch">
-                <!-- Cột 1: Ngôn ngữ -->
-                <div class="bg-white rounded-2xl p-8 md:p-10 shadow-sm hover:shadow-md transition-shadow">
-                    <div class="w-16 h-16 bg-cream rounded-full flex items-center justify-center mb-6">
-                        <svg class="w-8 h-8 text-navy" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div class="space-y-8">
+                    <!-- Khối 1: Ngôn ngữ -->
+                    <div class="bg-white rounded-2xl p-8 md:p-10 shadow-sm hover:shadow-md transition-shadow">
+                        <div class="w-16 h-16 bg-cream rounded-full flex items-center justify-center mb-6">
+                            <svg class="w-8 h-8 text-navy" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg>
+                        </div>
+                        <h3 class="font-oswald text-xl md:text-2xl text-navy font-bold mb-4 leading-tight">
+                            Khó khăn ngôn ngữ là khi con chưa hiểu ý nghĩa hoặc chưa có nhu cầu giao tiếp
+                        </h3>
+                        <p class="text-text-dark leading-relaxed">
+                            Ngôn ngữ là quá trình não bộ tiếp nhận, xử lý thông tin và sắp xếp ý tưởng. Trẻ gặp rào cản về ngôn ngữ thường gặp khó khăn trong việc hiểu những gì người khác nói hoặc không biết cách diễn đạt ý muốn của mình. Nguyên nhân gốc rễ nằm ở cách hệ thần kinh xử lý thông tin. Các con có thể chưa thực sự hiểu từ "nước" dùng để làm gì, hoặc chưa có nhu cầu phải gọi tên đồ vật đó để tương tác. Theo CDC, nhóm trẻ này thường ít phản ứng khi được gọi tên, ít có cử chỉ bù trừ như chỉ tay [1], [7].
+                        </p>
                     </div>
-                    <h3 class="font-oswald text-xl md:text-2xl text-navy font-bold mb-4 leading-tight">
-                        Khó khăn ngôn ngữ là khi con chưa hiểu ý nghĩa hoặc chưa có nhu cầu giao tiếp
-                    </h3>
-                    <p class="text-text-dark leading-relaxed">
-                        Ngôn ngữ là quá trình não bộ tiếp nhận, xử lý thông tin và sắp xếp ý tưởng. Trẻ gặp rào cản về ngôn ngữ thường gặp khó khăn trong việc hiểu những gì người khác nói hoặc không biết cách diễn đạt ý muốn của mình. Nguyên nhân gốc rễ nằm ở cách hệ thần kinh xử lý thông tin. Các con có thể chưa thực sự hiểu từ "nước" dùng để làm gì, hoặc chưa có nhu cầu phải gọi tên đồ vật đó để tương tác. Theo CDC, nhóm trẻ này thường ít phản ứng khi được gọi tên, ít có cử chỉ bù trừ như chỉ tay [1], [7].
-                    </p>
+                    
+                    <!-- Khối 2: Vận động miệng -->
+                    <div class="bg-white rounded-2xl p-8 md:p-10 shadow-sm hover:shadow-md transition-shadow">
+                        <div class="w-16 h-16 bg-cream rounded-full flex items-center justify-center mb-6">
+                            <svg class="w-8 h-8 text-navy" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        </div>
+                        <h3 class="font-oswald text-xl md:text-2xl text-navy font-bold mb-4 leading-tight">
+                            Khó khăn vận động miệng là khi con muốn nói nhưng cơ quan phát âm không phối hợp được
+                        </h3>
+                        <p class="text-text-dark leading-relaxed">
+                            Khó khăn vận động miệng xảy ra khi tư duy ngôn ngữ của con hoàn toàn bình thường, con biết chính xác từ mình muốn nói trong đầu, nhưng khi truyền tín hiệu xuống cơ quan phát âm (môi, lưỡi, hàm, thanh quản), các nhóm cơ này lại không thể phối hợp nhịp nhàng. Con giống như một nhạc trưởng tài ba đang cầm bản nhạc xuất sắc, nhưng dàn nhạc lại chơi sai nhịp [6], [14]. Trẻ thuộc nhóm này thường có biểu cảm khuôn mặt phong phú, dùng cử chỉ tay chân rất nhiều để bù đắp.
+                        </p>
+                    </div>
                 </div>
                 
-                <!-- Cột 2: Vận động miệng -->
-                <div class="bg-white rounded-2xl p-8 md:p-10 shadow-sm hover:shadow-md transition-shadow">
-                    <div class="w-16 h-16 bg-cream rounded-full flex items-center justify-center mb-6">
-                        <svg class="w-8 h-8 text-navy" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                    </div>
-                    <h3 class="font-oswald text-xl md:text-2xl text-navy font-bold mb-4 leading-tight">
-                        Khó khăn vận động miệng là khi con muốn nói nhưng cơ quan phát âm không phối hợp được
-                    </h3>
-                    <p class="text-text-dark leading-relaxed">
-                        Khó khăn vận động miệng xảy ra khi tư duy ngôn ngữ của con hoàn toàn bình thường, con biết chính xác từ mình muốn nói trong đầu, nhưng khi truyền tín hiệu xuống cơ quan phát âm (môi, lưỡi, hàm, thanh quản), các nhóm cơ này lại không thể phối hợp nhịp nhàng. Con giống như một nhạc trưởng tài ba đang cầm bản nhạc xuất sắc, nhưng dàn nhạc lại chơi sai nhịp [6], [14]. Trẻ thuộc nhóm này thường có biểu cảm khuôn mặt phong phú, dùng cử chỉ tay chân rất nhiều để bù đắp.
-                    </p>
+                <div class="relative hidden lg:flex items-center justify-center rounded-3xl overflow-hidden shadow-xl border border-gray-100 bg-white">
+                    <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/language_speech_diff_vi_1779081273654.png" alt="Sự khác biệt giữa tư duy ngôn ngữ và khả năng vận động miệng" class="w-full h-auto object-contain hover:scale-105 transition-transform duration-500" />
                 </div>
-            </div>
-            
-            <div class="relative hidden lg:block rounded-3xl overflow-hidden shadow-xl border border-gray-100">
-                <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/language_vs_speech_img_1779079183423.png" alt="Sự khác biệt giữa tư duy ngôn ngữ và khả năng vận động miệng" class="w-full h-auto object-cover hover:scale-105 transition-transform duration-500" />
             </div>
         </div>
     </section>

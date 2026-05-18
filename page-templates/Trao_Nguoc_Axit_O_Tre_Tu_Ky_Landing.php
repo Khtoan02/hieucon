@@ -31,6 +31,8 @@
       }
     </script>
     <style>
+        body { font-family: \'Quicksand\', sans-serif; background-color: #FAF9F6; }
+        h1, h2, h3, h4, h5, h6 { font-family: \'Oswald\', sans-serif; line-height: 1.4 !important; }
         body { font-family: 'Quicksand', sans-serif; color: #3D3D3D; }
         h1, h2, h3, h4, h5, h6, .font-oswald { font-family: 'Oswald', sans-serif; 
         line-height: 1.4 !important; }
@@ -42,19 +44,36 @@
 <body class="font-quicksand text-text-dark bg-white antialiased selection:bg-yellow selection:text-navy">
 
     <!-- HERO SECTION -->
-    <header class="bg-navy text-cream py-24 md:py-32 px-6 text-center">
-        <div class="max-w-5xl mx-auto">
-            <h1 class="font-oswald text-4xl md:text-5xl font-bold uppercase leading-tight mb-8">
-                TRÀO NGƯỢC AXIT Ở TRẺ TỰ KỶ VÀ NHỮNG DẤU HIỆU THẦM LẶNG CHA MẸ DỄ BỎ QUA
-            </h1>
-            <p class="text-lg md:text-xl max-w-4xl mx-auto mb-10 leading-relaxed text-cream/90">
-                Hành trình đồng hành cùng con chưa bao giờ là dễ dàng. Đã không ít lần bạn kiệt sức, bất lực khi chứng kiến con đột ngột la hét, đập đầu hay cắn tay mà không rõ nguyên nhân. Thật xót xa khi nhận ra những cơn bùng nổ ấy đôi khi không phải sự bướng bỉnh, mà là tiếng kêu cứu của cơ thể đang chịu đựng đau rát. Tình trạng <strong>trào ngược axit ở trẻ tự kỷ</strong> vô cùng thầm lặng, khiến con phải gồng mình chịu đựng những cơn ợ nóng thiêu đốt lồng ngực mà không có ngôn từ nào để diễn tả.
-            </p>
-            <a href="https://hieucontugoc.online/bang-kiem-tra-suc-khoe-toan-dien/" class="bg-yellow text-navy font-bold px-8 py-4 rounded-full shadow-lg hover:scale-105 hover:shadow-xl transition-all block w-fit mx-auto text-lg text-center">
-                Đánh Giá Sức Khỏe Toàn Diện Cho Con
-            </a>
+    <!-- HERO SECTION -->
+    <section class="relative bg-navy pt-32 pb-24 md:pt-40 md:pb-32 px-6 overflow-hidden" id="hero-section">
+        <div class="absolute top-0 left-0 w-full h-full overflow-hidden z-0">
+            <div class="absolute -top-24 -left-24 w-96 h-96 bg-[#2563eb] rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-[blob_7s_infinite]"></div>
+            <div class="absolute top-1/4 -right-24 w-96 h-96 bg-yellow rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-[blob_7s_infinite_2s]"></div>
         </div>
-    </header>
+        
+        <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center relative z-10">
+            <div class="text-left">
+                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[rgba(255,255,255,0.1)] backdrop-blur-md border border-solid border-[rgba(255,255,255,0.2)] text-cream text-sm font-semibold mb-6">
+                    <span class="w-2 h-2 rounded-full bg-yellow animate-pulse"></span>
+                    Góc Nhìn Chuyên Gia
+                </div>
+                <h1 class="font-oswald text-4xl md:text-5xl lg:text-5xl font-bold leading-tight mb-6 text-white tracking-wide uppercase">
+                    TRÀO NGƯỢC AXIT Ở TRẺ TỰ KỶ VÀ NHỮNG DẤU HIỆU THẦM LẶNG CHA MẸ DỄ BỎ QUA
+                </h1>
+                <p class="font-quicksand text-lg md:text-xl leading-relaxed text-[rgba(250,249,246,0.9)] mb-8 font-light">
+                    Hành trình đồng hành cùng con chưa bao giờ là dễ dàng. Đã không ít lần bạn kiệt sức, bất lực khi chứng kiến con đột ngột la hét, đập đầu hay cắn tay mà không rõ nguyên nhân. Thật xót xa khi nhận ra những cơn bùng nổ ấy đôi khi không phải sự bướng bỉnh, mà là tiếng kêu cứu của cơ thể đang chịu đựng đau rát. Tình trạng trào ngược axit ở trẻ tự kỷ vô cùng thầm lặng, khiến con phải gồng mình chịu đựng những cơn ợ nóng thiêu đốt lồng ngực mà không có ngôn từ nào để diễn tả.
+                </p>
+                <a href="https://hieucontugoc.online/bang-kiem-tra-suc-khoe-toan-dien/" class="inline-block bg-yellow text-navy font-bold px-8 py-4 rounded-full shadow-lg hover:scale-105 hover:shadow-xl transition-all text-lg">
+                    Đánh Giá Sức Khỏe Toàn Diện Cho Con
+                </a>
+            </div>
+            
+            <div class="relative hidden lg:block">
+                <div class="absolute inset-0 bg-[rgba(255,209,84,0.2)] rounded-3xl transform rotate-2 scale-105"></div>
+                <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/language_vs_speech_img_1779079183423.png" alt="Hero Image" class="relative rounded-3xl shadow-[0_25px_50px_-12px_rgba(0,0,0,0.25)] border border-solid border-[rgba(255,255,255,0.1)] object-cover w-full h-auto" />
+            </div>
+        </div>
+    </section>
 
     <main>
         <!-- SECTION 1: Nỗi đau thể chất (Nền Trắng) -->

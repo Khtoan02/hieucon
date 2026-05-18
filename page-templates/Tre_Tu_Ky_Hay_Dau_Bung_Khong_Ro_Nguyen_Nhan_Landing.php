@@ -33,6 +33,8 @@
         }
     </script>
     <style>
+        body { font-family: \'Quicksand\', sans-serif; background-color: #FAF9F6; }
+        h1, h2, h3, h4, h5, h6 { font-family: \'Oswald\', sans-serif; line-height: 1.4 !important; }
         /* Tùy chỉnh ẩn mũi tên mặc định của details/summary */
         details > summary { list-style: none; }
         details > summary::-webkit-details-marker { display: none; }
@@ -60,19 +62,36 @@
 
     <main>
         <!-- HERO SECTION -->
-        <section class="bg-navy text-cream py-24 md:py-32 px-6 text-center">
-            <div class="max-w-4xl mx-auto">
-                <h1 class="font-oswald text-4xl md:text-5xl uppercase font-bold leading-tight md:leading-tight mb-8">
+        <!-- HERO SECTION -->
+    <section class="relative bg-navy pt-32 pb-24 md:pt-40 md:pb-32 px-6 overflow-hidden" id="hero-section">
+        <div class="absolute top-0 left-0 w-full h-full overflow-hidden z-0">
+            <div class="absolute -top-24 -left-24 w-96 h-96 bg-[#2563eb] rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-[blob_7s_infinite]"></div>
+            <div class="absolute top-1/4 -right-24 w-96 h-96 bg-yellow rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-[blob_7s_infinite_2s]"></div>
+        </div>
+        
+        <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center relative z-10">
+            <div class="text-left">
+                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[rgba(255,255,255,0.1)] backdrop-blur-md border border-solid border-[rgba(255,255,255,0.2)] text-cream text-sm font-semibold mb-6">
+                    <span class="w-2 h-2 rounded-full bg-yellow animate-pulse"></span>
+                    Góc Nhìn Chuyên Gia
+                </div>
+                <h1 class="font-oswald text-4xl md:text-5xl lg:text-5xl font-bold leading-tight mb-6 text-white tracking-wide uppercase">
                     VÌ SAO TRẺ TỰ KỶ HAY ĐAU BỤNG KHÔNG RÕ NGUYÊN NHÂN
                 </h1>
-                <p class="text-lg md:text-xl max-w-3xl mx-auto mb-10 text-cream/90">
+                <p class="font-quicksand text-lg md:text-xl leading-relaxed text-[rgba(250,249,246,0.9)] mb-8 font-light">
                     Làm cha mẹ của một em bé có rối loạn phổ tự kỷ là một hành trình đòi hỏi sự kiên nhẫn và tình yêu thương vô bờ bến. Có lẽ không ít lần, bạn cảm thấy xót xa và hoang mang khi thấy con khóc lóc, cáu gắt hoặc gồng mình mà không rõ lý do. Thực tế, trẻ tự kỷ hay đau bụng không rõ nguyên nhân là một tình trạng rất phổ biến nhưng lại thường bị hiểu lầm. Hãy cùng giải mã tiếng kêu cứu thầm lặng của cơ thể con.
                 </p>
-                <a href="https://hieucontugoc.online/bang-kiem-tra-suc-khoe-toan-dien/" class="bg-yellow text-navy font-bold text-lg px-8 py-4 rounded-full shadow-lg hover:scale-105 hover:shadow-xl transition-all block w-fit mx-auto">
+                <a href="https://hieucontugoc.online/bang-kiem-tra-suc-khoe-toan-dien/" class="inline-block bg-yellow text-navy font-bold px-8 py-4 rounded-full shadow-lg hover:scale-105 hover:shadow-xl transition-all text-lg">
                     Thực Hiện Đánh Giá Sức Khỏe Cho Con Ngay
                 </a>
             </div>
-        </section>
+            
+            <div class="relative hidden lg:block">
+                <div class="absolute inset-0 bg-[rgba(255,209,84,0.2)] rounded-3xl transform rotate-2 scale-105"></div>
+                <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/stuffing_hero_img_1779078774052.png" alt="Hero Image" class="relative rounded-3xl shadow-[0_25px_50px_-12px_rgba(0,0,0,0.25)] border border-solid border-[rgba(255,255,255,0.1)] object-cover w-full h-auto" />
+            </div>
+        </div>
+    </section>
 
         <!-- SECTION 1: NỖI ĐAU THẦM LẶNG (BG-WHITE) -->
         <section class="py-16 md:py-24 px-6 bg-white">

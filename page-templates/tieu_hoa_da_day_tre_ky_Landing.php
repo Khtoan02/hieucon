@@ -28,6 +28,8 @@
         }
     </script>
     <style>
+        body { font-family: \'Quicksand\', sans-serif; background-color: #FAF9F6; }
+        h1, h2, h3, h4, h5, h6 { font-family: \'Oswald\', sans-serif; line-height: 1.4 !important; }
         body { font-family: 'Quicksand', sans-serif; color: #3D3D3D; scroll-behavior: smooth; }
         .font-oswald { font-family: 'Oswald', sans-serif; line-height: 1.4 !important;}
         details summary::-webkit-details-marker { display: none; }
@@ -42,33 +44,36 @@
 
     <main class="overflow-x-hidden">
         <!-- Hero Section -->
-        <section class="hero-pattern py-24 md:py-32 relative text-cream px-6">
-            <div class="absolute inset-0 bg-gradient-to-r from-navy via-navy/90 to-transparent"></div>
-            <div class="max-w-7xl mx-auto relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                <div>
-                    <span class="inline-block py-1 px-3 rounded-full bg-yellow text-navy text-sm font-bold tracking-wider mb-6">HIỂU CON TỪ GỐC</span>
-                    <h1 class="font-oswald text-4xl md:text-5xl lg:text-6xl leading-tight mb-8">
-                        TIÊU HÓA DẠ DÀY TRẺ TỰ KỶ VÀ NHỮNG NỖI ĐAU <span class="text-yellow">THẦM LẶNG</span>
-                    </h1>
-                    <p class="font-quicksand text-lg md:text-xl mb-10 opacity-90 leading-relaxed">
-                        Đằng sau những cơn cáu gắt và hành vi khó hiểu của con đôi khi là tiếng kêu cứu từ một hệ tiêu hóa đang bị tổn thương. Hãy cùng lắng nghe để thấu hiểu con từ gốc rễ thể chất.
-                    </p>
-                    <div class="flex flex-col sm:flex-row gap-4">
-                        <a href="https://hieucontugoc.online/bang-kiem-tra-suc-khoe-toan-dien/" class="bg-yellow text-navy font-bold px-8 py-4 rounded-full shadow-[0_0_20px_rgba(255,209,84,0.4)] hover:scale-105 hover:shadow-[0_0_30px_rgba(255,209,84,0.6)] transition-all inline-block uppercase tracking-wider font-oswald text-lg text-center">
-                            Bắt đầu kiểm tra sức khỏe
-                        </a>
-                    </div>
+        <!-- HERO SECTION -->
+    <section class="relative bg-navy pt-32 pb-24 md:pt-40 md:pb-32 px-6 overflow-hidden" id="hero-section">
+        <div class="absolute top-0 left-0 w-full h-full overflow-hidden z-0">
+            <div class="absolute -top-24 -left-24 w-96 h-96 bg-[#2563eb] rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-[blob_7s_infinite]"></div>
+            <div class="absolute top-1/4 -right-24 w-96 h-96 bg-yellow rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-[blob_7s_infinite_2s]"></div>
+        </div>
+        
+        <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center relative z-10">
+            <div class="text-left">
+                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[rgba(255,255,255,0.1)] backdrop-blur-md border border-solid border-[rgba(255,255,255,0.2)] text-cream text-sm font-semibold mb-6">
+                    <span class="w-2 h-2 rounded-full bg-yellow animate-pulse"></span>
+                    Góc Nhìn Chuyên Gia
                 </div>
-                <div class="relative hidden lg:block">
-                    <div class="absolute inset-0 bg-yellow rounded-full blur-[100px] opacity-20"></div>
-                    <img src="https://images.unsplash.com/photo-1434494878577-86c23bcb06b9?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Sức khỏe tiêu hóa" class="rounded-[2rem] shadow-2xl relative z-10 border-4 border-white/10 w-full object-cover h-[500px]">
-                    <div class="absolute -bottom-8 -left-8 bg-white text-navy p-6 rounded-2xl shadow-xl z-20 animate-bounce" style="animation-duration: 3s;">
-                        <p class="font-oswald text-xl font-bold">5+ Triệu chứng</p>
-                        <p class="text-sm text-text-soft">Thường bị bỏ qua</p>
-                    </div>
-                </div>
+                <h1 class="font-oswald text-4xl md:text-5xl lg:text-5xl font-bold leading-tight mb-6 text-white tracking-wide uppercase">
+                    TIÊU HÓA DẠ DÀY TRẺ TỰ KỶ VÀ NHỮNG NỖI ĐAU THẦM LẶNG
+                </h1>
+                <p class="font-quicksand text-lg md:text-xl leading-relaxed text-[rgba(250,249,246,0.9)] mb-8 font-light">
+                    Đằng sau những cơn cáu gắt và hành vi khó hiểu của con đôi khi là tiếng kêu cứu từ một hệ tiêu hóa đang bị tổn thương. Hãy cùng lắng nghe để thấu hiểu con từ gốc rễ thể chất.
+                </p>
+                <a href="https://hieucontugoc.online/bang-kiem-tra-suc-khoe-toan-dien/" class="inline-block bg-yellow text-navy font-bold px-8 py-4 rounded-full shadow-lg hover:scale-105 hover:shadow-xl transition-all text-lg">
+                    Bắt đầu kiểm tra sức khỏe
+                </a>
             </div>
-        </section>
+            
+            <div class="relative hidden lg:block">
+                <div class="absolute inset-0 bg-[rgba(255,209,84,0.2)] rounded-3xl transform rotate-2 scale-105"></div>
+                <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/oral_motor_therapy_hero_img_1779078827681.png" alt="Hero Image" class="relative rounded-3xl shadow-[0_25px_50px_-12px_rgba(0,0,0,0.25)] border border-solid border-[rgba(255,255,255,0.1)] object-cover w-full h-auto" />
+            </div>
+        </div>
+    </section>
 
         <!-- Thấu Hiểu Section -->
         <section class="bg-white py-20 md:py-28 px-6">

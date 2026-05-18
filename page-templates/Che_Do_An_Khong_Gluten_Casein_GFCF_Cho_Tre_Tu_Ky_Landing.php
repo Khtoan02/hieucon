@@ -22,6 +22,8 @@
   };
 </script>
 <style>
+        body { font-family: \'Quicksand\', sans-serif; background-color: #FAF9F6; }
+        h1, h2, h3, h4, h5, h6 { font-family: \'Oswald\', sans-serif; line-height: 1.4 !important; }
     h1, h2, h3, h4, h5, h6, .font-oswald { font-family: 'Oswald', sans-serif; 
     line-height: 1.4 !important; }
     body { font-family: 'Quicksand', sans-serif; color: #3D3D3D; }
@@ -38,17 +40,34 @@
 
 
     <!-- Hero Section -->
-    <section class="bg-navy text-cream py-24 md:py-32 px-6 text-center">
-        <div class="max-w-4xl mx-auto">
-            <h1 class="font-oswald text-4xl md:text-5xl font-bold leading-tight mb-8 uppercase text-white">
-                CHẾ ĐỘ ĂN KHÔNG GLUTEN CASEIN (GFCF) CHO TRẺ TỰ KỶ CÓ ĐÁNG THỬ HAY KHÔNG?
-            </h1>
-            <p class="text-lg md:text-xl max-w-3xl mx-auto mb-12 text-cream/90">
-                Hành trình đồng hành cùng một em bé có sự phát triển thần kinh khác biệt chưa bao giờ là dễ dàng. Giữa vô vàn luồng thông tin trên mạng, hẳn không ít lần cha mẹ cảm thấy hoang mang khi nghe đến <strong>chế độ ăn không gluten casein (gfcf) cho trẻ tự kỷ</strong>. Bài viết này mang đến cho cha mẹ góc nhìn khoa học rành mạch nhất về cơ chế hoạt động của dinh dưỡng, giúp cha mẹ tự tin đưa ra quyết định phù hợp nhất cho con.
-            </p>
-            <a href="https://hieucontugoc.online/bang-kiem-tra-suc-khoe-toan-dien/" class="bg-yellow text-navy font-bold px-8 py-4 rounded-full shadow-lg hover:scale-105 hover:shadow-xl transition-all block w-fit mx-auto text-lg">
-                Đánh giá sức khỏe toàn diện cho con ngay
-            </a>
+    <!-- HERO SECTION -->
+    <section class="relative bg-navy pt-32 pb-24 md:pt-40 md:pb-32 px-6 overflow-hidden" id="hero-section">
+        <div class="absolute top-0 left-0 w-full h-full overflow-hidden z-0">
+            <div class="absolute -top-24 -left-24 w-96 h-96 bg-[#2563eb] rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-[blob_7s_infinite]"></div>
+            <div class="absolute top-1/4 -right-24 w-96 h-96 bg-yellow rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-[blob_7s_infinite_2s]"></div>
+        </div>
+        
+        <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center relative z-10">
+            <div class="text-left">
+                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[rgba(255,255,255,0.1)] backdrop-blur-md border border-solid border-[rgba(255,255,255,0.2)] text-cream text-sm font-semibold mb-6">
+                    <span class="w-2 h-2 rounded-full bg-yellow animate-pulse"></span>
+                    Góc Nhìn Chuyên Gia
+                </div>
+                <h1 class="font-oswald text-4xl md:text-5xl lg:text-5xl font-bold leading-tight mb-6 text-white tracking-wide uppercase">
+                    CHẾ ĐỘ ĂN KHÔNG GLUTEN CASEIN (GFCF) CHO TRẺ TỰ KỶ CÓ ĐÁNG THỬ HAY KHÔNG?
+                </h1>
+                <p class="font-quicksand text-lg md:text-xl leading-relaxed text-[rgba(250,249,246,0.9)] mb-8 font-light">
+                    Hành trình đồng hành cùng một em bé có sự phát triển thần kinh khác biệt chưa bao giờ là dễ dàng. Giữa vô vàn luồng thông tin trên mạng, hẳn không ít lần cha mẹ cảm thấy hoang mang khi nghe đến chế độ ăn không gluten casein (gfcf) cho trẻ tự kỷ. Bài viết này mang đến cho cha mẹ góc nhìn khoa học rành mạch nhất về cơ chế hoạt động của dinh dưỡng, giúp cha mẹ tự tin đưa ra quyết định phù hợp nhất cho con.
+                </p>
+                <a href="https://hieucontugoc.online/bang-kiem-tra-suc-khoe-toan-dien/" class="inline-block bg-yellow text-navy font-bold px-8 py-4 rounded-full shadow-lg hover:scale-105 hover:shadow-xl transition-all text-lg">
+                    Đánh giá sức khỏe toàn diện cho con ngay
+                </a>
+            </div>
+            
+            <div class="relative hidden lg:block">
+                <div class="absolute inset-0 bg-[rgba(255,209,84,0.2)] rounded-3xl transform rotate-2 scale-105"></div>
+                <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/vat_ly_tri_lieu_hero_vi_1779077058220.png" alt="Hero Image" class="relative rounded-3xl shadow-[0_25px_50px_-12px_rgba(0,0,0,0.25)] border border-solid border-[rgba(255,255,255,0.1)] object-cover w-full h-auto" />
+            </div>
         </div>
     </section>
 

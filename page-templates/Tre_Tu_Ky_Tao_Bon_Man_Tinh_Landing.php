@@ -28,19 +28,36 @@
     }
 </style>
 
-<div class="landing-wrapper antialiased leading-relaxed relative z-10 bg-white">
-<header class="bg-[#002795] py-24 md:py-32 px-6 text-center">
-        <div class="max-w-5xl mx-auto">
-            <h1 class="text-[#FAF9F6] text-4xl md:text-6xl font-bold leading-tight tracking-wide mb-8">
-                TRẺ TỰ KỶ TÁO BÓN MÃN TÍNH VÀ HÀNH TRÌNH THẤU HIỂU ĐỂ XOA DỊU
-            </h1>
-            <p class="text-[#FAF9F6]/90 text-lg md:text-xl max-w-3xl mx-auto font-light leading-relaxed mb-12">
-                Đằng sau những khó khăn mỗi lần đi vệ sinh của con là cả một hệ thống sinh học phức tạp đang gặp sự cố. Hãy cùng khám phá giải pháp can thiệp an toàn từ gốc rễ để mang lại nụ cười cho thiên thần nhỏ của bạn.
-            </p>
-            <a href="https://hieucontugoc.online/bang-kiem-tra-suc-khoe-toan-dien/" class="cta-button">
-                LÀM BẢNG KIỂM TRA SỨC KHỎE NGAY
-            </a>
+<!-- HERO SECTION -->
+    <section class="relative bg-navy pt-32 pb-24 md:pt-40 md:pb-32 px-6 overflow-hidden" id="hero-section">
+        <div class="absolute top-0 left-0 w-full h-full overflow-hidden z-0">
+            <div class="absolute -top-24 -left-24 w-96 h-96 bg-[#2563eb] rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-[blob_7s_infinite]"></div>
+            <div class="absolute top-1/4 -right-24 w-96 h-96 bg-yellow rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-[blob_7s_infinite_2s]"></div>
         </div>
+        
+        <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center relative z-10">
+            <div class="text-left">
+                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[rgba(255,255,255,0.1)] backdrop-blur-md border border-solid border-[rgba(255,255,255,0.2)] text-cream text-sm font-semibold mb-6">
+                    <span class="w-2 h-2 rounded-full bg-yellow animate-pulse"></span>
+                    Góc Nhìn Chuyên Gia
+                </div>
+                <h1 class="font-oswald text-4xl md:text-5xl lg:text-5xl font-bold leading-tight mb-6 text-white tracking-wide uppercase">
+                    TRẺ TỰ KỶ TÁO BÓN MÃN TÍNH VÀ HÀNH TRÌNH THẤU HIỂU ĐỂ XOA DỊU
+                </h1>
+                <p class="font-quicksand text-lg md:text-xl leading-relaxed text-[rgba(250,249,246,0.9)] mb-8 font-light">
+                    Đằng sau những khó khăn mỗi lần đi vệ sinh của con là cả một hệ thống sinh học phức tạp đang gặp sự cố. Hãy cùng khám phá giải pháp can thiệp an toàn từ gốc rễ để mang lại nụ cười cho thiên thần nhỏ của bạn.
+                </p>
+                <a href="https://hieucontugoc.online/bang-kiem-tra-suc-khoe-toan-dien/" class="inline-block bg-yellow text-navy font-bold px-8 py-4 rounded-full shadow-lg hover:scale-105 hover:shadow-xl transition-all text-lg">
+                    LÀM BẢNG KIỂM TRA SỨC KHỎE NGAY
+                </a>
+            </div>
+            
+            <div class="relative hidden lg:block">
+                <div class="absolute inset-0 bg-[rgba(255,209,84,0.2)] rounded-3xl transform rotate-2 scale-105"></div>
+                <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/oral_motor_therapy_hero_img_1779078827681.png" alt="Hero Image" class="relative rounded-3xl shadow-[0_25px_50px_-12px_rgba(0,0,0,0.25)] border border-solid border-[rgba(255,255,255,0.1)] object-cover w-full h-auto" />
+            </div>
+        </div>
+    </section>
     </header>
 
     <section class="py-20 md:py-28 px-6 bg-white">
