@@ -9,8 +9,31 @@ get_header();
 
 <!-- Landing Page Head Assets -->
 <link
-    href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Be+Vietnam+Pro:wght@300;400;500;600&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Quicksand:wght@300;400;500;600;700&display=swap"
     rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+    tailwind.config = {
+        corePlugins: {
+            preflight: false,
+        },
+        theme: {
+            extend: {
+                colors: {
+                    navy: '#002795',
+                    yellow: '#FFD154',
+                    cream: '#FAF9F6',
+                    'text-dark': '#3D3D3D',
+                    'text-soft': '#555555'
+                },
+                fontFamily: {
+                    oswald: ['Oswald', 'sans-serif'],
+                    quicksand: ['Quicksand', 'sans-serif']
+                }
+            }
+        }
+    }
+</script>
 <style>
     :root {
       --navy: #002795;
@@ -37,7 +60,7 @@ get_header();
     }
 
     body {
-      font-family: 'Be Vietnam Pro', sans-serif;
+      font-family: 'Quicksand', sans-serif;
       background: var(--cream);
       color: var(--charcoal);
       line-height: 1.7;
@@ -89,7 +112,7 @@ get_header();
     }
 
     .hero h1 {
-      font-family: 'Playfair Display', serif;
+      font-family: 'Oswald', sans-serif;
       font-size: clamp(28px, 5vw, 48px);
       font-weight: 900;
       line-height: 1.2;
@@ -123,7 +146,7 @@ get_header();
     }
 
     .stat-num {
-      font-family: 'Playfair Display', serif;
+      font-family: 'Oswald', sans-serif;
       font-size: 32px;
       font-weight: 700;
       color: var(--yellow);
@@ -148,7 +171,7 @@ get_header();
     }
 
     .intro-card h2 {
-      font-family: 'Playfair Display', serif;
+      font-family: 'Oswald', sans-serif;
       font-size: 22px;
       color: var(--navy);
       margin-bottom: 16px;
@@ -234,7 +257,7 @@ get_header();
     }
 
     .section-title {
-      font-family: 'Playfair Display', serif;
+      font-family: 'Oswald', sans-serif;
       font-size: 20px;
       color: var(--navy);
     }
@@ -270,7 +293,7 @@ get_header();
       padding: 12px 16px;
       border: 1.5px solid var(--border);
       border-radius: 10px;
-      font-family: 'Be Vietnam Pro', sans-serif;
+      font-family: 'Quicksand', sans-serif;
       font-size: 14px;
       color: var(--charcoal);
       background: var(--cream);
@@ -408,7 +431,7 @@ get_header();
       font-size: 20px;
       font-weight: 700;
       color: var(--navy);
-      font-family: 'Playfair Display', serif;
+      font-family: 'Oswald', sans-serif;
     }
 
     .group-score-bar {
@@ -523,7 +546,7 @@ get_header();
     .btn {
       padding: 14px 32px;
       border-radius: 12px;
-      font-family: 'Be Vietnam Pro', sans-serif;
+      font-family: 'Quicksand', sans-serif;
       font-size: 15px;
       font-weight: 600;
       cursor: pointer;
@@ -587,7 +610,7 @@ get_header();
       padding: 12px 16px;
       border: 1.5px solid #E8D88A;
       border-radius: 10px;
-      font-family: 'Be Vietnam Pro', sans-serif;
+      font-family: 'Quicksand', sans-serif;
       font-size: 14px;
       background: var(--white);
       outline: none;
@@ -613,7 +636,7 @@ get_header();
     }
 
     .result-hero h2 {
-      font-family: 'Playfair Display', serif;
+      font-family: 'Oswald', sans-serif;
       font-size: 28px;
       margin-bottom: 12px;
     }
@@ -677,7 +700,7 @@ get_header();
     }
 
     .result-pct {
-      font-family: 'Playfair Display', serif;
+      font-family: 'Oswald', sans-serif;
       font-size: 28px;
       font-weight: 700;
       color: var(--navy);
@@ -729,7 +752,7 @@ get_header();
     }
 
     .cta-box h3 {
-      font-family: 'Playfair Display', serif;
+      font-family: 'Oswald', sans-serif;
       font-size: 26px;
       margin-bottom: 12px;
     }
@@ -757,7 +780,7 @@ get_header();
       padding: 14px 18px;
       border-radius: 12px;
       border: none;
-      font-family: 'Be Vietnam Pro', sans-serif;
+      font-family: 'Quicksand', sans-serif;
       font-size: 14px;
       outline: none;
     }
@@ -768,7 +791,7 @@ get_header();
       color: var(--navy);
       border: none;
       border-radius: 12px;
-      font-family: 'Be Vietnam Pro', sans-serif;
+      font-family: 'Quicksand', sans-serif;
       font-weight: 700;
       font-size: 15px;
       cursor: pointer;
@@ -822,39 +845,71 @@ get_header();
     }
   </style>
 
-<div class="landing-checklist-wrapper antialiased relative z-10 bg-[var(--cream)] text-[var(--charcoal)] font-['Be_Vietnam_Pro',_sans-serif]">
+<div class="landing-checklist-wrapper antialiased relative z-10 bg-[var(--cream)] text-[var(--charcoal)] font-quicksand">
 <!-- HERO -->
-  <div class="hero" id="hero-section">
-    <div class="hero-badge">🧩 Công cụ đánh giá</div>
-    <h1>Bảng Kiểm Tra Toàn Diện<br><span>Sức Khỏe Toàn Thân</span> Của Con</h1>
-    <p style="margin-bottom: 24px;">Được xây dựng dựa trên tài liệu tham khảo từ Documenting Hope. </br>Giúp cha mẹ nhìn rõ bức tranh toàn thân về con trong 10 phút.</p>
-    <div style="background: var(--white); border-radius: 12px; padding: 16px 20px; max-width: 680px; margin: 0 auto 40px; text-align: left; font-size: 12.5px; line-height: 1.5; color: var(--navy); box-shadow: var(--shadow);">
-      <h3 style="color: var(--navy); font-family: 'Be Vietnam Pro', sans-serif; font-size: 14px; font-weight: 700; margin-bottom: 8px; display: flex; align-items: center; gap: 6px;">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--yellow)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg>
-        Về Documenting Hope (Hoa Kỳ)
-      </h3>
-      <p style="margin: 0 0 8px 0 !important; max-width: 100% !important; opacity: 0.9 !important; font-size: 12.5px !important; font-weight: 400 !important; color: inherit;">Documenting Hope là tổ chức nghiên cứu phi lợi nhuận hàng đầu tại Mỹ, chuyên tìm kiếm giải pháp hồi phục tận gốc cho trẻ em gặp các vấn đề về phát triển (như tự kỷ, ADHD, chậm phát triển...).</p>
-      <ul style="list-style: none; padding: 0; margin: 0;">
-        <li style="margin-bottom: 6px; display: flex; align-items: flex-start; gap: 6px;">
-          <span style="color: var(--yellow); font-size: 9px; margin-top: 4px;">●</span> 
-          <span style="opacity: 0.9;"><strong>Khoa học thực chứng:</strong> Quy tụ đội ngũ bác sĩ nhi khoa và các chuyên gia đa ngành để xây dựng các tiêu chuẩn đánh giá sức khỏe toàn diện.</span>
-        </li>
-        <li style="margin-bottom: 6px; display: flex; align-items: flex-start; gap: 6px;">
-          <span style="color: var(--yellow); font-size: 9px; margin-top: 4px;">●</span> 
-          <span style="opacity: 0.9;"><strong>Cái nhìn đa chiều:</strong> Không chỉ đánh giá hành vi, tổ chức tập trung vào mối liên hệ giữa dinh dưỡng, môi trường và các biểu hiện sức khỏe bên trong của trẻ.</span>
-        </li>
-        <li style="display: flex; align-items: flex-start; gap: 6px;">
-          <span style="color: var(--yellow); font-size: 9px; margin-top: 4px;">●</span> 
-          <span style="opacity: 0.9;"><strong>Triết lý nhân văn:</strong> Khẳng định mỗi đứa trẻ đều có cơ hội cải thiện vượt bậc nếu được xác định đúng "điểm nghẽn" và hỗ trợ kịp thời.</span>
-        </li>
-      </ul>
-    </div>
-    <div class="hero-stats">
-      <div class="stat"><span class="stat-num">11</span><span class="stat-label">Nhóm triệu chứng</span></div>
-      <div class="stat"><span class="stat-num">100+</span><span class="stat-label">Dấu hiệu cụ thể</span></div>
-      <div class="stat"><span class="stat-num">10'</span><span class="stat-label">Thời gian hoàn thành</span></div>
-    </div>
-  </div>
+    <section class="relative bg-navy pt-32 pb-24 md:pt-40 md:pb-32 px-6 overflow-hidden" id="hero-section">
+        <div class="absolute top-0 left-0 w-full h-full overflow-hidden z-0">
+            <div class="absolute -top-24 -left-24 w-96 h-96 bg-[#2563eb] rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-[blob_7s_infinite]"></div>
+            <div class="absolute top-1/4 -right-24 w-96 h-96 bg-yellow rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-[blob_7s_infinite_2s]"></div>
+        </div>
+        
+        <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center relative z-10">
+            <div class="text-left">
+                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[rgba(255,255,255,0.1)] backdrop-blur-md border border-solid border-[rgba(255,255,255,0.2)] text-cream text-sm font-semibold mb-6">
+                    <span class="w-2 h-2 rounded-full bg-yellow animate-pulse"></span>
+                    Công cụ đánh giá
+                </div>
+                <h1 class="font-oswald text-3xl md:text-4xl lg:text-5xl font-bold leading-tight mb-6 text-white tracking-wide" style="margin-bottom: 24px;">
+                    Bảng kiểm tra toàn diện<br><span class="text-yellow block my-2 uppercase tracking-wide text-4xl md:text-5xl lg:text-6xl whitespace-nowrap">SỨC KHOẺ TOÀN THÂN</span>của con
+                </h1>
+                <p class="font-quicksand text-lg md:text-xl leading-relaxed text-[rgba(250,249,246,0.9)] mb-8 font-light max-w-lg" style="margin-bottom: 32px;">
+                    Được xây dựng dựa trên tài liệu tham khảo từ Documenting&nbsp;Hope. <br>Giúp cha mẹ nhìn rõ bức tranh toàn thân về con trong 10 phút.
+                </p>
+                
+                <div class="bg-[rgba(255,255,255,0.1)] backdrop-blur-md border border-solid border-[rgba(255,255,255,0.2)] rounded-2xl p-6 mb-8 text-[rgba(250,249,246,0.9)] font-light text-sm shadow-[0_10px_15px_-3px_rgba(0,0,0,0.1)]">
+                    <h3 class="text-yellow font-bold text-base mb-3 flex items-center gap-2" style="margin-bottom: 12px; font-size: 16px;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg>
+                        Về Documenting Hope (Hoa Kỳ)
+                    </h3>
+                    <p class="mb-4" style="margin-bottom: 16px;">Tổ chức nghiên cứu phi lợi nhuận hàng đầu tại Mỹ, chuyên tìm kiếm giải pháp hồi phục tận gốc cho trẻ em gặp các vấn đề về phát triển (tự kỷ, ADHD...).</p>
+                    <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 12px;">
+                        <li class="flex items-start gap-2">
+                            <span class="text-yellow mt-1 text-[10px]" style="margin-top: 4px;">●</span> 
+                            <span><strong>Khoa học thực chứng:</strong> Quy tụ đội ngũ bác sĩ nhi khoa xây dựng tiêu chuẩn đánh giá.</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="text-yellow mt-1 text-[10px]" style="margin-top: 4px;">●</span> 
+                            <span><strong>Cái nhìn đa chiều:</strong> Tập trung vào mối liên hệ dinh dưỡng, môi trường và sức khỏe.</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="text-yellow mt-1 text-[10px]" style="margin-top: 4px;">●</span> 
+                            <span><strong>Triết lý nhân văn:</strong> Mỗi đứa trẻ đều có cơ hội cải thiện nếu hỗ trợ đúng.</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="flex gap-8 items-center text-white" style="display: flex; gap: 32px; align-items: center; color: white;">
+                    <div class="text-left">
+                        <span class="block font-oswald text-4xl font-bold text-yellow mb-1" style="font-size: 36px; display: block; margin-bottom: 4px; font-weight: bold; color: var(--yellow);">11</span>
+                        <span class="text-xs uppercase tracking-wide" style="opacity: 0.8; font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em;">Nhóm triệu chứng</span>
+                    </div>
+                    <div class="text-left">
+                        <span class="block font-oswald text-4xl font-bold text-yellow mb-1" style="font-size: 36px; display: block; margin-bottom: 4px; font-weight: bold; color: var(--yellow);">100+</span>
+                        <span class="text-xs uppercase tracking-wide" style="opacity: 0.8; font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em;">Dấu hiệu cụ thể</span>
+                    </div>
+                    <div class="text-left">
+                        <span class="block font-oswald text-4xl font-bold text-yellow mb-1" style="font-size: 36px; display: block; margin-bottom: 4px; font-weight: bold; color: var(--yellow);">10'</span>
+                        <span class="text-xs uppercase tracking-wide" style="opacity: 0.8; font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em;">Thời gian</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="relative hidden lg:block">
+                <div class="absolute inset-0 bg-[rgba(255,209,84,0.2)] rounded-3xl transform rotate-2 scale-105"></div>
+                <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/checklist_hero_vi_1779074481858.png" alt="Bảng kiểm tra sức khỏe toàn thân" class="relative rounded-3xl shadow-[0_25px_50px_-12px_rgba(0,0,0,0.25)] border border-solid border-[rgba(255,255,255,0.1)] object-cover w-full h-auto" />
+            </div>
+        </div>
+    </section>
 
   <!-- INTRO CARD -->
   <div style="max-width:820px;margin:0 auto;padding:0 24px;" id="intro-section">
@@ -1610,8 +1665,5 @@ get_header();
       }
     }
   </script>
-
-
 </div>
-
 <?php get_footer(); ?>
