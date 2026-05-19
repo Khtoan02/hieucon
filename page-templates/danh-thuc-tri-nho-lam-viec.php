@@ -78,7 +78,7 @@
             </div>
             
             <div class="relative flex justify-center items-center">
-                <img src="https://images.unsplash.com/photo-1502086223501-7ea6ecd79368" alt="Mẹ và bé" class="rounded-3xl shadow-xl z-10 w-full max-w-md object-cover bounce-soft border-4 border-white">
+                <img src="https://images.unsplash.com/photo-1617791160536-598cf32026fb?auto=format&fit=crop&w=600&q=80" alt="Mẹ và bé" class="rounded-3xl shadow-xl z-10 w-full max-w-md object-cover bounce-soft border-4 border-white">
                 
                 <div class="absolute -left-4 top-1/4 bg-white p-3.5 rounded-2xl shadow-lg z-20 flex items-center gap-3 border border-gray-100">
                     <div class="w-10 h-10 bg-yellow-100 rounded-full flex items-center justify-center text-accent">
