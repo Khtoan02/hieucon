@@ -47,18 +47,6 @@
 </head>
 <body class="font-sans text-gray-800 bg-gray-50 leading-relaxed selection:bg-primary selection:text-white">
 
-    <header class="sticky top-0 z-50 bg-white/95 backdrop-blur-md shadow-sm border-b border-gray-100">
-        <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
-            <div class="flex items-center gap-2 text-primary font-bold text-xl">
-                <i class="fas fa-heart text-accent"></i>
-                <span>Góc Đồng Hành</span>
-            </div>
-            <a href="#giai-phap" class="hidden md:inline-block bg-primary text-white px-6 py-2.5 rounded-full font-semibold hover:bg-blue-600 transition shadow-md hover:shadow-lg">
-                Khám phá giải pháp
-            </a>
-        </div>
-    </header>
-
     <section class="relative bg-pastelBlue overflow-hidden">
         <div class="absolute top-0 left-0 w-64 h-64 bg-blue-200 rounded-full mix-blend-multiply filter blur-3xl opacity-40 animate-pulse"></div>
         <div class="absolute top-0 right-0 w-64 h-64 bg-yellow-200 rounded-full mix-blend-multiply filter blur-3xl opacity-40 animate-pulse"></div>
