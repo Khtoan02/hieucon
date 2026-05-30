@@ -1,14 +1,20 @@
+<?php
+$course_cats = get_terms([
+    'taxonomy'   => 'course_cat',
+    'hide_empty' => false,
+]);
+?>
 <!doctype html>
 <html <?php language_attributes(); ?> class="scroll-smooth">
 <?php get_template_part('template-parts/header/site-head'); ?>
 
-<body <?php body_class('bg-healing-gradient text-navy antialiased min-h-[100vh]'); ?>>
+<body <?php body_class('bg-healing-gradient text-navy antialiased min-h-[100vh] has-sticky-header'); ?>>
 <?php wp_body_open(); ?>
 <div id="page" class="site">
     <header id="main-header" class="glass-header sticky top-0 z-[100] w-full" aria-label="Main Navigation">
         <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
             <!-- Header Container -->
-            <div class="header-container flex justify-between items-center h-[76px] transition-all duration-400">
+            <div class="header-container flex justify-between items-center h-[60px] lg:h-[72px] transition-all duration-400">
                 
                 <!-- 1. Logo & Brand -->
                 <a href="<?php echo home_url('/'); ?>" class="flex items-center gap-3 cursor-pointer group shrink-0 outline-none focus-visible:ring-2 focus-visible:ring-secondary rounded-xl p-1">
@@ -30,7 +36,7 @@
                     
                     <!-- Mega Menu "Sản phẩm" -->
                     <div class="group h-full flex items-center">
-                        <button class="text-navy/80 hover:text-navy group-hover:text-secondary font-extrabold transition-colors text-[12px] xl:text-[13px] uppercase tracking-[0.15em] flex items-center gap-1.5 py-5 relative outline-none px-2" aria-expanded="false" aria-haspopup="true">
+                        <button class="text-navy/80 hover:text-navy group-hover:text-secondary font-extrabold transition-colors text-[12px] xl:text-[13px] uppercase tracking-[0.15em] flex items-center gap-1.5 py-4 relative outline-none px-2" aria-expanded="false" aria-haspopup="true">
                             Sản phẩm 
                             <i data-lucide="chevron-down" class="w-4 h-4 transition-transform duration-300 group-hover:-rotate-180" aria-hidden="true"></i>
                             <span class="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-[3px] bg-secondary transition-all duration-300 group-hover:w-full opacity-0 group-hover:opacity-100 rounded-t-md"></span>
@@ -109,26 +115,102 @@
                         </div>
                     </div>
 
+                    <!-- Mega Menu "Khóa học" -->
+                    <div class="group h-full flex items-center">
+                        <button class="text-navy/80 hover:text-navy group-hover:text-secondary font-extrabold transition-colors text-[12px] xl:text-[13px] uppercase tracking-[0.15em] flex items-center gap-1.5 py-4 relative outline-none px-2" aria-expanded="false" aria-haspopup="true">
+                            Khóa học 
+                            <i data-lucide="chevron-down" class="w-4 h-4 transition-transform duration-300 group-hover:-rotate-180" aria-hidden="true"></i>
+                            <span class="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-[3px] bg-secondary transition-all duration-300 group-hover:w-full opacity-0 group-hover:opacity-100 rounded-t-md"></span>
+                        </button>
+                        
+                        <!-- Dropdown Panel -->
+                        <div class="absolute top-full left-1/2 -translate-x-1/2 pt-4 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform translate-y-3 group-hover:translate-y-0 w-[600px] xl:w-[700px] z-50">
+                            <div class="mega-bridge glass-megamenu rounded-[2rem] shadow-premium p-6 xl:p-8 flex gap-6 relative overflow-hidden">
+                                
+                                <i data-lucide="graduation-cap" class="absolute -bottom-6 -right-6 w-32 h-32 text-navy/5 rotate-12 pointer-events-none" aria-hidden="true"></i>
+
+                                <!-- Cột 1: Thông tin & Lối vào chính -->
+                                <div class="w-[40%] border-r border-navy/10 pr-6 flex flex-col justify-between z-10 relative">
+                                    <div>
+                                        <h4 class="font-serif font-bold text-navy text-xl xl:text-2xl mb-2 leading-tight">E-Learning</h4>
+                                        <p class="text-[12px] text-navy/60 leading-relaxed mb-4">Hệ thống bài giảng y sinh học, dinh dưỡng và chăm sóc trẻ tự kỷ chuyên sâu từ gốc rễ tế bào.</p>
+                                    </div>
+
+                                    <a href="<?php echo home_url('/courses/'); ?>" class="group/btn flex items-center justify-center gap-3 text-white bg-navy hover:bg-secondary font-bold text-[13px] p-3.5 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 w-full uppercase tracking-wider">
+                                        <i data-lucide="graduation-cap" class="w-4 h-4"></i> Tất cả khóa học
+                                    </a>
+                                </div>
+
+                                <!-- Cột 2: Danh mục khóa học -->
+                                <div class="w-[60%] pl-6 flex flex-col z-10 relative">
+                                    <span class="text-secondary font-extrabold text-[11px] uppercase tracking-widest flex items-center gap-2 mb-3">
+                                        <i data-lucide="folder-heart" class="w-4 h-4" aria-hidden="true"></i> Danh mục khóa học
+                                    </span>
+                                    
+                                    <div class="grid grid-cols-1 gap-2 overflow-y-auto max-h-[220px] pr-2 no-scrollbar">
+                                        <?php if (!empty($course_cats) && !is_wp_error($course_cats)) : ?>
+                                            <?php foreach ($course_cats as $cat) : ?>
+                                                <a href="<?php echo esc_url(get_term_link($cat)); ?>" class="flex items-center justify-between p-2.5 rounded-xl bg-gradient-to-br from-white to-[#f8fafc] border border-white hover:border-secondary/30 hover:shadow-sm transition-all group/item">
+                                                    <div class="flex items-center gap-2.5">
+                                                        <div class="w-7 h-7 rounded-lg bg-secondary/5 flex items-center justify-center text-secondary group-hover/item:bg-secondary group-hover/item:text-white transition-colors">
+                                                            <i data-lucide="book-open" class="w-3.5 h-3.5"></i>
+                                                        </div>
+                                                        <span class="font-bold text-navy text-[13px] group-hover/item:text-secondary transition-colors"><?php echo esc_html($cat->name); ?></span>
+                                                    </div>
+                                                    <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-navy/5 text-navy/50 group-hover/item:bg-secondary/10 group-hover/item:text-secondary transition-colors"><?php echo esc_html($cat->count); ?> khóa</span>
+                                                </a>
+                                            <?php endforeach; ?>
+                                        <?php else : ?>
+                                            <p class="text-[12px] text-navy/40 italic">Chưa có danh mục khóa học nào.</p>
+                                        <?php endif; ?>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+
                     </nav>
 
                 <!-- 3. CTAs (Nút chức năng bên phải) -->
                 <div class="hidden lg:flex flex-1 justify-end items-center min-w-0 gap-3">
                     
                     <!-- Nút: Cộng đồng Facebook -->
-                    <a href="https://www.facebook.com/groups/tukylaroiloantoanthan" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2.5 bg-gradient-to-br from-[#1877F2] to-[#0A58CA] hover:from-[#1464CC] hover:to-[#084298] text-white px-4 xl:px-5 py-2.5 rounded-full font-extrabold transition-all duration-300 shadow-[0_4px_12px_rgba(24,119,242,0.3)] hover:shadow-[0_6px_16px_rgba(24,119,242,0.4)] hover:-translate-y-0.5 border border-white/10 group">
-                        <div class="bg-white/20 rounded-full w-6 h-6 flex items-center justify-center group-hover:scale-110 transition-transform">
-                            <svg viewBox="0 0 320 512" class="w-3 h-3 text-white fill-current"><path d="M279.14 288l14.22-92.66h-88.91v-60.13c0-25.35 12.42-50.06 52.24-50.06h40.42V6.26S260.43 0 225.36 0c-73.22 0-121.08 44.38-121.08 124.72v70.62H22.89V288h81.39v224h100.17V288z"/></svg>
-                        </div>
-                        <span class="text-[11px] xl:text-[12px] uppercase tracking-wider">Cộng Đồng Cha Mẹ</span>
+                    <a href="https://www.facebook.com/groups/tukylaroiloantoanthan" target="_blank" rel="noopener noreferrer" 
+                       title="Cộng Đồng Cha Mẹ"
+                       class="flex items-center justify-center bg-gradient-to-br from-[#1877F2] to-[#0A58CA] hover:from-[#1464CC] hover:to-[#084298] text-white w-10 h-10 rounded-full font-extrabold transition-all duration-300 shadow-[0_4px_12px_rgba(24,119,242,0.3)] hover:shadow-[0_6px_16px_rgba(24,119,242,0.4)] hover:-translate-y-0.5 border border-white/10 group shrink-0"
+                       aria-label="Cộng đồng Facebook">
+                        <svg viewBox="0 0 320 512" class="w-3.5 h-3.5 text-white fill-current group-hover:scale-110 transition-transform"><path d="M279.14 288l14.22-92.66h-88.91v-60.13c0-25.35 12.42-50.06 52.24-50.06h40.42V6.26S260.43 0 225.36 0c-73.22 0-121.08 44.38-121.08 124.72v70.62H22.89V288h81.39v224h100.17V288z"/></svg>
                     </a>
 
                     <!-- Nút: Kết nối Zalo -->
-                    <a href="https://zalo.me/g/vmgfxy834?joinSrc=9" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2.5 bg-gradient-to-br from-[#00A1FF] to-[#0068FF] hover:from-[#008CE6] hover:to-[#0052CC] text-white px-4 xl:px-5 py-2.5 rounded-full font-extrabold transition-all duration-300 shadow-[0_4px_12px_rgba(0,104,255,0.3)] hover:shadow-[0_6px_16px_rgba(0,104,255,0.4)] hover:-translate-y-0.5 border border-white/10 group">
-                        <div class="bg-white/20 rounded-full w-5 h-5 flex items-center justify-center group-hover:scale-110 transition-transform">
-                            <span class="font-black text-[11px] text-white leading-none">Z</span>
-                        </div>
-                        <span class="text-[11px] xl:text-[12px] uppercase tracking-wider">Kết Nối Chuyên Gia</span>
+                    <a href="https://zalo.me/g/vmgfxy834?joinSrc=9" target="_blank" rel="noopener noreferrer"
+                       title="Kết Nối Chuyên Gia"
+                       class="flex items-center justify-center bg-gradient-to-br from-[#00A1FF] to-[#0068FF] hover:from-[#008CE6] hover:to-[#0052CC] text-white w-10 h-10 rounded-full font-extrabold transition-all duration-300 shadow-[0_4px_12px_rgba(0,104,255,0.3)] hover:shadow-[0_6px_16px_rgba(0,104,255,0.4)] hover:-translate-y-0.5 border border-white/10 group shrink-0"
+                       aria-label="Kết nối Zalo">
+                        <span class="font-black text-[13px] text-white leading-none group-hover:scale-110 transition-transform">Z</span>
                     </a>
+
+                    <?php 
+                    $current_member = \Hieucon\Model\Member_Model::get_current_member(); 
+                    if ( $current_member ) : 
+                    ?>
+                        <!-- Nút: Tài khoản (Đã đăng nhập) -->
+                        <a href="<?php echo home_url('/tai-khoan/'); ?>" class="flex items-center gap-2 bg-gradient-to-br from-navy to-navy/80 hover:from-secondary hover:to-secondary_dark text-white px-4 xl:px-5 py-2.5 rounded-full font-extrabold transition-all duration-300 shadow-[0_4px_12px_rgba(10,25,49,0.15)] hover:-translate-y-0.5 border border-white/10 group shrink-0">
+                            <div class="bg-white/20 rounded-full w-5 h-5 flex items-center justify-center group-hover:scale-110 transition-transform">
+                                <i data-lucide="user" class="w-3 h-3 text-secondary group-hover:text-white transition-colors"></i>
+                            </div>
+                            <span class="text-[11px] xl:text-[12px] uppercase tracking-wider">Tài khoản</span>
+                        </a>
+                    <?php else : ?>
+                        <!-- Nút: Đăng nhập (Chưa đăng nhập) -->
+                        <a href="<?php echo home_url('/dang-nhap/'); ?>" class="flex items-center gap-2 bg-gradient-to-br from-secondary to-secondary_dark hover:from-navy hover:to-navy/80 text-white px-4 xl:px-5 py-2.5 rounded-full font-extrabold transition-all duration-300 shadow-[0_4px_12px_rgba(249,115,22,0.3)] hover:-translate-y-0.5 border border-white/10 group shrink-0">
+                            <div class="bg-white/20 rounded-full w-5 h-5 flex items-center justify-center group-hover:scale-110 transition-transform">
+                                <i data-lucide="log-in" class="w-3.5 h-3.5 text-white"></i>
+                            </div>
+                            <span class="text-[11px] xl:text-[12px] uppercase tracking-wider">Đăng nhập</span>
+                        </a>
+                    <?php endif; ?>
                 </div>
 
                 <!-- Nút Hamburger (Chỉ hiện dưới màn hình Desktop - lg) -->
@@ -186,9 +268,57 @@
                     </div>
                 </div>
 
+                <!-- Accordion: Khóa học -->
+                <div class="flex flex-col border-b border-navy/5">
+                    <button id="mobile-courses-toggle" aria-expanded="false" class="flex justify-between items-center py-4 text-navy font-bold uppercase tracking-widest text-sm w-full text-left outline-none rounded-lg">
+                        <span class="flex items-center gap-3"><i data-lucide="graduation-cap" class="w-4 h-4 text-navy/40"></i> Khóa học</span>
+                        <i data-lucide="chevron-down" class="w-4 h-4 text-navy/40 transition-transform duration-300" id="mobile-courses-icon"></i>
+                    </button>
+                    <div id="mobile-courses-content" class="hidden flex-col gap-2 pl-4 py-3 bg-white/60 rounded-2xl mb-4 border border-white shadow-[inset_0_2px_4px_rgba(0,0,0,0.02)]">
+                        <a href="<?php echo home_url('/courses/'); ?>" class="text-secondary font-bold text-[13px] py-2 px-3 flex items-center gap-2 hover:text-secondary_dark">Tất cả Khóa học <i data-lucide="arrow-right" class="w-3 h-3"></i></a>
+                        <div class="w-full h-px bg-navy/5 my-1"></div>
+                        <?php if (!empty($course_cats) && !is_wp_error($course_cats)) : ?>
+                            <?php foreach ($course_cats as $cat) : ?>
+                                <a href="<?php echo esc_url(get_term_link($cat)); ?>" class="text-navy/80 font-bold text-[13px] py-2 px-3 hover:text-secondary hover:bg-white rounded-lg transition-colors flex items-center justify-between">
+                                    <span class="flex items-center gap-2"><i data-lucide="book-open" class="w-3.5 h-3.5 opacity-50"></i> <?php echo esc_html($cat->name); ?></span>
+                                    <span class="text-[10px] bg-navy/5 text-navy/60 px-2 py-0.5 rounded-full"><?php echo esc_html($cat->count); ?></span>
+                                </a>
+                            <?php endforeach; ?>
+                        <?php else : ?>
+                            <p class="text-[12px] text-navy/40 italic px-3 py-1">Chưa có danh mục khóa học nào.</p>
+                        <?php endif; ?>
+                    </div>
+                </div>
+
             </div>
 
             <div class="p-5 flex flex-col gap-3 mt-auto border-t border-white bg-white/80 backdrop-blur-md pb-8">
+                <?php 
+                if ( $current_member ) : 
+                ?>
+                    <!-- Mobile CTA: Tài khoản -->
+                    <a href="<?php echo home_url('/tai-khoan/'); ?>" class="bg-gradient-to-br from-navy to-navy/80 text-white p-3.5 rounded-2xl shadow-[0_4px_12px_rgba(10,25,49,0.15)] flex items-center gap-3 transition-transform hover:scale-[1.02] active:scale-95 group">
+                        <div class="bg-white/20 w-9 h-9 rounded-xl flex items-center justify-center shrink-0">
+                            <i data-lucide="user" class="w-5 h-5 text-secondary group-hover:text-white transition-colors"></i>
+                        </div>
+                        <div class="flex flex-col text-left">
+                            <span class="font-extrabold text-[13px] leading-tight">Tài Khoản Của Tôi</span>
+                            <span class="font-bold text-[10px] text-white/80 uppercase tracking-widest mt-0.5">Chào, <?php echo esc_html($current_member->full_name); ?></span>
+                        </div>
+                    </a>
+                <?php else : ?>
+                    <!-- Mobile CTA: Đăng nhập -->
+                    <a href="<?php echo home_url('/dang-nhap/'); ?>" class="bg-gradient-to-br from-secondary to-secondary_dark text-white p-3.5 rounded-2xl shadow-[0_4px_12px_rgba(249,115,22,0.25)] flex items-center gap-3 transition-transform hover:scale-[1.02] active:scale-95 group">
+                        <div class="bg-white/20 w-9 h-9 rounded-xl flex items-center justify-center shrink-0">
+                            <i data-lucide="log-in" class="w-5 h-5 text-white"></i>
+                        </div>
+                        <div class="flex flex-col text-left">
+                            <span class="font-extrabold text-[13px] leading-tight">Đăng Nhập / Đăng Ký</span>
+                            <span class="font-bold text-[10px] text-white/80 uppercase tracking-widest mt-0.5">Xác thực OTP bảo mật</span>
+                        </div>
+                    </a>
+                <?php endif; ?>
+
                 <!-- Nút: Cộng đồng Facebook -->
                 <a href="https://www.facebook.com/groups/tukylaroiloantoanthan" target="_blank" class="bg-gradient-to-br from-[#1877F2] to-[#0A58CA] text-white p-3.5 rounded-2xl shadow-[0_4px_12px_rgba(24,119,242,0.25)] flex items-center gap-3 transition-transform hover:scale-[1.02] active:scale-95">
                     <div class="bg-white/20 w-9 h-9 rounded-xl flex items-center justify-center shrink-0">
@@ -201,7 +331,7 @@
                 </a>
 
                 <!-- Nút: Kết nối Zalo -->
-                <a href="#" target="_blank" class="bg-gradient-to-br from-[#00A1FF] to-[#0068FF] text-white p-3.5 rounded-2xl shadow-[0_4px_12px_rgba(0,104,255,0.25)] flex items-center gap-3 transition-transform hover:scale-[1.02] active:scale-95">
+                <a href="https://zalo.me/g/vmgfxy834?joinSrc=9" target="_blank" class="bg-gradient-to-br from-[#00A1FF] to-[#0068FF] text-white p-3.5 rounded-2xl shadow-[0_4px_12px_rgba(0,104,255,0.25)] flex items-center gap-3 transition-transform hover:scale-[1.02] active:scale-95">
                     <div class="bg-white/20 w-9 h-9 rounded-xl flex items-center justify-center shrink-0">
                         <span class="font-black text-[18px] text-white leading-none">Z</span>
                     </div>
@@ -290,6 +420,7 @@
 
         // Setup Accordions
         setupAccordion('mobile-products-toggle', 'mobile-products-content', 'mobile-products-icon');
+        setupAccordion('mobile-courses-toggle', 'mobile-courses-content', 'mobile-courses-icon');
 
         // Symptom Mega Menu Tabs Hover Logic
         const symptomTabs = document.querySelectorAll('.symptom-tab');

@@ -68,6 +68,34 @@
         }
     </script>
     <style>
+        /* CSS Variables cho Header Height */
+        :root {
+            --header-height-mobile: 60px;
+            --header-height-desktop: 72px;
+            --header-fixed-offset-mobile: 12px; /* top-3 */
+            --header-fixed-offset-desktop: 16px; /* top-4 */
+        }
+
+        /* Tự động đẩy nội dung xuống đối với các trang chuẩn dùng main#primary */
+        body.has-fixed-header main#primary {
+            padding-top: calc(var(--header-height-mobile) + var(--header-fixed-offset-mobile) + 12px);
+        }
+        @media (min-width: 1024px) {
+            body.has-fixed-header main#primary {
+                padding-top: calc(var(--header-height-desktop) + var(--header-fixed-offset-desktop) + 16px);
+            }
+        }
+
+        /* Cách header khi cuộn neo (Anchor links) */
+        html {
+            scroll-padding-top: calc(var(--header-height-mobile) + 20px);
+        }
+        @media (min-width: 1024px) {
+            html {
+                scroll-padding-top: calc(var(--header-height-desktop) + 20px);
+            }
+        }
+
         body { font-family: 'Nunito', sans-serif; }
         h1, h2, h3, h4, h5, h6, .font-serif { font-family: 'Lora', serif; }
         
@@ -95,7 +123,10 @@
             box-shadow: 0 4px 30px rgba(10, 25, 49, 0.05);
         }
         
-        .glass-header.is-scrolled .header-container { height: 75px; }
+        .glass-header.is-scrolled .header-container { height: 52px; }
+        @media (min-width: 1024px) {
+            .glass-header.is-scrolled .header-container { height: 64px; }
+        }
 
         /* Mega Menu */
         .glass-megamenu {
