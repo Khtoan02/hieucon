@@ -182,10 +182,10 @@ if ( $current_member ) {
                                     </span>
                                 </div>
                             </div>
-
-                            <!-- Click action overlay border highlight effect -->
-                            <a href="<?php the_permalink(); ?>" class="absolute inset-0 z-20 pointer-events-auto rounded-[2.5rem] border-2 border-transparent group-hover:border-primary/15 transition-all duration-500"></a>
                         </div>
+
+                        <!-- Click action overlay border highlight effect covering the entire card -->
+                        <a href="<?php the_permalink(); ?>" class="absolute inset-0 z-20 pointer-events-auto rounded-[2.5rem] border-2 border-transparent group-hover:border-primary/15 transition-all duration-500"></a>
                     </article>
                 <?php endwhile; ?>
             </div>
