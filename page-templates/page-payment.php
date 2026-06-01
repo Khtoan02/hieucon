@@ -22,22 +22,39 @@ $configured_tmpl    = get_option('sepay_qr_template', 'qronly');
 
 // Lấy thông tin đơn thanh toán từ URL Query
 $course_id     = isset($_GET['course_id']) ? intval($_GET['course_id']) : 0;
+$ebook_id      = isset($_GET['ebook_id']) ? intval($_GET['ebook_id']) : 0;
+$is_ebook      = ($ebook_id > 0);
 
 // Bảo mật chống đổi giá (Anti-Tampering): Truy vấn giá trực tiếp trên máy chủ
 $total_amount = 0;
-if ( $course_id && get_post( $course_id ) ) {
-    $total_amount = floatval( get_post_meta( $course_id, '_course_price', true ) );
+$product_title = '';
+$order_prefix  = 'DH';
+$product_param = 0;
+
+if ( $is_ebook && get_post( $ebook_id ) ) {
+    $total_amount  = floatval( get_post_meta( $ebook_id, '_ebook_price', true ) );
+    $product_title = get_the_title( $ebook_id );
+    $order_prefix  = 'EB';
+    $product_param = $ebook_id;
+} elseif ( $course_id && get_post( $course_id ) ) {
+    $total_amount  = floatval( get_post_meta( $course_id, '_course_price', true ) );
+    $product_title = get_the_title( $course_id );
+    $order_prefix  = 'DH';
+    $product_param = $course_id;
 } else {
-    // Fallback nếu không có khóa học (ví dụ: bán tài liệu/các giao dịch khác)
-    $total_amount = isset($_GET['total']) ? floatval($_GET['total']) : 0;
+    // Fallback nếu không có khóa học hay ebook
+    $total_amount  = isset($_GET['total']) ? floatval($_GET['total']) : 0;
+    $product_title = 'Đăng ký tài liệu / Khóa học hội viên';
+    $order_prefix  = 'DH';
+    $product_param = 0;
 }
 
-// Lấy thông tin khóa học
-$course_title  = $course_id ? get_the_title($course_id) : 'Đăng ký tài liệu / Khóa học hội viên';
+// Lấy thông tin hiển thị tiêu đề
+$course_title  = $product_title;
 
-// Tối ưu mã giao dịch định danh (Unique & Safe): DH + course_id + U + member_id + T + timestamp_hash
+// Tối ưu mã giao dịch định danh (Unique & Safe): EB/DH + product_id + U + member_id + T + timestamp_hash
 $member_id     = intval( $current_member->id );
-$temp_order_id = $course_id . 'U' . $member_id . 'T' . (time() % 100000);
+$temp_order_id = $order_prefix . $product_param . 'U' . $member_id . 'T' . (time() % 100000);
 
 // Lấy favicon/logo của website để hiển thị ở giữa QR Code
 $logo_url = get_site_icon_url(128);
@@ -226,8 +243,9 @@ if ( ! $logo_url ) {
 
         const orderInfo = {
             courseId: <?php echo esc_js($course_id); ?>,
+            ebookId: <?php echo esc_js($ebook_id); ?>,
             amount: <?php echo esc_js($total_amount); ?>,
-            code: 'DH<?php echo esc_js($temp_order_id); ?>',
+            code: '<?php echo esc_js($temp_order_id); ?>',
             ajaxUrl: '<?php echo esc_js(admin_url('admin-ajax.php')); ?>',
             nonce: '<?php echo esc_js(wp_create_nonce('hieucon_payment_nonce')); ?>'
         };
@@ -292,6 +310,7 @@ if ( ! $logo_url ) {
                 formData.append('action', 'hieucon_create_paid_order');
                 formData.append('nonce', orderInfo.nonce);
                 formData.append('course_id', orderInfo.courseId);
+                formData.append('ebook_id', orderInfo.ebookId);
                 formData.append('amount', orderInfo.amount);
                 formData.append('code', orderInfo.code);
 

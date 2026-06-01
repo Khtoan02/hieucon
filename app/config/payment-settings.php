@@ -1055,7 +1055,7 @@ function hieucon_handle_sepay_webhook(WP_REST_Request $request) {
         // do AI SePay thường bị cắt ngắn nếu mã chứa ký tự chữ cái (ví dụ: chỉ giữ lại DH156)
         $payment_code = '';
         if ( ! empty($data['transaction_content']) ) {
-            if ( preg_match('/(DH|TEST|VIP)[A-Za-z0-9]+/i', $data['transaction_content'], $matches) ) {
+            if ( preg_match('/(DH|EB|TEST|VIP)[A-Za-z0-9]+/i', $data['transaction_content'], $matches) ) {
                 $payment_code = strtoupper(trim($matches[0])); // Lấy mã đầy đủ
             }
         }
@@ -1228,11 +1228,21 @@ function hieucon_handle_create_paid_order() {
 
     // 3. Lấy thông số từ client gửi lên
     $course_id = isset($_POST['course_id']) ? intval($_POST['course_id']) : 0;
+    $ebook_id  = isset($_POST['ebook_id']) ? intval($_POST['ebook_id']) : 0;
     $amount    = isset($_POST['amount']) ? floatval($_POST['amount']) : 0;
-    $code      = strtoupper(trim(isset($_POST['code']) ? sanitize_text_field($_POST['code']) : '')); // e.g. DH1002
+    $code      = strtoupper(trim(isset($_POST['code']) ? sanitize_text_field($_POST['code']) : '')); // e.g. DH1002 hoặc EB2005
 
-    if ( ! $course_id || ! get_post($course_id) ) {
-        wp_send_json_error(array('message' => 'Khóa học được chọn không hợp lệ hoặc không tồn tại.'));
+    // Xác định loại sản phẩm thanh toán
+    $is_ebook = (strpos($code, 'EB') === 0 || $ebook_id > 0);
+
+    if ( $is_ebook ) {
+        if ( ! $ebook_id || ! get_post($ebook_id) ) {
+            wp_send_json_error(array('message' => 'Ebook được chọn không hợp lệ hoặc không tồn tại.'));
+        }
+    } else {
+        if ( ! $course_id || ! get_post($course_id) ) {
+            wp_send_json_error(array('message' => 'Khóa học được chọn không hợp lệ hoặc không tồn tại.'));
+        }
     }
 
     // 4. KIỂM TRA CHÉO BẢO MẬT: Kiểm tra xem giao dịch đã thực sự được Webhook SePay báo có tiền chưa
@@ -1241,25 +1251,39 @@ function hieucon_handle_create_paid_order() {
         wp_send_json_error(array('message' => 'Hệ thống chưa nhận được khoản tiền chuyển khoản thực tế cho mã giao dịch này.'));
     }
 
-    // 5. KÍCH HOẠT KHÓA HỌC CHO HỌC VIÊN
-    $enrolled = get_option("hieucon_enrolled_courses_{$member_id}", null);
-    if ( ! is_array($enrolled) ) {
-        $enrolled = array();
-    }
-    
-    if ( ! in_array($course_id, $enrolled) ) {
-        $enrolled[] = $course_id;
-        update_option("hieucon_enrolled_courses_{$member_id}", $enrolled, false);
+    // 5. KÍCH HOẠT KHÓA HỌC / EBOOK CHO HỌC VIÊN
+    if ( $is_ebook ) {
+        $enrolled = get_option("hieucon_enrolled_ebooks_{$member_id}", null);
+        if ( ! is_array($enrolled) ) {
+            $enrolled = array();
+        }
+        if ( ! in_array($ebook_id, $enrolled) ) {
+            $enrolled[] = $ebook_id;
+            update_option("hieucon_enrolled_ebooks_{$member_id}", $enrolled, false);
+        }
+        $target_url = get_permalink($ebook_id);
+        $success_message = 'Xác nhận thanh toán thành công và đã kích hoạt Ebook!';
+    } else {
+        $enrolled = get_option("hieucon_enrolled_courses_{$member_id}", null);
+        if ( ! is_array($enrolled) ) {
+            $enrolled = array();
+        }
+        if ( ! in_array($course_id, $enrolled) ) {
+            $enrolled[] = $course_id;
+            update_option("hieucon_enrolled_courses_{$member_id}", $enrolled, false);
+        }
+        $target_url = get_permalink($course_id);
+        $success_message = 'Xác nhận thanh toán thành công và đã kích hoạt khóa học!';
     }
 
     // 6. Xóa sạch option tạm của trạng thái thanh toán để tiết kiệm tài nguyên CSDL
     delete_option('hieucon_payment_status_' . $code);
 
-    // Bắn hook phụ nếu dev muốn liên kết thêm API gửi sang Pancake POS hoặc Pancake CRM
-    do_action('hieucon_ajax_payment_activation_success', $user_id, $course_id, $amount, $code);
+    // Bắn hook phụ nếu dev muốn liên kết thêm API gửi sang các hệ thống khác
+    do_action('hieucon_ajax_payment_activation_success', $member_id, $is_ebook ? $ebook_id : $course_id, $amount, $code);
 
     wp_send_json_success(array(
-        'message'    => 'Xác nhận thanh toán thành công và đã kích hoạt khóa học!',
-        'course_url' => get_permalink($course_id)
+        'message'    => $success_message,
+        'course_url' => $target_url
     ));
 }
