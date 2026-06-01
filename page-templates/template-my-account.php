@@ -89,6 +89,9 @@ $account_nonce     = wp_create_nonce( 'hieucon_account_nonce' );
                 <button type="button" onclick="switchAccountTab('redeem')" id="menu-redeem-btn" class="w-full text-left px-5 py-3.5 rounded-2xl text-sm font-bold transition-all text-navy/60 hover:text-navy hover:bg-white/50 flex items-center gap-2">
                     <i data-lucide="ticket" class="w-4 h-4"></i> Kích hoạt khóa học
                 </button>
+                <button type="button" onclick="switchAccountTab('ebooks')" id="menu-ebooks-btn" class="w-full text-left px-5 py-3.5 rounded-2xl text-sm font-bold transition-all text-navy/60 hover:text-navy hover:bg-white/50 flex items-center gap-2">
+                    <i data-lucide="book-open" class="w-4 h-4"></i> Ebook của tôi
+                </button>
             </div>
 
             <!-- Content Area Card -->
@@ -324,6 +327,112 @@ $account_nonce     = wp_create_nonce( 'hieucon_account_nonce' );
                     </form>
                 </div>
 
+                <!-- ================= TAB 5: EBOOK CỦA TÔI ================= -->
+                <div id="tab-ebooks-view" class="hidden transition-opacity duration-300">
+                    <h2 class="text-lg font-serif font-bold text-navy mb-6 pb-2 border-b border-slate-100">Ebook & Tài liệu của tôi</h2>
+                    
+                    <?php
+                    $enrolled_ebook_ids = hieucon_get_member_enrolled_ebooks( $current_member->id );
+                    if ( ! is_array( $enrolled_ebook_ids ) ) {
+                        $enrolled_ebook_ids = [];
+                    }
+                    
+                    $is_privileged = in_array( $current_member->role, ['administrator', 'teacher', 'expert'] ) || current_user_can( 'manage_options' );
+                    
+                    if ( empty( $enrolled_ebook_ids ) && ! $is_privileged ) {
+                        ?>
+                        <div class="text-center py-12">
+                            <div class="w-16 h-16 bg-slate-50 text-slate-450 rounded-full flex items-center justify-center mx-auto mb-4 border border-slate-100">
+                                <i data-lucide="book-open" class="w-8 h-8 text-slate-400"></i>
+                            </div>
+                            <p class="text-slate-550 font-medium mb-6 text-sm">Bạn chưa sở hữu Ebook nào trên hệ thống.</p>
+                            <a href="<?php echo esc_url( get_post_type_archive_link( 'ebook' ) ); ?>" class="inline-flex items-center gap-2 px-6 py-3.5 bg-navy hover:bg-navy/90 text-white rounded-xl font-bold text-xs shadow-md transition-colors">
+                                Khám phá tủ sách Ebook <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                            </a>
+                        </div>
+                        <?php
+                    } else {
+                        // Query the enrolled ebooks
+                        $query_args = [
+                            'post_type'      => 'ebook',
+                            'posts_per_page' => -1,
+                            'post_status'    => 'publish',
+                        ];
+                        if ( ! $is_privileged ) {
+                            $query_args['post__in'] = $enrolled_ebook_ids;
+                        }
+                        
+                        $my_ebooks_query = new WP_Query( $query_args );
+                        
+                        if ( $my_ebooks_query->have_posts() ) {
+                            ?>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                                <?php while ( $my_ebooks_query->have_posts() ) : $my_ebooks_query->the_post(); 
+                                    $pdf_url = get_post_meta( get_the_ID(), '_ebook_pdf_url', true );
+                                    $ebook_pages   = get_post_meta( get_the_ID(), '_ebook_pages', true );
+                                    
+                                    $ebook_pages = ! empty( $ebook_pages ) ? intval( $ebook_pages ) : 0;
+                                    $read_url = get_permalink();
+                                ?>
+                                    <div class="bg-white/50 border border-slate-100 rounded-3xl p-4 flex flex-col justify-between group hover:bg-white hover:shadow-soft transition-all duration-300">
+                                        <div>
+                                            <!-- Ebook Thumbnail -->
+                                            <div class="relative w-28 mx-auto aspect-[3/4] rounded-2xl overflow-hidden bg-slate-150 mb-4 shadow-sm group-hover:scale-103 transition-transform duration-300">
+                                                <?php if ( has_post_thumbnail() ) : ?>
+                                                    <?php the_post_thumbnail( 'medium', [ 'class' => 'w-full h-full object-cover' ] ); ?>
+                                                <?php else : ?>
+                                                    <div class="w-full h-full flex items-center justify-center text-slate-400 bg-slate-100">
+                                                        <i data-lucide="book-open" class="w-8 h-8"></i>
+                                                    </div>
+                                                <?php endif; ?>
+                                            </div>
+                                            
+                                            <h3 class="font-serif font-bold text-navy text-sm md:text-base group-hover:text-primary transition-colors text-center line-clamp-2 mb-2">
+                                                <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
+                                            </h3>
+                                            
+                                            <div class="flex items-center justify-center gap-4 text-[10px] md:text-[11px] text-slate-550 font-semibold mb-4">
+                                                <span class="flex items-center gap-1">
+                                                    <i data-lucide="file-text" class="w-3.5 h-3.5 text-slate-400"></i>
+                                                    <?php echo $ebook_pages ? $ebook_pages . ' trang' : 'Đang cập nhật'; ?>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="space-y-2">
+                                            <?php if ( ! empty( $pdf_url ) ) : ?>
+                                                <a href="<?php echo esc_url( $pdf_url ); ?>" target="_blank" class="w-full py-3 bg-emerald-600 hover:bg-emerald-550 text-white rounded-xl font-bold text-xs transition-all flex items-center justify-center gap-1.5 shadow-sm border-0">
+                                                    Đọc Toàn Bộ (PDF) <i data-lucide="external-link" class="w-4 h-4"></i>
+                                                </a>
+                                                <div class="grid grid-cols-2 gap-2">
+                                                    <a href="<?php echo esc_url( $read_url ); ?>" class="py-2 bg-slate-50 hover:bg-slate-100 text-slate-655 rounded-xl font-bold text-[10px] transition-colors flex items-center justify-center gap-1 border border-slate-150">
+                                                        Xem Chi Tiết <i data-lucide="info" class="w-3 h-3"></i>
+                                                    </a>
+                                                    <a href="<?php echo esc_url( $pdf_url ); ?>" download class="py-2 bg-slate-50 hover:bg-slate-100 text-slate-655 rounded-xl font-bold text-[10px] transition-colors flex items-center justify-center gap-1 border border-slate-150">
+                                                        Tải PDF <i data-lucide="download" class="w-3 h-3"></i>
+                                                    </a>
+                                                </div>
+                                            <?php else : ?>
+                                                <a href="<?php echo esc_url( $read_url ); ?>" class="w-full py-3 bg-amber-500 hover:bg-amber-600 text-white rounded-xl font-bold text-xs transition-colors flex items-center justify-center gap-1.5 border-0">
+                                                    Xem Chi Tiết <i data-lucide="book-open" class="w-4 h-4"></i>
+                                                </a>
+                                            <?php endif; ?>
+                                        </div>
+                                    </div>
+                                <?php endwhile; wp_reset_postdata(); ?>
+                            </div>
+                            <?php
+                        } else {
+                            ?>
+                            <div class="text-center py-12 text-slate-500 text-sm">
+                                Chưa có Ebook nào được tìm thấy trên tài khoản của bạn.
+                            </div>
+                            <?php
+                        }
+                    }
+                    ?>
+                </div>
+
             </div>
         </div>
     </div>
@@ -376,7 +485,7 @@ $account_nonce     = wp_create_nonce( 'hieucon_account_nonce' );
     
     // --- CHUYỂN TABS SIDEBAR ---
     function switchAccountTab(tab) {
-        const tabs = ['profile', 'password', 'courses', 'redeem'];
+        const tabs = ['profile', 'password', 'courses', 'redeem', 'ebooks'];
         
         hideAccountAlert();
 

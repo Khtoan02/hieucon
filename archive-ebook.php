@@ -79,10 +79,9 @@ if ( $current_member ) {
             <!-- Grid Ebooks Shelf -->
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">
                 <?php while ( have_posts() ) : the_post(); 
-                    $price    = get_post_meta( get_the_ID(), '_ebook_price', true );
+                    $raw_price   = get_post_meta( get_the_ID(), '_ebook_price', true );
+                    $price       = ( $raw_price !== '' ) ? floatval( $raw_price ) : null;
                     $ebook_pages = get_post_meta( get_the_ID(), '_ebook_pages', true );
-                    
-                    $price = ! empty( $price ) ? floatval( $price ) : 0;
                     $ebook_pages = ! empty( $ebook_pages ) ? intval( $ebook_pages ) : 0;
 
                     // Determine user ownership
@@ -94,7 +93,7 @@ if ( $current_member ) {
                             $is_owned = true;
                         }
                     }
-                    if ( $price == 0 ) {
+                    if ( $price === 0.0 ) {
                         $is_owned = true;
                     }
 
@@ -162,8 +161,10 @@ if ( $current_member ) {
                                     <span><?php echo $ebook_pages ? $ebook_pages . ' trang' : 'Đang biên soạn'; ?></span>
                                 </div>
                                 <div class="text-right">
-                                    <?php if ( $price == 0 ) : ?>
+                                    <?php if ( $price === 0.0 ) : ?>
                                         <span class="text-emerald-600 font-extrabold text-xs md:text-sm bg-emerald-50 px-2.5 py-1 rounded-lg border border-emerald-100/50 shadow-sm">Miễn phí</span>
+                                    <?php elseif ( is_null( $price ) ) : ?>
+                                        <span class="text-slate-500 font-bold text-xs md:text-sm bg-slate-50 px-2.5 py-1 rounded-lg border border-slate-200 shadow-sm">Chưa mở bán</span>
                                     <?php else : ?>
                                         <span class="text-primary font-black text-sm md:text-base"><?php echo number_format( $price, 0, ',', '.' ); ?> đ</span>
                                     <?php endif; ?>

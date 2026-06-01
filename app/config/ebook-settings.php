@@ -162,7 +162,12 @@ function hieucon_ebook_metabox_html( $post ) {
 function hieucon_ebook_save_meta_boxes( $post_id ) {
     if ( isset( $_POST['ebook_meta_nonce'] ) && wp_verify_nonce( $_POST['ebook_meta_nonce'], 'hieucon_ebook_meta_nonce' ) ) {
         if ( isset( $_POST['ebook_price'] ) ) {
-            update_post_meta( $post_id, '_ebook_price', floatval( $_POST['ebook_price'] ) );
+            $price_val = $_POST['ebook_price'];
+            if ( $price_val === '' ) {
+                update_post_meta( $post_id, '_ebook_price', '' );
+            } else {
+                update_post_meta( $post_id, '_ebook_price', floatval( $price_val ) );
+            }
         }
         if ( isset( $_POST['ebook_pdf_url'] ) ) {
             update_post_meta( $post_id, '_ebook_pdf_url', sanitize_text_field( $_POST['ebook_pdf_url'] ) );
