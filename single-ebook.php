@@ -13,12 +13,12 @@ $is_owned       = false;
 // Fetch Ebook custom metadata
 $price      = get_post_meta( get_the_ID(), '_ebook_price', true );
 $pdf_url    = get_post_meta( get_the_ID(), '_ebook_pdf_url', true );
-$pages      = get_post_meta( get_the_ID(), '_ebook_pages', true );
+$ebook_pages = get_post_meta( get_the_ID(), '_ebook_pages', true );
 $sample_url = get_post_meta( get_the_ID(), '_ebook_sample_url', true );
 
 // Set default values if not defined
 $price = ! empty( $price ) ? floatval( $price ) : 0;
-$pages = ! empty( $pages ) ? intval( $pages ) : 0;
+$ebook_pages = ! empty( $ebook_pages ) ? intval( $ebook_pages ) : 0;
 
 // Check membership status and ebook ownership
 if ( $current_member ) {
@@ -198,7 +198,7 @@ if ( ! $current_member ) {
                             <span class="text-xs text-slate-455 font-semibold flex items-center gap-2">
                                 <i data-lucide="file-text" class="w-4 h-4 text-primary"></i> Số trang
                             </span>
-                            <span class="text-xs font-bold text-navy"><?php echo $pages ? $pages . ' trang' : 'Đang cập nhật'; ?></span>
+                            <span class="text-xs font-bold text-navy"><?php echo $ebook_pages ? $ebook_pages . ' trang' : 'Đang cập nhật'; ?></span>
                         </div>
                         <div class="flex items-center justify-between p-3.5 bg-slate-50/50 rounded-2xl border border-slate-100">
                             <span class="text-xs text-slate-455 font-semibold flex items-center gap-2">
@@ -264,11 +264,11 @@ if ( ! $current_member ) {
                                 <i data-lucide="shield-check" class="w-4.5 h-4.5 text-primary"></i>
                                 <span>Bảo vệ bản quyền</span>
                             </div>
-                            <?php if ( $pages > 0 ) : ?>
+                            <?php if ( $ebook_pages > 0 ) : ?>
                                 <span class="w-1 h-1 bg-slate-300 rounded-full"></span>
                                 <div class="flex items-center gap-1.5">
                                     <i data-lucide="file-text" class="w-4.5 h-4.5 text-primary"></i>
-                                    <span><?php echo $pages; ?> trang độc quyền</span>
+                                    <span><?php echo $ebook_pages; ?> trang độc quyền</span>
                                 </div>
                             <?php endif; ?>
                         </div>

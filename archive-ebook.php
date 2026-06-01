@@ -80,10 +80,10 @@ if ( $current_member ) {
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">
                 <?php while ( have_posts() ) : the_post(); 
                     $price    = get_post_meta( get_the_ID(), '_ebook_price', true );
-                    $pages    = get_post_meta( get_the_ID(), '_ebook_pages', true );
+                    $ebook_pages = get_post_meta( get_the_ID(), '_ebook_pages', true );
                     
                     $price = ! empty( $price ) ? floatval( $price ) : 0;
-                    $pages = ! empty( $pages ) ? intval( $pages ) : 0;
+                    $ebook_pages = ! empty( $ebook_pages ) ? intval( $ebook_pages ) : 0;
 
                     // Determine user ownership
                     $is_owned = false;
@@ -159,7 +159,7 @@ if ( $current_member ) {
                             <div class="border-t border-slate-100 pt-4 flex items-center justify-between mt-auto">
                                 <div class="flex items-center gap-1 text-slate-455 text-[11px] font-bold">
                                     <i data-lucide="file-text" class="w-4 h-4 text-slate-400"></i>
-                                    <span><?php echo $pages ? $pages . ' trang' : 'Đang biên soạn'; ?></span>
+                                    <span><?php echo $ebook_pages ? $ebook_pages . ' trang' : 'Đang biên soạn'; ?></span>
                                 </div>
                                 <div class="text-right">
                                     <?php if ( $price == 0 ) : ?>
