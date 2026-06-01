@@ -115,7 +115,11 @@ $course_cats = get_terms([
                         </div>
                     </div>
 
-
+                    <!-- Link: Ebook -->
+                    <a href="<?php echo esc_url( get_post_type_archive_link( 'ebook' ) ); ?>" class="text-navy/80 hover:text-navy hover:text-secondary font-extrabold transition-colors text-[12px] xl:text-[13px] uppercase tracking-[0.15em] flex items-center gap-1.5 py-4 relative outline-none px-2 shrink-0">
+                        Ebook
+                        <span class="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-[3px] bg-secondary transition-all duration-300 hover:w-full opacity-0 hover:opacity-100 rounded-t-md"></span>
+                    </a>
 
                     </nav>
 
@@ -138,6 +142,27 @@ $course_cats = get_terms([
                         <span class="font-black text-[13px] text-white leading-none group-hover:scale-110 transition-transform">Z</span>
                     </a>
 
+                    <!-- Divider -->
+                    <div class="w-px h-5 bg-navy/10"></div>
+
+                    <?php 
+                    $current_member = class_exists( '\Hieucon\Model\Member_Model' ) ? \Hieucon\Model\Member_Model::get_current_member() : false; 
+                    if ( $current_member ) : 
+                    ?>
+                        <!-- Nút: Tài khoản (Đã đăng nhập) -->
+                        <a href="<?php echo home_url('/tai-khoan/'); ?>"
+                           class="flex items-center gap-1.5 bg-navy hover:bg-navy/80 text-white px-3 py-2 rounded-xl font-bold text-[11px] xl:text-[12px] transition-all duration-200 shadow-sm hover:shadow-md group shrink-0 border-0">
+                            <i data-lucide="user" class="w-4 h-4 text-secondary group-hover:text-white transition-colors"></i>
+                            <span>Tài khoản</span>
+                        </a>
+                    <?php else : ?>
+                        <!-- Nút: Đăng nhập (Chưa đăng nhập) -->
+                        <a href="<?php echo home_url('/dang-nhap/'); ?>"
+                           class="flex items-center gap-1.5 bg-secondary hover:bg-secondary_dark text-white px-3 py-2 rounded-xl font-bold text-[11px] xl:text-[12px] transition-all duration-200 shadow-sm hover:shadow-md shrink-0 border-0">
+                            <i data-lucide="log-in" class="w-4 h-4 text-white"></i>
+                            <span>Đăng nhập</span>
+                        </a>
+                    <?php endif; ?>
 
                 </div>
 
@@ -196,7 +221,25 @@ $course_cats = get_terms([
                     </div>
                 </div>
 
+                <!-- Link: Ebook -->
+                <div class="flex flex-col border-b border-navy/5">
+                    <a href="<?php echo esc_url( get_post_type_archive_link( 'ebook' ) ); ?>" class="flex items-center gap-3 py-4 text-navy font-bold uppercase tracking-widest text-sm w-full text-left outline-none rounded-lg">
+                        <i data-lucide="book-open" class="w-4 h-4 text-navy/40"></i> Ebook & Tài liệu
+                    </a>
+                </div>
 
+                <!-- Link: Tài khoản / Đăng nhập -->
+                <div class="flex flex-col border-b border-navy/5">
+                    <?php if ( $current_member ) : ?>
+                        <a href="<?php echo home_url('/tai-khoan/'); ?>" class="flex items-center gap-3 py-4 text-navy font-bold uppercase tracking-widest text-sm w-full text-left outline-none rounded-lg">
+                            <i data-lucide="user" class="w-4 h-4 text-navy/40"></i> Tài khoản của tôi
+                        </a>
+                    <?php else : ?>
+                        <a href="<?php echo home_url('/dang-nhap/'); ?>" class="flex items-center gap-3 py-4 text-navy font-bold uppercase tracking-widest text-sm w-full text-left outline-none rounded-lg">
+                            <i data-lucide="log-in" class="w-4 h-4 text-navy/40"></i> Đăng nhập / Đăng ký
+                        </a>
+                    <?php endif; ?>
+                </div>
 
             </div>
 
