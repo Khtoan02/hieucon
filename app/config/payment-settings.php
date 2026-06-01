@@ -651,6 +651,12 @@ function hieucon_payment_settings_html() {
                             </div>
                         </div>
 
+                        <!-- Vùng hiển thị trạng thái thanh toán test trong Admin -->
+                        <div id="hc-test-status-alert" style="display:none; background: rgba(16, 185, 129, 0.15); border: 1px solid rgba(16, 185, 129, 0.25); border-radius: 12px; padding: 12px; margin-bottom: 20px; text-align: left;">
+                             <span style="color: #10b981; font-size: 13px; font-weight: 700; display: block; margin-bottom: 4px; font-family: 'Quicksand', sans-serif;">🎉 Thanh toán thành công!</span>
+                             <span id="hc-test-status-msg" style="color: #ffffff; font-size: 11px; line-height: 1.4; display: block;">Hệ thống đã nhận được tiền từ SePay.</span>
+                        </div>
+
                         <div class="hc-qr-frame">
                             <img id="hc-qr-img" src="https://qr.sepay.vn/img?bank=<?php echo esc_attr($bank_id); ?>&acc=<?php echo esc_attr($acc_number); ?>&template=<?php echo esc_attr($qr_template); ?>&amount=5000&des=TEST5000" alt="VietQR SePay Live View">
                         </div>
@@ -780,6 +786,45 @@ function hieucon_payment_settings_html() {
     <div id="hc-toast">Đã sao chép!</div>
 
     <script>
+        let adminPollingTimer = null;
+
+        function startAdminPolling() {
+            if (adminPollingTimer) {
+                clearInterval(adminPollingTimer);
+            }
+            // Chạy kiểm tra mỗi 4 giây
+            adminPollingTimer = setInterval(checkAdminPaymentStatus, 4000);
+        }
+
+        async function checkAdminPaymentStatus() {
+            const descInput = document.getElementById('hc-test-desc');
+            const amountInput = document.getElementById('hc-test-amount');
+            if (!descInput) return;
+
+            const code = descInput.value;
+            const amount = amountInput.value || 0;
+            if (!code) return;
+
+            try {
+                const checkUrl = `${window.location.origin}/wp-json/hieucon/v1/payment-status?code=${encodeURIComponent(code)}`;
+                const res = await fetch(checkUrl, { method: 'GET', cache: 'no-store' });
+                const data = await res.json();
+
+                if (res.ok && data && data.paid) {
+                    // Hiển thị thông báo thành công
+                    const alertBox = document.getElementById('hc-test-status-alert');
+                    const alertMsg = document.getElementById('hc-test-status-msg');
+                    if (alertBox && alertMsg) {
+                        alertBox.style.display = 'block';
+                        alertMsg.innerText = `Hệ thống đã khớp tự động khoản chuyển khoản ${parseInt(amount).toLocaleString('vi-VN')}đ cho mã giao dịch thử nghiệm "${code}". Trạng thái đã được xác nhận!`;
+                    }
+                    clearInterval(adminPollingTimer);
+                }
+            } catch (err) {
+                console.error("Lỗi khi kiểm tra trạng thái test:", err);
+            }
+        }
+
         function updateLiveQR() {
             const bank = '<?php echo esc_js($bank_id); ?>';
             const acc = '<?php echo esc_js($acc_number); ?>';
@@ -790,6 +835,12 @@ function hieucon_payment_settings_html() {
             const amount = amountInput.value || 0;
             const desc = descInput.value || '';
             
+            // Reset alert box
+            const alertBox = document.getElementById('hc-test-status-alert');
+            if (alertBox) {
+                alertBox.style.display = 'none';
+            }
+
             // Build VietQR image URL dynamically
             const qrUrl = `https://qr.sepay.vn/img?bank=${bank}&acc=${acc}&template=${template}&amount=${amount}&des=${encodeURIComponent(desc)}`;
             
@@ -800,6 +851,9 @@ function hieucon_payment_settings_html() {
             
             document.getElementById('hc-display-amount').innerText = formattedAmount;
             document.getElementById('hc-display-desc').innerText = desc;
+
+            // Bắt đầu lại polling khi đổi thông tin test
+            startAdminPolling();
         }
 
         function copyToClipboard(elementId, label) {
@@ -817,6 +871,13 @@ function hieucon_payment_settings_html() {
                 toast.classList.remove('show');
             }, 2500);
         }
+
+        // Bắt đầu polling ngay khi load trang
+        document.addEventListener('DOMContentLoaded', () => {
+            if (document.getElementById('hc-test-desc')) {
+                startAdminPolling();
+            }
+        });
     </script>
     <?php
 }
