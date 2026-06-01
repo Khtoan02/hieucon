@@ -105,10 +105,10 @@ if ( $current_member ) {
                 ?>
                     <article class="bg-white/90 backdrop-blur-md rounded-[2.5rem] border border-white shadow-soft hover:shadow-elegant transition-all duration-500 overflow-hidden flex flex-col group p-6 relative">
                         
-                        <!-- Top visual display: 3D Mockup inside container with light leak and radial glow -->
-                        <div class="bg-gradient-to-tr from-slate-50/80 via-white to-orange-500/5 border border-slate-100 rounded-3xl p-6 mb-5 lib-book-container h-80 flex items-center justify-center relative overflow-hidden select-none group-hover:from-slate-50/50 group-hover:to-orange-500/10 transition-all duration-500">
+                        <!-- Top visual display: 3D Mockup standing directly on the card -->
+                        <div class="lib-book-container h-80 flex items-center justify-center relative select-none mb-6">
                             <!-- Soft background glow behind book cover -->
-                            <div class="absolute w-44 h-44 rounded-full bg-primary/5 filter blur-2xl group-hover:scale-125 transition-transform duration-700 pointer-events-none"></div>
+                            <div class="absolute w-56 h-56 rounded-full bg-primary/5 filter blur-3xl group-hover:scale-125 transition-transform duration-700 pointer-events-none"></div>
                             
                             <!-- 3D Mockup cover -->
                             <div class="lib-book-mockup bg-slate-200">
@@ -130,24 +130,23 @@ if ( $current_member ) {
                                 <!-- Pages Edge -->
                                 <div class="lib-book-pages-side"></div>
                             </div>
-
-                            <!-- Badges over Mockup container -->
-                            <div class="absolute top-4 left-4 flex flex-wrap gap-1.5 z-20">
-                                <span class="px-3 py-1 rounded-full bg-white/95 backdrop-blur-md border border-slate-200/50 text-[10px] font-bold text-slate-500 uppercase tracking-wider shadow-sm">
-                                    <?php echo esc_html( $cat_label ); ?>
-                                </span>
-                                <?php if ( $is_owned ) : ?>
-                                    <span class="px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 text-[10px] font-extrabold uppercase tracking-wider flex items-center gap-1.5 shadow-sm">
-                                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 inline-block animate-pulse"></span>
-                                        Đã sở hữu
-                                    </span>
-                                <?php endif; ?>
-                            </div>
                         </div>
 
                         <!-- Card Information Content -->
                         <div class="flex-1 flex flex-col justify-between z-10 relative">
                             <div>
+                                <!-- Badges Row -->
+                                <div class="flex flex-wrap gap-1.5 mb-3">
+                                    <span class="px-2.5 py-0.5 rounded-full bg-slate-50 border border-slate-200/50 text-[9px] font-extrabold text-slate-500 uppercase tracking-wider shadow-sm">
+                                        <?php echo esc_html( $cat_label ); ?>
+                                    </span>
+                                    <?php if ( $is_owned ) : ?>
+                                        <span class="px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/15 text-[9px] font-extrabold uppercase tracking-wider flex items-center gap-1 shadow-sm">
+                                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 inline-block animate-pulse"></span>
+                                            Đã sở hữu
+                                        </span>
+                                    <?php endif; ?>
+                                </div>
                                 <h2 class="text-base md:text-xl font-serif font-bold text-navy group-hover:text-primary transition-colors duration-300 line-clamp-2 mb-2">
                                     <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
                                 </h2>

@@ -68,8 +68,8 @@ if ( ! $current_member ) {
         }
         .book-mockup {
             position: relative;
-            width: 230px;
-            height: 320px;
+            width: 250px;
+            height: 350px;
             transform-style: preserve-3d;
             transform: rotateY(-20deg) rotateX(5deg);
             transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.6s;
@@ -82,9 +82,9 @@ if ( ! $current_member ) {
         }
         .book-spine {
             position: absolute;
-            width: 24px;
+            width: 26px;
             height: 100%;
-            left: -12px;
+            left: -13px;
             top: 0;
             background: linear-gradient(to right, rgba(0,0,0,0.3) 0%, rgba(255,255,255,0.1) 40%, rgba(0,0,0,0.1) 100%), #1e293b;
             transform: rotateY(-90deg);
@@ -93,9 +93,9 @@ if ( ! $current_member ) {
         }
         .book-pages-side {
             position: absolute;
-            width: 20px;
+            width: 22px;
             height: 98%;
-            right: -10px;
+            right: -11px;
             top: 1%;
             background: linear-gradient(to right, #ffffff 0%, #f1f5f9 60%, #e2e8f0 100%);
             transform: rotateY(90deg);
@@ -157,7 +157,9 @@ if ( ! $current_member ) {
                 <div class="bg-white/85 backdrop-blur-xl border border-white/80 p-8 rounded-[2.5rem] shadow-soft hover:shadow-elegant transition-all duration-500 flex flex-col items-center">
                     
                     <!-- 3D Book Display -->
-                    <div class="book-container py-6 mb-8 select-none">
+                    <div class="book-container py-6 mb-8 select-none relative">
+                        <!-- Ambient radial backdrop glow -->
+                        <div class="absolute w-56 h-56 rounded-full bg-primary/5 filter blur-3xl -z-10 pointer-events-none"></div>
                         <div class="book-mockup bg-slate-200">
                             <!-- Spine effect -->
                             <div class="book-spine" style="background-color: <?php echo esc_attr( $price == 0 ? '#10b981' : '#0d9488' ); ?>;"></div>
@@ -306,10 +308,7 @@ if ( ! $current_member ) {
                             <i data-lucide="check-circle-2" class="w-4.5 h-4.5 text-emerald-500 shrink-0"></i>
                             <span>Tương thích đa thiết bị (Máy tính, Máy tính bảng, Di động)</span>
                         </div>
-                        <div class="flex items-center gap-2">
-                            <i data-lucide="check-circle-2" class="w-4.5 h-4.5 text-emerald-500 shrink-0"></i>
-                            <span>Tải bản PDF chất lượng cao không giảm độ nét</span>
-                        </div>
+
                         <div class="flex items-center gap-2">
                             <i data-lucide="check-circle-2" class="w-4.5 h-4.5 text-emerald-500 shrink-0"></i>
                             <span>Bảo mật trọn đời gắn liền tài khoản Hieucon</span>
