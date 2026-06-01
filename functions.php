@@ -43,6 +43,7 @@ require_once HIEUCON_THEME_DIR . '/app/config/setup.php';
 require_once HIEUCON_THEME_DIR . '/app/config/tracking.php';
 require_once HIEUCON_THEME_DIR . '/app/config/theme-options.php';
 require_once HIEUCON_THEME_DIR . '/app/config/theme-settings.php';
+require_once HIEUCON_THEME_DIR . '/app/config/payment-settings.php';
 require_once HIEUCON_THEME_DIR . '/app/config/checklist-admin.php';
 require_once HIEUCON_THEME_DIR . '/app/config/checklist-dh-admin.php';
 require_once HIEUCON_THEME_DIR . '/app/config/page-generator.php';
