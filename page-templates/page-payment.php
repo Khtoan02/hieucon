@@ -20,11 +20,35 @@ $configured_tmpl    = get_option('sepay_qr_template', 'qronly');
 
 // Lấy thông tin đơn thanh toán từ URL Query
 $course_id     = isset($_GET['course_id']) ? intval($_GET['course_id']) : 0;
-$total_amount  = isset($_GET['total']) ? floatval($_GET['total']) : 0;
-$temp_order_id = isset($_GET['order_id']) ? sanitize_text_field($_GET['order_id']) : 'TEMP' . time();
+
+// Bảo mật chống đổi giá (Anti-Tampering): Truy vấn giá trực tiếp trên máy chủ
+$total_amount = 0;
+if ( $course_id && get_post( $course_id ) ) {
+    $total_amount = floatval( get_post_meta( $course_id, '_course_price', true ) );
+} else {
+    // Fallback nếu không có khóa học (ví dụ: bán tài liệu/các giao dịch khác)
+    $total_amount = isset($_GET['total']) ? floatval($_GET['total']) : 0;
+}
 
 // Lấy thông tin khóa học
 $course_title  = $course_id ? get_the_title($course_id) : 'Đăng ký tài liệu / Khóa học hội viên';
+
+// Tối ưu mã giao dịch định danh (Unique & Safe): DH + course_id + U + user_id + T + timestamp_hash
+$current_user  = wp_get_current_user();
+$user_id       = $current_user->ID;
+$temp_order_id = $course_id . 'U' . $user_id . 'T' . (time() % 100000);
+
+// Lấy favicon/logo của website để hiển thị ở giữa QR Code
+$logo_url = get_site_icon_url(128);
+if ( ! $logo_url ) {
+    $custom_logo_id = get_theme_mod('custom_logo');
+    if ( $custom_logo_id ) {
+        $logo_data = wp_get_attachment_image_src($custom_logo_id, 'full');
+        if ( $logo_data ) {
+            $logo_url = $logo_data[0];
+        }
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="vi">
@@ -195,7 +219,8 @@ $course_title  = $course_id ? get_the_title($course_id) : 'Đăng ký tài liệ
         const PAYMENT_CONFIG = {
             BANK_ID: '<?php echo esc_js($configured_bank); ?>',
             ACC_NO: '<?php echo esc_js($configured_acc); ?>',
-            TEMPLATE: '<?php echo esc_js($configured_tmpl); ?>'
+            TEMPLATE: '<?php echo esc_js($configured_tmpl); ?>',
+            LOGO_URL: '<?php echo esc_js($logo_url); ?>'
         };
 
         const orderInfo = {
@@ -210,7 +235,10 @@ $course_title  = $course_id ? get_the_title($course_id) : 'Đăng ký tài liệ
 
         document.addEventListener('DOMContentLoaded', () => {
             // A. Khởi tạo và tải mã QR động từ SePay VietQR Image API
-            const qrUrl = `https://qr.sepay.vn/img?bank=${PAYMENT_CONFIG.BANK_ID}&acc=${PAYMENT_CONFIG.ACC_NO}&template=${PAYMENT_CONFIG.TEMPLATE}&amount=${orderInfo.amount}&des=${encodeURIComponent(orderInfo.code)}`;
+            let qrUrl = `https://qr.sepay.vn/img?bank=${PAYMENT_CONFIG.BANK_ID}&acc=${PAYMENT_CONFIG.ACC_NO}&template=${PAYMENT_CONFIG.TEMPLATE}&amount=${orderInfo.amount}&des=${encodeURIComponent(orderInfo.code)}`;
+            if (PAYMENT_CONFIG.LOGO_URL) {
+                qrUrl += `&logo=${encodeURIComponent(PAYMENT_CONFIG.LOGO_URL)}`;
+            }
             
             const qrImgElement = document.getElementById('qrImage');
             qrImgElement.src = qrUrl;

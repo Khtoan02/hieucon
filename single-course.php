@@ -308,8 +308,8 @@ if ( $level === 'intermediate' ) {
                                 </a>
                             <?php else : ?>
                                 <!-- Not Owned Course -->
-                                <a href="<?php echo esc_url( home_url( '/tai-khoan/' ) ); ?>" class="w-full py-4 bg-primary hover:bg-secondary text-white rounded-2xl font-bold text-sm shadow-[0_4px_20px_rgba(13,148,136,0.15)] hover:shadow-[0_10px_30px_rgba(249,115,22,0.25)] hover:scale-[1.02] transform transition-all duration-300 flex items-center justify-center gap-2">
-                                    Kích hoạt khóa học bằng mã <i data-lucide="key" class="w-4 h-4"></i>
+                                <a href="<?php echo esc_url( home_url( '/thanh-toan/?course_id=' . get_the_ID() ) ); ?>" class="w-full py-4 bg-primary hover:bg-secondary text-white rounded-2xl font-bold text-sm shadow-[0_4px_20px_rgba(13,148,136,0.15)] hover:shadow-[0_10px_30px_rgba(249,115,22,0.25)] hover:scale-[1.02] transform transition-all duration-300 flex items-center justify-center gap-2">
+                                    Đăng ký khóa học ngay <i data-lucide="credit-card" class="w-4 h-4"></i>
                                 </a>
                             <?php endif; ?>
                         <?php endif; ?>

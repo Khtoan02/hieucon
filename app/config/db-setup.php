@@ -111,6 +111,26 @@ function hieucon_auto_create_member_pages() {
         // Đảm bảo template luôn đúng
         update_post_meta( $account_page->ID, '_wp_page_template', $account_template );
     }
+
+    // 3. Trang Thanh toán (SePay VietQR)
+    $payment_slug = 'thanh-toan';
+    $payment_page = get_page_by_path( $payment_slug );
+    $payment_template = 'page-templates/page-payment.php';
+
+    if ( ! $payment_page ) {
+        $payment_id = wp_insert_post( [
+            'post_title'  => 'Thanh toán',
+            'post_name'   => $payment_slug,
+            'post_status' => 'publish',
+            'post_type'   => 'page',
+        ] );
+        if ( ! is_wp_error( $payment_id ) ) {
+            update_post_meta( $payment_id, '_wp_page_template', $payment_template );
+        }
+    } else {
+        // Đảm bảo template luôn đúng
+        update_post_meta( $payment_page->ID, '_wp_page_template', $payment_template );
+    }
 }
 add_action( 'init', 'hieucon_auto_create_member_pages' );
 

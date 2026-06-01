@@ -96,6 +96,18 @@ function hieucon_payment_settings_html() {
     $acc_name       = get_option('sepay_account_name', 'NGUYEN KHANH TOAN');
     $qr_template    = get_option('sepay_qr_template', 'qronly');
 
+    // Lấy favicon/logo của website để hiển thị ở giữa QR Code
+    $logo_url = get_site_icon_url(128);
+    if ( ! $logo_url ) {
+        $custom_logo_id = get_theme_mod('custom_logo');
+        if ( $custom_logo_id ) {
+            $logo_data = wp_get_attachment_image_src($custom_logo_id, 'full');
+            if ( $logo_data ) {
+                $logo_url = $logo_data[0];
+            }
+        }
+    }
+
     // Tạo token tự động nếu chưa có
     if ( empty($webhook_token) ) {
         $webhook_token = wp_generate_password(16, false);
@@ -658,7 +670,13 @@ function hieucon_payment_settings_html() {
                         </div>
 
                         <div class="hc-qr-frame">
-                            <img id="hc-qr-img" src="https://qr.sepay.vn/img?bank=<?php echo esc_attr($bank_id); ?>&acc=<?php echo esc_attr($acc_number); ?>&template=<?php echo esc_attr($qr_template); ?>&amount=5000&des=TEST5000" alt="VietQR SePay Live View">
+                            <?php
+                            $preview_qr_url = "https://qr.sepay.vn/img?bank=" . esc_attr($bank_id) . "&acc=" . esc_attr($acc_number) . "&template=" . esc_attr($qr_template) . "&amount=5000&des=TEST5000";
+                            if ( ! empty($logo_url) ) {
+                                $preview_qr_url .= "&logo=" . urlencode($logo_url);
+                            }
+                            ?>
+                            <img id="hc-qr-img" src="<?php echo esc_url($preview_qr_url); ?>" alt="VietQR SePay Live View">
                         </div>
 
                         <div class="hc-qr-data-badge">
@@ -829,6 +847,7 @@ function hieucon_payment_settings_html() {
             const bank = '<?php echo esc_js($bank_id); ?>';
             const acc = '<?php echo esc_js($acc_number); ?>';
             const template = '<?php echo esc_js($qr_template); ?>';
+            const logo = '<?php echo esc_js($logo_url); ?>';
             const amountInput = document.getElementById('hc-test-amount');
             const descInput = document.getElementById('hc-test-desc');
             
@@ -842,7 +861,10 @@ function hieucon_payment_settings_html() {
             }
 
             // Build VietQR image URL dynamically
-            const qrUrl = `https://qr.sepay.vn/img?bank=${bank}&acc=${acc}&template=${template}&amount=${amount}&des=${encodeURIComponent(desc)}`;
+            let qrUrl = `https://qr.sepay.vn/img?bank=${bank}&acc=${acc}&template=${template}&amount=${amount}&des=${encodeURIComponent(desc)}`;
+            if (logo) {
+                qrUrl += `&logo=${encodeURIComponent(logo)}`;
+            }
             
             document.getElementById('hc-qr-img').src = qrUrl;
             
