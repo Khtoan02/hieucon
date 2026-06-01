@@ -53,6 +53,7 @@ require_once HIEUCON_THEME_DIR . '/app/config/smtp-config.php';
 require_once HIEUCON_THEME_DIR . '/app/config/member-admin.php';
 require_once HIEUCON_THEME_DIR . '/app/config/course-cpt.php';
 require_once HIEUCON_THEME_DIR . '/app/config/course-admin.php';
+require_once HIEUCON_THEME_DIR . '/app/config/elearning-settings.php';
 
 // Khởi chạy các Controller xác thực & tài khoản cho hệ thống hội viên
 add_action( 'init', function() {
