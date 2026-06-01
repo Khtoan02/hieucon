@@ -16,53 +16,52 @@ if ( $current_member ) {
     $member_id = intval( $current_member->id );
     $enrolled_ebooks = hieucon_get_member_enrolled_ebooks( $member_id );
 }
-?>
-
-<main id="primary" class="site-main min-h-screen py-12 md:py-20 bg-gradient-to-tr from-slate-50 via-slate-100 to-orange-50/20">
+?><main id="primary" class="site-main min-h-screen py-12 md:py-20 bg-gradient-to-tr from-slate-50 via-slate-100 to-orange-50/20">
     <!-- Premium Library Grid CSS Styles -->
     <style>
         .lib-book-container {
-            perspective: 800px;
+            perspective: 1200px;
             display: flex;
             justify-content: center;
             align-items: center;
+            transition: background 0.4s;
         }
         .lib-book-mockup {
             position: relative;
-            width: 140px;
-            height: 200px;
+            width: 175px;
+            height: 245px;
             transform-style: preserve-3d;
             transform: rotateY(-18deg) rotateX(3deg);
-            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.5s;
-            box-shadow: 3px 3px 12px rgba(15, 23, 42, 0.06), 8px 10px 20px rgba(15, 23, 42, 0.08);
-            border-radius: 2px 8px 8px 2px;
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.6s;
+            box-shadow: 5px 5px 20px rgba(15, 23, 42, 0.08), 12px 15px 30px rgba(15, 23, 42, 0.08);
+            border-radius: 2px 10px 10px 2px;
         }
         .group:hover .lib-book-mockup {
-            transform: rotateY(-4deg) rotateX(1deg) scale(1.04);
-            box-shadow: 5px 5px 18px rgba(15, 23, 42, 0.1), 15px 18px 30px rgba(15, 23, 42, 0.15);
+            transform: rotateY(-5deg) rotateX(1deg) translateY(-8px) scale(1.05);
+            box-shadow: 10px 25px 40px rgba(15, 23, 42, 0.15), 20px 35px 60px rgba(15, 23, 42, 0.18);
         }
         .lib-book-spine {
             position: absolute;
-            width: 16px;
+            width: 18px;
             height: 100%;
-            left: -8px;
+            left: -9px;
             top: 0;
-            background: linear-gradient(to right, rgba(0,0,0,0.3) 0%, rgba(255,255,255,0.1) 40%, rgba(0,0,0,0.1) 100%), #1e293b;
+            background: linear-gradient(to right, rgba(0,0,0,0.35) 0%, rgba(255,255,255,0.15) 40%, rgba(0,0,0,0.15) 100%), #1e293b;
             transform: rotateY(-90deg);
             transform-origin: right center;
             border-radius: 2px 0 0 2px;
         }
         .lib-book-pages-side {
             position: absolute;
-            width: 12px;
+            width: 14px;
             height: 98%;
-            right: -6px;
+            right: -7px;
             top: 1%;
-            background: linear-gradient(to right, #ffffff 0%, #f1f5f9 60%, #e2e8f0 100%);
+            background: linear-gradient(to right, #ffffff 0%, #f8fafc 60%, #e2e8f0 100%);
             transform: rotateY(90deg);
             transform-origin: left center;
-            box-shadow: inset 0px 0px 3px rgba(0,0,0,0.12);
-            border-radius: 0 3px 3px 0;
+            box-shadow: inset 0px 0px 4px rgba(0,0,0,0.15);
+            border-radius: 0 4px 4px 0;
         }
     </style>
 
@@ -76,8 +75,8 @@ if ( $current_member ) {
         </div>
 
         <?php if ( have_posts() ) : ?>
-            <!-- Grid Ebooks Shelf -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">
+            <!-- Center-aligned grid optimized for 2 books showcase -->
+            <div class="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 justify-center">
                 <?php while ( have_posts() ) : the_post(); 
                     $raw_price   = get_post_meta( get_the_ID(), '_ebook_price', true );
                     $price       = ( $raw_price !== '' ) ? floatval( $raw_price ) : null;
@@ -104,16 +103,17 @@ if ( $current_member ) {
                         $cat_label = $categories[0]->name;
                     }
                 ?>
-                    <article class="bg-white rounded-[2.25rem] border border-slate-100 shadow-soft hover:shadow-elegant transition-all duration-300 overflow-hidden flex flex-col group p-6 relative">
+                    <article class="bg-white/90 backdrop-blur-md rounded-[2.5rem] border border-white shadow-soft hover:shadow-elegant transition-all duration-500 overflow-hidden flex flex-col group p-6 relative">
                         
-                        <!-- Top visual display: 3D Mockup inside dynamic container -->
-                        <div class="bg-slate-50/70 border border-slate-100/50 rounded-3xl p-6 mb-5 lib-book-container h-56 flex items-center justify-center relative overflow-hidden select-none">
-                            <div class="absolute inset-0 bg-gradient-to-tr from-slate-100/30 to-orange-50/10 pointer-events-none"></div>
+                        <!-- Top visual display: 3D Mockup inside container with light leak and radial glow -->
+                        <div class="bg-gradient-to-tr from-slate-50/80 via-white to-orange-500/5 border border-slate-100 rounded-3xl p-6 mb-5 lib-book-container h-80 flex items-center justify-center relative overflow-hidden select-none group-hover:from-slate-50/50 group-hover:to-orange-500/10 transition-all duration-500">
+                            <!-- Soft background glow behind book cover -->
+                            <div class="absolute w-44 h-44 rounded-full bg-primary/5 filter blur-2xl group-hover:scale-125 transition-transform duration-700 pointer-events-none"></div>
                             
                             <!-- 3D Mockup cover -->
                             <div class="lib-book-mockup bg-slate-200">
                                 <!-- Spine -->
-                                <div class="lib-book-spine" style="background-color: <?php echo esc_attr( $price == 0 ? '#10b981' : '#0d9488' ); ?>;"></div>
+                                <div class="lib-book-spine" style="background-color: <?php echo esc_attr( $price === 0.0 ? '#10b981' : '#0d9488' ); ?>;"></div>
                                 
                                 <!-- Cover image -->
                                 <div class="w-full h-full rounded-r-lg overflow-hidden relative">
@@ -121,8 +121,8 @@ if ( $current_member ) {
                                         <?php the_post_thumbnail( 'large', [ 'class' => 'w-full h-full object-cover' ] ); ?>
                                     <?php else : ?>
                                         <div class="w-full h-full bg-gradient-to-tr from-teal-500 to-emerald-600 flex flex-col items-center justify-center p-3 text-center text-white">
-                                            <i data-lucide="book-open" class="w-8 h-8 mb-1.5 opacity-80"></i>
-                                            <span class="text-[9px] font-bold font-serif line-clamp-3 leading-snug"><?php the_title(); ?></span>
+                                            <i data-lucide="book-open" class="w-10 h-10 mb-2 opacity-80 animate-pulse-slow"></i>
+                                            <span class="text-xs font-bold font-serif line-clamp-3 leading-snug"><?php the_title(); ?></span>
                                         </div>
                                     <?php endif; ?>
                                 </div>
@@ -132,12 +132,12 @@ if ( $current_member ) {
                             </div>
 
                             <!-- Badges over Mockup container -->
-                            <div class="absolute top-4 left-4 flex flex-wrap gap-1.5">
-                                <span class="px-2.5 py-0.5 rounded-full bg-white/80 backdrop-blur-md border border-slate-200/50 text-[9px] font-bold text-slate-500 uppercase tracking-wider">
+                            <div class="absolute top-4 left-4 flex flex-wrap gap-1.5 z-20">
+                                <span class="px-3 py-1 rounded-full bg-white/95 backdrop-blur-md border border-slate-200/50 text-[10px] font-bold text-slate-500 uppercase tracking-wider shadow-sm">
                                     <?php echo esc_html( $cat_label ); ?>
                                 </span>
                                 <?php if ( $is_owned ) : ?>
-                                    <span class="px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/15 text-[9px] font-extrabold uppercase tracking-wider flex items-center gap-1 shadow-sm">
+                                    <span class="px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/20 text-[10px] font-extrabold uppercase tracking-wider flex items-center gap-1.5 shadow-sm">
                                         <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 inline-block animate-pulse"></span>
                                         Đã sở hữu
                                     </span>
@@ -146,33 +146,40 @@ if ( $current_member ) {
                         </div>
 
                         <!-- Card Information Content -->
-                        <div class="flex-1 flex flex-col justify-between">
+                        <div class="flex-1 flex flex-col justify-between z-10 relative">
                             <div>
-                                <h2 class="text-base md:text-lg font-serif font-bold text-navy group-hover:text-primary transition-colors line-clamp-2 mb-2">
+                                <h2 class="text-base md:text-xl font-serif font-bold text-navy group-hover:text-primary transition-colors duration-300 line-clamp-2 mb-2">
                                     <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
                                 </h2>
-                                <p class="text-slate-500 text-xs line-clamp-3 mb-6 font-medium leading-relaxed"><?php echo wp_strip_all_tags( get_the_excerpt() ); ?></p>
+                                <p class="text-slate-500 text-xs md:text-sm line-clamp-3 mb-6 font-medium leading-relaxed"><?php echo wp_strip_all_tags( get_the_excerpt() ); ?></p>
                             </div>
 
                             <!-- Meta details row -->
-                            <div class="border-t border-slate-100 pt-4 flex items-center justify-between mt-auto">
-                                <div class="flex items-center gap-1 text-slate-455 text-[11px] font-bold">
-                                    <i data-lucide="file-text" class="w-4 h-4 text-slate-400"></i>
+                            <div class="border-t border-slate-100 pt-5 flex items-center justify-between mt-auto">
+                                <div class="flex items-center gap-1.5 text-slate-455 text-[12px] font-bold">
+                                    <i data-lucide="file-text" class="w-4.5 h-4.5 text-slate-400"></i>
                                     <span><?php echo $ebook_pages ? $ebook_pages . ' trang' : 'Đang biên soạn'; ?></span>
                                 </div>
                                 <div class="text-right">
                                     <?php if ( $price === 0.0 ) : ?>
-                                        <span class="text-emerald-600 font-extrabold text-xs md:text-sm bg-emerald-50 px-2.5 py-1 rounded-lg border border-emerald-100/50 shadow-sm">Miễn phí</span>
+                                        <span class="text-emerald-600 font-extrabold text-xs md:text-sm bg-emerald-50 px-3 py-1.5 rounded-xl border border-emerald-100/50 shadow-sm inline-block">Miễn phí</span>
                                     <?php elseif ( is_null( $price ) ) : ?>
-                                        <span class="text-slate-500 font-bold text-xs md:text-sm bg-slate-50 px-2.5 py-1 rounded-lg border border-slate-200 shadow-sm">Chưa mở bán</span>
+                                        <span class="text-slate-500 font-bold text-xs md:text-sm bg-slate-50 px-3 py-1.5 rounded-xl border border-slate-200 shadow-sm inline-block">Chưa mở bán</span>
                                     <?php else : ?>
-                                        <span class="text-primary font-black text-sm md:text-base"><?php echo number_format( $price, 0, ',', '.' ); ?> đ</span>
+                                        <span class="text-primary font-black text-[16px] md:text-[18px]"><?php echo number_format( $price, 0, ',', '.' ); ?> đ</span>
                                     <?php endif; ?>
                                 </div>
                             </div>
+                            
+                            <!-- Visual Premium Button Action that animates on hover -->
+                            <div class="mt-4 pt-3 flex justify-end">
+                                <span class="inline-flex items-center gap-1.5 text-[11px] font-bold text-slate-600 group-hover:text-primary transition-colors uppercase tracking-widest leading-none bg-slate-50 group-hover:bg-primary/5 px-4.5 py-2.5 rounded-xl border border-slate-150 group-hover:border-primary/10">
+                                    Khám Phá Sách <i data-lucide="arrow-right" class="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform"></i>
+                                </span>
+                            </div>
 
                             <!-- Click action overlay border highlight effect -->
-                            <a href="<?php the_permalink(); ?>" class="absolute inset-0 z-10 pointer-events-auto rounded-[2.25rem] border-2 border-transparent group-hover:border-primary/10 transition-all duration-300"></a>
+                            <a href="<?php the_permalink(); ?>" class="absolute inset-0 z-20 pointer-events-auto rounded-[2.5rem] border-2 border-transparent group-hover:border-primary/15 transition-all duration-500"></a>
                         </div>
                     </article>
                 <?php endwhile; ?>
