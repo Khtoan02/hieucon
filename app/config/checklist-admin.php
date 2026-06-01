@@ -57,14 +57,25 @@ add_action('after_setup_theme', 'hieucon_install_checklist_table');
 
 // 2. Register Admin Menu
 function hieucon_checklist_admin_menu() {
+    // Menu chính gộp
     add_menu_page(
-        'Kết quả Check list',
-        'Kết quả Check list',
+        'Check-list',
+        'Check-list',
         'manage_options',
-        'hieucon-checklist',
+        'hieucon-checklist-main',
         'hieucon_checklist_admin_page',
         'dashicons-clipboard',
         30
+    );
+
+    // Submenu 1: Checklist Viêm Thần Kinh (bản ghi cũ)
+    add_submenu_page(
+        'hieucon-checklist-main',
+        'Viêm Thần Kinh',
+        'Viêm Thần Kinh',
+        'manage_options',
+        'hieucon-checklist-main',
+        'hieucon_checklist_admin_page'
     );
 }
 add_action('admin_menu', 'hieucon_checklist_admin_menu');

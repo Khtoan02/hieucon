@@ -62,17 +62,17 @@ add_action('after_setup_theme', 'hieucon_install_dh_checklist_table');
 
 // 2. Register Admin Menu
 function hieucon_dh_checklist_admin_menu() {
-    add_menu_page(
-        'Checklist DocumentingHope',
-        'Checklist DocumentingHope',
+    // Đăng ký dưới dạng Submenu của menu chính gộp
+    add_submenu_page(
+        'hieucon-checklist-main',
+        'DocumentingHope',
+        'DocumentingHope',
         'manage_options',
         'hieucon-dh-checklist',
-        'hieucon_dh_checklist_admin_page',
-        'dashicons-clipboard',
-        31
+        'hieucon_dh_checklist_admin_page'
     );
 }
-add_action('admin_menu', 'hieucon_dh_checklist_admin_menu');
+add_action('admin_menu', 'hieucon_dh_checklist_admin_menu', 11);
 
 // 3. Helper Parse User Agent
 function hieucon_parse_user_agent($ua) {
