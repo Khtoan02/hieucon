@@ -107,8 +107,8 @@ if ( $current_member ) {
                         
                         <!-- Top visual display: 3D Mockup standing directly on the card -->
                         <div class="lib-book-container h-80 flex items-center justify-center relative select-none mb-6">
-                            <!-- Soft background glow behind book cover -->
-                            <div class="absolute w-56 h-56 rounded-full bg-primary/5 filter blur-3xl group-hover:scale-125 transition-transform duration-700 pointer-events-none"></div>
+                            <!-- Cozy warm amber background glow behind book cover -->
+                            <div class="absolute w-56 h-56 rounded-full bg-secondary/10 filter blur-3xl group-hover:scale-125 transition-transform duration-700 pointer-events-none"></div>
                             
                             <!-- 3D Mockup cover -->
                             <div class="lib-book-mockup bg-slate-200">
@@ -135,13 +135,18 @@ if ( $current_member ) {
                         <!-- Card Information Content -->
                         <div class="flex-1 flex flex-col justify-between z-10 relative">
                             <div>
-                                <!-- Badges Row -->
-                                <div class="flex flex-wrap gap-1.5 mb-3">
-                                    <span class="px-2.5 py-0.5 rounded-full bg-slate-50 border border-slate-200/50 text-[9px] font-extrabold text-slate-500 uppercase tracking-wider shadow-sm">
+                                <!-- Consolidated Metadata Row -->
+                                <div class="flex flex-wrap items-center gap-2 mb-3.5">
+                                    <span class="px-2.5 py-0.5 rounded-full bg-slate-100 border border-slate-200/50 text-[10px] font-extrabold text-slate-500 uppercase tracking-wider">
                                         <?php echo esc_html( $cat_label ); ?>
                                     </span>
+                                    <span class="inline-flex items-center gap-1 text-[11px] font-bold text-slate-400">
+                                        <span class="w-1 h-1 rounded-full bg-slate-300"></span>
+                                        <i data-lucide="file-text" class="w-3.5 h-3.5 text-slate-400"></i>
+                                        <span><?php echo $ebook_pages ? $ebook_pages . ' trang' : 'Đang biên soạn'; ?></span>
+                                    </span>
                                     <?php if ( $is_owned ) : ?>
-                                        <span class="px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 border border-emerald-500/15 text-[9px] font-extrabold uppercase tracking-wider flex items-center gap-1 shadow-sm">
+                                        <span class="inline-flex items-center gap-1 text-[11px] font-bold text-emerald-600 ml-auto">
                                             <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 inline-block animate-pulse"></span>
                                             Đã sở hữu
                                         </span>
@@ -150,31 +155,32 @@ if ( $current_member ) {
                                 <h2 class="text-base md:text-xl font-serif font-bold text-navy group-hover:text-primary transition-colors duration-300 line-clamp-2 mb-2">
                                     <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
                                 </h2>
-                                <p class="text-slate-500 text-xs md:text-sm line-clamp-3 mb-6 font-medium leading-relaxed"><?php echo wp_strip_all_tags( get_the_excerpt() ); ?></p>
+                                <p class="text-slate-500 text-xs md:text-sm line-clamp-2 mb-6 font-medium leading-relaxed"><?php echo wp_strip_all_tags( get_the_excerpt() ); ?></p>
                             </div>
 
-                            <!-- Meta details row -->
-                            <div class="border-t border-slate-100 pt-5 flex items-center justify-between mt-auto">
-                                <div class="flex items-center gap-1.5 text-slate-455 text-[12px] font-bold">
-                                    <i data-lucide="file-text" class="w-4.5 h-4.5 text-slate-400"></i>
-                                    <span><?php echo $ebook_pages ? $ebook_pages . ' trang' : 'Đang biên soạn'; ?></span>
-                                </div>
-                                <div class="text-right">
+                            <!-- Unified Premium Footer (Border-topped single row) -->
+                            <div class="border-t border-slate-100 pt-5 mt-auto flex items-center justify-between gap-4">
+                                <!-- Price Display -->
+                                <div class="flex flex-col">
+                                    <span class="text-[9px] font-extrabold uppercase tracking-widest text-slate-400 mb-0.5">Giá sở hữu</span>
                                     <?php if ( $price === 0.0 ) : ?>
-                                        <span class="text-emerald-600 font-extrabold text-xs md:text-sm bg-emerald-50 px-3 py-1.5 rounded-xl border border-emerald-100/50 shadow-sm inline-block">Miễn phí</span>
+                                        <span class="text-emerald-600 font-extrabold text-sm md:text-base">Miễn phí</span>
                                     <?php elseif ( is_null( $price ) ) : ?>
-                                        <span class="text-slate-500 font-bold text-xs md:text-sm bg-slate-50 px-3 py-1.5 rounded-xl border border-slate-200 shadow-sm inline-block">Chưa mở bán</span>
+                                        <span class="text-slate-500 font-bold text-xs md:text-sm">Chưa mở bán</span>
                                     <?php else : ?>
-                                        <span class="text-primary font-black text-[16px] md:text-[18px]"><?php echo number_format( $price, 0, ',', '.' ); ?> đ</span>
+                                        <span class="text-primary font-black text-[18px] md:text-[20px] leading-none">
+                                            <?php echo number_format( $price, 0, ',', '.' ); ?> <span class="text-[14px] font-bold">đ</span>
+                                        </span>
                                     <?php endif; ?>
                                 </div>
-                            </div>
-                            
-                            <!-- Visual Premium Button Action that animates on hover -->
-                            <div class="mt-4 pt-3 flex justify-end">
-                                <span class="inline-flex items-center gap-1.5 text-[11px] font-bold text-slate-600 group-hover:text-primary transition-colors uppercase tracking-widest leading-none bg-slate-50 group-hover:bg-primary/5 px-4.5 py-2.5 rounded-xl border border-slate-150 group-hover:border-primary/10">
-                                    Khám Phá Sách <i data-lucide="arrow-right" class="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform"></i>
-                                </span>
+
+                                <!-- Filled Premium Action Button -->
+                                <div>
+                                    <span class="inline-flex items-center gap-1.5 text-[11px] font-bold text-white uppercase tracking-wider leading-none bg-navy group-hover:bg-primary px-5 py-3.5 rounded-full shadow-md group-hover:shadow-lg group-hover:-translate-y-0.5 transition-all duration-300">
+                                        Khám Phá Sách 
+                                        <i data-lucide="arrow-right" class="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform"></i>
+                                    </span>
+                                </div>
                             </div>
 
                             <!-- Click action overlay border highlight effect -->
