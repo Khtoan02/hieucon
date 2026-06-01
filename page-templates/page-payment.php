@@ -305,11 +305,8 @@ if ( ! $logo_url ) {
                 document.getElementById('loadingModal').classList.replace('flex', 'hidden');
 
                 if (result.success) {
-                    // Hiển thị modal thành công
-                    document.getElementById('successModal').classList.replace('hidden', 'flex');
-                    document.getElementById('btnStartLearning').onclick = () => {
-                        window.location.href = result.data.course_url;
-                    };
+                    // Chuyển hướng trực tiếp về trang khóa học sau khi thanh toán thành công
+                    window.location.href = result.data.course_url;
                 } else {
                     alert('Lỗi kích hoạt: ' + (result.data.message || 'Không rõ nguyên nhân'));
                     startPaymentPolling();
