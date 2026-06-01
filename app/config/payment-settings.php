@@ -1032,8 +1032,8 @@ function hieucon_handle_sepay_webhook(WP_REST_Request $request) {
         // Tự động sử dụng Regex quét tìm mã đơn hàng dự phòng nếu AI SePay không tự tách được
         $payment_code = $data['code'];
         if ( empty($payment_code) && ! empty($data['transaction_content']) ) {
-            // Định dạng mã đơn hàng: DH[Mã đơn hàng] ví dụ: DH205
-            if ( preg_match('/DH[A-Za-z0-9]+/i', $data['transaction_content'], $matches) ) {
+            // Định dạng mã đơn hàng: DH, TEST, hoặc VIP kèm ký tự liền nhau
+            if ( preg_match('/(DH|TEST|VIP)[A-Za-z0-9]+/i', $data['transaction_content'], $matches) ) {
                 $payment_code = strtoupper($matches[0]); // Chuẩn hóa viết hoa
             }
         }
