@@ -223,9 +223,6 @@ if ( ! $current_member ) {
                                 <a href="<?php echo esc_url( $pdf_url ); ?>" target="_blank" class="w-full py-4 bg-emerald-600 hover:bg-emerald-550 text-white rounded-2xl font-bold text-sm shadow-[0_4px_20px_rgba(16,185,129,0.18)] hover:scale-[1.02] transform transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer border-0">
                                     Đọc Toàn Bộ <i data-lucide="external-link" class="w-4 h-4"></i>
                                 </a>
-                                <a href="<?php echo esc_url( $pdf_url ); ?>" download class="w-full py-3 bg-white hover:bg-slate-50 text-slate-700 rounded-2xl font-bold text-xs border border-slate-200 shadow-sm flex items-center justify-center gap-2 transition-all">
-                                    Tải PDF Gốc <i data-lucide="download" class="w-4 h-4"></i>
-                                </a>
                             <?php else : ?>
                                 <div class="text-xs text-slate-400 text-center font-bold">Chưa cập nhật File PDF</div>
                             <?php endif; ?>
@@ -323,67 +320,7 @@ if ( ! $current_member ) {
 
         </div>
 
-        <!-- FULL WIDTH BLOCK: Embedded Secure PDF Reader / Blur Lock -->
-        <div id="ebook-reader-section" class="mb-12 scroll-mt-24">
-            <div class="bg-white/85 backdrop-blur-xl border border-white/80 p-6 md:p-8 rounded-[2.5rem] shadow-soft overflow-hidden">
-                <h3 class="text-xl font-serif font-bold text-navy mb-6 flex items-center gap-2 pb-4 border-b border-slate-100">
-                    <i data-lucide="book-open" class="w-5 h-5 text-primary"></i> Đọc sách Trực Tuyến & Tải tệp PDF
-                </h3>
 
-                <?php if ( $is_owned ) : ?>
-                    <!-- OWNED: Render premium direct access banner -->
-                    <div class="relative w-full overflow-hidden border border-emerald-100 rounded-3xl bg-gradient-to-tr from-emerald-500/10 via-teal-500/5 to-white p-8 md:p-12 text-center flex flex-col items-center shadow-sm">
-                        <div class="w-16 h-16 rounded-full bg-emerald-100 text-emerald-600 border border-emerald-200 flex items-center justify-center mb-6 shadow-sm">
-                            <i data-lucide="unlock" class="w-8 h-8 animate-pulse-slow"></i>
-                        </div>
-                        <h4 class="text-xl md:text-2xl font-serif font-black text-navy mb-3">Ebook của bạn đã được mở khóa!</h4>
-                        <p class="text-xs md:text-sm text-slate-655 max-w-lg leading-relaxed mb-8 font-medium">Cảm ơn bạn đã sở hữu Ebook bản quyền từ Hieucon. Hãy chọn phương thức bên dưới để mở toàn văn PDF chất lượng cao trong tab mới hoặc tải tệp về thiết bị.</p>
-                        
-                        <div class="flex flex-col sm:flex-row gap-4 justify-center w-full max-w-md">
-                            <?php if ( ! empty( $pdf_url ) ) : ?>
-                                <a href="<?php echo esc_url( $pdf_url ); ?>" target="_blank" class="px-8 py-4 bg-emerald-600 hover:bg-emerald-550 text-white rounded-2xl font-bold text-sm shadow-[0_4px_20px_rgba(16,185,129,0.18)] hover:scale-[1.02] transform transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer border-0">
-                                    Đọc Toàn Bộ Ebook <i data-lucide="external-link" class="w-4.5 h-4.5"></i>
-                                </a>
-                                <a href="<?php echo esc_url( $pdf_url ); ?>" download class="px-8 py-4 bg-white hover:bg-slate-50 text-slate-700 rounded-2xl font-bold text-sm border border-slate-200 shadow-sm flex items-center justify-center gap-2 transition-all">
-                                    Tải PDF Gốc <i data-lucide="download" class="w-4.5 h-4.5"></i>
-                                </a>
-                            <?php else : ?>
-                                <div class="text-sm text-slate-550 font-semibold bg-slate-50 border border-slate-200 px-6 py-4 rounded-xl w-full">Quản trị viên chưa cập nhật tệp PDF gốc cho Ebook này. Vui lòng quay lại sau nhé!</div>
-                            <?php endif; ?>
-                        </div>
-                    </div>
-                <?php else : ?>
-                    <!-- NOT OWNED: Show Premium Locked Screen with Sample Trigger -->
-                    <div class="relative w-full overflow-hidden border border-slate-150 rounded-3xl bg-slate-900 text-center flex flex-col items-center py-10 md:py-16 px-6 relative z-10">
-                        
-                        <!-- Background blurred mockup preview pages -->
-                        <div class="absolute inset-0 opacity-10 filter blur-md bg-cover bg-center select-none pointer-events-none" style="background-image: url('<?php echo has_post_thumbnail() ? esc_url( get_the_post_thumbnail_url( get_the_ID(), 'large' ) ) : ''; ?>');"></div>
-                        
-                        <!-- Premium locked glassmorphic prompt -->
-                        <div class="relative z-10 max-w-lg w-full p-8 rounded-3xl glass-blur-card text-center border border-white shadow-2xl flex flex-col items-center">
-                            <div class="w-14 h-14 rounded-full bg-primary/10 text-primary border border-primary/20 flex items-center justify-center mb-4.5 shadow-sm">
-                                <i data-lucide="lock" class="w-6 h-6 animate-pulse-slow"></i>
-                            </div>
-                            <h4 class="text-lg font-black text-navy mb-2">Nội dung Ebook PDF đã khóa bảo mật</h4>
-                            <p class="text-xs text-slate-655 leading-relaxed mb-6 font-medium">Bạn chưa đăng ký sở hữu cuốn Ebook này. Hãy mua ngay để mở khóa toàn bộ nội dung PDF trực tuyến cùng file tải gốc bản quyền.</p>
-                            
-                            <div class="flex flex-col sm:flex-row gap-3 w-full justify-center">
-                                <?php if ( ! is_null( $price ) ) : ?>
-                                    <a href="<?php echo esc_url( $purchase_url ); ?>" class="px-6 py-3.5 bg-primary hover:bg-secondary text-white rounded-xl font-bold text-xs shadow-md hover:scale-[1.02] transform transition-all duration-300 flex items-center justify-center gap-1.5 cursor-pointer border-0">
-                                        Mua Ebook Ngay <i data-lucide="credit-card" class="w-4 h-4"></i>
-                                    </a>
-                                <?php endif; ?>
-                                <?php if ( ! empty( $sample_url ) ) : ?>
-                                    <a href="<?php echo esc_url( $sample_url ); ?>" target="_blank" class="px-6 py-3.5 bg-white hover:bg-slate-50 text-slate-700 rounded-xl font-bold text-xs border border-slate-200 shadow-sm flex items-center justify-center gap-1.5 transition-all">
-                                        Đọc Thử Sách (10 trang) <i data-lucide="eye" class="w-4 h-4"></i>
-                                    </a>
-                                <?php endif; ?>
-                            </div>
-                        </div>
-                    </div>
-                <?php endif; ?>
-            </div>
-        </div>
 
         <!-- DISCUSSION & QA SECTION (Copied & adapted from single-course.php for maximum premium functionality) -->
         <div class="bg-white/85 backdrop-blur-xl border border-white/80 p-6 md:p-8 rounded-[2.5rem] shadow-soft hover:shadow-elegant transition-all duration-500 animate-fadeIn mt-8">

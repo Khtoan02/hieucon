@@ -404,17 +404,12 @@ $account_nonce     = wp_create_nonce( 'hieucon_account_nonce' );
                                                 <a href="<?php echo esc_url( $pdf_url ); ?>" target="_blank" class="w-full py-3 bg-emerald-600 hover:bg-emerald-550 text-white rounded-xl font-bold text-xs transition-all flex items-center justify-center gap-1.5 shadow-sm border-0">
                                                     Đọc Toàn Bộ (PDF) <i data-lucide="external-link" class="w-4 h-4"></i>
                                                 </a>
-                                                <div class="grid grid-cols-2 gap-2">
-                                                    <a href="<?php echo esc_url( $read_url ); ?>" class="py-2 bg-slate-50 hover:bg-slate-100 text-slate-655 rounded-xl font-bold text-[10px] transition-colors flex items-center justify-center gap-1 border border-slate-150">
-                                                        Xem Chi Tiết <i data-lucide="info" class="w-3 h-3"></i>
-                                                    </a>
-                                                    <a href="<?php echo esc_url( $pdf_url ); ?>" download class="py-2 bg-slate-50 hover:bg-slate-100 text-slate-655 rounded-xl font-bold text-[10px] transition-colors flex items-center justify-center gap-1 border border-slate-150">
-                                                        Tải PDF <i data-lucide="download" class="w-3 h-3"></i>
-                                                    </a>
-                                                </div>
+                                                <a href="<?php echo esc_url( $read_url ); ?>" class="w-full py-2 bg-slate-50 hover:bg-slate-100 text-slate-550 rounded-xl font-bold text-[10px] transition-colors flex items-center justify-center gap-1.5 border border-slate-150">
+                                                    Xem Chi Tiết <i data-lucide="info" class="w-3.5 h-3.5"></i>
+                                                </a>
                                             <?php else : ?>
                                                 <a href="<?php echo esc_url( $read_url ); ?>" class="w-full py-3 bg-amber-500 hover:bg-amber-600 text-white rounded-xl font-bold text-xs transition-colors flex items-center justify-center gap-1.5 border-0">
-                                                    Xem Chi Tiết <i data-lucide="book-open" class="w-4 h-4"></i>
+                                                    Xem Chi Tiết Ebook <i data-lucide="book-open" class="w-4 h-4"></i>
                                                 </a>
                                             <?php endif; ?>
                                         </div>
