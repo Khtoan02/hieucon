@@ -440,27 +440,41 @@ $course_cats = get_terms([
                                     </a>
                                 </div>
 
-                                <!-- Cột 2: Danh mục khóa học -->
+                                <!-- Cột 2: Các khóa học hiện có -->
                                 <div class="w-[60%] pl-6 flex flex-col z-10 relative">
                                     <span class="text-secondary font-extrabold text-[11px] uppercase tracking-widest flex items-center gap-2 mb-3">
-                                        <i data-lucide="folder-heart" class="w-4 h-4" aria-hidden="true"></i> Danh mục khóa học
+                                        <i data-lucide="play-circle" class="w-4 h-4" aria-hidden="true"></i> Khóa học nổi bật
                                     </span>
                                     
                                     <div class="grid grid-cols-1 gap-2 overflow-y-auto max-h-[220px] pr-2 no-scrollbar">
-                                        <?php if (!empty($course_cats) && !is_wp_error($course_cats)) : ?>
-                                            <?php foreach ($course_cats as $cat) : ?>
-                                                <a href="<?php echo esc_url(get_term_link($cat)); ?>" class="flex items-center justify-between p-2.5 rounded-xl bg-gradient-to-br from-white to-[#f8fafc] border border-white hover:border-secondary/30 hover:shadow-sm transition-all group/item">
-                                                    <div class="flex items-center gap-2.5">
-                                                        <div class="w-7 h-7 rounded-lg bg-secondary/5 flex items-center justify-center text-secondary group-hover/item:bg-secondary group-hover/item:text-white transition-colors">
-                                                            <i data-lucide="book-open" class="w-3.5 h-3.5"></i>
+                                        <?php
+                                        $mega_courses_query = new WP_Query( [
+                                            'post_type'      => 'course',
+                                            'posts_per_page' => 5,
+                                            'post_status'    => 'publish',
+                                            'orderby'        => 'date',
+                                            'order'          => 'DESC'
+                                        ] );
+                                        if ( $mega_courses_query->have_posts() ) :
+                                            while ( $mega_courses_query->have_posts() ) : $mega_courses_query->the_post();
+                                                $c_price = get_post_meta( get_the_ID(), '_course_price', true );
+                                                $c_price_label = ($c_price == 0) ? 'Miễn phí' : number_format($c_price, 0, ',', '.') . 'đ';
+                                        ?>
+                                                <a href="<?php the_permalink(); ?>" class="flex items-center justify-between p-2.5 rounded-xl bg-gradient-to-br from-white to-[#f8fafc] border border-white hover:border-secondary/30 hover:shadow-sm transition-all group/item">
+                                                    <div class="flex items-center gap-2.5 min-w-0">
+                                                        <div class="w-7 h-7 rounded-lg bg-secondary/5 flex items-center justify-center text-secondary group-hover/item:bg-secondary group-hover/item:text-white transition-colors shrink-0">
+                                                            <i data-lucide="graduation-cap" class="w-3.5 h-3.5"></i>
                                                         </div>
-                                                        <span class="font-bold text-navy text-[13px] group-hover/item:text-secondary transition-colors"><?php echo esc_html($cat->name); ?></span>
+                                                        <span class="font-bold text-navy text-[13px] group-hover/item:text-secondary transition-colors truncate"><?php the_title(); ?></span>
                                                     </div>
-                                                    <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-navy/5 text-navy/50 group-hover/item:bg-secondary/10 group-hover/item:text-secondary transition-colors"><?php echo esc_html($cat->count); ?> khóa</span>
+                                                    <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-600 group-hover/item:bg-secondary/10 group-hover/item:text-secondary transition-colors shrink-0"><?php echo esc_html($c_price_label); ?></span>
                                                 </a>
-                                            <?php endforeach; ?>
-                                        <?php else : ?>
-                                            <p class="text-[12px] text-navy/40 italic">Chưa có danh mục khóa học nào.</p>
+                                        <?php
+                                            endwhile;
+                                            wp_reset_postdata();
+                                        else :
+                                        ?>
+                                            <p class="text-[12px] text-navy/40 italic">Chưa có khóa học nào.</p>
                                         <?php endif; ?>
                                     </div>
                                 </div>

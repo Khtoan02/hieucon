@@ -5,8 +5,10 @@
  * @package Hieucon
  */
 
-if ( ! is_user_logged_in() ) {
-    wp_redirect( wp_login_url( get_permalink() ) );
+$current_member = class_exists( '\Hieucon\Model\Member_Model' ) ? \Hieucon\Model\Member_Model::get_current_member() : false;
+if ( ! $current_member ) {
+    $redirect_url = add_query_arg( 'redirect_to', urlencode( $_SERVER['REQUEST_URI'] ), home_url( '/dang-nhap/' ) );
+    wp_redirect( $redirect_url );
     exit;
 }
 
@@ -33,10 +35,9 @@ if ( $course_id && get_post( $course_id ) ) {
 // Lấy thông tin khóa học
 $course_title  = $course_id ? get_the_title($course_id) : 'Đăng ký tài liệu / Khóa học hội viên';
 
-// Tối ưu mã giao dịch định danh (Unique & Safe): DH + course_id + U + user_id + T + timestamp_hash
-$current_user  = wp_get_current_user();
-$user_id       = $current_user->ID;
-$temp_order_id = $course_id . 'U' . $user_id . 'T' . (time() % 100000);
+// Tối ưu mã giao dịch định danh (Unique & Safe): DH + course_id + U + member_id + T + timestamp_hash
+$member_id     = intval( $current_member->id );
+$temp_order_id = $course_id . 'U' . $member_id . 'T' . (time() % 100000);
 
 // Lấy favicon/logo của website để hiển thị ở giữa QR Code
 $logo_url = get_site_icon_url(128);

@@ -41,19 +41,7 @@ if ( $lessons_query->have_posts() ) {
 }
 
 // Check membership status and course ownership
-if ( current_user_can( 'manage_options' ) ) {
-    $is_enrolled = true;
-    if ( ! $current_member ) {
-        $wp_user = wp_get_current_user();
-        $current_member = (object) [
-            'id'        => 0,
-            'role'      => 'administrator',
-            'full_name' => $wp_user->display_name ? $wp_user->display_name : 'Quản trị viên',
-            'email'     => $wp_user->user_email,
-            'status'    => 'active'
-        ];
-    }
-} elseif ( $current_member ) {
+if ( $current_member ) {
     $member_id = intval( $current_member->id );
     if ( $current_member->role === 'administrator' || $current_member->role === 'teacher' || $current_member->role === 'expert' ) {
         $is_enrolled = true;
@@ -296,7 +284,7 @@ if ( $level === 'intermediate' ) {
                     <div class="pt-4 border-t border-slate-100 space-y-3">
                         <?php if ( ! $current_member ) : ?>
                             <!-- Guest User -->
-                            <a href="<?php echo esc_url( home_url( '/dang-nhap/?redirect_to=' . urlencode( get_permalink() ) ) ); ?>" class="w-full py-4 bg-navy hover:bg-secondary text-white rounded-2xl font-bold text-sm shadow-[0_4px_20px_rgba(10,25,49,0.15)] hover:shadow-[0_10px_30px_rgba(249,115,22,0.25)] hover:scale-[1.02] transform transition-all duration-300 flex items-center justify-center gap-2">
+                            <a href="<?php echo esc_url( home_url( '/dang-nhap/?redirect_to=' . urlencode( home_url( '/thanh-toan/?course_id=' . get_the_ID() ) ) ) ); ?>" class="w-full py-4 bg-navy hover:bg-secondary text-white rounded-2xl font-bold text-sm shadow-[0_4px_20px_rgba(10,25,49,0.15)] hover:shadow-[0_10px_30px_rgba(249,115,22,0.25)] hover:scale-[1.02] transform transition-all duration-300 flex items-center justify-center gap-2">
                                 Đăng ký để học ngay <i data-lucide="log-in" class="w-4 h-4"></i>
                             </a>
                         <?php else : ?>

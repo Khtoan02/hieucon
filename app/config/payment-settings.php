@@ -1213,12 +1213,12 @@ function hieucon_handle_create_paid_order() {
     }
 
     // 2. Kiểm tra Đăng nhập hội viên
-    if ( ! is_user_logged_in() ) {
+    $current_member = class_exists( '\Hieucon\Model\Member_Model' ) ? \Hieucon\Model\Member_Model::get_current_member() : false;
+    if ( ! $current_member ) {
         wp_send_json_error(array('message' => 'Vui lòng đăng nhập để hoàn tất đăng ký khóa học.'));
     }
 
-    $current_user = wp_get_current_user();
-    $user_id = $current_user->ID;
+    $member_id = intval( $current_member->id );
 
     // 3. Lấy thông số từ client gửi lên
     $course_id = isset($_POST['course_id']) ? intval($_POST['course_id']) : 0;
@@ -1236,14 +1236,14 @@ function hieucon_handle_create_paid_order() {
     }
 
     // 5. KÍCH HOẠT KHÓA HỌC CHO HỌC VIÊN
-    $enrolled = get_option("hieucon_enrolled_courses_{$user_id}", null);
+    $enrolled = get_option("hieucon_enrolled_courses_{$member_id}", null);
     if ( ! is_array($enrolled) ) {
         $enrolled = array();
     }
     
     if ( ! in_array($course_id, $enrolled) ) {
         $enrolled[] = $course_id;
-        update_option("hieucon_enrolled_courses_{$user_id}", $enrolled, false);
+        update_option("hieucon_enrolled_courses_{$member_id}", $enrolled, false);
     }
 
     // 6. Xóa sạch option tạm của trạng thái thanh toán để tiết kiệm tài nguyên CSDL

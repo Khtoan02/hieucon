@@ -7,10 +7,19 @@
 
 use Hieucon\Model\Member_Model;
 
-// Nếu đã đăng nhập thì tự động chuyển hướng về trang Tài khoản
+// Xác định địa chỉ chuyển hướng an toàn sau khi đăng ký / đăng nhập
+$redirect_to = home_url( '/tai-khoan/' );
+if ( ! empty( $_GET['redirect_to'] ) ) {
+    $safe_redirect = wp_validate_redirect( $_GET['redirect_to'], home_url( '/tai-khoan/' ) );
+    if ( $safe_redirect ) {
+        $redirect_to = $safe_redirect;
+    }
+}
+
+// Nếu đã đăng nhập thì tự động chuyển hướng về trang mong muốn
 $current_member = Member_Model::get_current_member();
 if ( $current_member ) {
-    wp_redirect( home_url( '/tai-khoan/' ) );
+    wp_redirect( $redirect_to );
     exit;
 }
 
@@ -436,7 +445,7 @@ $auth_nonce        = wp_create_nonce( 'hieucon_auth_nonce' );
             
             if (data.success) {
                 showAlert('Đăng ký tài khoản thành công! Đang chuyển hướng về trang tài khoản...', 'success');
-                setTimeout(() => window.location.href = '<?php echo esc_url( home_url( "/tai-khoan/" ) ); ?>', 1500);
+                setTimeout(() => window.location.href = '<?php echo esc_url( $redirect_to ); ?>', 1500);
             } else {
                 showAlert(data.data.message);
                 submitBtn.disabled = false;
@@ -473,7 +482,7 @@ $auth_nonce        = wp_create_nonce( 'hieucon_auth_nonce' );
             
             if (data.success) {
                 showAlert('Đăng nhập thành công! Đang vào tài khoản...', 'success');
-                setTimeout(() => window.location.href = '<?php echo esc_url( home_url( "/tai-khoan/" ) ); ?>', 1200);
+                setTimeout(() => window.location.href = '<?php echo esc_url( $redirect_to ); ?>', 1200);
             } else {
                 showAlert(data.data.message);
                 submitBtn.disabled = false;
@@ -510,7 +519,7 @@ $auth_nonce        = wp_create_nonce( 'hieucon_auth_nonce' );
             
             if (data.success) {
                 showAlert('Xác minh thành công! Đang tải tài khoản...', 'success');
-                setTimeout(() => window.location.href = '<?php echo esc_url( home_url( "/tai-khoan/" ) ); ?>', 1200);
+                setTimeout(() => window.location.href = '<?php echo esc_url( $redirect_to ); ?>', 1200);
             } else {
                 showAlert(data.data.message);
                 submitBtn.disabled = false;

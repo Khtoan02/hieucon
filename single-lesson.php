@@ -16,20 +16,6 @@ if ( ! $belong_to_course_id ) {
 $course_url = get_permalink( $belong_to_course_id );
 $current_member = class_exists( '\Hieucon\Model\Member_Model' ) ? \Hieucon\Model\Member_Model::get_current_member() : false;
 
-// If they are a WP Administrator, grant automatic session & bypass
-if ( current_user_can( 'manage_options' ) ) {
-    if ( ! $current_member ) {
-        $wp_user = wp_get_current_user();
-        $current_member = (object) [
-            'id'        => 0,
-            'role'      => 'administrator',
-            'full_name' => $wp_user->display_name ? $wp_user->display_name : 'Quản trị viên',
-            'email'     => $wp_user->user_email,
-            'status'    => 'active'
-        ];
-    }
-}
-
 if ( ! $current_member ) {
     // Redirect guest with login required notice
     wp_redirect( add_query_arg( 'error', 'login_required', $course_url ) );
@@ -39,7 +25,7 @@ if ( ! $current_member ) {
 $has_access = false;
 $member_id = intval( $current_member->id );
 
-if ( current_user_can( 'manage_options' ) || $current_member->role === 'administrator' || $current_member->role === 'teacher' || $current_member->role === 'expert' ) {
+if ( $current_member->role === 'administrator' || $current_member->role === 'teacher' || $current_member->role === 'expert' ) {
     $has_access = true;
 } else {
     $enrolled = hieucon_get_member_enrolled_courses( $member_id );
