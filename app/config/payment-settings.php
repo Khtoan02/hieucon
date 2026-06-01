@@ -1061,6 +1061,7 @@ function hieucon_handle_sepay_webhook(WP_REST_Request $request) {
         }
 
         if ( ! empty($payment_code) ) {
+            $payment_code = strtoupper(trim($payment_code)); // Chuẩn hóa luôn viết hoa và loại bỏ khoảng trắng
             hieucon_mark_order_paid($payment_code, $data);
         }
 
@@ -1077,7 +1078,7 @@ function hieucon_handle_sepay_webhook(WP_REST_Request $request) {
  * GHI TRẠNG THÁI THANH TOÁN THÀNH CÔNG VÀ KÍCH HOẠT ACTION HOOKS
  */
 function hieucon_mark_order_paid($payment_code, $transaction_data) {
-    $payment_code = sanitize_text_field($payment_code);
+    $payment_code = strtoupper(trim(sanitize_text_field($payment_code)));
     
     // Cập nhật trạng thái tạm vào WordPress Options
     update_option(
@@ -1098,7 +1099,7 @@ function hieucon_mark_order_paid($payment_code, $transaction_data) {
  * XỬ LÝ TRẢ VỀ TRẠNG THÁI THANH TOÁN (POLLING TỪ TRÌNH DUYỆT KHÁCH HÀNG)
  */
 function hieucon_rest_get_payment_status(WP_REST_Request $request) {
-    $code = $request->get_param('code');
+    $code = strtoupper(trim($request->get_param('code')));
     if ( empty($code) ) {
         return new WP_Error('missing_code', 'Thiếu mã thanh toán (code).', array('status' => 400));
     }
@@ -1165,6 +1166,7 @@ function hieucon_sepay_handle_rewrite_redirect() {
     // Giả lập một request REST API nội bộ truyền tới webhook chuẩn
     $request = new WP_REST_Request('POST', '/sepay/v1/webhook');
     $request->set_json_params($json);
+    $request->set_body($body);
     
     // Tự điền API Key kỳ vọng để bypass check header do chúng ta đã kiểm tra bằng Token rút gọn
     $api_key = get_option('sepay_api_key', '');
@@ -1223,7 +1225,7 @@ function hieucon_handle_create_paid_order() {
     // 3. Lấy thông số từ client gửi lên
     $course_id = isset($_POST['course_id']) ? intval($_POST['course_id']) : 0;
     $amount    = isset($_POST['amount']) ? floatval($_POST['amount']) : 0;
-    $code      = isset($_POST['code']) ? sanitize_text_field($_POST['code']) : ''; // e.g. DH1002
+    $code      = strtoupper(trim(isset($_POST['code']) ? sanitize_text_field($_POST['code']) : '')); // e.g. DH1002
 
     if ( ! $course_id || ! get_post($course_id) ) {
         wp_send_json_error(array('message' => 'Khóa học được chọn không hợp lệ hoặc không tồn tại.'));
