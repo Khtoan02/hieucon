@@ -1090,6 +1090,16 @@ function hieucon_sepay_handle_rewrite_redirect() {
     $api_key = get_option('sepay_api_key', '');
     $request->set_header('x-api-key', $api_key);
 
+    // Truyền tiếp các header chữ ký bảo mật HMAC nếu có gửi kèm từ SePay
+    $signature = $_SERVER['HTTP_X_SEPAY_SIGNATURE'] ?? '';
+    $timestamp = $_SERVER['HTTP_X_SEPAY_TIMESTAMP'] ?? '';
+    if ( ! empty( $signature ) ) {
+        $request->set_header('x-sepay-signature', $signature);
+    }
+    if ( ! empty( $timestamp ) ) {
+        $request->set_header('x-sepay-timestamp', $timestamp);
+    }
+
     $response = hieucon_handle_sepay_webhook($request);
 
     if ( is_wp_error($response) ) {
