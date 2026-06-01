@@ -883,25 +883,22 @@ function hieucon_handle_sepay_webhook(WP_REST_Request $request) {
     $expected_key = get_option('sepay_api_key', '');
     $secret_key   = get_option('sepay_secret_key', '');
 
-    if ( ! empty($secret_key) ) {
-        // Sử dụng HMAC-SHA256 Signature xác thực chữ ký mã hóa
-        $signature = $request->get_header('x-sepay-signature');
-        if ( empty($signature) ) {
-            $signature = $_SERVER['HTTP_X_SEPAY_SIGNATURE'] ?? '';
-        }
-        
-        $timestamp = $request->get_header('x-sepay-timestamp');
-        if ( empty($timestamp) ) {
-            $timestamp = $_SERVER['HTTP_X_SEPAY_TIMESTAMP'] ?? '';
-        }
+    $signature = $request->get_header('x-sepay-signature');
+    if ( empty($signature) ) {
+        $signature = $_SERVER['HTTP_X_SEPAY_SIGNATURE'] ?? '';
+    }
+    
+    $timestamp = $request->get_header('x-sepay-timestamp');
+    if ( empty($timestamp) ) {
+        $timestamp = $_SERVER['HTTP_X_SEPAY_TIMESTAMP'] ?? '';
+    }
 
+    // Nếu có cấu hình Secret Key VÀ SePay gửi kèm các header chữ ký bảo mật -> Xác thực bằng HMAC-SHA256
+    if ( ! empty($secret_key) && ! empty($signature) && ! empty($timestamp) ) {
+        // Sử dụng HMAC-SHA256 Signature xác thực chữ ký mã hóa
         $payload = $request->get_body();
         if ( empty($payload) ) {
             $payload = file_get_contents('php://input');
-        }
-
-        if ( empty($signature) || empty($timestamp) ) {
-            return new WP_Error('missing_signature', 'Thiếu chữ ký bảo mật X-SePay-Signature hoặc X-SePay-Timestamp.', array('status' => 401));
         }
 
         $expected_signature = 'sha256=' . hash_hmac('sha256', $timestamp . '.' . $payload, $secret_key);
@@ -910,7 +907,7 @@ function hieucon_handle_sepay_webhook(WP_REST_Request $request) {
             return new WP_Error('unauthorized', 'Chữ ký bảo mật HMAC-SHA256 không hợp lệ.', array('status' => 401));
         }
     } else {
-        // Fallback: Kiểm tra API Key tĩnh kiểu cũ
+        // Fallback: Kiểm tra API Key tĩnh (qua Header x-api-key hoặc Authorization: Apikey <KEY>)
         if ( empty($expected_key) ) {
             return new WP_Error('missing_key', 'API Key SePay chưa được cấu hình trên website.', array('status' => 500));
         }
