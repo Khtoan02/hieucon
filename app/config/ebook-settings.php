@@ -73,6 +73,18 @@ function hieucon_ebook_register_cpts() {
 }
 add_action( 'init', 'hieucon_ebook_register_cpts' );
 
+/**
+ * Tự động flush rewrite rules một lần duy nhất khi khởi chạy hệ thống Ebook mới
+ * để tránh lỗi 404 hoặc lỗi chuyển hướng lặp lặp (ERR_TOO_MANY_REDIRECTS) trên host live.
+ */
+function hieucon_ebook_flush_rules_once() {
+    if ( ! get_option( 'hieucon_ebook_rules_flushed_v1' ) ) {
+        flush_rewrite_rules( false );
+        update_option( 'hieucon_ebook_rules_flushed_v1', '1' );
+    }
+}
+add_action( 'init', 'hieucon_ebook_flush_rules_once', 99 );
+
 // ============================================================
 // 2. ĐĂNG KÝ METABOX CẤU HÌNH EBOOK TRONG ADMIN
 // ============================================================
