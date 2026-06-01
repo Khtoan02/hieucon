@@ -1051,17 +1051,21 @@ function hieucon_handle_sepay_webhook(WP_REST_Request $request) {
         // Kích hoạt hook phụ để các module khác đón sự kiện giao dịch thô
         do_action('hieucon_sepay_transaction_received', $transaction_id, $data);
 
-        // Tự động sử dụng Regex quét tìm mã đơn hàng dự phòng nếu AI SePay không tự tách được
-        $payment_code = $data['code'];
-        if ( empty($payment_code) && ! empty($data['transaction_content']) ) {
-            // Định dạng mã đơn hàng: DH, TEST, hoặc VIP kèm ký tự liền nhau
+        // Luôn ưu tiên quét tìm mã đơn hàng đầy đủ từ nội dung giao dịch thô trước (ví dụ: DH156U1T2825)
+        // do AI SePay thường bị cắt ngắn nếu mã chứa ký tự chữ cái (ví dụ: chỉ giữ lại DH156)
+        $payment_code = '';
+        if ( ! empty($data['transaction_content']) ) {
             if ( preg_match('/(DH|TEST|VIP)[A-Za-z0-9]+/i', $data['transaction_content'], $matches) ) {
-                $payment_code = strtoupper($matches[0]); // Chuẩn hóa viết hoa
+                $payment_code = strtoupper(trim($matches[0])); // Lấy mã đầy đủ
             }
         }
 
+        // Nếu tự quét không thấy thì mới dùng mã do SePay tự động phân tách gửi về
+        if ( empty($payment_code) && ! empty($data['code']) ) {
+            $payment_code = strtoupper(trim($data['code']));
+        }
+
         if ( ! empty($payment_code) ) {
-            $payment_code = strtoupper(trim($payment_code)); // Chuẩn hóa luôn viết hoa và loại bỏ khoảng trắng
             hieucon_mark_order_paid($payment_code, $data);
         }
 
