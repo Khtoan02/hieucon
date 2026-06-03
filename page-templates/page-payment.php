@@ -32,7 +32,8 @@ $order_prefix  = 'DH';
 $product_param = 0;
 
 if ( $is_ebook && get_post( $ebook_id ) ) {
-    $total_amount  = floatval( get_post_meta( $ebook_id, '_ebook_price', true ) );
+    $price_details = hieucon_get_ebook_price_details( $ebook_id );
+    $total_amount  = floatval( $price_details['display_price'] );
     $product_title = get_the_title( $ebook_id );
     $order_prefix  = 'EB';
     $product_param = $ebook_id;

@@ -125,8 +125,10 @@ if ( $current_member ) {
             <!-- Expanded grid optimized for multiple books showcase -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10" id="ebook-grid">
                 <?php while ( have_posts() ) : the_post(); 
-                    $raw_price   = get_post_meta( get_the_ID(), '_ebook_price', true );
-                    $price       = ( $raw_price !== '' ) ? floatval( $raw_price ) : null;
+                    $price_details = hieucon_get_ebook_price_details( get_the_ID() );
+                    $price       = $price_details['display_price'];
+                    $orig_price  = $price_details['original_price'];
+                    $is_promo    = $price_details['is_promo_active'];
                     $ebook_pages = get_post_meta( get_the_ID(), '_ebook_pages', true );
                     $ebook_pages = ! empty( $ebook_pages ) ? intval( $ebook_pages ) : 0;
 
@@ -220,9 +222,16 @@ if ( $current_member ) {
                                     <?php elseif ( is_null( $price ) ) : ?>
                                         <span class="text-slate-500 font-bold text-xs md:text-sm">Chưa mở bán</span>
                                     <?php else : ?>
-                                        <span class="text-primary font-black text-[18px] md:text-[20px] leading-none">
-                                            <?php echo number_format( $price, 0, ',', '.' ); ?> <span class="text-[14px] font-bold">đ</span>
-                                        </span>
+                                        <div class="flex items-baseline flex-wrap gap-1">
+                                            <?php if ( $is_promo ) : ?>
+                                                <span class="text-slate-450 line-through text-[13px] font-medium mr-1">
+                                                    <?php echo number_format( $orig_price, 0, ',', '.' ); ?>đ
+                                                </span>
+                                            <?php endif; ?>
+                                            <span class="text-primary font-black text-[18px] md:text-[20px] leading-none">
+                                                <?php echo number_format( $price, 0, ',', '.' ); ?> <span class="text-[14px] font-bold">đ</span>
+                                            </span>
+                                        </div>
                                     <?php endif; ?>
                                 </div>
 

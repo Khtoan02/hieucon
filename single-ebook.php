@@ -10,9 +10,12 @@ get_header();
 $current_member = class_exists( '\Hieucon\Model\Member_Model' ) ? \Hieucon\Model\Member_Model::get_current_member() : false;
 $is_owned       = false;
 
-// Fetch Ebook custom metadata
-$raw_price   = get_post_meta( get_the_ID(), '_ebook_price', true );
-$price       = ( $raw_price !== '' ) ? floatval( $raw_price ) : null;
+// Fetch Ebook custom metadata & promo details
+$price_details  = hieucon_get_ebook_price_details( get_the_ID() );
+$price          = $price_details['display_price'];
+$orig_price     = $price_details['original_price'];
+$is_promo       = $price_details['is_promo_active'];
+
 $pdf_url     = get_post_meta( get_the_ID(), '_ebook_pdf_url', true );
 $ebook_pages = get_post_meta( get_the_ID(), '_ebook_pages', true );
 $sample_url  = get_post_meta( get_the_ID(), '_ebook_sample_url', true );
@@ -189,9 +192,29 @@ if ( ! $current_member ) {
                         <?php elseif ( is_null( $price ) ) : ?>
                             <span class="text-xl font-bold text-slate-500 bg-slate-50 px-5 py-2 rounded-2xl border border-slate-200 inline-block shadow-sm">Chưa cấu hình giá</span>
                         <?php else : ?>
-                            <div class="flex items-baseline justify-center gap-1">
-                                <span class="text-3xl font-black text-navy leading-none"><?php echo number_format( $price, 0, ',', '.' ); ?></span>
-                                <span class="text-base font-bold text-navy">đ</span>
+                            <div class="flex flex-col items-center justify-center gap-1">
+                                <?php if ( $is_promo ) : ?>
+                                    <span class="text-slate-400 line-through text-xs font-medium">
+                                        Giá gốc: <?php echo number_format( $orig_price, 0, ',', '.' ); ?>đ
+                                    </span>
+                                <?php endif; ?>
+                                <div class="flex items-baseline justify-center gap-1">
+                                    <span class="text-3xl font-black text-navy leading-none"><?php echo number_format( $price, 0, ',', '.' ); ?></span>
+                                    <span class="text-base font-bold text-navy">đ</span>
+                                </div>
+                                <?php if ( $is_promo ) : ?>
+                                    <span class="mt-1.5 px-2.5 py-0.5 rounded-full bg-orange-50 text-orange-600 border border-orange-100 text-[10px] font-bold uppercase tracking-wider">
+                                        <?php
+                                        if ( $price_details['promo_target'] === 'all' ) {
+                                            echo 'Ưu đãi Đặc biệt';
+                                        } elseif ( $price_details['promo_target'] === 'new' ) {
+                                            echo 'Ưu đãi Khách mới';
+                                        } elseif ( $price_details['promo_target'] === 'loyal' ) {
+                                            echo 'Ưu đãi Hội viên';
+                                        }
+                                        ?>
+                                    </span>
+                                <?php endif; ?>
                             </div>
                         <?php endif; ?>
                     </div>
