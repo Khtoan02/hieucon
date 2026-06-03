@@ -178,6 +178,11 @@ function hieucon_ebook_save_meta_boxes( $post_id ) {
         if ( isset( $_POST['ebook_sample_url'] ) ) {
             update_post_meta( $post_id, '_ebook_sample_url', sanitize_text_field( $_POST['ebook_sample_url'] ) );
         }
+
+        // Dọn dẹp trường khuyến mãi cũ (nếu có) để tránh dữ liệu rác trong database
+        delete_post_meta( $post_id, '_ebook_promo_enabled' );
+        delete_post_meta( $post_id, '_ebook_sale_price' );
+        delete_post_meta( $post_id, '_ebook_promo_target' );
     }
 }
 add_action( 'save_post', 'hieucon_ebook_save_meta_boxes' );
@@ -201,30 +206,33 @@ add_filter( 'manage_ebook_posts_columns', 'hieucon_ebook_columns' );
 
 function hieucon_ebook_column_content( $col, $post_id ) {
     if ( $col === 'ebook_price' ) {
-        $price         = get_post_meta( $post_id, '_ebook_price', true );
-        $promo_enabled = get_post_meta( $post_id, '_ebook_promo_enabled', true ) === 'yes';
-        $sale_price    = get_post_meta( $post_id, '_ebook_sale_price', true );
-        $promo_target  = get_post_meta( $post_id, '_ebook_promo_target', true );
+        $price_details = hieucon_get_ebook_price_details( $post_id );
+        $price         = $price_details['display_price'];
+        $orig_price    = $price_details['original_price'];
+        $is_promo      = $price_details['is_promo_active'];
         
-        if ( $price === '' ) {
+        if ( $orig_price === '' || is_null( $orig_price ) ) {
             echo '<span style="color:#9ca3af;">Chưa đặt giá</span>';
-        } elseif ( floatval( $price ) === 0.0 ) {
+        } elseif ( floatval( $orig_price ) === 0.0 ) {
             echo '<span style="color:#22c55e;font-weight:700;">Miễn phí</span>';
         } else {
-            $formatted_price = number_format( floatval( $price ), 0, ',', '.' ) . 'đ';
-            if ( $promo_enabled && $sale_price !== '' ) {
-                $formatted_sale = number_format( floatval( $sale_price ), 0, ',', '.' ) . 'đ';
+            $formatted_orig = number_format( floatval( $orig_price ), 0, ',', '.' ) . 'đ';
+            if ( $is_promo && ! is_null( $price ) ) {
+                $formatted_sale = number_format( floatval( $price ), 0, ',', '.' ) . 'đ';
                 $target_label = 'Mọi khách';
-                if ( $promo_target === 'new' ) {
+                if ( $price_details['promo_target'] === 'new' ) {
                     $target_label = 'Khách mới';
-                } elseif ( $promo_target === 'loyal' ) {
+                } elseif ( $price_details['promo_target'] === 'loyal' ) {
                     $target_label = 'Hội viên';
                 }
+                
+                $promo_badge = ! empty( $price_details['promo_title'] ) ? $price_details['promo_title'] : $target_label;
+                
                 echo '<strong style="color:#ef4444;">' . $formatted_sale . '</strong> ';
-                echo '<span style="text-decoration:line-through;color:#9ca3af;font-size:11px;">' . $formatted_price . '</span> ';
-                echo '<span style="font-size:10px;background:#fff7ed;color:#ea580c;border:1px solid #ffedd5;padding:1px 5px;border-radius:4px;font-weight:600;">' . $target_label . '</span>';
+                echo '<span style="text-decoration:line-through;color:#9ca3af;font-size:11px;">' . $formatted_orig . '</span> ';
+                echo '<span style="font-size:10px;background:#fff7ed;color:#ea580c;border:1px solid #ffedd5;padding:1px 5px;border-radius:4px;font-weight:600;" title="' . esc_attr( $price_details['promo_title'] ) . '">' . esc_html( $promo_badge ) . '</span>';
             } else {
-                echo '<strong>' . $formatted_price . '</strong>';
+                echo '<strong>' . $formatted_orig . '</strong>';
             }
         }
     }

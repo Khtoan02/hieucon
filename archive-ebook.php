@@ -28,8 +28,8 @@ if ( $current_member ) {
         }
         .lib-book-mockup {
             position: relative;
-            width: 175px;
-            height: 245px;
+            width: 220px;
+            height: 308px;
             transform-style: preserve-3d;
             transform: rotateY(-18deg) rotateX(3deg);
             transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.6s;
@@ -42,9 +42,9 @@ if ( $current_member ) {
         }
         .lib-book-spine {
             position: absolute;
-            width: 18px;
+            width: 20px;
             height: 100%;
-            left: -9px;
+            left: -10px;
             top: 0;
             background: linear-gradient(to right, rgba(0,0,0,0.35) 0%, rgba(255,255,255,0.15) 40%, rgba(0,0,0,0.15) 100%), #1e293b;
             transform: rotateY(-90deg);
@@ -53,9 +53,9 @@ if ( $current_member ) {
         }
         .lib-book-pages-side {
             position: absolute;
-            width: 14px;
+            width: 16px;
             height: 98%;
-            right: -7px;
+            right: -8px;
             top: 1%;
             background: linear-gradient(to right, #ffffff 0%, #f8fafc 60%, #e2e8f0 100%);
             transform: rotateY(90deg);
@@ -160,9 +160,9 @@ if ( $current_member ) {
                     <article class="ebook-card <?php echo esc_attr( $cat_class_str ); ?> bg-white/90 backdrop-blur-md rounded-[2.5rem] border border-white shadow-soft hover:shadow-elegant transition-all duration-500 overflow-hidden flex flex-col group p-6 relative">
                         
                         <!-- Top visual display: 3D Mockup standing directly on the card -->
-                        <div class="lib-book-container h-80 flex items-center justify-center relative select-none mb-6">
+                        <div class="lib-book-container h-96 flex items-center justify-center relative select-none mb-6">
                             <!-- Cozy warm amber background glow behind book cover -->
-                            <div class="absolute w-56 h-56 rounded-full bg-secondary/10 filter blur-3xl group-hover:scale-125 transition-transform duration-700 pointer-events-none"></div>
+                            <div class="absolute w-72 h-72 rounded-full bg-secondary/10 filter blur-3xl group-hover:scale-125 transition-transform duration-700 pointer-events-none"></div>
                             
                             <!-- 3D Mockup cover -->
                             <div class="lib-book-mockup bg-slate-200">
