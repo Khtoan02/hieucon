@@ -63,6 +63,28 @@ if ( $current_member ) {
             box-shadow: inset 0px 0px 4px rgba(0,0,0,0.15);
             border-radius: 0 4px 4px 0;
         }
+        @keyframes fadeInScale {
+            0% {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        .animate-fade-in-scale {
+            animation: fadeInScale 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        .filter-btn {
+            cursor: pointer;
+        }
+        .filter-btn.active {
+            background-color: #0d9488 !important; /* bg-primary */
+            color: #ffffff !important;
+            border-color: #0d9488 !important;
+            box-shadow: 0 4px 14px rgba(13, 148, 136, 0.25) !important;
+        }
     </style>
 
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -74,9 +96,34 @@ if ( $current_member ) {
             <div class="w-16 h-1 bg-primary mx-auto mt-6 rounded-full"></div>
         </div>
 
+        <?php
+        // Fetch all categories under ebook_cat
+        $ebook_terms = get_terms( [
+            'taxonomy'   => 'ebook_cat',
+            'hide_empty' => true,
+        ] );
+        ?>
+
+        <?php if ( ! empty( $ebook_terms ) && ! is_wp_error( $ebook_terms ) ) : ?>
+            <div class="flex flex-wrap items-center justify-center gap-3 mb-12" id="ebook-filters">
+                <button type="button" 
+                        data-filter="all" 
+                        class="filter-btn active px-6 py-2.5 rounded-full text-xs font-bold transition-all shadow-sm border border-slate-200/60 bg-white text-navy/80 hover:border-primary hover:text-primary">
+                    Tất cả
+                </button>
+                <?php foreach ( $ebook_terms as $term ) : ?>
+                    <button type="button" 
+                            data-filter="cat-<?php echo esc_attr( $term->slug ); ?>" 
+                            class="filter-btn px-6 py-2.5 rounded-full text-xs font-bold transition-all shadow-sm border border-slate-200/60 bg-white text-navy/80 hover:border-primary hover:text-primary">
+                        <?php echo esc_html( $term->name ); ?>
+                    </button>
+                <?php endforeach; ?>
+            </div>
+        <?php endif; ?>
+
         <?php if ( have_posts() ) : ?>
-            <!-- Center-aligned grid optimized for 2 books showcase -->
-            <div class="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 justify-center">
+            <!-- Expanded grid optimized for multiple books showcase -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10" id="ebook-grid">
                 <?php while ( have_posts() ) : the_post(); 
                     $raw_price   = get_post_meta( get_the_ID(), '_ebook_price', true );
                     $price       = ( $raw_price !== '' ) ? floatval( $raw_price ) : null;
@@ -99,11 +146,16 @@ if ( $current_member ) {
                     // Ebook category
                     $categories = get_the_terms( get_the_ID(), 'ebook_cat' );
                     $cat_label  = 'Ebook';
+                    $cat_classes = [];
                     if ( ! empty( $categories ) && ! is_wp_error( $categories ) ) {
                         $cat_label = $categories[0]->name;
+                        foreach ( $categories as $cat ) {
+                            $cat_classes[] = 'cat-' . $cat->slug;
+                        }
                     }
+                    $cat_class_str = implode( ' ', $cat_classes );
                 ?>
-                    <article class="bg-white/90 backdrop-blur-md rounded-[2.5rem] border border-white shadow-soft hover:shadow-elegant transition-all duration-500 overflow-hidden flex flex-col group p-6 relative">
+                    <article class="ebook-card <?php echo esc_attr( $cat_class_str ); ?> bg-white/90 backdrop-blur-md rounded-[2.5rem] border border-white shadow-soft hover:shadow-elegant transition-all duration-500 overflow-hidden flex flex-col group p-6 relative">
                         
                         <!-- Top visual display: 3D Mockup standing directly on the card -->
                         <div class="lib-book-container h-80 flex items-center justify-center relative select-none mb-6">
@@ -226,6 +278,42 @@ if ( $current_member ) {
     document.addEventListener('DOMContentLoaded', function() {
         if (typeof lucide !== 'undefined') {
             lucide.createIcons();
+        }
+
+        // Category filter logic
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const ebookCards = document.querySelectorAll('.ebook-card');
+
+        if (filterButtons.length > 0 && ebookCards.length > 0) {
+            filterButtons.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    // Update active button state
+                    filterButtons.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+
+                    const filterValue = this.getAttribute('data-filter');
+
+                    ebookCards.forEach(card => {
+                        // Reset animation
+                        card.style.animation = 'none';
+                        card.offsetHeight; // trigger reflow
+                        card.style.animation = null;
+
+                        if (filterValue === 'all') {
+                            card.classList.remove('hidden');
+                            card.classList.add('animate-fade-in-scale');
+                        } else {
+                            if (card.classList.contains(filterValue)) {
+                                card.classList.remove('hidden');
+                                card.classList.add('animate-fade-in-scale');
+                            } else {
+                                card.classList.add('hidden');
+                                card.classList.remove('animate-fade-in-scale');
+                            }
+                        }
+                    });
+                });
+            });
         }
     });
 </script>
