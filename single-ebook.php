@@ -320,7 +320,19 @@ if ( ! $current_member ) {
                             
                             <h3 class="text-xl font-serif font-bold text-navy mb-4">Giới thiệu tóm tắt sách</h3>
                             <div class="editorial-content">
-                                <?php the_content(); ?>
+                                <?php
+                                $content = get_the_content();
+                                $parsedown_path = get_template_directory() . '/app/Parsedown.php';
+                                if ( file_exists( $parsedown_path ) ) {
+                                    if ( ! class_exists( 'Parsedown' ) ) {
+                                        require_once $parsedown_path;
+                                    }
+                                    $parsedown = new Parsedown();
+                                    echo do_shortcode( $parsedown->text( $content ) );
+                                } else {
+                                    the_content();
+                                }
+                                ?>
                             </div>
                         </div>
                     </div>
