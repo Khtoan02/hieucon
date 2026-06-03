@@ -205,12 +205,16 @@ if ( ! $current_member ) {
                                 <?php if ( $is_promo ) : ?>
                                     <span class="mt-1.5 px-2.5 py-0.5 rounded-full bg-orange-50 text-orange-600 border border-orange-100 text-[10px] font-bold uppercase tracking-wider">
                                         <?php
-                                        if ( $price_details['promo_target'] === 'all' ) {
-                                            echo 'Ưu đãi Đặc biệt';
-                                        } elseif ( $price_details['promo_target'] === 'new' ) {
-                                            echo 'Ưu đãi Khách mới';
-                                        } elseif ( $price_details['promo_target'] === 'loyal' ) {
-                                            echo 'Ưu đãi Hội viên';
+                                        if ( ! empty( $price_details['promo_title'] ) ) {
+                                            echo esc_html( $price_details['promo_title'] );
+                                        } else {
+                                            if ( $price_details['promo_target'] === 'all' ) {
+                                                echo 'Ưu đãi Đặc biệt';
+                                            } elseif ( $price_details['promo_target'] === 'new' ) {
+                                                echo 'Ưu đãi Khách mới';
+                                            } elseif ( $price_details['promo_target'] === 'loyal' ) {
+                                                echo 'Ưu đãi Hội viên';
+                                            }
                                         }
                                         ?>
                                     </span>

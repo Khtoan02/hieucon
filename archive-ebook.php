@@ -194,6 +194,23 @@ if ( $current_member ) {
                                     <span class="px-2.5 py-0.5 rounded-full bg-slate-100 border border-slate-200/50 text-[10px] font-extrabold text-slate-500 uppercase tracking-wider">
                                         <?php echo esc_html( $cat_label ); ?>
                                     </span>
+                                    <?php if ( $is_promo ) : ?>
+                                        <span class="px-2.5 py-0.5 rounded-full bg-orange-50 border border-orange-100 text-[10px] font-bold text-orange-600 uppercase tracking-wider">
+                                            <?php
+                                            if ( ! empty( $price_details['promo_title'] ) ) {
+                                                echo esc_html( $price_details['promo_title'] );
+                                            } else {
+                                                if ( $price_details['promo_target'] === 'all' ) {
+                                                    echo 'Khuyến mãi';
+                                                } elseif ( $price_details['promo_target'] === 'new' ) {
+                                                    echo 'Khách mới';
+                                                } elseif ( $price_details['promo_target'] === 'loyal' ) {
+                                                    echo 'Hội viên';
+                                                }
+                                            }
+                                            ?>
+                                        </span>
+                                    <?php endif; ?>
                                     <span class="inline-flex items-center gap-1 text-[11px] font-bold text-slate-400">
                                         <span class="w-1 h-1 rounded-full bg-slate-300"></span>
                                         <i data-lucide="file-text" class="w-3.5 h-3.5 text-slate-400"></i>

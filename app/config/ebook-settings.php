@@ -107,44 +107,12 @@ function hieucon_ebook_metabox_html( $post ) {
     $pdf_url       = get_post_meta( $post->ID, '_ebook_pdf_url', true );
     $pages         = get_post_meta( $post->ID, '_ebook_pages', true );
     $sample_url    = get_post_meta( $post->ID, '_ebook_sample_url', true );
-    
-    $promo_enabled = get_post_meta( $post->ID, '_ebook_promo_enabled', true ) === 'yes';
-    $sale_price    = get_post_meta( $post->ID, '_ebook_sale_price', true );
-    $promo_target  = get_post_meta( $post->ID, '_ebook_promo_target', true );
-    if ( empty( $promo_target ) ) {
-        $promo_target = 'all';
-    }
     ?>
     <table class="form-table">
         <tr>
             <th><label for="ebook_price">Giá bán thường (VND)</label></th>
             <td>
                 <input type="number" id="ebook_price" name="ebook_price" value="<?php echo esc_attr( $price ); ?>" class="regular-text" placeholder="Ví dụ: 200000. Để trống hoặc 0 nếu Miễn phí.">
-            </td>
-        </tr>
-        <tr>
-            <th><label for="ebook_promo_enabled">Khuyến mãi</label></th>
-            <td>
-                <label>
-                    <input type="checkbox" id="ebook_promo_enabled" name="ebook_promo_enabled" value="yes" <?php checked( $promo_enabled ); ?>>
-                    Kích hoạt chương trình khuyến mãi cho Ebook này
-                </label>
-            </td>
-        </tr>
-        <tr>
-            <th><label for="ebook_sale_price">Giá khuyến mãi (VND)</label></th>
-            <td>
-                <input type="number" id="ebook_sale_price" name="ebook_sale_price" value="<?php echo esc_attr( $sale_price ); ?>" class="regular-text" placeholder="Ví dụ: 150000. Để trống nếu không khuyến mãi.">
-            </td>
-        </tr>
-        <tr>
-            <th><label for="ebook_promo_target">Đối tượng áp dụng KM</label></th>
-            <td>
-                <select id="ebook_promo_target" name="ebook_promo_target" class="regular-text">
-                    <option value="all" <?php selected( $promo_target, 'all' ); ?>>Tất cả khách hàng</option>
-                    <option value="new" <?php selected( $promo_target, 'new' ); ?>>Khách hàng mới (chưa từng mua khóa học/ebook)</option>
-                    <option value="loyal" <?php selected( $promo_target, 'loyal' ); ?>>Khách hàng thân thiết (đã sở hữu ít nhất 1 khóa học/ebook)</option>
-                </select>
             </td>
         </tr>
         <tr>
@@ -209,23 +177,6 @@ function hieucon_ebook_save_meta_boxes( $post_id ) {
         }
         if ( isset( $_POST['ebook_sample_url'] ) ) {
             update_post_meta( $post_id, '_ebook_sample_url', sanitize_text_field( $_POST['ebook_sample_url'] ) );
-        }
-
-        // Save promotional campaign fields
-        $promo_enabled_val = isset( $_POST['ebook_promo_enabled'] ) ? 'yes' : 'no';
-        update_post_meta( $post_id, '_ebook_promo_enabled', $promo_enabled_val );
-
-        if ( isset( $_POST['ebook_sale_price'] ) ) {
-            $sale_price_val = $_POST['ebook_sale_price'];
-            if ( $sale_price_val === '' ) {
-                update_post_meta( $post_id, '_ebook_sale_price', '' );
-            } else {
-                update_post_meta( $post_id, '_ebook_sale_price', floatval( $sale_price_val ) );
-            }
-        }
-
-        if ( isset( $_POST['ebook_promo_target'] ) ) {
-            update_post_meta( $post_id, '_ebook_promo_target', sanitize_key( $_POST['ebook_promo_target'] ) );
         }
     }
 }
@@ -360,43 +311,94 @@ function hieucon_get_ebook_price_details( $ebook_id ) {
     $raw_price      = get_post_meta( $ebook_id, '_ebook_price', true );
     $original_price = ( $raw_price !== '' ) ? floatval( $raw_price ) : null;
 
-    $promo_enabled  = get_post_meta( $ebook_id, '_ebook_promo_enabled', true ) === 'yes';
-    $raw_sale_price = get_post_meta( $ebook_id, '_ebook_sale_price', true );
-    $sale_price     = ( $raw_sale_price !== '' ) ? floatval( $raw_sale_price ) : null;
-    $promo_target   = get_post_meta( $ebook_id, '_ebook_promo_target', true );
-    if ( empty( $promo_target ) ) {
-        $promo_target = 'all';
+    $display_price   = $original_price;
+    $is_promo_active = false;
+    $applied_promo_title = '';
+    $applied_promo_target = 'all';
+
+    // Nếu Ebook chưa cấu hình giá thường hoặc là miễn phí, không áp dụng khuyến mãi
+    if ( is_null( $original_price ) || $original_price === 0.0 ) {
+        return [
+            'original_price'  => $original_price,
+            'display_price'   => $display_price,
+            'is_promo_active' => $is_promo_active,
+            'promo_title'     => $applied_promo_title,
+            'promo_target'    => $applied_promo_target,
+        ];
     }
 
-    $is_promo_active = false;
-    $display_price   = $original_price;
+    // Truy vấn tất cả các chiến dịch khuyến mãi đang hoạt động
+    $campaigns = get_posts( [
+        'post_type'      => 'promo_campaign',
+        'posts_per_page' => -1,
+        'post_status'    => 'publish',
+        'meta_query'     => [
+            [
+                'key'     => '_promo_active',
+                'value'   => 'yes',
+                'compare' => '='
+            ]
+        ]
+    ] );
 
-    if ( $promo_enabled && ! is_null( $sale_price ) && ! is_null( $original_price ) ) {
-        // Kiểm tra đối tượng áp dụng
+    if ( ! empty( $campaigns ) ) {
         $current_member = class_exists( '\Hieucon\Model\Member_Model' ) ? \Hieucon\Model\Member_Model::get_current_member() : false;
-        
-        if ( $promo_target === 'all' ) {
-            $is_promo_active = true;
-        } elseif ( $promo_target === 'new' ) {
-            if ( ! $current_member || ! hieucon_is_member_loyal_customer( $current_member->id ) ) {
-                $is_promo_active = true;
+        $lowest_price   = $original_price;
+
+        foreach ( $campaigns as $campaign ) {
+            $applied_ebooks = get_post_meta( $campaign->ID, '_promo_applied_ebooks', true );
+            if ( ! is_array( $applied_ebooks ) ) {
+                $applied_ebooks = [];
             }
-        } elseif ( $promo_target === 'loyal' ) {
-            if ( $current_member && hieucon_is_member_loyal_customer( $current_member->id ) ) {
-                $is_promo_active = true;
+
+            // Kiểm tra Ebook này có thuộc chiến dịch không
+            if ( in_array( $ebook_id, $applied_ebooks ) ) {
+                $promo_target   = get_post_meta( $campaign->ID, '_promo_target', true );
+                $discount_type  = get_post_meta( $campaign->ID, '_promo_discount_type', true );
+                $discount_value = floatval( get_post_meta( $campaign->ID, '_promo_discount_value', true ) );
+
+                $is_eligible = false;
+                if ( $promo_target === 'all' ) {
+                    $is_eligible = true;
+                } elseif ( $promo_target === 'new' ) {
+                    if ( ! $current_member || ! hieucon_is_member_loyal_customer( $current_member->id ) ) {
+                        $is_eligible = true;
+                    }
+                } elseif ( $promo_target === 'loyal' ) {
+                    if ( $current_member && hieucon_is_member_loyal_customer( $current_member->id ) ) {
+                        $is_eligible = true;
+                    }
+                }
+
+                if ( $is_eligible ) {
+                    $temp_price = $original_price;
+                    if ( $discount_type === 'percent' ) {
+                        $temp_price = $original_price * ( 1 - $discount_value / 100 );
+                    } elseif ( $discount_type === 'fixed' ) {
+                        $temp_price = $original_price - $discount_value;
+                    }
+                    
+                    $temp_price = max( 0.0, $temp_price );
+
+                    // Tìm mức giá ưu đãi nhất (thấp nhất) cho khách hàng
+                    if ( $temp_price < $lowest_price ) {
+                        $lowest_price         = $temp_price;
+                        $is_promo_active      = true;
+                        $applied_promo_title  = $campaign->post_title;
+                        $applied_promo_target = $promo_target;
+                    }
+                }
             }
         }
 
-        if ( $is_promo_active ) {
-            $display_price = $sale_price;
-        }
+        $display_price = $lowest_price;
     }
 
     return [
         'original_price'  => $original_price,
         'display_price'   => $display_price,
         'is_promo_active' => $is_promo_active,
-        'promo_target'    => $promo_target,
-        'sale_price'      => $sale_price,
+        'promo_title'     => $applied_promo_title,
+        'promo_target'    => $applied_promo_target,
     ];
 }
