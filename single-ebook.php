@@ -133,6 +133,32 @@ if ( ! $current_member ) {
         .animate-pulse-slow {
             animation: pulse 2.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
         }
+
+        /* Style list tags inside eBook summary content since Tailwind CSS resets list styles by default */
+        .editorial-content ul {
+            list-style-type: disc !important;
+            margin-left: 1.5rem !important;
+            margin-top: 1rem !important;
+            margin-bottom: 1rem !important;
+            padding-left: 0.5rem !important;
+        }
+        .editorial-content ol {
+            list-style-type: decimal !important;
+            margin-left: 1.5rem !important;
+            margin-top: 1rem !important;
+            margin-bottom: 1rem !important;
+            padding-left: 0.5rem !important;
+        }
+        .editorial-content li {
+            margin-bottom: 0.5rem !important;
+            display: list-item !important;
+        }
+        .editorial-content p {
+            margin-bottom: 1.25rem !important;
+        }
+        .editorial-content strong {
+            font-weight: 700 !important;
+        }
     </style>
 
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
