@@ -6,7 +6,7 @@
  */
 ?>
     <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Nunito:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
-    <footer id="colophon" class="bg-gradient-to-b from-[#0A1931] to-[#0A1121] text-white pt-20 pb-8 mt-12 relative overflow-hidden [font-family:'Nunito',_sans-serif]">
+    <footer id="colophon" class="bg-gradient-to-b from-[#0A1931] to-[#0A1121] text-white pt-20 pb-8 relative overflow-hidden [font-family:'Nunito',_sans-serif]">
         <!-- Đồ họa trang trí (Decorative background) -->
         <i data-lucide="heart-handshake" class="absolute -right-20 -bottom-20 w-96 h-96 text-white/[0.03] rotate-[-15deg] pointer-events-none"></i>
         <i data-lucide="dna" class="absolute -left-10 top-20 w-64 h-64 text-white/[0.02] rotate-[30deg] pointer-events-none"></i>
