@@ -13,10 +13,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 // 1. ĐĂNG KÝ CPT EBOOK & TAXONOMY EBOOK_CAT
 // ============================================================
 function hieucon_ebook_register_cpts() {
-    // A. Đăng ký Taxonomy: Danh mục Ebook (ebook_cat)
+    // A. Đăng ký Taxonomy: Danh mục Tài liệu (ebook_cat)
     $cat_labels = [
-        'name'              => 'Danh mục Ebook',
-        'singular_name'     => 'Danh mục Ebook',
+        'name'              => 'Danh mục Tài liệu',
+        'singular_name'     => 'Danh mục Tài liệu',
         'search_items'      => 'Tìm danh mục',
         'all_items'         => 'Tất cả danh mục',
         'parent_item'       => 'Danh mục cha',
@@ -25,7 +25,7 @@ function hieucon_ebook_register_cpts() {
         'update_item'       => 'Cập nhật danh mục',
         'add_new_item'      => 'Thêm danh mục mới',
         'new_item_name'     => 'Tên danh mục mới',
-        'menu_name'         => 'Danh mục Ebook',
+        'menu_name'         => 'Danh mục Tài liệu',
     ];
 
     register_taxonomy( 'ebook_cat', [ 'ebook' ], [
@@ -34,25 +34,25 @@ function hieucon_ebook_register_cpts() {
         'show_ui'           => true,
         'show_admin_column' => true,
         'query_var'         => true,
-        'rewrite'           => [ 'slug' => 'ebook-category' ],
+        'rewrite'           => [ 'slug' => 'docs-category' ],
     ] );
 
-    // B. Đăng ký CPT: Ebook (ebook)
+    // B. Đăng ký CPT: Ebook (ebook) - Thay đổi nhãn thành Tài liệu bồi dưỡng
     $ebook_labels = [
-        'name'               => 'Ebook',
-        'singular_name'      => 'Ebook',
-        'menu_name'          => 'Ebooks & Tài liệu',
-        'name_admin_bar'     => 'Ebook',
-        'add_new'            => 'Thêm Ebook mới',
-        'add_new_item'       => 'Thêm Ebook mới',
-        'new_item'           => 'Ebook mới',
-        'edit_item'          => 'Sửa Ebook',
-        'view_item'          => 'Xem Ebook',
-        'all_items'          => 'Tất cả Ebook',
-        'search_items'       => 'Tìm Ebook',
-        'parent_item_colon'  => 'Ebook cha:',
-        'not_found'          => 'Không tìm thấy Ebook nào.',
-        'not_found_in_trash' => 'Không tìm thấy Ebook nào trong thùng rác.'
+        'name'               => 'Tài liệu bồi dưỡng',
+        'singular_name'      => 'Tài liệu bồi dưỡng',
+        'menu_name'          => 'Tài liệu bồi dưỡng',
+        'name_admin_bar'     => 'Tài liệu bồi dưỡng',
+        'add_new'            => 'Thêm Tài liệu mới',
+        'add_new_item'       => 'Thêm Tài liệu mới',
+        'new_item'           => 'Tài liệu mới',
+        'edit_item'          => 'Sửa Tài liệu',
+        'view_item'          => 'Xem Tài liệu',
+        'all_items'          => 'Tất cả Tài liệu',
+        'search_items'       => 'Tìm Tài liệu',
+        'parent_item_colon'  => 'Tài liệu cha:',
+        'not_found'          => 'Không tìm thấy tài liệu nào.',
+        'not_found_in_trash' => 'Không tìm thấy tài liệu nào trong thùng rác.'
     ];
 
     register_post_type( 'ebook', [
@@ -62,7 +62,7 @@ function hieucon_ebook_register_cpts() {
         'show_ui'            => true,
         'show_in_menu'       => true,
         'query_var'          => true,
-        'rewrite'            => [ 'slug' => 'ebooks' ],
+        'rewrite'            => [ 'slug' => 'docs' ],
         'capability_type'    => 'post',
         'has_archive'        => true,
         'hierarchical'       => false,
@@ -78,9 +78,9 @@ add_action( 'init', 'hieucon_ebook_register_cpts' );
  * để tránh lỗi 404 hoặc lỗi chuyển hướng lặp lặp (ERR_TOO_MANY_REDIRECTS) trên host live.
  */
 function hieucon_ebook_flush_rules_once() {
-    if ( ! get_option( 'hieucon_ebook_rules_flushed_v1' ) ) {
+    if ( ! get_option( 'hieucon_ebook_rules_flushed_v2' ) ) {
         flush_rewrite_rules( false );
-        update_option( 'hieucon_ebook_rules_flushed_v1', '1' );
+        update_option( 'hieucon_ebook_rules_flushed_v2', '1' );
     }
 }
 add_action( 'init', 'hieucon_ebook_flush_rules_once', 99 );
@@ -91,7 +91,7 @@ add_action( 'init', 'hieucon_ebook_flush_rules_once', 99 );
 function hieucon_ebook_add_meta_boxes() {
     add_meta_box(
         'hieucon_ebook_settings',
-        'Cấu hình Ebook & Tài liệu',
+        'Cấu hình Tài liệu bồi dưỡng',
         'hieucon_ebook_metabox_html',
         'ebook',
         'normal',

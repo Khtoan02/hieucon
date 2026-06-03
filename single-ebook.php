@@ -168,7 +168,7 @@ if ( ! $current_member ) {
             <ol class="inline-flex items-center space-x-1 md:space-x-2">
                 <li class="inline-flex items-center">
                     <a href="<?php echo esc_url( get_post_type_archive_link( 'ebook' ) ); ?>" class="hover:text-primary text-navy/70 transition-colors flex items-center gap-2 bg-white/70 backdrop-blur-md px-4 py-2 rounded-full border border-white/80 shadow-soft">
-                        <i data-lucide="book-open" class="w-4 h-4 text-primary"></i> Tủ sách Ebook
+                        <i data-lucide="book-open" class="w-4 h-4 text-primary"></i> Thư viện Tài liệu
                     </a>
                 </li>
                 <li class="flex items-center">
@@ -284,7 +284,7 @@ if ( ! $current_member ) {
                         <?php else : ?>
                             <?php if ( ! is_null( $price ) ) : ?>
                                 <a href="<?php echo esc_url( $purchase_url ); ?>" class="w-full py-4 bg-primary hover:bg-secondary text-white rounded-2xl font-bold text-sm shadow-[0_4px_20px_rgba(13,148,136,0.15)] hover:scale-[1.02] transform transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer border-0">
-                                    Mua Ebook Ngay <i data-lucide="credit-card" class="w-4 h-4"></i>
+                                    Mua Tài Liệu Ngay <i data-lucide="credit-card" class="w-4 h-4"></i>
                                 </a>
                             <?php else : ?>
                                 <button disabled class="w-full py-4 bg-slate-200 text-slate-400 rounded-2xl font-bold text-sm cursor-not-allowed border-0">
@@ -294,7 +294,7 @@ if ( ! $current_member ) {
                             
                             <?php if ( ! empty( $sample_url ) ) : ?>
                                 <a href="<?php echo esc_url( $sample_url ); ?>" target="_blank" class="w-full py-3 bg-white hover:bg-slate-50 text-slate-700 rounded-2xl font-bold text-xs border border-slate-200 shadow-sm flex items-center justify-center gap-2 transition-all">
-                                    Đọc Thử Sách <i data-lucide="eye" class="w-4 h-4"></i>
+                                    Đọc Thử Tài Liệu <i data-lucide="eye" class="w-4 h-4"></i>
                                 </a>
                             <?php endif; ?>
                         <?php endif; ?>
@@ -320,7 +320,7 @@ if ( ! $current_member ) {
                         <div class="flex flex-wrap gap-y-3 gap-x-6 items-center text-slate-500 text-xs md:text-sm font-semibold mb-8 pb-6 border-b border-slate-100">
                             <div class="flex items-center gap-1.5">
                                 <i data-lucide="book-open" class="w-4.5 h-4.5 text-primary"></i>
-                                <span>Thể loại: Ebook PDF</span>
+                                <span>Thể loại: Tài liệu PDF</span>
                             </div>
                             <span class="w-1 h-1 bg-slate-300 rounded-full"></span>
                             <div class="flex items-center gap-1.5">
@@ -344,7 +344,7 @@ if ( ! $current_member ) {
                                 </div>
                             <?php endif; ?>
                             
-                            <h3 class="text-xl font-serif font-bold text-navy mb-4">Giới thiệu tóm tắt sách</h3>
+                            <h3 class="text-xl font-serif font-bold text-navy mb-4">Giới thiệu tóm tắt tài liệu</h3>
                             <div class="editorial-content">
                                 <?php
                                 $content = get_the_content();
@@ -389,7 +389,7 @@ if ( ! $current_member ) {
         <!-- DISCUSSION & QA SECTION (Copied & adapted from single-course.php for maximum premium functionality) -->
         <div class="bg-white/85 backdrop-blur-xl border border-white/80 p-6 md:p-8 rounded-[2.5rem] shadow-soft hover:shadow-elegant transition-all duration-500 animate-fadeIn mt-8">
             <h3 class="text-xl font-serif font-bold text-navy mb-6 flex items-center gap-2">
-                <i data-lucide="messages-square" class="w-5 h-5 text-primary"></i> Thảo luận & Hỏi đáp Ebook
+                <i data-lucide="messages-square" class="w-5 h-5 text-primary"></i> Thảo luận & Hỏi đáp Tài liệu
             </h3>
 
             <!-- Comments list mount area -->
@@ -409,14 +409,14 @@ if ( ! $current_member ) {
                 </h4>
                 <?php if ( ! $current_member ) : ?>
                     <div class="p-5 bg-slate-50 border border-slate-150 rounded-2xl text-center select-none shadow-soft">
-                        <p class="text-xs text-slate-500 font-semibold mb-3">Vui lòng đăng nhập để gửi thắc mắc hoặc bình luận cảm nhận về cuốn sách này.</p>
+                        <p class="text-xs text-slate-500 font-semibold mb-3">Vui lòng đăng nhập để gửi thắc mắc hoặc bình luận cảm nhận về tài liệu này.</p>
                         <a href="<?php echo esc_url( home_url( '/dang-nhap/?redirect_to=' . urlencode( get_permalink() ) ) ); ?>" class="inline-flex items-center gap-2 px-5 py-2.5 bg-navy hover:bg-secondary text-white text-xs font-bold rounded-xl transition-all shadow-md hover:scale-102 transform duration-200">
                             Đăng nhập ngay <i data-lucide="log-in" class="w-4 h-4"></i>
                         </a>
                     </div>
                 <?php else : ?>
                     <form id="ajax-comment-form" onsubmit="submitAjaxComment(event)" class="space-y-4">
-                        <textarea id="comment-textarea" name="comment" required rows="3" class="w-full px-4 py-3 rounded-2xl border border-slate-200 bg-white focus:bg-white transition-all text-xs text-slate-800 placeholder-slate-400 resize-none font-semibold shadow-soft" placeholder="Hãy để lại ý kiến hoặc thảo luận về nội dung cuốn sách..."></textarea>
+                        <textarea id="comment-textarea" name="comment" required rows="3" class="w-full px-4 py-3 rounded-2xl border border-slate-200 bg-white focus:bg-white transition-all text-xs text-slate-800 placeholder-slate-400 resize-none font-semibold shadow-soft" placeholder="Hãy để lại ý kiến hoặc thảo luận về nội dung tài liệu..."></textarea>
                         <input type="hidden" name="comment_post_ID" value="<?php echo get_the_ID(); ?>" id="comment_post_ID">
                         <input type="hidden" name="comment_parent" id="ajax_comment_parent" value="0">
                         <?php wp_nonce_field( 'hieucon_comment_nonce', 'comment_nonce' ); ?>

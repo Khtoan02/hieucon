@@ -90,7 +90,7 @@ $account_nonce     = wp_create_nonce( 'hieucon_account_nonce' );
                     <i data-lucide="ticket" class="w-4 h-4"></i> Kích hoạt khóa học
                 </button>
                 <button type="button" onclick="switchAccountTab('ebooks')" id="menu-ebooks-btn" class="w-full text-left px-5 py-3.5 rounded-2xl text-sm font-bold transition-all text-navy/60 hover:text-navy hover:bg-white/50 flex items-center gap-2">
-                    <i data-lucide="book-open" class="w-4 h-4"></i> Ebook của tôi
+                    <i data-lucide="book-open" class="w-4 h-4"></i> Tài liệu của tôi
                 </button>
             </div>
 
@@ -329,7 +329,7 @@ $account_nonce     = wp_create_nonce( 'hieucon_account_nonce' );
 
                 <!-- ================= TAB 5: EBOOK CỦA TÔI ================= -->
                 <div id="tab-ebooks-view" class="hidden transition-opacity duration-300">
-                    <h2 class="text-lg font-serif font-bold text-navy mb-6 pb-2 border-b border-slate-100">Ebook & Tài liệu của tôi</h2>
+                    <h2 class="text-lg font-serif font-bold text-navy mb-6 pb-2 border-b border-slate-100">Tài liệu bồi dưỡng của tôi</h2>
                     
                     <?php
                     $enrolled_ebook_ids = hieucon_get_member_enrolled_ebooks( $current_member->id );
@@ -345,9 +345,9 @@ $account_nonce     = wp_create_nonce( 'hieucon_account_nonce' );
                             <div class="w-16 h-16 bg-slate-50 text-slate-450 rounded-full flex items-center justify-center mx-auto mb-4 border border-slate-100">
                                 <i data-lucide="book-open" class="w-8 h-8 text-slate-400"></i>
                             </div>
-                            <p class="text-slate-550 font-medium mb-6 text-sm">Bạn chưa sở hữu Ebook nào trên hệ thống.</p>
+                            <p class="text-slate-550 font-medium mb-6 text-sm">Bạn chưa sở hữu tài liệu nào trên hệ thống.</p>
                             <a href="<?php echo esc_url( get_post_type_archive_link( 'ebook' ) ); ?>" class="inline-flex items-center gap-2 px-6 py-3.5 bg-navy hover:bg-navy/90 text-white rounded-xl font-bold text-xs shadow-md transition-colors">
-                                Khám phá tủ sách Ebook <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                                Khám phá thư viện tài liệu <i data-lucide="arrow-right" class="w-4 h-4"></i>
                             </a>
                         </div>
                         <?php
@@ -409,7 +409,7 @@ $account_nonce     = wp_create_nonce( 'hieucon_account_nonce' );
                                                 </a>
                                             <?php else : ?>
                                                 <a href="<?php echo esc_url( $read_url ); ?>" class="w-full py-3 bg-amber-500 hover:bg-amber-600 text-white rounded-xl font-bold text-xs transition-colors flex items-center justify-center gap-1.5 border-0">
-                                                    Xem Chi Tiết Ebook <i data-lucide="book-open" class="w-4 h-4"></i>
+                                                    Xem Chi Tiết Tài Liệu <i data-lucide="book-open" class="w-4 h-4"></i>
                                                 </a>
                                             <?php endif; ?>
                                         </div>
@@ -420,7 +420,7 @@ $account_nonce     = wp_create_nonce( 'hieucon_account_nonce' );
                         } else {
                             ?>
                             <div class="text-center py-12 text-slate-500 text-sm">
-                                Chưa có Ebook nào được tìm thấy trên tài khoản của bạn.
+                                Chưa có tài liệu nào được tìm thấy trên tài khoản của bạn.
                             </div>
                             <?php
                         }

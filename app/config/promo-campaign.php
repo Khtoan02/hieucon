@@ -126,7 +126,7 @@ function hieucon_promo_campaign_metabox_html( $post ) {
             </td>
         </tr>
         <tr>
-            <th>Ebook áp dụng</th>
+            <th>Tài liệu áp dụng</th>
             <td>
                 <?php if ( ! empty( $ebooks ) ) : ?>
                     <div style="max-height: 250px; overflow-y: auto; border: 1px solid #ccd0d4; padding: 10px; background: #fff; border-radius: 4px;">
@@ -137,9 +137,9 @@ function hieucon_promo_campaign_metabox_html( $post ) {
                             </label>
                         <?php endforeach; ?>
                     </div>
-                    <p class="description">Tích chọn các Ebook & Tài liệu được áp dụng chương trình khuyến mãi này.</p>
+                    <p class="description">Tích chọn các Tài liệu bồi dưỡng được áp dụng chương trình khuyến mãi này.</p>
                 <?php else : ?>
-                    <p style="color: #9ca3af; font-style: italic;">Chưa có cuốn sách Ebook nào được xuất bản trên hệ thống.</p>
+                    <p style="color: #9ca3af; font-style: italic;">Chưa có Tài liệu bồi dưỡng nào được xuất bản trên hệ thống.</p>
                 <?php endif; ?>
             </td>
         </tr>
@@ -184,7 +184,7 @@ function hieucon_promo_campaign_columns( $cols ) {
         'title'                => $cols['title'],
         'promo_discount'       => 'Mức giảm giá',
         'promo_target_col'     => 'Đối tượng',
-        'promo_applied_count'  => 'Số lượng Ebook áp dụng',
+        'promo_applied_count'  => 'Số lượng tài liệu áp dụng',
         'promo_status'         => 'Trạng thái',
         'date'                 => $cols['date']
     ];
@@ -215,7 +215,7 @@ function hieucon_promo_campaign_column_content( $col, $post_id ) {
     if ( $col === 'promo_applied_count' ) {
         $applied = get_post_meta( $post_id, '_promo_applied_ebooks', true );
         $count = is_array( $applied ) ? count( $applied ) : 0;
-        echo '<strong>' . $count . ' Ebook</strong>';
+        echo '<strong>' . $count . ' tài liệu</strong>';
     }
     if ( $col === 'promo_status' ) {
         $active = get_post_meta( $post_id, '_promo_active', true );

@@ -228,8 +228,9 @@ if ( ! $logo_url ) {
                 <i class="fas fa-graduation-cap"></i>
             </div>
             <h4 class="text-xl font-black text-slate-900 mb-2">Đăng Ký Thành Công!</h4>
-            <p class="text-xs text-slate-500 mb-6">Bạn đã kích hoạt thành công khóa học: <strong><?php echo esc_html($course_title); ?></strong>. Chào mừng bạn tham gia hành trình học tập.</p>
-            <button id="btnStartLearning" class="w-full py-3 bg-slate-900 text-white font-bold rounded-xl hover:bg-slate-800 transition">Vào Học Ngay</button>
+            <h4 class="text-xl font-black text-slate-900 mb-2">Đăng Ký Thành Công!</h4>
+            <p class="text-xs text-slate-500 mb-6">Bạn đã kích hoạt thành công <?php echo $is_ebook ? 'tài liệu' : 'khóa học'; ?>: <strong><?php echo esc_html($course_title); ?></strong>. Chào mừng bạn tham gia hành trình học tập.</p>
+            <button id="btnStartLearning" class="w-full py-3 bg-slate-900 text-white font-bold rounded-xl hover:bg-slate-800 transition"><?php echo $is_ebook ? 'Xem Tài Liệu Ngay' : 'Vào Học Ngay'; ?></button>
         </div>
     </div>
 
@@ -248,7 +249,8 @@ if ( ! $logo_url ) {
             amount: <?php echo esc_js($total_amount); ?>,
             code: '<?php echo esc_js($temp_order_id); ?>',
             ajaxUrl: '<?php echo esc_js(admin_url('admin-ajax.php')); ?>',
-            nonce: '<?php echo esc_js(wp_create_nonce('hieucon_payment_nonce')); ?>'
+            nonce: '<?php echo esc_js(wp_create_nonce('hieucon_payment_nonce')); ?>',
+            isEbook: <?php echo $is_ebook ? 'true' : 'false'; ?>
         };
 
         let pollingTimer = null;
@@ -333,7 +335,7 @@ if ( ! $logo_url ) {
                 }
             } catch (err) {
                 document.getElementById('loadingModal').classList.replace('flex', 'hidden');
-                alert('Đã có lỗi đường truyền kết nối xảy ra khi thực hiện kích hoạt khóa học.');
+                alert('Đã có lỗi đường truyền kết nối xảy ra khi thực hiện kích hoạt ' + (orderInfo.isEbook ? 'tài liệu' : 'khóa học') + '.');
                 startPaymentPolling();
             }
         }

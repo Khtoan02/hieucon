@@ -91,8 +91,8 @@ if ( $current_member ) {
         
         <!-- Header Banner Cozy style -->
         <div class="text-center max-w-3xl mx-auto mb-16">
-            <h1 class="text-3xl md:text-5xl font-serif font-bold text-navy leading-tight mb-4">Thư Viện Ebook & Tài Liệu</h1>
-            <p class="text-slate-600 text-sm md:text-base font-medium">Khám phá và sở hữu ngay các tài liệu nuôi dạy con, cẩm nang gia đình bản quyền biên soạn độc quyền bởi Hieucon.</p>
+            <h1 class="text-3xl md:text-5xl font-serif font-bold text-navy leading-tight mb-4">Tài Liệu Bồi Dưỡng Kỹ Năng / Kiến Thức</h1>
+            <p class="text-slate-600 text-sm md:text-base font-medium">Khám phá và sở hữu ngay các tài liệu bồi dưỡng kỹ năng, kiến thức nuôi dạy con, cẩm nang gia đình bản quyền biên soạn độc quyền bởi Hieucon.</p>
             <div class="w-16 h-1 bg-primary mx-auto mt-6 rounded-full"></div>
         </div>
 
@@ -147,7 +147,7 @@ if ( $current_member ) {
 
                     // Ebook category
                     $categories = get_the_terms( get_the_ID(), 'ebook_cat' );
-                    $cat_label  = 'Ebook';
+                    $cat_label  = 'Tài liệu';
                     $cat_classes = [];
                     if ( ! empty( $categories ) && ! is_wp_error( $categories ) ) {
                         $cat_label = $categories[0]->name;
@@ -255,7 +255,7 @@ if ( $current_member ) {
                                 <!-- Filled Premium Action Button -->
                                 <div>
                                     <span class="inline-flex items-center gap-1.5 text-[11px] font-bold text-white uppercase tracking-wider leading-none bg-navy group-hover:bg-primary px-5 py-3.5 rounded-full shadow-md group-hover:shadow-lg group-hover:-translate-y-0.5 transition-all duration-300">
-                                        Khám Phá Sách 
+                                        Khám Phá Tài Liệu 
                                         <i data-lucide="arrow-right" class="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform"></i>
                                     </span>
                                 </div>
@@ -282,13 +282,13 @@ if ( $current_member ) {
         <?php else : ?>
             <div class="text-center py-20 bg-white rounded-[2.5rem] border border-slate-100 shadow-soft">
                 <i data-lucide="book-open" class="w-16 h-16 text-slate-300 mx-auto mb-4 animate-pulse-slow"></i>
-                <p class="text-slate-500 font-semibold text-sm">Hiện tại chưa có cuốn sách Ebook nào được trưng bày trên tủ sách.</p>
+                <p class="text-slate-500 font-semibold text-sm">Hiện tại chưa có tài liệu bồi dưỡng nào được trưng bày trên tủ sách.</p>
             </div>
         <?php endif; ?>
 
         <!-- SEO Article at the bottom -->
         <?php
-        $seo_page = get_page_by_path( 'ebooks' );
+        $seo_page = get_page_by_path( 'docs' );
         if ( $seo_page && ! empty( $seo_page->post_content ) ) : ?>
             <div class="mt-24 bg-white/70 backdrop-blur-xl border border-white p-8 md:p-12 rounded-[2.5rem] shadow-sm prose max-w-none text-slate-700">
                 <div class="seo-content">

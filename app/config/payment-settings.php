@@ -1237,7 +1237,7 @@ function hieucon_handle_create_paid_order() {
 
     if ( $is_ebook ) {
         if ( ! $ebook_id || ! get_post($ebook_id) ) {
-            wp_send_json_error(array('message' => 'Ebook được chọn không hợp lệ hoặc không tồn tại.'));
+            wp_send_json_error(array('message' => 'Tài liệu được chọn không hợp lệ hoặc không tồn tại.'));
         }
     } else {
         if ( ! $course_id || ! get_post($course_id) ) {
@@ -1251,7 +1251,7 @@ function hieucon_handle_create_paid_order() {
         wp_send_json_error(array('message' => 'Hệ thống chưa nhận được khoản tiền chuyển khoản thực tế cho mã giao dịch này.'));
     }
 
-    // 5. KÍCH HOẠT KHÓA HỌC / EBOOK CHO HỌC VIÊN
+    // 5. KÍCH HOẠT KHÓA HỌC / TÀI LIỆU CHO HỌC VIÊN
     if ( $is_ebook ) {
         $enrolled = get_option("hieucon_enrolled_ebooks_{$member_id}", null);
         if ( ! is_array($enrolled) ) {
@@ -1262,7 +1262,7 @@ function hieucon_handle_create_paid_order() {
             update_option("hieucon_enrolled_ebooks_{$member_id}", $enrolled, false);
         }
         $target_url = get_permalink($ebook_id);
-        $success_message = 'Xác nhận thanh toán thành công và đã kích hoạt Ebook!';
+        $success_message = 'Xác nhận thanh toán thành công và đã kích hoạt tài liệu!';
     } else {
         $enrolled = get_option("hieucon_enrolled_courses_{$member_id}", null);
         if ( ! is_array($enrolled) ) {
