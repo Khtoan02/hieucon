@@ -106,7 +106,7 @@ if ($current_member) {
             <h1 class="text-3xl md:text-5xl font-serif font-bold text-navy leading-tight mb-4">Cẩm nang Kỹ Năng / Kiến
                 Thức</h1>
             <p class="text-slate-600 text-sm md:text-base font-medium">Khám phá và sở hữu ngay các Cẩm nang kỹ năng,
-                kiến thức nuôi dạy con, cẩm nang gia đình bản quyền biên soạn độc quyền bởi Hieucon.</p>
+                kiến thức nuôi dạy con, cẩm nang gia đình bản quyền biên soạn bởi Hieucon.</p>
             <div class="w-16 h-1 bg-primary mx-auto mt-6 rounded-full"></div>
         </div>
 
@@ -154,7 +154,7 @@ if ($current_member) {
                             $is_owned = true;
                         }
                     }
-                    if ($price === 0.0) {
+                    if ($price === 0.0 && $current_member) {
                         $is_owned = true;
                     }
 

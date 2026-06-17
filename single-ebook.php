@@ -36,8 +36,8 @@ if ( $current_member && ! isset( $_GET['test_lock'] ) ) {
     }
 }
 
-// Free Ebook (price is explicitly set to 0) grants access to everyone
-if ( $price === 0.0 ) {
+// Free Ebook (price is explicitly set to 0) grants access to logged in users
+if ( $price === 0.0 && $current_member ) {
     $is_owned = true;
 }
 
@@ -282,7 +282,11 @@ if ( ! $current_member ) {
                                 <div class="text-xs text-slate-400 text-center font-bold">Chưa cập nhật File PDF</div>
                             <?php endif; ?>
                         <?php else : ?>
-                            <?php if ( ! is_null( $price ) ) : ?>
+                            <?php if ( $price === 0.0 ) : ?>
+                                <a href="<?php echo esc_url( add_query_arg( 'redirect_to', urlencode( get_permalink() ), home_url( '/dang-nhap/' ) ) ); ?>" class="w-full py-4 bg-emerald-600 hover:bg-emerald-550 text-white rounded-2xl font-bold text-sm shadow-[0_4px_20px_rgba(16,185,129,0.18)] hover:scale-[1.02] transform transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer border-0">
+                                    Đọc Toàn Bộ <i data-lucide="external-link" class="w-4 h-4"></i>
+                                </a>
+                            <?php elseif ( ! is_null( $price ) ) : ?>
                                 <a href="<?php echo esc_url( $purchase_url ); ?>" class="w-full py-4 bg-primary hover:bg-secondary text-white rounded-2xl font-bold text-sm shadow-[0_4px_20px_rgba(13,148,136,0.15)] hover:scale-[1.02] transform transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer border-0">
                                     Mua Tài Liệu Ngay <i data-lucide="credit-card" class="w-4 h-4"></i>
                                 </a>
@@ -325,13 +329,13 @@ if ( ! $current_member ) {
                             <span class="w-1 h-1 bg-slate-300 rounded-full"></span>
                             <div class="flex items-center gap-1.5">
                                 <i data-lucide="shield-check" class="w-4.5 h-4.5 text-primary"></i>
-                                <span>Bảo vệ bản quyền</span>
+                                <span><?php echo ( $price === 0.0 ) ? 'Tài liệu miễn phí' : 'Bảo vệ bản quyền'; ?></span>
                             </div>
                             <?php if ( $ebook_pages > 0 ) : ?>
                                 <span class="w-1 h-1 bg-slate-300 rounded-full"></span>
                                 <div class="flex items-center gap-1.5">
                                     <i data-lucide="file-text" class="w-4.5 h-4.5 text-primary"></i>
-                                    <span><?php echo $ebook_pages; ?> trang độc quyền</span>
+                                    <span><?php echo $ebook_pages; ?> trang</span>
                                 </div>
                             <?php endif; ?>
                         </div>
