@@ -1231,6 +1231,7 @@ function hieucon_handle_create_paid_order() {
     $ebook_id  = isset($_POST['ebook_id']) ? intval($_POST['ebook_id']) : 0;
     $amount    = isset($_POST['amount']) ? floatval($_POST['amount']) : 0;
     $code      = strtoupper(trim(isset($_POST['code']) ? sanitize_text_field($_POST['code']) : '')); // e.g. DH1002 hoặc EB2005
+    $ref_code  = strtoupper(trim(isset($_POST['ref_code']) ? sanitize_text_field($_POST['ref_code']) : ''));
 
     // Xác định loại sản phẩm thanh toán
     $is_ebook = (strpos($code, 'EB') === 0 || $ebook_id > 0);
@@ -1274,6 +1275,25 @@ function hieucon_handle_create_paid_order() {
         }
         $target_url = get_permalink($course_id);
         $success_message = 'Xác nhận thanh toán thành công và đã kích hoạt khóa học!';
+    }
+
+    // Ghi nhận lượt sử dụng mã giới thiệu (nếu có)
+    if ( ! empty($ref_code) ) {
+        global $wpdb;
+        $ref_post_id = $wpdb->get_var( $wpdb->prepare(
+            "SELECT ID FROM $wpdb->posts WHERE post_title = %s AND post_type = 'referral_code' AND post_status = 'publish' LIMIT 1",
+            $ref_code
+        ) );
+        if ( $ref_post_id ) {
+            $used_by = get_post_meta( $ref_post_id, '_ref_used_by_members', true );
+            if ( ! is_array($used_by) ) {
+                $used_by = array();
+            }
+            if ( ! in_array($member_id, $used_by) ) {
+                $used_by[] = $member_id;
+                update_post_meta( $ref_post_id, '_ref_used_by_members', $used_by );
+            }
+        }
     }
 
     // 6. Xóa sạch option tạm của trạng thái thanh toán để tiết kiệm tài nguyên CSDL

@@ -56,6 +56,8 @@ require_once HIEUCON_THEME_DIR . '/app/config/course-admin.php';
 require_once HIEUCON_THEME_DIR . '/app/config/elearning-settings.php';
 require_once HIEUCON_THEME_DIR . '/app/config/ebook-settings.php';
 require_once HIEUCON_THEME_DIR . '/app/config/promo-campaign.php';
+require_once HIEUCON_THEME_DIR . '/app/config/referral-codes.php';
+
 
 // Khởi chạy các Controller xác thực & tài khoản cho hệ thống hội viên
 add_action( 'init', function() {
@@ -547,3 +549,135 @@ function hieucon_update_member_enrolled_courses( $member_id, $course_ids ) {
 
     update_option( "hieucon_enrolled_courses_{$member_id}", $course_ids, false );
 }
+
+/**
+ * ------------------------------------------------------------------------
+ * REFERRAL CODES REDEMPTION & ACCESS LOGIC
+ * ------------------------------------------------------------------------
+ */
+
+function hieucon_member_has_unlocked_all( $member_id ) {
+    return (int) get_option( "hieucon_member_unlocked_all_" . intval( $member_id ), 0 ) === 1;
+}
+
+add_action( 'wp_ajax_hieucon_apply_referral_code', 'hieucon_ajax_apply_referral_code' );
+function hieucon_ajax_apply_referral_code() {
+    check_ajax_referer( 'hieucon_ref_nonce', 'nonce' );
+
+    $current_member = class_exists( '\Hieucon\Model\Member_Model' ) ? \Hieucon\Model\Member_Model::get_current_member() : false;
+    if ( ! $current_member ) {
+        wp_send_json_error( [ 'message' => 'Vui lòng đăng nhập trước khi áp dụng mã.' ] );
+    }
+    $member_id = intval( $current_member->id );
+
+    $code      = isset( $_POST['code'] ) ? strtoupper( sanitize_text_field( trim( $_POST['code'] ) ) ) : '';
+    $post_id   = isset( $_POST['post_id'] ) ? intval( $_POST['post_id'] ) : 0;
+    $post_type = isset( $_POST['post_type'] ) ? sanitize_key( $_POST['post_type'] ) : '';
+
+    if ( empty( $code ) || ! $post_id ) {
+        wp_send_json_error( [ 'message' => 'Thông tin không hợp lệ.' ] );
+    }
+
+    global $wpdb;
+    $ref_post_id = $wpdb->get_var( $wpdb->prepare(
+        "SELECT ID FROM $wpdb->posts WHERE post_title = %s AND post_type = 'referral_code' AND post_status = 'publish' LIMIT 1",
+        $code
+    ) );
+
+    if ( ! $ref_post_id ) {
+        wp_send_json_error( [ 'message' => 'Mã giới thiệu không hợp lệ hoặc không tồn tại.' ] );
+    }
+
+    $active = get_post_meta( $ref_post_id, '_ref_active', true );
+    if ( $active !== 'yes' ) {
+        wp_send_json_error( [ 'message' => 'Mã giới thiệu này đã tạm ngưng hoạt động.' ] );
+    }
+
+    $limit   = get_post_meta( $ref_post_id, '_ref_usage_limit', true );
+    $used_by = get_post_meta( $ref_post_id, '_ref_used_by_members', true );
+    if ( ! is_array( $used_by ) ) {
+        $used_by = [];
+    }
+
+    if ( $limit !== '' && ! is_null( $limit ) && count( $used_by ) >= intval( $limit ) ) {
+        wp_send_json_error( [ 'message' => 'Mã giới thiệu này đã đạt giới hạn số lần sử dụng.' ] );
+    }
+
+    if ( in_array( $member_id, $used_by ) ) {
+        wp_send_json_error( [ 'message' => 'Bạn đã sử dụng mã giới thiệu này rồi.' ] );
+    }
+
+    $type = get_post_meta( $ref_post_id, '_ref_type', true );
+
+    if ( $type === 'free_all' ) {
+        update_option( "hieucon_member_unlocked_all_{$member_id}", 1, false );
+
+        $used_by[] = $member_id;
+        update_post_meta( $ref_post_id, '_ref_used_by_members', $used_by );
+
+        wp_send_json_success( [ 
+            'message' => 'Kích hoạt thành công! Đã mở khóa miễn phí toàn bộ thư viện học liệu.',
+            'action' => 'reload'
+        ] );
+    }
+
+    // Kiểm tra tính hợp lệ của học liệu áp dụng (nếu giới hạn)
+    $applied_courses = get_post_meta( $ref_post_id, '_ref_applied_courses', true );
+    $applied_ebooks  = get_post_meta( $ref_post_id, '_ref_applied_ebooks', true );
+    if ( ! is_array( $applied_courses ) ) $applied_courses = [];
+    if ( ! is_array( $applied_ebooks ) ) $applied_ebooks = [];
+
+    $is_restricted = ( ! empty( $applied_courses ) || ! empty( $applied_ebooks ) );
+    $is_eligible = true;
+
+    if ( $is_restricted ) {
+        if ( $post_type === 'course' ) {
+            $is_eligible = in_array( $post_id, $applied_courses );
+        } elseif ( $post_type === 'ebook' ) {
+            $is_eligible = in_array( $post_id, $applied_ebooks );
+        } else {
+            $is_eligible = false;
+        }
+    }
+
+    if ( ! $is_eligible ) {
+        wp_send_json_error( [ 'message' => 'Mã giới thiệu này không áp dụng cho học liệu hiện tại.' ] );
+    }
+
+    if ( $type === 'free_items' ) {
+        if ( $post_type === 'course' ) {
+            $enrolled = hieucon_get_member_enrolled_courses( $member_id );
+            if ( ! in_array( $post_id, $enrolled ) ) {
+                $enrolled[] = $post_id;
+                hieucon_update_member_enrolled_courses( $member_id, $enrolled );
+            }
+        } elseif ( $post_type === 'ebook' ) {
+            $enrolled = hieucon_get_member_enrolled_ebooks( $member_id );
+            if ( ! in_array( $post_id, $enrolled ) ) {
+                $enrolled[] = $post_id;
+                hieucon_update_member_enrolled_ebooks( $member_id, $enrolled );
+            }
+        }
+
+        $used_by[] = $member_id;
+        update_post_meta( $ref_post_id, '_ref_used_by_members', $used_by );
+
+        wp_send_json_success( [
+            'message' => 'Kích hoạt thành công! Học liệu này đã được mở khóa miễn phí cho bạn.',
+            'action' => 'reload'
+        ] );
+    }
+
+    if ( $type === 'discount_percent' || $type === 'discount_fixed' ) {
+        // Trả về link chuyển khoản giảm giá
+        $checkout_url = home_url( '/thanh-toan/?' . ( $post_type === 'ebook' ? 'ebook_id' : 'course_id' ) . '=' . $post_id . '&ref_code=' . urlencode( $code ) );
+        wp_send_json_success( [
+            'message' => 'Mã giảm giá hợp lệ! Đang chuyển hướng bạn tới trang thanh toán...',
+            'action' => 'redirect',
+            'url' => $checkout_url
+        ] );
+    }
+
+    wp_send_json_error( [ 'message' => 'Loại ưu đãi của mã không hợp lệ.' ] );
+}
+

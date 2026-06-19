@@ -25,7 +25,7 @@ if ( ! $current_member ) {
 $has_access = false;
 $member_id = intval( $current_member->id );
 
-if ( $current_member->role === 'administrator' || $current_member->role === 'teacher' || $current_member->role === 'expert' ) {
+if ( $current_member->role === 'administrator' || $current_member->role === 'teacher' || $current_member->role === 'expert' || hieucon_member_has_unlocked_all( $member_id ) ) {
     $has_access = true;
 } else {
     $enrolled = hieucon_get_member_enrolled_courses( $member_id );

@@ -50,6 +50,59 @@ if ( $is_ebook && get_post( $ebook_id ) ) {
     $product_param = 0;
 }
 
+// Xử lý mã giới thiệu / mã giảm giá
+$ref_code = isset($_GET['ref_code']) ? strtoupper(sanitize_text_field(trim($_GET['ref_code']))) : '';
+$discount_applied_label = '';
+
+if ( ! empty($ref_code) ) {
+    global $wpdb;
+    $ref_post_id = $wpdb->get_var( $wpdb->prepare(
+        "SELECT ID FROM $wpdb->posts WHERE post_title = %s AND post_type = 'referral_code' AND post_status = 'publish' LIMIT 1",
+        $ref_code
+    ) );
+    if ( $ref_post_id ) {
+        $active = get_post_meta( $ref_post_id, '_ref_active', true );
+        $limit   = get_post_meta( $ref_post_id, '_ref_usage_limit', true );
+        $used_by = get_post_meta( $ref_post_id, '_ref_used_by_members', true );
+        if ( ! is_array( $used_by ) ) $used_by = [];
+        
+        $limit_ok = ( $limit === '' || is_null($limit) || count($used_by) < intval($limit) );
+        $user_ok = ! in_array( $member_id, $used_by );
+
+        if ( $active === 'yes' && $limit_ok && $user_ok ) {
+            $type = get_post_meta( $ref_post_id, '_ref_type', true );
+            $discount_value = floatval( get_post_meta( $ref_post_id, '_ref_discount_value', true ) );
+            
+            // Kiểm tra giới hạn học liệu áp dụng
+            $applied_courses = get_post_meta( $ref_post_id, '_ref_applied_courses', true );
+            $applied_ebooks  = get_post_meta( $ref_post_id, '_ref_applied_ebooks', true );
+            if ( ! is_array( $applied_courses ) ) $applied_courses = [];
+            if ( ! is_array( $applied_ebooks ) ) $applied_ebooks = [];
+            
+            $is_restricted = ( ! empty( $applied_courses ) || ! empty( $applied_ebooks ) );
+            $is_eligible = true;
+            if ( $is_restricted ) {
+                if ( $is_ebook ) {
+                    $is_eligible = in_array( $ebook_id, $applied_ebooks );
+                } else {
+                    $is_eligible = in_array( $course_id, $applied_courses );
+                }
+            }
+            
+            if ( $is_eligible ) {
+                if ( $type === 'discount_percent' ) {
+                    $discount_amount = $total_amount * ( $discount_value / 100 );
+                    $total_amount = max( 0.0, $total_amount - $discount_amount );
+                    $discount_applied_label = 'Đã áp dụng mã ' . $ref_code . ' (-' . $discount_value . '%)';
+                } elseif ( $type === 'discount_fixed' ) {
+                    $total_amount = max( 0.0, $total_amount - $discount_value );
+                    $discount_applied_label = 'Đã áp dụng mã ' . $ref_code . ' (-' . number_format($discount_value, 0, ',', '.') . 'đ)';
+                }
+            }
+        }
+    }
+}
+
 // Lấy thông tin hiển thị tiêu đề
 $course_title  = $product_title;
 
@@ -107,6 +160,9 @@ if ( ! $logo_url ) {
                 <div class="text-center mb-6 mt-4">
                     <p class="text-slate-400 text-xs font-semibold uppercase tracking-wider mb-1">Số tiền học phí</p>
                     <h2 class="text-3xl font-black text-emerald-400 font-mono"><?php echo number_format($total_amount, 0, ',', '.'); ?>đ</h2>
+                    <?php if ( ! empty($discount_applied_label) ) : ?>
+                        <p class="text-emerald-300 text-[10px] font-bold mt-1 bg-emerald-950/40 px-2.5 py-1 rounded border border-emerald-800/30 inline-block"><?php echo esc_html($discount_applied_label); ?></p>
+                    <?php endif; ?>
                     <p class="text-slate-450 text-[11px] mt-1 line-clamp-1 opacity-80"><?php echo esc_html($course_title); ?></p>
                 </div>
 
@@ -250,7 +306,8 @@ if ( ! $logo_url ) {
             code: '<?php echo esc_js($temp_order_id); ?>',
             ajaxUrl: '<?php echo esc_js(admin_url('admin-ajax.php')); ?>',
             nonce: '<?php echo esc_js(wp_create_nonce('hieucon_payment_nonce')); ?>',
-            isEbook: <?php echo $is_ebook ? 'true' : 'false'; ?>
+            isEbook: <?php echo $is_ebook ? 'true' : 'false'; ?>,
+            refCode: '<?php echo esc_js($ref_code); ?>'
         };
 
         let pollingTimer = null;
@@ -316,6 +373,9 @@ if ( ! $logo_url ) {
                 formData.append('ebook_id', orderInfo.ebookId);
                 formData.append('amount', orderInfo.amount);
                 formData.append('code', orderInfo.code);
+                if (orderInfo.refCode) {
+                    formData.append('ref_code', orderInfo.refCode);
+                }
 
                 const response = await fetch(orderInfo.ajaxUrl, {
                     method: 'POST',

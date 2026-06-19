@@ -26,7 +26,7 @@ $ebook_pages = ! empty( $ebook_pages ) ? intval( $ebook_pages ) : 0;
 // Check membership status and ebook ownership (supports test_lock=1 query param for admin testing)
 if ( $current_member && ! isset( $_GET['test_lock'] ) ) {
     $member_id = intval( $current_member->id );
-    if ( $current_member->role === 'administrator' || $current_member->role === 'teacher' || $current_member->role === 'expert' ) {
+    if ( $current_member->role === 'administrator' || $current_member->role === 'teacher' || $current_member->role === 'expert' || hieucon_member_has_unlocked_all( $member_id ) ) {
         $is_owned = true;
     } else {
         $enrolled = hieucon_get_member_enrolled_ebooks( $member_id );
@@ -300,6 +300,11 @@ if ( ! $current_member ) {
                                 <a href="<?php echo esc_url( $sample_url ); ?>" target="_blank" class="w-full py-3 bg-white hover:bg-slate-50 text-slate-700 rounded-2xl font-bold text-xs border border-slate-200 shadow-sm flex items-center justify-center gap-2 transition-all">
                                     Đọc Thử Tài Liệu <i data-lucide="eye" class="w-4 h-4"></i>
                                 </a>
+                            <?php endif; ?>
+                            <?php if ( $current_member && ! $is_owned ) : ?>
+                                <button type="button" onclick="openReferralModal()" class="w-full py-2 bg-transparent text-primary hover:text-secondary rounded-2xl font-bold text-xs flex items-center justify-center gap-1.5 transition-colors border-0 cursor-pointer mt-1">
+                                    <i data-lucide="ticket" class="w-3.5 h-3.5"></i> Bạn có mã giới thiệu?
+                                </button>
                             <?php endif; ?>
                         <?php endif; ?>
                     </div>
@@ -954,6 +959,142 @@ if ( ! $current_member ) {
         applyNestedRepliesPagination();
     }
 </script>
+
+<?php if ( $current_member && ! $is_owned ) : ?>
+    <!-- REFERRAL CODE POPUP MODAL -->
+    <div id="referral-code-modal" class="fixed inset-0 bg-slate-950/65 backdrop-blur-md z-[9999] flex items-center justify-center p-4 opacity-0 pointer-events-none transition-all duration-300">
+        <div class="bg-white/95 backdrop-blur-2xl rounded-[2.5rem] border border-orange-200/50 p-6 md:p-10 max-w-md w-full text-center shadow-[0_25px_60px_-15px_rgba(10,25,49,0.18)] relative transform translate-y-8 transition-all duration-300">
+            <!-- Close Button -->
+            <button type="button" onclick="closeReferralModal()" class="absolute top-5 right-5 text-slate-400 hover:text-slate-655 transition-colors p-2 bg-slate-50 hover:bg-slate-100 rounded-full border border-slate-100 cursor-pointer flex items-center justify-center">
+                <i data-lucide="x" class="w-4 h-4"></i>
+            </button>
+
+            <!-- Header -->
+            <div class="w-16 h-16 bg-primary/10 rounded-3xl flex items-center justify-center text-primary mx-auto mb-6 border border-primary/20 shadow-soft">
+                <i data-lucide="ticket" class="w-8 h-8"></i>
+            </div>
+            <h3 class="text-xl md:text-2xl font-serif font-bold text-navy mb-2">Nhập mã giới thiệu</h3>
+            <p class="text-xs md:text-sm text-slate-500 font-semibold mb-8 px-2">Bạn có mã giới thiệu hoặc mã kích hoạt? Nhập mã vào đây để nhận ưu đãi giảm giá hoặc mở khóa miễn phí tài liệu này.</p>
+
+            <!-- Error message container -->
+            <div id="ref-modal-error" class="hidden p-3.5 bg-red-50 border border-red-200/60 rounded-2xl text-[11px] font-bold text-red-500 mb-6 text-left animate-fadeIn"></div>
+
+            <!-- Form -->
+            <form onsubmit="submitReferralCode(event)" class="space-y-5">
+                <div class="relative">
+                    <input type="text" id="ref-code-input" required class="w-full px-5 py-4 rounded-2xl border border-slate-200 bg-white/70 focus:bg-white transition-all text-sm font-bold text-center uppercase tracking-widest text-navy placeholder-slate-400 shadow-soft" placeholder="VÍ DỤ: CODE50">
+                </div>
+                
+                <button type="submit" id="ref-submit-btn" class="w-full py-4 bg-primary hover:bg-primary/95 text-white rounded-2xl font-bold text-sm shadow-[0_4px_20px_rgba(13,148,136,0.18)] hover:scale-[1.01] transform transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer border-0">
+                    Kích Hoạt Ngay <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                </button>
+            </form>
+
+            <!-- Helper Text / Skip -->
+            <div class="mt-6 text-xs text-slate-400 font-bold">
+                <button type="button" onclick="closeReferralModal()" class="hover:text-slate-600 transition-colors bg-transparent border-0 cursor-pointer">
+                    Để sau, xem bản đọc thử
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification for success -->
+    <div id="ref-success-toast" class="fixed bottom-6 right-6 max-w-sm w-full bg-emerald-600 border border-emerald-500 shadow-[0_20px_40px_rgba(16,185,129,0.2)] rounded-2xl p-4 transition-all duration-500 transform translate-y-12 opacity-0 pointer-events-none z-[10000] flex items-start gap-3 select-none text-white">
+        <div class="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-white shrink-0 mt-0.5 shadow-sm">
+            <i data-lucide="check-circle" class="w-4 h-4"></i>
+        </div>
+        <div class="flex-1 min-w-0">
+            <div>
+                <span class="text-[9px] text-emerald-250 font-bold block uppercase tracking-wider">Thành công</span>
+                <p id="ref-success-toast-msg" class="text-[10px] font-bold leading-tight"></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openReferralModal() {
+            const modal = document.getElementById('referral-code-modal');
+            if (!modal) return;
+            modal.classList.remove('opacity-0', 'pointer-events-none');
+            const inner = modal.querySelector('div');
+            inner.classList.remove('translate-y-8');
+            document.getElementById('ref-code-input').focus();
+        }
+
+        function closeReferralModal() {
+            const modal = document.getElementById('referral-code-modal');
+            if (!modal) return;
+            modal.classList.add('opacity-0', 'pointer-events-none');
+            const inner = modal.querySelector('div');
+            inner.classList.add('translate-y-8');
+        }
+
+        // Tự động mở popup sau 1 giây khi tải trang
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(openReferralModal, 1000);
+        });
+
+        async function submitReferralCode(e) {
+            e.preventDefault();
+            const input = document.getElementById('ref-code-input');
+            const btn = document.getElementById('ref-submit-btn');
+            const errorBox = document.getElementById('ref-modal-error');
+            const code = input.value.trim().toUpperCase();
+
+            if (!code) return;
+
+            errorBox.classList.add('hidden');
+            btn.disabled = true;
+            btn.innerHTML = `<span class="inline-block animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent mr-2"></span> Đang xử lý...`;
+
+            const formData = new FormData();
+            formData.append('action', 'hieucon_apply_referral_code');
+            formData.append('code', code);
+            formData.append('post_id', <?php echo get_the_ID(); ?>);
+            formData.append('post_type', 'ebook');
+            formData.append('nonce', '<?php echo wp_create_nonce("hieucon_ref_nonce"); ?>');
+
+            try {
+                const res = await fetch('<?php echo admin_url("admin-ajax.php"); ?>', {
+                    method: 'POST',
+                    body: formData
+                });
+                const data = await res.json();
+
+                if (data.success) {
+                    closeReferralModal();
+                    
+                    // Show success toast
+                    const toast = document.getElementById('ref-success-toast');
+                    const toastMsg = document.getElementById('ref-success-toast-msg');
+                    toastMsg.innerText = data.data.message;
+                    toast.classList.remove('translate-y-12', 'opacity-0', 'pointer-events-none');
+                    toast.classList.add('translate-y-0', 'opacity-100', 'pointer-events-auto');
+
+                    setTimeout(() => {
+                        if (data.data.action === 'reload') {
+                            window.location.reload();
+                        } else if (data.data.action === 'redirect') {
+                            window.location.href = data.data.url;
+                        }
+                    }, 1500);
+                } else {
+                    errorBox.innerText = data.data.message || 'Mã không hợp lệ. Vui lòng kiểm tra lại.';
+                    errorBox.classList.remove('hidden');
+                    btn.disabled = false;
+                    btn.innerHTML = `Kích Hoạt Ngay <i data-lucide="arrow-right" class="w-4 h-4"></i>`;
+                }
+            } catch (err) {
+                console.error(err);
+                errorBox.innerText = 'Đã xảy ra lỗi kết nối. Vui lòng thử lại sau.';
+                errorBox.classList.remove('hidden');
+                btn.disabled = false;
+                btn.innerHTML = `Kích Hoạt Ngay <i data-lucide="arrow-right" class="w-4 h-4"></i>`;
+            }
+        }
+    </script>
+<?php endif; ?>
 
 <?php
 get_footer();
