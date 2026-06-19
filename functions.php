@@ -599,7 +599,7 @@ function hieucon_ajax_apply_referral_code() {
         $used_by = [];
     }
 
-    if ( $limit !== '' && ! is_null( $limit ) && count( $used_by ) >= intval( $limit ) ) {
+    if ( $limit !== '' && ! is_null( $limit ) && $limit !== false && count( $used_by ) >= intval( $limit ) ) {
         wp_send_json_error( [ 'message' => 'Mã giới thiệu này đã đạt giới hạn số lần sử dụng.' ] );
     }
 
