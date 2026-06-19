@@ -230,132 +230,133 @@ $course_cats = get_terms([
                 </div>
             </div>
 
-            <!-- ========================================== -->
-            <!-- MOBILE DRAWER MENU (Tablet & Phone) -->
-            <!-- ========================================== -->
-            <div id="mobile-backdrop"
-                class="fixed inset-0 bg-navy/40 backdrop-blur-sm z-[110] opacity-0 pointer-events-none transition-opacity duration-300 lg:hidden"
-                aria-hidden="true"></div>
-
-            <nav id="mobile-drawer"
-                class="fixed top-0 right-0 h-[100dvh] w-[85%] sm:w-[380px] bg-[#f8fafc] z-[120] transform translate-x-full transition-transform duration-400 ease-in-out shadow-2xl overflow-y-auto lg:hidden flex flex-col border-l border-white"
-                aria-label="Mobile Navigation">
-                <div
-                    class="flex justify-between items-center p-5 border-b border-navy/5 bg-white/80 backdrop-blur-md sticky top-0 z-10">
-                    <div class="flex items-center gap-3">
-                        <div class="bg-navy text-white p-1.5 rounded-full shadow-md flex items-center justify-center">
-                            <i data-lucide="dna" class="w-4 h-4"></i>
-                        </div>
-                        <span class="font-serif font-bold text-base text-navy tracking-wide">MENU CHÍNH</span>
-                    </div>
-                    <button id="mobile-close-btn"
-                        class="p-2 text-navy/50 hover:text-navy hover:bg-navy/5 rounded-full transition-colors">
-                        <i data-lucide="x" class="w-5 h-5"></i>
-                    </button>
-                </div>
-
-                <div class="flex flex-col py-2 px-5 gap-1 flex-grow">
-
-                    <!-- Accordion: Sản phẩm -->
-                    <div class="flex flex-col border-b border-navy/5">
-                        <button id="mobile-products-toggle" aria-expanded="false"
-                            class="flex justify-between items-center py-4 text-navy font-bold uppercase tracking-widest text-sm w-full text-left outline-none rounded-lg">
-                            <span class="flex items-center gap-3"><i data-lucide="box" class="w-4 h-4 text-navy/40"></i>
-                                Sản phẩm</span>
-                            <i data-lucide="chevron-down" class="w-4 h-4 text-navy/40 transition-transform duration-300"
-                                id="mobile-products-icon"></i>
-                        </button>
-                        <div id="mobile-products-content"
-                            class="hidden flex-col gap-3 pl-4 py-4 bg-white/60 rounded-2xl mb-4 border border-white shadow-[inset_0_2px_4px_rgba(0,0,0,0.02)] pt-5 overflow-hidden">
-                            <span
-                                class="text-secondary font-extrabold text-[10px] uppercase tracking-widest mb-1 px-3">Tâm
-                                điểm y sinh</span>
-                            <div
-                                class="flex gap-3 overflow-x-auto no-scrollbar snap-x snap-mandatory px-3 -mx-3 pb-2 pt-1">
-                                <?php
-                                foreach ($mega_products_data as $product):
-                                    ?>
-                                    <a href="/<?php echo esc_attr($product['slug']); ?>"
-                                        class="shrink-0 w-[200px] snap-start bg-white border border-secondary/10 shadow-sm rounded-xl p-3 hover:border-secondary transition-colors group/mcard flex flex-col">
-                                        <div
-                                            class="w-full h-[120px] bg-[#f8fafc] rounded-lg mb-3 flex items-center justify-center overflow-hidden relative p-2">
-                                            <img src="<?php echo esc_url($product['img']); ?>"
-                                                class="w-full h-full object-contain group-hover/mcard:scale-105 transition-transform">
-                                        </div>
-                                        <span
-                                            class="text-navy font-bold text-sm mb-1 leading-tight line-clamp-1"><?php echo esc_html($product['title']); ?></span>
-                                        <span
-                                            class="text-secondary text-[11px] font-bold flex items-center gap-1 mt-auto">Khám
-                                            phá <i data-lucide="arrow-right" class="w-3 h-3"></i></span>
-                                    </a>
-                                <?php endforeach; ?>
-                            </div>
-                            <div class="w-full h-px bg-navy/5 my-2 flex-shrink-0"></div>
-                            <a href="/san-pham"
-                                class="text-navy/80 font-bold text-[14px] flex items-center gap-3 px-3 py-2 hover:text-navy"><i
-                                    data-lucide="box" class="w-4 h-4 text-navy/30"></i> Xem tất cả sản phẩm</a>
-                        </div>
-                    </div>
-
-                    <!-- Link: Ebook -->
-                    <div class="flex flex-col border-b border-navy/5">
-                        <a href="<?php echo esc_url(get_post_type_archive_link('ebook')); ?>"
-                            class="flex items-center gap-3 py-4 text-navy font-bold uppercase tracking-widest text-sm w-full text-left outline-none rounded-lg">
-                            <i data-lucide="book-open" class="w-4 h-4 text-navy/40"></i> Cẩm nang
-                        </a>
-                    </div>
-
-                    <!-- Link: Tài khoản / Đăng nhập -->
-                    <div class="flex flex-col border-b border-navy/5">
-                        <?php if ($current_member): ?>
-                            <a href="<?php echo home_url('/tai-khoan/'); ?>"
-                                class="flex items-center gap-3 py-4 text-navy font-bold uppercase tracking-widest text-sm w-full text-left outline-none rounded-lg">
-                                <i data-lucide="user" class="w-4 h-4 text-navy/40"></i> Tài khoản của tôi
-                            </a>
-                        <?php else: ?>
-                            <a href="<?php echo home_url('/dang-nhap/'); ?>"
-                                class="flex items-center gap-3 py-4 text-navy font-bold uppercase tracking-widest text-sm w-full text-left outline-none rounded-lg">
-                                <i data-lucide="log-in" class="w-4 h-4 text-navy/40"></i> Đăng nhập / Đăng ký
-                            </a>
-                        <?php endif; ?>
-                    </div>
-
-                </div>
-
-                <div class="p-5 flex flex-col gap-3 mt-auto border-t border-white bg-white/80 backdrop-blur-md pb-8">
-
-
-                    <!-- Nút: Cộng đồng Facebook -->
-                    <a href="https://www.facebook.com/groups/tukylaroiloantoanthan" target="_blank"
-                        class="bg-gradient-to-br from-[#1877F2] to-[#0A58CA] text-white p-3.5 rounded-2xl shadow-[0_4px_12px_rgba(24,119,242,0.25)] flex items-center gap-3 transition-transform hover:scale-[1.02] active:scale-95">
-                        <div class="bg-white/20 w-9 h-9 rounded-xl flex items-center justify-center shrink-0">
-                            <svg viewBox="0 0 320 512" class="w-4 h-4 text-white fill-current">
-                                <path
-                                    d="M279.14 288l14.22-92.66h-88.91v-60.13c0-25.35 12.42-50.06 52.24-50.06h40.42V6.26S260.43 0 225.36 0c-73.22 0-121.08 44.38-121.08 124.72v70.62H22.89V288h81.39v224h100.17V288z" />
-                            </svg>
-                        </div>
-                        <div class="flex flex-col text-left">
-                            <span class="font-extrabold text-[13px] leading-tight">Cộng Đồng Cha Mẹ</span>
-                            <span class="font-bold text-[10px] text-white/80 uppercase tracking-widest mt-0.5">Nơi chia
-                                sẻ & đồng hành</span>
-                        </div>
-                    </a>
-
-                    <!-- Nút: Kết nối Zalo -->
-                    <a href="https://zalo.me/g/vmgfxy834?joinSrc=9" target="_blank"
-                        class="bg-gradient-to-br from-[#00A1FF] to-[#0068FF] text-white p-3.5 rounded-2xl shadow-[0_4px_12px_rgba(0,104,255,0.25)] flex items-center gap-3 transition-transform hover:scale-[1.02] active:scale-95">
-                        <div class="bg-white/20 w-9 h-9 rounded-xl flex items-center justify-center shrink-0">
-                            <span class="font-black text-[18px] text-white leading-none">Z</span>
-                        </div>
-                        <div class="flex flex-col text-left">
-                            <span class="font-extrabold text-[13px] leading-tight">Kết Nối Chuyên Gia</span>
-                            <span class="font-bold text-[10px] text-white/80 uppercase tracking-widest mt-0.5">Hỏi đáp &
-                                tư vấn y sinh</span>
-                        </div>
-                    </a>
-                </div>
-            </nav>
         </header>
+
+        <!-- ========================================== -->
+        <!-- MOBILE DRAWER MENU (Tablet & Phone) -->
+        <!-- ========================================== -->
+        <div id="mobile-backdrop"
+            class="fixed inset-0 bg-navy/40 backdrop-blur-sm z-[110] opacity-0 pointer-events-none transition-opacity duration-300 lg:hidden"
+            aria-hidden="true"></div>
+
+        <nav id="mobile-drawer"
+            class="fixed top-0 right-0 h-[100dvh] w-[85%] sm:w-[380px] bg-[#f8fafc] z-[120] transform translate-x-full transition-transform duration-400 ease-in-out shadow-2xl overflow-y-auto lg:hidden flex flex-col border-l border-white"
+            aria-label="Mobile Navigation">
+            <div
+                class="flex justify-between items-center p-5 border-b border-navy/5 bg-white/80 backdrop-blur-md sticky top-0 z-10">
+                <div class="flex items-center gap-3">
+                    <div class="bg-navy text-white p-1.5 rounded-full shadow-md flex items-center justify-center">
+                        <i data-lucide="dna" class="w-4 h-4"></i>
+                    </div>
+                    <span class="font-serif font-bold text-base text-navy tracking-wide">MENU CHÍNH</span>
+                </div>
+                <button id="mobile-close-btn"
+                    class="p-2 text-navy/50 hover:text-navy hover:bg-navy/5 rounded-full transition-colors">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+
+            <div class="flex flex-col py-2 px-5 gap-1 flex-grow">
+
+                <!-- Accordion: Sản phẩm -->
+                <div class="flex flex-col border-b border-navy/5">
+                    <button id="mobile-products-toggle" aria-expanded="false"
+                        class="flex justify-between items-center py-4 text-navy font-bold uppercase tracking-widest text-sm w-full text-left outline-none rounded-lg">
+                        <span class="flex items-center gap-3"><i data-lucide="box" class="w-4 h-4 text-navy/40"></i>
+                            Sản phẩm</span>
+                        <i data-lucide="chevron-down" class="w-4 h-4 text-navy/40 transition-transform duration-300"
+                            id="mobile-products-icon"></i>
+                    </button>
+                    <div id="mobile-products-content"
+                        class="hidden flex-col gap-3 pl-4 py-4 bg-white/60 rounded-2xl mb-4 border border-white shadow-[inset_0_2px_4px_rgba(0,0,0,0.02)] pt-5 overflow-hidden">
+                        <span
+                            class="text-secondary font-extrabold text-[10px] uppercase tracking-widest mb-1 px-3">Tâm
+                            điểm y sinh</span>
+                        <div
+                            class="flex gap-3 overflow-x-auto no-scrollbar snap-x snap-mandatory px-3 -mx-3 pb-2 pt-1">
+                            <?php
+                            foreach ($mega_products_data as $product):
+                                ?>
+                                <a href="/<?php echo esc_attr($product['slug']); ?>"
+                                    class="shrink-0 w-[200px] snap-start bg-white border border-secondary/10 shadow-sm rounded-xl p-3 hover:border-secondary transition-colors group/mcard flex flex-col">
+                                    <div
+                                        class="w-full h-[120px] bg-[#f8fafc] rounded-lg mb-3 flex items-center justify-center overflow-hidden relative p-2">
+                                        <img src="<?php echo esc_url($product['img']); ?>"
+                                            class="w-full h-full object-contain group-hover/mcard:scale-105 transition-transform">
+                                    </div>
+                                    <span
+                                        class="text-navy font-bold text-sm mb-1 leading-tight line-clamp-1"><?php echo esc_html($product['title']); ?></span>
+                                    <span
+                                        class="text-secondary text-[11px] font-bold flex items-center gap-1 mt-auto">Khám
+                                        phá <i data-lucide="arrow-right" class="w-3 h-3"></i></span>
+                                </a>
+                            <?php endforeach; ?>
+                        </div>
+                        <div class="w-full h-px bg-navy/5 my-2 flex-shrink-0"></div>
+                        <a href="/san-pham"
+                            class="text-navy/80 font-bold text-[14px] flex items-center gap-3 px-3 py-2 hover:text-navy"><i
+                                data-lucide="box" class="w-4 h-4 text-navy/30"></i> Xem tất cả sản phẩm</a>
+                    </div>
+                </div>
+
+                <!-- Link: Ebook -->
+                <div class="flex flex-col border-b border-navy/5">
+                    <a href="<?php echo esc_url(get_post_type_archive_link('ebook')); ?>"
+                        class="flex items-center gap-3 py-4 text-navy font-bold uppercase tracking-widest text-sm w-full text-left outline-none rounded-lg">
+                        <i data-lucide="book-open" class="w-4 h-4 text-navy/40"></i> Cẩm nang
+                    </a>
+                </div>
+
+                <!-- Link: Tài khoản / Đăng nhập -->
+                <div class="flex flex-col border-b border-navy/5">
+                    <?php if ($current_member): ?>
+                        <a href="<?php echo home_url('/tai-khoan/'); ?>"
+                            class="flex items-center gap-3 py-4 text-navy font-bold uppercase tracking-widest text-sm w-full text-left outline-none rounded-lg">
+                            <i data-lucide="user" class="w-4 h-4 text-navy/40"></i> Tài khoản của tôi
+                        </a>
+                    <?php else: ?>
+                        <a href="<?php echo home_url('/dang-nhap/'); ?>"
+                            class="flex items-center gap-3 py-4 text-navy font-bold uppercase tracking-widest text-sm w-full text-left outline-none rounded-lg">
+                            <i data-lucide="log-in" class="w-4 h-4 text-navy/40"></i> Đăng nhập / Đăng ký
+                        </a>
+                    <?php endif; ?>
+                </div>
+
+            </div>
+
+            <div class="p-5 flex flex-col gap-3 mt-auto border-t border-white bg-white/80 backdrop-blur-md pb-8">
+
+
+                <!-- Nút: Cộng đồng Facebook -->
+                <a href="https://www.facebook.com/groups/tukylaroiloantoanthan" target="_blank"
+                    class="bg-gradient-to-br from-[#1877F2] to-[#0A58CA] text-white p-3.5 rounded-2xl shadow-[0_4px_12px_rgba(24,119,242,0.25)] flex items-center gap-3 transition-transform hover:scale-[1.02] active:scale-95">
+                    <div class="bg-white/20 w-9 h-9 rounded-xl flex items-center justify-center shrink-0">
+                        <svg viewBox="0 0 320 512" class="w-4 h-4 text-white fill-current">
+                            <path
+                                d="M279.14 288l14.22-92.66h-88.91v-60.13c0-25.35 12.42-50.06 52.24-50.06h40.42V6.26S260.43 0 225.36 0c-73.22 0-121.08 44.38-121.08 124.72v70.62H22.89V288h81.39v224h100.17V288z" />
+                        </svg>
+                    </div>
+                    <div class="flex flex-col text-left">
+                        <span class="font-extrabold text-[13px] leading-tight">Cộng Đồng Cha Mẹ</span>
+                        <span class="font-bold text-[10px] text-white/80 uppercase tracking-widest mt-0.5">Nơi chia
+                            sẻ & đồng hành</span>
+                    </div>
+                </a>
+
+                <!-- Nút: Kết nối Zalo -->
+                <a href="https://zalo.me/g/vmgfxy834?joinSrc=9" target="_blank"
+                    class="bg-gradient-to-br from-[#00A1FF] to-[#0068FF] text-white p-3.5 rounded-2xl shadow-[0_4px_12px_rgba(0,104,255,0.25)] flex items-center gap-3 transition-transform hover:scale-[1.02] active:scale-95">
+                    <div class="bg-white/20 w-9 h-9 rounded-xl flex items-center justify-center shrink-0">
+                        <span class="font-black text-[18px] text-white leading-none">Z</span>
+                    </div>
+                    <div class="flex flex-col text-left">
+                        <span class="font-extrabold text-[13px] leading-tight">Kết Nối Chuyên Gia</span>
+                        <span class="font-bold text-[10px] text-white/80 uppercase tracking-widest mt-0.5">Hỏi đáp &
+                            tư vấn y sinh</span>
+                    </div>
+                </a>
+            </div>
+        </nav>
 
         <style>
             @keyframes fadeIn {

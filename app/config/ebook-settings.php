@@ -426,3 +426,15 @@ function hieucon_get_ebook_price_details($ebook_id)
         'promo_target' => $applied_promo_target,
     ];
 }
+
+/**
+ * Configure the pagination query for ebook archives and taxonomy
+ */
+function hieucon_ebook_archive_query($query)
+{
+    if (!is_admin() && $query->is_main_query() && ($query->is_post_type_archive('ebook') || $query->is_tax('ebook_cat'))) {
+        $query->set('posts_per_page', 12);
+    }
+}
+add_action('pre_get_posts', 'hieucon_ebook_archive_query');
+

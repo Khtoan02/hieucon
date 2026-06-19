@@ -587,134 +587,135 @@ $course_cats = get_terms([
 
             </div>
         </div>
-
-                <!-- ========================================== -->
-        <!-- MOBILE DRAWER MENU (Tablet & Phone) -->
-        <!-- ========================================== -->
-        <div id="mobile-backdrop" class="fixed inset-0 bg-navy/40 backdrop-blur-sm z-[110] opacity-0 pointer-events-none transition-opacity duration-300 lg:hidden" aria-hidden="true"></div>
-        
-        <nav id="mobile-drawer" class="fixed top-0 right-0 h-[100dvh] w-[85%] sm:w-[380px] bg-[#f8fafc] z-[120] transform translate-x-full transition-transform duration-400 ease-in-out shadow-2xl overflow-y-auto lg:hidden flex flex-col border-l border-white" aria-label="Mobile Navigation">
-            <div class="flex justify-between items-center p-5 border-b border-navy/5 bg-white/80 backdrop-blur-md sticky top-0 z-10">
-                <div class="flex items-center gap-3">
-                    <div class="bg-navy text-white p-1.5 rounded-full shadow-md flex items-center justify-center">
-                        <i data-lucide="dna" class="w-4 h-4"></i>
-                    </div>
-                    <span class="font-serif font-bold text-base text-navy tracking-wide">MENU CHÍNH</span>
-                </div>
-                <button id="mobile-close-btn" class="p-2 text-navy/50 hover:text-navy hover:bg-navy/5 rounded-full transition-colors">
-                    <i data-lucide="x" class="w-5 h-5"></i>
-                </button>
-            </div>
-
-            <div class="flex flex-col py-2 px-5 gap-1 flex-grow">
-                
-                <!-- Accordion: Sản phẩm -->
-                <div class="flex flex-col border-b border-navy/5">
-                    <button id="mobile-products-toggle" aria-expanded="false" class="flex justify-between items-center py-4 text-navy font-bold uppercase tracking-widest text-sm w-full text-left outline-none rounded-lg">
-                        <span class="flex items-center gap-3"><i data-lucide="box" class="w-4 h-4 text-navy/40"></i> Sản phẩm</span>
-                        <i data-lucide="chevron-down" class="w-4 h-4 text-navy/40 transition-transform duration-300" id="mobile-products-icon"></i>
-                    </button>
-                    <div id="mobile-products-content" class="hidden flex-col gap-3 pl-4 py-4 bg-white/60 rounded-2xl mb-4 border border-white shadow-[inset_0_2px_4px_rgba(0,0,0,0.02)] pt-5 overflow-hidden">
-                        <span class="text-secondary font-extrabold text-[10px] uppercase tracking-widest mb-1 px-3">Tâm điểm y sinh</span>
-                        <div class="flex gap-3 overflow-x-auto no-scrollbar snap-x snap-mandatory px-3 -mx-3 pb-2 pt-1">
-                            <?php
-                            foreach ($mega_products_data as $product) :
-                            ?>
-                            <a href="/<?php echo esc_attr($product['slug']); ?>" class="shrink-0 w-[200px] snap-start bg-white border border-secondary/10 shadow-sm rounded-xl p-3 hover:border-secondary transition-colors group/mcard flex flex-col">
-                                <div class="w-full h-[120px] bg-[#f8fafc] rounded-lg mb-3 flex items-center justify-center overflow-hidden relative p-2">
-                                    <img src="<?php echo esc_url($product['img']); ?>" class="w-full h-full object-contain group-hover/mcard:scale-105 transition-transform">
-                                </div>
-                                <span class="text-navy font-bold text-sm mb-1 leading-tight line-clamp-1"><?php echo esc_html($product['title']); ?></span>
-                                <span class="text-secondary text-[11px] font-bold flex items-center gap-1 mt-auto">Khám phá <i data-lucide="arrow-right" class="w-3 h-3"></i></span>
-                            </a>
-                            <?php endforeach; ?>
-                        </div>
-                        <div class="w-full h-px bg-navy/5 my-2 flex-shrink-0"></div>
-                        <a href="/san-pham" class="text-navy/80 font-bold text-[14px] flex items-center gap-3 px-3 py-2 hover:text-navy"><i data-lucide="box" class="w-4 h-4 text-navy/30"></i> Xem tất cả sản phẩm</a>
-                    </div>
-                </div>
-
-
-                <!-- Accordion: Triệu Chứng (HIERARCHICAL) -->
-                <div class="flex flex-col border-b border-navy/5">
-                    <button id="mobile-symptoms-toggle" aria-expanded="false" class="flex justify-between items-center py-4 text-navy font-bold uppercase tracking-widest text-sm w-full text-left outline-none rounded-lg">
-                        <span class="flex items-center gap-3"><i data-lucide="activity" class="w-4 h-4 text-navy/40"></i> Triệu Chứng</span>
-                        <i data-lucide="chevron-down" class="w-4 h-4 text-navy/40 transition-transform duration-300" id="mobile-symptoms-icon"></i>
-                    </button>
-                    <div id="mobile-symptoms-content" class="hidden flex-col gap-1 pl-4 py-3 bg-white/60 rounded-2xl mb-4 border border-white shadow-[inset_0_2px_4px_rgba(0,0,0,0.02)]">
-                        <a href="/11-nhom-trieu-chung-tu-ky-toan-than" class="text-secondary font-bold text-[13px] py-2 px-3 flex items-center gap-2 hover:text-secondary_dark">Tổng quan 11 nhóm <i data-lucide="arrow-right" class="w-3 h-3"></i></a>
-                        <div class="w-full h-px bg-navy/5 my-1"></div>
-                        <a href="/van-dong-tho-tinh-o-tre-tu-ky" class="text-navy/80 font-bold text-[13px] py-2 px-3 hover:text-secondary hover:bg-white rounded-lg transition-colors flex items-center gap-2"><i data-lucide="person-standing" class="w-3.5 h-3.5 opacity-50"></i> 01. Vận động thô & tinh</a>
-                        <a href="/van-dong-mieng-hong-tre-tu-ky" class="text-navy/80 font-bold text-[13px] py-2 px-3 hover:text-secondary hover:bg-white rounded-lg transition-colors flex items-center gap-2"><i data-lucide="smile" class="w-3.5 h-3.5 opacity-50"></i> 02. Vận động miệng họng</a>
-                        <a href="/tieu-hoa-da-day-tre-tu-ky" class="text-navy/80 font-bold text-[13px] py-2 px-3 hover:text-secondary hover:bg-white rounded-lg transition-colors flex items-center gap-2"><i data-lucide="apple" class="w-3.5 h-3.5 opacity-50"></i> 03. Tiêu hóa & dạ dày</a>
-                        <a href="/xu-ly-cam-giac-o-tre-tu-ky" class="text-navy/80 font-bold text-[13px] py-2 px-3 hover:text-secondary hover:bg-white rounded-lg transition-colors flex items-center gap-2"><i data-lucide="eye" class="w-3.5 h-3.5 opacity-50"></i> 04. Xử lý cảm giác</a>
-                        <a href="/ngon-ngu-giao-tiep-tre-tu-ky" class="text-navy/80 font-bold text-[13px] py-2 px-3 hover:text-secondary hover:bg-white rounded-lg transition-colors flex items-center gap-2"><i data-lucide="message-circle" class="w-3.5 h-3.5 opacity-50"></i> 05. Ngôn ngữ giao tiếp</a>
-                        <a href="/nhan-thuc-hoc-tap-tre-tu-ky" class="text-navy/80 font-bold text-[13px] py-2 px-3 hover:text-secondary hover:bg-white rounded-lg transition-colors flex items-center gap-2"><i data-lucide="brain" class="w-3.5 h-3.5 opacity-50"></i> 06. Nhận thức & học tập</a>
-                        <a href="/hanh-vi-xa-hoi-tre-tu-ky" class="text-navy/80 font-bold text-[13px] py-2 px-3 hover:text-secondary hover:bg-white rounded-lg transition-colors flex items-center gap-2"><i data-lucide="users" class="w-3.5 h-3.5 opacity-50"></i> 07. Hành vi & xã hội</a>
-                        <a href="/di-ung-nhay-cam-thuc-pham-tre-tu-ky" class="text-navy/80 font-bold text-[13px] py-2 px-3 hover:text-secondary hover:bg-white rounded-lg transition-colors flex items-center gap-2"><i data-lucide="shield-alert" class="w-3.5 h-3.5 opacity-50"></i> 08. Dị ứng thực phẩm</a>
-                        <a href="/he-mien-dich-tre-tu-ky" class="text-navy/80 font-bold text-[13px] py-2 px-3 hover:text-secondary hover:bg-white rounded-lg transition-colors flex items-center gap-2"><i data-lucide="shield-plus" class="w-3.5 h-3.5 opacity-50"></i> 09. Hệ miễn dịch</a>
-                        <a href="/dinh-duong-vi-chat-o-tre-tu-ky" class="text-navy/80 font-bold text-[13px] py-2 px-3 hover:text-secondary hover:bg-white rounded-lg transition-colors flex items-center gap-2"><i data-lucide="test-tube" class="w-3.5 h-3.5 opacity-50"></i> 10. Dinh dưỡng vi chất</a>
-                        <a href="/nang-luong-chuyen-hoa-o-tre-tu-ky" class="text-navy/80 font-bold text-[13px] py-2 px-3 hover:text-secondary hover:bg-white rounded-lg transition-colors flex items-center gap-2"><i data-lucide="zap" class="w-3.5 h-3.5 opacity-50"></i> 11. Năng lượng chuyển hóa</a>
-                    </div>
-                </div>
-
-                <!-- Accordion: Dinh Dưỡng -->
-                <div class="flex flex-col border-b border-navy/5">
-                    <button id="mobile-nutrition-toggle" aria-expanded="false" class="flex justify-between items-center py-4 text-navy font-bold uppercase tracking-widest text-sm w-full text-left outline-none rounded-lg">
-                        <span class="flex items-center gap-3"><i data-lucide="microscope" class="w-4 h-4 text-navy/40"></i> Dinh Dưỡng</span>
-                        <i data-lucide="chevron-down" class="w-4 h-4 text-navy/40 transition-transform duration-300" id="mobile-nutrition-icon"></i>
-                    </button>
-                    <div id="mobile-nutrition-content" class="hidden flex-col gap-2 pl-4 py-3 bg-white/60 rounded-2xl mb-4 border border-white shadow-[inset_0_2px_4px_rgba(0,0,0,0.02)]">
-                        <a href="/dinh-duong-cho-tre-tu-ky" class="text-secondary font-bold text-[13px] py-2 px-3 flex items-center gap-2 hover:text-secondary_dark">Tổng quan Dinh Dưỡng <i data-lucide="arrow-right" class="w-3 h-3"></i></a>
-                    </div>
-                </div>
-
-
-
-            </div>
-
-            <div class="p-5 flex flex-col gap-3 mt-auto border-t border-white bg-white/80 backdrop-blur-md pb-8">
-                <?php 
-                $current_member = \Hieucon\Model\Member_Model::get_current_member(); 
-                if ( $current_member ) : 
-                ?>
-                    <!-- Mobile CTA: Tài khoản -->
-                    <a href="<?php echo home_url('/tai-khoan/'); ?>" class="bg-gradient-to-br from-navy to-navy/80 text-white p-3.5 rounded-2xl shadow-[0_4px_12px_rgba(10,25,49,0.15)] flex items-center gap-3 transition-transform hover:scale-[1.02] active:scale-95 group">
-                        <div class="bg-white/20 w-9 h-9 rounded-xl flex items-center justify-center shrink-0">
-                            <i data-lucide="user" class="w-5 h-5 text-secondary group-hover:text-white transition-colors"></i>
-                        </div>
-                        <div class="flex flex-col text-left">
-                            <span class="font-extrabold text-[13px] leading-tight">Tài Khoản Của Tôi</span>
-                            <span class="font-bold text-[10px] text-white/80 uppercase tracking-widest mt-0.5">Chào, <?php echo esc_html($current_member->full_name); ?></span>
-                        </div>
-                    </a>
-                <?php else : ?>
-                    <!-- Mobile CTA: Đăng nhập -->
-                    <a href="<?php echo home_url('/dang-nhap/'); ?>" class="bg-gradient-to-br from-secondary to-secondary_dark text-white p-3.5 rounded-2xl shadow-[0_4px_12px_rgba(249,115,22,0.25)] flex items-center gap-3 transition-transform hover:scale-[1.02] active:scale-95 group">
-                        <div class="bg-white/20 w-9 h-9 rounded-xl flex items-center justify-center shrink-0">
-                            <i data-lucide="log-in" class="w-5 h-5 text-white"></i>
-                        </div>
-                        <div class="flex flex-col text-left">
-                            <span class="font-extrabold text-[13px] leading-tight">Đăng Nhập / Đăng Ký</span>
-                            <span class="font-bold text-[10px] text-white/80 uppercase tracking-widest mt-0.5">Xác thực OTP bảo mật</span>
-                        </div>
-                    </a>
-                <?php endif; ?>
-
-                <a href="/chuyen-de" class="flex items-center gap-3 bg-white border border-secondary/20 hover:border-secondary p-3.5 rounded-2xl shadow-sm transition-all">
-                    <div class="bg-secondary/10 p-2.5 rounded-xl text-secondary"><i data-lucide="book-open" class="w-5 h-5"></i></div>
-                    <div class="flex flex-col text-left">
-                        <span class="font-extrabold text-navy text-[13px] leading-tight">Tài liệu Y sinh</span>
-                        <span class="text-[10px] font-extrabold text-secondary uppercase tracking-widest mt-0.5">Các chuyên đề chuyên sâu</span>
-                    </div>
-                </a>
-                
-                <a href="https://www.facebook.com/groups/tukylaroiloantoanthan" target="_blank" class="bg-navy hover:bg-navy-light text-white p-4 rounded-2xl font-bold text-center shadow-md flex items-center justify-center gap-2.5 text-sm">
-                    <i data-lucide="users" class="w-4 h-4 text-secondary"></i> Tham gia nhóm "Hiểu Con Từ Gốc"
-                </a>
-            </div>
-        </nav>
     </header>
+
+    <!-- ========================================== -->
+    <!-- MOBILE DRAWER MENU (Tablet & Phone) -->
+    <!-- ========================================== -->
+    <div id="mobile-backdrop" class="fixed inset-0 bg-navy/40 backdrop-blur-sm z-[110] opacity-0 pointer-events-none transition-opacity duration-300 lg:hidden" aria-hidden="true"></div>
+    
+    <nav id="mobile-drawer" class="fixed top-0 right-0 h-[100dvh] w-[85%] sm:w-[380px] bg-[#f8fafc] z-[120] transform translate-x-full transition-transform duration-400 ease-in-out shadow-2xl overflow-y-auto lg:hidden flex flex-col border-l border-white" aria-label="Mobile Navigation">
+        <div class="flex justify-between items-center p-5 border-b border-navy/5 bg-white/80 backdrop-blur-md sticky top-0 z-10">
+            <div class="flex items-center gap-3">
+                <div class="bg-navy text-white p-1.5 rounded-full shadow-md flex items-center justify-center">
+                    <i data-lucide="dna" class="w-4 h-4"></i>
+                </div>
+                <span class="font-serif font-bold text-base text-navy tracking-wide">MENU CHÍNH</span>
+            </div>
+            <button id="mobile-close-btn" class="p-2 text-navy/50 hover:text-navy hover:bg-navy/5 rounded-full transition-colors">
+                 <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+        </div>
+
+        <div class="flex flex-col py-2 px-5 gap-1 flex-grow">
+            
+            <!-- Accordion: Sản phẩm -->
+            <div class="flex flex-col border-b border-navy/5">
+                <button id="mobile-products-toggle" aria-expanded="false" class="flex justify-between items-center py-4 text-navy font-bold uppercase tracking-widest text-sm w-full text-left outline-none rounded-lg">
+                    <span class="flex items-center gap-3"><i data-lucide="box" class="w-4 h-4 text-navy/40"></i> Sản phẩm</span>
+                    <i data-lucide="chevron-down" class="w-4 h-4 text-navy/40 transition-transform duration-300" id="mobile-products-icon"></i>
+                </button>
+                <div id="mobile-products-content" class="hidden flex-col gap-3 pl-4 py-4 bg-white/60 rounded-2xl mb-4 border border-white shadow-[inset_0_2px_4px_rgba(0,0,0,0.02)] pt-5 overflow-hidden">
+                    <span class="text-secondary font-extrabold text-[10px] uppercase tracking-widest mb-1 px-3">Tâm điểm y sinh</span>
+                    <div class="flex gap-3 overflow-x-auto no-scrollbar snap-x snap-mandatory px-3 -mx-3 pb-2 pt-1">
+                        <?php
+                        foreach ($mega_products_data as $product) :
+                        ?>
+                        <a href="/<?php echo esc_attr($product['slug']); ?>" class="shrink-0 w-[200px] snap-start bg-white border border-secondary/10 shadow-sm rounded-xl p-3 hover:border-secondary transition-colors group/mcard flex flex-col">
+                            <div class="w-full h-[120px] bg-[#f8fafc] rounded-lg mb-3 flex items-center justify-center overflow-hidden relative p-2">
+                                <img src="<?php echo esc_url($product['img']); ?>" class="w-full h-full object-contain group-hover/mcard:scale-105 transition-transform">
+                            </div>
+                            <span class="text-navy font-bold text-sm mb-1 leading-tight line-clamp-1"><?php echo esc_html($product['title']); ?></span>
+                            <span class="text-secondary text-[11px] font-bold flex items-center gap-1 mt-auto">Khám phá <i data-lucide="arrow-right" class="w-3 h-3"></i></span>
+                        </a>
+                        <?php endforeach; ?>
+                    </div>
+                    <div class="w-full h-px bg-navy/5 my-2 flex-shrink-0"></div>
+                    <a href="/san-pham" class="text-navy/80 font-bold text-[14px] flex items-center gap-3 px-3 py-2 hover:text-navy"><i data-lucide="box" class="w-4 h-4 text-navy/30"></i> Xem tất cả sản phẩm</a>
+                </div>
+            </div>
+
+
+            <!-- Accordion: Triệu Chứng (HIERARCHICAL) -->
+            <div class="flex flex-col border-b border-navy/5">
+                <button id="mobile-symptoms-toggle" aria-expanded="false" class="flex justify-between items-center py-4 text-navy font-bold uppercase tracking-widest text-sm w-full text-left outline-none rounded-lg">
+                    <span class="flex items-center gap-3"><i data-lucide="activity" class="w-4 h-4 text-navy/40"></i> Triệu Chứng</span>
+                    <i data-lucide="chevron-down" class="w-4 h-4 text-navy/40 transition-transform duration-300" id="mobile-symptoms-icon"></i>
+                </button>
+                <div id="mobile-symptoms-content" class="hidden flex-col gap-1 pl-4 py-3 bg-white/60 rounded-2xl mb-4 border border-white shadow-[inset_0_2px_4px_rgba(0,0,0,0.02)]">
+                    <a href="/11-nhom-trieu-chung-tu-ky-toan-than" class="text-secondary font-bold text-[13px] py-2 px-3 flex items-center gap-2 hover:text-secondary_dark">Tổng quan 11 nhóm <i data-lucide="arrow-right" class="w-3 h-3"></i></a>
+                    <div class="w-full h-px bg-navy/5 my-1"></div>
+                    <a href="/van-dong-tho-tinh-o-tre-tu-ky" class="text-navy/80 font-bold text-[13px] py-2 px-3 hover:text-secondary hover:bg-white rounded-lg transition-colors flex items-center gap-2"><i data-lucide="person-standing" class="w-3.5 h-3.5 opacity-50"></i> 01. Vận động thô & tinh</a>
+                    <a href="/van-dong-mieng-hong-tre-tu-ky" class="text-navy/80 font-bold text-[13px] py-2 px-3 hover:text-secondary hover:bg-white rounded-lg transition-colors flex items-center gap-2"><i data-lucide="smile" class="w-3.5 h-3.5 opacity-50"></i> 02. Vận động miệng họng</a>
+                    <a href="/tieu-hoa-da-day-tre-tu-ky" class="text-navy/80 font-bold text-[13px] py-2 px-3 hover:text-secondary hover:bg-white rounded-lg transition-colors flex items-center gap-2"><i data-lucide="apple" class="w-3.5 h-3.5 opacity-50"></i> 03. Tiêu hóa & dạ dày</a>
+                    <a href="/xu-ly-cam-giac-o-tre-tu-ky" class="text-navy/80 font-bold text-[13px] py-2 px-3 hover:text-secondary hover:bg-white rounded-lg transition-colors flex items-center gap-2"><i data-lucide="eye" class="w-3.5 h-3.5 opacity-50"></i> 04. Xử lý cảm giác</a>
+                    <a href="/ngon-ngu-giao-tiep-tre-tu-ky" class="text-navy/80 font-bold text-[13px] py-2 px-3 hover:text-secondary hover:bg-white rounded-lg transition-colors flex items-center gap-2"><i data-lucide="message-circle" class="w-3.5 h-3.5 opacity-50"></i> 05. Ngôn ngữ giao tiếp</a>
+                    <a href="/nhan-thuc-hoc-tap-tre-tu-ky" class="text-navy/80 font-bold text-[13px] py-2 px-3 hover:text-secondary hover:bg-white rounded-lg transition-colors flex items-center gap-2"><i data-lucide="brain" class="w-3.5 h-3.5 opacity-50"></i> 06. Nhận thức & học tập</a>
+                    <a href="/hanh-vi-xa-hoi-tre-tu-ky" class="text-navy/80 font-bold text-[13px] py-2 px-3 hover:text-secondary hover:bg-white rounded-lg transition-colors flex items-center gap-2"><i data-lucide="users" class="w-3.5 h-3.5 opacity-50"></i> 07. Hành vi & xã hội</a>
+                    <a href="/di-ung-nhay-cam-thuc-pham-tre-tu-ky" class="text-navy/80 font-bold text-[13px] py-2 px-3 hover:text-secondary hover:bg-white rounded-lg transition-colors flex items-center gap-2"><i data-lucide="shield-alert" class="w-3.5 h-3.5 opacity-50"></i> 08. Dị ứng thực phẩm</a>
+                    <a href="/he-mien-dich-tre-tu-ky" class="text-navy/80 font-bold text-[13px] py-2 px-3 hover:text-secondary hover:bg-white rounded-lg transition-colors flex items-center gap-2"><i data-lucide="shield-plus" class="w-3.5 h-3.5 opacity-50"></i> 09. Hệ miễn dịch</a>
+                    <a href="/dinh-duong-vi-chat-o-tre-tu-ky" class="text-navy/80 font-bold text-[13px] py-2 px-3 hover:text-secondary hover:bg-white rounded-lg transition-colors flex items-center gap-2"><i data-lucide="test-tube" class="w-3.5 h-3.5 opacity-50"></i> 10. Dinh dưỡng vi chất</a>
+                    <a href="/nang-luong-chuyen-hoa-o-tre-tu-ky" class="text-navy/80 font-bold text-[13px] py-2 px-3 hover:text-secondary hover:bg-white rounded-lg transition-colors flex items-center gap-2"><i data-lucide="zap" class="w-3.5 h-3.5 opacity-50"></i> 11. Năng lượng chuyển hóa</a>
+                </div>
+            </div>
+
+            <!-- Accordion: Dinh Dưỡng -->
+            <div class="flex flex-col border-b border-navy/5">
+                <button id="mobile-nutrition-toggle" aria-expanded="false" class="flex justify-between items-center py-4 text-navy font-bold uppercase tracking-widest text-sm w-full text-left outline-none rounded-lg">
+                    <span class="flex items-center gap-3"><i data-lucide="microscope" class="w-4 h-4 text-navy/40"></i> Dinh Dưỡng</span>
+                    <i data-lucide="chevron-down" class="w-4 h-4 text-navy/40 transition-transform duration-300" id="mobile-nutrition-icon"></i>
+                </button>
+                <div id="mobile-nutrition-content" class="hidden flex-col gap-2 pl-4 py-3 bg-white/60 rounded-2xl mb-4 border border-white shadow-[inset_0_2px_4px_rgba(0,0,0,0.02)]">
+                    <a href="/dinh-duong-cho-tre-tu-ky" class="text-secondary font-bold text-[13px] py-2 px-3 flex items-center gap-2 hover:text-secondary_dark">Tổng quan Dinh Dưỡng <i data-lucide="arrow-right" class="w-3 h-3"></i></a>
+                </div>
+            </div>
+
+
+
+        </div>
+
+        <div class="p-5 flex flex-col gap-3 mt-auto border-t border-white bg-white/80 backdrop-blur-md pb-8">
+            <?php 
+            $current_member = \Hieucon\Model\Member_Model::get_current_member(); 
+            if ( $current_member ) : 
+            ?>
+                <!-- Mobile CTA: Tài khoản -->
+                <a href="<?php echo home_url('/tai-khoan/'); ?>" class="bg-gradient-to-br from-navy to-navy/80 text-white p-3.5 rounded-2xl shadow-[0_4px_12px_rgba(10,25,49,0.15)] flex items-center gap-3 transition-transform hover:scale-[1.02] active:scale-95 group">
+                    <div class="bg-white/20 w-9 h-9 rounded-xl flex items-center justify-center shrink-0">
+                        <i data-lucide="user" class="w-5 h-5 text-secondary group-hover:text-white transition-colors"></i>
+                    </div>
+                    <div class="flex flex-col text-left">
+                        <span class="font-extrabold text-[13px] leading-tight">Tài Khoản Của Tôi</span>
+                        <span class="font-bold text-[10px] text-white/80 uppercase tracking-widest mt-0.5">Chào, <?php echo esc_html($current_member->full_name); ?></span>
+                    </div>
+                </a>
+            <?php else : ?>
+                <!-- Mobile CTA: Đăng nhập -->
+                <a href="<?php echo home_url('/dang-nhap/'); ?>" class="bg-gradient-to-br from-secondary to-secondary_dark text-white p-3.5 rounded-2xl shadow-[0_4px_12px_rgba(249,115,22,0.25)] flex items-center gap-3 transition-transform hover:scale-[1.02] active:scale-95 group">
+                    <div class="bg-white/20 w-9 h-9 rounded-xl flex items-center justify-center shrink-0">
+                        <i data-lucide="log-in" class="w-5 h-5 text-white"></i>
+                    </div>
+                    <div class="flex flex-col text-left">
+                        <span class="font-extrabold text-[13px] leading-tight">Đăng Nhập / Đăng Ký</span>
+                        <span class="font-bold text-[10px] text-white/80 uppercase tracking-widest mt-0.5">Xác thực OTP bảo mật</span>
+                    </div>
+                </a>
+            <?php endif; ?>
+
+            <a href="/chuyen-de" class="flex items-center gap-3 bg-white border border-secondary/20 hover:border-secondary p-3.5 rounded-2xl shadow-sm transition-all">
+                <div class="bg-secondary/10 p-2.5 rounded-xl text-secondary"><i data-lucide="book-open" class="w-5 h-5"></i></div>
+                <div class="flex flex-col text-left">
+                    <span class="font-extrabold text-navy text-[13px] leading-tight">Tài liệu Y sinh</span>
+                    <span class="text-[10px] font-extrabold text-secondary uppercase tracking-widest mt-0.5">Các chuyên đề chuyên sâu</span>
+                </div>
+            </a>
+            
+            <a href="https://www.facebook.com/groups/tukylaroiloantoanthan" target="_blank" class="bg-navy hover:bg-navy-light text-white p-4 rounded-2xl font-bold text-center shadow-md flex items-center justify-center gap-2.5 text-sm">
+                <i data-lucide="users" class="w-4 h-4 text-secondary"></i> Tham gia nhóm "Hiểu Con Từ Gốc"
+            </a>
+        </div>
+    </nav>
+</header>
 
     <style>
         @keyframes fadeIn {

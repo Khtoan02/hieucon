@@ -31,13 +31,27 @@ if ($current_member) {
 
         .lib-book-mockup {
             position: relative;
-            width: 220px;
-            height: 308px;
+            width: 140px;
+            height: 196px;
             transform-style: preserve-3d;
             transform: rotateY(-18deg) rotateX(3deg);
             transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.6s;
             box-shadow: 5px 5px 20px rgba(15, 23, 42, 0.08), 12px 15px 30px rgba(15, 23, 42, 0.08);
             border-radius: 2px 10px 10px 2px;
+        }
+
+        @media (min-width: 640px) {
+            .lib-book-mockup {
+                width: 180px;
+                height: 252px;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .lib-book-mockup {
+                width: 200px;
+                height: 280px;
+            }
         }
 
         .group:hover .lib-book-mockup {
@@ -99,7 +113,7 @@ if ($current_member) {
         }
     </style>
 
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
 
         <!-- Header Banner Cozy style -->
         <div class="text-center max-w-3xl mx-auto mb-16">
@@ -135,7 +149,7 @@ if ($current_member) {
 
         <?php if (have_posts()): ?>
             <!-- Expanded grid optimized for multiple books showcase -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10" id="ebook-grid">
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8" id="ebook-grid">
                 <?php while (have_posts()):
                     the_post();
                     $price_details = hieucon_get_ebook_price_details(get_the_ID());
@@ -171,13 +185,13 @@ if ($current_member) {
                     $cat_class_str = implode(' ', $cat_classes);
                     ?>
                     <article
-                        class="ebook-card <?php echo esc_attr($cat_class_str); ?> bg-white/90 backdrop-blur-md rounded-[2.5rem] border border-white shadow-soft hover:shadow-elegant transition-all duration-500 overflow-hidden flex flex-col group p-6 relative">
+                        class="ebook-card <?php echo esc_attr($cat_class_str); ?> bg-white/90 backdrop-blur-md rounded-[1.5rem] sm:rounded-[2.5rem] border border-white shadow-soft hover:shadow-elegant transition-all duration-500 overflow-hidden flex flex-col group p-4 sm:p-5 lg:p-6 relative">
 
                         <!-- Top visual display: 3D Mockup standing directly on the card -->
-                        <div class="lib-book-container h-96 flex items-center justify-center relative select-none mb-6">
+                        <div class="lib-book-container h-60 sm:h-72 lg:h-80 flex items-center justify-center relative select-none mb-4 sm:mb-6">
                             <!-- Cozy warm amber background glow behind book cover -->
                             <div
-                                class="absolute w-72 h-72 rounded-full bg-secondary/10 filter blur-3xl group-hover:scale-125 transition-transform duration-700 pointer-events-none">
+                                class="absolute w-48 h-48 sm:w-60 sm:h-60 rounded-full bg-secondary/10 filter blur-3xl group-hover:scale-125 transition-transform duration-700 pointer-events-none">
                             </div>
 
                             <!-- 3D Mockup cover -->
@@ -194,9 +208,9 @@ if ($current_member) {
                                     <?php else: ?>
                                         <div
                                             class="w-full h-full bg-gradient-to-tr from-teal-500 to-emerald-600 flex flex-col items-center justify-center p-3 text-center text-white">
-                                            <i data-lucide="book-open" class="w-10 h-10 mb-2 opacity-80 animate-pulse-slow"></i>
+                                            <i data-lucide="book-open" class="w-8 h-8 sm:w-10 sm:h-10 mb-2 opacity-80 animate-pulse-slow"></i>
                                             <span
-                                                class="text-xs font-bold font-serif line-clamp-3 leading-snug"><?php the_title(); ?></span>
+                                                class="text-[10px] sm:text-xs font-bold font-serif line-clamp-3 leading-snug"><?php the_title(); ?></span>
                                         </div>
                                     <?php endif; ?>
                                 </div>
@@ -210,14 +224,14 @@ if ($current_member) {
                         <div class="flex-1 flex flex-col justify-between z-10 relative">
                             <div>
                                 <!-- Consolidated Metadata Row -->
-                                <div class="flex flex-wrap items-center gap-2 mb-3.5">
+                                <div class="flex flex-wrap items-center gap-1.5 sm:gap-2 mb-3">
                                     <span
-                                        class="px-2.5 py-0.5 rounded-full bg-slate-100 border border-slate-200/50 text-[10px] font-extrabold text-slate-500 uppercase tracking-wider">
+                                        class="px-2 py-0.5 sm:px-2.5 sm:py-0.5 rounded-full bg-slate-100 border border-slate-200/50 text-[9px] sm:text-[10px] font-extrabold text-slate-500 uppercase tracking-wider">
                                         <?php echo esc_html($cat_label); ?>
                                     </span>
                                     <?php if ($is_promo): ?>
                                         <span
-                                            class="px-2.5 py-0.5 rounded-full bg-orange-50 border border-orange-100 text-[10px] font-bold text-orange-600 uppercase tracking-wider">
+                                            class="px-2 py-0.5 sm:px-2.5 sm:py-0.5 rounded-full bg-orange-50 border border-orange-100 text-[9px] sm:text-[10px] font-bold text-orange-600 uppercase tracking-wider">
                                             <?php
                                             if (!empty($price_details['promo_title'])) {
                                                 echo esc_html($price_details['promo_title']);
@@ -233,58 +247,56 @@ if ($current_member) {
                                             ?>
                                         </span>
                                     <?php endif; ?>
-                                    <span class="inline-flex items-center gap-1 text-[11px] font-bold text-slate-400">
+                                    <span class="inline-flex items-center gap-0.5 sm:gap-1 text-[10px] sm:text-[11px] font-bold text-slate-400">
                                         <span class="w-1 h-1 rounded-full bg-slate-300"></span>
-                                        <i data-lucide="file-text" class="w-3.5 h-3.5 text-slate-400"></i>
+                                        <i data-lucide="file-text" class="w-3 h-3 sm:w-3.5 sm:h-3.5 text-slate-400"></i>
                                         <span><?php echo $ebook_pages ? $ebook_pages . ' trang' : 'Đang biên soạn'; ?></span>
                                     </span>
                                     <?php if ($is_owned): ?>
-                                        <span class="inline-flex items-center gap-1 text-[11px] font-bold text-emerald-600 ml-auto">
+                                        <span class="inline-flex items-center gap-0.5 sm:gap-1 text-[10px] sm:text-[11px] font-bold text-emerald-600 ml-auto">
                                             <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 inline-block animate-pulse"></span>
                                             Đã sở hữu
                                         </span>
                                     <?php endif; ?>
                                 </div>
                                 <h2
-                                    class="text-base md:text-xl font-serif font-bold text-navy group-hover:text-primary transition-colors duration-300 line-clamp-2 mb-2">
+                                    class="text-sm sm:text-base lg:text-lg font-serif font-bold text-navy group-hover:text-primary transition-colors duration-300 line-clamp-2 mb-2">
                                     <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
                                 </h2>
-                                <p class="text-slate-500 text-xs md:text-sm line-clamp-2 mb-6 font-medium leading-relaxed">
+                                <p class="text-slate-500 text-[11px] sm:text-xs lg:text-sm line-clamp-2 mb-4 sm:mb-6 font-medium leading-relaxed">
                                     <?php echo wp_strip_all_tags(get_the_excerpt()); ?></p>
                             </div>
 
-                            <!-- Unified Premium Footer (Border-topped single row) -->
-                            <div class="border-t border-slate-100 pt-5 mt-auto flex items-center justify-between gap-4">
+                            <!-- Unified Premium Footer (Border-topped column-to-row) -->
+                            <div class="border-t border-slate-100 pt-4 sm:pt-5 mt-auto flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4">
                                 <!-- Price Display -->
                                 <div class="flex flex-col">
-                                    <span class="text-[9px] font-extrabold uppercase tracking-widest text-slate-400 mb-0.5">Giá
-                                        sở hữu</span>
+                                    <span class="text-[9px] font-extrabold uppercase tracking-widest text-slate-400 mb-0.5">Giá sở hữu</span>
                                     <?php if ($price === 0.0): ?>
-                                        <span class="text-emerald-600 font-extrabold text-sm md:text-base">Miễn phí</span>
+                                        <span class="text-emerald-600 font-extrabold text-sm sm:text-base">Miễn phí</span>
                                     <?php elseif (is_null($price)): ?>
-                                        <span class="text-slate-500 font-bold text-xs md:text-sm">Chưa mở bán</span>
+                                        <span class="text-slate-500 font-bold text-xs sm:text-sm">Chưa mở bán</span>
                                     <?php else: ?>
                                         <div class="flex items-baseline flex-wrap gap-1">
                                             <?php if ($is_promo): ?>
-                                                <span class="text-slate-450 line-through text-[13px] font-medium mr-1">
+                                                <span class="text-slate-450 line-through text-[11px] sm:text-[13px] font-medium mr-1">
                                                     <?php echo number_format($orig_price, 0, ',', '.'); ?>đ
                                                 </span>
                                             <?php endif; ?>
-                                            <span class="text-primary font-black text-[18px] md:text-[20px] leading-none">
-                                                <?php echo number_format($price, 0, ',', '.'); ?> <span
-                                                    class="text-[14px] font-bold">đ</span>
+                                            <span class="text-primary font-black text-[16px] sm:text-[18px] lg:text-[20px] leading-none">
+                                                <?php echo number_format($price, 0, ',', '.'); ?> <span class="text-[12px] sm:text-[14px] font-bold">đ</span>
                                             </span>
                                         </div>
                                     <?php endif; ?>
                                 </div>
 
                                 <!-- Filled Premium Action Button -->
-                                <div>
+                                <div class="w-full sm:w-auto text-center">
                                     <span
-                                        class="inline-flex items-center gap-1.5 text-[11px] font-bold text-white uppercase tracking-wider leading-none bg-navy group-hover:bg-primary px-5 py-3.5 rounded-full shadow-md group-hover:shadow-lg group-hover:-translate-y-0.5 transition-all duration-300">
-                                        Khám Phá Tài Liệu
+                                        class="inline-flex items-center justify-center gap-1.5 text-[10px] sm:text-[11px] font-bold text-white uppercase tracking-wider leading-none bg-navy group-hover:bg-primary px-4 py-2.5 sm:px-5 sm:py-3.5 rounded-full shadow-md group-hover:shadow-lg group-hover:-translate-y-0.5 transition-all duration-300 w-full sm:w-auto">
+                                        Khám Phá
                                         <i data-lucide="arrow-right"
-                                            class="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform"></i>
+                                            class="w-3 h-3 sm:w-3.5 sm:h-3.5 group-hover:translate-x-1 transition-transform"></i>
                                     </span>
                                 </div>
                             </div>
@@ -292,19 +304,29 @@ if ($current_member) {
 
                         <!-- Click action overlay border highlight effect covering the entire card -->
                         <a href="<?php the_permalink(); ?>"
-                            class="absolute inset-0 z-20 pointer-events-auto rounded-[2.5rem] border-2 border-transparent group-hover:border-primary/15 transition-all duration-500"></a>
+                            class="absolute inset-0 z-20 pointer-events-auto rounded-[1.5rem] sm:rounded-[2.5rem] border-2 border-transparent group-hover:border-primary/15 transition-all duration-500"></a>
                     </article>
                 <?php endwhile; ?>
             </div>
 
             <!-- Pagination Grid Cozy links -->
-            <div class="mt-16 flex justify-center">
+            <div class="mt-20 flex justify-center">
                 <?php
-                echo paginate_links([
-                    'prev_text' => '<span class="px-3.5 py-2 border border-slate-200 rounded-xl hover:bg-white text-navy font-bold text-xs flex items-center gap-1.5 shadow-sm"><i data-lucide="chevron-left" class="w-4 h-4"></i> Trước</span>',
-                    'next_text' => '<span class="px-3.5 py-2 border border-slate-200 rounded-xl hover:bg-white text-navy font-bold text-xs flex items-center gap-1.5 shadow-sm">Sau <i data-lucide="chevron-right" class="w-4 h-4"></i></span>',
-                    'type' => 'plain',
+                $pagination = paginate_links([
+                    'prev_text' => '<i data-lucide="chevron-left" class="w-5 h-5"></i>',
+                    'next_text' => '<i data-lucide="chevron-right" class="w-5 h-5"></i>',
+                    'type' => 'array',
                 ]);
+
+                if ($pagination) {
+                    echo '<nav class="inline-flex items-center gap-2 bg-white/60 backdrop-blur-md p-2 rounded-2xl border border-white shadow-soft" aria-label="Pagination">';
+                    foreach ($pagination as $page) {
+                        $page = str_replace('page-numbers', 'flex items-center justify-center min-w-[40px] h-[40px] rounded-xl font-bold transition-all text-navy hover:bg-navy hover:text-white', $page);
+                        $page = str_replace('current', '!bg-secondary !text-white shadow-md', $page);
+                        echo $page;
+                    }
+                    echo '</nav>';
+                }
                 ?>
             </div>
 
@@ -372,6 +394,16 @@ if ($current_member) {
                 });
             });
         }
+
+        // Pagination current class helper
+        const paginations = document.querySelectorAll('.page-numbers');
+        paginations.forEach(el => {
+            if(el.tagName.toLowerCase() === 'span' && el.classList.contains('current')) {
+                el.className = 'page-numbers current flex items-center justify-center min-w-[40px] h-[40px] rounded-xl font-bold transition-all !bg-secondary !text-white shadow-md px-2';
+            } else if (!el.classList.contains('flex')) {
+                el.classList.add('flex', 'items-center', 'justify-center', 'min-w-[40px]', 'h-[40px]', 'rounded-xl', 'font-bold', 'transition-all', 'text-navy', 'hover:bg-navy', 'hover:text-white', 'px-2');
+            }
+        });
     });
 </script>
 
