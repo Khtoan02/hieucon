@@ -88,7 +88,7 @@ $account_nonce = wp_create_nonce('hieucon_account_nonce');
                 ?>
                 <button type="button" onclick="switchAccountTab('ebooks')" id="menu-ebooks-btn"
                     class="w-full text-left px-5 py-3.5 rounded-2xl text-sm font-bold transition-all text-navy bg-white shadow-soft border border-white flex items-center gap-2">
-                    <i data-lucide="book-open" class="w-4 h-4"></i> Danh sách tài liệu của tôi
+                    <i data-lucide="book-open" class="w-4 h-4"></i> Tài liệu của tôi
                 </button>
                 <button type="button" onclick="switchAccountTab('redeem')" id="menu-redeem-btn"
                     class="w-full text-left px-5 py-3.5 rounded-2xl text-sm font-bold transition-all text-navy/60 hover:text-navy hover:bg-white/50 flex items-center gap-2">
