@@ -704,6 +704,13 @@ $ref_nonce = wp_create_nonce('hieucon_ref_nonce');
                     setTimeout(() => window.location.reload(), 2000);
                 }
                 return;
+            } else if (refData.data && refData.data.message && !refData.data.message.includes('không hợp lệ hoặc không tồn tại')) {
+                // Nếu là mã giới thiệu thật nhưng bị lỗi cụ thể (hết lượt, đã dùng...) thì báo lỗi luôn
+                showAccountAlert(refData.data.message);
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = 'Kích hoạt ngay <i data-lucide="sparkles" class="w-4 h-4"></i>';
+                lucide.createIcons();
+                return;
             }
         } catch (e) {
             console.error('Error verifying referral code:', e);
@@ -738,7 +745,7 @@ $ref_nonce = wp_create_nonce('hieucon_ref_nonce');
                 lucide.createIcons();
             }
         } catch (e) {
-            showAccountAlert('Lỗi kết nối khi gửi yêu cầu kích hoạt.');
+            showAccountAlert('Mã kích hoạt không đúng hoặc không hợp lệ.');
             submitBtn.disabled = false;
             submitBtn.innerHTML = 'Kích hoạt ngay <i data-lucide="sparkles" class="w-4 h-4"></i>';
             lucide.createIcons();
