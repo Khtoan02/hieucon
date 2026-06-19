@@ -164,7 +164,7 @@ $course_cats = get_terms([
                         <!-- Link: Ebook -->
                         <a href="<?php echo esc_url(get_post_type_archive_link('ebook')); ?>"
                             class="text-navy/80 hover:text-navy hover:text-secondary font-extrabold transition-colors text-[12px] xl:text-[13px] uppercase tracking-[0.15em] flex items-center gap-1.5 py-4 relative outline-none px-2 shrink-0">
-                            Tài liệu
+                            Thư viện tài liệu
                             <span
                                 class="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-[3px] bg-secondary transition-all duration-300 hover:w-full opacity-0 hover:opacity-100 rounded-t-md"></span>
                         </a>

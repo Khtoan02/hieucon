@@ -364,7 +364,7 @@ $account_nonce = wp_create_nonce('hieucon_account_nonce');
                             <i data-lucide="ticket" class="w-5 h-5"></i>
                         </div>
                         <div>
-                            <h4 class="text-sm font-bold text-navy mb-1">Mã giới thiệu & Kích hoạt học liệu Hieucon</h4>
+                            <h4 class="text-sm font-bold text-navy mb-1">Mã giới thiệu Hieucon</h4>
                             <p class="text-xs text-slate-500 leading-relaxed font-medium">Nhập mã giới thiệu, mã giảm giá hoặc mã kích hoạt học liệu của bạn vào đây để mở khóa nội dung hoặc nhận ưu đãi.</p>
                         </div>
                     </div>
