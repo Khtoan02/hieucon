@@ -161,17 +161,6 @@ $auth_nonce        = wp_create_nonce( 'hieucon_auth_nonce' );
                         <input type="text" name="full_name" required class="w-full px-4 py-3 rounded-xl border border-slate-200 bg-white/50 focus:bg-white focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all text-sm" placeholder="Nguyễn Văn A">
                     </div>
 
-                    <div class="grid grid-cols-2 gap-4">
-                        <div class="space-y-1">
-                            <label class="block text-xs font-bold text-navy/70 uppercase tracking-widest pl-1">Số điện thoại</label>
-                            <input type="tel" name="phone_number" class="w-full px-4 py-3 rounded-xl border border-slate-200 bg-white/50 focus:bg-white focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all text-sm" placeholder="0987654321">
-                        </div>
-                        <div class="space-y-1">
-                            <label class="block text-xs font-bold text-navy/70 uppercase tracking-widest pl-1">Ngày sinh</label>
-                            <input type="date" name="date_of_birth" class="w-full px-4 py-3 rounded-xl border border-slate-200 bg-white/50 focus:bg-white focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all text-sm">
-                        </div>
-                    </div>
-
                     <div class="space-y-1">
                         <label class="block text-xs font-bold text-navy/70 uppercase tracking-widest pl-1">Địa chỉ Email</label>
                         <div class="relative flex gap-2">
