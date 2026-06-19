@@ -31,6 +31,7 @@ function hieucon_register_theme_settings() {
     register_setting('hieucon_theme_options', 'hieucon_custom_body_code');
     register_setting('hieucon_theme_options', 'hieucon_custom_footer_code');
     register_setting('hieucon_theme_options', 'hieucon_custom_css');
+    register_setting('hieucon_theme_options', 'hieucon_show_courses_in_account');
 }
 add_action('admin_init', 'hieucon_register_theme_settings');
 
@@ -187,6 +188,21 @@ function hieucon_theme_settings_html() {
                     <td>
                         <textarea name="hieucon_custom_css" id="hieucon_custom_css" rows="8" class="large-text code"><?php echo esc_textarea($custom_css); ?></textarea>
                         <p class="description">Viết CSS để ghi đè giao diện web. Không cần thêm thẻ &lt;style&gt;.</p>
+                    </td>
+                </tr>
+            </table>
+            
+            <h2 class="title">3. Cài đặt Tài khoản Hội viên</h2>
+            <table class="form-table">
+                <tr>
+                    <th scope="row"><label>Hiển thị Khóa học?</label></th>
+                    <td>
+                        <?php $show_courses = get_option('hieucon_show_courses_in_account', '0'); ?>
+                        <label>
+                            <input type="checkbox" name="hieucon_show_courses_in_account" value="1" <?php checked($show_courses, '1'); ?>>
+                            Cho phép hiển thị tab "Khóa học của tôi" và "Kích hoạt khóa học" ở trang tài khoản hội viên.
+                        </label>
+                        <p class="description">Mặc định tính năng khóa học sẽ bị ẩn ở trang tài khoản, chỉ hiển thị tài liệu/cẩm nang.</p>
                     </td>
                 </tr>
             </table>

@@ -574,7 +574,7 @@ function hieucon_ajax_apply_referral_code() {
     $post_id   = isset( $_POST['post_id'] ) ? intval( $_POST['post_id'] ) : 0;
     $post_type = isset( $_POST['post_type'] ) ? sanitize_key( $_POST['post_type'] ) : '';
 
-    if ( empty( $code ) || ! $post_id ) {
+    if ( empty( $code ) ) {
         wp_send_json_error( [ 'message' => 'Thông tin không hợp lệ.' ] );
     }
 
@@ -619,6 +619,21 @@ function hieucon_ajax_apply_referral_code() {
             'message' => 'Kích hoạt thành công! Đã mở khóa miễn phí toàn bộ thư viện học liệu.',
             'action' => 'reload'
         ] );
+    }
+
+    // Nếu không truyền post_id (đăng ký từ trang tài khoản) thì trả về thông báo hợp lệ
+    if ( ! $post_id ) {
+        if ( $type === 'free_items' ) {
+            wp_send_json_success( [
+                'message' => 'Mã kích hoạt hợp lệ! Hãy truy cập tài liệu được áp dụng trong Thư viện để xem miễn phí.',
+                'action' => 'message'
+            ] );
+        } elseif ( $type === 'discount_percent' || $type === 'discount_fixed' ) {
+            wp_send_json_success( [
+                'message' => 'Mã giảm giá hợp lệ! Hãy truy cập tài liệu bạn muốn mua trong Thư viện để áp dụng mã giảm giá này.',
+                'action' => 'message'
+            ] );
+        }
     }
 
     // Kiểm tra tính hợp lệ của học liệu áp dụng (nếu giới hạn)

@@ -83,26 +83,31 @@ $account_nonce = wp_create_nonce('hieucon_account_nonce');
 
             <!-- Sidebar Menu -->
             <div class="md:col-span-1 space-y-2">
-                <button type="button" onclick="switchAccountTab('profile')" id="menu-profile-btn"
-                    class="w-full text-left px-5 py-3.5 rounded-2xl text-sm font-bold transition-all text-navy bg-white shadow-soft border border-white flex items-center gap-2">
-                    <i data-lucide="user" class="w-4 h-4"></i> Thông tin cá nhân
-                </button>
-                <button type="button" onclick="switchAccountTab('password')" id="menu-password-btn"
-                    class="w-full text-left px-5 py-3.5 rounded-2xl text-sm font-bold transition-all text-navy/60 hover:text-navy hover:bg-white/50 flex items-center gap-2">
-                    <i data-lucide="key" class="w-4 h-4"></i> Đổi mật khẩu
-                </button>
-                <button type="button" onclick="switchAccountTab('courses')" id="menu-courses-btn"
-                    class="w-full text-left px-5 py-3.5 rounded-2xl text-sm font-bold transition-all text-navy/60 hover:text-navy hover:bg-white/50 flex items-center gap-2">
-                    <i data-lucide="graduation-cap" class="w-4 h-4"></i> Khóa học của tôi
+                <?php
+                $show_courses = get_option('hieucon_show_courses_in_account', '0') === '1';
+                ?>
+                <button type="button" onclick="switchAccountTab('ebooks')" id="menu-ebooks-btn"
+                    class="w-full text-left px-5 py-3.5 rounded-2xl text-sm font-bold transition-all <?php echo $show_courses ? 'text-navy/60 hover:text-navy hover:bg-white/50' : 'text-navy bg-white shadow-soft border border-white'; ?> flex items-center gap-2">
+                    <i data-lucide="book-open" class="w-4 h-4"></i> Danh sách tài liệu của tôi
                 </button>
                 <button type="button" onclick="switchAccountTab('redeem')" id="menu-redeem-btn"
                     class="w-full text-left px-5 py-3.5 rounded-2xl text-sm font-bold transition-all text-navy/60 hover:text-navy hover:bg-white/50 flex items-center gap-2">
-                    <i data-lucide="ticket" class="w-4 h-4"></i> Kích hoạt khóa học
+                    <i data-lucide="ticket" class="w-4 h-4"></i> Nhập mã giới thiệu
                 </button>
-                <button type="button" onclick="switchAccountTab('ebooks')" id="menu-ebooks-btn"
-                    class="w-full text-left px-5 py-3.5 rounded-2xl text-sm font-bold transition-all text-navy/60 hover:text-navy hover:bg-white/50 flex items-center gap-2">
-                    <i data-lucide="book-open" class="w-4 h-4"></i> Tài liệu của tôi
-                </button>
+                <?php if ($show_courses) : ?>
+                    <button type="button" onclick="switchAccountTab('courses')" id="menu-courses-btn"
+                        class="w-full text-left px-5 py-3.5 rounded-2xl text-sm font-bold transition-all text-navy/60 hover:text-navy hover:bg-white/50 flex items-center gap-2">
+                        <i data-lucide="graduation-cap" class="w-4 h-4"></i> Khóa học của tôi
+                    </button>
+                    <button type="button" onclick="switchAccountTab('profile')" id="menu-profile-btn"
+                        class="w-full text-left px-5 py-3.5 rounded-2xl text-sm font-bold transition-all <?php echo $show_courses ? 'text-navy bg-white shadow-soft border border-white' : 'text-navy/60 hover:text-navy hover:bg-white/50'; ?> flex items-center gap-2">
+                        <i data-lucide="user" class="w-4 h-4"></i> Thông tin cá nhân
+                    </button>
+                    <button type="button" onclick="switchAccountTab('password')" id="menu-password-btn"
+                        class="w-full text-left px-5 py-3.5 rounded-2xl text-sm font-bold transition-all text-navy/60 hover:text-navy hover:bg-white/50 flex items-center gap-2">
+                        <i data-lucide="key" class="w-4 h-4"></i> Đổi mật khẩu
+                    </button>
+                <?php endif; ?>
             </div>
 
             <!-- Content Area Card -->
@@ -114,7 +119,7 @@ $account_nonce = wp_create_nonce('hieucon_account_nonce');
                 </div>
 
                 <!-- ================= TAB 1: THÔNG TIN CÁ NHÂN ================= -->
-                <div id="tab-profile-view" class="transition-opacity duration-300">
+                <div id="tab-profile-view" class="<?php echo $show_courses ? '' : 'hidden'; ?> transition-opacity duration-300">
                     <h2 class="text-lg font-serif font-bold text-navy mb-6 pb-2 border-b border-slate-100">Cập nhật
                         Thông tin Cá nhân</h2>
 
@@ -348,32 +353,28 @@ $account_nonce = wp_create_nonce('hieucon_account_nonce');
                     ?>
                 </div>
 
-                <!-- ================= TAB 4: KÍCH HOẠT KHÓA HỌC ================= -->
+                <!-- ================= TAB 4: NHẬP MÃ GIỚI THIỆU ================= -->
                 <div id="tab-redeem-view" class="hidden transition-opacity duration-300">
-                    <h2 class="text-lg font-serif font-bold text-navy mb-6 pb-2 border-b border-slate-100">Kích hoạt
-                        Khóa học của Bạn</h2>
+                    <h2 class="text-lg font-serif font-bold text-navy mb-6 pb-2 border-b border-slate-100">Nhập mã giới thiệu hoặc kích hoạt</h2>
 
                     <div
                         class="bg-gradient-to-r from-orange-50/50 via-amber-50/30 to-slate-50 p-6 rounded-3xl border border-orange-100/50 mb-6 flex items-start gap-4">
                         <div
                             class="w-10 h-10 rounded-full bg-orange-100 text-orange-600 flex items-center justify-center shrink-0 border border-orange-200">
-                            <i data-lucide="gift" class="w-5 h-5"></i>
+                            <i data-lucide="ticket" class="w-5 h-5"></i>
                         </div>
                         <div>
-                            <h4 class="text-sm font-bold text-navy mb-1">Mã kích hoạt E-Learning Hieucon</h4>
-                            <p class="text-xs text-slate-500 leading-relaxed font-medium">Nhập mã kích hoạt của bạn để
-                                nhận toàn quyền truy cập bài giảng và bài tập thực hành. Mỗi mã chỉ được sử dụng một lần
-                                cho một tài khoản hội viên.</p>
+                            <h4 class="text-sm font-bold text-navy mb-1">Mã giới thiệu & Kích hoạt học liệu Hieucon</h4>
+                            <p class="text-xs text-slate-500 leading-relaxed font-medium">Nhập mã giới thiệu, mã giảm giá hoặc mã kích hoạt học liệu của bạn vào đây để mở khóa nội dung hoặc nhận ưu đãi.</p>
                         </div>
                     </div>
 
                     <form id="form-redeem-code" onsubmit="handleRedeemCode(event)" class="space-y-5">
                         <div class="space-y-1">
-                            <label class="block text-xs font-bold text-navy/70 uppercase tracking-widest pl-1">Nhập mã
-                                kích hoạt (Redeem Code)</label>
+                            <label class="block text-xs font-bold text-navy/70 uppercase tracking-widest pl-1">Nhập mã của bạn (Referral / Redeem Code)</label>
                             <input type="text" id="redeem-code-input" required
-                                class="w-full px-4 py-3.5 rounded-xl border border-slate-200 bg-white/50 focus:bg-white focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all text-sm font-mono tracking-wider placeholder:font-sans placeholder:tracking-normal"
-                                placeholder="Ví dụ: HIEUCON-XXXX-XXXX">
+                                class="w-full px-4 py-3.5 rounded-xl border border-slate-200 bg-white/50 focus:bg-white focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all text-sm font-mono tracking-wider placeholder:font-sans placeholder:tracking-normal text-center uppercase"
+                                placeholder="Ví dụ: FREEALL, GIFT50, HIEUCON-XXXX">
                         </div>
 
                         <div class="pt-2">
@@ -386,7 +387,7 @@ $account_nonce = wp_create_nonce('hieucon_account_nonce');
                 </div>
 
                 <!-- ================= TAB 5: EBOOK CỦA TÔI ================= -->
-                <div id="tab-ebooks-view" class="hidden transition-opacity duration-300">
+                <div id="tab-ebooks-view" class="<?php echo $show_courses ? 'hidden' : ''; ?> transition-opacity duration-300">
                     <h2 class="text-lg font-serif font-bold text-navy mb-6 pb-2 border-b border-slate-100">Cẩm nang của
                         tôi</h2>
 
@@ -584,7 +585,7 @@ $account_nonce = wp_create_nonce('hieucon_account_nonce');
         }
     }
 
-    // --- AJAX KÍCH HOẠT MÃ KHÓA HỌC ---
+    // --- AJAX KÍCH HOẠT MÃ KHÓA HỌC / MÃ GIỚI THIỆU ---
     async function handleRedeemCode(event) {
         event.preventDefault();
 
@@ -602,6 +603,34 @@ $account_nonce = wp_create_nonce('hieucon_account_nonce');
         submitBtn.innerHTML = 'Đang kích hoạt... <i data-lucide="loader" class="w-4 h-4 animate-spin"></i>';
         lucide.createIcons();
 
+        // 1. Try applying as a referral code first
+        const refFormData = new FormData();
+        refFormData.append('action', 'hieucon_apply_referral_code');
+        refFormData.append('code', codeVal);
+        refFormData.append('nonce', '<?php echo wp_create_nonce("hieucon_ref_nonce"); ?>');
+        refFormData.append('post_id', '0');
+
+        try {
+            const refRes = await fetch(ajaxUrl, { method: 'POST', body: refFormData });
+            const refData = await refRes.json();
+
+            if (refData.success) {
+                showAccountAlert(refData.data.message, 'success');
+                input.value = '';
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = 'Kích hoạt ngay <i data-lucide="sparkles" class="w-4 h-4"></i>';
+                lucide.createIcons();
+
+                if (refData.data.action === 'reload') {
+                    setTimeout(() => window.location.reload(), 2000);
+                }
+                return;
+            }
+        } catch (e) {
+            console.error('Error verifying referral code:', e);
+        }
+
+        // 2. If not a valid referral code, fallback to traditional course code activation
         const formData = new FormData();
         formData.append('action', 'hieucon_redeem_course_code');
         formData.append('code', codeVal);
