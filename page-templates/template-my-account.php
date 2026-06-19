@@ -41,7 +41,7 @@ $ref_nonce = wp_create_nonce('hieucon_ref_nonce');
 
 <main id="primary"
     class="site-main min-h-screen py-12 md:py-20 bg-gradient-to-tr from-slate-50 via-slate-100 to-orange-50/20">
-    <div class="max-w-[1000px] mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8">
 
         <!-- Header tài khoản -->
         <div
@@ -252,7 +252,7 @@ $ref_nonce = wp_create_nonce('hieucon_ref_nonce');
 
                         if ($my_courses_query->have_posts()) {
                             ?>
-                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                                 <?php while ($my_courses_query->have_posts()):
                                     $my_courses_query->the_post();
                                     $price = get_post_meta(get_the_ID(), '_course_price', true);
@@ -508,7 +508,7 @@ $ref_nonce = wp_create_nonce('hieucon_ref_nonce');
 
                         if ($my_ebooks_query->have_posts()) {
                             ?>
-                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                                 <?php while ($my_ebooks_query->have_posts()):
                                     $my_ebooks_query->the_post();
                                     $pdf_url = get_post_meta(get_the_ID(), '_ebook_pdf_url', true);
