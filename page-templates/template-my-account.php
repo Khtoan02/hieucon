@@ -32,6 +32,7 @@ get_header();
 
 $turnstile_sitekey = ''; // get_option( 'hieucon_turnstile_sitekey', '' );
 $account_nonce = wp_create_nonce('hieucon_account_nonce');
+$ref_nonce = wp_create_nonce('hieucon_ref_nonce');
 ?>
 
 <?php if (!empty($turnstile_sitekey)): ?>
@@ -685,7 +686,7 @@ $account_nonce = wp_create_nonce('hieucon_account_nonce');
         const refFormData = new FormData();
         refFormData.append('action', 'hieucon_apply_referral_code');
         refFormData.append('code', codeVal);
-        refFormData.append('nonce', '<?php echo wp_create_nonce("hieucon_ref_nonce"); ?>');
+        refFormData.append('nonce', '<?php echo esc_attr($ref_nonce); ?>');
         refFormData.append('post_id', '0');
 
         try {
