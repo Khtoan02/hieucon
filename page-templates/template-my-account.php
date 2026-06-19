@@ -87,7 +87,7 @@ $account_nonce = wp_create_nonce('hieucon_account_nonce');
                 $show_courses = get_option('hieucon_show_courses_in_account', '0') === '1';
                 ?>
                 <button type="button" onclick="switchAccountTab('ebooks')" id="menu-ebooks-btn"
-                    class="w-full text-left px-5 py-3.5 rounded-2xl text-sm font-bold transition-all <?php echo $show_courses ? 'text-navy/60 hover:text-navy hover:bg-white/50' : 'text-navy bg-white shadow-soft border border-white'; ?> flex items-center gap-2">
+                    class="w-full text-left px-5 py-3.5 rounded-2xl text-sm font-bold transition-all text-navy bg-white shadow-soft border border-white flex items-center gap-2">
                     <i data-lucide="book-open" class="w-4 h-4"></i> Danh sách tài liệu của tôi
                 </button>
                 <button type="button" onclick="switchAccountTab('redeem')" id="menu-redeem-btn"
@@ -99,15 +99,15 @@ $account_nonce = wp_create_nonce('hieucon_account_nonce');
                         class="w-full text-left px-5 py-3.5 rounded-2xl text-sm font-bold transition-all text-navy/60 hover:text-navy hover:bg-white/50 flex items-center gap-2">
                         <i data-lucide="graduation-cap" class="w-4 h-4"></i> Khóa học của tôi
                     </button>
-                    <button type="button" onclick="switchAccountTab('profile')" id="menu-profile-btn"
-                        class="w-full text-left px-5 py-3.5 rounded-2xl text-sm font-bold transition-all <?php echo $show_courses ? 'text-navy bg-white shadow-soft border border-white' : 'text-navy/60 hover:text-navy hover:bg-white/50'; ?> flex items-center gap-2">
-                        <i data-lucide="user" class="w-4 h-4"></i> Thông tin cá nhân
-                    </button>
-                    <button type="button" onclick="switchAccountTab('password')" id="menu-password-btn"
-                        class="w-full text-left px-5 py-3.5 rounded-2xl text-sm font-bold transition-all text-navy/60 hover:text-navy hover:bg-white/50 flex items-center gap-2">
-                        <i data-lucide="key" class="w-4 h-4"></i> Đổi mật khẩu
-                    </button>
                 <?php endif; ?>
+                <button type="button" onclick="switchAccountTab('profile')" id="menu-profile-btn"
+                    class="w-full text-left px-5 py-3.5 rounded-2xl text-sm font-bold transition-all text-navy/60 hover:text-navy hover:bg-white/50 flex items-center gap-2">
+                    <i data-lucide="user" class="w-4 h-4"></i> Thông tin cá nhân
+                </button>
+                <button type="button" onclick="switchAccountTab('password')" id="menu-password-btn"
+                    class="w-full text-left px-5 py-3.5 rounded-2xl text-sm font-bold transition-all text-navy/60 hover:text-navy hover:bg-white/50 flex items-center gap-2">
+                    <i data-lucide="key" class="w-4 h-4"></i> Đổi mật khẩu
+                </button>
             </div>
 
             <!-- Content Area Card -->
@@ -119,7 +119,7 @@ $account_nonce = wp_create_nonce('hieucon_account_nonce');
                 </div>
 
                 <!-- ================= TAB 1: THÔNG TIN CÁ NHÂN ================= -->
-                <div id="tab-profile-view" class="<?php echo $show_courses ? '' : 'hidden'; ?> transition-opacity duration-300">
+                <div id="tab-profile-view" class="hidden transition-opacity duration-300">
                     <h2 class="text-lg font-serif font-bold text-navy mb-6 pb-2 border-b border-slate-100">Cập nhật
                         Thông tin Cá nhân</h2>
 
@@ -384,10 +384,88 @@ $account_nonce = wp_create_nonce('hieucon_account_nonce');
                             </button>
                         </div>
                     </form>
+
+                    <?php
+                    // Lấy tất cả mã giới thiệu mà hội viên hiện tại đã sử dụng
+                    $member_id = intval($current_member->id);
+                    $applied_codes_query = new WP_Query([
+                        'post_type' => 'referral_code',
+                        'posts_per_page' => -1,
+                        'post_status' => 'publish',
+                    ]);
+
+                    $my_used_codes = [];
+                    if ($applied_codes_query->have_posts()) {
+                        while ($applied_codes_query->have_posts()) {
+                            $applied_codes_query->the_post();
+                            $used_by = get_post_meta(get_the_ID(), '_ref_used_by_members', true);
+                            if (is_array($used_by) && in_array($member_id, $used_by)) {
+                                $type_label = '';
+                                $type = get_post_meta(get_the_ID(), '_ref_type', true);
+                                $val = get_post_meta(get_the_ID(), '_ref_discount_value', true);
+                                if ($type === 'free_all') {
+                                    $type_label = 'Miễn phí toàn bộ thư viện';
+                                } elseif ($type === 'free_items') {
+                                    $type_label = 'Mở khóa miễn phí tài liệu được áp dụng';
+                                } elseif ($type === 'discount_percent') {
+                                    $type_label = 'Giảm giá ' . $val . '%';
+                                } elseif ($type === 'discount_fixed') {
+                                    $type_label = 'Giảm giá cố định ' . number_format($val, 0, ',', '.') . 'đ';
+                                }
+
+                                $my_used_codes[] = [
+                                    'code' => get_the_title(),
+                                    'benefit' => $type_label,
+                                ];
+                            }
+                        }
+                        wp_reset_postdata();
+                    }
+
+                    if (hieucon_member_has_unlocked_all($member_id)) {
+                        // Thêm trường hợp nếu có unlock all toàn hệ thống nhưng ko tìm thấy code cụ thể (vẫn show)
+                        $has_freeall = false;
+                        foreach ($my_used_codes as $c) {
+                            if (strpos(strtolower($c['benefit']), 'toàn bộ') !== false) {
+                                $has_freeall = true;
+                                break;
+                            }
+                        }
+                        if (!$has_freeall) {
+                            $my_used_codes[] = [
+                                'code' => 'HỆ THỐNG',
+                                'benefit' => 'Đã mở khoá toàn bộ thư viện học liệu (Admin cấp)',
+                            ];
+                        }
+                    }
+
+                    if (!empty($my_used_codes)):
+                    ?>
+                        <div class="mt-8 border-t border-slate-100 pt-6">
+                            <h3 class="text-xs font-bold text-navy/70 uppercase tracking-widest mb-4">Mã giới thiệu đang hoạt động trên tài khoản</h3>
+                            <div class="space-y-3">
+                                <?php foreach ($my_used_codes as $item): ?>
+                                    <div class="flex items-center justify-between p-3.5 bg-emerald-50/50 border border-emerald-100 rounded-2xl">
+                                        <div class="flex items-center gap-2.5">
+                                            <span class="px-2.5 py-1 bg-emerald-600 text-white rounded-lg font-mono text-[10px] font-bold uppercase tracking-wider">
+                                                <?php echo esc_html($item['code']); ?>
+                                            </span>
+                                            <span class="text-xs text-navy/80 font-semibold">
+                                                <?php echo esc_html($item['benefit']); ?>
+                                            </span>
+                                        </div>
+                                        <span class="flex items-center gap-1 text-[10px] font-bold text-emerald-600 uppercase tracking-wider shrink-0 bg-emerald-100/60 px-2 py-0.5 rounded-full">
+                                            <i data-lucide="check-circle" class="w-3.5 h-3.5"></i> Đang áp dụng
+                                        </span>
+                                    </div>
+                                <?php endforeach; ?>
+                            </div>
+                        </div>
+                    <?php endif; ?>
                 </div>
 
                 <!-- ================= TAB 5: EBOOK CỦA TÔI ================= -->
-                <div id="tab-ebooks-view" class="<?php echo $show_courses ? 'hidden' : ''; ?> transition-opacity duration-300">
+                <div id="tab-ebooks-view" class="transition-opacity duration-300">
                     <h2 class="text-lg font-serif font-bold text-navy mb-6 pb-2 border-b border-slate-100">Cẩm nang của
                         tôi</h2>
 

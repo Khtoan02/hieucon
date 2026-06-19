@@ -183,6 +183,30 @@ function hieucon_referral_code_metabox_html($post)
                 <?php endif; ?>
             </td>
         </tr>
+        <?php if (!empty($used_by)): ?>
+        <tr>
+            <th>Danh sách người đã dùng</th>
+            <td>
+                <div style="max-height: 150px; overflow-y: auto; border: 1px solid #ccd0d4; padding: 10px; background: #f9f9f9; border-radius: 4px; max-width: 500px;">
+                    <ul style="margin: 0; padding-left: 15px; list-style-type: decimal;">
+                        <?php 
+                        global $wpdb;
+                        $table = $wpdb->prefix . 'hieucon_members';
+                        foreach ($used_by as $uid) {
+                            $member_row = $wpdb->get_row($wpdb->prepare("SELECT full_name, email FROM $table WHERE id = %d", $uid));
+                            if ($member_row) {
+                                echo '<li style="margin-bottom: 4px;"><strong>' . esc_html($member_row->full_name) . '</strong> (' . esc_html($member_row->email) . ')</li>';
+                            } else {
+                                echo '<li style="margin-bottom: 4px; color:#999;">Thành viên #' . intval($uid) . ' (Đã bị xoá hoặc không tồn tại)</li>';
+                            }
+                        }
+                        ?>
+                    </ul>
+                </div>
+                <p class="description">Danh sách chi tiết các hội viên đã kích hoạt thành công mã giới thiệu này.</p>
+            </td>
+        </tr>
+        <?php endif; ?>
     </table>
 
     <script>

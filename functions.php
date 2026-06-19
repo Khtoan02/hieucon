@@ -621,12 +621,32 @@ function hieucon_ajax_apply_referral_code() {
         ] );
     }
 
-    // Nếu không truyền post_id (đăng ký từ trang tài khoản) thì trả về thông báo hợp lệ
+    // Nếu không truyền post_id (đăng ký từ trang tài khoản) thì xử lý/trả về thông báo hợp lệ
     if ( ! $post_id ) {
         if ( $type === 'free_items' ) {
+            // Tự động thêm các khoá học/ebook miễn phí trong danh sách áp dụng vào tài khoản của hội viên
+            $applied_courses = get_post_meta( $ref_post_id, '_ref_applied_courses', true );
+            $applied_ebooks  = get_post_meta( $ref_post_id, '_ref_applied_ebooks', true );
+            if ( ! is_array( $applied_courses ) ) $applied_courses = [];
+            if ( ! is_array( $applied_ebooks ) ) $applied_ebooks = [];
+
+            if ( ! empty( $applied_courses ) ) {
+                $enrolled_courses = hieucon_get_member_enrolled_courses( $member_id );
+                $enrolled_courses = array_unique( array_merge( $enrolled_courses, $applied_courses ) );
+                hieucon_update_member_enrolled_courses( $member_id, $enrolled_courses );
+            }
+            if ( ! empty( $applied_ebooks ) ) {
+                $enrolled_ebooks = hieucon_get_member_enrolled_ebooks( $member_id );
+                $enrolled_ebooks = array_unique( array_merge( $enrolled_ebooks, $applied_ebooks ) );
+                hieucon_update_member_enrolled_ebooks( $member_id, $enrolled_ebooks );
+            }
+
+            $used_by[] = $member_id;
+            update_post_meta( $ref_post_id, '_ref_used_by_members', $used_by );
+
             wp_send_json_success( [
-                'message' => 'Mã kích hoạt hợp lệ! Hãy truy cập tài liệu được áp dụng trong Thư viện để xem miễn phí.',
-                'action' => 'message'
+                'message' => 'Kích hoạt thành công! Đã tự động thêm các tài liệu được áp dụng vào tài khoản của bạn.',
+                'action' => 'reload'
             ] );
         } elseif ( $type === 'discount_percent' || $type === 'discount_fixed' ) {
             wp_send_json_success( [
