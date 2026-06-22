@@ -580,7 +580,7 @@ function hieucon_ajax_apply_referral_code() {
 
     global $wpdb;
     $ref_post_id = $wpdb->get_var( $wpdb->prepare(
-        "SELECT ID FROM $wpdb->posts WHERE post_title = %s AND post_type = 'referral_code' AND post_status = 'publish' LIMIT 1",
+        "SELECT ID FROM $wpdb->posts WHERE UPPER(post_title) = UPPER(%s) AND post_type = 'referral_code' AND post_status = 'publish' LIMIT 1",
         $code
     ) );
 

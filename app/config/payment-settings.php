@@ -1281,7 +1281,7 @@ function hieucon_handle_create_paid_order() {
     if ( ! empty($ref_code) ) {
         global $wpdb;
         $ref_post_id = $wpdb->get_var( $wpdb->prepare(
-            "SELECT ID FROM $wpdb->posts WHERE post_title = %s AND post_type = 'referral_code' AND post_status = 'publish' LIMIT 1",
+            "SELECT ID FROM $wpdb->posts WHERE UPPER(post_title) = UPPER(%s) AND post_type = 'referral_code' AND post_status = 'publish' LIMIT 1",
             $ref_code
         ) );
         if ( $ref_post_id ) {
