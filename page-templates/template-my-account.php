@@ -220,7 +220,8 @@ $ref_nonce = wp_create_nonce('hieucon_ref_nonce');
                         $enrolled_ids = [];
                     }
 
-                    $is_privileged = in_array($current_member->role, ['administrator', 'teacher', 'expert']) || current_user_can('manage_options');
+                    $has_unlocked_all = hieucon_member_has_unlocked_all($current_member->id);
+                    $is_privileged = in_array($current_member->role, ['administrator', 'teacher', 'expert']) || current_user_can('manage_options') || $has_unlocked_all;
 
                     if (empty($enrolled_ids) && !$is_privileged) {
                         ?>
