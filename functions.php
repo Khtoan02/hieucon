@@ -570,6 +570,7 @@ function hieucon_member_has_unlocked_all( $member_id ) {
 }
 
 add_action( 'wp_ajax_hieucon_apply_referral_code', 'hieucon_ajax_apply_referral_code' );
+add_action( 'wp_ajax_nopriv_hieucon_apply_referral_code', 'hieucon_ajax_apply_referral_code' );
 function hieucon_ajax_apply_referral_code() {
     hieucon_debug_log( "hieucon_ajax_apply_referral_code started. POST: " . json_encode( $_POST ) );
 

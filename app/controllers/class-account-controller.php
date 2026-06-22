@@ -19,6 +19,7 @@ class Account_Controller {
 
         foreach ( $actions as $action ) {
             add_action( "wp_ajax_hieucon_{$action}", [ self::class, "ajax_{$action}" ] );
+            add_action( "wp_ajax_nopriv_hieucon_{$action}", [ self::class, "ajax_{$action}" ] );
         }
     }
 

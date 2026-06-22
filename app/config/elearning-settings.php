@@ -445,6 +445,7 @@ if ( ! function_exists( 'hieucon_ajax_redeem_course_code' ) ) {
         ] );
     }
     add_action( 'wp_ajax_hieucon_redeem_course_code', 'hieucon_ajax_redeem_course_code' );
+    add_action( 'wp_ajax_nopriv_hieucon_redeem_course_code', 'hieucon_ajax_redeem_course_code' );
 }
 
 /**
