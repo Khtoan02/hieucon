@@ -177,22 +177,24 @@ $course_cats = get_terms([
                         <!-- Nút: Cộng đồng Facebook -->
                         <a href="https://www.facebook.com/groups/tukylaroiloantoanthan" target="_blank"
                             rel="noopener noreferrer" title="Cộng Đồng Cha Mẹ"
-                            class="flex items-center justify-center bg-gradient-to-br from-[#1877F2] to-[#0A58CA] hover:from-[#1464CC] hover:to-[#084298] text-white w-10 h-10 rounded-full font-extrabold transition-all duration-300 shadow-[0_4px_12px_rgba(24,119,242,0.3)] hover:shadow-[0_6px_16px_rgba(24,119,242,0.4)] hover:-translate-y-0.5 border border-white/10 group shrink-0"
+                            class="flex items-center gap-2 bg-gradient-to-br from-[#1877F2] to-[#0A58CA] hover:from-[#1464CC] hover:to-[#084298] text-white px-3.5 py-2 rounded-xl font-bold text-[11px] xl:text-[12px] transition-all duration-300 shadow-[0_4px_12px_rgba(24,119,242,0.25)] hover:shadow-[0_6px_16px_rgba(24,119,242,0.35)] hover:-translate-y-0.5 border border-white/10 group shrink-0"
                             aria-label="Cộng đồng Facebook">
                             <svg viewBox="0 0 320 512"
                                 class="w-3.5 h-3.5 text-white fill-current group-hover:scale-110 transition-transform">
                                 <path
                                     d="M279.14 288l14.22-92.66h-88.91v-60.13c0-25.35 12.42-50.06 52.24-50.06h40.42V6.26S260.43 0 225.36 0c-73.22 0-121.08 44.38-121.08 124.72v70.62H22.89V288h81.39v224h100.17V288z" />
                             </svg>
+                            <span>Cộng đồng</span>
                         </a>
 
                         <!-- Nút: Kết nối Zalo -->
                         <a href="https://zalo.me/g/vmgfxy834?joinSrc=9" target="_blank" rel="noopener noreferrer"
                             title="Kết Nối Chuyên Gia"
-                            class="flex items-center justify-center bg-gradient-to-br from-[#00A1FF] to-[#0068FF] hover:from-[#008CE6] hover:to-[#0052CC] text-white w-10 h-10 rounded-full font-extrabold transition-all duration-300 shadow-[0_4px_12px_rgba(0,104,255,0.3)] hover:shadow-[0_6px_16px_rgba(0,104,255,0.4)] hover:-translate-y-0.5 border border-white/10 group shrink-0"
+                            class="flex items-center gap-2 bg-gradient-to-br from-[#00A1FF] to-[#0068FF] hover:from-[#008CE6] hover:to-[#0052CC] text-white px-3.5 py-2 rounded-xl font-bold text-[11px] xl:text-[12px] transition-all duration-300 shadow-[0_4px_12px_rgba(0,104,255,0.25)] hover:shadow-[0_6px_16px_rgba(0,104,255,0.35)] hover:-translate-y-0.5 border border-white/10 group shrink-0"
                             aria-label="Kết nối Zalo">
                             <span
                                 class="font-black text-[13px] text-white leading-none group-hover:scale-110 transition-transform">Z</span>
+                            <span>Hỏi đáp Zalo</span>
                         </a>
 
                         <!-- Divider -->
