@@ -562,7 +562,9 @@ function hieucon_member_has_unlocked_all( $member_id ) {
 
 add_action( 'wp_ajax_hieucon_apply_referral_code', 'hieucon_ajax_apply_referral_code' );
 function hieucon_ajax_apply_referral_code() {
-    check_ajax_referer( 'hieucon_ref_nonce', 'nonce' );
+    if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( $_POST['nonce'], 'hieucon_ref_nonce' ) ) {
+        wp_send_json_error( [ 'message' => 'Phiên làm việc hết hạn hoặc yêu cầu không hợp lệ. Vui lòng tải lại trang và thử lại.' ] );
+    }
 
     $current_member = class_exists( '\Hieucon\Model\Member_Model' ) ? \Hieucon\Model\Member_Model::get_current_member() : false;
     if ( ! $current_member ) {

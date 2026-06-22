@@ -691,9 +691,15 @@ $ref_nonce = wp_create_nonce('hieucon_ref_nonce');
 
         try {
             const refRes = await fetch(ajaxUrl, { method: 'POST', body: refFormData });
-            const refData = await refRes.json();
+            const refText = await refRes.text();
+            let refData;
+            try {
+                refData = JSON.parse(refText);
+            } catch (e) {
+                console.error('Error parsing referral code JSON:', refText);
+            }
 
-            if (refData.success) {
+            if (refData && refData.success) {
                 showAccountAlert(refData.data.message, 'success');
                 input.value = '';
                 submitBtn.disabled = false;
@@ -704,13 +710,15 @@ $ref_nonce = wp_create_nonce('hieucon_ref_nonce');
                     setTimeout(() => window.location.reload(), 2000);
                 }
                 return;
-            } else if (refData.data && refData.data.message && !refData.data.message.includes('không hợp lệ hoặc không tồn tại')) {
-                // Nếu là mã giới thiệu thật nhưng bị lỗi cụ thể (hết lượt, đã dùng...) thì báo lỗi luôn
-                showAccountAlert(refData.data.message);
-                submitBtn.disabled = false;
-                submitBtn.innerHTML = 'Kích hoạt ngay <i data-lucide="sparkles" class="w-4 h-4"></i>';
-                lucide.createIcons();
-                return;
+            } else if (refData && refData.data && refData.data.message) {
+                if (!refData.data.message.includes('không hợp lệ hoặc không tồn tại')) {
+                    // Nếu là mã giới thiệu thật nhưng bị lỗi cụ thể (hết lượt, đã dùng...) thì báo lỗi luôn
+                    showAccountAlert(refData.data.message);
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = 'Kích hoạt ngay <i data-lucide="sparkles" class="w-4 h-4"></i>';
+                    lucide.createIcons();
+                    return;
+                }
             }
         } catch (e) {
             console.error('Error verifying referral code:', e);
@@ -724,7 +732,17 @@ $ref_nonce = wp_create_nonce('hieucon_ref_nonce');
 
         try {
             const res = await fetch(ajaxUrl, { method: 'POST', body: formData });
-            const data = await res.json();
+            const resText = await res.text();
+            let data;
+            try {
+                data = JSON.parse(resText);
+            } catch (e) {
+                showAccountAlert('Lỗi định dạng phản hồi từ server: ' + resText);
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = 'Kích hoạt ngay <i data-lucide="sparkles" class="w-4 h-4"></i>';
+                lucide.createIcons();
+                return;
+            }
 
             if (data.success) {
                 showAccountAlert(data.data.message, 'success');

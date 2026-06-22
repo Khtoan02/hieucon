@@ -340,7 +340,9 @@ if ( ! function_exists( 'hieucon_elearning_save_meta_boxes' ) ) {
  */
 if ( ! function_exists( 'hieucon_ajax_redeem_course_code' ) ) {
     function hieucon_ajax_redeem_course_code() {
-        check_ajax_referer( 'hieucon_account_nonce', 'nonce' );
+        if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( $_POST['nonce'], 'hieucon_account_nonce' ) ) {
+            wp_send_json_error( [ 'message' => 'Phiên làm việc hết hạn hoặc yêu cầu không hợp lệ. Vui lòng tải lại trang và thử lại.' ] );
+        }
 
         // Kiểm tra lớp quản lý tài khoản thành viên
         if ( ! class_exists( '\Hieucon\Model\Member_Model' ) ) {
