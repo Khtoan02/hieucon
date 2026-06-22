@@ -13,6 +13,15 @@ define('HIEUCON_THEME_DIR', get_template_directory());
 define('HIEUCON_THEME_URI', get_template_directory_uri());
 define('HIEUCON_THEME_VERSION', '1.0.0');
 
+// Debug logging helper
+function hieucon_debug_log( $message ) {
+    $log_file = WP_CONTENT_DIR . '/hieucon-debug.log';
+    $time = date( 'Y-m-d H:i:s' );
+    $ip = $_SERVER['REMOTE_ADDR'] ?? '127.0.0.1';
+    $log_message = "[{$time}] [IP: {$ip}] {$message}\n";
+    @file_put_contents( $log_file, $log_message, FILE_APPEND );
+}
+
 // Autoloader tự động nạp (include) các file Controllers và Models theo chuẩn PSR-4 thu nhỏ
 spl_autoload_register(function ($class) {
     $prefix = 'Hieucon\\';
@@ -562,21 +571,29 @@ function hieucon_member_has_unlocked_all( $member_id ) {
 
 add_action( 'wp_ajax_hieucon_apply_referral_code', 'hieucon_ajax_apply_referral_code' );
 function hieucon_ajax_apply_referral_code() {
+    hieucon_debug_log( "hieucon_ajax_apply_referral_code started. POST: " . json_encode( $_POST ) );
+
     if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( $_POST['nonce'], 'hieucon_ref_nonce' ) ) {
+        hieucon_debug_log( "Nonce verification failed for hieucon_ref_nonce." );
         wp_send_json_error( [ 'message' => 'Phiên làm việc hết hạn hoặc yêu cầu không hợp lệ. Vui lòng tải lại trang và thử lại.' ] );
     }
 
     $current_member = class_exists( '\Hieucon\Model\Member_Model' ) ? \Hieucon\Model\Member_Model::get_current_member() : false;
     if ( ! $current_member ) {
+        hieucon_debug_log( "No current member logged in." );
         wp_send_json_error( [ 'message' => 'Vui lòng đăng nhập trước khi áp dụng mã.' ] );
     }
     $member_id = intval( $current_member->id );
+    hieucon_debug_log( "Member ID: {$member_id}" );
 
     $code      = isset( $_POST['code'] ) ? strtoupper( sanitize_text_field( trim( $_POST['code'] ) ) ) : '';
     $post_id   = isset( $_POST['post_id'] ) ? intval( $_POST['post_id'] ) : 0;
     $post_type = isset( $_POST['post_type'] ) ? sanitize_key( $_POST['post_type'] ) : '';
 
+    hieucon_debug_log( "Sanitized Code: '{$code}', post_id: {$post_id}, post_type: '{$post_type}'" );
+
     if ( empty( $code ) ) {
+        hieucon_debug_log( "Code is empty." );
         wp_send_json_error( [ 'message' => 'Thông tin không hợp lệ.' ] );
     }
 
@@ -586,7 +603,22 @@ function hieucon_ajax_apply_referral_code() {
         $code
     ) );
 
+    hieucon_debug_log( "SELECT ID FROM posts ... Query result ID: " . ($ref_post_id ? $ref_post_id : 'FALSE/NULL') );
+
     if ( ! $ref_post_id ) {
+        // Check if code exists under ANY post status or post type to give details
+        $any_match = $wpdb->get_results( $wpdb->prepare(
+            "SELECT ID, post_type, post_status, post_title FROM $wpdb->posts WHERE UPPER(post_title) = UPPER(%s)",
+            $code
+        ) );
+        if ( ! empty( $any_match ) ) {
+            foreach ( $any_match as $row ) {
+                hieucon_debug_log( "FOUND MATCH BUT NOT ACTIVE: ID: {$row->ID}, title: '{$row->post_title}', type: '{$row->post_type}', status: '{$row->post_status}'" );
+            }
+        } else {
+            hieucon_debug_log( "No posts matching title '{$code}' found at all in wp_posts." );
+        }
+
         wp_send_json_error( [ 'message' => 'Mã giới thiệu không hợp lệ hoặc không tồn tại.' ] );
     }
 

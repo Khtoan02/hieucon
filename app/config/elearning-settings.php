@@ -340,22 +340,30 @@ if ( ! function_exists( 'hieucon_elearning_save_meta_boxes' ) ) {
  */
 if ( ! function_exists( 'hieucon_ajax_redeem_course_code' ) ) {
     function hieucon_ajax_redeem_course_code() {
+        hieucon_debug_log( "hieucon_ajax_redeem_course_code started. POST: " . json_encode( $_POST ) );
+
         if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( $_POST['nonce'], 'hieucon_account_nonce' ) ) {
+            hieucon_debug_log( "Nonce verification failed for hieucon_account_nonce." );
             wp_send_json_error( [ 'message' => 'Phiên làm việc hết hạn hoặc yêu cầu không hợp lệ. Vui lòng tải lại trang và thử lại.' ] );
         }
 
         // Kiểm tra lớp quản lý tài khoản thành viên
         if ( ! class_exists( '\Hieucon\Model\Member_Model' ) ) {
+            hieucon_debug_log( "Member_Model class not found." );
             wp_send_json_error( [ 'message' => 'Lớp quản lý tài khoản không khả dụng.' ] );
         }
 
         $current_member = \Hieucon\Model\Member_Model::get_current_member();
         if ( ! $current_member ) {
+            hieucon_debug_log( "No current member logged in." );
             wp_send_json_error( [ 'message' => 'Vui lòng đăng nhập để thực hiện kích hoạt.' ] );
         }
 
         $code = isset( $_POST['code'] ) ? sanitize_text_field( trim( $_POST['code'] ) ) : '';
+        hieucon_debug_log( "Sanitized Course Code: '{$code}'" );
+
         if ( empty( $code ) ) {
+            hieucon_debug_log( "Course code is empty." );
             wp_send_json_error( [ 'message' => 'Vui lòng nhập mã kích hoạt.' ] );
         }
 
@@ -374,9 +382,12 @@ if ( ! function_exists( 'hieucon_ajax_redeem_course_code' ) ) {
         );
 
         if ( ! $code_row ) {
+            hieucon_debug_log( "Redeem code '{$code}' not found in {$table_name} table." );
             $wpdb->query( 'ROLLBACK' );
             wp_send_json_error( [ 'message' => 'Mã kích hoạt không hợp lệ hoặc không tồn tại.' ] );
         }
+
+        hieucon_debug_log( "Redeem code found: ID: {$code_row->id}, course_id: {$code_row->course_id}, status: {$code_row->status}" );
 
         if ( $code_row->status == 1 ) {
             $wpdb->query( 'ROLLBACK' );
