@@ -1484,3 +1484,44 @@
     background: #1e3a8a;
     box-shadow: 0 6px 14px rgba(0, 39, 149, 0.25);
   }
+
+  /* ── CUSTOM SURVEY CHECKBOX ── */
+  .custom-survey-checkbox {
+    display: none !important;
+  }
+
+  .custom-checkbox-box {
+    width: 24px;
+    height: 24px;
+    border: 2px solid #cbd5e1;
+    border-radius: 6px;
+    background: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+  }
+
+  .checkmark-icon {
+    width: 14px;
+    height: 14px;
+    color: #ffffff;
+    stroke-dasharray: 24;
+    stroke-dashoffset: 24;
+    transition: stroke-dashoffset 0.2s ease;
+  }
+
+  /* When checked state */
+  .check-item-row.checked {
+    border-color: rgba(0, 39, 149, 0.4) !important;
+    background: rgba(0, 39, 149, 0.02) !important;
+  }
+
+  .custom-survey-checkbox:checked + .custom-checkbox-box {
+    background: var(--navy) !important;
+    border-color: var(--navy) !important;
+  }
+
+  .custom-survey-checkbox:checked + .custom-checkbox-box .checkmark-icon {
+    stroke-dashoffset: 0;
+  }

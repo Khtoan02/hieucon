@@ -477,6 +477,33 @@
         const sec = document.createElement('div');
         sec.className = 'checklist-section';
         sec.id = `group-${gi}`;
+        
+        let itemsHtml = '';
+        group.items.forEach((item, ii) => {
+          const isChecked = this.app.state.answers[group.id][ii];
+          itemsHtml += `
+            <label class="check-item-row flex items-start gap-4 p-4 border border-solid border-[#e2e8f0] rounded-xl bg-[#faf9f6] hover:border-navy/40 transition-colors cursor-pointer ${isChecked ? 'checked' : ''}" id="ci-row-${gi}-${ii}">
+              <div class="checkbox-wrapper shrink-0 mt-0.5">
+                <input type="checkbox" id="opt-yes-${gi}-${ii}" onchange="ModuleSurvey.toggleItemCheckbox(${gi},${ii},this)" class="custom-survey-checkbox" ${isChecked ? 'checked' : ''}>
+                <div class="custom-checkbox-box">
+                  <svg class="checkmark-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                  </svg>
+                </div>
+              </div>
+              <div class="check-text flex-1 text-left">
+                <div class="check-main" style="line-height: 1.5; font-weight: 500; font-size: 14px; color: var(--charcoal); position: relative; display: inline-block;">
+                  <span>${item.main}</span>
+                  <span class="info-tooltip-wrapper inline-flex items-center ml-1.5" onclick="toggleTooltip(this, event)">
+                    <span class="info-tooltip-trigger" style="margin: 0 0 0 4px; width: 15px; height: 15px; font-size: 9px; line-height: 15px;">i</span>
+                    <span class="info-tooltip-content">Ví dụ: ${item.example}<span style="display:block; text-align:right; font-size:10px; opacity:0.7; margin-top:6px; font-weight:normal;">✕ Chạm để đóng</span></span>
+                  </span>
+                </div>
+              </div>
+            </label>
+          `;
+        });
+
         sec.innerHTML = `
             <div class="section-header" style="display:flex; align-items:center; justify-content:space-between; width:100%; gap: 16px; margin-bottom: 20px; user-select:none;">
               <div style="display:flex; align-items:center; gap: 12px;">
@@ -493,29 +520,7 @@
               <div class="group-score-bar"><div class="group-score-fill" id="gbar-${gi}"></div></div>
             </div>
             <div class="checklist-items flex flex-col gap-3">
-              ${group.items.map((item, ii) => `
-                <div class="check-item-row flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 border border-solid border-[#e2e8f0] rounded-xl bg-[#faf9f6] hover:border-navy/40 transition-colors" id="ci-row-${gi}-${ii}">
-                  <div class="check-text flex-1">
-                    <div class="check-main" style="line-height: 1.5; font-weight: 500; font-size: 14px; color: var(--charcoal); position: relative;">
-                      <span>${item.main}</span>
-                      <span class="info-tooltip-wrapper inline-flex items-center ml-1.5" onclick="toggleTooltip(this, event)">
-                        <span class="info-tooltip-trigger" style="margin: 0 0 0 4px; width: 15px; height: 15px; font-size: 9px; line-height: 15px;">i</span>
-                        <span class="info-tooltip-content">Ví dụ: ${item.example}<span style="display:block; text-align:right; font-size:10px; opacity:0.7; margin-top:6px; font-weight:normal;">✕ Chạm để đóng</span></span>
-                      </span>
-                    </div>
-                  </div>
-                  <div class="check-options flex gap-3 shrink-0 w-full sm:w-auto">
-                    <label class="check-opt-label flex items-center justify-center gap-2 cursor-pointer select-none py-2.5 px-4 border border-solid border-[#cbd5e1] rounded-xl bg-white transition-all text-sm font-bold text-[#334155]" id="label-yes-${gi}-${ii}" style="flex: 1; min-width: 80px; text-align: center;">
-                      <input type="checkbox" id="opt-yes-${gi}-${ii}" onchange="ModuleSurvey.toggleItemOption(${gi},${ii},'yes',this)" style="display:none;">
-                      <span>Có</span>
-                    </label>
-                    <label class="check-opt-label flex items-center justify-center gap-2 cursor-pointer select-none py-2.5 px-4 border border-solid border-[#cbd5e1] rounded-xl bg-white transition-all text-sm font-bold text-[#334155]" id="label-no-${gi}-${ii}" style="flex: 1; min-width: 80px; text-align: center;">
-                      <input type="checkbox" id="opt-no-${gi}-${ii}" onchange="ModuleSurvey.toggleItemOption(${gi},${ii},'no',this)" style="display:none;">
-                      <span>Không</span>
-                    </label>
-                  </div>
-                </div>
-              `).join('')}
+              ${itemsHtml}
             </div>
             
             <!-- Slide Navigation Buttons -->
@@ -528,32 +533,16 @@
       });
     },
 
-    toggleItemOption(gi, ii, option, cb) {
-      if (option === 'yes') {
-        if (cb.checked) {
-          const noInput = document.getElementById(`opt-no-${gi}-${ii}`);
-          if (noInput) {
-            noInput.checked = false;
-            noInput.closest('.check-opt-label').classList.remove('checked');
-          }
-          this.app.state.answers[GROUPS[gi].id][ii] = true;
-          cb.closest('.check-opt-label').classList.add('checked');
-        } else {
-          this.app.state.answers[GROUPS[gi].id][ii] = false;
-          cb.closest('.check-opt-label').classList.remove('checked');
-        }
+    toggleItemCheckbox(gi, ii, cb) {
+      const isChecked = cb.checked;
+      const row = document.getElementById(`ci-row-${gi}-${ii}`);
+      
+      if (isChecked) {
+        if (row) row.classList.add('checked');
+        this.app.state.answers[GROUPS[gi].id][ii] = true;
       } else {
-        if (cb.checked) {
-          const yesInput = document.getElementById(`opt-yes-${gi}-${ii}`);
-          if (yesInput) {
-            yesInput.checked = false;
-            yesInput.closest('.check-opt-label').classList.remove('checked');
-          }
-          this.app.state.answers[GROUPS[gi].id][ii] = false;
-          cb.closest('.check-opt-label').classList.add('checked');
-        } else {
-          cb.closest('.check-opt-label').classList.remove('checked');
-        }
+        if (row) row.classList.remove('checked');
+        this.app.state.answers[GROUPS[gi].id][ii] = false;
       }
 
       const groupName = GROUPS[gi].name;
@@ -626,10 +615,6 @@
     },
 
     nextGroup(gi) {
-      if (!this.isGroupCompleted(gi)) {
-        alert("Vui lòng tích chọn đầy đủ 'Có' hoặc 'Không' cho tất cả câu hỏi trong nhóm này trước khi tiếp tục.");
-        return;
-      }
       this.showGroup(gi + 1);
     },
 
@@ -645,14 +630,6 @@
     },
 
     isGroupCompleted(gi) {
-      const itemsCount = GROUPS[gi].items.length;
-      for (let ii = 0; ii < itemsCount; ii++) {
-        const yesChecked = document.getElementById(`opt-yes-${gi}-${ii}`)?.checked;
-        const noChecked = document.getElementById(`opt-no-${gi}-${ii}`)?.checked;
-        if (!yesChecked && !noChecked) {
-          return false;
-        }
-      }
       return true;
     },
 
