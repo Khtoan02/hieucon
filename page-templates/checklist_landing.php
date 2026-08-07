@@ -1190,6 +1190,13 @@ get_header();
     align-items: start;
   }
 
+  .survey-page-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 24px;
+    align-items: start;
+  }
+
   @media (max-width: 1024px) {
     .mobile-only-widget {
       display: block !important;
@@ -1203,6 +1210,10 @@ get_header();
   @media (min-width: 1025px) {
     .survey-grid {
       grid-template-columns: 3fr 1fr;
+    }
+
+    .survey-page-grid {
+      grid-template-columns: 1fr 3fr;
     }
 
     .survey-sidebar-sticky {
@@ -1268,6 +1279,13 @@ get_header();
     align-items: start;
   }
 
+  .survey-page-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 24px;
+    align-items: start;
+  }
+
   @media (max-width: 1024px) {
     .mobile-only-widget {
       display: block !important;
@@ -1281,6 +1299,10 @@ get_header();
   @media (min-width: 1025px) {
     .survey-grid {
       grid-template-columns: 3fr 1fr;
+    }
+
+    .survey-page-grid {
+      grid-template-columns: 1fr 3fr;
     }
 
     .survey-sidebar-sticky {
@@ -1557,9 +1579,8 @@ get_header();
   </section>
 
   <!-- SURVEY PAGE CONTAINER (GRID LAYOUT) -->
-  <div class="max-w-7xl mx-auto px-6 py-12" id="survey-page-container"
-    style="<?php echo $is_start ? 'display:block;' : 'display:none;'; ?>">
-    <div class="grid grid-cols-1 lg:grid-cols-4 gap-8 items-start">
+  <div class="max-w-7xl mx-auto px-6 py-12" id="survey-page-container" style="display:none;">
+    <div class="survey-page-grid">
 
       <!-- CỘT TRÁI (1/4): WIDGET FIXED/STICKY -->
       <div class="survey-sidebar-sticky" id="sticky-sidebar" style="display:flex; flex-direction:column; gap:24px;">
@@ -3692,6 +3713,18 @@ get_header();
   document.addEventListener('DOMContentLoaded', () => {
     ChecklistApp.init();
     // ModuleDebug.init();
+
+    // Client-side routing to support server-side page caching
+    const urlParams = new URLSearchParams(window.location.search);
+    const hero = document.getElementById('hero-section');
+    const childInfo = document.getElementById('survey-page-container');
+    if (urlParams.has('start')) {
+      if (hero) hero.style.display = 'none';
+      if (childInfo) childInfo.style.display = 'block';
+    } else {
+      if (hero) hero.style.display = 'block';
+      if (childInfo) childInfo.style.display = 'none';
+    }
   });
 </script>
 </div>
