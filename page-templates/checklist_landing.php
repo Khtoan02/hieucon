@@ -3280,50 +3280,73 @@ get_header();
             <div style="max-width: 600px; margin: 0 auto 10px; background: #0f172a; padding: 12px; border-radius: 8px; text-align: center; font-weight: bold; color: #fbbf24; font-family: sans-serif; font-size: 13px; border: 1px solid rgba(255,255,255,0.15);">
               📧 ĐANG XEM TRƯỚC GIAO DIỆN EMAIL GỬI KHÁCH HÀNG (MOCKUP)
             </div>
-            <table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px; margin: 0 auto; background-color: #ffffff; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.05); border: 1px solid #e2e8f0;">
-                <tr>
-                    <td bgcolor="#002795" style="padding: 32px 24px; text-align: center;">
-                        <h1 style="color: #ffffff; margin: 0; font-size: 22px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; font-family: sans-serif;">Hiểu Con Từ Gốc</h1>
-                        <p style="color: #FFD154; margin: 8px 0 0 0; font-size: 14px; font-weight: 600; font-family: sans-serif;">KẾT QUẢ PHÂN TÍCH CHECKLIST HÀNH VI</p>
-                    </td>
-                </tr>
-                <tr>
-                    <td style="padding: 32px 24px; font-family: sans-serif;">
-                        <p style="font-size: 16px; line-height: 1.6; color: #1e293b; margin: 0 0 16px 0;">Chào bạn <strong>\${parentName}</strong>,</p>
-                        <p style="font-size: 15px; line-height: 1.6; color: #334155; margin: 0 0 24px 0;">Cảm ơn bạn đã tin tưởng thực hiện bảng khảo sát checklist hành vi của trẻ trên hệ thống <strong>Hiểu Con Từ Gốc</strong> cho bé <strong>\${childName}</strong> (\${childAge}, \${childGender}).</p>
-                        
-                        <div style="background-color: #fff1f2; border: 1px dashed #fda4af; border-radius: 12px; padding: 20px; margin-bottom: 28px;">
-                            <h3 style="margin: 0 0 14px 0; color: #be123c; font-size: 16px; font-weight: 700; font-family: sans-serif;">🚨 Nhóm vấn đề cần ưu tiên hỗ trợ sớm:</h3>
-                            <ul style="margin: 0; padding-left: 20px; color: #4c0519;">
-                                \${topIssuesHtml}
-                            </ul>
-                        </div>
-                        
-                        <p style="font-size: 15px; line-height: 1.6; color: #334155; margin: 0 0 16px 0;">Để xem báo cáo phân tích đầy đủ và chi tiết cho tất cả 8 nhóm dấu hiệu cũng như danh sách từng biểu hiện cụ thể được ghi nhận, bạn vui lòng nhấp vào nút liên kết dưới đây:</p>
-                        
-                        <div style="text-align: center; margin: 28px 0;">
-                            <a href="\${resultUrl}" target="_blank" style="display: inline-block; background-color: #f05a25; color: #ffffff; font-weight: 700; font-size: 15px; padding: 14px 32px; text-decoration: none; border-radius: 10px; box-shadow: 0 4px 6px rgba(240, 90, 37, 0.25); font-family: sans-serif;">XEM CHI TIẾT KẾT QUẢ PHÂN TÍCH</a>
-                        </div>
-                        
-                        <p style="font-size: 14px; line-height: 1.6; color: #64748b; margin: 24px 0 0 0; border-top: 1px solid #e2e8f0; padding-top: 16px; font-style: italic; font-family: sans-serif;">
-                            <strong>Mẹo:</strong> Bạn có thể sao chép liên kết của nút trên để gửi trực tiếp cho chuyên gia tư vấn trong buổi trao đổi tiếp theo của mình.
-                        </p>
-                    </td>
-                </tr>
-                <tr>
-                    <td bgcolor="#f8fafc" style="padding: 24px; border-top: 1px solid #e2e8f0; border-bottom: 1px solid #e2e8f0; font-family: sans-serif;">
-                        <h4 style="margin: 0 0 10px 0; color: #002795; font-size: 14px; font-weight: 700; text-transform: uppercase;">💬 Tư vấn chuyên môn miễn phí:</h4>
-                        <p style="margin: 0 0 12px 0; font-size: 13.5px; line-height: 1.5; color: #475569;">Đội ngũ trợ lý chuyên gia sẽ liên hệ tư vấn giải thích chi tiết báo cáo và định hướng hướng can thiệp tối ưu nhất từ gốc cho bé hoàn toàn miễn phí.</p>
-                        <p style="margin: 0; font-size: 14px; color: #1e293b; font-weight: 600;">Hỗ trợ Zalo/Call: <a href="tel:0988717107" style="color: #f05a25; text-decoration: none;">0988.71.71.07</a></p>
-                    </td>
-                </tr>
-                <tr>
-                    <td style="padding: 24px; text-align: center; font-size: 12px; color: #94a3b8; line-height: 1.6; font-family: sans-serif;">
-                        <strong>Lưu ý quan trọng:</strong> Kết quả trên được phân tích dựa trên phản hồi chủ quan của cha mẹ và chỉ mang tính tham khảo, không có giá trị thay thế chẩn đoán y khoa chuyên nghiệp.<br><br>
-                        © ${new Date().getFullYear()} Hiểu Con Từ Gốc | <a href="${window.location.origin}" style="color: #002795; text-decoration: none;">dawnbridge.care</a>
-                    </td>
-                </tr>
-            </table>
+            
+            <div class="wrapper" style="width: 100%; background-color: #EBF1FA; padding: 24px 10px; box-sizing: border-box;">
+                <table role="presentation" width="100%" style="border-spacing: 0; border-collapse: collapse;">
+                    <tr>
+                        <td align="center">
+                            <div class="main-container" style="background-color: #ffffff; margin: 0 auto; width: 100%; max-width: 580px; border-radius: 16px; overflow: hidden; box-shadow: 0 8px 24px rgba(13, 42, 120, 0.08); border: 1px solid #D6E2F5; text-align: left; font-family: sans-serif;">
+                                
+                                <!-- Header Banner -->
+                                <div class="header" style="background: linear-gradient(150deg, #0A2268 0%, #0D2A78 50%, #163CA3 100%); padding: 24px 24px 20px 24px; text-align: center; color: #ffffff;">
+                                    <div class="badge-pill" style="display: inline-block; background: rgba(255, 255, 255, 0.15); padding: 4px 14px; border-radius: 20px; font-size: 12px; font-weight: 600; color: #F3BA2F; border: 1px solid rgba(255, 255, 255, 0.2); margin-bottom: 10px;">🟡 HIỂU CON TỪ GỐC</div>
+                                    <h1 style="margin: 0; font-size: 20px; line-height: 1.35; font-weight: 800; color: #FFFFFF; letter-spacing: 0.5px; text-transform: uppercase;">
+                                        CÔNG CỤ ĐÁNH GIÁ
+                                        <span class="highlight" style="color: #F3BA2F; display: block;">SỨC KHỎE TOÀN DIỆN</span>
+                                    </h1>
+                                </div>
+
+                                <!-- Main Content Body -->
+                                <div class="content" style="padding: 24px 24px 20px 24px;">
+                                    <!-- Code Badge & Greeting -->
+                                    <div style="margin-bottom: 14px;">
+                                        <span class="profile-badge" style="display: inline-block; background-color: #F0F5FF; border: 1px solid #C7DCFE; color: #163CA3; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 700;">Mã hồ sơ: \${userCode}</span>
+                                    </div>
+                                    <div class="greeting" style="font-size: 15px; line-height: 1.4; color: #0D2A78; font-weight: 700; margin-bottom: 10px;">Xin chào \${parentName},</div>
+                                    
+                                    <!-- Streamlined Result Link Section -->
+                                    <div class="result-compact-box" style="background-color: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 12px; padding: 18px 16px; margin: 16px 0 20px 0; text-align: center;">
+                                        <div class="result-compact-text" style="font-size: 13px; line-height: 1.5; color: #334155; margin-bottom: 12px;">
+                                            Kết quả đánh giá của bé đã hoàn tất. Ba mẹ có thể xem chi tiết trực tiếp tại đường link: <br>
+                                            <a href="\${resultUrl}" target="_blank" style="color: #0284C7; font-weight: 600; word-break: break-all; text-decoration: underline;">\${resultUrl}</a>
+                                        </div>
+                                        <a href="\${resultUrl}" class="btn-view-report" target="_blank" style="background-color: #0D2A78; color: #ffffff !important; padding: 12px 24px; text-decoration: none; font-size: 14px; font-weight: 700; border-radius: 8px; display: inline-block; box-shadow: 0 3px 10px rgba(13, 42, 120, 0.2); transition: background-color 0.2s ease;">
+                                            Kết quả: \${userCode}
+                                        </a>
+                                    </div>
+
+                                    <!-- Disclaimer Box -->
+                                    <div class="disclaimer-box" style="background-color: #FAF5FF; border: 1px solid #E9D5FF; border-radius: 8px; padding: 12px 14px; margin-top: 20px; font-size: 11px; color: #6B21A8; line-height: 1.5;">
+                                        <strong style="color: #581C87;">⚠️ Lưu ý:</strong> Kết quả từ bộ công cụ mang tính chất tổng hợp thông tin quan sát nhằm hỗ trợ ba mẹ định hướng theo dõi. Đây không phải là kết luận hay chẩn đoán y khoa chính thức.
+                                    </div>
+
+                                </div>
+
+                                <!-- Refined Minimalist Footer with Subtle Nav -->
+                                <div class="footer" style="background-color: #0F172A; color: #94A3B8; padding: 22px 20px; text-align: center; font-size: 12px; line-height: 1.5;">
+                                    <!-- Subtle Footer Navigation -->
+                                    <div class="footer-nav" style="border-bottom: none; padding-bottom: 6px; margin-bottom: 10px;">
+                                        <a href="https://zalo.me/0988717107" class="footer-link-btn footer-btn-tuvan" target="_blank" style="display: inline-block; text-decoration: none; font-size: 12px; font-weight: 600; padding: 6px 12px; border-radius: 20px; margin: 0 3px 6px 3px; background-color: rgba(255, 107, 0, 0.15); color: #FF9E59 !important; border: 1px solid rgba(255, 107, 0, 0.3);">
+                                            Tư vấn
+                                        </a>
+                                        <a href="https://zalo.me/g/vmgfxy834?joinSrc=9" class="footer-link-btn footer-btn-hoidap" target="_blank" style="display: inline-block; text-decoration: none; font-size: 12px; font-weight: 600; padding: 6px 12px; border-radius: 20px; margin: 0 3px 6px 3px; background-color: rgba(56, 189, 248, 0.12); color: #38BDF8 !important; border: 1px solid rgba(56, 189, 248, 0.25);">
+                                            Hỏi đáp
+                                        </a>
+                                        <a href="https://www.facebook.com/groups/tukylaroiloantoanthan" class="footer-link-btn footer-btn-congdong" target="_blank" style="display: inline-block; text-decoration: none; font-size: 12px; font-weight: 600; padding: 6px 12px; border-radius: 20px; margin: 0 3px 6px 3px; background-color: rgba(241, 245, 249, 0.1); color: #E2E8F0 !important; border: 1px solid rgba(241, 245, 249, 0.2);">
+                                            Cộng đồng
+                                        </a>
+                                    </div>
+
+                                    <div style="font-size: 11px; color: #94A3B8;">
+                                        © 2026 Hiểu Con Từ Gốc | <a href="https://hieucontugoc.online" class="site-link" target="_blank" style="color: #F3BA2F; text-decoration: none; font-weight: 700;">hieucontugoc.online</a>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
           </body>
           </html>`;
         
