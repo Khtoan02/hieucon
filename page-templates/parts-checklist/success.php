@@ -14,21 +14,24 @@
     Cha mẹ vui lòng kiểm tra hộp thư đến (Inbox). Nếu không tìm thấy thư trong vòng 3-5 phút, vui lòng kiểm tra thêm thư
     mục <strong>Spam (Thư rác)</strong> hoặc <strong>Promotions (Quảng cáo)</strong>.
   </p>
-  <!-- Sub Nav matching the email template footer -->
-  <div style="background-color: #0F172A; color: #94A3B8; padding: 24px; border-radius: 12px; text-align: center; margin-top: 32px; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">
-    <div style="margin-bottom: 12px;">
-      <a href="https://zalo.me/0985391881" target="_blank" rel="noopener" style="display: inline-block; text-decoration: none; font-size: 13px; font-weight: 600; padding: 8px 16px; border-radius: 20px; margin: 0 6px 6px 6px; background-color: rgba(255, 107, 0, 0.15); color: #FF9E59 !important; border: 1px solid rgba(255, 107, 0, 0.3); font-family: 'Quicksand', sans-serif;">
+  <!-- Sub Nav matching the header buttons color scheme -->
+  <div style="border-top: 1px solid #e2e8f0; padding-top: 32px; margin-top: 40px; text-align: center;">
+    <p style="font-size: 14px; font-weight: 700; color: var(--navy); margin: 0 0 16px 0; font-family: 'Quicksand', sans-serif;">
+      Kênh tương tác và hỗ trợ từ Hiểu Con Từ Gốc:
+    </p>
+    <div style="display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; margin-bottom: 20px;">
+      <a href="https://zalo.me/0985391881" target="_blank" rel="noopener" class="btn-success-nav" style="display: inline-flex; align-items: center; justify-content: center; text-decoration: none; padding: 11px 24px; font-weight: 700; background: linear-gradient(135deg, #F05A25 0%, #FF7A45 100%); color: #ffffff !important; border-radius: 12px; font-size: 13.5px; font-family: 'Quicksand', sans-serif; box-shadow: 0 4px 10px rgba(240, 90, 37, 0.2); transition: all 0.2s ease;">
         Tư vấn
       </a>
-      <a href="https://zalo.me/g/vmgfxy834?joinSrc=9" target="_blank" rel="noopener" style="display: inline-block; text-decoration: none; font-size: 13px; font-weight: 600; padding: 8px 16px; border-radius: 20px; margin: 0 6px 6px 6px; background-color: rgba(56, 189, 248, 0.12); color: #38BDF8 !important; border: 1px solid rgba(56, 189, 248, 0.25); font-family: 'Quicksand', sans-serif;">
-        Hỏi đáp
+      <a href="https://zalo.me/g/vmgfxy834?joinSrc=9" target="_blank" rel="noopener" class="btn-success-nav" style="display: inline-flex; align-items: center; justify-content: center; text-decoration: none; padding: 11px 24px; font-weight: 700; background: linear-gradient(135deg, #00A1FF 0%, #0068FF 100%); color: #ffffff !important; border-radius: 12px; font-size: 13.5px; font-family: 'Quicksand', sans-serif; box-shadow: 0 4px 10px rgba(0, 104, 255, 0.2); transition: all 0.2s ease;">
+        Hỏi đáp Zalo
       </a>
-      <a href="https://www.facebook.com/groups/tukylaroiloantoanthan" target="_blank" rel="noopener" style="display: inline-block; text-decoration: none; font-size: 13px; font-weight: 600; padding: 8px 16px; border-radius: 20px; margin: 0 6px 6px 6px; background-color: rgba(241, 245, 249, 0.1); color: #E2E8F0 !important; border: 1px solid rgba(241, 245, 249, 0.2); font-family: 'Quicksand', sans-serif;">
+      <a href="https://www.facebook.com/groups/tukylaroiloantoanthan" target="_blank" rel="noopener" class="btn-success-nav" style="display: inline-flex; align-items: center; justify-content: center; text-decoration: none; padding: 11px 24px; font-weight: 700; background: linear-gradient(135deg, #1877F2 0%, #0A58CA 100%); color: #ffffff !important; border-radius: 12px; font-size: 13.5px; font-family: 'Quicksand', sans-serif; box-shadow: 0 4px 10px rgba(24, 119, 242, 0.2); transition: all 0.2s ease;">
         Cộng đồng
       </a>
     </div>
-    <div style="font-size: 11px; color: #94A3B8; font-family: 'Quicksand', sans-serif;">
-      © 2026 Hiểu Con Từ Gốc | <a href="https://hieucontugoc.online" target="_blank" style="color: #F3BA2F; text-decoration: none; font-weight: 700;">hieucontugoc.online</a>
+    <div style="font-size: 11.5px; color: #64748b; font-family: 'Quicksand', sans-serif;">
+      © 2026 Hiểu Con Từ Gốc | <a href="https://hieucontugoc.online" target="_blank" style="color: var(--navy); text-decoration: none; font-weight: 700;">hieucontugoc.online</a>
     </div>
   </div>
 </div>

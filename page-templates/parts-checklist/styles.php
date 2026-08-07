@@ -1540,4 +1540,18 @@
     justify-content: flex-start;
   }
 
+
+  /* Hover effects for unified Success screen navigation buttons */
+  .btn-success-nav {
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  }
+  .btn-success-nav:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 6px 20px rgba(15, 23, 42, 0.15) !important;
+    opacity: 0.95 !important;
+  }
+  .btn-success-nav:active {
+    transform: translateY(0px) !important;
+  }
+
 </style>

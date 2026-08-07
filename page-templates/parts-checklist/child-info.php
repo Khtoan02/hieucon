@@ -20,22 +20,25 @@
               <div
                 style="color: var(--navy); font-weight:800; width:24px; height:24px; display:flex; align-items:center; justify-content:center; border-radius:50%; background: var(--yellow); margin-top:2px; font-size: 11px;"
                 class="shrink-0">1</div>
-              <p class="m-0" style="margin:0; font-weight:500;">Nhập thông tin cơ bản về con (Họ tên, ngày sinh, chiều
-                cao, cân nặng...).</p>
+              <p class="m-0" style="margin:0; font-weight:500;">Nhập thông tin cơ bản về con.</p>
             </div>
             <div class="flex gap-3 items-start">
               <div
                 style="color: var(--navy); font-weight:800; width:24px; height:24px; display:flex; align-items:center; justify-content:center; border-radius:50%; background: var(--yellow); margin-top:2px; font-size: 11px;"
                 class="shrink-0">2</div>
-              <p class="m-0" style="margin:0; font-weight:500;">Tích chọn những dấu hiệu quan sát được ở con qua 8 nhóm
-                hệ cơ quan.</p>
+              <p class="m-0" style="margin:0; font-weight:500;">Tích chọn những dấu hiệu quan sát được.</p>
             </div>
             <div class="flex gap-3 items-start">
               <div
                 style="color: var(--navy); font-weight:800; width:24px; height:24px; display:flex; align-items:center; justify-content:center; border-radius:50%; background: var(--yellow); margin-top:2px; font-size: 11px;"
                 class="shrink-0">3</div>
-              <p class="m-0" style="margin:0; font-weight:500;">Điền thông tin liên hệ của ba mẹ để nhận kết quả
-                phân tích gửi qua email.</p>
+              <p class="m-0" style="margin:0; font-weight:500;">Điền thông tin liên hệ để nhận kết quả.</p>
+            </div>
+            <div class="flex gap-3 items-start">
+              <div
+                style="color: var(--navy); font-weight:800; width:24px; height:24px; display:flex; align-items:center; justify-content:center; border-radius:50%; background: var(--yellow); margin-top:2px; font-size: 11px;"
+                class="shrink-0">4</div>
+              <p class="m-0" style="margin:0; font-weight:500;">Liên hệ tư vấn.</p>
             </div>
           </div>
         </div>
@@ -47,15 +50,8 @@
             <span style="font-size:16px;">⚠️</span> Lưu ý quan trọng
           </h3>
           <p class="text-xs text-[#713f12] leading-relaxed m-0 font-light"
-            style="margin:0; font-size:12px; line-height:1.6;">
-            Bảng kiểm tra này là công cụ hỗ trợ nhận diện dấu hiệu, không thay thế chẩn đoán lâm sàng hoặc tư vấn y tế
-            chuyên nghiệp. Mọi quyết định can thiệp cho trẻ cần được thảo luận với bác sĩ hoặc chuyên gia có chuyên môn
-            phù hợp.
+            style="margin:0; font-size:12px; line-height:1.6;">Bộ công cụ chỉ hỗ trợ phụ huynh nhận diện các dấu hiệu sức khỏe của con, không thay thế chẩn đoán lâm sàng hoặc tư vấn y tế chuyên nghiệp. Mọi quyết định can thiệp cho trẻ cần được thảo luận với bác sĩ hoặc chuyên gia có chuyên môn phù hợp
           </p>
-          <div class="mt-4 pt-3 border-t border-solid border-[#fef08a] text-[11px] text-[#854d0e] font-medium"
-            style="margin-top:16px; padding-top:12px; border-top:1px solid #fef08a; font-size:11px; font-weight:500;">
-            Tài liệu tham khảo: Documenting Hope
-          </div>
         </div>
 
         <!-- WIDGET LIÊN KẾT NHANH (Nút Bấm Từ Header) -->
@@ -123,7 +119,6 @@
             1. Tên của con</div>
           <div class="form-row" style="margin-bottom:24px;">
             <div class="form-group" style="grid-column: 1 / -1;">
-              <label>Họ và tên của con *</label>
               <input type="text" id="child-name" placeholder="Ví dụ: Nguyễn Văn A" required
                 style="padding:14px 16px; font-size:15px; font-weight:600;">
             </div>
@@ -248,10 +243,6 @@
               <label>Đang dùng sản phẩm hỗ trợ nào không?</label>
               <input type="text" id="child-supplement" placeholder="Vitamin, men vi sinh, Omega-3...">
             </div>
-          </div>
-          <div class="form-group">
-            <label>Điều ba mẹ lo lắng nhất về con hiện tại là gì?</label>
-            <textarea id="parent-concern" placeholder="Chia sẻ ngắn gọn điều khiến ba mẹ trăn trở nhất..."></textarea>
           </div>
           <div class="nav-buttons" style="justify-content:center;">
             <button class="btn btn-primary" onclick="startChecklist()">Bắt đầu kiểm tra →</button>
