@@ -1072,9 +1072,74 @@ get_header();
       border-left: 3px solid var(--border);
     }
 
+        /* Global box-sizing reset (fallback if Tailwind fails) */
+    *, *::before, *::after {
+      box-sizing: border-box !important;
+    }
+    html, body {
+      max-width: 100% !important;
+      overflow-x: hidden !important;
+    }
+
     /* ── RESPONSIVE HELPERS & GRID LAYOUT (Vanilla CSS replacements for Tailwind) ── */
-    /* Fallback styles for CTA Buttons & Layout if Tailwind fails to load on Host */
-    .bg-white.rounded-2xl {
+    .mobile-only-widget {
+      display: none !important;
+    }
+    .desktop-only-widget {
+      display: block !important;
+    }
+    .survey-grid {
+      display: grid !important;
+      grid-template-columns: 1fr !important;
+      gap: 24px !important;
+      align-items: start !important;
+    }
+    @media (max-width: 1024px) {
+      .mobile-only-widget {
+        display: block !important;
+      }
+      .desktop-only-widget {
+        display: none !important;
+      }
+    }
+    @media (min-width: 1025px) {
+      .survey-grid {
+        grid-template-columns: 3fr 1fr !important;
+      }
+      .survey-sidebar-sticky {
+        position: sticky !important;
+        top: 96px !important;
+      }
+    }
+
+    /* Robust Sidebar Card fallbacks */
+    .sidebar-widget-card {
+      background-color: var(--navy) !important;
+      color: #ffffff !important;
+      border-radius: 16px !important;
+      padding: 24px !important;
+      border: 1px solid rgba(255, 255, 255, 0.15) !important;
+      box-shadow: 0 10px 25px rgba(0, 39, 149, 0.15) !important;
+      position: relative !important;
+      overflow: hidden !important;
+      box-sizing: border-box !important;
+      width: 100% !important;
+      max-width: 100% !important;
+      text-align: left !important;
+    }
+    .sidebar-widget-card-yellow {
+      background-color: #fefce8 !important;
+      color: #713f12 !important;
+      border-radius: 16px !important;
+      padding: 24px !important;
+      border: 1px solid #fef08a !important;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02) !important;
+      box-sizing: border-box !important;
+      width: 100% !important;
+      max-width: 100% !important;
+      text-align: left !important;
+    }
+    .sidebar-widget-card-white {
       background: #ffffff !important;
       border-radius: 16px !important;
       padding: 24px !important;
@@ -1085,34 +1150,6 @@ get_header();
       gap: 12px !important;
       width: 100% !important;
       box-sizing: border-box !important;
-    }
-    .bg-white.rounded-2xl a {
-      display: flex !important;
-      align-items: center !important;
-      justify-content: center !important;
-      gap: 8px !important;
-      padding: 10px 14px !important;
-      border-radius: 10px !important;
-      font-weight: 700 !important;
-      font-size: 12px !important;
-      text-align: center !important;
-      box-sizing: border-box !important;
-      border: none !important;
-      width: 100% !important;
-      color: #ffffff !important;
-      text-decoration: none !important;
-    }
-    .bg-white.rounded-2xl a[href*="facebook.com"] {
-      background: linear-gradient(to bottom right, #1877F2, #0A58CA) !important;
-    }
-    .bg-white.rounded-2xl a[href*="zalo.me"] {
-      background: linear-gradient(to bottom right, #00A1FF, #0068FF) !important;
-    }
-    .bg-white.rounded-2xl a[href*="tai-khoan"] {
-      background: var(--navy) !important;
-    }
-    .bg-white.rounded-2xl a[href*="dang-nhap"] {
-      background: #f05a25 !important;
     }
     .mobile-only-widget {
       display: none !important;
@@ -1370,7 +1407,7 @@ get_header();
     <div class="grid grid-cols-1 lg:grid-cols-4 gap-8 items-start">
         
         <!-- CỘT TRÁI (1/4): WIDGET FIXED/STICKY -->
-        <div class="lg:col-span-1 lg:sticky lg:top-24 flex flex-col gap-6" id="sticky-sidebar">
+        <div class="survey-sidebar-sticky" id="sticky-sidebar" style="display:flex; flex-direction:column; gap:24px;">
             <!-- WIDGET CÁCH SỬ DỤNG (Nổi bật màu Navy) -->
             <div class="bg-navy rounded-2xl p-6 border border-solid border-[rgba(255,255,255,0.15)] shadow-[0_10px_25px_rgba(0,39,149,0.15)] text-white relative overflow-hidden has-pattern-bg" style="background-color: var(--navy); color: white;">
                 <!-- Decorative subtle light circle -->
@@ -1396,7 +1433,7 @@ get_header();
             </div>
             
             <!-- WIDGET DISCLAIMER -->
-            <div class="hidden lg:block bg-[#fefce8] border border-solid border-[#fef08a] rounded-2xl p-6 shadow-[0_4px_20px_rgba(254,240,138,0.15)]">
+            <div class="desktop-only-widget sidebar-widget-card-yellow">
                 <h3 class="text-[#854d0e] font-bold text-sm mb-3 flex items-center gap-2" style="margin-bottom: 12px; font-weight:700;">
                     <span style="font-size:16px;">⚠️</span> Lưu ý quan trọng
                 </h3>
@@ -1409,7 +1446,7 @@ get_header();
             </div>
             
             <!-- WIDGET LIÊN KẾT NHANH (Nút Bấm Từ Header) -->
-            <div class="hidden lg:block bg-white rounded-2xl p-6 border border-solid border-[rgba(0,39,149,0.12)] shadow-[0_4px_20px_rgba(0,39,149,0.05)] flex flex-col gap-3 w-full">
+            <div class="desktop-only-widget sidebar-widget-card-white">
                 <!-- Nút: Cộng đồng Facebook -->
                 <a href="https://www.facebook.com/groups/tukylaroiloantoanthan" target="_blank"
                     rel="noopener noreferrer" title="Cộng Đồng Cha Mẹ"
@@ -1571,11 +1608,11 @@ get_header();
     </div> <!-- /#info-section -->
 
     <!-- MOBILE ONLY: DISCLAIMER & CTA BUTTONS -->
-    <div class="block lg:hidden mt-8 flex flex-col gap-6">
+    <div class="mobile-only-widget mt-8" style="display:flex; flex-direction:column; gap:24px;">
         <!-- Divider to separate checklist from bottom content -->
         <div class="border-t-2 border-solid border-[#e2e8f0] my-2 pt-2"></div>
         <!-- WIDGET DISCLAIMER -->
-        <div class="bg-[#fefce8] border border-solid border-[#fef08a] rounded-2xl p-6 shadow-[0_4px_20px_rgba(254,240,138,0.15)]">
+        <div class="sidebar-widget-card-yellow">
             <h3 class="text-[#854d0e] font-bold text-sm mb-3 flex items-center gap-2" style="margin-bottom: 12px; font-weight:700; margin-top:0;">
                 <span style="font-size:16px;">⚠️</span> Lưu ý quan trọng
             </h3>
@@ -1588,7 +1625,7 @@ get_header();
         </div>
         
         <!-- WIDGET LIÊN KẾT NHANH (Nút Bấm Từ Header) -->
-        <div class="bg-white rounded-2xl p-6 border border-solid border-[rgba(0,39,149,0.12)] shadow-[0_4px_20px_rgba(0,39,149,0.05)] flex flex-col gap-3 w-full">
+        <div class="sidebar-widget-card-white">
             <!-- Nút: Cộng đồng Facebook -->
             <a href="https://www.facebook.com/groups/tukylaroiloantoanthan" target="_blank"
                 rel="noopener noreferrer" title="Cộng Đồng Cha Mẹ"
@@ -1721,7 +1758,111 @@ get_header();
                    </div>
                  </div>
 
-                 <!-- THÀNH CÔNG (Sau khi submit parent-info-section) -->
+                 </div>
+                  </div> <!-- /#main-form -->
+        </div> <!-- /#checklist-main-column -->
+        
+        <!-- CỘT PHẢI (1/4): SIDEBAR BIỂU ĐỒ & HƯỚNG DẪN (Sticky) -->
+        <div class="survey-sidebar-sticky" id="survey-sidebar" style="display:flex; flex-direction:column; gap:24px;">
+            
+            <!-- WIDGET 2: HƯỚNG DẪN KHẢO SÁT (Màu Navy) -->
+            <div class="desktop-only-widget bg-navy rounded-2xl p-6 border border-solid border-[rgba(255,255,255,0.15)] shadow-[0_10px_25px_rgba(0,39,149,0.15)] text-white relative overflow-hidden has-pattern-bg" style="background-color: var(--navy); color: white;">
+                <div class="absolute -right-12 -bottom-12 w-32 h-32 bg-white/5 rounded-full pointer-events-none"></div>
+                <h3 class="font-bold text-base mb-4 flex items-center gap-2 text-yellow font-oswald tracking-wide uppercase" style="color: var(--yellow); margin-bottom: 16px; font-weight:700; font-family: 'Oswald', sans-serif; font-size: 15px; letter-spacing: 0.03em;">
+                    <span style="font-size:18px;">📋</span> Hướng dẫn khảo sát
+                </h3>
+                <div class="flex flex-col gap-4" style="display: flex; flex-direction: column; gap: 16px; font-size: 13px; line-height: 1.5; color: #ffffff;">
+                    <div class="flex gap-2.5 items-start">
+                        <div style="color: var(--navy); font-weight:800; width:20px; height:20px; display:flex; align-items:center; justify-content:center; border-radius:50%; background: var(--yellow); margin-top:2px; font-size: 10px;" class="shrink-0">1</div>
+                        <p class="m-0" style="margin:0; font-weight:500;">Tích chọn các dấu hiệu quan sát thấy ở con trong nhóm hiện tại.</p>
+                    </div>
+                    <div class="flex gap-2.5 items-start">
+                        <div style="color: var(--navy); font-weight:800; width:20px; height:20px; display:flex; align-items:center; justify-content:center; border-radius:50%; background: var(--yellow); margin-top:2px; font-size: 10px;" class="shrink-0">2</div>
+                        <p class="m-0" style="margin:0; font-weight:500;">Nhấn "Tiếp theo →" hoặc click tên nhóm ở trên để chuyển phần.</p>
+                    </div>
+                    <div class="flex gap-2.5 items-start">
+                        <div style="color: var(--navy); font-weight:800; width:20px; height:20px; display:flex; align-items:center; justify-content:center; border-radius:50%; background: var(--yellow); margin-top:2px; font-size: 10px;" class="shrink-0">3</div>
+                        <p class="m-0" style="margin:0; font-weight:500;">Nhấn "Hoàn thiện & nhận kết quả" sau khi điền xong nhóm thứ 8.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- WIDGET 1: RADAR CHART -->
+            <div class="sidebar-widget-card has-pattern-bg" style="padding: 16px !important;">
+                <!-- Close Button (Only visible on mobile overlay mode) -->
+                <button onclick="toggleMobileRadar(false)" class="absolute top-4 right-4 text-white/70 hover:text-white" style="display:none; background:none; border:none; padding:4px; cursor:pointer; z-index: 10;" id="close-radar-btn">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </button>
+                <h3 class="font-bold text-sm mb-3 text-yellow font-oswald tracking-wide uppercase text-center w-full" style="color: var(--yellow); margin-bottom: 12px; font-weight:700; font-family: 'Oswald', sans-serif; font-size: 15px; letter-spacing: 0.03em;">
+                    📊 Tổng quan dấu hiệu cha mẹ ghi nhận
+                </h3>
+                <div style="position: relative; width: 100%; height: 280px;">
+                    <canvas id="radarChartCanvas"></canvas>
+                </div>
+                <div class="mt-4 text-[11px] text-white/70 text-center font-light leading-relaxed">
+                    Biểu đồ phản ánh tỷ lệ biểu hiện dấu hiệu của từng hệ cơ quan theo thời gian thực.
+                </div>
+            </div>
+            
+            <!-- WIDGET 3: DISCLAIMER -->
+    <div class="sidebar-widget-card-yellow">
+                <h3 class="text-[#854d0e] font-bold text-sm mb-2 flex items-center gap-2" style="margin-bottom: 8px; font-weight:700;">
+                    <span>⚠️</span> Lưu ý quan trọng
+                </h3>
+                <p class="text-xs text-[#713f12] leading-relaxed m-0 font-light" style="margin:0; font-size:11px; line-height:1.5;">
+                    Kết quả và biểu đồ này là công cụ hỗ trợ nhận diện dấu hiệu, không thay thế chẩn đoán chuyên khoa hoặc chỉ định y khoa chính thức.
+                </p>
+            </div>
+            
+            <!-- WIDGET 4: LIÊN KẾT NHANH (Nút Bấm Từ Header) -->
+            <div class="sidebar-widget-card-white">
+                <!-- Nút: Cộng đồng Facebook -->
+                <a href="https://www.facebook.com/groups/tukylaroiloantoanthan" target="_blank"
+                    rel="noopener noreferrer" title="Cộng Đồng Cha Mẹ"
+                    class="flex items-center justify-center gap-2 bg-gradient-to-br from-[#1877F2] to-[#0A58CA] hover:from-[#1464CC] hover:to-[#084298] text-white px-3.5 py-2.5 rounded-xl font-bold text-xs transition-all duration-300 shadow-[0_4px_12px_rgba(24,119,242,0.25)] hover:shadow-[0_6px_16px_rgba(24,119,242,0.35)] hover:-translate-y-0.5 border border-white/10 group w-full text-center"
+                    aria-label="Cộng đồng Facebook" style="text-decoration:none; display:flex;">
+                    <svg viewBox="0 0 320 512" style="width:12px; height:12px; fill:currentColor;" class="group-hover:scale-110 transition-transform">
+                        <path d="M279.14 288l14.22-92.66h-88.91v-60.13c0-25.35 12.42-50.06 52.24-50.06h40.42V6.26S260.43 0 225.36 0c-73.22 0-121.08 44.38-121.08 124.72v70.62H22.89V288h81.39v224h100.17V288z" />
+                    </svg>
+                    <span>Cộng đồng</span>
+                </a>
+
+                <!-- Nút: Hỏi đáp Zalo -->
+                <a href="https://zalo.me/g/vmgfxy834?joinSrc=9" target="_blank" rel="noopener noreferrer"
+                    title="Kết Nối Chuyên Gia"
+                    class="flex items-center justify-center gap-2 bg-gradient-to-br from-[#00A1FF] to-[#0068FF] hover:from-[#008CE6] hover:to-[#0052CC] text-white px-3.5 py-2.5 rounded-xl font-bold text-xs transition-all duration-300 shadow-[0_4px_12px_rgba(0,104,255,0.25)] hover:shadow-[0_6px_16px_rgba(0,104,255,0.35)] hover:-translate-y-0.5 border border-white/10 group w-full text-center"
+                    aria-label="Kết nối Zalo" style="text-decoration:none; display:flex;">
+                    <span class="font-black text-xs text-white leading-none group-hover:scale-110 transition-transform">Z</span>
+                    <span>Hỏi đáp Zalo</span>
+                </a>
+
+                <!-- Nút: Đăng nhập / Tài khoản -->
+                <?php
+                $current_member = class_exists('\Hieucon\Model\Member_Model') ? \Hieucon\Model\Member_Model::get_current_member() : false;
+                if ($current_member):
+                    ?>
+                    <a href="<?php echo home_url('/tai-khoan/'); ?>"
+                        class="flex items-center justify-center gap-1.5 bg-navy hover:bg-navy/80 text-white px-3.5 py-2.5 rounded-xl font-bold text-xs transition-all duration-200 shadow-sm hover:shadow-md hover:-translate-y-0.5 group w-full text-center border-0"
+                        style="text-decoration:none; display:flex;">
+                        <i data-lucide="user" class="w-4 h-4 text-secondary group-hover:text-white transition-colors"></i>
+                        <span>Tài khoản</span>
+                    </a>
+                <?php else: ?>
+                    <a href="<?php echo home_url('/dang-nhap/'); ?>"
+                        class="flex items-center justify-center gap-1.5 bg-secondary hover:bg-secondary_dark text-white px-3.5 py-2.5 rounded-xl font-bold text-xs transition-all duration-200 shadow-sm hover:shadow-md hover:-translate-y-0.5 w-full text-center border-0"
+                        style="text-decoration:none; display:flex;">
+                        <i data-lucide="log-in" class="w-4 h-4 text-white"></i>
+                        <span>Đăng nhập</span>
+                    </a>
+                <?php endif; ?>
+            </div>
+            
+        </div> <!-- /#survey-sidebar -->
+        
+</div> <!-- /#survey-active-container -->
+
+<!-- THÀNH CÔNG SCREEN (Outside active container to avoid sidebar conflicts) -->
+<!-- THÀNH CÔNG (Sau khi submit parent-info-section) -->
                  <div class="form-section" id="thankyou-section" style="display:none; text-align:center; padding:48px 32px; max-width:760px; margin: 32px auto;">
                    <div style="font-size: 64px; margin-bottom: 24px;">✉️</div>
                    <h2 style="font-family:'Oswald', sans-serif; font-size:28px; color:var(--navy); margin-bottom:16px;">Đã gửi kết quả thành công!</h2>
@@ -1781,107 +1922,8 @@ get_header();
                    </div>
                  </div>
 
-             </div> <!-- /#main-form -->
-        </div> <!-- /#checklist-main-column -->
-        
-        <!-- CỘT PHẢI (1/4): SIDEBAR BIỂU ĐỒ & HƯỚNG DẪN (Sticky) -->
-        <div class="survey-sidebar-sticky" id="survey-sidebar" style="display:flex; flex-direction:column; gap:24px;">
-            
-            <!-- WIDGET 2: HƯỚNG DẪN KHẢO SÁT (Màu Navy) -->
-            <div class="desktop-only-widget bg-navy rounded-2xl p-6 border border-solid border-[rgba(255,255,255,0.15)] shadow-[0_10px_25px_rgba(0,39,149,0.15)] text-white relative overflow-hidden has-pattern-bg" style="background-color: var(--navy); color: white;">
-                <div class="absolute -right-12 -bottom-12 w-32 h-32 bg-white/5 rounded-full pointer-events-none"></div>
-                <h3 class="font-bold text-base mb-4 flex items-center gap-2 text-yellow font-oswald tracking-wide uppercase" style="color: var(--yellow); margin-bottom: 16px; font-weight:700; font-family: 'Oswald', sans-serif; font-size: 15px; letter-spacing: 0.03em;">
-                    <span style="font-size:18px;">📋</span> Hướng dẫn khảo sát
-                </h3>
-                <div class="flex flex-col gap-4" style="display: flex; flex-direction: column; gap: 16px; font-size: 13px; line-height: 1.5; color: #ffffff;">
-                    <div class="flex gap-2.5 items-start">
-                        <div style="color: var(--navy); font-weight:800; width:20px; height:20px; display:flex; align-items:center; justify-content:center; border-radius:50%; background: var(--yellow); margin-top:2px; font-size: 10px;" class="shrink-0">1</div>
-                        <p class="m-0" style="margin:0; font-weight:500;">Tích chọn các dấu hiệu quan sát thấy ở con trong nhóm hiện tại.</p>
-                    </div>
-                    <div class="flex gap-2.5 items-start">
-                        <div style="color: var(--navy); font-weight:800; width:20px; height:20px; display:flex; align-items:center; justify-content:center; border-radius:50%; background: var(--yellow); margin-top:2px; font-size: 10px;" class="shrink-0">2</div>
-                        <p class="m-0" style="margin:0; font-weight:500;">Nhấn "Tiếp theo →" hoặc click tên nhóm ở trên để chuyển phần.</p>
-                    </div>
-                    <div class="flex gap-2.5 items-start">
-                        <div style="color: var(--navy); font-weight:800; width:20px; height:20px; display:flex; align-items:center; justify-content:center; border-radius:50%; background: var(--yellow); margin-top:2px; font-size: 10px;" class="shrink-0">3</div>
-                        <p class="m-0" style="margin:0; font-weight:500;">Nhấn "Hoàn thiện & nhận kết quả" sau khi điền xong nhóm thứ 8.</p>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- WIDGET 1: RADAR CHART -->
-            <div class="bg-navy rounded-2xl p-4 border border-solid border-[rgba(255,255,255,0.15)] shadow-[0_10px_25px_rgba(0,39,149,0.15)] text-white flex flex-col items-center justify-center has-pattern-bg relative" style="background-color: var(--navy); color: white;">
-                <!-- Close Button (Only visible on mobile overlay mode) -->
-                <button onclick="toggleMobileRadar(false)" class="absolute top-4 right-4 text-white/70 hover:text-white" style="display:none; background:none; border:none; padding:4px; cursor:pointer; z-index: 10;" id="close-radar-btn">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-                </button>
-                <h3 class="font-bold text-sm mb-3 text-yellow font-oswald tracking-wide uppercase text-center w-full" style="color: var(--yellow); margin-bottom: 12px; font-weight:700; font-family: 'Oswald', sans-serif; font-size: 15px; letter-spacing: 0.03em;">
-                    📊 Tổng quan dấu hiệu cha mẹ ghi nhận
-                </h3>
-                <div style="position: relative; width: 100%; height: 280px;">
-                    <canvas id="radarChartCanvas"></canvas>
-                </div>
-                <div class="mt-4 text-[11px] text-white/70 text-center font-light leading-relaxed">
-                    Biểu đồ phản ánh tỷ lệ biểu hiện dấu hiệu của từng hệ cơ quan theo thời gian thực.
-                </div>
-            </div>
-            
-            <!-- WIDGET 3: DISCLAIMER -->
-            <div class="bg-[#fefce8] border border-solid border-[#fef08a] rounded-2xl p-6 shadow-sm">
-                <h3 class="text-[#854d0e] font-bold text-sm mb-2 flex items-center gap-2" style="margin-bottom: 8px; font-weight:700;">
-                    <span>⚠️</span> Lưu ý quan trọng
-                </h3>
-                <p class="text-xs text-[#713f12] leading-relaxed m-0 font-light" style="margin:0; font-size:11px; line-height:1.5;">
-                    Kết quả và biểu đồ này là công cụ hỗ trợ nhận diện dấu hiệu, không thay thế chẩn đoán chuyên khoa hoặc chỉ định y khoa chính thức.
-                </p>
-            </div>
-            
-            <!-- WIDGET 4: LIÊN KẾT NHANH (Nút Bấm Từ Header) -->
-            <div class="bg-white rounded-2xl p-6 border border-solid border-[rgba(0,39,149,0.12)] shadow-[0_4px_20px_rgba(0,39,149,0.05)] flex flex-col gap-3 w-full">
-                <!-- Nút: Cộng đồng Facebook -->
-                <a href="https://www.facebook.com/groups/tukylaroiloantoanthan" target="_blank"
-                    rel="noopener noreferrer" title="Cộng Đồng Cha Mẹ"
-                    class="flex items-center justify-center gap-2 bg-gradient-to-br from-[#1877F2] to-[#0A58CA] hover:from-[#1464CC] hover:to-[#084298] text-white px-3.5 py-2.5 rounded-xl font-bold text-xs transition-all duration-300 shadow-[0_4px_12px_rgba(24,119,242,0.25)] hover:shadow-[0_6px_16px_rgba(24,119,242,0.35)] hover:-translate-y-0.5 border border-white/10 group w-full text-center"
-                    aria-label="Cộng đồng Facebook" style="text-decoration:none; display:flex;">
-                    <svg viewBox="0 0 320 512" style="width:12px; height:12px; fill:currentColor;" class="group-hover:scale-110 transition-transform">
-                        <path d="M279.14 288l14.22-92.66h-88.91v-60.13c0-25.35 12.42-50.06 52.24-50.06h40.42V6.26S260.43 0 225.36 0c-73.22 0-121.08 44.38-121.08 124.72v70.62H22.89V288h81.39v224h100.17V288z" />
-                    </svg>
-                    <span>Cộng đồng</span>
-                </a>
-
-                <!-- Nút: Hỏi đáp Zalo -->
-                <a href="https://zalo.me/g/vmgfxy834?joinSrc=9" target="_blank" rel="noopener noreferrer"
-                    title="Kết Nối Chuyên Gia"
-                    class="flex items-center justify-center gap-2 bg-gradient-to-br from-[#00A1FF] to-[#0068FF] hover:from-[#008CE6] hover:to-[#0052CC] text-white px-3.5 py-2.5 rounded-xl font-bold text-xs transition-all duration-300 shadow-[0_4px_12px_rgba(0,104,255,0.25)] hover:shadow-[0_6px_16px_rgba(0,104,255,0.35)] hover:-translate-y-0.5 border border-white/10 group w-full text-center"
-                    aria-label="Kết nối Zalo" style="text-decoration:none; display:flex;">
-                    <span class="font-black text-xs text-white leading-none group-hover:scale-110 transition-transform">Z</span>
-                    <span>Hỏi đáp Zalo</span>
-                </a>
-
-                <!-- Nút: Đăng nhập / Tài khoản -->
-                <?php
-                $current_member = class_exists('\Hieucon\Model\Member_Model') ? \Hieucon\Model\Member_Model::get_current_member() : false;
-                if ($current_member):
-                    ?>
-                    <a href="<?php echo home_url('/tai-khoan/'); ?>"
-                        class="flex items-center justify-center gap-1.5 bg-navy hover:bg-navy/80 text-white px-3.5 py-2.5 rounded-xl font-bold text-xs transition-all duration-200 shadow-sm hover:shadow-md hover:-translate-y-0.5 group w-full text-center border-0"
-                        style="text-decoration:none; display:flex;">
-                        <i data-lucide="user" class="w-4 h-4 text-secondary group-hover:text-white transition-colors"></i>
-                        <span>Tài khoản</span>
-                    </a>
-                <?php else: ?>
-                    <a href="<?php echo home_url('/dang-nhap/'); ?>"
-                        class="flex items-center justify-center gap-1.5 bg-secondary hover:bg-secondary_dark text-white px-3.5 py-2.5 rounded-xl font-bold text-xs transition-all duration-200 shadow-sm hover:shadow-md hover:-translate-y-0.5 w-full text-center border-0"
-                        style="text-decoration:none; display:flex;">
-                        <i data-lucide="log-in" class="w-4 h-4 text-white"></i>
-                        <span>Đăng nhập</span>
-                    </a>
-                <?php endif; ?>
-            </div>
-            
-        </div> <!-- /#survey-sidebar -->
-        
-</div> <!-- /#survey-active-container -->
+             </div>
+</div>
 
   <script>
     // ── DỮ LIỆU CHECKLIST ──
@@ -2636,6 +2678,8 @@ get_header();
         // Ẩn phần trắc nghiệm
         document.getElementById('checklist-container').style.display = 'none';
         document.getElementById('progress-wrap').style.display = 'none';
+        const mobileInstr = document.getElementById('mobile-instructions-widget');
+        if (mobileInstr) mobileInstr.style.display = 'none';
         
         const completionSec = document.getElementById('survey-completion-section');
         if (completionSec) completionSec.style.display = 'none';
@@ -2776,7 +2820,8 @@ get_header();
       },
 
       transitionToNextStep(email) {
-        document.getElementById('parent-info-section').style.display = 'none';
+        const survey = document.getElementById('survey-active-container');
+        if (survey) survey.style.display = 'none';
         ModuleSuccess.show(email);
       }
     };
@@ -3092,6 +3137,8 @@ get_header();
         if (parent) parent.style.display = 'none';
         if (thankyou) thankyou.style.display = 'none';
         if (surveyPageContainer) surveyPageContainer.style.display = 'none';
+        // Hide survey grid unless survey screen is active
+        if (survey) survey.style.display = 'none';
 
         document.querySelectorAll('.debug-btn').forEach(btn => btn.classList.remove('active'));
 
@@ -3106,6 +3153,7 @@ get_header();
           if (btn) btn.classList.add('active');
         } else if (screenId === 'survey') {
           if (survey) survey.style.display = 'grid';
+          if (thankyou) thankyou.style.display = 'none';
           const checklistContainer = document.getElementById('checklist-container');
           if (checklistContainer) checklistContainer.style.display = 'block';
           const btn = document.getElementById('db-btn-survey');
