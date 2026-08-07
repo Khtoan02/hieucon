@@ -347,7 +347,7 @@
       const diagnosis = this.getChildDiagnosis();
 
       if (!childName || !age || !gender || !height || !weight || !diagnosis) {
-        alert('Ba mẹ vui lòng điền đầy đủ các thông tin có dấu * trước khi tiếp tục.');
+        alert('Cha mẹ vui lòng điền đầy đủ các thông tin có dấu * trước khi tiếp tục.');
         return false;
       }
       return true;
@@ -773,7 +773,7 @@
       const email = this.getParentEmail();
 
       if (!name || !phone || !email) {
-        alert('Ba mẹ vui lòng điền đầy đủ các thông tin liên hệ để nhận kết quả.');
+        alert('Cha mẹ vui lòng điền đầy đủ các thông tin liên hệ để nhận kết quả.');
         return false;
       }
 
@@ -919,7 +919,7 @@
   function submitCTA() {
     const phone = document.getElementById('cta-phone').value.trim();
     if (!phone) { alert('Vui lòng nhập số điện thoại để đặt lịch.'); return; }
-    alert(`Cảm ơn ba mẹ! Chuyên gia sẽ liên hệ qua số ${phone} trong vòng 24 giờ để tư vấn. Mã hồ sơ của con là: ${ChecklistApp.state.userCode}`);
+    alert(`Cảm ơn cha mẹ! Chuyên gia sẽ liên hệ qua số ${phone} trong vòng 24 giờ để tư vấn. Mã hồ sơ của con là: ${ChecklistApp.state.userCode}`);
 
     if (typeof fbq !== 'undefined') {
       fbq('track', 'Contact');
@@ -1406,7 +1406,7 @@
                                     <!-- Streamlined Result Link Section -->
                                     <div class="result-compact-box" style="background-color: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 12px; padding: 18px 16px; margin: 16px 0 20px 0; text-align: center;">
                                         <div class="result-compact-text" style="font-size: 13px; line-height: 1.5; color: #334155; margin-bottom: 12px;">
-                                            Kết quả đánh giá của bé đã hoàn tất. Ba mẹ có thể xem chi tiết trực tiếp tại đường link: <br>
+                                            Kết quả đánh giá của bé đã hoàn tất. Cha mẹ có thể xem chi tiết trực tiếp tại đường link: <br>
                                             <a href="\${resultUrl}" target="_blank" style="color: #0284C7; font-weight: 600; word-break: break-all; text-decoration: underline;">\${resultUrl}</a>
                                         </div>
                                         <a href="\${resultUrl}" class="btn-view-report" target="_blank" style="background-color: #0D2A78; color: #ffffff !important; padding: 12px 24px; text-decoration: none; font-size: 14px; font-weight: 700; border-radius: 8px; display: inline-block; box-shadow: 0 3px 10px rgba(13, 42, 120, 0.2); transition: background-color 0.2s ease;">
@@ -1416,7 +1416,7 @@
 
                                     <!-- Disclaimer Box -->
                                     <div class="disclaimer-box" style="background-color: #FAF5FF; border: 1px solid #E9D5FF; border-radius: 8px; padding: 12px 14px; margin-top: 20px; font-size: 11px; color: #6B21A8; line-height: 1.5;">
-                                        <strong style="color: #581C87;">⚠️ Lưu ý:</strong> Kết quả từ bộ công cụ mang tính chất tổng hợp thông tin quan sát nhằm hỗ trợ ba mẹ định hướng theo dõi. Đây không phải là kết luận hay chẩn đoán y khoa chính thức.
+                                        <strong style="color: #581C87;">⚠️ Lưu ý:</strong> Kết quả từ bộ công cụ mang tính chất tổng hợp thông tin quan sát nhằm hỗ trợ cha mẹ định hướng theo dõi. Đây không phải là kết luận hay chẩn đoán y khoa chính thức.
                                     </div>
 
                                 </div>
