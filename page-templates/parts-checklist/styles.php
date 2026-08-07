@@ -1185,6 +1185,7 @@
     .survey-sidebar-sticky {
       position: sticky !important;
       top: 96px !important;
+      align-self: start !important;
     }
   }
 
@@ -1278,6 +1279,7 @@
     .survey-sidebar-sticky {
       position: sticky !important;
       top: 96px !important;
+      align-self: start !important;
     }
   }
 
@@ -1420,3 +1422,8 @@
     display: block;
   }
 </style>
+
+/* Hide progress wrap as requested */
+#progress-wrap {
+  display: none !important;
+}
