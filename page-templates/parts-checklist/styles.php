@@ -514,7 +514,7 @@
     margin: 16px auto;
     max-width: 820px;
     box-shadow: var(--shadow);
-    display: block;
+    display: none;
     animation: fadeIn 0.3s ease;
   }
 
@@ -1427,3 +1427,60 @@
 #progress-wrap {
   display: none !important;
 }
+
+  .checklist-section.active {
+    display: block !important;
+  }
+
+  .slide-navigation {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 32px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+    gap: 16px;
+  }
+
+  .btn-prev-slide {
+    padding: 12px 24px;
+    background: #f1f5f9;
+    color: #334155;
+    font-weight: 700;
+    border: 1px solid #cbd5e1;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 14px;
+    font-family: 'Quicksand', sans-serif;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .btn-prev-slide:hover {
+    background: #e2e8f0;
+    color: #0f172a;
+  }
+
+  .btn-next-slide {
+    padding: 12px 28px;
+    background: var(--navy);
+    color: var(--white);
+    font-weight: 700;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 14px;
+    font-family: 'Quicksand', sans-serif;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    box-shadow: 0 4px 10px rgba(0, 39, 149, 0.15);
+  }
+
+  .btn-next-slide:hover {
+    background: #1e3a8a;
+    box-shadow: 0 6px 14px rgba(0, 39, 149, 0.25);
+  }

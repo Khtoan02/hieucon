@@ -455,10 +455,6 @@
       // Show mobile Radar FAB!
       const fab = document.getElementById('mobile-radar-fab');
       if (fab) fab.style.display = 'flex';
-
-      // Show completion section
-      const completionSec = document.getElementById('survey-completion-section');
-      if (completionSec) completionSec.style.display = 'block';
     },
 
     buildProgressSteps() {
@@ -482,7 +478,7 @@
         sec.className = 'checklist-section';
         sec.id = `group-${gi}`;
         sec.innerHTML = `
-            <div class="section-header" onclick="ModuleSurvey.toggleGroupCollapse(${gi})" style="display:flex; align-items:center; justify-content:space-between; width:100%; gap: 16px; margin-bottom: 20px; cursor:pointer; user-select:none;">
+            <div class="section-header" style="display:flex; align-items:center; justify-content:space-between; width:100%; gap: 16px; margin-bottom: 20px; user-select:none;">
               <div style="display:flex; align-items:center; gap: 12px;">
                 <div class="section-icon">${group.icon}</div>
                 <div>
@@ -490,9 +486,6 @@
                   <div class="section-subtitle">${group.desc}</div>
                 </div>
               </div>
-              <button type="button" class="accordion-toggle-btn" style="background:none; border:none; color:currentColor; cursor:pointer; padding:4px; display:flex; align-items:center; justify-content:center;">
-                <svg class="accordion-arrow" style="width:20px; height:20px; transition: transform 0.3s;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>
-              </button>
             </div>
             <div class="group-score" style="display: none;">
               <span class="group-score-label">Điểm số:</span>
@@ -523,6 +516,12 @@
                   </div>
                 </div>
               `).join('')}
+            </div>
+            
+            <!-- Slide Navigation Buttons -->
+            <div class="slide-navigation">
+              ${gi > 0 ? `<button type="button" class="btn-prev-slide" onclick="ModuleSurvey.prevGroup(${gi})">← Quay lại</button>` : `<div></div>`}
+              ${gi < 7 ? `<button type="button" class="btn-next-slide" onclick="ModuleSurvey.nextGroup(${gi})">Tiếp theo →</button>` : `<div></div>`}
             </div>
           `;
         container.appendChild(sec);
@@ -606,16 +605,36 @@
         targetGroup.classList.add('active');
       }
 
+      // Show/Hide completion section on the last group (index 7)
+      const completionSec = document.getElementById('survey-completion-section');
+      if (completionSec) {
+        completionSec.style.display = (gi === GROUPS.length - 1) ? 'block' : 'none';
+      }
+
       if (gi > 0 && gi < GROUPS.length) {
         this.app.state.deepTracker.drop_point = `Nhóm ${gi + 1} / ${GROUPS.length}: ${GROUPS[gi].name}`;
         this.app.pingServerDropOff();
       }
 
       this.updateProgress();
-      const progressWrap = document.getElementById('progress-wrap');
-      if (progressWrap) {
-        window.scrollTo({ top: progressWrap.offsetTop - 20, behavior: 'smooth' });
+      
+      // Scroll to the top of the survey column so the user doesn't stay scrolled down
+      const activeSurvey = document.getElementById('survey-active-container');
+      if (activeSurvey) {
+        window.scrollTo({ top: activeSurvey.offsetTop - 20, behavior: 'smooth' });
       }
+    },
+
+    nextGroup(gi) {
+      if (!this.isGroupCompleted(gi)) {
+        alert("Vui lòng tích chọn đầy đủ 'Có' hoặc 'Không' cho tất cả câu hỏi trong nhóm này trước khi tiếp tục.");
+        return;
+      }
+      this.showGroup(gi + 1);
+    },
+
+    prevGroup(gi) {
+      this.showGroup(gi - 1);
     },
 
     jumpToGroup(gi) {
