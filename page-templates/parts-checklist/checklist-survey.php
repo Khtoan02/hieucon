@@ -73,7 +73,6 @@
         <!-- THÔNG TIN PHỤ HUYNH (Mới - Sau khi xong khảo sát) -->
         <?php include get_template_directory() . '/page-templates/parts-checklist/result-request.php'; ?>
 
-      </div>
     </div> <!-- /#main-form -->
   </div> <!-- /#checklist-main-column -->
 
