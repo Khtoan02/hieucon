@@ -1216,6 +1216,10 @@ get_header();
       grid-template-columns: 1fr 3fr;
     }
 
+    #right-form-column {
+      grid-column: auto !important;
+    }
+
     .survey-sidebar-sticky {
       position: sticky !important;
       top: 96px !important;
@@ -1303,6 +1307,10 @@ get_header();
 
     .survey-page-grid {
       grid-template-columns: 1fr 3fr;
+    }
+
+    #right-form-column {
+      grid-column: auto !important;
     }
 
     .survey-sidebar-sticky {
