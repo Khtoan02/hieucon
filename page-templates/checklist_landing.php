@@ -1072,6 +1072,78 @@ get_header();
       border-left: 3px solid var(--border);
     }
 
+    /* ── RESPONSIVE HELPERS & GRID LAYOUT (Vanilla CSS replacements for Tailwind) ── */
+    /* Fallback styles for CTA Buttons & Layout if Tailwind fails to load on Host */
+    .bg-white.rounded-2xl {
+      background: #ffffff !important;
+      border-radius: 16px !important;
+      padding: 24px !important;
+      border: 1px solid rgba(0,39,149,0.12) !important;
+      box-shadow: 0 4px 20px rgba(0,39,149,0.05) !important;
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 12px !important;
+      width: 100% !important;
+      box-sizing: border-box !important;
+    }
+    .bg-white.rounded-2xl a {
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      gap: 8px !important;
+      padding: 10px 14px !important;
+      border-radius: 10px !important;
+      font-weight: 700 !important;
+      font-size: 12px !important;
+      text-align: center !important;
+      box-sizing: border-box !important;
+      border: none !important;
+      width: 100% !important;
+      color: #ffffff !important;
+      text-decoration: none !important;
+    }
+    .bg-white.rounded-2xl a[href*="facebook.com"] {
+      background: linear-gradient(to bottom right, #1877F2, #0A58CA) !important;
+    }
+    .bg-white.rounded-2xl a[href*="zalo.me"] {
+      background: linear-gradient(to bottom right, #00A1FF, #0068FF) !important;
+    }
+    .bg-white.rounded-2xl a[href*="tai-khoan"] {
+      background: var(--navy) !important;
+    }
+    .bg-white.rounded-2xl a[href*="dang-nhap"] {
+      background: #f05a25 !important;
+    }
+    .mobile-only-widget {
+      display: none !important;
+    }
+    .desktop-only-widget {
+      display: block !important;
+    }
+    .survey-grid {
+      display: grid !important;
+      grid-template-columns: 1fr !important;
+      gap: 24px !important;
+      align-items: start !important;
+    }
+    @media (max-width: 1024px) {
+      .mobile-only-widget {
+        display: block !important;
+      }
+      .desktop-only-widget {
+        display: none !important;
+      }
+    }
+    @media (min-width: 1025px) {
+      .survey-grid {
+        grid-template-columns: 3fr 1fr !important;
+      }
+      .survey-sidebar-sticky {
+        position: sticky !important;
+        top: 96px !important;
+      }
+    }
+
     /* ── RESPONSIVE ── */
     @media (max-width: 640px) {
 
@@ -1563,11 +1635,10 @@ get_header();
 </div> <!-- /#survey-page-container -->
 
 <!-- SURVEY ACTIVE CONTAINER (GRID LAYOUT FOR SURVEY STEP) -->
-<div class="max-w-7xl mx-auto px-6 py-12" id="survey-active-container" style="display:none;">
-    <div class="grid grid-cols-1 lg:grid-cols-4 gap-8 items-start">
+<div class="max-w-7xl mx-auto px-6 py-12 survey-grid" id="survey-active-container" style="display:none;">
         
         <!-- CỘT TRÁI (3/4): KHU VỰC KHẢO SÁT CHÍNH -->
-        <div class="lg:col-span-3" id="checklist-main-column">
+        <div id="checklist-main-column">
              <!-- MAIN FORM -->
              <div id="main-form">
                  
@@ -1711,10 +1782,10 @@ get_header();
         </div> <!-- /#checklist-main-column -->
         
         <!-- CỘT PHẢI (1/4): SIDEBAR BIỂU ĐỒ & HƯỚNG DẪN (Sticky) -->
-        <div class="lg:col-span-1 lg:sticky lg:top-24 flex flex-col gap-6" id="survey-sidebar">
+        <div class="survey-sidebar-sticky" id="survey-sidebar" style="display:flex; flex-direction:column; gap:24px;">
             
             <!-- WIDGET 2: HƯỚNG DẪN KHẢO SÁT (Màu Navy) -->
-            <div class="hidden lg:block bg-navy rounded-2xl p-6 border border-solid border-[rgba(255,255,255,0.15)] shadow-[0_10px_25px_rgba(0,39,149,0.15)] text-white relative overflow-hidden has-pattern-bg" style="background-color: var(--navy); color: white;">
+            <div class="desktop-only-widget bg-navy rounded-2xl p-6 border border-solid border-[rgba(255,255,255,0.15)] shadow-[0_10px_25px_rgba(0,39,149,0.15)] text-white relative overflow-hidden has-pattern-bg" style="background-color: var(--navy); color: white;">
                 <div class="absolute -right-12 -bottom-12 w-32 h-32 bg-white/5 rounded-full pointer-events-none"></div>
                 <h3 class="font-bold text-base mb-4 flex items-center gap-2 text-yellow font-oswald tracking-wide uppercase" style="color: var(--yellow); margin-bottom: 16px; font-weight:700; font-family: 'Oswald', sans-serif; font-size: 15px; letter-spacing: 0.03em;">
                     <span style="font-size:18px;">📋</span> Hướng dẫn khảo sát
@@ -1807,7 +1878,6 @@ get_header();
             
         </div> <!-- /#survey-sidebar -->
         
-    </div> <!-- /.grid -->
 </div> <!-- /#survey-active-container -->
 
   <script>
