@@ -269,21 +269,43 @@ get_header();
       }
       .check-item-row {
         position: relative !important;
+        display: flex !important;
+        flex-direction: column !important;
         background: var(--white) !important;
-        padding: 12px 14px !important;
-        gap: 12px !important;
+        padding: 16px 14px !important;
+        gap: 14px !important;
+        border-radius: 12px !important;
+        border: 1px solid #e2e8f0 !important;
+        box-sizing: border-box !important;
+        width: 100% !important;
       }
       .check-main {
-        font-size: 14.5px !important;
+        font-size: 14px !important;
         font-weight: 600 !important;
         line-height: 1.45 !important;
       }
       .check-options {
+        display: flex !important;
         gap: 10px !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
       }
       .check-opt-label {
-        padding: 8px 12px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        padding: 10px 12px !important;
         font-size: 13px !important;
+        font-weight: 700 !important;
+        border: 1.5px solid #cbd5e1 !important;
+        border-radius: 10px !important;
+        background: #ffffff !important;
+        color: #334155 !important;
+        cursor: pointer !important;
+        flex: 1 !important;
+        min-width: 80px !important;
+        text-align: center !important;
+        box-sizing: border-box !important;
       }
       .info-tooltip-wrapper {
         position: static !important;
@@ -723,10 +745,49 @@ get_header();
       opacity: 1;
     }
 
-    /* Wide quiz pill buttons style */
+    /* ── QUIZ PILL BUTTONS & ROWS LAYOUT (Vanilla CSS fallbacks) ── */
+    .check-item-row {
+      display: flex !important;
+      flex-direction: row !important;
+      align-items: center !important;
+      justify-content: space-between !important;
+      gap: 16px !important;
+      padding: 16px 24px !important;
+      border: 1px solid #e2e8f0 !important;
+      border-radius: 16px !important;
+      background-color: #faf9f6 !important;
+      margin-bottom: 12px !important;
+      box-sizing: border-box !important;
+      width: 100% !important;
+    }
+    .check-text {
+      flex: 1 !important;
+      box-sizing: border-box !important;
+    }
+    .check-options {
+      display: flex !important;
+      gap: 12px !important;
+      align-items: center !important;
+      box-sizing: border-box !important;
+    }
     .check-opt-label {
-      box-shadow: 0 2px 4px rgba(0,0,0,0.02);
-      border-width: 1.5px !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      padding: 10px 20px !important;
+      border: 1.5px solid #cbd5e1 !important;
+      border-radius: 12px !important;
+      background-color: #ffffff !important;
+      color: #334155 !important;
+      font-size: 14px !important;
+      font-weight: 700 !important;
+      cursor: pointer !important;
+      user-select: none !important;
+      min-width: 90px !important;
+      text-align: center !important;
+      box-sizing: border-box !important;
+      transition: all 0.2s !important;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.02) !important;
     }
     
     /* Completed group collapse styles */
