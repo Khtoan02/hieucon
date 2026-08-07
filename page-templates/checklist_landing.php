@@ -1121,10 +1121,10 @@ get_header();
       display: block !important;
     }
     .survey-grid {
-      display: grid !important;
-      grid-template-columns: 1fr !important;
-      gap: 24px !important;
-      align-items: start !important;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 24px;
+      align-items: start;
     }
     @media (max-width: 1024px) {
       .mobile-only-widget {
@@ -1136,7 +1136,7 @@ get_header();
     }
     @media (min-width: 1025px) {
       .survey-grid {
-        grid-template-columns: 3fr 1fr !important;
+        grid-template-columns: 3fr 1fr;
       }
       .survey-sidebar-sticky {
         position: sticky !important;
@@ -2304,7 +2304,7 @@ get_header();
         
         // Show second container (Survey step)
         const surveyContainer = document.getElementById('survey-active-container');
-        if (surveyContainer) surveyContainer.style.display = 'block';
+        if (surveyContainer) surveyContainer.style.display = 'grid';
         
         // Initialize the Radar Chart!
         initializeRadarChart();
@@ -3105,7 +3105,7 @@ get_header();
           const btn = document.getElementById('db-btn-info');
           if (btn) btn.classList.add('active');
         } else if (screenId === 'survey') {
-          if (survey) survey.style.display = 'block';
+          if (survey) survey.style.display = 'grid';
           const checklistContainer = document.getElementById('checklist-container');
           if (checklistContainer) checklistContainer.style.display = 'block';
           const btn = document.getElementById('db-btn-survey');
