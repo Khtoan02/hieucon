@@ -12,8 +12,10 @@ function hieucon_install_dh_checklist_table() {
     $sql = "CREATE TABLE IF NOT EXISTS $table_name (
         id bigint(20) NOT NULL AUTO_INCREMENT,
         user_code varchar(10) NOT NULL,
+        child_name varchar(255) NOT NULL DEFAULT '',
         parent_name varchar(255) NOT NULL DEFAULT '',
         parent_phone varchar(50) NOT NULL DEFAULT '',
+        parent_email varchar(100) NOT NULL DEFAULT '',
         child_age varchar(50) NOT NULL DEFAULT '',
         child_gender varchar(20) DEFAULT NULL,
         child_height varchar(20) DEFAULT NULL,
@@ -39,6 +41,12 @@ function hieucon_install_dh_checklist_table() {
 
     // Tự động add column nếu dbDelta không chạy
     $existing_cols = $wpdb->get_col( "SHOW COLUMNS FROM $table_name", 0 );
+    if ( ! in_array( 'child_name', $existing_cols ) ) {
+        $wpdb->query( "ALTER TABLE $table_name ADD COLUMN child_name varchar(255) NOT NULL DEFAULT '' AFTER user_code" );
+    }
+    if ( ! in_array( 'parent_email', $existing_cols ) ) {
+        $wpdb->query( "ALTER TABLE $table_name ADD COLUMN parent_email varchar(100) NOT NULL DEFAULT '' AFTER parent_phone" );
+    }
     if ( ! in_array( 'time_spent', $existing_cols ) ) {
         $wpdb->query( "ALTER TABLE $table_name ADD COLUMN time_spent int(11) NOT NULL DEFAULT 0 AFTER extra_symptoms" );
     }
@@ -148,9 +156,13 @@ function hieucon_dh_checklist_admin_page() {
                         <tr>
                             <td><?php echo esc_html($row->id); ?></td>
                             <td><strong><?php echo esc_html($row->user_code); ?></strong></td>
-                            <td><?php echo esc_html($row->parent_name); ?></td>
-                            <td><?php echo esc_html($row->parent_phone); ?></td>
                             <td>
+                                <?php echo esc_html($row->parent_name ? $row->parent_name : '---'); ?><br>
+                                <span style="font-size:11px; color:#666;"><?php echo esc_html($row->parent_email ? $row->parent_email : '---'); ?></span>
+                            </td>
+                            <td><?php echo esc_html($row->parent_phone ? $row->parent_phone : '---'); ?></td>
+                            <td>
+                                Bé: <strong><?php echo esc_html($row->child_name ? $row->child_name : '---'); ?></strong><br>
                                 Tuổi: <?php echo esc_html($row->child_age); ?><br>
                                 CĐ: <?php echo esc_html($row->child_diagnosis); ?>
                             </td>
@@ -230,6 +242,8 @@ function hieucon_dh_submit_checklist() {
 
     $parent_name = isset($_POST['parent_name']) ? sanitize_text_field($_POST['parent_name']) : '';
     $parent_phone = isset($_POST['parent_phone']) ? sanitize_text_field($_POST['parent_phone']) : '';
+    $parent_email = isset($_POST['parent_email']) ? sanitize_email($_POST['parent_email']) : '';
+    $child_name = isset($_POST['child_name']) ? sanitize_text_field($_POST['child_name']) : '';
     $child_age = isset($_POST['child_age']) ? sanitize_text_field($_POST['child_age']) : '';
     $child_gender = isset($_POST['child_gender']) ? sanitize_text_field($_POST['child_gender']) : '';
     $child_height = isset($_POST['child_height']) ? sanitize_text_field($_POST['child_height']) : '';
@@ -244,8 +258,10 @@ function hieucon_dh_submit_checklist() {
     $behaviors_json = isset($_POST['behaviors_json']) ? wp_unslash($_POST['behaviors_json']) : '';
 
     $data = [
+        'child_name' => $child_name,
         'parent_name' => $parent_name,
         'parent_phone' => $parent_phone,
+        'parent_email' => $parent_email,
         'child_age' => $child_age,
         'child_gender' => $child_gender,
         'child_height' => $child_height,
@@ -265,7 +281,7 @@ function hieucon_dh_submit_checklist() {
         $da = json_decode(wp_unslash($_POST['deep_analytics']), true) ?: [];
         
         // Luôn bắt IP chuẩn từ Server
-        $server_ip = $_SERVER['REMOTE_ADDR'];
+        $server_ip = isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : '127.0.0.1';
         if (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
             $server_ip = trim(explode(',', $_SERVER['HTTP_X_FORWARDED_FOR'])[0]);
         }
@@ -292,13 +308,20 @@ function hieucon_dh_submit_checklist() {
         $data['deep_analytics'] = json_encode($da, JSON_UNESCAPED_UNICODE);
     }
 
-    $existing = $wpdb->get_row($wpdb->prepare("SELECT id FROM $table_name WHERE user_code = %s", $user_code));
+    $existing = $wpdb->get_row($wpdb->prepare("SELECT id, parent_email FROM $table_name WHERE user_code = %s", $user_code));
 
     if ($existing) {
         $wpdb->update($table_name, $data, ['user_code' => $user_code]);
     } else {
         $data['user_code'] = $user_code;
         $wpdb->insert($table_name, $data);
+    }
+
+    // Gửi email tự động nếu nộp kết quả cuối cùng và chưa được gửi trước đó
+    $is_final = !empty($parent_email) && !empty($scores_json);
+    $already_sent = ($existing && !empty($existing->parent_email));
+    if ($is_final && !$already_sent) {
+        hieucon_send_checklist_email($user_code, $parent_name, $parent_email, $child_name, $child_age, $child_gender, $scores_json);
     }
 
     wp_send_json_success(['user_code' => $user_code]);
@@ -324,7 +347,7 @@ function hieucon_dh_export_csv_handler() {
     $output = fopen('php://output', 'w');
     
     $headers = [
-        'ID', 'Mã KH', 'Phụ huynh', 'SĐT', 'Tuổi', 'Chẩn đoán hiện tại', 'Đang can thiệp', 'Sản phẩm hỗ trợ', 
+        'ID', 'Mã KH', 'Tên con', 'Phụ huynh', 'SĐT', 'Email phụ huynh', 'Tuổi', 'Chẩn đoán hiện tại', 'Đang can thiệp', 'Sản phẩm hỗ trợ', 
         'Lo lắng nhất', 'Triệu chứng khác', 'Thời gian làm bài (giây)', 'Thời gian nộp', 'Thiết bị',
         'Vị trí', 'IP', 'Thời gian Active (giây)', 'Tiến trình (Drop-off)', 'Nhóm suy nghĩ lâu nhất', 
         'Lưỡng lự (Tick/Untick)', 'Số ký tự đã xoá', 'Từ khoá bôi đen', 'UTMs', 'Danh sách dấu hiệu chọn'
@@ -365,8 +388,10 @@ function hieucon_dh_export_csv_handler() {
         $line = [
             $row->id,
             $row->user_code,
+            $row->child_name,
             $row->parent_name,
             $row->parent_phone,
+            $row->parent_email,
             $row->child_age,
             $row->child_diagnosis,
             $row->child_therapy,
@@ -429,305 +454,301 @@ function hieucon_dh_public_checklist_result() {
         $scores     = json_decode($row->scores_json, true) ?: [];
         $behaviors  = json_decode($row->behaviors_json, true) ?: [];
     ?>
+      <!-- Include Tailwind CSS & Chart.js -->
+      <script src="https://cdn.tailwindcss.com"></script>
+      <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+      <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+      
       <style>
         :root {
           --navy: #002795;
           --yellow: #FFD154;
           --charcoal: #1e293b;
-          --bg-body: #f1f5f9;
+          --bg-body: #faf9f6;
           --white: #FFFFFF;
           --gray: #64748b;
           --border: #e2e8f0;
-          --shadow: 0 1px 3px rgba(0,0,0,0.05), 0 1px 2px rgba(0,0,0,0.03);
-          --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.05), 0 4px 6px -2px rgba(0,0,0,0.03);
+          --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+          --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
         }
 
-        body {
-          margin: 0;
-          font-family: 'Be Vietnam Pro', sans-serif;
-          background: var(--bg-body);
+        .results-page-body {
+          background-color: var(--bg-body);
           color: var(--charcoal);
-          line-height: 1.5;
-        }
-
-        .dashboard-header {
-          background: var(--navy);
-          color: var(--white);
-        }
-        .dashboard-header-inner {
-          max-width: 1200px;
-          margin: 0 auto;
-          padding: 16px 20px;
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-        }
-
-        .dashboard-header h1 {
-          font-size: 18px;
-          margin: 0;
-          font-weight: 700;
-        }
-
-        .dashboard-header .badge {
-          background: var(--yellow);
-          color: var(--navy);
-          font-size: 11px;
-          font-weight: 700;
-          padding: 4px 12px;
-          border-radius: 12px;
-          text-transform: uppercase;
-        }
-
-        .dashboard-container {
-          max-width: 1320px;
-          margin: 24px auto;
-          padding: 0 16px;
-          display: grid;
-          grid-template-columns: 360px 1fr;
-          gap: 24px;
-          align-items: start;
-        }
-
-        .panel {
-          background: var(--white);
-          border-radius: 12px;
-          box-shadow: var(--shadow);
-          padding: 20px;
-          margin-bottom: 24px;
+          font-family: 'Quicksand', sans-serif;
+          min-height: 100vh;
         }
 
         .panel-title {
-          font-size: 15px;
-          font-weight: 700;
-          color: var(--navy);
-          margin: 0 0 16px;
-          padding-bottom: 12px;
-          border-bottom: 1px solid var(--border);
-          text-transform: uppercase;
-          letter-spacing: 0.5px;
+          font-family: 'Oswald', sans-serif;
         }
 
-        /* Thông tin khách hàng */
-        .info-list {
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          gap: 12px;
-        }
-        .info-item p {
-          font-size: 11px;
-          color: var(--gray);
-          text-transform: uppercase;
-          margin: 0 0 2px;
-        }
-        .info-item h3 {
-          font-size: 14px;
-          color: var(--charcoal);
-          margin: 0;
-          font-weight: 700;
-        }
-
-        .disclaimer {
-          background: #fffbeb;
-          border: 1px solid #fcd34d;
-          padding: 12px;
-          border-radius: 8px;
-          font-size: 12px;
-          color: #92400e;
-          margin-top: 16px;
-        }
-
-        /* Thống kê */
-        .score-item {
-          margin-bottom: 14px;
-        }
-        .score-header {
-          display: flex;
-          justify-content: space-between;
-          font-size: 13px;
-          margin-bottom: 4px;
-          font-weight: 600;
-        }
-        .score-bar-bg {
-          height: 6px;
-          background: #f1f5f9;
-          border-radius: 6px;
-          overflow: hidden;
-        }
-        .score-bar-fill {
-          height: 100%;
-          background: var(--navy);
-          border-radius: 6px;
-        }
-
-        /* Chi tiết */
-        .masonry-grid {
-          display: grid;
-          grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-          gap: 16px;
-        }
-        .b-group {
-          background: #f8fafc;
-          border: 1px solid var(--border);
-          border-radius: 8px;
-          padding: 12px;
-        }
-        .b-group h4 {
-          font-size: 14px;
-          color: var(--navy);
-          margin: 0 0 10px;
-          padding-bottom: 8px;
-          border-bottom: 1px dashed #cbd5e1;
-        }
-        .b-list {
-          list-style: none;
-          padding: 0;
-          margin: 0;
-        }
-        .b-list li {
-          font-size: 13px;
-          color: #334155;
-          margin-bottom: 6px;
-          padding-left: 18px;
-          position: relative;
-        }
-        .b-list li:last-child {
-          margin-bottom: 0;
-        }
-        .b-list li::before {
-          content: '✓';
-          position: absolute;
-          left: 0;
-          color: #d97706;
-          font-weight: 900;
-        }
-
-        @media(max-width: 992px) {
-          .dashboard-container {
-            grid-template-columns: 1fr;
+        /* Alarm Pulse Animation */
+        @keyframes pulse-red {
+          0%, 100% {
+            border-color: #fda4af;
+            background-color: #fff1f2;
+            box-shadow: 0 0 0 0 rgba(225, 29, 72, 0.2);
           }
+          50% {
+            border-color: #e11d48;
+            background-color: #ffe4e6;
+            box-shadow: 0 0 10px 2px rgba(225, 29, 72, 0.15);
+          }
+        }
+        .alarm-pulse {
+          animation: pulse-red 2s infinite ease-in-out;
+        }
+        .has-pattern-bg {
+          position: relative !important;
+          background: transparent !important;
+          overflow: hidden !important;
+          z-index: 1 !important;
+        }
+        .has-pattern-bg::before {
+          content: "" !important;
+          position: absolute !important;
+          top: 0 !important;
+          left: 0 !important;
+          right: 0 !important;
+          bottom: 0 !important;
+          background-color: #002795 !important;
+          z-index: -2 !important;
+          pointer-events: none !important;
+        }
+        .has-pattern-bg::after {
+          content: "" !important;
+          position: absolute !important;
+          top: 0 !important;
+          left: 0 !important;
+          right: 0 !important;
+          bottom: 0 !important;
+          background-image: url("<?php echo get_stylesheet_directory_uri(); ?>/assets/images/pattern-hieu-con.png?v=1.2") !important;
+          background-size: 200px !important;
+          background-position: right 40px center !important;
+          background-repeat: no-repeat !important;
+          opacity: 0.1 !important;
+          z-index: -1 !important;
+          pointer-events: none !important;
         }
       </style>
 
-      <div class="dashboard-header">
-        <div class="dashboard-header-inner" style="justify-content: center; text-align: center;">
-          <h1 style="margin: 0; font-size: 16px; font-weight: 600;">BẢNG GHI DẤU HIỆU DỰA TRÊN DỮ LIỆU PHỤ HUYNH CUNG CẤP</h1>
-        </div>
-      </div>
-
-      <div class="dashboard-container">
-        <!-- Cột Trái: Thông tin & Thống kê -->
-        <div class="col-left">
-          <div class="panel">
-            <h2 class="panel-title">Thông Tin Hồ Sơ</h2>
-            <div class="info-list">
-              <div class="info-item">
-                <p>Mã hồ sơ</p>
-                <h3>#<?php echo esc_html($row->user_code); ?></h3>
-              </div>
-              <div class="info-item">
-                <p>Ngày ghi nhận</p>
-                <h3><?php echo esc_html($updated); ?></h3>
-              </div>
-              <div class="info-item">
-                <p>Phụ huynh</p>
-                <h3><?php echo $name; ?></h3>
-              </div>
-              <div class="info-item">
-                <p>Tuổi của con</p>
-                <h3><?php echo esc_html($row->child_age); ?></h3>
-              </div>
-              <div class="info-item">
-                <p>Giới tính</p>
-                <h3><?php echo esc_html($row->child_gender ? $row->child_gender : '---'); ?></h3>
-              </div>
-              <div class="info-item">
-                <p>Chiều cao</p>
-                <h3><?php echo esc_html($row->child_height ? $row->child_height . ' cm' : '---'); ?></h3>
-              </div>
-              <div class="info-item">
-                <p>Cân nặng</p>
-                <h3><?php echo esc_html($row->child_weight ? $row->child_weight . ' kg' : '---'); ?></h3>
-              </div>
-
-            </div>
-            <div class="disclaimer">
-              <strong>Lưu ý:</strong> Bảng đánh giá dựa trên dữ liệu phụ huynh cung cấp. Không thay thế chẩn đoán y tế chuyên khoa.
-            </div>
-          </div>
-
-          <?php if (!empty($scores)): 
-            usort($scores, function($a, $b) { return $b['pct'] <=> $a['pct']; });
-          ?>
-          <div class="panel">
-            <h2 class="panel-title">Các vấn đề cần ưu tiên</h2>
-            <div style="font-size:12px; color:#b91c1c; background:#fef2f2; padding:8px 12px; border-radius:6px; margin-bottom:16px; border:1px solid #fecaca;">
-              ⚠️ <strong>Lưu ý:</strong> Màu đỏ là ba nhóm vấn đề con cần được quan tâm hỗ trợ sớm.
-            </div>
-            <?php 
-            $count = 0;
-            foreach ($scores as $sg): 
-              $is_top = ($count < 3 && $sg['pct'] > 0);
-              $bar_color = $is_top ? '#e11d48' : 'var(--navy)';
-              $wrap_style = $is_top ? 'background:#fff1f2; padding:10px 12px; border-radius:8px; border:1px dashed #fda4af; margin-bottom:12px;' : 'margin-bottom:14px;';
-              $text_color = $is_top ? '#be123c' : 'inherit';
-              $icon = $is_top ? '🚨 ' : '';
-            ?>
-              <div class="score-item" style="<?php echo $wrap_style; ?>">
-                <div class="score-header">
-                  <span style="color:<?php echo $text_color; ?>; font-weight:<?php echo $is_top ? '700' : '600'; ?>;"><?php echo $icon . esc_html($sg['name']); ?></span>
-                  <span style="color:<?php echo $bar_color; ?>; font-weight:700;"><?php echo intval($sg['ticked']).'/'.intval($sg['total']); ?> (<?php echo intval($sg['pct']); ?>%)</span>
-                </div>
-                <div class="score-bar-bg">
-                  <div class="score-bar-fill" style="width:<?php echo intval($sg['pct']); ?>%; background:<?php echo $bar_color; ?>;"></div>
-                </div>
-              </div>
-            <?php 
-              $count++;
-            endforeach; 
-            ?>
-          </div>
-          <?php endif; ?>
-
-          <div style="text-align:center; margin-top:16px;">
-            <a href="https://m.me/884864428052710?ref=1002533683" target="_blank" style="display:inline-block; width:100%; background:var(--navy); color:var(--white); font-weight:700; padding:12px; border-radius:8px; text-decoration:none; font-size:14px; margin-bottom:12px;">💬 Liên hệ chuyên gia</a>
+      <div class="results-page-body py-10 antialiased">
+        <div class="max-w-7xl mx-auto px-6">
             
-            <button onclick="copyResultLink()" style="display:inline-block; width:100%; background:#f8fafc; color:var(--navy); font-weight:700; padding:12px; border-radius:8px; border:1px solid var(--border); font-size:14px; cursor:pointer; font-family:'Be Vietnam Pro', sans-serif; transition: background 0.2s;">🔗 Link kết quả</button>
-            <p style="font-size:11.5px; color:var(--gray); margin:6px 0 0;">(Copy link kết quả để gửi cho chuyên gia tư vấn)</p>
-          </div>
-        </div>
-
-        <!-- Cột Phải: Chi tiết dấu hiệu -->
-        <div class="col-right">
-          <?php if (!empty($behaviors)): ?>
-          <div class="panel" style="box-shadow: var(--shadow-lg);">
-            <h2 class="panel-title">Chi Tiết Dấu Hiệu Ghi Nhận</h2>
-            <div class="masonry-grid">
-            <?php foreach ($scores as $sg): 
-                $items = isset($behaviors[$sg['id']]) ? $behaviors[$sg['id']] : (isset($behaviors[$sg['name']]) ? $behaviors[$sg['name']] : []);
-                if (empty($items)) continue;
-            ?>
-              <div class="b-group">
-                <h4><?php echo esc_html(isset($sg['icon']) ? $sg['icon'].' ' : '') . esc_html($sg['name']); ?></h4>
-                <ul class="b-list">
-                  <?php foreach ($items as $item): ?>
-                    <li><?php echo esc_html($item); ?></li>
-                  <?php endforeach; ?>
-                </ul>
-              </div>
-            <?php endforeach; ?>
+            <!-- Header Banner -->
+            <div class="bg-[#002795] text-white rounded-2xl p-6 mb-8 text-center shadow-md border border-solid border-white/10 relative overflow-hidden has-pattern-bg">
+                <div class="absolute -right-24 -bottom-24 w-64 h-64 bg-white/5 rounded-full pointer-events-none"></div>
+                <h1 class="text-xl md:text-2xl font-bold panel-title uppercase tracking-wide m-0" style="color: white; line-height: 1.4;">BẢNG GHI DẤU HIỆU DỰA TRÊN DỮ LIỆU PHỤ HUYNH CUNG CẤP</h1>
             </div>
-          </div>
-          <?php endif; ?>
 
-          <?php if (!empty($row->extra_symptoms)): ?>
-          <div class="panel">
-            <h2 class="panel-title">Ghi chú khác từ phụ huynh</h2>
-            <p style="font-size:13px; color:#475569; white-space:pre-wrap; margin:0;"><?php echo esc_html($row->extra_symptoms); ?></p>
-          </div>
-          <?php endif; ?>
-          
-          <p style="text-align:center; font-size:12px; color:var(--gray); margin-top:24px;">© <?php echo date('Y'); ?> Hiểu Con Từ Gốc.</p>
+            <!-- Top Grid Layout: 1/3 Left, 2/3 Right -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch mb-8">
+                
+                <!-- 1/3 Left Column: Profile Info & Action CTAs -->
+                <div class="lg:col-span-1 flex flex-col gap-6">
+                    <div class="bg-white rounded-2xl shadow-sm border border-solid border-[#e2e8f0] p-6">
+                        <h2 class="panel-title border-b border-solid border-[#e2e8f0] pb-3 mb-4 text-[#002795] font-bold text-base uppercase tracking-wider m-0">Thông Tin Hồ Sơ</h2>
+                        
+                        <div class="grid grid-cols-2 gap-4 mt-4">
+                            <div>
+                                <p class="text-[10px] text-gray-500 uppercase font-semibold tracking-wider m-0">Mã hồ sơ</p>
+                                <h3 class="text-sm font-bold text-slate-800 mt-1 m-0">#<?php echo esc_html($row->user_code); ?></h3>
+                            </div>
+                            <div>
+                                <p class="text-[10px] text-gray-500 uppercase font-semibold tracking-wider m-0">Ngày ghi nhận</p>
+                                <h3 class="text-sm font-bold text-slate-800 mt-1 m-0"><?php echo esc_html($updated); ?></h3>
+                            </div>
+
+                            <!-- Parent Info Section -->
+                            <div class="col-span-2 border-t border-solid border-slate-100 pt-3">
+                                <p class="text-[11px] text-[#002795] uppercase font-bold tracking-wider mb-2">Thông tin phụ huynh</p>
+                                <div class="grid grid-cols-1 gap-2">
+                                    <div class="flex justify-between text-xs">
+                                        <span class="text-gray-500">Họ tên:</span>
+                                        <span class="font-bold text-slate-800"><?php echo esc_html($row->parent_name ?: '---'); ?></span>
+                                    </div>
+                                    <div class="flex justify-between text-xs">
+                                        <span class="text-gray-500">Số điện thoại:</span>
+                                        <span class="font-bold text-slate-800"><?php echo esc_html($row->parent_phone ?: '---'); ?></span>
+                                    </div>
+                                    <div class="flex justify-between text-xs">
+                                        <span class="text-gray-500">Email:</span>
+                                        <span class="font-bold text-slate-800"><?php echo esc_html($row->parent_email ?: '---'); ?></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Child Info Section -->
+                            <div class="col-span-2 border-t border-solid border-slate-100 pt-3">
+                                <p class="text-[11px] text-[#002795] uppercase font-bold tracking-wider mb-2">Thông tin của con</p>
+                                <div class="grid grid-cols-1 gap-2">
+                                    <div class="flex justify-between text-xs">
+                                        <span class="text-gray-500">Họ tên con:</span>
+                                        <span class="font-bold text-slate-800"><?php echo esc_html($row->child_name ?: '---'); ?></span>
+                                    </div>
+                                    <div class="flex justify-between text-xs">
+                                        <span class="text-gray-500">Tuổi con:</span>
+                                        <span class="font-bold text-slate-800"><?php echo esc_html($row->child_age ?: '---'); ?></span>
+                                    </div>
+                                    <div class="flex justify-between text-xs">
+                                        <span class="text-gray-500">Giới tính:</span>
+                                        <span class="font-bold text-slate-800"><?php echo esc_html($row->child_gender ?: '---'); ?></span>
+                                    </div>
+                                    <div class="flex justify-between text-xs">
+                                        <span class="text-gray-500">Chiều cao:</span>
+                                        <span class="font-bold text-slate-800"><?php echo esc_html($row->child_height ? $row->child_height . ' cm' : '---'); ?></span>
+                                    </div>
+                                    <div class="flex justify-between text-xs">
+                                        <span class="text-gray-500">Cân nặng:</span>
+                                        <span class="font-bold text-slate-800"><?php echo esc_html($row->child_weight ? $row->child_weight . ' kg' : '---'); ?></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Biomedicals & Concerns Section -->
+                            <?php if (!empty($row->child_diagnosis) || !empty($row->child_therapy) || !empty($row->child_supplement) || !empty($row->parent_concern)): ?>
+                            <div class="col-span-2 border-t border-solid border-slate-100 pt-3">
+                                <p class="text-[11px] text-[#002795] uppercase font-bold tracking-wider mb-2">Thông tin bổ sung</p>
+                                <div class="flex flex-col gap-2">
+                                    <?php if (!empty($row->child_diagnosis)): ?>
+                                    <div class="text-xs bg-slate-50 p-2 rounded border border-solid border-slate-100">
+                                        <div class="text-[10px] text-gray-500 uppercase font-semibold">Chẩn đoán y tế:</div>
+                                        <div class="font-medium text-slate-800 mt-0.5"><?php echo esc_html($row->child_diagnosis); ?></div>
+                                    </div>
+                                    <?php endif; ?>
+
+                                    <?php if (!empty($row->child_therapy)): ?>
+                                    <div class="text-xs bg-slate-50 p-2 rounded border border-solid border-slate-100">
+                                        <div class="text-[10px] text-gray-500 uppercase font-semibold">Can thiệp/Trị liệu đang dùng:</div>
+                                        <div class="font-medium text-slate-800 mt-0.5"><?php echo esc_html($row->child_therapy); ?></div>
+                                    </div>
+                                    <?php endif; ?>
+
+                                    <?php if (!empty($row->child_supplement)): ?>
+                                    <div class="text-xs bg-slate-50 p-2 rounded border border-solid border-slate-100">
+                                        <div class="text-[10px] text-gray-500 uppercase font-semibold">Dinh dưỡng/Bổ sung đang dùng:</div>
+                                        <div class="font-medium text-slate-800 mt-0.5"><?php echo esc_html($row->child_supplement); ?></div>
+                                    </div>
+                                    <?php endif; ?>
+
+                                    <?php if (!empty($row->parent_concern)): ?>
+                                    <div class="text-xs bg-slate-50 p-2 rounded border border-solid border-slate-100">
+                                        <div class="text-[10px] text-gray-500 uppercase font-semibold">Băn khoăn/Mối bận tâm lớn nhất:</div>
+                                        <div class="font-medium text-slate-800 mt-0.5"><?php echo esc_html($row->parent_concern); ?></div>
+                                    </div>
+                                    <?php endif; ?>
+                                </div>
+                            </div>
+                            <?php endif; ?>
+                        </div>
+
+                        <div class="mt-6 p-4 rounded-xl bg-[#fffbeb] border border-solid border-[#fef08a] text-xs text-[#854d0e] leading-relaxed">
+                            <strong>Lưu ý:</strong> Bảng đánh giá dựa trên dữ liệu phụ huynh cung cấp. Không thay thế chẩn đoán y tế chuyên khoa.
+                        </div>
+                    </div>
+
+                    <!-- Actions -->
+                    <div class="flex flex-col gap-3">
+                        <a href="https://m.me/884864428052710?ref=1002533683" target="_blank" class="flex items-center justify-center bg-[#002795] text-white font-bold py-3.5 px-4 rounded-xl shadow-md hover:bg-[#001e73] transition-all text-sm text-center border-0" style="text-decoration:none;">💬 Liên hệ chuyên gia</a>
+                        <button onclick="copyResultLink()" class="flex items-center justify-center bg-white text-[#002795] border border-solid border-[#002795]/20 font-bold py-3.5 px-4 rounded-xl hover:bg-slate-50 transition-all text-sm cursor-pointer font-family-inherit">🔗 Link kết quả</button>
+                        <p class="text-[11px] text-gray-500 text-center m-0">(Copy link kết quả để gửi cho chuyên gia tư vấn)</p>
+                    </div>
+                </div>
+
+                <!-- 2/3 Right Column: Combined Radar Chart & Priority Issues -->
+                <div class="lg:col-span-2 flex flex-col h-full">
+                    <div class="bg-white rounded-2xl shadow-sm border border-solid border-[#e2e8f0] p-6 flex flex-col flex-grow">
+                        <!-- Card Header -->
+                        <h2 class="panel-title border-b border-solid border-[#e2e8f0] pb-3 mb-4 text-[#002795] font-bold text-base uppercase tracking-wider m-0 text-center">
+                            Tổng quan dấu hiệu cha mẹ ghi nhận
+                        </h2>
+
+                        <!-- 1. Radar Chart (Massive size) -->
+                        <div style="position: relative; flex-grow: 1; width: 100%; min-height: 480px;">
+                            <canvas id="resultBarChartCanvas"></canvas>
+                        </div>
+                        <p class="text-[11px] text-gray-500 text-center mt-2 mb-6 leading-relaxed">
+                            Tỷ lệ biểu hiện dấu hiệu của từng hệ cơ quan.
+                        </p>
+
+                        <!-- 2. Priority Issues (3 items side-by-side below the chart) -->
+                        <?php if (!empty($scores)): 
+                            usort($scores, function($a, $b) { return $b['pct'] <=> $a['pct']; });
+                        ?>
+                        <div class="border-t border-solid border-slate-100 pt-6">
+                            <h3 class="panel-title text-sm font-bold text-[#002795] uppercase tracking-wider mb-4 mt-0">
+                                🚨 Các vấn đề cần ưu tiên hỗ trợ sớm
+                            </h3>
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                <?php 
+                                $count = 0;
+                                foreach ($scores as $sg): 
+                                    if ($count >= 3) break; // Only show top 3
+                                    if ($sg['pct'] <= 0) continue; // Skip if 0%
+                                    $is_top = true;
+                                    $bar_color = '#e11d48';
+                                    $wrap_class = 'alarm-pulse border border-solid border-[#fda4af] rounded-xl';
+                                    $wrap_style = 'padding:12px; border-radius:12px; border:1.5px solid #fda4af;';
+                                    $text_color = '#be123c';
+                                ?>
+                                    <div class="<?php echo $wrap_class; ?>" style="<?php echo $wrap_style; ?>">
+                                        <div style="display:flex; justify-content:space-between; font-size:12.5px; margin-bottom:6px; font-weight:700;">
+                                            <span style="color:<?php echo $text_color; ?>;"><?php echo esc_html($sg['name']); ?></span>
+                                            <span style="color:<?php echo $bar_color; ?>;"><?php echo intval($sg['pct']); ?>%</span>
+                                        </div>
+                                        <div style="height:6px; background:#f1f5f9; border-radius:6px; overflow:hidden;">
+                                            <div style="height:100%; width:<?php echo intval($sg['pct']); ?>%; background:<?php echo $bar_color; ?>; border-radius:6px;"></div>
+                                        </div>
+                                    </div>
+                                <?php 
+                                    $count++;
+                                endforeach; 
+                                ?>
+                            </div>
+                        </div>
+                        <?php endif; ?>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bottom Section: Chi Tiết Dấu Hiệu Ghi Nhận -->
+            <?php if (!empty($behaviors)): ?>
+            <div class="bg-white rounded-2xl shadow-sm border border-solid border-[#e2e8f0] p-6 mb-8">
+                <h2 class="panel-title border-b border-solid border-[#e2e8f0] pb-3 mb-6 text-[#002795] font-bold text-base uppercase tracking-wider m-0">Chi Tiết Dấu Hiệu Ghi Nhận</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                    <?php foreach ($scores as $sg): 
+                        $items = isset($behaviors[$sg['id']]) ? $behaviors[$sg['id']] : (isset($behaviors[$sg['name']]) ? $behaviors[$sg['name']] : []);
+                        if (empty($items)) continue;
+                    ?>
+                      <div class="bg-[#f8fafc] border border-solid border-[#e2e8f0] rounded-xl p-4 transition-all hover:border-[#002795]/20 hover:shadow-sm <?php echo (isset($scores[0]) && $sg['id'] === $scores[0]['id'] && $sg['pct'] > 0) ? 'alarm-pulse border border-solid border-[#fda4af]' : ''; ?>" style="<?php echo (isset($scores[0]) && $sg['id'] === $scores[0]['id'] && $sg['pct'] > 0) ? 'border-radius:12px; border: 1.5px solid #fda4af;' : ''; ?>">
+                        <h4 class="text-sm font-bold text-[#002795] pb-2 mb-3 border-b border-solid border-slate-200 flex items-center gap-1.5 mt-0">
+                          <span style="font-size: 16px;"><?php echo esc_html(isset($sg['icon']) ? $sg['icon'] : ''); ?></span>
+                          <span class="panel-title" style="<?php echo (isset($scores[0]) && $sg['id'] === $scores[0]['id'] && $sg['pct'] > 0) ? 'color:#be123c;' : ''; ?>"><?php echo esc_html($sg['name']); ?></span>
+                        </h4>
+                        <ul class="list-none p-0 m-0 flex flex-col gap-2">
+                          <?php foreach ($items as $item): ?>
+                            <li style="font-size:12.5px; color:#334155; padding-left:18px; position:relative; line-height:1.4; text-align: left;">
+                              <span style="position:absolute; left:0; color:#d97706; font-weight:900;">✓</span>
+                              <span><?php echo esc_html($item); ?></span>
+                            </li>
+                          <?php endforeach; ?>
+                        </ul>
+                      </div>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+            <?php endif; ?>
+
+            <!-- Extra Symptoms Note -->
+            <?php if (!empty($row->extra_symptoms)): ?>
+            <div class="bg-white rounded-2xl shadow-sm border border-solid border-[#e2e8f0] p-6 mb-8">
+                <h2 class="panel-title border-b border-solid border-[#e2e8f0] pb-3 mb-4 text-[#002795] font-bold text-base uppercase tracking-wider m-0">Ghi chú khác từ phụ huynh</h2>
+                <p style="font-size:13.5px; color:#475569; white-space:pre-wrap; margin:0; line-height:1.6; text-align: left;"><?php echo esc_html($row->extra_symptoms); ?></p>
+            </div>
+            <?php endif; ?>
+            
+            <p class="text-center text-xs text-gray-400 mt-10">© <?php echo date('Y'); ?> Hiểu Con Từ Gốc.</p>
         </div>
       </div>
 
@@ -759,8 +780,320 @@ function hieucon_dh_public_checklist_result() {
           }, 300);
         }, 4000);
       }
-      </script>
-    <?php
+
+      // Initialize Bar Chart in Result Page
+      document.addEventListener('DOMContentLoaded', () => {
+          const ctx = document.getElementById('resultBarChartCanvas');
+          if (!ctx) return;
+          
+          const originalOrder = ['tieuHoa', 'anUong', 'giacNgu', 'camGiac', 'tangDong', 'camXuc', 'mienDich', 'vanDong'];
+          const scoresMap = {};
+          <?php foreach ($scores as $s): ?>
+              scoresMap['<?php echo esc_js($s['id']); ?>'] = {
+                  name: '<?php echo esc_js($s['name']); ?>',
+                  pct: <?php echo intval($s['pct']); ?>
+              };
+          <?php endforeach; ?>
+          
+          const labels = [
+              ['Rối loạn', 'tiêu hóa'],
+              ['Rối loạn', 'ăn uống'],
+              ['Rối loạn', 'giấc ngủ'],
+              ['Xử lý', 'giác quan'],
+              ['Tăng động -', 'Giảm chú ý'],
+              ['Cảm xúc -', 'Hành vi'],
+              ['Miễn dịch -', 'Dị ứng'],
+              ['Chức năng', 'vận động']
+          ];
+          const chartData = [];
+          originalOrder.forEach(id => {
+              if (scoresMap[id]) {
+                  chartData.push(scoresMap[id].pct);
+              }
+          });
+
+          // Identify priority groups
+          const priorityIds = [];
+          <?php 
+          $count = 0;
+          foreach ($scores as $s) {
+              if ($count < 3 && $s['pct'] > 0) {
+                  echo "priorityIds.push('" . esc_js($s['id']) . "');\n";
+                  $count++;
+              }
+          }
+          ?>
+
+          const pointBgColors = [];
+          const pointBorderColors = [];
+          const pointRadii = [];
+          
+          originalOrder.forEach(id => {
+              const isPriority = priorityIds.includes(id);
+              if (isPriority) {
+                  pointBgColors.push('#e11d48'); // Red dot
+                  pointBorderColors.push('#ffffff'); // White border
+                  pointRadii.push(7.5);
+              } else {
+                  pointBgColors.push('#FFD154'); // Yellow dot
+                  pointBorderColors.push('#002795'); // Navy border
+                  pointRadii.push(5.5);
+              }
+          });
+
+          // Smooth glowing pulse with index-based phase offset
+          const startTime = Date.now();
+          
+          const radarPulsePlugin = {
+              id: 'radarPulsePlugin',
+              afterDatasetsDraw(chart) {
+                  const { ctx } = chart;
+                  const meta = chart.getDatasetMeta(0);
+                  if (!meta || !meta.data) return;
+
+                  const elapsed = (Date.now() - startTime) / 1000;
+
+                  originalOrder.forEach((id, idx) => {
+                      const isPriority = priorityIds.includes(id);
+                      if (!isPriority) return;
+
+                      const point = meta.data[idx];
+                      if (!point) return;
+                      const { x, y } = point;
+                      if (typeof x !== 'number' || typeof y !== 'number' || isNaN(x) || isNaN(y)) return;
+
+                      // Phase offset per point to make them out of sync
+                      const phase = elapsed * 3.0 + (idx * 1.8);
+                      
+                      // Draw 2 expanding rings
+                      // Ring 1
+                      const progress1 = (phase % Math.PI) / Math.PI;
+                      const r1 = 7.5 + progress1 * 35; // expand up to 35px
+                      const opacity1 = (1 - progress1) * 0.6;
+
+                      ctx.save();
+                      ctx.strokeStyle = `rgba(225, 29, 72, ${opacity1})`;
+                      ctx.lineWidth = 1.5;
+                      ctx.beginPath();
+                      ctx.arc(x, y, r1, 0, 2 * Math.PI);
+                      ctx.stroke();
+                      ctx.restore();
+
+                      // Ring 2 (offset phase)
+                      const progress2 = ((phase + Math.PI/2) % Math.PI) / Math.PI;
+                      const r2 = 7.5 + progress2 * 35;
+                      const opacity2 = (1 - progress2) * 0.3;
+
+                      ctx.save();
+                      ctx.strokeStyle = `rgba(225, 29, 72, ${opacity2})`;
+                      ctx.lineWidth = 1.0;
+                      ctx.beginPath();
+                      ctx.arc(x, y, r2, 0, 2 * Math.PI);
+                      ctx.stroke();
+                      ctx.restore();
+                  });
+              }
+          };
+
+          const chart = new Chart(ctx, {
+              type: 'radar',
+              plugins: [radarPulsePlugin],
+              data: {
+                  labels: labels,
+                  datasets: [{
+                      label: 'Tỷ lệ biểu hiện (%)',
+                      data: chartData,
+                      backgroundColor: 'rgba(0, 39, 149, 0.15)',
+                      borderColor: '#002795',
+                      borderWidth: 2,
+                      pointBackgroundColor: pointBgColors,
+                      pointBorderColor: pointBorderColors,
+                      pointHoverBackgroundColor: '#fff',
+                      pointHoverBorderColor: '#002795',
+                      pointRadius: pointRadii,
+                      pointHitRadius: 10
+                  }]
+              },
+              options: {
+                  responsive: true,
+                  maintainAspectRatio: false,
+                  layout: {
+                      padding: 0
+                  },
+                  plugins: {
+                      legend: {
+                          display: false
+                      },
+                      tooltip: {
+                          animation: false,
+                          callbacks: {
+                              title: function(context) {
+                                  if (!context || !context.length || !context[0]) return '';
+                                  const label = context[0].label;
+                                  if (Array.isArray(label)) {
+                                      return label.join(' ');
+                                  }
+                                  return label;
+                              },
+                              label: function(context) {
+                                  if (!context || context.raw === undefined) return '';
+                                  return 'Tỷ lệ biểu hiện: ' + context.raw + '%';
+                              }
+                          }
+                      }
+                  },
+                  scales: {
+                      r: {
+                          angleLines: {
+                              color: 'rgba(0, 39, 149, 0.18)',
+                              lineWidth: 1.8
+                          },
+                          grid: {
+                              color: 'rgba(0, 39, 149, 0.15)',
+                              lineWidth: 1.5
+                          },
+                          pointLabels: {
+                              display: true,
+                              color: '#0f172a',
+                              padding: 4,
+                              font: {
+                                  family: 'Quicksand, sans-serif',
+                                  size: 11,
+                                  weight: '800'
+                              }
+                          },
+                          ticks: {
+                              backdropColor: 'transparent',
+                              color: '#64748b',
+                              font: {
+                                  size: 9
+                              },
+                              stepSize: 10
+                          },
+                          min: 0,
+                          max: 100
+                      }
+                  }
+              }
+          });
+
+          function pulse() {
+              if (!chart) return;
+              const elapsed = (Date.now() - startTime) / 1000;
+              
+              const currentRadii = [];
+              const currentHoverRadii = [];
+              originalOrder.forEach((id, idx) => {
+                  const isPriority = priorityIds.includes(id);
+                  if (isPriority) {
+                      const phase = elapsed * 3.0 + (idx * 1.8);
+                      const currentRadius = 4 + (Math.sin(phase) + 1) * 2; // pulse smoothly between 4px and 8px
+                      currentRadii.push(currentRadius);
+                      currentHoverRadii.push(currentRadius + 2);
+                  } else {
+                      currentRadii.push(4);
+                      currentHoverRadii.push(6);
+                  }
+              });
+              chart.data.datasets[0].pointRadius = currentRadii;
+              chart.data.datasets[0].pointHoverRadius = currentHoverRadii;
+              chart.update('none');
+              requestAnimationFrame(pulse);
+          }
+          requestAnimationFrame(pulse);
+      });
+      </script>    <?php
     get_footer();
     exit;
+}
+
+/**
+ * Gửi email kết quả Checklist cho phụ huynh dưới dạng HTML đẹp mắt.
+ */
+function hieucon_send_checklist_email($user_code, $parent_name, $parent_email, $child_name, $child_age, $child_gender, $scores_json) {
+    $scores = json_decode($scores_json, true) ?: [];
+    
+    // Sắp xếp các nhóm theo tỉ lệ % dấu hiệu giảm dần
+    usort($scores, function($a, $b) {
+        return $b['pct'] <=> $a['pct'];
+    });
+    
+    $top_issues_html = '';
+    $count = 0;
+    foreach ($scores as $sg) {
+        if ($count >= 3) break;
+        if ($sg['pct'] > 0) {
+            $top_issues_html .= '<li style="margin-bottom: 12px; font-size: 15px; line-height: 1.6;">';
+            $top_issues_html .= '<strong style="color: #be123c;">🚨 ' . esc_html($sg['name']) . ':</strong> ';
+            $top_issues_html .= 'Ghi nhận <strong>' . intval($sg['ticked']) . '/' . intval($sg['total']) . '</strong> dấu hiệu (' . intval($sg['pct']) . '%)';
+            $top_issues_html .= '</li>';
+            $count++;
+        }
+    }
+    
+    if (empty($top_issues_html)) {
+        $top_issues_html = '<li style="font-size: 15px; color: #475569; font-style: italic;">Chưa ghi nhận dấu hiệu bất thường nổi bật nào.</li>';
+    }
+
+    $result_url = esc_url(site_url('/ket-qua-dh?code=' . $user_code));
+    $subject = '[Hồ sơ #' . $user_code . '] Kết quả Checklist phân tích 8 nhóm dấu hiệu của con';
+    
+    $message = '
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="utf-8">
+        <title>' . esc_html($subject) . '</title>
+    </head>
+    <body style="margin: 0; padding: 0; background-color: #f1f5f9; font-family: system-ui, -apple-system, BlinkMacSystemFont, \'Segoe UI\', Roboto, Helvetica, Arial, sans-serif;">
+        <table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px; margin: 20px auto; background-color: #ffffff; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.05); border: 1px solid #e2e8f0;">
+            <tr>
+                <td bgcolor="#002795" style="padding: 32px 24px; text-align: center;">
+                    <h1 style="color: #ffffff; margin: 0; font-size: 22px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px;">Hiểu Con Từ Gốc</h1>
+                    <p style="color: #FFD154; margin: 8px 0 0 0; font-size: 14px; font-weight: 600;">KẾT QUẢ PHÂN TÍCH CHECKLIST HÀNH VI</p>
+                </td>
+            </tr>
+            <tr>
+                <td style="padding: 32px 24px;">
+                    <p style="font-size: 16px; line-height: 1.6; color: #1e293b; margin: 0 0 16px 0;">Chào bạn <strong>' . esc_html($parent_name) . '</strong>,</p>
+                    <p style="font-size: 15px; line-height: 1.6; color: #334155; margin: 0 0 24px 0;">Cảm ơn bạn đã tin tưởng thực hiện bảng khảo sát checklist hành vi của trẻ trên hệ thống <strong>Hiểu Con Từ Gốc</strong> cho bé <strong>' . esc_html($child_name) . '</strong> (' . esc_html($child_age) . ', ' . esc_html($child_gender) . ').</p>
+                    
+                    <div style="background-color: #fff1f2; border: 1px dashed #fda4af; border-radius: 12px; padding: 20px; margin-bottom: 28px;">
+                        <h3 style="margin: 0 0 14px 0; color: #be123c; font-size: 16px; font-weight: 700;">🚨 Nhóm vấn đề cần ưu tiên hỗ trợ sớm:</h3>
+                        <ul style="margin: 0; padding-left: 20px; color: #4c0519;">
+                            ' . $top_issues_html . '
+                        </ul>
+                    </div>
+                    
+                    <p style="font-size: 15px; line-height: 1.6; color: #334155; margin: 0 0 16px 0;">Để xem báo cáo phân tích đầy đủ và chi tiết cho tất cả 8 nhóm dấu hiệu cũng như danh sách từng biểu hiện cụ thể được ghi nhận, bạn vui lòng nhấp vào nút liên kết dưới đây:</p>
+                    
+                    <div style="text-align: center; margin: 28px 0;">
+                        <a href="' . $result_url . '" target="_blank" style="display: inline-block; background-color: #f05a25; color: #ffffff; font-weight: 700; font-size: 15px; padding: 14px 32px; text-decoration: none; border-radius: 10px; box-shadow: 0 4px 6px rgba(240, 90, 37, 0.25);">XEM CHI TIẾT KẾT QUẢ PHÂN TÍCH</a>
+                    </div>
+                    
+                    <p style="font-size: 14px; line-height: 1.6; color: #64748b; margin: 24px 0 0 0; border-top: 1px solid #e2e8f0; padding-top: 16px; font-style: italic;">
+                        <strong>Mẹo:</strong> Bạn có thể sao chép liên kết của nút trên để gửi trực tiếp cho chuyên gia tư vấn trong buổi trao đổi tiếp theo của mình.
+                    </p>
+                </td>
+            </tr>
+            <tr>
+                <td bgcolor="#f8fafc" style="padding: 24px; border-top: 1px solid #e2e8f0; border-bottom: 1px solid #e2e8f0;">
+                    <h4 style="margin: 0 0 10px 0; color: #002795; font-size: 14px; font-weight: 700; text-transform: uppercase;">💬 Tư vấn chuyên môn miễn phí:</h4>
+                    <p style="margin: 0 0 12px 0; font-size: 13.5px; line-height: 1.5; color: #475569;">Đội ngũ trợ lý chuyên gia sẽ liên hệ tư vấn giải thích chi tiết báo cáo và định hướng hướng can thiệp tối ưu nhất từ gốc cho bé hoàn toàn miễn phí.</p>
+                    <p style="margin: 0; font-size: 14px; color: #1e293b; font-weight: 600;">Hỗ trợ Zalo/Call: <a href="tel:0988717107" style="color: #f05a25; text-decoration: none;">0988.71.71.07</a></p>
+                </td>
+            </tr>
+            <tr>
+                <td style="padding: 24px; text-align: center; font-size: 12px; color: #94a3b8; line-height: 1.6;">
+                    <strong>Lưu ý quan trọng:</strong> Kết quả trên được phân tích dựa trên phản hồi chủ quan của cha mẹ và chỉ mang tính tham khảo, không có giá trị thay thế chẩn đoán y khoa chuyên nghiệp.<br><br>
+                    © ' . date('Y') . ' Hiểu Con Từ Gốc | <a href="' . site_url() . '" style="color: #002795; text-decoration: none;">dawnbridge.care</a>
+                </td>
+            </tr>
+        </table>
+    </body>
+    </html>
+    ';
+    
+    $headers = array('Content-Type: text/html; charset=UTF-8');
+    wp_mail($parent_email, $subject, $message, $headers);
 }

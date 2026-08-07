@@ -4,6 +4,7 @@
  * 
  * @package Hieucon
  */
+$is_start = false; // Bỏ qua màn hình intro, mặc định vào thẳng checklist để debug
 get_header();
 ?>
 
@@ -12,6 +13,7 @@ get_header();
     href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Quicksand:wght@300;400;500;600;700&display=swap"
     rel="stylesheet">
 <script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
     tailwind.config = {
         corePlugins: {
@@ -183,11 +185,130 @@ get_header();
       margin-bottom: 12px;
     }
 
+    .has-pattern-bg {
+      position: relative !important;
+      background: transparent !important;
+      overflow: hidden !important;
+      z-index: 1 !important;
+    }
+    .has-pattern-bg::before {
+      content: "" !important;
+      position: absolute !important;
+      top: 0 !important;
+      left: 0 !important;
+      right: 0 !important;
+      bottom: 0 !important;
+      background-color: #002795 !important;
+      z-index: -2 !important;
+      pointer-events: none !important;
+    }
+    .has-pattern-bg::after {
+      content: "" !important;
+      position: absolute !important;
+      top: 0 !important;
+      left: 0 !important;
+      right: 0 !important;
+      bottom: 0 !important;
+      background-image: url("<?php echo get_stylesheet_directory_uri(); ?>/assets/images/pattern-hieu-con.png?v=1.2") !important;
+      background-size: 220px !important;
+      background-position: right -30px center !important;
+      background-repeat: no-repeat !important;
+      opacity: 0.12 !important;
+      z-index: -1 !important;
+      pointer-events: none !important;
+    }
+    #hero-section.has-pattern-bg::after {
+      background-size: 800px !important;
+      background-position: -150px center !important;
+      opacity: 0.08 !important;
+    }
+
     .intro-steps {
       display: flex;
       gap: 20px;
       margin-top: 28px;
       flex-wrap: wrap;
+    }
+    @media (max-width: 1024px) {
+      .progress-steps {
+        flex-wrap: nowrap !important;
+        overflow-x: auto !important;
+        white-space: nowrap !important;
+        -webkit-overflow-scrolling: touch;
+        padding-bottom: 8px;
+        justify-content: flex-start !important;
+        gap: 6px !important;
+      }
+      .progress-step {
+        flex-shrink: 0 !important;
+      }
+      #survey-sidebar.show-mobile-overlay {
+        display: flex !important;
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        bottom: 0 !important;
+        background: rgba(15, 23, 42, 0.95) !important;
+        z-index: 9999 !important;
+        padding: 32px 24px !important;
+        justify-content: center !important;
+        align-items: center !important;
+        overflow-y: auto !important;
+      }
+      #survey-sidebar.show-mobile-overlay > div {
+        width: 100% !important;
+        max-width: 400px !important;
+        background: var(--navy) !important;
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5) !important;
+        border-radius: 16px !important;
+        padding: 24px 20px !important;
+      }
+      #close-radar-btn {
+        display: block !important;
+      }
+      .check-item-row {
+        position: relative !important;
+        background: var(--white) !important;
+        padding: 12px 14px !important;
+        gap: 12px !important;
+      }
+      .check-main {
+        font-size: 14.5px !important;
+        font-weight: 600 !important;
+        line-height: 1.45 !important;
+      }
+      .check-options {
+        gap: 10px !important;
+      }
+      .check-opt-label {
+        padding: 8px 12px !important;
+        font-size: 13px !important;
+      }
+      .info-tooltip-wrapper {
+        position: static !important;
+      }
+      .info-tooltip-content {
+        position: absolute !important;
+        left: 12px !important;
+        right: 12px !important;
+        top: 12px !important;
+        bottom: auto !important;
+        transform: none !important;
+        width: auto !important;
+        z-index: 100 !important;
+        display: none;
+        pointer-events: auto !important;
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.05) !important;
+      }
+      .info-tooltip-wrapper.active .info-tooltip-content {
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+      }
+      .info-tooltip-content::after {
+        display: none !important;
+      }
     }
 
     .intro-step {
@@ -290,6 +411,7 @@ get_header();
     .form-group input,
     .form-group select,
     .form-group textarea {
+      width: 100%;
       padding: 12px 16px;
       border: 1.5px solid var(--border);
       border-radius: 10px;
@@ -392,12 +514,8 @@ get_header();
       margin: 16px auto;
       max-width: 820px;
       box-shadow: var(--shadow);
-      display: none;
-      animation: fadeIn 0.3s ease;
-    }
-
-    .checklist-section.active {
       display: block;
+      animation: fadeIn 0.3s ease;
     }
 
     @keyframes fadeIn {
@@ -529,6 +647,145 @@ get_header();
       color: var(--gray);
       margin-top: 3px;
       font-style: italic;
+    }
+
+    /* ── TOOLTIP HÀNH VI ── */
+    .info-tooltip-wrapper {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      vertical-align: middle;
+    }
+
+    .info-tooltip-trigger {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 15px;
+      height: 15px;
+      border-radius: 50%;
+      background: rgba(0, 39, 149, 0.08);
+      color: var(--navy);
+      font-size: 10px;
+      font-weight: 700;
+      cursor: help;
+      transition: all 0.2s;
+      user-select: none;
+      font-family: sans-serif;
+      margin-right: 6px;
+    }
+
+    .info-tooltip-wrapper:hover .info-tooltip-trigger {
+      background: var(--navy);
+      color: var(--white);
+    }
+
+    .info-tooltip-content {
+      visibility: hidden;
+      width: 250px;
+      background-color: var(--navy);
+      color: var(--white);
+      text-align: left;
+      border-radius: 8px;
+      padding: 10px 12px;
+      position: absolute;
+      z-index: 999;
+      bottom: 130%; /* Trực quan hóa nằm trên nút i */
+      left: 50%;
+      transform: translateX(-50%);
+      opacity: 0;
+      transition: opacity 0.2s, visibility 0.2s;
+      box-shadow: 0 10px 25px rgba(0, 39, 149, 0.15);
+      font-size: 12.5px;
+      font-weight: 500;
+      line-height: 1.4;
+      pointer-events: none;
+      font-family: 'Quicksand', sans-serif;
+      border: 1.5px solid rgba(255, 255, 255, 0.15);
+      font-style: normal;
+    }
+
+    /* Tooltip mũi tên chỉ xuống */
+    .info-tooltip-content::after {
+      content: "";
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      margin-left: -6px;
+      border-width: 6px;
+      border-style: solid;
+      border-color: var(--navy) transparent transparent transparent;
+    }
+
+    .info-tooltip-wrapper:hover .info-tooltip-content {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    /* Wide quiz pill buttons style */
+    .check-opt-label {
+      box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+      border-width: 1.5px !important;
+    }
+    
+    /* Completed group collapse styles */
+    .checklist-section.completed-group .checklist-items,
+    .checklist-section.completed-group .open-section,
+    .checklist-section.completed-group .group-score {
+      display: none !important;
+    }
+    
+    /* Collapsed completed blue block styling */
+    .checklist-section.completed-group {
+      background: var(--navy) !important;
+      color: white !important;
+      border: none !important;
+      box-shadow: 0 10px 20px rgba(0,39,149,0.15) !important;
+      padding: 16px 20px !important;
+      border-radius: 16px !important;
+      margin-bottom: 20px !important;
+      border-bottom: none !important;
+      padding-bottom: 16px !important;
+    }
+    .checklist-section.completed-group .section-title {
+      color: white !important;
+    }
+    .checklist-section.completed-group .section-subtitle {
+      color: rgba(255, 255, 255, 0.7) !important;
+    }
+    .checklist-section.completed-group .section-icon {
+      background: rgba(255, 255, 255, 0.15) !important;
+      color: white !important;
+    }
+    .checklist-section.completed-group .accordion-arrow {
+      color: white !important;
+    }
+    .checklist-section.completed-group .section-header {
+      border-bottom: none !important;
+      margin-bottom: 0 !important;
+      padding-bottom: 0 !important;
+    }
+    
+    /* Rotate arrow when collapsed */
+    .checklist-section.completed-group .accordion-arrow {
+      transform: rotate(180deg);
+    }
+    .check-opt-label:hover {
+      border-color: var(--navy) !important;
+      background-color: #f8fafc !important;
+    }
+    .check-opt-label[id^="label-yes-"].checked {
+      background: var(--navy) !important;
+      border-color: var(--navy) !important;
+      color: white !important;
+      box-shadow: 0 4px 12px rgba(0,39,149,0.15) !important;
+    }
+    .check-opt-label[id^="label-no-"].checked {
+      background: #475569 !important;
+      border-color: #475569 !important;
+      color: white !important;
+      box-shadow: 0 4px 12px rgba(71,85,105,0.15) !important;
     }
 
     /* ── NAV BUTTONS ── */
@@ -820,7 +1077,68 @@ get_header();
 
       .form-section,
       .checklist-section {
-        padding: 28px 20px;
+        background: transparent !important;
+        border: none !important;
+        box-shadow: none !important;
+        padding: 0 !important;
+        margin-bottom: 32px !important;
+        border-bottom: 1.5px solid var(--border) !important;
+        padding-bottom: 24px !important;
+        border-radius: 0 !important;
+      }
+      .checklist-section:last-of-type {
+        border-bottom: none !important;
+        padding-bottom: 0 !important;
+        margin-bottom: 0 !important;
+      }
+      .section-header {
+        gap: 12px !important;
+        margin-bottom: 16px !important;
+        padding-bottom: 12px !important;
+      }
+      .section-icon {
+        width: 44px !important;
+        height: 44px !important;
+        border-radius: 12px !important;
+        font-size: 20px !important;
+      }
+      .section-title {
+        font-size: 17px !important;
+        font-weight: 700 !important;
+        line-height: 1.3 !important;
+      }
+      .section-subtitle {
+        font-size: 13px !important;
+        color: #4b5563 !important;
+        font-weight: 500 !important;
+        margin-top: 4px !important;
+        line-height: 1.4 !important;
+      }
+      .open-section {
+        padding: 16px 20px !important;
+        margin-top: 24px !important;
+        border-radius: 12px !important;
+      }
+      .open-section label {
+        font-size: 13.5px !important;
+        margin-bottom: 8px !important;
+      }
+      .open-section textarea {
+        padding: 10px 14px !important;
+        font-size: 13.5px !important;
+      }
+      #checklist-main-column .btn-submit {
+        width: 100% !important;
+        padding: 14px 24px !important;
+        font-size: 15px !important;
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+        border-radius: 12px !important;
+      }
+      #checklist-main-column .flex.justify-end.mt-8 {
+        justify-content: center !important;
+        margin-top: 24px !important;
       }
 
       .intro-card {
@@ -843,99 +1161,228 @@ get_header();
         gap: 24px;
       }
     }
+    
+    .btn-hero-start {
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    .btn-hero-start:hover {
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: 0 14px 28px rgba(255,209,84,0.45) !important;
+      background-color: #ffe082 !important;
+    }
+    .btn-hero-start:active {
+      transform: translateY(-1px) scale(1);
+    }
+    
+    <?php if ($is_start): ?>
+    #main-header, #colophon {
+      display: none !important;
+    }
+    <?php endif; ?>
+
+    .check-opt-label.checked .check-opt-box {
+      background: var(--navy) !important;
+      border-color: var(--navy) !important;
+    }
+    .check-opt-box::after {
+      content: '✓';
+      color: #fff;
+      font-size: 12px;
+      font-weight: 800;
+      display: none;
+    }
+    .check-opt-label.checked .check-opt-box::after {
+      display: block;
+    }
   </style>
 
 <div class="landing-checklist-wrapper antialiased relative z-10 bg-[var(--cream)] text-[var(--charcoal)] font-quicksand">
 <!-- HERO -->
-    <section class="relative bg-navy pt-32 pb-24 md:pt-40 md:pb-32 px-6 overflow-hidden" id="hero-section">
+    <section class="relative bg-navy pt-32 pb-24 md:pt-40 md:pb-32 px-6 overflow-hidden has-pattern-bg" id="hero-section" <?php if ($is_start) echo 'style="display:none;"'; ?>>
         <div class="absolute top-0 left-0 w-full h-full overflow-hidden z-0">
             <div class="absolute -top-24 -left-24 w-96 h-96 bg-[#2563eb] rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-[blob_7s_infinite]"></div>
             <div class="absolute top-1/4 -right-24 w-96 h-96 bg-yellow rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-[blob_7s_infinite_2s]"></div>
         </div>
         
         <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center relative z-10">
-            <div class="text-left">
-                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[rgba(255,255,255,0.1)] backdrop-blur-md border border-solid border-[rgba(255,255,255,0.2)] text-cream text-sm font-semibold mb-6">
+            <div class="text-left flex flex-col justify-center">
+                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[rgba(255,255,255,0.1)] backdrop-blur-md border border-solid border-[rgba(255,255,255,0.2)] text-cream text-sm font-semibold mb-6 w-fit">
                     <span class="w-2 h-2 rounded-full bg-yellow animate-pulse"></span>
                     Công cụ đánh giá
                 </div>
-                <h1 class="font-oswald text-3xl md:text-4xl lg:text-5xl font-bold leading-tight mb-6 text-white tracking-wide" style="margin-bottom: 24px;">
-                    Bảng kiểm tra toàn diện<br><span class="text-yellow block my-2 uppercase tracking-wide text-4xl md:text-5xl lg:text-6xl whitespace-nowrap">SỨC KHOẺ TOÀN THÂN</span>của con
+                
+                <h1 class="font-oswald mb-6 text-white tracking-wide uppercase" style="line-height: 1.35;">
+                    <span class="block font-bold tracking-wider opacity-90 whitespace-nowrap" style="font-size: clamp(18px, 5.2vw, 30px);">BỘ CÔNG CỤ NHẬN DIỆN</span>
+                    <span class="text-yellow uppercase block my-2 sm:my-2.5 font-black whitespace-nowrap" style="color: var(--yellow); font-size: clamp(24px, 7.6vw, 48px); letter-spacing: 0.02em;">CÁC RÀO CẢN SỨC KHỎE</span>
+                    <span class="block font-bold tracking-wider opacity-90 whitespace-nowrap" style="font-size: clamp(18px, 5.2vw, 30px);">THƯỜNG GẶP Ở TRẺ TỰ KỶ</span>
                 </h1>
-                <p class="font-quicksand text-lg md:text-xl leading-relaxed text-[rgba(250,249,246,0.9)] mb-8 font-light max-w-lg" style="margin-bottom: 32px;">
-                    Được xây dựng dựa trên tài liệu tham khảo từ Documenting&nbsp;Hope. <br>Giúp cha mẹ nhìn rõ bức tranh toàn thân về con trong 10 phút.
+                
+                <p class="font-quicksand text-sm sm:text-base leading-relaxed text-[rgba(250,249,246,0.9)] mb-6 font-light max-w-xl">
+                    Đằng sau nhiều khó khăn về hành vi có thể là những vấn đề sức khỏe chưa được nhận diện. Bộ công cụ này giúp ba mẹ quan sát nhanh 8 nhóm dấu hiệu thường gặp ở trẻ tự kỷ, từ đó biết nhóm nào cần theo dõi, trao đổi chuyên môn và ưu tiên hỗ trợ trước.
                 </p>
                 
-                <div class="bg-[rgba(255,255,255,0.1)] backdrop-blur-md border border-solid border-[rgba(255,255,255,0.2)] rounded-2xl p-6 mb-8 text-[rgba(250,249,246,0.9)] font-light text-sm shadow-[0_10px_15px_-3px_rgba(0,0,0,0.1)]">
-                    <h3 class="text-yellow font-bold text-base mb-3 flex items-center gap-2" style="margin-bottom: 12px; font-size: 16px;">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg>
-                        Về Documenting Hope (Hoa Kỳ)
-                    </h3>
-                    <p class="mb-4" style="margin-bottom: 16px;">Tổ chức nghiên cứu phi lợi nhuận hàng đầu tại Mỹ, chuyên tìm kiếm giải pháp hồi phục tận gốc cho trẻ em gặp các vấn đề về phát triển (tự kỷ, ADHD...).</p>
-                    <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 12px;">
-                        <li class="flex items-start gap-2">
-                            <span class="text-yellow mt-1 text-[10px]" style="margin-top: 4px;">●</span> 
-                            <span><strong>Khoa học thực chứng:</strong> Quy tụ đội ngũ bác sĩ nhi khoa xây dựng tiêu chuẩn đánh giá.</span>
-                        </li>
-                        <li class="flex items-start gap-2">
-                            <span class="text-yellow mt-1 text-[10px]" style="margin-top: 4px;">●</span> 
-                            <span><strong>Cái nhìn đa chiều:</strong> Tập trung vào mối liên hệ dinh dưỡng, môi trường và sức khỏe.</span>
-                        </li>
-                        <li class="flex items-start gap-2">
-                            <span class="text-yellow mt-1 text-[10px]" style="margin-top: 4px;">●</span> 
-                            <span><strong>Triết lý nhân văn:</strong> Mỗi đứa trẻ đều có cơ hội cải thiện nếu hỗ trợ đúng.</span>
-                        </li>
-                    </ul>
+                <!-- Combined Stats & Action Card (2/3 Stats, 1/3 Button) -->
+                <div class="bg-[rgba(255,255,255,0.06)] border border-solid border-[rgba(255,255,255,0.12)] rounded-2xl p-4 shadow-[0_8px_32px_rgba(0,0,0,0.08)] mb-6 text-white max-w-xl">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 items-center">
+                        
+                        <!-- Left 2/3: Stats Columns -->
+                        <div class="md:col-span-2 grid grid-cols-3 gap-2 text-center items-center">
+                            <div class="py-1">
+                                <span class="block font-oswald text-2xl md:text-3xl font-extrabold text-yellow" style="color: var(--yellow); line-height: 1;">8</span>
+                                <span class="block mt-1 text-[9px] uppercase tracking-wider font-semibold text-white/70">Nhóm cơ quan</span>
+                            </div>
+                            <div class="border-l border-r border-solid border-white/10 py-1">
+                                <span class="block font-oswald text-2xl md:text-3xl font-extrabold text-yellow" style="color: var(--yellow); line-height: 1;">40+</span>
+                                <span class="block mt-1 text-[9px] uppercase tracking-wider font-semibold text-white/70">Biểu hiện</span>
+                            </div>
+                            <div class="py-1">
+                                <span class="block font-oswald text-2xl md:text-3xl font-extrabold text-yellow" style="color: var(--yellow); line-height: 1;">10'</span>
+                                <span class="block mt-1 text-[9px] uppercase tracking-wider font-semibold text-white/70">Thời gian làm</span>
+                            </div>
+                        </div>
+
+                        <!-- Right 1/3: Start Button -->
+                        <div class="md:col-span-1 flex justify-center md:justify-end">
+                            <button onclick="goToIntro()" class="btn-hero-start w-full text-center" style="padding: 14px 20px; background: var(--yellow); color: var(--navy); font-family: 'Oswald', sans-serif; font-weight: 700; font-size: 15px; text-transform: uppercase; border: none; border-radius: 10px; cursor: pointer; box-shadow: 0 6px 15px rgba(255,209,84,0.3); transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); display: inline-flex; align-items: center; justify-content: center; gap: 6px;">
+                                <span>BẮT ĐẦU NGAY</span>
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                            </button>
+                        </div>
+
+                    </div>
                 </div>
 
-                <div class="flex gap-8 items-center text-white" style="display: flex; gap: 32px; align-items: center; color: white;">
-                    <div class="text-left">
-                        <span class="block font-oswald text-4xl font-bold text-yellow mb-1" style="font-size: 36px; display: block; margin-bottom: 4px; font-weight: bold; color: var(--yellow);">11</span>
-                        <span class="text-xs uppercase tracking-wide" style="opacity: 0.8; font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em;">Nhóm triệu chứng</span>
-                    </div>
-                    <div class="text-left">
-                        <span class="block font-oswald text-4xl font-bold text-yellow mb-1" style="font-size: 36px; display: block; margin-bottom: 4px; font-weight: bold; color: var(--yellow);">100+</span>
-                        <span class="text-xs uppercase tracking-wide" style="opacity: 0.8; font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em;">Dấu hiệu cụ thể</span>
-                    </div>
-                    <div class="text-left">
-                        <span class="block font-oswald text-4xl font-bold text-yellow mb-1" style="font-size: 36px; display: block; margin-bottom: 4px; font-weight: bold; color: var(--yellow);">10'</span>
-                        <span class="text-xs uppercase tracking-wide" style="opacity: 0.8; font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em;">Thời gian</span>
+                <!-- Nguồn tham khảo khoa học (Listed directly below the button in a 2-column grid layout) -->
+                <div class="text-left text-white max-w-xl bg-[rgba(255,255,255,0.03)] border border-solid border-[rgba(255,255,255,0.08)] rounded-2xl p-5 shadow-[0_8px_32px_rgba(0,0,0,0.04)]">
+                    <h3 class="text-yellow font-bold text-xs uppercase tracking-wider mb-3.5 flex items-center gap-2" style="color: var(--yellow); font-family: 'Oswald', sans-serif; letter-spacing: 0.05em; margin: 0 0 14px 0;">
+                        📖 Nguồn tham khảo đối chứng khoa học:
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <ul class="list-none p-0 m-0 flex flex-col gap-3 font-light text-[rgba(250,249,246,0.8)] leading-relaxed text-[11px]" style="display:flex; flex-direction:column; gap:10px; padding-left:0; margin:0; list-style:none;">
+                            <li class="flex items-start gap-2" style="display:flex; align-items:start; gap:8px; margin-bottom: 0;">
+                                <span style="color: var(--yellow); font-weight: 800; font-size: 12px; line-height: 1;">•</span>
+                                <span><strong class="text-yellow" style="color: var(--yellow); font-weight:700;">PSC:</strong> Sàng lọc hành vi & cảm xúc (trẻ từ 4-16 tuổi).</span>
+                            </li>
+                            <li class="flex items-start gap-2" style="display:flex; align-items:start; gap:8px; margin-bottom: 0;">
+                                <span style="color: var(--yellow); font-weight: 800; font-size: 12px; line-height: 1;">•</span>
+                                <span><strong class="text-yellow" style="color: var(--yellow); font-weight:700;">CSHQ:</strong> Sàng lọc rối loạn giấc ngủ (trẻ 4-12 tuổi).</span>
+                            </li>
+                            <li class="flex items-start gap-2" style="display:flex; align-items:start; gap:8px; margin-bottom: 0;">
+                                <span style="color: var(--yellow); font-weight: 800; font-size: 12px; line-height: 1;">•</span>
+                                <span><strong class="text-yellow" style="color: var(--yellow); font-weight:700;">BAMBI:</strong> Khảo sát hành vi ăn uống tự kỷ (2-11 tuổi).</span>
+                            </li>
+                        </ul>
+                        <ul class="list-none p-0 m-0 flex flex-col gap-3 font-light text-[rgba(250,249,246,0.8)] leading-relaxed text-[11px]" style="display:flex; flex-direction:column; gap:10px; padding-left:0; margin:0; list-style:none;">
+                            <li class="flex items-start gap-2" style="display:flex; align-items:start; gap:8px; margin-bottom: 0;">
+                                <span style="color: var(--yellow); font-weight: 800; font-size: 12px; line-height: 1;">•</span>
+                                <span><strong class="text-yellow" style="color: var(--yellow); font-weight:700;">VADRS:</strong> Đánh giá nguy cơ Tăng động - Giảm chú ý (6-12 tuổi).</span>
+                            </li>
+                            <li class="flex items-start gap-2" style="display:flex; align-items:start; gap:8px; margin-bottom: 0;">
+                                <span style="color: var(--yellow); font-weight: 800; font-size: 12px; line-height: 1;">•</span>
+                                <span><strong class="text-yellow" style="color: var(--yellow); font-weight:700;">Documenting Hope:</strong> Tổ chức phi lợi nhuận của Mỹ về phục hồi trẻ chậm phát triển thần kinh từ gốc.</span>
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </div>
             
             <div class="relative hidden lg:block">
                 <div class="absolute inset-0 bg-[rgba(255,209,84,0.2)] rounded-3xl transform rotate-2 scale-105"></div>
-                <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/checklist_hero_vi_1779074481858.png" alt="Bảng kiểm tra sức khỏe toàn thân" class="relative rounded-3xl shadow-[0_25px_50px_-12px_rgba(0,0,0,0.25)] border border-solid border-[rgba(255,255,255,0.1)] object-cover w-full h-auto" />
+                <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/bang-check-list.png" alt="Bộ công cụ nhận diện các rào cản sức khỏe" class="relative rounded-3xl shadow-[0_25px_50px_-12px_rgba(0,0,0,0.25)] border border-solid border-[rgba(255,255,255,0.1)] object-cover w-full aspect-square" style="aspect-ratio: 1 / 1;" />
             </div>
         </div>
     </section>
 
-  <!-- INTRO CARD -->
-  <div style="max-width:820px;margin:0 auto;padding:0 24px;" id="intro-section">
-    <div class="intro-card">
-      <h2>Cách sử dụng bảng kiểm tra này</h2>
-      <p>Đây là công cụ hỗ trợ cha mẹ nhận diện các dấu hiệu cần chú ý ở con. Kết quả sẽ giúp chuyên gia tư vấn hiểu
-        được bức tranh tổng thể và định hướng hỗ trợ phù hợp nhất cho con.</p>
-      <div class="intro-steps">
-        <div class="intro-step">
-          <div class="intro-step-num">1</div>
-          <p>Điền thông tin cơ bản về con</p>
-        </div>
-        <div class="intro-step">
-          <div class="intro-step-num">2</div>
-          <p>Chọn các dấu hiệu quan sát được ở con</p>
-        </div>
-        <div class="intro-step">
-          <div class="intro-step-num">3</div>
-          <p>Nhận kết quả & đặt lịch tư vấn</p>
-        </div>
-      </div>
-    </div>
-  </div>
+  <!-- SURVEY PAGE CONTAINER (GRID LAYOUT) -->
+  <div class="max-w-7xl mx-auto px-6 py-12" id="survey-page-container" style="<?php echo $is_start ? 'display:block;' : 'display:none;'; ?>">
+    <div class="grid grid-cols-1 lg:grid-cols-4 gap-8 items-start">
+        
+        <!-- CỘT TRÁI (1/4): WIDGET FIXED/STICKY -->
+        <div class="lg:col-span-1 lg:sticky lg:top-24 flex flex-col gap-6" id="sticky-sidebar">
+            <!-- WIDGET CÁCH SỬ DỤNG (Nổi bật màu Navy) -->
+            <div class="bg-navy rounded-2xl p-6 border border-solid border-[rgba(255,255,255,0.15)] shadow-[0_10px_25px_rgba(0,39,149,0.15)] text-white relative overflow-hidden has-pattern-bg" style="background-color: var(--navy); color: white;">
+                <!-- Decorative subtle light circle -->
+                <div class="absolute -right-12 -bottom-12 w-32 h-32 bg-white/5 rounded-full pointer-events-none"></div>
+                
+                <h3 class="font-bold text-base mb-4 flex items-center gap-2 text-yellow font-oswald tracking-wide uppercase" style="color: var(--yellow); margin-bottom: 16px; font-weight:700; font-family: 'Oswald', sans-serif; font-size: 17px; letter-spacing: 0.03em;">
+                    <span style="font-size:18px;">📋</span> Hướng dẫn làm bài
+                </h3>
+                <div class="flex flex-col gap-4" style="display: flex; flex-direction: column; gap: 16px; font-size: 13.5px; line-height: 1.5; color: #ffffff;">
+                    <div class="flex gap-3 items-start">
+                        <div style="color: var(--navy); font-weight:800; width:24px; height:24px; display:flex; align-items:center; justify-content:center; border-radius:50%; background: var(--yellow); margin-top:2px; font-size: 11px;" class="shrink-0">1</div>
+                        <p class="m-0" style="margin:0; font-weight:500;">Nhập thông tin cơ bản về con (Họ tên, ngày sinh, chiều cao, cân nặng...).</p>
+                    </div>
+                    <div class="flex gap-3 items-start">
+                        <div style="color: var(--navy); font-weight:800; width:24px; height:24px; display:flex; align-items:center; justify-content:center; border-radius:50%; background: var(--yellow); margin-top:2px; font-size: 11px;" class="shrink-0">2</div>
+                        <p class="m-0" style="margin:0; font-weight:500;">Tích chọn những dấu hiệu quan sát được ở con qua 8 nhóm hệ cơ quan.</p>
+                    </div>
+                    <div class="flex gap-3 items-start">
+                        <div style="color: var(--navy); font-weight:800; width:24px; height:24px; display:flex; align-items:center; justify-content:center; border-radius:50%; background: var(--yellow); margin-top:2px; font-size: 11px;" class="shrink-0">3</div>
+                        <p class="m-0" style="margin:0; font-weight:500;">Điền thông tin liên hệ của phụ huynh để nhận kết quả phân tích gửi qua email.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- WIDGET DISCLAIMER -->
+            <div class="hidden lg:block bg-[#fefce8] border border-solid border-[#fef08a] rounded-2xl p-6 shadow-[0_4px_20px_rgba(254,240,138,0.15)]">
+                <h3 class="text-[#854d0e] font-bold text-sm mb-3 flex items-center gap-2" style="margin-bottom: 12px; font-weight:700;">
+                    <span style="font-size:16px;">⚠️</span> Lưu ý quan trọng
+                </h3>
+                <p class="text-xs text-[#713f12] leading-relaxed m-0 font-light" style="margin:0; font-size:12px; line-height:1.6;">
+                    Bảng kiểm tra này là công cụ hỗ trợ nhận diện dấu hiệu, không thay thế chẩn đoán lâm sàng hoặc tư vấn y tế chuyên nghiệp. Mọi quyết định can thiệp cho trẻ cần được thảo luận với bác sĩ hoặc chuyên gia có chuyên môn phù hợp.
+                </p>
+                <div class="mt-4 pt-3 border-t border-solid border-[#fef08a] text-[11px] text-[#854d0e] font-medium" style="margin-top:16px; padding-top:12px; border-top:1px solid #fef08a; font-size:11px; font-weight:500;">
+                    Tài liệu tham khảo: Documenting Hope
+                </div>
+            </div>
+            
+            <!-- WIDGET LIÊN KẾT NHANH (Nút Bấm Từ Header) -->
+            <div class="hidden lg:block bg-white rounded-2xl p-6 border border-solid border-[rgba(0,39,149,0.12)] shadow-[0_4px_20px_rgba(0,39,149,0.05)] flex flex-col gap-3 w-full">
+                <!-- Nút: Cộng đồng Facebook -->
+                <a href="https://www.facebook.com/groups/tukylaroiloantoanthan" target="_blank"
+                    rel="noopener noreferrer" title="Cộng Đồng Cha Mẹ"
+                    class="flex items-center justify-center gap-2 bg-gradient-to-br from-[#1877F2] to-[#0A58CA] hover:from-[#1464CC] hover:to-[#084298] text-white px-3.5 py-2.5 rounded-xl font-bold text-xs transition-all duration-300 shadow-[0_4px_12px_rgba(24,119,242,0.25)] hover:shadow-[0_6px_16px_rgba(24,119,242,0.35)] hover:-translate-y-0.5 border border-white/10 group w-full text-center"
+                    aria-label="Cộng đồng Facebook" style="text-decoration:none; display:flex;">
+                    <svg viewBox="0 0 320 512" style="width:14px; height:14px; fill:currentColor;" class="group-hover:scale-110 transition-transform">
+                        <path d="M279.14 288l14.22-92.66h-88.91v-60.13c0-25.35 12.42-50.06 52.24-50.06h40.42V6.26S260.43 0 225.36 0c-73.22 0-121.08 44.38-121.08 124.72v70.62H22.89V288h81.39v224h100.17V288z" />
+                    </svg>
+                    <span>Cộng đồng</span>
+                </a>
 
-  <!-- MAIN FORM -->
-  <div id="main-form">
+                <!-- Nút: Hỏi đáp Zalo -->
+                <a href="https://zalo.me/g/vmgfxy834?joinSrc=9" target="_blank" rel="noopener noreferrer"
+                    title="Kết Nối Chuyên Gia"
+                    class="flex items-center justify-center gap-2 bg-gradient-to-br from-[#00A1FF] to-[#0068FF] hover:from-[#008CE6] hover:to-[#0052CC] text-white px-3.5 py-2.5 rounded-xl font-bold text-xs transition-all duration-300 shadow-[0_4px_12px_rgba(0,104,255,0.25)] hover:shadow-[0_6px_16px_rgba(0,104,255,0.35)] hover:-translate-y-0.5 border border-white/10 group w-full text-center"
+                    aria-label="Kết nối Zalo" style="text-decoration:none; display:flex;">
+                    <span class="font-black text-xs text-white leading-none group-hover:scale-110 transition-transform">Z</span>
+                    <span>Hỏi đáp Zalo</span>
+                </a>
+
+                <!-- Nút: Đăng nhập / Tài khoản -->
+                <?php
+                $current_member = class_exists('\Hieucon\Model\Member_Model') ? \Hieucon\Model\Member_Model::get_current_member() : false;
+                if ($current_member):
+                    ?>
+                    <a href="<?php echo home_url('/tai-khoan/'); ?>"
+                        class="flex items-center justify-center gap-1.5 bg-navy hover:bg-navy/80 text-white px-3.5 py-2.5 rounded-xl font-bold text-xs transition-all duration-200 shadow-sm hover:shadow-md hover:-translate-y-0.5 group w-full text-center border-0"
+                        style="text-decoration:none; display:flex;">
+                        <i data-lucide="user" class="w-4 h-4 text-secondary group-hover:text-white transition-colors"></i>
+                        <span>Tài khoản</span>
+                    </a>
+                <?php else: ?>
+                    <a href="<?php echo home_url('/dang-nhap/'); ?>"
+                        class="flex items-center justify-center gap-1.5 bg-secondary hover:bg-secondary_dark text-white px-3.5 py-2.5 rounded-xl font-bold text-xs transition-all duration-200 shadow-sm hover:shadow-md hover:-translate-y-0.5 w-full text-center border-0"
+                        style="text-decoration:none; display:flex;">
+                        <i data-lucide="log-in" class="w-4 h-4 text-white"></i>
+                        <span>Đăng nhập</span>
+                    </a>
+                <?php endif; ?>
+            </div>
+        </div>
+        
+        <!-- CỘT PHẢI (3/4): KHU VỰC FORM CHÍNH -->
+        <div class="lg:col-span-3" id="right-form-column">
+          <!-- MAIN FORM -->
 
     <!-- THÔNG TIN CƠ BẢN -->
     <div class="form-section" id="info-section">
@@ -946,16 +1393,12 @@ get_header();
           <div class="section-subtitle">Giúp chuyên gia tư vấn hiểu ngữ cảnh trước buổi gặp</div>
         </div>
       </div>
-      <!-- GROUP 1: Liên hệ -->
-      <div style="font-size:14px; font-weight:700; color:var(--navy); margin-bottom:12px; border-bottom:1px solid var(--border); padding-bottom:8px;">1. Thông tin liên hệ</div>
+      <!-- GROUP 1: Tên của con -->
+      <div style="font-size:14px; font-weight:700; color:var(--navy); margin-bottom:12px; border-bottom:1px solid var(--border); padding-bottom:8px;">1. Tên của con</div>
       <div class="form-row" style="margin-bottom:24px;">
-        <div class="form-group">
-          <label>Tên cha / mẹ *</label>
-          <input type="text" id="parent-name" placeholder="Họ và tên">
-        </div>
-        <div class="form-group">
-          <label>Số điện thoại / Zalo *</label>
-          <input type="tel" id="parent-phone" placeholder="0xxx xxx xxx">
+        <div class="form-group" style="grid-column: 1 / -1;">
+          <label>Họ và tên của con *</label>
+          <input type="text" id="child-name" placeholder="Ví dụ: Nguyễn Văn A" required style="padding:14px 16px; font-size:15px; font-weight:600;">
         </div>
       </div>
 
@@ -963,8 +1406,10 @@ get_header();
       <div style="font-size:14px; font-weight:700; color:var(--navy); margin-bottom:12px; border-bottom:1px solid var(--border); padding-bottom:8px;">2. Thông tin của con</div>
       <div class="form-row">
         <div class="form-group" style="position:relative;">
-          <label style="margin-bottom:2px;">Ngày sinh của con *</label>
-          <div style="font-size:12px; color:var(--gray); margin-bottom:10px; font-weight:400;">(Để tính chính xác độ tuổi)</div>
+          <label style="margin-bottom:8px; display:flex; flex-wrap:wrap; align-items:center; gap:6px;">
+            <span>Ngày sinh của con *</span>
+            <span style="font-size:12px; color:var(--gray); font-weight:400; text-transform:none;">(Để tính chính xác độ tuổi)</span>
+          </label>
           <div style="display:flex; border: 1.5px solid var(--border); border-radius: 10px; overflow: hidden; background: var(--white); box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);">
             <div style="flex:1; border-right: 1px solid var(--border); position: relative;">
               <div style="position:absolute; top:4px; left:0; right:0; text-align:center; font-size:9px; font-weight:700; color:var(--gray); text-transform:uppercase; letter-spacing:0.5px; pointer-events:none;">Ngày</div>
@@ -993,8 +1438,10 @@ get_header();
         </div>
 
         <div class="form-group">
-          <label style="margin-bottom:2px;">Giới tính *</label>
-          <div style="font-size:12px; color:var(--gray); margin-bottom:10px; font-weight:400;">(Dùng cho chỉ số phát triển)</div>
+          <label style="margin-bottom:8px; display:flex; flex-wrap:wrap; align-items:center; gap:6px;">
+            <span>Giới tính *</span>
+            <span style="font-size:12px; color:var(--gray); font-weight:400; text-transform:none;">(Dùng cho chỉ số phát triển)</span>
+          </label>
           <div style="display:flex; gap:12px; height: 49.5px;">
             <label style="flex:1; display:flex; align-items:center; justify-content:center; gap:8px; border:1.5px solid var(--border); border-radius:10px; cursor:pointer; font-size:15px; font-weight:600; color:var(--charcoal); background:var(--white); box-shadow: inset 0 2px 4px rgba(0,0,0,0.02); margin:0;">
               <input type="radio" name="child-gender" value="Bé trai" style="width:16px; height:16px; margin:0;"> Bé trai
@@ -1006,7 +1453,7 @@ get_header();
         </div>
       </div>
 
-      <div class="form-row" style="margin-bottom: 24px;">
+      <div class="grid grid-cols-2 gap-4" style="margin-bottom: 24px;">
         <div class="form-group" style="position:relative;">
           <label>Chiều cao (cm) *</label>
           <input type="number" id="child-height" placeholder="Ví dụ: 105" required style="padding:14px 16px; font-size:15px; font-weight:600;">
@@ -1046,624 +1493,1783 @@ get_header();
         <label>Điều cha mẹ lo lắng nhất về con hiện tại là gì?</label>
         <textarea id="parent-concern" placeholder="Chia sẻ ngắn gọn điều khiến cha mẹ trăn trở nhất..."></textarea>
       </div>
-      <div class="nav-buttons" style="justify-content:flex-end;">
+      <div class="nav-buttons" style="justify-content:center;">
         <button class="btn btn-primary" onclick="startChecklist()">Bắt đầu kiểm tra →</button>
       </div>
-    </div>
+    </div> <!-- /#info-section -->
 
-    <!-- PROGRESS -->
-    <div class="progress-wrap" id="progress-wrap" style="display:none;">
-      <div class="progress-header">
-        <span class="progress-label">Tiến trình hoàn thành</span>
-        <span class="progress-count" id="progress-count">0 / 11 nhóm</span>
-      </div>
-      <div class="progress-bar">
-        <div class="progress-fill" id="progress-fill"></div>
-      </div>
-      <div class="progress-steps" id="progress-steps"></div>
-    </div>
+    <!-- MOBILE ONLY: DISCLAIMER & CTA BUTTONS -->
+    <div class="block lg:hidden mt-8 flex flex-col gap-6">
+        <!-- Divider to separate checklist from bottom content -->
+        <div class="border-t-2 border-solid border-[#e2e8f0] my-2 pt-2"></div>
+        <!-- WIDGET DISCLAIMER -->
+        <div class="bg-[#fefce8] border border-solid border-[#fef08a] rounded-2xl p-6 shadow-[0_4px_20px_rgba(254,240,138,0.15)]">
+            <h3 class="text-[#854d0e] font-bold text-sm mb-3 flex items-center gap-2" style="margin-bottom: 12px; font-weight:700; margin-top:0;">
+                <span style="font-size:16px;">⚠️</span> Lưu ý quan trọng
+            </h3>
+            <p class="text-xs text-[#713f12] leading-relaxed m-0 font-light" style="margin:0; font-size:12px; line-height:1.6;">
+                Bảng kiểm tra này là công cụ hỗ trợ nhận diện dấu hiệu, không thay thế chẩn đoán lâm sàng hoặc tư vấn y tế chuyên nghiệp. Mọi quyết định can thiệp cho trẻ cần được thảo luận với bác sĩ hoặc chuyên gia có chuyên môn phù hợp.
+            </p>
+            <div class="mt-4 pt-3 border-t border-solid border-[#fef08a] text-[11px] text-[#854d0e] font-medium" style="margin-top:16px; padding-top:12px; border-top:1px solid #fef08a; font-size:11px; font-weight:500;">
+                Tài liệu tham khảo: Documenting Hope
+            </div>
+        </div>
+        
+        <!-- WIDGET LIÊN KẾT NHANH (Nút Bấm Từ Header) -->
+        <div class="bg-white rounded-2xl p-6 border border-solid border-[rgba(0,39,149,0.12)] shadow-[0_4px_20px_rgba(0,39,149,0.05)] flex flex-col gap-3 w-full">
+            <!-- Nút: Cộng đồng Facebook -->
+            <a href="https://www.facebook.com/groups/tukylaroiloantoanthan" target="_blank"
+                rel="noopener noreferrer" title="Cộng Đồng Cha Mẹ"
+                class="flex items-center justify-center gap-2 bg-gradient-to-br from-[#1877F2] to-[#0A58CA] hover:from-[#1464CC] hover:to-[#084298] text-white px-3.5 py-2.5 rounded-xl font-bold text-xs transition-all duration-300 shadow-[0_4px_12px_rgba(24,119,242,0.25)] hover:shadow-[0_6px_16px_rgba(24,119,242,0.35)] hover:-translate-y-0.5 border border-white/10 group w-full text-center"
+                aria-label="Cộng đồng Facebook" style="text-decoration:none; display:flex;">
+                <svg viewBox="0 0 320 512" style="width:14px; height:14px; fill:currentColor;" class="group-hover:scale-110 transition-transform">
+                    <path d="M279.14 288l14.22-92.66h-88.91v-60.13c0-25.35 12.42-50.06 52.24-50.06h40.42V6.26S260.43 0 225.36 0c-73.22 0-121.08 44.38-121.08 124.72v70.62H22.89V288h81.39v224h100.17V288z" />
+                </svg>
+                <span>Cộng đồng</span>
+            </a>
 
-    <!-- CHECKLIST DATA -->
-    <div id="checklist-container"></div>
+            <!-- Nút: Hỏi đáp Zalo -->
+            <a href="https://zalo.me/g/vmgfxy834?joinSrc=9" target="_blank" rel="noopener noreferrer"
+                title="Kết Nối Chuyên Gia"
+                class="flex items-center justify-center gap-2 bg-gradient-to-br from-[#00A1FF] to-[#0068FF] hover:from-[#008CE6] hover:to-[#0052CC] text-white px-3.5 py-2.5 rounded-xl font-bold text-xs transition-all duration-300 shadow-[0_4px_12px_rgba(0,104,255,0.25)] hover:shadow-[0_6px_16px_rgba(0,104,255,0.35)] hover:-translate-y-0.5 border border-white/10 group w-full text-center"
+                aria-label="Kết nối Zalo" style="text-decoration:none; display:flex;">
+                <span class="font-black text-xs text-white leading-none group-hover:scale-110 transition-transform">Z</span>
+                <span>Hỏi đáp Zalo</span>
+            </a>
 
-  </div>
+            <!-- Nút: Đăng nhập / Tài khoản -->
+            <?php
+            $current_member = class_exists('\Hieucon\Model\Member_Model') ? \Hieucon\Model\Member_Model::get_current_member() : false;
+            if ($current_member):
+                ?>
+                <a href="<?php echo home_url('/tai-khoan/'); ?>"
+                    class="flex items-center justify-center gap-1.5 bg-navy hover:bg-navy/80 text-white px-3.5 py-2.5 rounded-xl font-bold text-xs transition-all duration-200 shadow-sm hover:shadow-md hover:-translate-y-0.5 group w-full text-center border-0"
+                    style="text-decoration:none; display:flex;">
+                    <i data-lucide="user" class="w-4 h-4 text-secondary group-hover:text-white transition-colors"></i>
+                    <span>Tài khoản</span>
+                </a>
+            <?php else: ?>
+                <a href="<?php echo home_url('/dang-nhap/'); ?>"
+                    class="flex items-center justify-center gap-1.5 bg-secondary hover:bg-secondary_dark text-white px-3.5 py-2.5 rounded-xl font-bold text-xs transition-all duration-200 shadow-sm hover:shadow-md hover:-translate-y-0.5 w-full text-center border-0"
+                    style="text-decoration:none; display:flex;">
+                    <i data-lucide="log-in" class="w-4 h-4 text-white"></i>
+                    <span>Đăng nhập</span>
+                </a>
+            <?php endif; ?>
+        </div>
+    </div>
+  </div> <!-- /#right-form-column -->
+</div> <!-- /.grid -->
+</div> <!-- /#survey-page-container -->
 
-  <!-- RESULT PAGE -->
-  <div id="result-page">
-    <div class="result-hero">
-      <div style="font-size:48px;margin-bottom:16px;">📋</div>
-      <h2>Bản Ghi Nhận Dấu Hiệu (Checklist)</h2>
-      <p>Dưới đây là thống kê tỷ lệ các dấu hiệu được ghi nhận theo từng nhóm.<br>Chuyên gia tư vấn sẽ sử dụng thông tin này để phân tích chi tiết
-        và đề xuất hướng hỗ trợ phù hợp nhất cho con.</p>
-    </div>
-    <div class="result-grid" id="result-grid"></div>
-    <div class="cta-box">
-      <h3>Đặt lịch tư vấn </h3>
-      <p>Chuyên gia sẽ phân tích kết quả kiểm tra và đưa ra định hướng hỗ trợ cụ thể cho con - hoàn toàn , không
-        ràng buộc.</p>
-      <div class="cta-form">
-        <input type="tel" placeholder="Số điện thoại / Zalo của bạn" id="cta-phone">
-        <button onclick="submitCTA()">Đặt lịch ngay</button>
-      </div>
-      <p style="font-size:13px;opacity:0.6;margin-top:16px;">Hoặc liên hệ trực tiếp qua Zalo: <strong>0xxx xxx
-          xxx</strong></p>
-    </div>
-    <div class="disclaimer">
-      <strong>Lưu ý quan trọng:</strong> Bảng kiểm tra này là công cụ hỗ trợ nhận diện dấu hiệu, không thay thế chẩn
-      đoán lâm sàng hoặc tư vấn y tế chuyên nghiệp. Mọi quyết định can thiệp cho trẻ cần được thảo luận với bác sĩ hoặc
-      chuyên gia có chuyên môn phù hợp. Tài liệu tham khảo: Documenting Hope
-    </div>
-  </div>
+<!-- SURVEY ACTIVE CONTAINER (GRID LAYOUT FOR SURVEY STEP) -->
+<div class="max-w-7xl mx-auto px-6 py-12" id="survey-active-container" style="display:none;">
+    <div class="grid grid-cols-1 lg:grid-cols-4 gap-8 items-start">
+        
+        <!-- CỘT TRÁI (3/4): KHU VỰC KHẢO SÁT CHÍNH -->
+        <div class="lg:col-span-3" id="checklist-main-column">
+             <!-- MAIN FORM -->
+             <div id="main-form">
+                 
+                 <!-- MOBILE ONLY: HƯỚNG DẪN KHẢO SÁT -->
+                 <div class="block lg:hidden bg-navy rounded-2xl p-6 border border-solid border-[rgba(255,255,255,0.15)] shadow-[0_10px_25px_rgba(0,39,149,0.15)] text-white relative overflow-hidden has-pattern-bg mb-6" style="background-color: var(--navy); color: white;">
+                     <div class="absolute -right-12 -bottom-12 w-32 h-32 bg-white/5 rounded-full pointer-events-none"></div>
+                     <h3 class="font-bold text-base mb-4 flex items-center gap-2 text-yellow font-oswald tracking-wide uppercase" style="color: var(--yellow); margin-bottom: 16px; font-weight:700; font-family: 'Oswald', sans-serif; font-size: 15px; letter-spacing: 0.03em; margin-top: 0;">
+                         <span style="font-size:18px;">📋</span> Hướng dẫn khảo sát
+                     </h3>
+                     <div class="flex flex-col gap-4" style="display: flex; flex-direction: column; gap: 16px; font-size: 13px; line-height: 1.5; color: #ffffff;">
+                         <div class="flex gap-2.5 items-start">
+                             <div style="color: var(--navy); font-weight:800; width:20px; height:20px; display:flex; align-items:center; justify-content:center; border-radius:50%; background: var(--yellow); margin-top:2px; font-size: 10px;" class="shrink-0">1</div>
+                             <p class="m-0" style="margin:0; font-weight:500;">Tích chọn các dấu hiệu quan sát thấy ở con trong nhóm hiện tại.</p>
+                         </div>
+                         <div class="flex gap-2.5 items-start">
+                             <div style="color: var(--navy); font-weight:800; width:20px; height:20px; display:flex; align-items:center; justify-content:center; border-radius:50%; background: var(--yellow); margin-top:2px; font-size: 10px;" class="shrink-0">2</div>
+                             <p class="m-0" style="margin:0; font-weight:500;">Nhấn "Tiếp theo →" hoặc click tên nhóm ở trên để chuyển phần.</p>
+                         </div>
+                         <div class="flex gap-2.5 items-start">
+                             <div style="color: var(--navy); font-weight:800; width:20px; height:20px; display:flex; align-items:center; justify-content:center; border-radius:50%; background: var(--yellow); margin-top:2px; font-size: 10px;" class="shrink-0">3</div>
+                             <p class="m-0" style="margin:0; font-weight:500;">Nhấn "Hoàn thiện & nhận kết quả" sau khi điền xong nhóm thứ 8.</p>
+                         </div>
+                     </div>
+                 </div>
+                 
+                 <!-- PROGRESS -->
+                 <div class="progress-wrap" id="progress-wrap" style="display:none;">
+                   <div class="progress-header">
+                     <span class="progress-label">Tiến trình hoàn thành</span>
+                     <span class="progress-count" id="progress-count">0 / 8 nhóm</span>
+                   </div>
+                   <div class="progress-bar">
+                     <div class="progress-fill" id="progress-fill"></div>
+                   </div>
+                   <div class="progress-steps" id="progress-steps"></div>
+                 </div>
+
+                 <!-- CHECKLIST DATA -->
+                 <div id="checklist-container"></div>
+                  
+                  <!-- OPEN-ENDED & SUBMIT SECTION (Outside Groups) -->
+                  <div id="survey-completion-section" style="display: none; margin-top: 32px;">
+                    <div class="open-section">
+                      <label>Triệu chứng khác cha mẹ muốn chia sẻ thêm (không bắt buộc)</label>
+                      <textarea id="extra-symptoms" placeholder="Ghi thêm bất kỳ dấu hiệu nào cha mẹ quan sát được ở con..."></textarea>
+                    </div>
+                    <div class="flex justify-end mt-8">
+                      <button type="button" class="btn btn-submit" id="btn-show-parent-info" onclick="ModuleSurvey.completeSurvey()">Hoàn thiện & nhận kết quả →</button>
+                    </div>
+                  </div>
+
+                 <!-- THÔNG TIN PHỤ HUYNH (Mới - Sau khi xong khảo sát) -->
+                 <div class="form-section" id="parent-info-section" style="display:none; max-width:760px; margin: 32px auto;">
+                   <div class="section-header">
+                     <div class="section-icon">✉️</div>
+                     <div>
+                       <div class="section-title">Nhận Kết Quả Qua Email</div>
+                       <div class="section-subtitle">Vui lòng điền thông tin để nhận kết quả khảo sát chi tiết của con</div>
+                     </div>
+                   </div>
+                   
+                   <div class="form-group" style="margin-bottom: 20px;">
+                     <label>Tên cha / mẹ *</label>
+                     <input type="text" id="parent-name" placeholder="Họ và tên phụ huynh" required style="padding:14px 16px; font-size:15px; font-weight:600; width:100%; border:1.5px solid var(--border); border-radius:10px; font-family:'Quicksand', sans-serif; background:var(--cream); outline:none;">
+                   </div>
+                   
+                   <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-6">
+                     <div class="form-group">
+                       <label>Số điện thoại / Zalo *</label>
+                       <input type="tel" id="parent-phone" placeholder="Ví dụ: 0987654321" required style="padding:14px 16px; font-size:15px; font-weight:600; width:100%; border:1.5px solid var(--border); border-radius:10px; font-family:'Quicksand', sans-serif; background:var(--cream); outline:none;">
+                     </div>
+                     <div class="form-group">
+                       <label>Email liên hệ nhận kết quả *</label>
+                       <input type="email" id="parent-email" placeholder="Ví dụ: email@gmail.com" required style="padding:14px 16px; font-size:15px; font-weight:600; width:100%; border:1.5px solid var(--border); border-radius:10px; font-family:'Quicksand', sans-serif; background:var(--cream); outline:none;">
+                     </div>
+                   </div>
+                   
+                   <div class="nav-buttons" style="display:flex; justify-content:flex-end;">
+                     <button class="btn btn-submit" id="btn-final-submit" onclick="submitParentInfo()" style="padding: 14px 28px; background:var(--navy); color:var(--white); font-weight:700; border:none; border-radius:10px; cursor:pointer; font-size:15px; font-family:'Quicksand', sans-serif;">Hoàn thiện & nhận kết quả →</button>
+                   </div>
+                 </div>
+
+                 <!-- THÀNH CÔNG (Sau khi submit parent-info-section) -->
+                 <div class="form-section" id="thankyou-section" style="display:none; text-align:center; padding:48px 32px; max-width:760px; margin: 32px auto;">
+                   <div style="font-size: 64px; margin-bottom: 24px;">✉️</div>
+                   <h2 style="font-family:'Oswald', sans-serif; font-size:28px; color:var(--navy); margin-bottom:16px;">Đã gửi kết quả thành công!</h2>
+                   <p style="font-size:16px; color:var(--charcoal); max-width:540px; margin:0 auto 24px; line-height:1.7;">
+                     Kết quả phân tích 8 nhóm dấu hiệu của con đã được gửi tới hòm thư của cha mẹ tại <strong id="sent-email-display" style="color:var(--navy);">[email]</strong>.
+                   </p>
+                   <p style="font-size:14px; color:#64748b; max-width:500px; margin:0 auto 32px; line-height:1.6; font-style:italic;">
+                     Cha mẹ vui lòng kiểm tra hộp thư đến (Inbox). Nếu không tìm thấy thư trong vòng 3-5 phút, vui lòng kiểm tra thêm thư mục <strong>Spam (Thư rác)</strong> hoặc <strong>Promotions (Quảng cáo)</strong>.
+                   </p>
+                   <div style="display:flex; justify-content:center; gap:16px; flex-wrap:wrap;">
+                     <a href="https://zalo.me/0988717107" target="_blank" rel="noopener" class="btn btn-primary" style="display:inline-flex; align-items:center; justify-content:center; text-decoration:none; padding:14px 28px; font-weight:700; background:var(--navy); color:var(--white); border-radius:10px; font-size:15px; font-family:'Quicksand', sans-serif;">
+                       📞 Kết nối chuyên gia qua Zalo
+                     </a>
+                     <a href="/" class="btn btn-secondary" style="display:inline-flex; align-items:center; justify-content:center; text-decoration:none; padding:14px 28px; font-weight:700; background:#f1f5f9; color:#334155; border:1px solid #cbd5e1; border-radius:10px; font-size:15px; font-family:'Quicksand', sans-serif; transition: background 0.2s;">
+                       Quay lại trang chủ
+                     </a>
+                   </div>
+                 </div>
+
+                 <!-- RESULT PAGE -->
+                 <div id="result-page">
+                   <div class="result-hero">
+                     <div style="font-size:48px;margin-bottom:16px;">📋</div>
+                     <h2>Bản Ghi Nhận Dấu Hiệu (Checklist)</h2>
+                     <p>Dưới đây là thống kê tỷ lệ các dấu hiệu được ghi nhận theo từng nhóm.<br>Chuyên gia tư vấn sẽ sử dụng thông tin này để phân tích chi tiết
+                       và đề xuất hướng hỗ trợ phù hợp nhất cho con.</p>
+                   </div>
+                   <div class="result-grid" id="result-grid"></div>
+                   <div class="cta-box">
+                     <h3>Đặt lịch tư vấn </h3>
+                     <p>Chuyên gia sẽ phân tích kết quả kiểm tra và đưa ra định hướng hỗ trợ cụ thể cho con - hoàn toàn , không
+                       ràng buộc.</p>
+                     <div class="cta-form">
+                       <input type="tel" placeholder="Số điện thoại / Zalo của bạn" id="cta-phone">
+                       <button onclick="submitCTA()">Đặt lịch ngay</button>
+                     </div>
+                     <p style="font-size:13px;opacity:0.6;margin-top:16px;">Hoặc liên hệ trực tiếp qua Zalo: <strong>0xxx xxx
+                         xxx</strong></p>
+                   </div>
+                   <div class="disclaimer">
+                     <strong>Lưu ý quan trọng:</strong> Bảng kiểm tra này là công cụ hỗ trợ nhận diện dấu hiệu, không thay thế chẩn
+                     đoán lâm sàng hoặc tư vấn y tế chuyên nghiệp. Mọi quyết định can thiệp cho trẻ cần được thảo luận với bác sĩ hoặc
+                     chuyên gia có chuyên môn phù hợp.
+                      <details class="mt-3 pt-3 border-t border-solid border-slate-200 text-xs text-gray-500 cursor-pointer">
+                        <summary class="focus:outline-none hover:text-gray-700 font-semibold">📖 Xem nguồn tài liệu tham khảo</summary>
+                        <ul class="list-none p-0 mt-2 flex flex-col gap-2 font-normal text-gray-600 leading-relaxed text-xs" style="display:flex; flex-direction:column; gap:8px; padding-left:0; margin-top:8px; list-style:none;">
+                          <li><strong>PSC - Pediatric Symptom Checklist:</strong> Bộ công cụ sàng lọc những vấn đề về cảm xúc và hành vi cho trẻ từ 4 đến 16 tuổi.</li>
+                          <li><strong>CSHQ - Children’s Sleep Habits Questionnaire:</strong> Bộ công cụ sàng lọc những vấn đề liên quan đến giấc ngủ cho trẻ từ 48 tháng đến 12 tuổi.</li>
+                          <li><strong>BAMBI - Brief Autism Mealtime Behavior Inventory:</strong> Bộ công cụ sàng lọc những vấn đề hành vi liên quan đến ăn uống ở trẻ tự kỷ từ 2 đến dưới 11 tuổi.</li>
+                          <li><strong>VADRS - Vanderbilt ADHD Diagnostic Rating Scale:</strong> Bộ công cụ sàng lọc nguy cơ Tăng động - Giảm chú ý và các rối loạn liên quan, thường dùng cho trẻ từ 6 đến 12 tuổi.</li>
+                          <li><strong>Documenting Hope:</strong> Một tổ chức phi lợi nhuận tại Hoa Kỳ, tập trung vào giáo dục, nghiên cứu và cung cấp tài nguyên về sức khỏe toàn diện cho trẻ em mắc các rối loạn phát triển thần kinh, bao gồm tự kỷ.</li>
+                        </ul>
+                      </details>
+                   </div>
+                 </div>
+
+             </div> <!-- /#main-form -->
+        </div> <!-- /#checklist-main-column -->
+        
+        <!-- CỘT PHẢI (1/4): SIDEBAR BIỂU ĐỒ & HƯỚNG DẪN (Sticky) -->
+        <div class="lg:col-span-1 lg:sticky lg:top-24 flex flex-col gap-6" id="survey-sidebar">
+            
+            <!-- WIDGET 2: HƯỚNG DẪN KHẢO SÁT (Màu Navy) -->
+            <div class="hidden lg:block bg-navy rounded-2xl p-6 border border-solid border-[rgba(255,255,255,0.15)] shadow-[0_10px_25px_rgba(0,39,149,0.15)] text-white relative overflow-hidden has-pattern-bg" style="background-color: var(--navy); color: white;">
+                <div class="absolute -right-12 -bottom-12 w-32 h-32 bg-white/5 rounded-full pointer-events-none"></div>
+                <h3 class="font-bold text-base mb-4 flex items-center gap-2 text-yellow font-oswald tracking-wide uppercase" style="color: var(--yellow); margin-bottom: 16px; font-weight:700; font-family: 'Oswald', sans-serif; font-size: 15px; letter-spacing: 0.03em;">
+                    <span style="font-size:18px;">📋</span> Hướng dẫn khảo sát
+                </h3>
+                <div class="flex flex-col gap-4" style="display: flex; flex-direction: column; gap: 16px; font-size: 13px; line-height: 1.5; color: #ffffff;">
+                    <div class="flex gap-2.5 items-start">
+                        <div style="color: var(--navy); font-weight:800; width:20px; height:20px; display:flex; align-items:center; justify-content:center; border-radius:50%; background: var(--yellow); margin-top:2px; font-size: 10px;" class="shrink-0">1</div>
+                        <p class="m-0" style="margin:0; font-weight:500;">Tích chọn các dấu hiệu quan sát thấy ở con trong nhóm hiện tại.</p>
+                    </div>
+                    <div class="flex gap-2.5 items-start">
+                        <div style="color: var(--navy); font-weight:800; width:20px; height:20px; display:flex; align-items:center; justify-content:center; border-radius:50%; background: var(--yellow); margin-top:2px; font-size: 10px;" class="shrink-0">2</div>
+                        <p class="m-0" style="margin:0; font-weight:500;">Nhấn "Tiếp theo →" hoặc click tên nhóm ở trên để chuyển phần.</p>
+                    </div>
+                    <div class="flex gap-2.5 items-start">
+                        <div style="color: var(--navy); font-weight:800; width:20px; height:20px; display:flex; align-items:center; justify-content:center; border-radius:50%; background: var(--yellow); margin-top:2px; font-size: 10px;" class="shrink-0">3</div>
+                        <p class="m-0" style="margin:0; font-weight:500;">Nhấn "Hoàn thiện & nhận kết quả" sau khi điền xong nhóm thứ 8.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- WIDGET 1: RADAR CHART -->
+            <div class="bg-navy rounded-2xl p-4 border border-solid border-[rgba(255,255,255,0.15)] shadow-[0_10px_25px_rgba(0,39,149,0.15)] text-white flex flex-col items-center justify-center has-pattern-bg relative" style="background-color: var(--navy); color: white;">
+                <!-- Close Button (Only visible on mobile overlay mode) -->
+                <button onclick="toggleMobileRadar(false)" class="absolute top-4 right-4 text-white/70 hover:text-white" style="display:none; background:none; border:none; padding:4px; cursor:pointer; z-index: 10;" id="close-radar-btn">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </button>
+                <h3 class="font-bold text-sm mb-3 text-yellow font-oswald tracking-wide uppercase text-center w-full" style="color: var(--yellow); margin-bottom: 12px; font-weight:700; font-family: 'Oswald', sans-serif; font-size: 15px; letter-spacing: 0.03em;">
+                    📊 Tổng quan dấu hiệu cha mẹ ghi nhận
+                </h3>
+                <div style="position: relative; width: 100%; height: 280px;">
+                    <canvas id="radarChartCanvas"></canvas>
+                </div>
+                <div class="mt-4 text-[11px] text-white/70 text-center font-light leading-relaxed">
+                    Biểu đồ phản ánh tỷ lệ biểu hiện dấu hiệu của từng hệ cơ quan theo thời gian thực.
+                </div>
+            </div>
+            
+            <!-- WIDGET 3: DISCLAIMER -->
+            <div class="bg-[#fefce8] border border-solid border-[#fef08a] rounded-2xl p-6 shadow-sm">
+                <h3 class="text-[#854d0e] font-bold text-sm mb-2 flex items-center gap-2" style="margin-bottom: 8px; font-weight:700;">
+                    <span>⚠️</span> Lưu ý quan trọng
+                </h3>
+                <p class="text-xs text-[#713f12] leading-relaxed m-0 font-light" style="margin:0; font-size:11px; line-height:1.5;">
+                    Kết quả và biểu đồ này là công cụ hỗ trợ nhận diện dấu hiệu, không thay thế chẩn đoán chuyên khoa hoặc chỉ định y khoa chính thức.
+                </p>
+            </div>
+            
+            <!-- WIDGET 4: LIÊN KẾT NHANH (Nút Bấm Từ Header) -->
+            <div class="bg-white rounded-2xl p-6 border border-solid border-[rgba(0,39,149,0.12)] shadow-[0_4px_20px_rgba(0,39,149,0.05)] flex flex-col gap-3 w-full">
+                <!-- Nút: Cộng đồng Facebook -->
+                <a href="https://www.facebook.com/groups/tukylaroiloantoanthan" target="_blank"
+                    rel="noopener noreferrer" title="Cộng Đồng Cha Mẹ"
+                    class="flex items-center justify-center gap-2 bg-gradient-to-br from-[#1877F2] to-[#0A58CA] hover:from-[#1464CC] hover:to-[#084298] text-white px-3.5 py-2.5 rounded-xl font-bold text-xs transition-all duration-300 shadow-[0_4px_12px_rgba(24,119,242,0.25)] hover:shadow-[0_6px_16px_rgba(24,119,242,0.35)] hover:-translate-y-0.5 border border-white/10 group w-full text-center"
+                    aria-label="Cộng đồng Facebook" style="text-decoration:none; display:flex;">
+                    <svg viewBox="0 0 320 512" style="width:12px; height:12px; fill:currentColor;" class="group-hover:scale-110 transition-transform">
+                        <path d="M279.14 288l14.22-92.66h-88.91v-60.13c0-25.35 12.42-50.06 52.24-50.06h40.42V6.26S260.43 0 225.36 0c-73.22 0-121.08 44.38-121.08 124.72v70.62H22.89V288h81.39v224h100.17V288z" />
+                    </svg>
+                    <span>Cộng đồng</span>
+                </a>
+
+                <!-- Nút: Hỏi đáp Zalo -->
+                <a href="https://zalo.me/g/vmgfxy834?joinSrc=9" target="_blank" rel="noopener noreferrer"
+                    title="Kết Nối Chuyên Gia"
+                    class="flex items-center justify-center gap-2 bg-gradient-to-br from-[#00A1FF] to-[#0068FF] hover:from-[#008CE6] hover:to-[#0052CC] text-white px-3.5 py-2.5 rounded-xl font-bold text-xs transition-all duration-300 shadow-[0_4px_12px_rgba(0,104,255,0.25)] hover:shadow-[0_6px_16px_rgba(0,104,255,0.35)] hover:-translate-y-0.5 border border-white/10 group w-full text-center"
+                    aria-label="Kết nối Zalo" style="text-decoration:none; display:flex;">
+                    <span class="font-black text-xs text-white leading-none group-hover:scale-110 transition-transform">Z</span>
+                    <span>Hỏi đáp Zalo</span>
+                </a>
+
+                <!-- Nút: Đăng nhập / Tài khoản -->
+                <?php
+                $current_member = class_exists('\Hieucon\Model\Member_Model') ? \Hieucon\Model\Member_Model::get_current_member() : false;
+                if ($current_member):
+                    ?>
+                    <a href="<?php echo home_url('/tai-khoan/'); ?>"
+                        class="flex items-center justify-center gap-1.5 bg-navy hover:bg-navy/80 text-white px-3.5 py-2.5 rounded-xl font-bold text-xs transition-all duration-200 shadow-sm hover:shadow-md hover:-translate-y-0.5 group w-full text-center border-0"
+                        style="text-decoration:none; display:flex;">
+                        <i data-lucide="user" class="w-4 h-4 text-secondary group-hover:text-white transition-colors"></i>
+                        <span>Tài khoản</span>
+                    </a>
+                <?php else: ?>
+                    <a href="<?php echo home_url('/dang-nhap/'); ?>"
+                        class="flex items-center justify-center gap-1.5 bg-secondary hover:bg-secondary_dark text-white px-3.5 py-2.5 rounded-xl font-bold text-xs transition-all duration-200 shadow-sm hover:shadow-md hover:-translate-y-0.5 w-full text-center border-0"
+                        style="text-decoration:none; display:flex;">
+                        <i data-lucide="log-in" class="w-4 h-4 text-white"></i>
+                        <span>Đăng nhập</span>
+                    </a>
+                <?php endif; ?>
+            </div>
+            
+        </div> <!-- /#survey-sidebar -->
+        
+    </div> <!-- /.grid -->
+</div> <!-- /#survey-active-container -->
 
   <script>
     // ── DỮ LIỆU CHECKLIST ──
-    const GROUPS = [
-      {
-        id: 'vanDongThoTinh',
-        name: 'Vận động thô & tinh',
-        icon: '🏃',
-        desc: 'Khả năng di chuyển, giữ thăng bằng và vận động tay',
-        items: [
-          { main: 'Con dễ bị ngã khi chạy, leo cầu thang hoặc di chuyển', example: 'Cha mẹ thấy con vấp té thường xuyên hơn bạn cùng tuổi' },
-          { main: 'Con giữ thăng bằng kém - hay lảo đảo, không đứng vững trên một chân', example: 'Khi đứng một chân hoặc đi trên bề mặt không bằng phẳng' },
-          { main: 'Con gặp khó khăn khi đi trên bề mặt gồ ghề, cầu thang, vỉa hè', example: 'Cần người dắt tay mỗi khi lên xuống cầu thang' },
-          { main: 'Con vận động tinh kém - khó khăn với việc cầm bút, dùng kéo, xâu hạt, xếp hình..', example: 'Bút rớt nhiều, không tô màu đúng viền được' },
-          { main: 'Con đi nhón gót (toe walking) thường xuyên', example: 'Đi bằng đầu ngón chân thay vì cả bàn chân' },
-          { main: 'Cơ bắp con yếu, trương lực cơ thấp - con hay ngồi dựa, khòm lưng', example: 'Khó giữ lưng thẳng khi ngồi học hoặc ngồi ăn' },
-          { main: 'Con hay ngồi kiểu chữ W (hai gót ra ngoài, hai đầu gối vào trong)', example: 'Tư thế ngồi chơi quen thuộc của con trên sàn' },
-          { main: 'Dáng đi của con trông khác biệt so với bạn bè cùng tuổi', example: 'Đi bước ngắn, cơ thể lắc lư sang hai bên, cứng nhắc như robot, đi lóng ngóng, hay vấp ngã' },
-        ]
-      },
-      {
-        id: 'miengHong',
-        name: 'Vận động miệng - họng',
-        icon: '👄',
-        desc: 'Khả năng nhai, nuốt, nói và phát âm',
-        items: [
-          { main: 'Con gặp khó khăn với việc nhai nuốt, sợ nuốt', example: 'Ngậm thức ăn lâu trong miệng, hay tít nước nhả bã hoặc không chịu nuốt..' },
-          { main: 'Con né tránh thức ăn cần nhai nhiều - thích thức ăn mềm, xay nhuyễn', example: 'Không thích/từ chối thức ăn nguyên miếng, dai, thích ăn cháo, súp, cơm xay..' },
-          { main: 'Con hay nuốt chửng, dễ bị ọe, nghẹn khi ăn', example: 'Trẻ thường nhai qua loa hoặc bỏ qua bước nhai, nuốt chửng thức ăn, đưa thức ăn lợn cợn vào miệng là nôn trớ, dễ nôn trớ' },
-          { main: 'Trẻ gặp khó khăn khi thực hiện các cử động môi/lưỡi', example: 'Khi được yêu cầu bắt chước động tác thè lưỡi liếm quanh miệng, chu môi, phồng má, thổi..trẻ tỏ ra lóng ngóng, không làm được' },
-          { main: 'Hội chứng mất điều khiển lời nói chủ ý (CAS)', example: 'Trẻ biết mình muốn nói gì nhưng lại không thể điều khiển môi, miệng, lưỡi tạo ra lời nói rõ ràng' },
-          { main: 'Nói ngọng, phát âm thiếu hơi, không rõ nghĩa', example: 'Trẻ nói rất nhỏ, không ngữ điệu, không rõ ràng' },
-          { main: 'Tìm kiếm cảm giác miệng', example: 'Trẻ hay cắn, nhai mọi thứ, hay nghiến răng..' },
-        ]
-      },
+        const GROUPS = [
       {
         id: 'tieuHoa',
-        name: 'Tiêu hóa & dạ dày',
+        name: 'Rối loạn tiêu hóa',
         icon: '🫁',
-        desc: 'Tình trạng đường ruột và tiêu hóa hàng ngày',
+        desc: 'Tình trạng đường ruột và các vấn đề về tiêu hóa hàng ngày',
         items: [
-          { main: 'Con táo bón mãn tính & hành vi nín nhịn', example: 'Trẻ đi vệ sinh ít hơn 3 lần/tuần; phân lỗn nhỗn từng cục như phân dê, hoặc to, cứng, hoặc bị chảy máu, nứt kẽ hậu môn..' },
-          { main: 'Đi ngoài sau ăn, phân sống hoặc nhầy', example: 'Trẻ đi vệ sinh sau khi ăn 15-30 phút, phân vẫn lợn cợn thức ăn chưa tiêu hóa hết' },
-          { main: 'Phân có mùi rất khai hoặc khó chịu bất thường', example: 'Thối, khắm, tanh, chua...' },
-          { main: 'Con bị trao ngược axit - hay ợ chua', example: 'Trẻ thường ợ chua, đặt tay lên ngực, tì/ép chặt bụng vào vật cứng, đang ngủ nửa đêm tỉnh dậy gào khóc không dỗ được, cáu kỉnh sau khi ăn, hãy uống éo hoặc ưỡn con người ra sau' },
-          { main: 'Con ăn những thứ không phải thực phẩm', example: 'đất cát, nhai giấy, đồ chơi.. đồ không phải thức ăn' },
+          { main: 'Trẻ thường xuyên xì hơi nặng mùi hoặc hơi thở hôi dù đã vệ sinh răng miệng?', example: 'Trẻ thường xuyên xì hơi nặng mùi hoặc có hơi thở hôi (dù đã vệ sinh răng miệng sạch sẽ)?' },
+          { main: 'Trẻ hay đầy bụng, chướng bụng, sôi bụng hoặc ợ chua sau ăn?', example: 'Trẻ hay bị đầy bụng, chướng bụng, sôi bụng hoặc ợ chua thường xuyên sau khi ăn?' },
+          { main: 'Trẻ đi ngoài không đều, phân lỏng, sống, có bọt hoặc mùi bất thường?', example: 'Trẻ đi ngoài (tiêu) không đều, tính chất phân bất thường (phân sống, lỏng, có bọt hoặc mùi chua/khai nồng)?' },
+          { main: 'Trẻ táo bón kéo dài, đau khi đi vệ sinh, són phân hoặc né tránh đi vệ sinh?', example: 'Trẻ bị táo bón kéo dài (nhiều ngày mới đi một lần) kèm theo biểu hiện đau đớn, són phân ra quần hoặc sợ hãi, lảng tránh việc đi vệ sinh?' },
+          { main: 'Trẻ có dấu hiệu đau bụng dữ dội như ôm bụng, cong người, khóc nhiều hoặc đập bụng vào vật cứng?', example: 'Trẻ có biểu hiện đau bụng cấp tính như ôm bụng, cong người quấy khóc dữ dội, hoặc đập bụng vào các vật cứng (cạnh bàn, ghế) để tự giảm đau?' }
+        ]
+      },
+      {
+        id: 'anUong',
+        name: 'Rối loạn ăn uống',
+        icon: '🍽️',
+        desc: 'Các hành vi kén ăn, nhạy cảm thực phẩm và khó khăn trong bữa ăn',
+        items: [
+          { main: 'Trẻ chỉ chấp nhận một số rất ít món ăn quen thuộc?', example: 'Trẻ có xu hướng kén ăn, chỉ chấp nhận một danh mục thực phẩm rất hạn hẹp (ví dụ: chỉ ăn đồ chiên, chỉ ăn cơm trắng)?' },
+          { main: 'Trẻ rất nhạy với mùi, màu, vị hoặc kết cấu thức ăn?', example: 'Trẻ cực kỳ nhạy cảm với kết cấu (mềm, nhão, giòn), màu sắc hoặc mùi vị của thức ăn, dễ dàng phát hiện ra sự thay đổi nhỏ trong món ăn?' },
+          { main: 'Trẻ hay ngậm lâu, không nhai nuốt, buồn nôn hoặc oẹ khi gặp món lạ?', example: 'Trẻ thường xuyên ngậm thức ăn rất lâu trong miệng không chịu nhai nuốt, hoặc có hành vi nôn trớ, oẹ khi ngửi/thấy thức ăn lạ?' },
+          { main: 'Chế độ ăn hạn hẹp khiến trẻ chậm tăng cân, sụt cân, mệt mỏi hoặc có dấu hiệu thiếu chất?', example: 'Chế độ ăn quá hạn hẹp (dưới 10 món) khiến trẻ có dấu hiệu thiếu chất (da xanh xao, móng tay có vệt trắng, hay mệt mỏi) hoặc sụt cân/chậm tăng cân?' },
+          { main: 'Trẻ ăn/nhai vật không phải thức ăn hoặc bùng nổ dữ dội khi bị ép ăn?', example: 'Trẻ có hành vi ăn, nhai các vật không phải thực phẩm (như giấy, đất, cát, đồ nhựa - hội chứng Pica) hoặc bùng nổ dữ dội nếu bị ép ăn món không thích?' }
+        ]
+      },
+      {
+        id: 'giacNgu',
+        name: 'Rối loạn giấc ngủ',
+        icon: '🌙',
+        desc: 'Tình trạng giấc ngủ và nhịp sinh học của trẻ',
+        items: [
+          { main: 'Trẻ thường mất hơn 60 phút mới ngủ được?', example: 'Trẻ thường xuyên mất hơn 60 phút trằn trọc mới có thể đi vào giấc ngủ?' },
+          { main: 'Trẻ phải có điều kiện đặc biệt mới ngủ, như ôm chặt, tiếng ồn trắng hoặc bật đèn?', example: 'Trẻ lệ thuộc hoàn toàn vào các hỗ trợ giác quan hoặc quy trình cứng nhắc để ngủ (phải ôm chặt, phải có tiếng ồn trắng, hoặc phải bật đèn)?' },
+          { main: 'Trẻ thức giấc nhiều lần trong đêm và khó ngủ lại?', example: 'Trẻ hay thức giấc giữa đêm (từ 2 lần trở lên) và mất rất nhiều thời gian để dỗ ngủ lại?' },
+          { main: 'Khi ngủ, trẻ nghiến răng, đổ mồ hôi nhiều hoặc cử động chân tay liên tục?', example: 'Khi ngủ, trẻ có các biểu hiện thực thể như nghiến răng ken két, đổ mồ hôi trộm đầm đìa hoặc chân tay cử động không ngừng?' },
+          { main: 'Trẻ thường la hét hoảng loạn ban đêm hoặc thức trắng nhiều giờ giữa đêm?', example: 'Trẻ thường xuyên gặp cơn hoảng sợ ban đêm (la hét hoảng loạn khi đang ngủ) hoặc thức trắng nhiều giờ liền giữa đêm trong trạng thái tỉnh táo?' }
         ]
       },
       {
         id: 'camGiac',
-        name: 'Xử lý cảm giác',
+        name: 'Xử lý giác quan',
         icon: '🎯',
-        desc: 'Cách con phản ứng với thế giới xung quanh qua các giác quan',
+        desc: 'Cách trẻ tiếp nhận và phản ứng với các kích thích từ môi trường',
         items: [
-          { main: 'Con quá nhạy cảm với âm thanh', example: 'Bịt tai, khóc, hoảng loạn khi nghe tiếng ồn LỚN.' },
-          { main: 'Con nhạy cảm quá mức với mùi', example: 'Trẻ thường đưa đồ vật lên ngửi trước khi tương tác, từ chối thức ăn/đồ chơi/môi trường có mùi lạ, hoặc có thể nôn, ọe với mùi mới.' },
-          { main: 'Con tìm kiếm áp lực sâu', example: '(ôm chặt, đắp chăn nặng,  quấn chăn, hay chui vào không gian hẹp (khe tủ, gầm bàn...) hoặc hay đóng cửa sầm sầm, ôm gì, hay đâm sầm, đánh mạnh người khác' },
-          { main: 'Trẻ gặp vấn đề về vận động', example: 'Thăng bằng ví dụ chạy nhảy liên tục, xoay tròn liên tục mà không chóng mặt hoặc sợ/thích độ cao, thang cuốn, xích đu, cầu trượt, sợ bị nhấc bổng lên cao' },
-          { main: 'Trẻ gặp vấn đề về thị giác', example: 'Trẻ thích nhìn các chuyển động, ánh sáng sặc sỡ (ví dụ: thích nhìn quạt trần quay, nhìn bằng góc mắt, nhìn ánh sáng nhấp nháy, dễ bị mất tập trung ở nơi nhiều ánh sáng..)' },
+          { main: 'Trẻ sợ tiếng ồn, ánh sáng hoặc khó chịu với một số chất liệu quần áo?', example: 'Trẻ có biểu hiện quá nhạy cảm với các kích thích môi trường như: sợ tiếng ồn bình thường, khó chịu với ánh sáng đèn, hay từ chối mặc quần áo có chất liệu nhất định?' },
+          { main: 'Trẻ thích va chạm mạnh, nhìn vật xoay, ngửi đồ vật hoặc tìm cảm giác mạnh?', example: 'Trẻ có xu hướng tìm kiếm cảm giác mạnh như: thích va chạm mạnh vào người khác, nhìn chằm chằm vào vật xoay tròn, hoặc thích ngửi đồ vật/người lạ?' },
+          { main: 'Trẻ vụng về, hay vấp ngã, nhảy liên tục hoặc khó điều chỉnh lực tay?', example: 'Trẻ gặp khó khăn về thăng bằng và nhận thức cơ thể: thường xuyên vấp ngã, vụng về, nhảy lên xuống liên tục hoặc không biết điều chỉnh lực tay (quá mạnh hoặc quá nhẹ)?' },
+          { main: 'Trẻ khó nhận biết đói, đau, buồn vệ sinh hoặc tín hiệu bên trong cơ thể?', example: 'Trẻ dường như không nhận biết được các tín hiệu nội tại của cơ thể: không cảm thấy đói, đau khi bị thương, hoặc gặp khó khăn lớn trong việc tập đi vệ sinh đúng lúc?' },
+          { main: 'Trẻ dễ bùng nổ hoặc đóng băng khi ở nơi quá đông, ồn hoặc nhiều kích thích?', example: 'Trẻ thường xuyên có các cơn bùng nổ (la hét, mất kiểm soát) hoặc đóng băng (im lặng, ngắt kết nối hoàn toàn) khi phải ở nơi có quá nhiều kích thích?' }
         ]
       },
       {
-        id: 'ngonNgu',
-        name: 'Ngôn ngữ & giao tiếp',
-        icon: '💬',
-        desc: 'Khả năng nói, hiểu và diễn đạt của con',
+        id: 'tangDong',
+        name: 'Tăng động - Giảm chú ý',
+        icon: '⚡',
+        desc: 'Mức độ hoạt động, khả năng tập trung và tự kiểm soát của trẻ',
         items: [
-          { main: 'Con chưa có ngôn ngữ lời nói hoặc rất ít từ', example: 'Trên 2 tuổi nhưng không nói được từ nào rõ ràng' },
-          { main: 'Con nói chậm so với bạn cùng tuổi', example: 'Ít từ hơn hoặc chưa ghép được câu theo cột mốc phát triển' },
-          { main: 'Con không thể diễn đạt nhu cầu bằng lời - phải kéo tay, chỉ hoặc khóc', example: 'Muốn nước nhưng không nói được, chỉ kéo tay cha mẹ ra tủ lạnh' },
-          { main: 'Con không hiểu những chỉ dẫn đơn giản', example: 'Nói "cầm áo lên" hoặc "đi lấy giày" nhưng con không phản ứng' },
-          { main: 'Con khó để người khác hiểu khi nói - phát âm không rõ', example: 'Người ngoài gia đình không hiểu được con đang nói gì' },
-          { main: 'Con nhắc lại từ hoặc câu vừa nghe thay vì trả lời (echolalia)', example: 'Hỏi "con có muốn ăn không?" - con nhắc lại "con có muốn ăn không?"' },
-          { main: 'Con gặp khó khăn về khả năng hiểu', example: 'Điếc chọn lọc (ba mẹ gọi nhiều lần không quay lại nhưng lại phản xạ ngay với thông tin yêu thích), không hiểu chuỗi mệnh lệnh nhiều bước, không biết đùa.' },
-          { main: 'Trẻ bị thoái lui về ngôn ngữ', example: 'Con giảm dần khả năng ngôn ngữ khi lớn lên.' },
-          { main: 'Trẻ né tránh giao tiếp mắt', example: 'Không nhìn vào người đối diện khi nói chuyện hoặc chỉ nhìn chằm chằm vào miệng người nói.' },
+          { main: 'Trẻ thường không phản hồi khi được gọi hoặc khó theo hướng dẫn?', example: 'Trẻ dường như không nghe thấy khi được gọi tên hoặc không để ý đến hướng dẫn của người lớn vì đang bị thu hút quá mức bởi một chi tiết nhỏ?' },
+          { main: 'Trẻ rất khó chuyển hoạt động, dễ khựng lại hoặc bùng nổ khi bị yêu cầu dừng việc đang thích?', example: 'Trẻ có thể cực kỳ tập trung vào thứ mình thích nhưng lại "khựng lại" hoặc bùng nổ khi được yêu cầu chuyển sang một hoạt động khác (như đi tắm, đi ăn)?' },
+          { main: 'Trẻ luôn bồn chồn, di chuyển, nhún nhảy hoặc táy máy tay chân?', example: 'Trẻ có biểu hiện bồn chồn, luôn phải di chuyển, nhún nhảy hoặc táy máy tay chân ngay cả khi cơ thể đã mệt mỏi hoặc trong môi trường cần sự yên tĩnh?' },
+          { main: 'Trẻ hay lao đi, leo trèo, nhảy từ cao hoặc làm việc nguy hiểm mà chưa kịp cân nhắc?', example: 'Trẻ thường lao đi hoặc thực hiện các hành động nguy hiểm (nhảy từ trên cao, lao ra đường) mà dường như không có sự cân nhắc hay nhận thức được hậu quả ngay lúc đó?' },
+          { main: 'Sau khi cố ngồi yên hoặc tập trung, trẻ cáu kỉnh, kiệt sức hoặc ngắt kết nối rõ rệt?', example: 'Sau một khoảng thời gian ngắn cố gắng tập trung hoặc ngồi yên, trẻ có biểu hiện cáu kỉnh dữ dội, mệt mỏi hoặc "ngắt kết nối" hoàn toàn?' }
         ]
       },
       {
-        id: 'nhanThuc',
-        name: 'Nhận thức & học tập',
-        icon: '🧠',
-        desc: 'Khả năng tập trung, ghi nhớ và tiếp thu của con',
-        items: [
-          { main: 'Con thiếu tập trung, không chú ý - ánh mắt hay lơ đãng', example: 'Gọi tên nhiều lần mới quay lại, dễ quên chỉ dẫn vừa nói' },
-          { main: 'Con luôn trong trạng thái chuyển động - không ngồi yên được', example: 'Chạy, nhảy, leo trèo liên tục ngay cả khi cần ngồi yên' },
-          { main: 'Con khó tập trung làm một việc trong thời gian dài', example: 'Bỏ dở hoạt động sau 1-2 phút để chuyển sang việc khác' },
-          { main: 'Con xử lý thông tin chậm - cần nhiều thời gian để phản ứng', example: 'Hỏi xong phải đợi 10-15 giây con mới trả lời hoặc phản ứng' },
-          { main: 'Con gặp khó khăn khi giải quyết vấn đề đơn giản', example: 'Không biết mở hộp, không biết xếp hình đơn giản theo tuổi' },
-          { main: 'Con chậm phát triển toàn diện so với cột mốc chuẩn', example: 'Nhiều kỹ năng chậm hơn bạn cùng tuổi 6 tháng trở lên' },
-          { main: 'Con đã từng có biểu hiện động kinh hoặc co giật', example: 'Dù chỉ một lần, kể cả dạng vắng ý thức nhẹ' },
-          { main: 'Tập trung thái quá', example: 'Con không thể ngồi yên 5 phút để làm nhiệm vụ theo yêu cầu của cô giáo, nhưng lại có thể ngồi rất lâu để làm việc mình thích.' },
-          { main: 'Trẻ gặp vấn đề về trí nhớ', example: 'Có thể nhớ máy móc (bài hát, tên các phương tiện...) tốt nhưng lại dễ quên các kiến thức, kỹ năng dạy hàng ngày.' },
-          { main: 'Trẻ gặp vấn đề về khái quát thông tin', example: 'Trẻ có thể nhớ những thứ quen thuộc ở nhà, lớp nhưng khi đến môi trường mới lại không nhận ra hoặc biết cách thực hiện.' },
-        ]
-      },
-      {
-        id: 'hanhViXaHoi',
-        name: 'Hành vi & xã hội',
+        id: 'camXuc',
+        name: 'Cảm xúc - Hành vi',
         icon: '🤝',
-        desc: 'Cách con kết nối với người khác và điều tiết cảm xúc',
+        desc: 'Khả năng điều tiết cảm xúc, lo âu và các phản ứng khi khủng hoảng',
         items: [
-          { main: 'Con không phản ứng khi được gọi tên - như không nghe thấy', example: 'Gọi tên 3-4 lần ở khoảng cách gần con mới quay lại' },
-          { main: 'Con thu mình vào thế giới riêng, ít tương tác với xung quanh', example: 'Chơi một mình trong góc riêng, không quan tâm đến người xung quanh' },
-          { main: 'Con tránh giao tiếp mắt hoặc nhìn lướt qua rất nhanh', example: 'Khi nói chuyện, ánh mắt con nhìn ra chỗ khác thay vì nhìn vào mắt người đối diện' },
-          { main: 'Con ít hoặc không có nhu cầu chơi cùng bạn bè', example: 'Thích chơi một mình hơn, không tìm đến bạn để chơi' },
-          { main: 'Con có hành vi ám ảnh lặp đi lặp lại (xoay đồ vật, lắc người, vỗ tay)', example: 'Quay bánh xe, xếp đồ vật thành hàng, lắc người liên tục' },
-          { main: 'Con gắn bó bất thường với một đồ vật cụ thể', example: 'Không thể rời bỏ một món đồ nhất định, khóc dữ dội khi mất món đó' },
-          { main: 'Con cực kỳ kháng cự với thay đổi - khó chuyển từ hoạt động này sang hoạt động khác', example: 'Khủng hoảng dữ dội khi thay đổi lịch sinh hoạt, đường đi, bàn ăn' },
-          { main: 'Con có cơn bùng phát cảm xúc dữ dội không tương xứng với nguyên nhân', example: 'Khóc ăn vạ kéo dài 30-60 phút vì những lý do nhỏ' },
-          { main: 'Con quan tâm cực đoan đến một chủ đề cụ thể', example: 'Chỉ nói về xe lửa / khủng long / con số và không quan tâm chủ đề khác' },
-        ]
-      },
-      {
-        id: 'diUngThucPham',
-        name: 'Dị ứng & nhạy cảm thực phẩm',
-        icon: '🥗',
-        desc: 'Phản ứng của con với thức ăn và môi trường',
-        items: [
-          { main: 'Tai hoặc má con đỏ, nóng sau khi ăn một số loại thức ăn', example: 'Đặc biệt sau khi ăn sữa, gluten, thực phẩm có màu nhân tạo' },
-          { main: 'Bụng con hay phình to, căng tròn sau khi ăn', example: 'Bụng to hơn sau bữa ăn dù ăn không nhiều' },
-          { main: 'Con bị chàm (eczema), nổi mề đay hoặc viêm da tái phát', example: 'Mẩn đỏ, ngứa ở tay, mặt, bụng tái đi tái lại' },
-          { main: 'Con thèm muốn mạnh một loại thức ăn cụ thể và đòi ăn mỗi ngày', example: 'Chỉ đòi ăn sữa / bánh mì / mì tôm và từ chối mọi thứ khác' },
-          { main: 'Hành vi con thay đổi rõ ràng sau khi ăn một số thực phẩm', example: 'Tăng động, hung hăng hoặc thu mình hơn sau khi ăn đường, bánh kẹo' },
-          { main: 'Con bị hăm tã đau đớn tái phát dù đã qua tuổi mặc tã', example: 'Da vùng kín đỏ tấy thường xuyên không rõ nguyên nhân' },
-          { main: 'Con đái dầm ban đêm hoặc khó kiểm soát bàng quang dù đã lớn', example: 'Trên 5 tuổi vẫn đái dầm ban đêm thường xuyên' },
+          { main: 'Trẻ có thay đổi cảm xúc thất thường mà không rõ nguyên nhân?', example: 'Trẻ có những cơn vui buồn thất thường mà không có lý do ngoại cảnh rõ ràng (ví dụ: đang chơi bình thường bỗng khóc thét hoặc cười ngặt nghẽo)?' },
+          { main: 'Trẻ rất căng thẳng hoặc bùng nổ khi lịch trình thay đổi?', example: 'Trẻ cực kỳ căng thẳng, lo âu hoặc bùng nổ nếu lịch trình sinh hoạt bị thay đổi nhỏ, hoặc gặp khó khăn lớn khi phải dừng việc đang làm để chuyển sang việc khác?' },
+          { main: 'Hành vi lặp lại tăng mạnh khi trẻ lo lắng hoặc áp lực?', example: 'Trẻ thực hiện các hành vi lặp đi lặp lại (như vẫy tay, xoay đồ vật, lặp lại lời nói) với cường độ cao hơn hẳn mỗi khi gặp áp lực hoặc lo lắng?' },
+          { main: 'Trẻ thường la hét, khóc kéo dài và rất khó dỗ?', example: 'Trẻ thường xuyên có những cơn la hét, khóc lóc dữ dội kéo dài (trên 15-30 phút) mà mọi nỗ lực dỗ dành hay đe dọa của người lớn đều không có tác dụng?' },
+          { main: 'Khi khủng hoảng, trẻ tự làm đau hoặc tấn công người khác?', example: 'Khi gặp khủng hoảng, trẻ có hành vi tự làm đau (đập đầu, cắn tay mình) hoặc tấn công người khác (cắn, cào cấu, ném đồ vật)?' }
         ]
       },
       {
         id: 'mienDich',
-        name: 'Hệ miễn dịch',
+        name: 'Miễn dịch - Dị ứng',
         icon: '🛡️',
-        desc: 'Khả năng chống đỡ bệnh tật và các dấu hiệu miễn dịch bất thường',
+        desc: 'Tình trạng đề kháng, phản ứng viêm và các nhạy cảm thể chất',
         items: [
-          { main: 'Con hay bị chảy nước mũi mãn tính dù không bị cảm', example: 'Mũi chảy hoặc nghẹt quanh năm, không liên quan đến bệnh cụ thể' },
-          { main: 'Con ốm liên tục - bị bệnh nhiều hơn 6-8 lần/năm', example: 'Hầu như tháng nào cũng phải nghỉ học vì bệnh' },
-          { main: 'Con bị viêm tai giữa tái phát nhiều lần', example: 'Viêm tai 3 lần trở lên trong một năm' },
-          { main: 'Con bị nhiễm liên cầu khuẩn (viêm họng liên cầu) tái phát', example: 'Viêm họng có mủ điều trị khỏi rồi lại tái phát' },
-          { main: 'Con bị viêm xoang tái phát nhiều lần trong năm', example: 'Điều trị khỏi rồi lại tái phát trong vài tuần' },
-          { main: 'Con bị hen suyễn hoặc khó thở tái phát', example: 'Đã được chẩn đoán hen hoặc thở khò khè tái đi tái lại' },
-          { main: 'Gia đình có tiền sử bệnh tự miễn (lupus, viêm khớp, bệnh tuyến giáp...)', example: 'Cha, mẹ, anh chị em, ông bà mắc bệnh tự miễn' },
-          { main: 'Con đã dùng nhiều đợt kháng sinh liên tiếp', example: 'Dùng kháng sinh hơn 3-4 đợt trong một năm' },
-          { main: 'Con hay bị nhiễm nấm (nấm da, nấm miệng, hăm kẽ tái phát)', example: 'Thường xuyên phải dùng thuốc chống nấm' },
+          { main: 'Trẻ hay hắt hơi, sổ mũi, dụi mắt/mũi, mẩn đỏ hoặc ngứa da?', example: 'Trẻ thường xuyên có các biểu hiện dị ứng như: hay hắt hơi, sổ mũi khi thời tiết thay đổi, dụi mắt/mũi liên tục, hoặc da dễ bị mẩn đỏ, ngứa ngáy, viêm da cơ địa?' },
+          { main: 'Trẻ có biểu hiện lạ sau khi ăn một số thực phẩm hoặc tiếp xúc mùi hóa chất?', example: 'Trẻ có biểu hiện lạ sau khi ăn thực phẩm nhất định (sữa, bột mì, đồ ngọt) hoặc ngửi mùi hóa chất như: đỏ tai, đỏ má, quầng thâm mắt đậm lên hoặc đột ngột kích động?' },
+          { main: 'Trẻ hay bị viêm tai, viêm họng, viêm amidan hoặc sưng nướu lặp lại?', example: 'Trẻ thường xuyên bị các đợt viêm nhiễm lặp đi lặp lại như: viêm tai giữa, viêm họng, viêm amidan hoặc sưng nướu răng mãn tính?' },
+          { main: 'Trẻ dễ ốm, lâu khỏi và sau ốm thường mệt mỏi kéo dài?', example: 'Trẻ rất dễ bị lây bệnh từ người khác (đề kháng kém), mỗi đợt ốm thường kéo dài lâu khỏi hơn bình thường và sau khi khỏi, trẻ vẫn bị sụt giảm năng lượng, mệt mỏi kéo dài?' },
+          { main: 'Sau các đợt ốm hoặc dị ứng nặng, trẻ lờ đờ, mất tập trung rõ hoặc giảm kỹ năng đã có?', example: 'Trẻ dường như rơi vào trạng thái "sương mù não" (lờ đờ, mất tập trung hoàn toàn) hoặc đột ngột mất đi các kỹ năng đã thạo (như ngôn ngữ, vệ sinh) mỗi khi hệ miễn dịch bị kích hoạt mạnh do ốm hoặc dị ứng nặng?' }
         ]
       },
       {
-        id: 'dinhDuong',
-        name: 'Dinh dưỡng & vi chất',
-        icon: '🥦',
-        desc: 'Các dấu hiệu thiếu hụt vi chất quan trọng',
+        id: 'vanDong',
+        name: 'Chức năng vận động',
+        icon: '🏃',
+        desc: 'Phối hợp vận động thô/tinh và các hoạt động tự phục vụ của trẻ',
         items: [
-          { main: 'Móng tay con có đốm trắng hoặc gợn ngang bất thường', example: 'Đốm trắng xuất hiện nhiều trên một hoặc nhiều móng tay' },
-          { main: 'Lòng bàn chân con bị bong tróc da thường xuyên', example: 'Da bàn chân bong vảy không liên quan đến nấm' },
-          { main: 'Tóc con mỏng, thưa hoặc rụng nhiều bất thường', example: 'Gội đầu thấy rụng nhiều hoặc tóc không mọc dày bình thường' },
-          { main: 'Con sụt cân hoặc không tăng cân dù ăn uống đầy đủ', example: 'Cân nặng không tăng trong 2-3 tháng dù chế độ ăn bình thường' },
-          { main: 'Con có xu hướng ăn đồ vật không phải thức ăn (pica)', example: 'Hay cắn, nhai hoặc nuốt giấy, đất, bút, vải...' },
-        ]
-      },
-      {
-        id: 'chuyenHoa',
-        name: 'Năng lượng & chuyển hóa',
-        icon: '⚡',
-        desc: 'Các dấu hiệu liên quan đến năng lượng tế bào và chức năng ti thể',
-        items: [
-          { main: 'Con mệt mỏi, li bì quá mức - không tương xứng với hoạt động trong ngày', example: 'Ngủ xong vẫn mệt, không có năng lượng chơi như bạn bè' },
-          { main: 'Con ngủ rất nhiều hoặc rất khó thức dậy buổi sáng', example: 'Phải lay gọi rất lâu, cáu kỉnh và mất định hướng sau khi thức dậy' },
-          { main: 'Con mất đi kỹ năng đã biết - ngôn ngữ, vận động, xã hội', example: 'Từng nói được 10 từ nay không nói nữa; từng biết đi nay đi lại khó' },
-          { main: 'Tâm trạng và hành vi con thay đổi rõ ràng theo thời điểm trong ngày', example: 'Buổi sáng tốt, buổi chiều hoặc tối lại kém hơn nhiều và không giải thích được' },
-          { main: 'Con được chẩn đoán hoặc nghi ngờ có vấn đề tuyến giáp, rối loạn tâm trạng', example: 'Chẩn đoán lưỡng cực, rối loạn cảm xúc từ nhỏ' },
-          { main: 'Trong gia đình có 2 con trở lên có dấu hiệu tự kỷ hoặc chậm phát triển', example: 'Anh chị em ruột cũng có chẩn đoán tương tự' },
-          { main: 'Con có vòng đầu nhỏ hơn chuẩn hoặc giảm tương đối theo thời gian', example: 'Bác sĩ đã nhận xét về kích thước đầu khi khám' },
-          { main: 'Con phát triển chậm về chiều cao và cân nặng - dưới đường chuẩn kéo dài', example: 'Biểu đồ tăng trưởng dưới -2 SD trong nhiều lần đo' },
-          { main: 'Con từng có phản ứng bất thường với gây mê hoặc gây tê', example: 'Tỉnh dậy sau phẫu thuật khó khăn hơn bình thường hoặc có biểu hiện lạ' },
-          { main: 'Kết quả xét nghiệm máu của con có chỉ số bất thường không rõ nguyên nhân', example: 'Bác sĩ có đề cập đến chỉ số bất thường nhưng chưa giải thích được' },
+          { main: 'Trẻ khó cài cúc, kéo khóa, cầm thìa, dùng kéo hoặc bút chì?', example: 'Trẻ gặp khó khăn với các nhiệm vụ cần sự khéo léo của bàn tay như: cài cúc áo, kéo khóa, cầm thìa đúng cách, hoặc sử dụng kéo và bút chì?' },
+          { main: 'Trẻ hay vấp ngã, va vào đồ vật hoặc đi đứng thiếu vững vàng?', example: 'Trẻ thường xuyên vấp ngã, va vào đồ vật/người khác khi đi lại, hoặc có tư thế đi đứng trông không vững vàng, thiếu sự nhịp nhàng?' },
+          { main: 'Trẻ nhanh mệt, cơ thể mềm yếu, hay tựa người, nằm bò ra bàn hoặc ngồi chữ W?', example: 'Cơ thể trẻ có vẻ "mềm yếu", trẻ nhanh mệt khi phải đi bộ, thường có xu hướng tựa vào người khác, nằm bò ra bàn hoặc ngồi tư thế chữ W để giữ thăng bằng?' },
+          { main: 'Trẻ khó học chuỗi vận động mới như nhảy theo nhạc, đạp xe, leo cầu thang?', example: 'Trẻ gặp khó khăn lớn khi học các chuỗi vận động mới (như tập nhảy theo điệu nhạc, đạp xe, hoặc leo trèo cầu thang luân phiên chân)?' },
+          { main: 'Trẻ rất khó thực hiện chuỗi tự phục vụ như ăn uống, mặc quần áo, vệ sinh cá nhân?', example: 'Trẻ gặp khó khăn cực lớn trong việc thực hiện các chuỗi hành động tự phục vụ cơ bản (như cầm bát ăn, tự mặc quần áo, vệ sinh cá nhân) hoặc có các kiểu vận động rất cứng nhắc, vụng về.' }
         ]
       }
     ];
 
-    // ── STATE ──
-    let currentGroup = 0;
-    let answers = {};
-    let completedGroups = new Set();
-    let userCode = Math.floor(10000000 + Math.random() * 90000000).toString(); // 8 digits
-    let startTime = Date.now();
+    // ==========================================
+    // ── CORE APPLICATION CONTROLLER (ChecklistApp) ──
+    // ==========================================
+    const ChecklistApp = {
+      state: {
+        userCode: '',
+        startTime: null,
+        answers: {},
+        completedGroups: new Set(),
+        currentGroup: 0,
+        currentGroupStartTime: Date.now(),
+        currentGroupFirstClickRecorded: false,
+        deepTracker: {
+          activeTime: 0,
+          toggles: {},
+          thinkTimes: {},
+          deletedChars: 0,
+          highlighted: new Set(),
+          location: 'Đang lấy...',
+          ip: '',
+          utms: {},
+          drop_point: 'Chưa bắt đầu',
+          lastFocus: Date.now()
+        }
+      },
 
-    // ── DEEP ANALYTICS TRACKER ──
-    const deepTracker = {
-      activeTime: 0,
-      toggles: {},
-      thinkTimes: {},
-      deletedChars: 0,
-      highlighted: new Set(),
-      location: 'Đang lấy...',
-      ip: '',
-      utms: {},
-      drop_point: 'Chưa bắt đầu',
-      lastFocus: Date.now()
-    };
-    
-    let currentGroupStartTime = Date.now();
-    let currentGroupFirstClickRecorded = false;
+      init() {
+        this.state.startTime = Date.now();
+        this.initUTM();
+        this.initDeepTracking();
+        
+        // Khởi trị các module con
+        ModuleChildInfo.init(this);
+        ModuleSurvey.init(this);
+        ModuleParentInfo.init(this);
+        ModuleSuccess.init(this);
+      },
 
-    // UTMs
-    const params = new URLSearchParams(window.location.search);
-    for (const [key, value] of params.entries()) {
-      if (key.startsWith('utm_')) deepTracker.utms[key] = value;
-    }
-
-    // Tính tuổi tự động
-    function calculateAge() {
-      const d = document.getElementById('child-dob-day').value;
-      const m = document.getElementById('child-dob-month').value;
-      const y = document.getElementById('child-dob-year').value;
-      const displayDiv = document.getElementById('calculated-age');
-      const hiddenInput = document.getElementById('child-age');
-      
-      if (!d || !m || !y) {
-        displayDiv.innerText = '';
-        hiddenInput.value = '';
-        return;
-      }
-
-      const dob = new Date(y, m - 1, d);
-      const today = new Date();
-      
-      // Kiểm tra ngày hợp lệ (ví dụ tháng 2 không có ngày 30)
-      if (dob.getFullYear() != y || dob.getMonth() != m - 1 || dob.getDate() != d) {
-        displayDiv.innerText = 'Ngày sinh không tồn tại';
-        displayDiv.style.color = '#e11d48';
-        hiddenInput.value = '';
-        return;
-      }
-      
-      let months = (today.getFullYear() - dob.getFullYear()) * 12;
-      months -= dob.getMonth();
-      months += today.getMonth();
-      
-      if (today.getDate() < dob.getDate()) {
-        months--;
-      }
-      
-      if (months < 0) {
-        displayDiv.innerText = 'Ngày sinh chưa hợp lệ';
-        displayDiv.style.color = '#e11d48';
-        hiddenInput.value = '';
-        return;
-      }
-      
-      let ageStr = '';
-      if (months < 24) {
-        ageStr = months + ' tháng tuổi';
-      } else {
-        const years = Math.floor(months / 12);
-        const extraMonths = months % 12;
-        ageStr = years + ' tuổi ' + (extraMonths > 0 ? extraMonths + ' tháng' : '');
-      }
-      
-      displayDiv.innerText = 'Tuổi của con: ' + ageStr;
-      displayDiv.style.color = 'var(--navy)';
-      hiddenInput.value = ageStr;
-    }
-
-
-
-    // Lấy IP & Vị trí
-    fetch('https://api.db-ip.com/v2/free/self')
-      .then(res => res.json())
-      .then(data => {
-          deepTracker.location = data.city + ', ' + data.countryName;
-          deepTracker.ip = data.ipAddress;
-      }).catch(e => {
-          deepTracker.location = 'Không xác định';
-      });
-
-    // Active Time
-    window.addEventListener('blur', () => { deepTracker.activeTime += (Date.now() - deepTracker.lastFocus); });
-    window.addEventListener('focus', () => { deepTracker.lastFocus = Date.now(); });
-    window.addEventListener('visibilitychange', () => {
-      if (document.hidden) deepTracker.activeTime += (Date.now() - deepTracker.lastFocus);
-      else deepTracker.lastFocus = Date.now();
-    });
-
-    // Text selection
-    document.addEventListener('mouseup', () => {
-      const selection = window.getSelection().toString().trim();
-      if (selection.length > 3 && selection.length < 50) deepTracker.highlighted.add(selection);
-    });
-
-    // Input deletions
-    document.addEventListener('keydown', (e) => {
-      if ((e.key === 'Backspace' || e.key === 'Delete') && e.target.tagName === 'TEXTAREA') {
-        deepTracker.deletedChars++;
-      }
-    });
-
-    function pingServerDropOff() {
-      const phone = document.getElementById('parent-phone').value.trim();
-      if (!phone) return;
-      deepTracker.activeTime += (Date.now() - deepTracker.lastFocus);
-      deepTracker.lastFocus = Date.now();
-
-      const timeSpent = Math.floor((Date.now() - startTime) / 1000);
-      const da = { ...deepTracker, highlighted: Array.from(deepTracker.highlighted), activeTime: Math.floor(deepTracker.activeTime / 1000) };
-
-      const formData = new FormData();
-      formData.append('action', 'hieucon_dh_submit_checklist');
-      formData.append('user_code', userCode);
-      formData.append('parent_name', document.getElementById('parent-name').value.trim());
-      formData.append('parent_phone', phone);
-      formData.append('child_age', document.getElementById('child-age').value);
-      
-      const genderElDrop = document.querySelector('input[name="child-gender"]:checked');
-      formData.append('child_gender', genderElDrop ? genderElDrop.value : '');
-      
-      formData.append('child_diagnosis', document.getElementById('child-diagnosis').value);
-      formData.append('child_height', document.getElementById('child-height').value.trim());
-      formData.append('child_weight', document.getElementById('child-weight').value.trim());
-      formData.append('time_spent', timeSpent);
-      formData.append('device_info', navigator.userAgent);
-      formData.append('deep_analytics', JSON.stringify(da));
-
-      fetch('<?php echo admin_url('admin-ajax.php'); ?>', { method: 'POST', body: formData }).catch(()=>{});
-    }
-
-    // ── INIT ──
-    function startChecklist() {
-      const name = document.getElementById('parent-name').value.trim();
-      const phone = document.getElementById('parent-phone').value.trim();
-      const age = document.getElementById('child-age').value;
-      const diagnosis = document.getElementById('child-diagnosis').value;
-      const height = document.getElementById('child-height').value.trim();
-      const weight = document.getElementById('child-weight').value.trim();
-      const genderEl = document.querySelector('input[name="child-gender"]:checked');
-      const gender = genderEl ? genderEl.value : '';
-      if (!name || !phone || !age || !diagnosis || !height || !weight || !gender) {
-        alert('Cha mẹ vui lòng điền đầy đủ các thông tin có dấu * trước khi tiếp tục.');
-        return;
-      }
-      document.getElementById('info-section').style.display = 'none';
-      document.getElementById('hero-section').style.display = 'none';
-      document.getElementById('intro-section').style.display = 'none';
-      document.getElementById('progress-wrap').style.display = 'block';
-      buildChecklist();
-      buildProgressSteps();
-      showGroup(0);
-
-      // Theo dõi sự kiện bắt đầu
-      if (typeof fbq !== 'undefined') {
-        fbq('track', 'ViewContent', { content_name: 'Start DH Checklist', content_category: 'Checklist' });
-      }
-
-      deepTracker.drop_point = `Nhóm 1 / ${GROUPS.length}: ${GROUPS[0].name}`;
-      pingServerDropOff();
-    }
-
-    function buildProgressSteps() {
-      const wrap = document.getElementById('progress-steps');
-      wrap.innerHTML = GROUPS.map((g, i) =>
-        `<span class="progress-step" id="pstep-${i}" onclick="jumpToGroup(${i})">${g.icon} ${g.name}</span>`
-      ).join('');
-    }
-
-    function buildChecklist() {
-      const container = document.getElementById('checklist-container');
-      container.innerHTML = '';
-      GROUPS.forEach((group, gi) => {
-        if (!answers[group.id]) answers[group.id] = Array(group.items.length).fill(false);
-        const sec = document.createElement('div');
-        sec.className = 'checklist-section';
-        sec.id = `group-${gi}`;
-        sec.innerHTML = `
-      <div class="section-header">
-        <div class="section-icon">${group.icon}</div>
-        <div>
-          <div class="section-title">Nhóm ${gi + 1} / ${GROUPS.length}: ${group.name}</div>
-          <div class="section-subtitle">${group.desc}</div>
-        </div>
-      </div>
-      <div class="group-score">
-        <span class="group-score-label">Đã chọn:</span>
-        <span class="group-score-value" id="gscore-${gi}">0 / ${group.items.length}</span>
-        <div class="group-score-bar"><div class="group-score-fill" id="gbar-${gi}"></div></div>
-      </div>
-      <div class="checklist-items">
-        ${group.items.map((item, ii) => `
-          <label class="check-item" id="ci-${gi}-${ii}">
-            <input type="checkbox" onchange="toggleItem(${gi},${ii},this)">
-            <div class="check-box"></div>
-            <div class="check-text">
-              <div class="check-main">${item.main}</div>
-              <div class="check-example">Ví dụ: ${item.example}</div>
-            </div>
-          </label>
-        `).join('')}
-      </div>
-      ${gi === GROUPS.length - 1 ? `
-        <div class="open-section">
-          <label>Triệu chứng khác cha mẹ muốn chia sẻ thêm (không bắt buộc)</label>
-          <textarea id="extra-symptoms" placeholder="Ghi thêm bất kỳ dấu hiệu nào cha mẹ quan sát được ở con..."></textarea>
-        </div>
-      ` : ''}
-      <div class="nav-buttons">
-        ${gi > 0 ? `<button class="btn btn-secondary" onclick="showGroup(${gi - 1})">← Quay lại</button>` : '<span></span>'}
-        ${gi < GROUPS.length - 1
-            ? `<button class="btn btn-primary" onclick="showGroup(${gi + 1})">Tiếp theo →</button>`
-            : `<button class="btn btn-submit" onclick="showResult()">✅ Xem kết quả</button>`}
-      </div>
-    `;
-        container.appendChild(sec);
-      });
-    }
-
-    function toggleItem(gi, ii, cb) {
-      const groupName = GROUPS[gi].name;
-      const itemName = GROUPS[gi].items[ii].main;
-      
-      if (!currentGroupFirstClickRecorded) {
-          const thinkSeconds = Math.floor((Date.now() - currentGroupStartTime) / 1000);
-          deepTracker.thinkTimes[groupName] = thinkSeconds;
-          currentGroupFirstClickRecorded = true;
-      }
-      
-      const itemKey = groupName + ' - ' + itemName;
-      deepTracker.toggles[itemKey] = (deepTracker.toggles[itemKey] || 0) + 1;
-
-      answers[GROUPS[gi].id][ii] = cb.checked;
-      const label = document.getElementById(`ci-${gi}-${ii}`);
-      label.classList.toggle('checked', cb.checked);
-      updateGroupScore(gi);
-    }
-
-    function updateGroupScore(gi) {
-      const group = GROUPS[gi];
-      const ticked = answers[group.id].filter(Boolean).length;
-      const total = group.items.length;
-      document.getElementById(`gscore-${gi}`).textContent = `${ticked} / ${total}`;
-      document.getElementById(`gbar-${gi}`).style.width = `${(ticked / total) * 100}%`;
-    }
-
-    function showGroup(gi) {
-      if (currentGroup !== undefined) {
-        const prev = document.getElementById(`group-${currentGroup}`);
-        if (prev) { prev.classList.remove('active'); completedGroups.add(currentGroup); }
-      }
-      currentGroup = gi;
-      currentGroupStartTime = Date.now();
-      currentGroupFirstClickRecorded = false;
-      document.querySelectorAll('.checklist-section').forEach(s => s.classList.remove('active'));
-      document.getElementById(`group-${gi}`).classList.add('active');
-      
-      if (gi > 0 && gi < GROUPS.length) {
-          deepTracker.drop_point = `Nhóm ${gi + 1} / ${GROUPS.length}: ${GROUPS[gi].name}`;
-          pingServerDropOff();
-      }
-
-      updateProgress();
-      window.scrollTo({ top: document.getElementById('progress-wrap').offsetTop - 20, behavior: 'smooth' });
-    }
-
-    function jumpToGroup(gi) { showGroup(gi); }
-
-    function updateProgress() {
-      const done = completedGroups.size;
-      const total = GROUPS.length;
-      document.getElementById('progress-fill').style.width = `${(done / total) * 100}%`;
-      document.getElementById('progress-count').textContent = `${done} / ${total} nhóm`;
-      GROUPS.forEach((_, i) => {
-        const el = document.getElementById(`pstep-${i}`);
-        el.classList.remove('active', 'done');
-        if (i === currentGroup) el.classList.add('active');
-        else if (completedGroups.has(i)) el.classList.add('done');
-      });
-    }
-
-    // ── RESULT ──
-    function showResult() {
-      completedGroups.add(currentGroup);
-      document.getElementById('main-form').style.display = 'none';
-      document.getElementById('progress-wrap').style.display = 'none';
-
-      // Tính điểm
-      const scores = GROUPS.map(g => {
-        const ticked = answers[g.id].filter(Boolean).length;
-        const total = g.items.length;
-        const pct = Math.round((ticked / total) * 100);
-        const tickedItems = g.items.filter((_, i) => answers[g.id][i]).map(x => x.main);
-        return { id: g.id, name: g.name, icon: g.icon, ticked, total, pct, tickedItems };
-      }).sort((a, b) => b.pct - a.pct);
-
-      // Gửi dữ liệu về Server và chuyển trang
-      submitDataToServer(scores);
-    }
-
-    function submitDataToServer(scores) {
-      const name = document.getElementById('parent-name').value.trim();
-      const phone = document.getElementById('parent-phone').value.trim();
-      const age = document.getElementById('child-age').value;
-      const diagnosis = document.getElementById('child-diagnosis').value;
-      const therapy = document.getElementById('child-therapy').value.trim();
-      const supplement = document.getElementById('child-supplement').value.trim();
-      const concern = document.getElementById('parent-concern').value.trim();
-      const extra = document.getElementById('extra-symptoms') ? document.getElementById('extra-symptoms').value.trim() : '';
-      const genderEl = document.querySelector('input[name="child-gender"]:checked');
-      const gender = genderEl ? genderEl.value : '';
-
-      const behaviorsByGroup = {};
-      scores.forEach(s => {
-          if (s.tickedItems && s.tickedItems.length > 0) {
-              behaviorsByGroup[s.id] = s.tickedItems;
+      initUTM() {
+        const params = new URLSearchParams(window.location.search);
+        for (const [key, value] of params.entries()) {
+          if (key.startsWith('utm_')) {
+            this.state.deepTracker.utms[key] = value;
           }
-      });
+        }
+      },
 
-      const timeSpent = Math.floor((Date.now() - startTime) / 1000);
-      const deviceInfo = navigator.userAgent;
+      initDeepTracking() {
+        // Lấy IP & Vị trí
+        fetch('https://api.db-ip.com/v2/free/self')
+          .then(res => res.json())
+          .then(data => {
+              this.state.deepTracker.location = data.city + ', ' + data.countryName;
+              this.state.deepTracker.ip = data.ipAddress;
+          }).catch(e => {
+              this.state.deepTracker.location = 'Không xác định';
+          });
 
-      const formData = new FormData();
-      formData.append('action', 'hieucon_dh_submit_checklist');
-      formData.append('user_code', userCode);
-      formData.append('parent_name', name);
-      formData.append('parent_phone', phone);
-      formData.append('child_age', age);
-      formData.append('child_diagnosis', diagnosis);
-      formData.append('child_gender', gender);
-      formData.append('child_height', document.getElementById('child-height').value.trim());
-      formData.append('child_weight', document.getElementById('child-weight').value.trim());
-      formData.append('child_therapy', therapy);
-      formData.append('child_supplement', supplement);
-      formData.append('parent_concern', concern);
-      formData.append('extra_symptoms', extra);
-      formData.append('scores_json', JSON.stringify(scores));
-      formData.append('behaviors_json', JSON.stringify(behaviorsByGroup));
-      deepTracker.drop_point = 'Hoàn thành 100%';
-      deepTracker.activeTime += (Date.now() - deepTracker.lastFocus);
-      deepTracker.lastFocus = Date.now();
-      const da = { ...deepTracker, highlighted: Array.from(deepTracker.highlighted), activeTime: Math.floor(deepTracker.activeTime / 1000) };
+        // Active Time
+        window.addEventListener('blur', () => { 
+          this.state.deepTracker.activeTime += (Date.now() - this.state.deepTracker.lastFocus); 
+        });
+        window.addEventListener('focus', () => { 
+          this.state.deepTracker.lastFocus = Date.now(); 
+        });
+        window.addEventListener('visibilitychange', () => {
+          if (document.hidden) {
+            this.state.deepTracker.activeTime += (Date.now() - this.state.deepTracker.lastFocus);
+          } else {
+            this.state.deepTracker.lastFocus = Date.now();
+          }
+        });
 
-      formData.append('time_spent', timeSpent);
-      formData.append('device_info', deviceInfo);
-      formData.append('deep_analytics', JSON.stringify(da));
+        // Text selection
+        document.addEventListener('mouseup', () => {
+          const selection = window.getSelection().toString().trim();
+          if (selection.length > 3 && selection.length < 50) {
+            this.state.deepTracker.highlighted.add(selection);
+          }
+        });
 
-      fetch('<?php echo admin_url('admin-ajax.php'); ?>', {
+        // Input deletions
+        document.addEventListener('keydown', (e) => {
+          if ((e.key === 'Backspace' || e.key === 'Delete') && e.target.tagName === 'TEXTAREA') {
+            this.state.deepTracker.deletedChars++;
+          }
+        });
+      },
+
+      pingServerDropOff() {
+        if (!this.state.userCode) return;
+        this.state.deepTracker.activeTime += (Date.now() - this.state.deepTracker.lastFocus);
+        this.state.deepTracker.lastFocus = Date.now();
+
+        const timeSpent = Math.floor((Date.now() - this.state.startTime) / 1000);
+        const da = { 
+          ...this.state.deepTracker, 
+          highlighted: Array.from(this.state.deepTracker.highlighted), 
+          activeTime: Math.floor(this.state.deepTracker.activeTime / 1000) 
+        };
+
+        const formData = new FormData();
+        formData.append('action', 'hieucon_dh_submit_checklist');
+        formData.append('user_code', this.state.userCode);
+        formData.append('child_name', ModuleChildInfo.getChildName());
+        formData.append('child_age', ModuleChildInfo.getChildAge());
+        formData.append('child_gender', ModuleChildInfo.getChildGender());
+        formData.append('child_height', ModuleChildInfo.getChildHeight());
+        formData.append('child_weight', ModuleChildInfo.getChildWeight());
+        formData.append('child_diagnosis', ModuleChildInfo.getChildDiagnosis());
+        formData.append('child_therapy', ModuleChildInfo.getChildTherapy());
+        formData.append('child_supplement', ModuleChildInfo.getChildSupplement());
+        formData.append('parent_concern', ModuleChildInfo.getParentConcern());
+        
+        // Bổ sung thông tin phụ huynh nếu có
+        formData.append('parent_name', ModuleParentInfo.getParentName());
+        formData.append('parent_phone', ModuleParentInfo.getParentPhone());
+        formData.append('parent_email', ModuleParentInfo.getParentEmail());
+
+        const extraSymptomsEl = document.getElementById('extra-symptoms');
+        formData.append('extra_symptoms', extraSymptomsEl ? extraSymptomsEl.value.trim() : '');
+
+        // Bổ sung scores nếu đã hoàn thành trắc nghiệm
+        if (Object.keys(this.state.answers).length > 0) {
+          const scores = ModuleSurvey.calculateScores();
+          const behaviorsByGroup = {};
+          scores.forEach(s => {
+            if (s.tickedItems && s.tickedItems.length > 0) {
+              behaviorsByGroup[s.id] = s.tickedItems;
+            }
+          });
+          formData.append('scores_json', JSON.stringify(scores));
+          formData.append('behaviors_json', JSON.stringify(behaviorsByGroup));
+        }
+
+        formData.append('time_spent', timeSpent);
+        formData.append('device_info', navigator.userAgent);
+        formData.append('deep_analytics', JSON.stringify(da));
+
+        fetch('<?php echo admin_url('admin-ajax.php'); ?>', { method: 'POST', body: formData }).catch(()=>{});
+      }
+    };
+
+    // ==========================================
+    // ── MODULE 1: THÔNG TIN TRẺ (ModuleChildInfo) ──
+    // ==========================================
+    const ModuleChildInfo = {
+      app: null,
+
+      init(appInstance) {
+        this.app = appInstance;
+        this.bindEvents();
+      },
+
+      bindEvents() {
+        const dayEl = document.getElementById('child-dob-day');
+        const monthEl = document.getElementById('child-dob-month');
+        const yearEl = document.getElementById('child-dob-year');
+
+        if (dayEl && monthEl && yearEl) {
+          dayEl.addEventListener('input', () => this.calculateAge());
+          monthEl.addEventListener('input', () => this.calculateAge());
+          yearEl.addEventListener('input', () => this.calculateAge());
+        }
+      },
+
+      getChildName() { return document.getElementById('child-name') ? document.getElementById('child-name').value.trim() : ''; },
+      getChildAge() { return document.getElementById('child-age') ? document.getElementById('child-age').value : ''; },
+      getChildGender() {
+        const genderEl = document.querySelector('input[name="child-gender"]:checked');
+        return genderEl ? genderEl.value : '';
+      },
+      getChildHeight() { return document.getElementById('child-height') ? document.getElementById('child-height').value.trim() : ''; },
+      getChildWeight() { return document.getElementById('child-weight') ? document.getElementById('child-weight').value.trim() : ''; },
+      getChildDiagnosis() { return document.getElementById('child-diagnosis') ? document.getElementById('child-diagnosis').value : ''; },
+      getChildTherapy() { return document.getElementById('child-therapy') ? document.getElementById('child-therapy').value.trim() : ''; },
+      getChildSupplement() { return document.getElementById('child-supplement') ? document.getElementById('child-supplement').value.trim() : ''; },
+      getParentConcern() { return document.getElementById('parent-concern') ? document.getElementById('parent-concern').value.trim() : ''; },
+
+      calculateAge() {
+        const d = document.getElementById('child-dob-day').value;
+        const m = document.getElementById('child-dob-month').value;
+        const y = document.getElementById('child-dob-year').value;
+        const displayDiv = document.getElementById('calculated-age');
+        const hiddenInput = document.getElementById('child-age');
+        
+        if (!d || !m || !y) {
+          displayDiv.innerText = '';
+          hiddenInput.value = '';
+          return;
+        }
+
+        const dob = new Date(y, m - 1, d);
+        const today = new Date();
+        
+        if (dob.getFullYear() != y || dob.getMonth() != m - 1 || dob.getDate() != d) {
+          displayDiv.innerText = 'Ngày sinh không tồn tại';
+          displayDiv.style.color = '#e11d48';
+          hiddenInput.value = '';
+          return;
+        }
+        
+        let months = (today.getFullYear() - dob.getFullYear()) * 12;
+        months -= dob.getMonth();
+        months += today.getMonth();
+        
+        if (today.getDate() < dob.getDate()) {
+          months--;
+        }
+        
+        if (months < 0) {
+          displayDiv.innerText = 'Ngày sinh chưa hợp lệ';
+          displayDiv.style.color = '#e11d48';
+          hiddenInput.value = '';
+          return;
+        }
+        
+        let ageStr = '';
+        if (months < 24) {
+          ageStr = months + ' tháng tuổi';
+        } else {
+          const years = Math.floor(months / 12);
+          const extraMonths = months % 12;
+          ageStr = years + ' tuổi ' + (extraMonths > 0 ? extraMonths + ' tháng' : '');
+        }
+        
+        displayDiv.innerText = 'Tuổi của con: ' + ageStr;
+        displayDiv.style.color = 'var(--navy)';
+        hiddenInput.value = ageStr;
+      },
+
+      validate() {
+        const childName = this.getChildName();
+        const age = this.getChildAge();
+        const gender = this.getChildGender();
+        const height = this.getChildHeight();
+        const weight = this.getChildWeight();
+        const diagnosis = this.getChildDiagnosis();
+
+        if (!childName || !age || !gender || !height || !weight || !diagnosis) {
+          alert('Cha mẹ vui lòng điền đầy đủ các thông tin có dấu * trước khi tiếp tục.');
+          return false;
+        }
+        return true;
+      },
+
+      submit() {
+        if (!this.validate()) return;
+
+        // Sinh mã hồ sơ (userCode) 8 chữ số nếu chưa có
+        if (!this.app.state.userCode) {
+          this.app.state.userCode = Math.floor(10000000 + Math.random() * 90000000).toString();
+        }
+
+        // Đổi trạng thái nút bấm
+        const btn = document.querySelector('#info-section .btn-primary');
+        if (btn) {
+          btn.disabled = true;
+          btn.innerText = 'ĐANG KHỞI TẠO HỒ SƠ...';
+        }
+
+        // Tạo bản ghi Draft đầu tiên ngay lập tức
+        const timeSpent = Math.floor((Date.now() - this.app.state.startTime) / 1000);
+        const da = { 
+          ...this.app.state.deepTracker, 
+          highlighted: Array.from(this.app.state.deepTracker.highlighted), 
+          activeTime: Math.floor(this.app.state.deepTracker.activeTime / 1000) 
+        };
+
+        const formData = new FormData();
+        formData.append('action', 'hieucon_dh_submit_checklist');
+        formData.append('user_code', this.app.state.userCode);
+        formData.append('child_name', this.getChildName());
+        formData.append('child_age', this.getChildAge());
+        formData.append('child_gender', this.getChildGender());
+        formData.append('child_height', this.getChildHeight());
+        formData.append('child_weight', this.getChildWeight());
+        formData.append('child_diagnosis', this.getChildDiagnosis());
+        formData.append('child_therapy', this.getChildTherapy());
+        formData.append('child_supplement', this.getChildSupplement());
+        formData.append('parent_concern', this.getParentConcern());
+        formData.append('time_spent', timeSpent);
+        formData.append('device_info', navigator.userAgent);
+        formData.append('deep_analytics', JSON.stringify(da));
+
+        fetch('<?php echo admin_url('admin-ajax.php'); ?>', {
           method: 'POST',
           body: formData
-      })
-      .then(res => res.json())
-      .then(res => {
-          console.log('Saved checklist:', res);
-          // Theo dõi sự kiện hoàn thành
-          if (typeof fbq !== 'undefined') {
-            fbq('track', 'Lead', { content_name: 'Complete DH Checklist' });
+        })
+        .then(res => res.json())
+        .then(res => {
+          console.log('Draft record initialized:', res);
+          this.transitionToNextStep();
+        })
+        .catch(err => {
+          console.error('Error creating draft:', err);
+          // Vẫn cho phép tiếp tục dù gặp lỗi kết nối phụ
+          this.transitionToNextStep();
+        });
+      },
+
+      transitionToNextStep() {
+        // Hide first container (Child Info step)
+        const childInfoContainer = document.getElementById('survey-page-container');
+        if (childInfoContainer) childInfoContainer.style.display = 'none';
+        
+        // Hide Hero Section if visible
+        const hero = document.getElementById('hero-section');
+        if (hero) hero.style.display = 'none';
+        
+        // Show second container (Survey step)
+        const surveyContainer = document.getElementById('survey-active-container');
+        if (surveyContainer) surveyContainer.style.display = 'block';
+        
+        // Initialize the Radar Chart!
+        initializeRadarChart();
+        
+        // Hiển thị thanh tiến trình và kích hoạt ModuleSurvey
+        document.getElementById('progress-wrap').style.display = 'block';
+        ModuleSurvey.start();
+      }
+    };
+
+    // ==========================================
+    // ── MODULE 2: TRẮC NGHIỆM HÀNH VI (ModuleSurvey) ──
+    // ==========================================
+    const ModuleSurvey = {
+      app: null,
+
+      init(appInstance) {
+        this.app = appInstance;
+      },
+
+      start() {
+        this.buildChecklist();
+        this.buildProgressSteps();
+        this.showGroup(0);
+
+        if (typeof fbq !== 'undefined') {
+          fbq('track', 'ViewContent', { content_name: 'Start DH Checklist', content_category: 'Checklist' });
+        }
+
+        this.app.state.deepTracker.drop_point = `Nhóm 1 / ${GROUPS.length}: ${GROUPS[0].name}`;
+        this.app.pingServerDropOff();
+
+        // Show mobile Radar FAB!
+        const fab = document.getElementById('mobile-radar-fab');
+        if (fab) fab.style.display = 'flex';
+        
+        // Show completion section
+        const completionSec = document.getElementById('survey-completion-section');
+        if (completionSec) completionSec.style.display = 'block';
+      },
+
+      buildProgressSteps() {
+        const wrap = document.getElementById('progress-steps');
+        if (!wrap) return;
+        wrap.innerHTML = GROUPS.map((g, i) =>
+          `<span class="progress-step" id="pstep-${i}" onclick="ModuleSurvey.jumpToGroup(${i})">${g.icon} ${g.name}</span>`
+        ).join('');
+      },
+
+      buildChecklist() {
+        const container = document.getElementById('checklist-container');
+        if (!container) return;
+        container.innerHTML = '';
+        GROUPS.forEach((group, gi) => {
+          if (!this.app.state.answers[group.id]) {
+            this.app.state.answers[group.id] = Array(group.items.length).fill(false);
           }
-          // Chuyển sang trang kết quả
-          window.location.href = '<?php echo site_url('/ket-qua-dh?code='); ?>' + userCode;
-      })
-      .catch(err => {
-          console.error(err);
-          // Vẫn chuyển trang dù lỗi kết nối phụ
-          window.location.href = '<?php echo site_url('/ket-qua-dh?code='); ?>' + userCode;
-      });
+          
+          const sec = document.createElement('div');
+          sec.className = 'checklist-section';
+          sec.id = `group-${gi}`;
+          sec.innerHTML = `
+            <div class="section-header" onclick="ModuleSurvey.toggleGroupCollapse(${gi})" style="display:flex; align-items:center; justify-content:space-between; width:100%; gap: 16px; margin-bottom: 20px; cursor:pointer; user-select:none;">
+              <div style="display:flex; align-items:center; gap: 12px;">
+                <div class="section-icon">${group.icon}</div>
+                <div>
+                  <div class="section-title">${group.name}</div>
+                  <div class="section-subtitle">${group.desc}</div>
+                </div>
+              </div>
+              <button type="button" class="accordion-toggle-btn" style="background:none; border:none; color:currentColor; cursor:pointer; padding:4px; display:flex; align-items:center; justify-content:center;">
+                <svg class="accordion-arrow" style="width:20px; height:20px; transition: transform 0.3s;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>
+              </button>
+            </div>
+            <div class="group-score" style="display: none;">
+              <span class="group-score-label">Điểm số:</span>
+              <span class="group-score-value" id="gscore-${gi}">0 / 15 điểm</span>
+              <div class="group-score-bar"><div class="group-score-fill" id="gbar-${gi}"></div></div>
+            </div>
+            <div class="checklist-items flex flex-col gap-3">
+              ${group.items.map((item, ii) => `
+                <div class="check-item-row flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 border border-solid border-[#e2e8f0] rounded-xl bg-[#faf9f6] hover:border-navy/40 transition-colors" id="ci-row-${gi}-${ii}">
+                  <div class="check-text flex-1">
+                    <div class="check-main" style="line-height: 1.5; font-weight: 500; font-size: 14px; color: var(--charcoal); position: relative;">
+                      <span>${item.main}</span>
+                      <span class="info-tooltip-wrapper inline-flex items-center ml-1.5" onclick="toggleTooltip(this, event)">
+                        <span class="info-tooltip-trigger" style="margin: 0 0 0 4px; width: 15px; height: 15px; font-size: 9px; line-height: 15px;">i</span>
+                        <span class="info-tooltip-content">Ví dụ: ${item.example}<span style="display:block; text-align:right; font-size:10px; opacity:0.7; margin-top:6px; font-weight:normal;">✕ Chạm để đóng</span></span>
+                      </span>
+                    </div>
+                  </div>
+                  <div class="check-options flex gap-3 shrink-0 w-full sm:w-auto">
+                    <label class="check-opt-label flex items-center justify-center gap-2 cursor-pointer select-none py-2.5 px-4 border border-solid border-[#cbd5e1] rounded-xl bg-white transition-all text-sm font-bold text-[#334155]" id="label-yes-${gi}-${ii}" style="flex: 1; min-width: 80px; text-align: center;">
+                      <input type="checkbox" id="opt-yes-${gi}-${ii}" onchange="ModuleSurvey.toggleItemOption(${gi},${ii},'yes',this)" style="display:none;">
+                      <span>Có</span>
+                    </label>
+                    <label class="check-opt-label flex items-center justify-center gap-2 cursor-pointer select-none py-2.5 px-4 border border-solid border-[#cbd5e1] rounded-xl bg-white transition-all text-sm font-bold text-[#334155]" id="label-no-${gi}-${ii}" style="flex: 1; min-width: 80px; text-align: center;">
+                      <input type="checkbox" id="opt-no-${gi}-${ii}" onchange="ModuleSurvey.toggleItemOption(${gi},${ii},'no',this)" style="display:none;">
+                      <span>Không</span>
+                    </label>
+                  </div>
+                </div>
+              `).join('')}
+            </div>
+          `;
+          container.appendChild(sec);
+        });
+      },
+
+      toggleItemOption(gi, ii, option, cb) {
+        if (option === 'yes') {
+          if (cb.checked) {
+            const noInput = document.getElementById(`opt-no-${gi}-${ii}`);
+            if (noInput) {
+              noInput.checked = false;
+              noInput.closest('.check-opt-label').classList.remove('checked');
+            }
+            this.app.state.answers[GROUPS[gi].id][ii] = true;
+            cb.closest('.check-opt-label').classList.add('checked');
+          } else {
+            this.app.state.answers[GROUPS[gi].id][ii] = false;
+            cb.closest('.check-opt-label').classList.remove('checked');
+          }
+        } else {
+          if (cb.checked) {
+            const yesInput = document.getElementById(`opt-yes-${gi}-${ii}`);
+            if (yesInput) {
+              yesInput.checked = false;
+              yesInput.closest('.check-opt-label').classList.remove('checked');
+            }
+            this.app.state.answers[GROUPS[gi].id][ii] = false;
+            cb.closest('.check-opt-label').classList.add('checked');
+          } else {
+            cb.closest('.check-opt-label').classList.remove('checked');
+          }
+        }
+
+        const groupName = GROUPS[gi].name;
+        const itemName = GROUPS[gi].items[ii].main;
+        
+        if (!this.app.state.currentGroupFirstClickRecorded) {
+            const thinkSeconds = Math.floor((Date.now() - this.app.state.currentGroupStartTime) / 1000);
+            this.app.state.deepTracker.thinkTimes[groupName] = thinkSeconds;
+            this.app.state.currentGroupFirstClickRecorded = true;
+        }
+        
+        const itemKey = groupName + ' - ' + itemName;
+        this.app.state.deepTracker.toggles[itemKey] = (this.app.state.deepTracker.toggles[itemKey] || 0) + 1;
+
+        this.updateGroupScore(gi);
+        this.checkGroupCompletion(gi);
+      },
+
+      updateGroupScore(gi) {
+        const group = GROUPS[gi];
+        let score = 0;
+        this.app.state.answers[group.id].forEach((ticked, index) => {
+          if (ticked) {
+            score += (index + 1);
+          }
+        });
+        document.getElementById(`gscore-${gi}`).textContent = `${score} / 15 điểm`;
+        document.getElementById(`gbar-${gi}`).style.width = `${(score / 15) * 100}%`;
+        
+        // Cập nhật biểu đồ Radar bên cột phải
+        updateRadarChartData();
+      },
+
+      showGroup(gi) {
+        if (this.app.state.currentGroup !== undefined) {
+          const prev = document.getElementById(`group-${this.app.state.currentGroup}`);
+          if (prev) { 
+            prev.classList.remove('active'); 
+            this.app.state.completedGroups.add(this.app.state.currentGroup); 
+          }
+        }
+        this.app.state.currentGroup = gi;
+        this.app.state.currentGroupStartTime = Date.now();
+        this.app.state.currentGroupFirstClickRecorded = false;
+        document.querySelectorAll('.checklist-section').forEach(s => s.classList.remove('active'));
+        
+        const targetGroup = document.getElementById(`group-${gi}`);
+        if (targetGroup) {
+          targetGroup.classList.add('active');
+        }
+        
+        if (gi > 0 && gi < GROUPS.length) {
+            this.app.state.deepTracker.drop_point = `Nhóm ${gi + 1} / ${GROUPS.length}: ${GROUPS[gi].name}`;
+            this.app.pingServerDropOff();
+        }
+
+        this.updateProgress();
+        const progressWrap = document.getElementById('progress-wrap');
+        if (progressWrap) {
+          window.scrollTo({ top: progressWrap.offsetTop - 20, behavior: 'smooth' });
+        }
+      },
+
+      jumpToGroup(gi) {
+        const el = document.getElementById(`group-${gi}`);
+        if (el) {
+          window.scrollTo({ top: el.offsetTop - 80, behavior: 'smooth' });
+        }
+      },
+
+      isGroupCompleted(gi) {
+        const itemsCount = GROUPS[gi].items.length;
+        for (let ii = 0; ii < itemsCount; ii++) {
+          const yesChecked = document.getElementById(`opt-yes-${gi}-${ii}`)?.checked;
+          const noChecked = document.getElementById(`opt-no-${gi}-${ii}`)?.checked;
+          if (!yesChecked && !noChecked) {
+            return false;
+          }
+        }
+        return true;
+      },
+
+      checkGroupCompletion(gi) {
+        const section = document.getElementById(`group-${gi}`);
+        if (!section) return;
+        
+        const isCompleted = this.isGroupCompleted(gi);
+        if (isCompleted) {
+          section.classList.add('completed-group');
+          this.app.state.completedGroups.add(gi);
+        } else {
+          section.classList.remove('completed-group');
+          this.app.state.completedGroups.delete(gi);
+        }
+        this.updateProgress();
+      },
+
+      expandGroup(gi, event) {
+        if (event) {
+          event.stopPropagation();
+          event.preventDefault();
+        }
+        const section = document.getElementById(`group-${gi}`);
+        if (section) {
+          section.classList.remove('completed-group');
+        }
+      },
+
+      toggleGroupCollapse(gi) {
+        const section = document.getElementById(`group-${gi}`);
+        if (!section) return;
+        
+        if (section.classList.contains('completed-group')) {
+          section.classList.remove('completed-group');
+        } else {
+          const isCompleted = this.isGroupCompleted(gi);
+          if (isCompleted) {
+            section.classList.add('completed-group');
+          }
+        }
+      },
+
+      updateProgress() {
+        const done = this.app.state.completedGroups.size;
+        const total = GROUPS.length;
+        const fillEl = document.getElementById('progress-fill');
+        const countEl = document.getElementById('progress-count');
+        
+        if (fillEl) fillEl.style.width = `${(done / total) * 100}%`;
+        if (countEl) countEl.textContent = `${done} / ${total} nhóm`;
+        
+        GROUPS.forEach((_, i) => {
+          const el = document.getElementById(`pstep-${i}`);
+          if (el) {
+            el.classList.remove('active', 'done');
+            if (i === this.app.state.currentGroup) el.classList.add('active');
+            else if (this.app.state.completedGroups.has(i)) el.classList.add('done');
+          }
+        });
+      },
+
+      calculateScores() {
+        return GROUPS.map(g => {
+          let score = 0;
+          this.app.state.answers[g.id].forEach((ticked, index) => {
+            if (ticked) {
+              score += (index + 1);
+            }
+          });
+          const ticked = score;
+          const total = 15;
+          const pct = Math.round((ticked / total) * 100);
+          const tickedItems = g.items.filter((_, i) => this.app.state.answers[g.id][i]).map(x => x.main);
+          return { id: g.id, name: g.name, icon: g.icon, ticked, total, pct, tickedItems };
+        }).sort((a, b) => b.pct - a.pct);
+      },
+
+      completeSurvey() {
+        // Auto-fill unanswered questions with "No" (Không)
+        GROUPS.forEach((group, gi) => {
+          group.items.forEach((item, ii) => {
+            const yesChecked = document.getElementById(`opt-yes-${gi}-${ii}`)?.checked;
+            const noChecked = document.getElementById(`opt-no-${gi}-${ii}`)?.checked;
+            if (!yesChecked && !noChecked) {
+              const noInput = document.getElementById(`opt-no-${gi}-${ii}`);
+              if (noInput) {
+                noInput.checked = true;
+                noInput.closest('.check-opt-label').classList.add('checked');
+                this.app.state.answers[group.id][ii] = false;
+              }
+            }
+          });
+          this.updateGroupScore(gi);
+          this.checkGroupCompletion(gi);
+        });
+
+        // Recalculate and update Radar Chart to ensure it has all values!
+        if (window.myRadarChart) {
+          const newData = GROUPS.map(group => {
+            const answers = this.app.state.answers[group.id];
+            if (!answers) return 0;
+            let score = 0;
+            answers.forEach((ticked, index) => {
+              if (ticked) score += (index + 1);
+            });
+            return Math.round((score / 15) * 100);
+          });
+          window.myRadarChart.data.datasets[0].data = newData;
+          window.myRadarChart.update();
+        }
+
+        this.app.state.completedGroups.add(this.app.state.currentGroup);
+        
+        // Ẩn phần trắc nghiệm
+        document.getElementById('checklist-container').style.display = 'none';
+        document.getElementById('progress-wrap').style.display = 'none';
+        
+        const completionSec = document.getElementById('survey-completion-section');
+        if (completionSec) completionSec.style.display = 'none';
+        
+        // Chuyển tiếp điều khiển sang ModuleParentInfo
+        ModuleParentInfo.show();
+      }
+    };
+
+    // ==========================================
+    // ── MODULE 3: THÔNG TIN PHỤ HUYNH (ModuleParentInfo) ──
+    // ==========================================
+    const ModuleParentInfo = {
+      app: null,
+
+      init(appInstance) {
+        this.app = appInstance;
+      },
+
+      getParentName() { return document.getElementById('parent-name') ? document.getElementById('parent-name').value.trim() : ''; },
+      getParentPhone() { return document.getElementById('parent-phone') ? document.getElementById('parent-phone').value.trim() : ''; },
+      getParentEmail() { return document.getElementById('parent-email') ? document.getElementById('parent-email').value.trim() : ''; },
+
+      show() {
+        const parentSec = document.getElementById('parent-info-section');
+        if (parentSec) {
+          parentSec.style.display = 'block';
+          window.scrollTo({ top: parentSec.offsetTop - 20, behavior: 'smooth' });
+        }
+        
+        // Hide mobile Radar FAB!
+        const fab = document.getElementById('mobile-radar-fab');
+        if (fab) fab.style.display = 'none';
+        
+        this.app.state.deepTracker.drop_point = 'Đang điền thông tin phụ huynh';
+        this.app.pingServerDropOff();
+      },
+
+      validate() {
+        const name = this.getParentName();
+        const phone = this.getParentPhone();
+        const email = this.getParentEmail();
+        
+        if (!name || !phone || !email) {
+          alert('Cha mẹ vui lòng điền đầy đủ các thông tin liên hệ để nhận kết quả.');
+          return false;
+        }
+        
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+          alert('Địa chỉ email không hợp lệ. Vui lòng kiểm tra lại.');
+          return false;
+        }
+        return true;
+      },
+
+      submit() {
+        if (!this.validate()) return;
+        
+        const btn = document.getElementById('btn-final-submit');
+        if (btn) {
+          btn.disabled = true;
+          btn.innerText = 'ĐANG GỬI KẾT QUẢ...';
+        }
+        
+        const scores = ModuleSurvey.calculateScores();
+        const childName = ModuleChildInfo.getChildName();
+        const name = this.getParentName();
+        const phone = this.getParentPhone();
+        const email = this.getParentEmail();
+        const age = ModuleChildInfo.getChildAge();
+        const diagnosis = ModuleChildInfo.getChildDiagnosis();
+        const therapy = ModuleChildInfo.getChildTherapy();
+        const supplement = ModuleChildInfo.getChildSupplement();
+        const concern = ModuleChildInfo.getParentConcern();
+        const extraSymptomsEl = document.getElementById('extra-symptoms');
+        const extra = extraSymptomsEl ? extraSymptomsEl.value.trim() : '';
+        const gender = ModuleChildInfo.getChildGender();
+
+        const behaviorsByGroup = {};
+        scores.forEach(s => {
+            if (s.tickedItems && s.tickedItems.length > 0) {
+                behaviorsByGroup[s.id] = s.tickedItems;
+            }
+        });
+
+        const timeSpent = Math.floor((Date.now() - this.app.state.startTime) / 1000);
+        const deviceInfo = navigator.userAgent;
+
+        const formData = new FormData();
+        formData.append('action', 'hieucon_dh_submit_checklist');
+        formData.append('user_code', this.app.state.userCode);
+        formData.append('child_name', childName);
+        formData.append('parent_name', name);
+        formData.append('parent_phone', phone);
+        formData.append('parent_email', email);
+        formData.append('child_age', age);
+        formData.append('child_diagnosis', diagnosis);
+        formData.append('child_gender', gender);
+        formData.append('child_height', ModuleChildInfo.getChildHeight());
+        formData.append('child_weight', ModuleChildInfo.getChildWeight());
+        formData.append('child_therapy', therapy);
+        formData.append('child_supplement', supplement);
+        formData.append('parent_concern', concern);
+        formData.append('extra_symptoms', extra);
+        formData.append('scores_json', JSON.stringify(scores));
+        formData.append('behaviors_json', JSON.stringify(behaviorsByGroup));
+        
+        this.app.state.deepTracker.drop_point = 'Hoàn thành 100%';
+        this.app.state.deepTracker.activeTime += (Date.now() - this.app.state.deepTracker.lastFocus);
+        this.app.state.deepTracker.lastFocus = Date.now();
+        const da = { 
+          ...this.app.state.deepTracker, 
+          highlighted: Array.from(this.app.state.deepTracker.highlighted), 
+          activeTime: Math.floor(this.app.state.deepTracker.activeTime / 1000) 
+        };
+
+        formData.append('time_spent', timeSpent);
+        formData.append('device_info', deviceInfo);
+        formData.append('deep_analytics', JSON.stringify(da));
+
+        fetch('<?php echo admin_url('admin-ajax.php'); ?>', {
+            method: 'POST',
+            body: formData
+        })
+        .then(res => res.json())
+        .then(res => {
+            console.log('Saved checklist:', res);
+            if (typeof fbq !== 'undefined') {
+              fbq('track', 'Lead', { content_name: 'Complete DH Checklist' });
+            }
+            this.transitionToNextStep(email);
+        })
+        .catch(err => {
+            console.error(err);
+            this.transitionToNextStep(email);
+        });
+      },
+
+      transitionToNextStep(email) {
+        document.getElementById('parent-info-section').style.display = 'none';
+        ModuleSuccess.show(email);
+      }
+    };
+
+    // ==========================================
+    // ── MODULE 4: HIỂN THỊ THÀNH CÔNG (ModuleSuccess) ──
+    // ==========================================
+    const ModuleSuccess = {
+      app: null,
+
+      init(appInstance) {
+        this.app = appInstance;
+      },
+
+      show(email) {
+        const emailDisp = document.getElementById('sent-email-display');
+        if (emailDisp) {
+          emailDisp.textContent = email;
+        }
+        
+        const thankSec = document.getElementById('thankyou-section');
+        if (thankSec) {
+          thankSec.style.display = 'block';
+          window.scrollTo({ top: thankSec.offsetTop - 20, behavior: 'smooth' });
+        }
+      }
+    };
+
+    // ==========================================
+    // ── PHƯƠNG THỨC LIÊN KẾT GIAO DIỆN (Nút Bấm) ──
+    // ==========================================
+    function goToIntro() {
+      const urlParams = new URLSearchParams(window.location.search);
+      urlParams.set('start', '1');
+      window.location.href = window.location.pathname + '?' + urlParams.toString();
+    }
+
+    function startChecklist() {
+      ModuleChildInfo.submit();
+    }
+
+    function submitParentInfo() {
+      ModuleParentInfo.submit();
     }
 
     function submitCTA() {
       const phone = document.getElementById('cta-phone').value.trim();
       if (!phone) { alert('Vui lòng nhập số điện thoại để đặt lịch.'); return; }
-      alert(`Cảm ơn cha mẹ! Chuyên gia sẽ liên hệ qua số ${phone} trong vòng 24 giờ để tư vấn . Mã hồ sơ của con là: ${userCode}`);
+      alert(`Cảm ơn cha mẹ! Chuyên gia sẽ liên hệ qua số ${phone} trong vòng 24 giờ để tư vấn. Mã hồ sơ của con là: ${ChecklistApp.state.userCode}`);
       
       if (typeof fbq !== 'undefined') {
         fbq('track', 'Contact');
       }
     }
+
+    // Mobile Radar Modal Toggle helper
+    function toggleMobileRadar(show) {
+      const sidebar = document.getElementById('survey-sidebar');
+      const closeBtn = document.getElementById('close-radar-btn');
+      if (sidebar) {
+        if (show) {
+          sidebar.classList.add('show-mobile-overlay');
+          if (closeBtn) closeBtn.style.display = 'block';
+        } else {
+          sidebar.classList.remove('show-mobile-overlay');
+          if (closeBtn) closeBtn.style.display = 'none';
+        }
+      }
+    }
+
+    // Toggle tooltips on click (mobile focus)
+    function toggleTooltip(wrapperElement, event) {
+      if (event) {
+        event.stopPropagation();
+        event.preventDefault();
+      }
+      const isActive = wrapperElement.classList.contains('active');
+      
+      // Close all open tooltips
+      const allActive = document.querySelectorAll('.info-tooltip-wrapper.active');
+      allActive.forEach(el => el.classList.remove('active'));
+      
+      // Toggle current one
+      if (!isActive) {
+        wrapperElement.classList.add('active');
+      }
+    }
+
+    // Close tooltips when clicking outside
+    document.addEventListener('click', function(event) {
+      if (!event.target.closest('.info-tooltip-wrapper')) {
+        const allActive = document.querySelectorAll('.info-tooltip-wrapper.active');
+        allActive.forEach(el => el.classList.remove('active'));
+      }
+    });
+
+    // ==========================================
+    // ── BIỂU ĐỒ RADAR CHỈ SỐ Y SINH ──
+    // ==========================================
+    window.myRadarChart = null;
+
+    function initializeRadarChart() {
+      const ctx = document.getElementById('radarChartCanvas');
+      if (!ctx || window.myRadarChart) return;
+      
+      const labels = ['TH', 'AU', 'GN', 'GQ', 'TD', 'CX', 'MD', 'VD'];
+      const initialData = GROUPS.map(group => {
+        const answers = ChecklistApp.state.answers[group.id];
+        if (!answers) return 0;
+        let score = 0;
+        answers.forEach((ticked, index) => {
+          if (ticked) score += (index + 1);
+        });
+        return Math.round((score / 15) * 100);
+      });
+      
+      window.myRadarChart = new Chart(ctx, {
+        type: 'radar',
+        data: {
+          labels: labels,
+          datasets: [{
+            label: 'Tỷ lệ biểu hiện (%)',
+            data: initialData,
+            backgroundColor: 'rgba(255, 209, 84, 0.25)', // light yellow
+            borderColor: '#FFD154', // theme yellow
+            borderWidth: 2,
+            pointBackgroundColor: '#002795', // theme navy
+            pointBorderColor: '#FFD154',
+            pointRadius: 4,
+            pointHoverRadius: 6
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          layout: {
+            padding: 0
+          },
+          plugins: {
+            legend: {
+              display: false
+            },
+            tooltip: {
+              animation: false,
+              callbacks: {
+                title: function(context) {
+                  if (!context || !context.length || !context[0]) return '';
+                  const index = context[0].dataIndex;
+                  const fullNames = [
+                    'Rối loạn tiêu hóa',
+                    'Rối loạn ăn uống',
+                    'Rối loạn giấc ngủ',
+                    'Xử lý giác quan',
+                    'Tăng động - Giảm chú ý',
+                    'Cảm xúc - Hành vi',
+                    'Miễn dịch - Dị ứng',
+                    'Chức năng vận động'
+                  ];
+                  return fullNames[index] || '';
+                },
+                label: function(context) {
+                  if (!context || context.raw === undefined) return '';
+                  return 'Tỷ lệ biểu hiện: ' + context.raw + '%';
+                }
+              }
+            }
+          },
+          scales: {
+            r: {
+              angleLines: {
+                color: 'rgba(255, 255, 255, 0.15)'
+              },
+              grid: {
+                color: 'rgba(255, 255, 255, 0.12)'
+              },
+              pointLabels: {
+                display: true,
+                color: 'rgba(255, 255, 255, 0.85)',
+                font: {
+                  family: 'Quicksand, sans-serif',
+                  size: 10,
+                  weight: '700'
+                }
+              },
+              ticks: {
+                display: false,
+                stepSize: 20
+              },
+              suggestedMin: 0,
+              suggestedMax: 100
+            }
+          }
+        }
+      });
+
+    }
+
+    function updateRadarChartData() {
+      if (!window.myRadarChart) return;
+      
+      const percentages = GROUPS.map(group => {
+        const answers = ChecklistApp.state.answers[group.id];
+        if (!answers) return 0;
+        let score = 0;
+        answers.forEach((ticked, index) => {
+          if (ticked) score += (index + 1);
+        });
+        return Math.round((score / 15) * 100);
+      });
+      
+      window.myRadarChart.data.datasets[0].data = percentages;
+      window.myRadarChart.update();
+    }
+
+    // ==========================================
+    // ── DEBUG CONTROLLER (ModuleDebug) ──
+    // ==========================================
+    const ModuleDebug = {
+      activeScreen: 'survey',
+
+      init() {
+        const debugHtml = `
+          <div id="debug-floating-panel" style="position: fixed; bottom: 20px; right: 20px; z-index: 999999; width: 320px; background: rgba(15, 23, 42, 0.95); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.15); border-radius: 16px; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.4); padding: 16px; font-family: system-ui, -apple-system, sans-serif; color: #f1f5f9; font-size: 13px; transition: all 0.3s ease;">
+            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 8px; margin-bottom: 12px;">
+              <strong style="color: #fbbf24; font-size: 14px; display: flex; align-items: center; gap: 6px;">🛠️ DEBUG PANEL</strong>
+              <button onclick="ModuleDebug.toggleMinimize()" style="background: none; border: none; color: #94a3b8; cursor: pointer; font-size: 16px;">➖</button>
+            </div>
+            <div id="debug-panel-content">
+              <div style="margin-bottom: 12px;">
+                <div style="font-weight: 600; color: #38bdf8; margin-bottom: 6px;">BẬT/TẮT MÀN HÌNH:</div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px;">
+                  <button onclick="ModuleDebug.showScreen('hero')" class="debug-btn" id="db-btn-hero">1. Intro/Hero</button>
+                  <button onclick="ModuleDebug.showScreen('info')" class="debug-btn" id="db-btn-info">2. Thông tin con</button>
+                  <button onclick="ModuleDebug.showScreen('survey')" class="debug-btn" id="db-btn-survey">3. Checklist</button>
+                  <button onclick="ModuleDebug.showScreen('parent')" class="debug-btn" id="db-btn-parent">4. Nhận kết quả</button>
+                </div>
+              </div>
+              <div style="margin-bottom: 12px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px;">
+                <div style="font-weight: 600; color: #34d399; margin-bottom: 6px;">TIỆN ÍCH NHANH:</div>
+                <div style="display: flex; flex-direction: column; gap: 6px;">
+                  <button onclick="ModuleDebug.autoFillForms()" style="background: #059669; color: white; border: none; padding: 8px 12px; border-radius: 8px; font-weight: bold; cursor: pointer; text-align: center; transition: all 0.2s;">⚡ Điền nhanh thông tin</button>
+                  <button onclick="ModuleDebug.autoCheckRandom()" style="background: #2563eb; color: white; border: none; padding: 8px 12px; border-radius: 8px; font-weight: bold; cursor: pointer; text-align: center; transition: all 0.2s;">🎲 Chọn ngẫu nhiên Checklist</button>
+                </div>
+              </div>
+              <div style="margin-bottom: 12px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px;">
+                <div style="font-weight: 600; color: #fb7185; margin-bottom: 6px;">XEM TRƯỚC MẪU (SLUG & MAIL):</div>
+                <div style="display: flex; flex-direction: column; gap: 6px;">
+                  <button onclick="ModuleDebug.debugViewResult()" style="background: #e11d48; color: white; border: none; padding: 8px 12px; border-radius: 8px; font-weight: bold; cursor: pointer; text-align: center; transition: all 0.2s;">🌐 Xem trang kết quả mẫu</button>
+                  <button onclick="ModuleDebug.previewEmailHtml()" style="background: #7c3aed; color: white; border: none; padding: 8px 12px; border-radius: 8px; font-weight: bold; cursor: pointer; text-align: center; transition: all 0.2s;">📧 Xem trước HTML Email</button>
+                </div>
+              </div>
+              <div style="font-size: 11px; color: #64748b; text-align: center; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 8px;">
+                Nhấp chuột vào các nút để kiểm tra nhanh luồng chạy.
+              </div>
+            </div>
+          </div>
+          <style>
+            .debug-btn {
+              background: rgba(255, 255, 255, 0.08);
+              border: 1px solid rgba(255, 255, 255, 0.1);
+              color: #cbd5e1;
+              padding: 6px;
+              border-radius: 6px;
+              cursor: pointer;
+              font-size: 11px;
+              font-weight: 500;
+              text-align: center;
+              transition: all 0.2s;
+            }
+            .debug-btn:hover {
+              background: rgba(255, 255, 255, 0.15);
+              color: #fff;
+            }
+            .debug-btn.active {
+              background: #e11d48 !important;
+              border-color: #e11d48 !important;
+              color: white !important;
+              font-weight: bold;
+            }
+          </style>
+        `;
+        const div = document.createElement('div');
+        div.innerHTML = debugHtml;
+        document.body.appendChild(div);
+        
+        // Auto show checklist as initial screen
+        this.showScreen('survey');
+      },
+
+      toggleMinimize() {
+        const content = document.getElementById('debug-panel-content');
+        const panel = document.getElementById('debug-floating-panel');
+        if (content.style.display === 'none') {
+          content.style.display = 'block';
+          panel.style.width = '320px';
+        } else {
+          content.style.display = 'none';
+          panel.style.width = '160px';
+        }
+      },
+
+      showScreen(screenId) {
+        const hero = document.getElementById('hero-section');
+        const info = document.getElementById('info-section');
+        const survey = document.getElementById('survey-active-container');
+        const parent = document.getElementById('parent-info-section');
+        const thankyou = document.getElementById('thankyou-section');
+        const surveyPageContainer = document.getElementById('survey-page-container');
+
+        if (hero) hero.style.display = 'none';
+        if (info) info.style.display = 'none';
+        if (survey) survey.style.display = 'none';
+        if (parent) parent.style.display = 'none';
+        if (thankyou) thankyou.style.display = 'none';
+        if (surveyPageContainer) surveyPageContainer.style.display = 'none';
+
+        document.querySelectorAll('.debug-btn').forEach(btn => btn.classList.remove('active'));
+
+        if (screenId === 'hero') {
+          if (hero) hero.style.display = 'block';
+          const btn = document.getElementById('db-btn-hero');
+          if (btn) btn.classList.add('active');
+        } else if (screenId === 'info') {
+          if (surveyPageContainer) surveyPageContainer.style.display = 'block';
+          if (info) info.style.display = 'block';
+          const btn = document.getElementById('db-btn-info');
+          if (btn) btn.classList.add('active');
+        } else if (screenId === 'survey') {
+          if (survey) survey.style.display = 'block';
+          const checklistContainer = document.getElementById('checklist-container');
+          if (checklistContainer) checklistContainer.style.display = 'block';
+          const btn = document.getElementById('db-btn-survey');
+          if (btn) btn.classList.add('active');
+          if (ModuleSurvey && typeof ModuleSurvey.start === 'function') {
+            ModuleSurvey.start();
+          }
+          if (typeof initializeRadarChart === 'function') {
+            initializeRadarChart();
+          }
+          if (typeof updateRadarChartData === 'function') {
+            updateRadarChartData();
+          }
+        } else if (screenId === 'parent') {
+          if (survey) survey.style.display = 'block';
+          if (parent) parent.style.display = 'block';
+          const checklistContainer = document.getElementById('checklist-container');
+          if (checklistContainer) checklistContainer.style.display = 'none';
+          const btn = document.getElementById('db-btn-parent');
+          if (btn) btn.classList.add('active');
+        }
+      },
+
+      autoFillForms() {
+        const fields = {
+          'child-name': 'Nguyễn Khánh An',
+          'child-age': '5',
+          'child-height': '110',
+          'child-weight': '18',
+          'child-therapy': 'Can thiệp ngôn ngữ tuần 3 buổi',
+          'child-supplement': 'DHA, Kẽm, Vitamin D3 K2',
+          'parent-concern': 'Con chậm nói, giao tiếp mắt kém, thỉnh thoảng nhón gót',
+          'parent-name': 'Nguyễn Văn Minh',
+          'parent-phone': '0987654321',
+          'parent-email': 'parent.test@gmail.com'
+        };
+
+        for (const [id, val] of Object.entries(fields)) {
+          const el = document.getElementById(id);
+          if (el) {
+            el.value = val;
+            el.dispatchEvent(new Event('change'));
+            el.dispatchEvent(new Event('input'));
+          }
+        }
+        
+        const genderMale = document.getElementById('gender-male') || document.querySelector('input[value="Nam"]');
+        if (genderMale) {
+          genderMale.checked = true;
+          genderMale.dispatchEvent(new Event('change'));
+        }
+
+        const diagnosisCheckboxes = document.querySelectorAll('#info-section input[type="checkbox"]');
+        if (diagnosisCheckboxes.length > 0) {
+          diagnosisCheckboxes[0].checked = true;
+          diagnosisCheckboxes[0].dispatchEvent(new Event('change'));
+        }
+
+        alert('Đã điền tự động toàn bộ biểu mẫu thông tin thành công!');
+      },
+
+      autoCheckRandom() {
+        if (!ModuleSurvey || !ModuleSurvey.app) return;
+
+        GROUPS.forEach((group, gi) => {
+          group.items.forEach((_, ii) => {
+            const isYes = Math.random() > 0.4;
+            const option = isYes ? 'yes' : 'no';
+            const checkbox = document.getElementById(`opt-${option}-${gi}-${ii}`);
+            if (checkbox) {
+              checkbox.checked = true;
+              ModuleSurvey.toggleItemOption(gi, ii, option, checkbox);
+            }
+          });
+        });
+        
+        alert('Đã tích chọn ngẫu nhiên toàn bộ 40 câu hỏi checklist thành công!');
+      },
+
+      debugViewResult() {
+        if (!ModuleChildInfo.getChildName()) {
+          this.autoFillForms();
+        }
+        const scores = ModuleSurvey.calculateScores();
+        const hasTicked = scores.some(s => s.ticked > 0);
+        if (!hasTicked) {
+          this.autoCheckRandom();
+        }
+
+        const childName = ModuleChildInfo.getChildName();
+        const name = ModuleParentInfo.getParentName() || 'Phụ huynh Test';
+        const phone = ModuleParentInfo.getParentPhone() || '0987654321';
+        const email = ModuleParentInfo.getParentEmail() || 'test@gmail.com';
+        const age = ModuleChildInfo.getChildAge();
+        const diagnosis = ModuleChildInfo.getChildDiagnosis();
+        const therapy = ModuleChildInfo.getChildTherapy();
+        const supplement = ModuleChildInfo.getChildSupplement();
+        const concern = ModuleChildInfo.getParentConcern();
+        const gender = ModuleChildInfo.getChildGender();
+        const height = ModuleChildInfo.getChildHeight();
+        const weight = ModuleChildInfo.getChildWeight();
+
+        const latestScores = ModuleSurvey.calculateScores();
+        const behaviorsByGroup = {};
+        latestScores.forEach(s => {
+            if (s.tickedItems && s.tickedItems.length > 0) {
+                behaviorsByGroup[s.id] = s.tickedItems;
+            }
+        });
+
+        const formData = new FormData();
+        formData.append('action', 'hieucon_dh_submit_checklist');
+        formData.append('user_code', ChecklistApp.state.userCode || Math.floor(10000000 + Math.random() * 90000000).toString());
+        formData.append('child_name', childName);
+        formData.append('parent_name', name);
+        formData.append('parent_phone', phone);
+        formData.append('parent_email', email);
+        formData.append('child_age', age);
+        formData.append('child_diagnosis', diagnosis);
+        formData.append('child_gender', gender);
+        formData.append('child_height', height);
+        formData.append('child_weight', weight);
+        formData.append('child_therapy', therapy);
+        formData.append('child_supplement', supplement);
+        formData.append('parent_concern', concern);
+        formData.append('scores_json', JSON.stringify(latestScores));
+        formData.append('behaviors_json', JSON.stringify(behaviorsByGroup));
+        formData.append('time_spent', 120);
+        formData.append('device_info', navigator.userAgent);
+
+        fetch('<?php echo admin_url('admin-ajax.php'); ?>', {
+            method: 'POST',
+            body: formData
+        })
+        .then(res => res.json())
+        .then(res => {
+            const code = (res && res.data && res.data.user_code) ? res.data.user_code : ChecklistApp.state.userCode;
+            window.open(`<?php echo site_url('/ket-qua-dh?code='); ?>` + code, '_blank');
+        })
+        .catch(err => {
+            window.open(`<?php echo site_url('/ket-qua-dh?code='); ?>` + ChecklistApp.state.userCode, '_blank');
+        });
+      },
+
+      previewEmailHtml() {
+        const scores = ModuleSurvey.calculateScores();
+        let topIssuesHtml = '';
+        let count = 0;
+        scores.forEach(s => {
+          if (count >= 3) return;
+          if (s.pct > 0) {
+            topIssuesHtml += `
+              <li style="margin-bottom: 12px; font-size: 15px; line-height: 1.6;">
+                <strong style="color: #be123c;">🚨 \${s.name}:</strong> 
+                Ghi nhận <strong>\${s.ticked}/\${s.total}</strong> dấu hiệu (\${s.pct}%)
+              </li>`;
+            count++;
+          }
+        });
+        if (!topIssuesHtml) {
+          topIssuesHtml = '<li style="font-size: 15px; color: #475569; font-style: italic;">Chưa ghi nhận dấu hiệu bất thường nổi bật nào.</li>';
+        }
+
+        const userCode = ChecklistApp.state.userCode || '12345678';
+        const resultUrl = `${window.location.origin}/ket-qua-dh?code=\${userCode}`;
+        const parentName = ModuleParentInfo.getParentName() || 'Nguyễn Văn A';
+        const childName = ModuleChildInfo.getChildName() || 'Bé An';
+        const childAge = ModuleChildInfo.getChildAge() || '5 tuổi';
+        const childGender = ModuleChildInfo.getChildGender() || 'Bé trai';
+
+        const emailHtml = `
+          <!DOCTYPE html>
+          <html>
+          <body style="margin: 0; padding: 20px; background-color: #f1f5f9; font-family: system-ui, -apple-system, sans-serif;">
+            <div style="max-width: 600px; margin: 0 auto 10px; background: #0f172a; padding: 12px; border-radius: 8px; text-align: center; font-weight: bold; color: #fbbf24; font-family: sans-serif; font-size: 13px; border: 1px solid rgba(255,255,255,0.15);">
+              📧 ĐANG XEM TRƯỚC GIAO DIỆN EMAIL GỬI KHÁCH HÀNG (MOCKUP)
+            </div>
+            <table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px; margin: 0 auto; background-color: #ffffff; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.05); border: 1px solid #e2e8f0;">
+                <tr>
+                    <td bgcolor="#002795" style="padding: 32px 24px; text-align: center;">
+                        <h1 style="color: #ffffff; margin: 0; font-size: 22px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; font-family: sans-serif;">Hiểu Con Từ Gốc</h1>
+                        <p style="color: #FFD154; margin: 8px 0 0 0; font-size: 14px; font-weight: 600; font-family: sans-serif;">KẾT QUẢ PHÂN TÍCH CHECKLIST HÀNH VI</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding: 32px 24px; font-family: sans-serif;">
+                        <p style="font-size: 16px; line-height: 1.6; color: #1e293b; margin: 0 0 16px 0;">Chào bạn <strong>\${parentName}</strong>,</p>
+                        <p style="font-size: 15px; line-height: 1.6; color: #334155; margin: 0 0 24px 0;">Cảm ơn bạn đã tin tưởng thực hiện bảng khảo sát checklist hành vi của trẻ trên hệ thống <strong>Hiểu Con Từ Gốc</strong> cho bé <strong>\${childName}</strong> (\${childAge}, \${childGender}).</p>
+                        
+                        <div style="background-color: #fff1f2; border: 1px dashed #fda4af; border-radius: 12px; padding: 20px; margin-bottom: 28px;">
+                            <h3 style="margin: 0 0 14px 0; color: #be123c; font-size: 16px; font-weight: 700; font-family: sans-serif;">🚨 Nhóm vấn đề cần ưu tiên hỗ trợ sớm:</h3>
+                            <ul style="margin: 0; padding-left: 20px; color: #4c0519;">
+                                \${topIssuesHtml}
+                            </ul>
+                        </div>
+                        
+                        <p style="font-size: 15px; line-height: 1.6; color: #334155; margin: 0 0 16px 0;">Để xem báo cáo phân tích đầy đủ và chi tiết cho tất cả 8 nhóm dấu hiệu cũng như danh sách từng biểu hiện cụ thể được ghi nhận, bạn vui lòng nhấp vào nút liên kết dưới đây:</p>
+                        
+                        <div style="text-align: center; margin: 28px 0;">
+                            <a href="\${resultUrl}" target="_blank" style="display: inline-block; background-color: #f05a25; color: #ffffff; font-weight: 700; font-size: 15px; padding: 14px 32px; text-decoration: none; border-radius: 10px; box-shadow: 0 4px 6px rgba(240, 90, 37, 0.25); font-family: sans-serif;">XEM CHI TIẾT KẾT QUẢ PHÂN TÍCH</a>
+                        </div>
+                        
+                        <p style="font-size: 14px; line-height: 1.6; color: #64748b; margin: 24px 0 0 0; border-top: 1px solid #e2e8f0; padding-top: 16px; font-style: italic; font-family: sans-serif;">
+                            <strong>Mẹo:</strong> Bạn có thể sao chép liên kết của nút trên để gửi trực tiếp cho chuyên gia tư vấn trong buổi trao đổi tiếp theo của mình.
+                        </p>
+                    </td>
+                </tr>
+                <tr>
+                    <td bgcolor="#f8fafc" style="padding: 24px; border-top: 1px solid #e2e8f0; border-bottom: 1px solid #e2e8f0; font-family: sans-serif;">
+                        <h4 style="margin: 0 0 10px 0; color: #002795; font-size: 14px; font-weight: 700; text-transform: uppercase;">💬 Tư vấn chuyên môn miễn phí:</h4>
+                        <p style="margin: 0 0 12px 0; font-size: 13.5px; line-height: 1.5; color: #475569;">Đội ngũ trợ lý chuyên gia sẽ liên hệ tư vấn giải thích chi tiết báo cáo và định hướng hướng can thiệp tối ưu nhất từ gốc cho bé hoàn toàn miễn phí.</p>
+                        <p style="margin: 0; font-size: 14px; color: #1e293b; font-weight: 600;">Hỗ trợ Zalo/Call: <a href="tel:0988717107" style="color: #f05a25; text-decoration: none;">0988.71.71.07</a></p>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding: 24px; text-align: center; font-size: 12px; color: #94a3b8; line-height: 1.6; font-family: sans-serif;">
+                        <strong>Lưu ý quan trọng:</strong> Kết quả trên được phân tích dựa trên phản hồi chủ quan của cha mẹ và chỉ mang tính tham khảo, không có giá trị thay thế chẩn đoán y khoa chuyên nghiệp.<br><br>
+                        © ${new Date().getFullYear()} Hiểu Con Từ Gốc | <a href="${window.location.origin}" style="color: #002795; text-decoration: none;">dawnbridge.care</a>
+                    </td>
+                </tr>
+            </table>
+          </body>
+          </html>`;
+        
+        const win = window.open("", "_blank");
+        win.document.write(emailHtml);
+        win.document.close();
+      }
+    };
+
+    // ==========================================
+    // ── DOM READY INITIALIZATION ──
+    // ==========================================
+    document.addEventListener('DOMContentLoaded', () => {
+      ChecklistApp.init();
+      // ModuleDebug.init();
+    });
   </script>
 </div>
 <?php get_footer(); ?>

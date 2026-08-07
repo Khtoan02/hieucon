@@ -28,6 +28,13 @@ if (!$current_member) {
     exit;
 }
 
+if (function_exists('hieucon_debug_log')) {
+    hieucon_debug_log("Account Page Access: Member ID: " . $current_member->id . 
+                      ", role: " . $current_member->role . 
+                      ", unlocked_all: " . (hieucon_member_has_unlocked_all($current_member->id) ? 'YES' : 'NO') . 
+                      ", enrolled_ebooks: " . json_encode(hieucon_get_member_enrolled_ebooks($current_member->id)));
+}
+
 get_header();
 
 $turnstile_sitekey = ''; // get_option( 'hieucon_turnstile_sitekey', '' );
@@ -220,8 +227,7 @@ $ref_nonce = wp_create_nonce('hieucon_ref_nonce');
                         $enrolled_ids = [];
                     }
 
-                    $has_unlocked_all = hieucon_member_has_unlocked_all($current_member->id);
-                    $is_privileged = in_array($current_member->role, ['administrator', 'teacher', 'expert']) || current_user_can('manage_options') || $has_unlocked_all;
+                    $is_privileged = in_array($current_member->role, ['administrator', 'teacher', 'expert']) || current_user_can('manage_options');
 
                     if (empty($enrolled_ids) && !$is_privileged) {
                         ?>
