@@ -51,5 +51,4 @@ include get_template_directory() . '/page-templates/parts-checklist/result-page.
 // Include Javascript modules and initialization
 include get_template_directory() . '/page-templates/parts-checklist/scripts.php';
 ?>
-</div>
 <?php get_footer(); ?>

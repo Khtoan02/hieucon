@@ -709,24 +709,6 @@
     },
 
     completeSurvey() {
-      // Auto-fill unanswered questions with "No" (Không)
-      GROUPS.forEach((group, gi) => {
-        group.items.forEach((item, ii) => {
-          const yesChecked = document.getElementById(`opt-yes-${gi}-${ii}`)?.checked;
-          const noChecked = document.getElementById(`opt-no-${gi}-${ii}`)?.checked;
-          if (!yesChecked && !noChecked) {
-            const noInput = document.getElementById(`opt-no-${gi}-${ii}`);
-            if (noInput) {
-              noInput.checked = true;
-              noInput.closest('.check-opt-label').classList.add('checked');
-              this.app.state.answers[group.id][ii] = false;
-            }
-          }
-        });
-        this.updateGroupScore(gi);
-        this.checkGroupCompletion(gi);
-      });
-
       // Recalculate and update Radar Chart to ensure it has all values!
       if (window.myRadarChart) {
         const newData = GROUPS.map(group => {
@@ -1290,11 +1272,10 @@
       GROUPS.forEach((group, gi) => {
         group.items.forEach((_, ii) => {
           const isYes = Math.random() > 0.4;
-          const option = isYes ? 'yes' : 'no';
-          const checkbox = document.getElementById(`opt-${option}-${gi}-${ii}`);
+          const checkbox = document.getElementById(`opt-yes-${gi}-${ii}`);
           if (checkbox) {
-            checkbox.checked = true;
-            ModuleSurvey.toggleItemOption(gi, ii, option, checkbox);
+            checkbox.checked = isYes;
+            ModuleSurvey.toggleItemCheckbox(gi, ii, checkbox);
           }
         });
       });
