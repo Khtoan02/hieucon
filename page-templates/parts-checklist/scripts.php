@@ -1495,6 +1495,7 @@
     const parentInfo = document.getElementById('parent-info-section');
     const thankyou = document.getElementById('thankyou-section');
     const progressWrap = document.getElementById('progress-wrap');
+    const resultPage = document.getElementById('result-page');
 
     if (urlParams.has('start')) {
       if (hero) hero.style.display = 'none';
@@ -1503,6 +1504,7 @@
       if (parentInfo) parentInfo.style.display = 'none';
       if (thankyou) thankyou.style.display = 'none';
       if (progressWrap) progressWrap.style.display = 'none';
+      if (resultPage) resultPage.style.display = 'none';
     } else {
       if (hero) hero.style.display = 'block';
       if (childInfo) childInfo.style.display = 'none';
@@ -1510,6 +1512,7 @@
       if (parentInfo) parentInfo.style.display = 'none';
       if (thankyou) thankyou.style.display = 'none';
       if (progressWrap) progressWrap.style.display = 'none';
+      if (resultPage) resultPage.style.display = 'none';
     }
   });
 </script>

@@ -1,5 +1,5 @@
 <!-- RESULT PAGE -->
-<div id="result-page">
+<div id="result-page" style="display:none;">
   <div class="result-hero">
     <div style="font-size:48px;margin-bottom:16px;">📋</div>
     <h2>Bản Ghi Nhận Dấu Hiệu (Checklist)</h2>
