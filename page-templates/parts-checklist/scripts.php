@@ -639,10 +639,8 @@
 
       const isCompleted = this.isGroupCompleted(gi);
       if (isCompleted) {
-        section.classList.add('completed-group');
         this.app.state.completedGroups.add(gi);
       } else {
-        section.classList.remove('completed-group');
         this.app.state.completedGroups.delete(gi);
       }
       this.updateProgress();
