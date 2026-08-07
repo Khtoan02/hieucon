@@ -1421,7 +1421,6 @@
   .check-opt-label.checked .check-opt-box::after {
     display: block;
   }
-</style>
 
 /* Hide progress wrap as requested */
 #progress-wrap {
@@ -1525,3 +1524,4 @@
   .custom-survey-checkbox:checked + .custom-checkbox-box .checkmark-icon {
     stroke-dashoffset: 0;
   }
+</style>
