@@ -425,7 +425,7 @@
       initializeRadarChart();
 
       // Hiển thị thanh tiến trình và kích hoạt ModuleSurvey
-      document.getElementById('progress-wrap').style.display = 'block';
+      document.getElementById('progress-wrap').style.display = 'none';
       ModuleSurvey.start();
     }
   };
