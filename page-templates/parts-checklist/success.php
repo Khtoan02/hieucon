@@ -7,25 +7,17 @@
   <h2 style="font-family:'Oswald', sans-serif; font-size:28px; color:var(--navy); margin-bottom:16px;">Đã gửi kết quả
     thành công!</h2>
   <p style="font-size:16px; color:var(--charcoal); max-width:540px; margin:0 auto 24px; line-height:1.7;">
-    Kết quả phân tích 8 nhóm dấu hiệu của con đã được gửi tới hòm thư của cha mẹ tại <strong id="sent-email-display"
+    Kết quả phân tích 8 nhóm dấu hiệu của con đã được gửi tới hòm thư của ba mẹ tại <strong id="sent-email-display"
       style="color:var(--navy);">[email]</strong>.
   </p>
   <p style="font-size:14px; color:#64748b; max-width:500px; margin:0 auto 32px; line-height:1.6; font-style:italic;">
-    Cha mẹ vui lòng kiểm tra hộp thư đến (Inbox). Nếu không tìm thấy thư trong vòng 3-5 phút, vui lòng kiểm tra thêm thư
+    Ba mẹ vui lòng kiểm tra hộp thư đến (Inbox). Nếu không tìm thấy thư trong vòng 3-5 phút, vui lòng kiểm tra thêm thư
     mục <strong>Spam (Thư rác)</strong> hoặc <strong>Promotions (Quảng cáo)</strong>.
   </p>
   <div style="display:flex; justify-content:center; gap:16px; flex-wrap:wrap;">
-    <a href="https://zalo.me/0988717107" target="_blank" rel="noopener" class="btn btn-primary"
+    <a href="https://zalo.me/0985391881" target="_blank" rel="noopener" class="btn btn-primary"
       style="display:inline-flex; align-items:center; justify-content:center; text-decoration:none; padding:14px 28px; font-weight:700; background:var(--navy); color:var(--white); border-radius:10px; font-size:15px; font-family:'Quicksand', sans-serif;">
       📞 Kết nối chuyên gia qua Zalo
-    </a>
-    <a href="https://mail.google.com/mail/u/0/#inbox" target="_blank" rel="noopener" class="btn btn-secondary"
-      style="display:inline-flex; align-items:center; justify-content:center; text-decoration:none; padding:14px 28px; font-weight:700; background:#f1f5f9; color:#334155; border:1px solid #cbd5e1; border-radius:10px; font-size:15px; font-family:'Quicksand', sans-serif; transition: background 0.2s;">
-      📬 Kiểm tra Hòm thư đến (Inbox)
-    </a>
-    <a href="https://mail.google.com/mail/u/0/#spam" target="_blank" rel="noopener" class="btn btn-secondary"
-      style="display:inline-flex; align-items:center; justify-content:center; text-decoration:none; padding:14px 28px; font-weight:700; background:#fff1f2; color:#be123c; border:1px solid #fecdd3; border-radius:10px; font-size:15px; font-family:'Quicksand', sans-serif; transition: background 0.2s;">
-      📁 Kiểm tra Hòm thư Spam
     </a>
   </div>
 </div>

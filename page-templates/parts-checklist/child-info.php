@@ -34,7 +34,7 @@
               <div
                 style="color: var(--navy); font-weight:800; width:24px; height:24px; display:flex; align-items:center; justify-content:center; border-radius:50%; background: var(--yellow); margin-top:2px; font-size: 11px;"
                 class="shrink-0">3</div>
-              <p class="m-0" style="margin:0; font-weight:500;">Điền thông tin liên hệ của phụ huynh để nhận kết quả
+              <p class="m-0" style="margin:0; font-weight:500;">Điền thông tin liên hệ của ba mẹ để nhận kết quả
                 phân tích gửi qua email.</p>
             </div>
           </div>
@@ -62,7 +62,7 @@
         <div class="desktop-only-widget sidebar-widget-card-white">
           <!-- Nút: Cộng đồng Facebook -->
           <a href="https://www.facebook.com/groups/tukylaroiloantoanthan" target="_blank" rel="noopener noreferrer"
-            title="Cộng Đồng Cha Mẹ"
+            title="Cộng Đồng Ba Mẹ"
             class="flex items-center justify-center gap-2 bg-gradient-to-br from-[#1877F2] to-[#0A58CA] hover:from-[#1464CC] hover:to-[#084298] text-white px-3.5 py-2.5 rounded-xl font-bold text-xs transition-all duration-300 shadow-[0_4px_12px_rgba(24,119,242,0.25)] hover:shadow-[0_6px_16px_rgba(24,119,242,0.35)] hover:-translate-y-0.5 border border-white/10 group w-full text-center"
             aria-label="Cộng đồng Facebook" style="text-decoration:none; display:flex;">
             <svg viewBox="0 0 320 512" style="width:14px; height:14px; fill:currentColor;"
@@ -250,8 +250,8 @@
             </div>
           </div>
           <div class="form-group">
-            <label>Điều cha mẹ lo lắng nhất về con hiện tại là gì?</label>
-            <textarea id="parent-concern" placeholder="Chia sẻ ngắn gọn điều khiến cha mẹ trăn trở nhất..."></textarea>
+            <label>Điều ba mẹ lo lắng nhất về con hiện tại là gì?</label>
+            <textarea id="parent-concern" placeholder="Chia sẻ ngắn gọn điều khiến ba mẹ trăn trở nhất..."></textarea>
           </div>
           <div class="nav-buttons" style="justify-content:center;">
             <button class="btn btn-primary" onclick="startChecklist()">Bắt đầu kiểm tra →</button>
@@ -284,7 +284,7 @@
           <div class="sidebar-widget-card-white">
             <!-- Nút: Cộng đồng Facebook -->
             <a href="https://www.facebook.com/groups/tukylaroiloantoanthan" target="_blank" rel="noopener noreferrer"
-              title="Cộng Đồng Cha Mẹ"
+              title="Cộng Đồng Ba Mẹ"
               class="flex items-center justify-center gap-2 bg-gradient-to-br from-[#1877F2] to-[#0A58CA] hover:from-[#1464CC] hover:to-[#084298] text-white px-3.5 py-2.5 rounded-xl font-bold text-xs transition-all duration-300 shadow-[0_4px_12px_rgba(24,119,242,0.25)] hover:shadow-[0_6px_16px_rgba(24,119,242,0.35)] hover:-translate-y-0.5 border border-white/10 group w-full text-center"
               aria-label="Cộng đồng Facebook" style="text-decoration:none; display:flex;">
               <svg viewBox="0 0 320 512" style="width:14px; height:14px; fill:currentColor;"

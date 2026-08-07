@@ -60,9 +60,9 @@
         <!-- OPEN-ENDED & SUBMIT SECTION (Outside Groups) -->
         <div id="survey-completion-section" style="display: none; margin-top: 32px;">
           <div class="open-section">
-            <label>Triệu chứng khác cha mẹ muốn chia sẻ thêm (không bắt buộc)</label>
+            <label>Triệu chứng khác ba mẹ muốn chia sẻ thêm (không bắt buộc)</label>
             <textarea id="extra-symptoms"
-              placeholder="Ghi thêm bất kỳ dấu hiệu nào cha mẹ quan sát được ở con..."></textarea>
+              placeholder="Ghi thêm bất kỳ dấu hiệu nào ba mẹ quan sát được ở con..."></textarea>
           </div>
           <div class="flex justify-end mt-8">
             <button type="button" class="btn btn-submit" id="btn-show-parent-info"
@@ -128,7 +128,7 @@
       </button>
       <h3 class="font-bold text-sm mb-3 text-yellow font-oswald tracking-wide uppercase text-center w-full"
         style="color: var(--yellow); margin-bottom: 12px; font-weight:700; font-family: 'Oswald', sans-serif; font-size: 15px; letter-spacing: 0.03em;">
-        📊 Tổng quan dấu hiệu cha mẹ ghi nhận
+        📊 Tổng quan dấu hiệu ba mẹ ghi nhận
       </h3>
       <div style="position: relative; width: 100%; height: 280px;">
         <canvas id="radarChartCanvas"></canvas>
@@ -155,7 +155,7 @@
     <div class="sidebar-widget-card-white">
       <!-- Nút: Cộng đồng Facebook -->
       <a href="https://www.facebook.com/groups/tukylaroiloantoanthan" target="_blank" rel="noopener noreferrer"
-        title="Cộng Đồng Cha Mẹ"
+        title="Cộng Đồng Ba Mẹ"
         class="flex items-center justify-center gap-2 bg-gradient-to-br from-[#1877F2] to-[#0A58CA] hover:from-[#1464CC] hover:to-[#084298] text-white px-3.5 py-2.5 rounded-xl font-bold text-xs transition-all duration-300 shadow-[0_4px_12px_rgba(24,119,242,0.25)] hover:shadow-[0_6px_16px_rgba(24,119,242,0.35)] hover:-translate-y-0.5 border border-white/10 group w-full text-center"
         aria-label="Cộng đồng Facebook" style="text-decoration:none; display:flex;">
         <svg viewBox="0 0 320 512" style="width:12px; height:12px; fill:currentColor;"

@@ -8,8 +8,8 @@
           </div>
 
           <div class="form-group" style="margin-bottom: 20px;">
-            <label>Tên cha / mẹ *</label>
-            <input type="text" id="parent-name" placeholder="Họ và tên phụ huynh" required
+            <label>Tên ba mẹ *</label>
+            <input type="text" id="parent-name" placeholder="Họ và tên ba mẹ" required
               style="padding:14px 16px; font-size:15px; font-weight:600; width:100%; border:1.5px solid var(--border); border-radius:10px; font-family:'Quicksand', sans-serif; background:var(--cream); outline:none;">
           </div>
 

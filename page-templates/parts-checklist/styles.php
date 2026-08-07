@@ -1524,4 +1524,20 @@
   .custom-survey-checkbox:checked + .custom-checkbox-box .checkmark-icon {
     stroke-dashoffset: 0;
   }
+
+  /* Force unified background color on the entire page */
+  body {
+    background-color: var(--cream) !important;
+    background: var(--cream) !important;
+  }
+
+  .landing-checklist-wrapper {
+    min-height: 100vh !important;
+    background-color: var(--cream) !important;
+    background: var(--cream) !important;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+
 </style>
