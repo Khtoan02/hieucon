@@ -1735,8 +1735,11 @@ get_header();
                      <a href="https://zalo.me/0988717107" target="_blank" rel="noopener" class="btn btn-primary" style="display:inline-flex; align-items:center; justify-content:center; text-decoration:none; padding:14px 28px; font-weight:700; background:var(--navy); color:var(--white); border-radius:10px; font-size:15px; font-family:'Quicksand', sans-serif;">
                        📞 Kết nối chuyên gia qua Zalo
                      </a>
-                     <a href="/" class="btn btn-secondary" style="display:inline-flex; align-items:center; justify-content:center; text-decoration:none; padding:14px 28px; font-weight:700; background:#f1f5f9; color:#334155; border:1px solid #cbd5e1; border-radius:10px; font-size:15px; font-family:'Quicksand', sans-serif; transition: background 0.2s;">
-                       Quay lại trang chủ
+                     <a href="https://mail.google.com/mail/u/0/#inbox" target="_blank" rel="noopener" class="btn btn-secondary" style="display:inline-flex; align-items:center; justify-content:center; text-decoration:none; padding:14px 28px; font-weight:700; background:#f1f5f9; color:#334155; border:1px solid #cbd5e1; border-radius:10px; font-size:15px; font-family:'Quicksand', sans-serif; transition: background 0.2s;">
+                       📬 Kiểm tra Hòm thư đến (Inbox)
+                     </a>
+                     <a href="https://mail.google.com/mail/u/0/#spam" target="_blank" rel="noopener" class="btn btn-secondary" style="display:inline-flex; align-items:center; justify-content:center; text-decoration:none; padding:14px 28px; font-weight:700; background:#fff1f2; color:#be123c; border:1px solid #fecdd3; border-radius:10px; font-size:15px; font-family:'Quicksand', sans-serif; transition: background 0.2s;">
+                       📁 Kiểm tra Hòm thư Spam
                      </a>
                    </div>
                  </div>
