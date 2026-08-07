@@ -4,7 +4,7 @@
  * 
  * @package Hieucon
  */
-$is_start = false; // Bỏ qua màn hình intro, mặc định vào thẳng checklist để debug
+$is_start = isset($_GET['start']);
 get_header();
 ?>
 
