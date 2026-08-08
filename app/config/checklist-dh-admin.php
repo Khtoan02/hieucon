@@ -798,6 +798,16 @@ function hieucon_dh_public_checklist_result() {
                                         <div style="height:6px; background:#f1f5f9; border-radius:6px; overflow:hidden;">
                                             <div style="height:100%; width:<?php echo intval($sg['pct']); ?>%; background:<?php echo $bar_color; ?>; border-radius:6px;"></div>
                                         </div>
+                                        <?php 
+                                        $group_descs = hieucon_dh_get_group_descriptions();
+                                        $id_or_name = !empty($sg['id']) ? $sg['id'] : $sg['name'];
+                                        $desc = isset($group_descs[$id_or_name]) ? $group_descs[$id_or_name] : '';
+                                        if ($desc): 
+                                        ?>
+                                            <div style="font-size:12px; color:#475569; line-height:1.5; margin-top:8px; border-top:1px dashed #fecaca; padding-top:8px; text-align:left;">
+                                                <?php echo esc_html($desc); ?>
+                                            </div>
+                                        <?php endif; ?>
                                     </div>
                                 <?php 
                                     $count++;
@@ -1116,25 +1126,7 @@ function hieucon_send_checklist_email($user_code, $parent_name, $parent_email, $
         return $b['pct'] <=> $a['pct'];
     });
     
-    $group_descs = [
-        'tieuHoa'  => 'Tình trạng đường ruột và các vấn đề về tiêu hóa hàng ngày',
-        'anUong'   => 'Các hành vi kén ăn, nhạy cảm thực phẩm và khó khăn trong bữa ăn',
-        'giacNgu'  => 'Tình trạng giấc ngủ và nhịp sinh học của trẻ',
-        'camGiac'  => 'Cách trẻ tiếp nhận và phản ứng với các kích thích từ môi trường',
-        'tangDong' => 'Mức độ hoạt động, khả năng tập trung và tự kiểm soát của trẻ',
-        'camXuc'   => 'Khả năng điều tiết cảm xúc, lo âu và các phản ứng khi khủng hoảng',
-        'mienDich' => 'Tình trạng đề kháng, phản ứng viêm và các nhạy cảm thể chất',
-        'vanDong'  => 'Phối hợp vận động thô/tinh và các hoạt động tự phục vụ của trẻ',
-        // Fallbacks by Name
-        'Rối loạn tiêu hóa' => 'Tình trạng đường ruột và các vấn đề về tiêu hóa hàng ngày',
-        'Rối loạn ăn uống'  => 'Các hành vi kén ăn, nhạy cảm thực phẩm và khó khăn trong bữa ăn',
-        'Rối loạn giấc ngủ' => 'Tình trạng giấc ngủ và nhịp sinh học của trẻ',
-        'Xử lý giác quan'    => 'Cách trẻ tiếp nhận và phản ứng với các kích thích từ môi trường',
-        'Tăng động - Giảm chú ý' => 'Mức độ hoạt động, khả năng tập trung và tự kiểm soát của trẻ',
-        'Cảm xúc - Hành vi'  => 'Khả năng điều tiết cảm xúc, lo âu và các phản ứng khi khủng hoảng',
-        'Miễn dịch - Dị ứng' => 'Tình trạng đề kháng, phản ứng viêm và các nhạy cảm thể chất',
-        'Chức năng vận động' => 'Phối hợp vận động thô/tinh và các hoạt động tự phục vụ của trẻ',
-    ];
+    $group_descs = hieucon_dh_get_group_descriptions();
     
     $top_issues_html = '';
     $count = 0;
@@ -1167,4 +1159,29 @@ function hieucon_send_checklist_email($user_code, $parent_name, $parent_email, $
     $message = ob_get_clean();
     $headers = array('Content-Type: text/html; charset=UTF-8');
     wp_mail($parent_email, $subject, $message, $headers);
+}
+
+// 7. Group Descriptions Helper
+function hieucon_dh_get_group_descriptions() {
+    return [
+        'tieuHoa'  => 'Sức khỏe hệ tiêu hóa là nền tảng quan trọng giúp trẻ phát triển thể chất, ổn định hành vi và nâng cao hiệu quả can thiệp. Rối loạn tiêu hóa ảnh hưởng trực tiếp đến dinh dưỡng, giấc ngủ, cảm xúc, khả năng học tập, hành vi của trẻ.',
+        'anUong'   => 'Tình trạng rối loạn ăn uống kéo dài có thể dẫn đến thiếu hụt dinh dưỡng, chậm tăng trưởng, suy giảm thể lực, đồng thời làm gia tăng căng thẳng, hành vi chống đối và khó khăn trong sinh hoạt gia đình.',
+        'giacNgu'  => 'Rối loạn giấc ngủ khiến trẻ có nhu cầu đặc biệt dễ mệt mỏi, cáu gắt, giảm tập trung và gia tăng hành vi thách thức. Giấc ngủ chất lượng là nền tảng giúp não bộ phục hồi, củng cố khả năng học tập và nâng cao hiệu quả can thiệp.',
+        'camGiac'  => 'Rối loạn xử lý giác quan ảnh hưởng đến cảm xúc, hành vi, khả năng tập trung và mức độ tham gia của trẻ trong học tập, vui chơi và sinh hoạt hằng ngày.',
+        'tangDong' => 'Rối loạn tăng động - giảm chú ý ảnh hưởng trực tiếp tới sức khỏe tâm - thân - trí của trẻ, khiến trẻ khó khăn trong học tập và hòa nhập, khó kiểm soát hành vi, cảm xúc và tương tác xã hội.',
+        'mienDich' => 'Miễn dịch dị ứng ảnh hưởng đến đa cơ quan- tiêu hóa, hệ thần kinh, ảnh hưởng đến giấc ngủ, giảm tập trung và ảnh hưởng đến khả năng học tập, sinh hoạt của trẻ.',
+        'vanDong'  => 'Chức năng vận động là nền tảng giúp trẻ giữ thăng bằng, phối hợp cơ thể và thực hiện các hoạt động hằng ngày. Khó khăn về vận động có thể hạn chế khả năng tự lập, vui chơi, học tập và hòa nhập xã hội của trẻ.',
+        'camXuc'   => 'Khó khăn trong điều hòa cảm xúc khiến trẻ dễ lo âu, cáu gắt, bùng nổ, hạn chế khả năng giao tiếp xã hội, ảnh hưởng đến khả năng giao tiếp, học tập và sinh hoạt.',
+        
+        // Fallbacks by exact Vietnamese names to be absolutely robust
+        'Rối loạn tiêu hóa' => 'Sức khỏe hệ tiêu hóa là nền tảng quan trọng giúp trẻ phát triển thể chất, ổn định hành vi và nâng cao hiệu quả can thiệp. Rối loạn tiêu hóa ảnh hưởng trực tiếp đến dinh dưỡng, giấc ngủ, cảm xúc, khả năng học tập, hành vi của trẻ.',
+        'Rối loạn ăn uống'  => 'Tình trạng rối loạn ăn uống kéo dài có thể dẫn đến thiếu hụt dinh dưỡng, chậm tăng trưởng, suy giảm thể lực, đồng thời làm gia tăng căng thẳng, hành vi chống đối và khó khăn trong sinh hoạt gia đình.',
+        'Rối loạn giấc ngủ' => 'Rối loạn giấc ngủ khiến trẻ có nhu cầu đặc biệt dễ mệt mỏi, cáu gắt, giảm tập trung và gia tăng hành vi thách thức. Giấc ngủ chất lượng là nền tảng giúp não bộ phục hồi, củng cố khả năng học tập và nâng cao hiệu quả can thiệp.',
+        'Xử lý giác quan'    => 'Rối loạn xử lý giác quan ảnh hưởng đến cảm xúc, hành vi, khả năng tập trung và mức độ tham gia của trẻ trong học tập, vui chơi và sinh hoạt hằng ngày.',
+        'Rối loạn xử lý giác quan' => 'Rối loạn xử lý giác quan ảnh hưởng đến cảm xúc, hành vi, khả năng tập trung và mức độ tham gia của trẻ trong học tập, vui chơi và sinh hoạt hằng ngày.',
+        'Tăng động - Giảm chú ý' => 'Rối loạn tăng động - giảm chú ý ảnh hưởng trực tiếp tới sức khỏe tâm - thân - trí của trẻ, khiến trẻ khó khăn trong học tập và hòa nhập, khó kiểm soát hành vi, cảm xúc và tương tác xã hội.',
+        'Miễn dịch - Dị ứng' => 'Miễn dịch dị ứng ảnh hưởng đến đa cơ quan- tiêu hóa, hệ thần kinh, ảnh hưởng đến giấc ngủ, giảm tập trung và ảnh hưởng đến khả năng học tập, sinh hoạt của trẻ.',
+        'Chức năng vận động' => 'Chức năng vận động là nền tảng giúp trẻ giữ thăng bằng, phối hợp cơ thể và thực hiện các hoạt động hằng ngày. Khó khăn về vận động có thể hạn chế khả năng tự lập, vui chơi, học tập và hòa nhập xã hội của trẻ.',
+        'Cảm xúc - Hành vi'  => 'Khó khăn trong điều hòa cảm xúc khiến trẻ dễ lo âu, cáu gắt, bùng nổ, hạn chế khả năng giao tiếp xã hội, ảnh hưởng đến khả năng giao tiếp, học tập và sinh hoạt.',
+    ];
 }
