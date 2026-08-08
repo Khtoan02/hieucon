@@ -49,7 +49,7 @@
                             <!-- Streamlined Result Link Section -->
                             <div class="result-compact-box" style="background-color: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 12px; padding: 18px 16px; margin: 16px 0 20px 0; text-align: center;">
                                 <div class="result-compact-text" style="font-size: 13px; line-height: 1.5; color: #334155; margin-bottom: 12px;">
-                                    Kết quả đánh giá của bé đã hoàn tất. Cha mẹ có thể xem chi tiết trực tiếp tại đường link: <br>
+                                    Kết quả đánh giá của bé đã hoàn tất. Quý phụ huynh có thể xem chi tiết trực tiếp tại đường link: <br>
                                     <a href="<?php echo $result_url; ?>" target="_blank" style="color: #0284C7; font-weight: 600; word-break: break-all; text-decoration: underline;"><?php echo $result_url; ?></a>
                                 </div>
                                 <a href="<?php echo $result_url; ?>" class="btn-view-report" target="_blank" style="background-color: #0D2A78; color: #ffffff !important; padding: 12px 24px; text-decoration: none; font-size: 14px; font-weight: 700; border-radius: 8px; display: inline-block; box-shadow: 0 3px 10px rgba(13, 42, 120, 0.2); transition: background-color 0.2s ease;">
@@ -69,7 +69,7 @@
 
                             <!-- Disclaimer Box -->
                             <div class="disclaimer-box" style="background-color: #FAF5FF; border: 1px solid #E9D5FF; border-radius: 8px; padding: 12px 14px; margin-top: 20px; font-size: 11px; color: #6B21A8; line-height: 1.5;">
-                                <strong style="color: #581C87;">⚠️ Lưu ý:</strong> Kết quả từ bộ công cụ mang tính chất tổng hợp thông tin quan sát nhằm hỗ trợ cha mẹ định hướng theo dõi. Đây không phải là kết luận hay chẩn đoán y khoa chính thức.
+                                <strong style="color: #581C87;">⚠️ Lưu ý:</strong> Kết quả từ bộ công cụ mang tính chất tổng hợp thông tin quan sát nhằm hỗ trợ Quý phụ huynh định hướng theo dõi. Đây không phải là kết luận hay chẩn đoán y khoa chính thức.
                             </div>
 
                         </div>

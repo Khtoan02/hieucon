@@ -351,7 +351,6 @@
     background: var(--white);
     border-radius: 20px;
     padding: 40px 48px;
-    margin: 32px auto;
     max-width: 820px;
     box-shadow: var(--shadow);
   }
@@ -392,6 +391,13 @@
   .form-row {
     display: grid;
     grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-bottom: 20px;
+  }
+
+  .form-row-3 {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
     gap: 20px;
     margin-bottom: 20px;
   }
@@ -1366,7 +1372,8 @@
       padding: 28px 20px;
     }
 
-    .form-row {
+    .form-row,
+    .form-row-3 {
       grid-template-columns: 1fr;
     }
 
@@ -1552,6 +1559,24 @@
   }
   .btn-success-nav:active {
     transform: translateY(0px) !important;
+  }
+
+  /* Gender Radio Button Custom Behaviors */
+  .gender-btn-wrapper {
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  }
+  .gender-btn-wrapper:has(input[type="radio"]:checked) {
+    border-color: var(--navy) !important;
+    background: rgba(0, 39, 149, 0.03) !important;
+    box-shadow: 0 4px 12px rgba(0, 39, 149, 0.05) !important;
+  }
+  .gender-btn-wrapper input[type="radio"]:checked ~ .gender-boy-icon {
+    opacity: 1 !important;
+    transform: translateY(-2px) scale(1.2) rotate(15deg) !important;
+  }
+  .gender-btn-wrapper input[type="radio"]:checked ~ .gender-girl-icon {
+    opacity: 1 !important;
+    transform: translateY(-2px) scale(1.2) rotate(-15deg) !important;
   }
 
 </style>

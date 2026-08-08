@@ -16,20 +16,20 @@
 
     <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center relative z-10">
       <div class="text-left flex flex-col justify-center">
-        <h1 class="font-oswald mb-6 text-white tracking-wide uppercase" style="line-height: 1.35;">
-          <span class="block font-bold tracking-wider opacity-90 whitespace-nowrap"
-            style="font-size: clamp(18px, 5.2vw, 30px);">BỘ CÔNG CỤ NHẬN DIỆN CÁC</span>
-          <span class="text-yellow uppercase block my-2 sm:my-2.5 font-black whitespace-nowrap"
-            style="color: var(--yellow); font-size: clamp(24px, 7.6vw, 48px); letter-spacing: 0.02em;">VẤN ĐỀ SỨC
+        <h1 class="font-oswald mb-6 text-white uppercase" style="line-height: 1.4; letter-spacing: 0;">
+          <span class="block font-bold whitespace-nowrap"
+            style="font-size: clamp(18px, 3.2vw, 44px); letter-spacing: 0;">BỘ CÔNG CỤ NHẬN DIỆN CÁC</span>
+          <span class="text-yellow uppercase block my-1 sm:my-1.5 font-bold whitespace-nowrap"
+            style="color: var(--yellow); font-size: clamp(24px, 5.2vw, 72px); letter-spacing: 0;">VẤN ĐỀ SỨC
             KHỎE</span>
-          <span class="block font-bold tracking-wider opacity-90 whitespace-nowrap"
-            style="font-size: clamp(18px, 5.2vw, 30px);">THƯỜNG GẶP Ở TRẺ TỰ KỶ</span>
+          <span class="block font-bold whitespace-nowrap"
+            style="font-size: clamp(18px, 3.2vw, 44px); letter-spacing: 0;">THƯỜNG GẶP Ở TRẺ TỰ KỶ</span>
         </h1>
 
         <p
           class="font-quicksand text-sm sm:text-base leading-relaxed text-[rgba(250,249,246,0.9)] mb-6 font-light max-w-xl">
-          Đằng sau nhiều khó khăn về hành vi có thể là những vấn đề sức khỏe chưa được nhận diện. Bộ công cụ này giúp ba
-          mẹ quan sát nhanh 8 nhóm dấu hiệu thường gặp ở trẻ tự kỷ, từ đó biết nhóm nào cần theo dõi, trao đổi chuyên
+          Đằng sau nhiều khó khăn về hành vi có thể là những vấn đề sức khỏe chưa được nhận diện. Bộ công cụ này giúp phụ
+          huynh quan sát nhanh 8 nhóm dấu hiệu thường gặp ở trẻ tự kỷ, từ đó biết nhóm nào cần theo dõi, trao đổi chuyên
           môn và ưu tiên hỗ trợ trước.
         </p>
 
@@ -75,44 +75,33 @@
           </div>
         </div>
 
-        <!-- Nguồn tham khảo khoa học (Listed directly below the button in a 2-column grid layout) -->
+        <!-- Nguồn tham khảo khoa học (Listed directly below the button in a 1-column layout) -->
         <div
           class="text-left text-white max-w-xl bg-[rgba(255,255,255,0.03)] border border-solid border-[rgba(255,255,255,0.08)] rounded-2xl p-5 shadow-[0_8px_32px_rgba(0,0,0,0.04)]">
-          <h3 class="text-yellow font-bold text-xs uppercase tracking-wider mb-3.5 flex items-center gap-2"
+          <h3 class="text-yellow font-bold text-sm uppercase tracking-wider mb-4 flex items-center gap-2"
             style="color: var(--yellow); font-family: 'Oswald', sans-serif; letter-spacing: 0.05em; margin: 0 0 14px 0;">
-            📖 Nguồn tham khảo đối chứng khoa học:
+            📖 Nguồn tham khảo:
           </h3>
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <ul
-              class="list-none p-0 m-0 flex flex-col gap-3 font-light text-[rgba(250,249,246,0.8)] leading-relaxed text-[11px]"
-              style="display:flex; flex-direction:column; gap:10px; padding-left:0; margin:0; list-style:none;">
-              <li class="flex items-start gap-2" style="display:flex; align-items:start; gap:8px; margin-bottom: 0;">
-                <span style="color: var(--yellow); font-weight: 800; font-size: 12px; line-height: 1;">•</span>
-                <span><strong class="text-yellow" style="color: var(--yellow); font-weight:700;">PSC:</strong> Sàng lọc
-                  hành vi & cảm xúc (trẻ từ 4-16 tuổi).</span>
-              </li>
-              <li class="flex items-start gap-2" style="display:flex; align-items:start; gap:8px; margin-bottom: 0;">
-                <span style="color: var(--yellow); font-weight: 800; font-size: 12px; line-height: 1;">•</span>
-                <span><strong class="text-yellow" style="color: var(--yellow); font-weight:700;">CSHQ:</strong> Sàng lọc
-                  rối loạn giấc ngủ (trẻ 4-12 tuổi).</span>
-              </li>
-            </ul>
-            <ul
-              class="list-none p-0 m-0 flex flex-col gap-3 font-light text-[rgba(250,249,246,0.8)] leading-relaxed text-[11px]"
-              style="display:flex; flex-direction:column; gap:10px; padding-left:0; margin:0; list-style:none;">
-
-              <li class="flex items-start gap-2" style="display:flex; align-items:start; gap:8px; margin-bottom: 0;">
-                <span style="color: var(--yellow); font-weight: 800; font-size: 12px; line-height: 1;">•</span>
-                <span><strong class="text-yellow" style="color: var(--yellow); font-weight:700;">BAMBI:</strong> Khảo
-                  sát hành vi ăn uống tự kỷ (2-11 tuổi).</span>
-              </li>
-              <li class="flex items-start gap-2" style="display:flex; align-items:start; gap:8px; margin-bottom: 0;">
-                <span style="color: var(--yellow); font-weight: 800; font-size: 12px; line-height: 1;">•</span>
-                <span><strong class="text-yellow" style="color: var(--yellow); font-weight:700;">VADRS:</strong> Đánh
-                  giá nguy cơ Tăng động - Giảm chú ý (6-12 tuổi).</span>
-              </li>
-            </ul>
-          </div>
+          <ul
+            class="list-none p-0 m-0 flex flex-col gap-3 font-light text-[rgba(250,249,246,0.9)] leading-relaxed text-[13px]"
+            style="display:flex; flex-direction:column; gap:12px; padding-left:0; margin:0; list-style:none;">
+            <li class="flex items-start gap-2" style="display:flex; align-items:start; gap:8px; margin-bottom: 0;">
+              <span style="color: var(--yellow); font-weight: 800; font-size: 14px; line-height: 1;">•</span>
+              <span><a href="https://www.massgeneral.org/psychiatry/treatments-and-services/pediatric-symptom-checklist/" target="_blank" rel="noopener noreferrer" class="text-yellow hover:underline font-bold" style="color: var(--yellow); text-decoration: underline;">PSC</a>: Sàng lọc hành vi & cảm xúc (trẻ từ 4-16 tuổi).</span>
+            </li>
+            <li class="flex items-start gap-2" style="display:flex; align-items:start; gap:8px; margin-bottom: 0;">
+              <span style="color: var(--yellow); font-weight: 800; font-size: 14px; line-height: 1;">•</span>
+              <span><a href="https://site.thoracic.org/assemblies/srn/sleep-related-questionnaires/cshq" target="_blank" rel="noopener noreferrer" class="text-yellow hover:underline font-bold" style="color: var(--yellow); text-decoration: underline;">CSHQ</a>: Sàng lọc rối loạn giấc ngủ (trẻ 4-12 tuổi).</span>
+            </li>
+            <li class="flex items-start gap-2" style="display:flex; align-items:start; gap:8px; margin-bottom: 0;">
+              <span style="color: var(--yellow); font-weight: 800; font-size: 14px; line-height: 1;">•</span>
+              <span><a href="https://psychology.osu.edu/" target="_blank" rel="noopener noreferrer" class="text-yellow hover:underline font-bold" style="color: var(--yellow); text-decoration: underline;">BAMBI</a>: Khảo sát hành vi ăn uống tự kỷ (2-11 tuổi).</span>
+            </li>
+            <li class="flex items-start gap-2" style="display:flex; align-items:start; gap:8px; margin-bottom: 0;">
+              <span style="color: var(--yellow); font-weight: 800; font-size: 14px; line-height: 1;">•</span>
+              <span><a href="https://publications.aap.org/toolkits/pages/ADHD-Toolkit?autologincheck=redirected" target="_blank" rel="noopener noreferrer" class="text-yellow hover:underline font-bold" style="color: var(--yellow); text-decoration: underline;">VADRS</a>: Đánh giá nguy cơ Tăng động - Giảm chú ý (6-12 tuổi).</span>
+            </li>
+          </ul>
         </div>
       </div>
 
@@ -122,6 +111,11 @@
           alt="Bộ công cụ nhận diện các rào cản sức khỏe"
           class="relative rounded-3xl shadow-[0_25px_50px_-12px_rgba(0,0,0,0.25)] border border-solid border-[rgba(255,255,255,0.1)] object-cover w-full aspect-square"
           style="aspect-ratio: 1 / 1;" />
+        <!-- Badge: Phù hợp với trẻ từ 2 đến 12 tuổi -->
+        <div class="absolute top-4 left-4 bg-yellow text-navy font-bold text-[11px] sm:text-xs px-4 py-2.5 rounded-2xl shadow-[0_8px_20px_rgba(0,0,0,0.15)] z-20 flex items-center gap-2 border border-solid border-white/20 select-none uppercase tracking-wider">
+          <span class="text-sm">👶</span>
+          <span>Phù hợp với trẻ từ 2 đến 12 tuổi</span>
+        </div>
       </div>
     </div>
   </section>

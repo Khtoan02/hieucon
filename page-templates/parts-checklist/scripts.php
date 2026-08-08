@@ -267,9 +267,43 @@
       const yearEl = document.getElementById('child-dob-year');
 
       if (dayEl && monthEl && yearEl) {
-        dayEl.addEventListener('input', () => this.calculateAge());
-        monthEl.addEventListener('input', () => this.calculateAge());
-        yearEl.addEventListener('input', () => this.calculateAge());
+        // Auto-jump to next field
+        dayEl.addEventListener('input', (e) => {
+          let val = e.target.value.replace(/\D/g, '');
+          e.target.value = val;
+          if (val.length >= 2) {
+            monthEl.focus();
+          }
+          this.calculateAge();
+        });
+
+        monthEl.addEventListener('input', (e) => {
+          let val = e.target.value.replace(/\D/g, '');
+          e.target.value = val;
+          if (val.length >= 2) {
+            yearEl.focus();
+          }
+          this.calculateAge();
+        });
+
+        yearEl.addEventListener('input', (e) => {
+          let val = e.target.value.replace(/\D/g, '');
+          e.target.value = val;
+          this.calculateAge();
+        });
+
+        // Backspace to jump back
+        monthEl.addEventListener('keydown', (e) => {
+          if (e.key === 'Backspace' && monthEl.value.length === 0) {
+            dayEl.focus();
+          }
+        });
+
+        yearEl.addEventListener('keydown', (e) => {
+          if (e.key === 'Backspace' && yearEl.value.length === 0) {
+            monthEl.focus();
+          }
+        });
       }
     },
 
@@ -287,14 +321,45 @@
     getParentConcern() { return document.getElementById('parent-concern') ? document.getElementById('parent-concern').value.trim() : ''; },
 
     calculateAge() {
-      const d = document.getElementById('child-dob-day').value;
-      const m = document.getElementById('child-dob-month').value;
-      const y = document.getElementById('child-dob-year').value;
+      const dVal = document.getElementById('child-dob-day').value;
+      const mVal = document.getElementById('child-dob-month').value;
+      const yVal = document.getElementById('child-dob-year').value;
       const displayDiv = document.getElementById('calculated-age');
+      const labelText = document.getElementById('dob-label-text');
       const hiddenInput = document.getElementById('child-age');
 
-      if (!d || !m || !y) {
-        displayDiv.innerText = '';
+      if (!dVal || !mVal || !yVal) {
+        if (labelText) labelText.style.display = 'inline';
+        if (displayDiv) {
+          displayDiv.innerText = '';
+          displayDiv.style.display = 'none';
+        }
+        hiddenInput.value = '';
+        return;
+      }
+
+      // Only calculate age when year has 4 digits
+      if (yVal.length < 4) {
+        if (labelText) labelText.style.display = 'inline';
+        if (displayDiv) {
+          displayDiv.innerText = '';
+          displayDiv.style.display = 'none';
+        }
+        hiddenInput.value = '';
+        return;
+      }
+
+      const d = parseInt(dVal, 10);
+      const m = parseInt(mVal, 10);
+      const y = parseInt(yVal, 10);
+
+      if (isNaN(d) || isNaN(m) || isNaN(y) || y < 1900 || y > new Date().getFullYear()) {
+        if (labelText) labelText.style.display = 'none';
+        if (displayDiv) {
+          displayDiv.innerText = 'Ngày sinh không hợp lệ';
+          displayDiv.style.color = '#e11d48';
+          displayDiv.style.display = 'inline';
+        }
         hiddenInput.value = '';
         return;
       }
@@ -303,8 +368,12 @@
       const today = new Date();
 
       if (dob.getFullYear() != y || dob.getMonth() != m - 1 || dob.getDate() != d) {
-        displayDiv.innerText = 'Ngày sinh không tồn tại';
-        displayDiv.style.color = '#e11d48';
+        if (labelText) labelText.style.display = 'none';
+        if (displayDiv) {
+          displayDiv.innerText = 'Ngày sinh không tồn tại';
+          displayDiv.style.color = '#e11d48';
+          displayDiv.style.display = 'inline';
+        }
         hiddenInput.value = '';
         return;
       }
@@ -318,8 +387,12 @@
       }
 
       if (months < 0) {
-        displayDiv.innerText = 'Ngày sinh chưa hợp lệ';
-        displayDiv.style.color = '#e11d48';
+        if (labelText) labelText.style.display = 'none';
+        if (displayDiv) {
+          displayDiv.innerText = 'Ngày sinh chưa hợp lệ';
+          displayDiv.style.color = '#e11d48';
+          displayDiv.style.display = 'inline';
+        }
         hiddenInput.value = '';
         return;
       }
@@ -333,8 +406,12 @@
         ageStr = years + ' tuổi ' + (extraMonths > 0 ? extraMonths + ' tháng' : '');
       }
 
-      displayDiv.innerText = 'Tuổi của con: ' + ageStr;
-      displayDiv.style.color = 'var(--navy)';
+      if (labelText) labelText.style.display = 'none';
+      if (displayDiv) {
+        displayDiv.innerText = 'Tuổi của con: ' + ageStr;
+        displayDiv.style.color = 'var(--navy)';
+        displayDiv.style.display = 'inline';
+      }
       hiddenInput.value = ageStr;
     },
 
@@ -347,7 +424,7 @@
       const diagnosis = this.getChildDiagnosis();
 
       if (!childName || !age || !gender || !height || !weight || !diagnosis) {
-        alert('Cha mẹ vui lòng điền đầy đủ các thông tin có dấu * trước khi tiếp tục.');
+        alert('Phụ huynh vui lòng điền đầy đủ các thông tin có dấu * trước khi tiếp tục.');
         return false;
       }
       return true;
@@ -524,10 +601,12 @@
             </div>
             
             <!-- Slide Navigation Buttons -->
+            ${gi < 7 ? `
             <div class="slide-navigation">
               ${gi > 0 ? `<button type="button" class="btn-prev-slide" onclick="ModuleSurvey.prevGroup(${gi})">← Quay lại</button>` : `<div></div>`}
-              ${gi < 7 ? `<button type="button" class="btn-next-slide" onclick="ModuleSurvey.nextGroup(${gi})">Tiếp theo →</button>` : `<div></div>`}
+              <button type="button" class="btn-next-slide" onclick="ModuleSurvey.nextGroup(${gi})">Tiếp theo →</button>
             </div>
+            ` : ''}
           `;
         container.appendChild(sec);
       });
@@ -773,7 +852,7 @@
       const email = this.getParentEmail();
 
       if (!name || !phone || !email) {
-        alert('Cha mẹ vui lòng điền đầy đủ các thông tin liên hệ để nhận kết quả.');
+        alert('Phụ huynh vui lòng điền đầy đủ các thông tin liên hệ để nhận kết quả.');
         return false;
       }
 
@@ -919,7 +998,7 @@
   function submitCTA() {
     const phone = document.getElementById('cta-phone').value.trim();
     if (!phone) { alert('Vui lòng nhập số điện thoại để đặt lịch.'); return; }
-    alert(`Cảm ơn cha mẹ! Chuyên gia sẽ liên hệ qua số ${phone} trong vòng 24 giờ để tư vấn. Mã hồ sơ của con là: ${ChecklistApp.state.userCode}`);
+    alert(`Cảm ơn phụ huynh! Chuyên gia sẽ liên hệ qua số ${phone} trong vòng 24 giờ để tư vấn. Mã hồ sơ của con là: ${ChecklistApp.state.userCode}`);
 
     if (typeof fbq !== 'undefined') {
       fbq('track', 'Contact');
@@ -1406,7 +1485,7 @@
                                     <!-- Streamlined Result Link Section -->
                                     <div class="result-compact-box" style="background-color: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 12px; padding: 18px 16px; margin: 16px 0 20px 0; text-align: center;">
                                         <div class="result-compact-text" style="font-size: 13px; line-height: 1.5; color: #334155; margin-bottom: 12px;">
-                                            Kết quả đánh giá của bé đã hoàn tất. Cha mẹ có thể xem chi tiết trực tiếp tại đường link: <br>
+                                            Kết quả đánh giá của bé đã hoàn tất. Quý phụ huynh có thể xem chi tiết trực tiếp tại đường link: <br>
                                             <a href="\${resultUrl}" target="_blank" style="color: #0284C7; font-weight: 600; word-break: break-all; text-decoration: underline;">\${resultUrl}</a>
                                         </div>
                                         <a href="\${resultUrl}" class="btn-view-report" target="_blank" style="background-color: #0D2A78; color: #ffffff !important; padding: 12px 24px; text-decoration: none; font-size: 14px; font-weight: 700; border-radius: 8px; display: inline-block; box-shadow: 0 3px 10px rgba(13, 42, 120, 0.2); transition: background-color 0.2s ease;">
@@ -1416,7 +1495,7 @@
 
                                     <!-- Disclaimer Box -->
                                     <div class="disclaimer-box" style="background-color: #FAF5FF; border: 1px solid #E9D5FF; border-radius: 8px; padding: 12px 14px; margin-top: 20px; font-size: 11px; color: #6B21A8; line-height: 1.5;">
-                                        <strong style="color: #581C87;">⚠️ Lưu ý:</strong> Kết quả từ bộ công cụ mang tính chất tổng hợp thông tin quan sát nhằm hỗ trợ cha mẹ định hướng theo dõi. Đây không phải là kết luận hay chẩn đoán y khoa chính thức.
+                                        <strong style="color: #581C87;">⚠️ Lưu ý:</strong> Kết quả từ bộ công cụ mang tính chất tổng hợp thông tin quan sát nhằm hỗ trợ Quý phụ huynh định hướng theo dõi. Đây không phải là kết luận hay chẩn đoán y khoa chính thức.
                                     </div>
 
                                 </div>

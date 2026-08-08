@@ -7,11 +7,11 @@
   <h2 style="font-family:'Oswald', sans-serif; font-size:28px; color:var(--navy); margin-bottom:16px;">Đã gửi kết quả
     thành công!</h2>
   <p style="font-size:16px; color:var(--charcoal); max-width:540px; margin:0 auto 24px; line-height:1.7;">
-    Kết quả ghi nhận các vấn đề sức khỏe của con đã được gửi tới hòm thư của cha mẹ tại <strong id="sent-email-display"
+    Kết quả ghi nhận các vấn đề sức khỏe của con đã được gửi tới Email của phụ huynh tại <strong id="sent-email-display"
       style="color:var(--navy);">[email]</strong>.
   </p>
   <p style="font-size:14px; color:#64748b; max-width:500px; margin:0 auto 32px; line-height:1.6; font-style:italic;">
-    Cha mẹ vui lòng kiểm tra hộp thư đến (Inbox). Nếu không tìm thấy thư trong vòng 3-5 phút, vui lòng kiểm tra thêm thư
+    Phụ huynh vui lòng kiểm tra hộp thư đến (Inbox). Nếu không tìm thấy thư trong vòng 3-5 phút, vui lòng kiểm tra thêm thư
     mục <strong>Spam (Thư rác)</strong> hoặc <strong>Promotions (Quảng cáo)</strong>.
   </p>
   <!-- Sub Nav matching the header buttons color scheme -->
