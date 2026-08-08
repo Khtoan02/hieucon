@@ -665,19 +665,33 @@ function hieucon_dh_public_checklist_result() {
           z-index: -1 !important;
           pointer-events: none !important;
         }
+        @media (min-width: 1024px) {
+          .sticky-header-banner {
+            position: fixed !important;
+            top: 16px !important;
+            left: 50% !important;
+            transform: translateX(-50%) !important;
+            width: calc(100% - 48px) !important;
+            max-width: 80rem !important;
+            z-index: 999 !important;
+          }
+          .main-grid-container {
+            margin-top: 128px !important;
+          }
+        }
       </style>
 
       <div class="results-page-body py-10 antialiased">
         <div class="max-w-7xl mx-auto px-6">
             
             <!-- Header Banner -->
-            <div class="bg-[#002795] text-white rounded-2xl p-6 mb-8 text-center shadow-md border border-solid border-white/10 relative overflow-hidden has-pattern-bg sticky top-4 z-50">
+            <div class="bg-[#002795] text-white rounded-2xl p-6 mb-8 text-center shadow-md border border-solid border-white/10 relative overflow-hidden has-pattern-bg sticky-header-banner">
                 <div class="absolute -right-24 -bottom-24 w-64 h-64 bg-white/5 rounded-full pointer-events-none"></div>
                 <h1 class="text-xl md:text-2xl font-bold panel-title uppercase tracking-wide m-0" style="color: white; line-height: 1.4;">BẢNG GHI DẤU HIỆU DỰA TRÊN DỮ LIỆU PHỤ HUYNH CUNG CẤP</h1>
             </div>
 
             <!-- Top Grid Layout: 1/3 Left, 2/3 Right -->
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch mb-8">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch mb-8 main-grid-container">
                 
                 <!-- 1/3 Left Column: Profile Info & Action CTAs -->
                 <div class="lg:col-span-1 lg:sticky lg:top-[128px] self-start flex flex-col gap-6">
