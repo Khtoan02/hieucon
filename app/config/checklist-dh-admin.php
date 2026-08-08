@@ -128,12 +128,33 @@ function hieucon_dh_checklist_admin_page() {
     global $wpdb;
     $table_name = $wpdb->prefix . 'hieucon_dh_checklists';
     
+    // Save password option if posted
+    if (isset($_POST['hieucon_save_password'])) {
+        check_admin_referer('hieucon_save_password_action');
+        $new_pass = sanitize_text_field($_POST['hieucon_checklist_view_password']);
+        update_option('hieucon_checklist_view_password', $new_pass);
+        echo '<div class="notice notice-success is-dismissible"><p>Đã lưu mật khẩu bảo mật xem kết quả thành công!</p></div>';
+    }
+
     $results = $wpdb->get_results("SELECT * FROM $table_name ORDER BY updated_at DESC LIMIT 500");
     ?>
     <div class="wrap">
         <h1 class="wp-heading-inline">Checklist DocumentingHope</h1>
         <a href="<?php echo admin_url('admin-post.php?action=hieucon_dh_export_csv'); ?>" class="page-title-action">Xuất CSV toàn bộ dữ liệu</a>
         <p>Danh sách khách hàng đã điền Checklist Toàn Diện (DocumentingHope).</p>
+        
+        <!-- Password Settings Form -->
+        <div style="background:#ffffff; border:1px solid #ccd0d4; padding:15px; margin-bottom:20px; max-width:600px; border-radius:4px; box-shadow:0 1px 3px rgba(0,0,0,0.05);">
+            <form method="POST" style="margin:0; padding:0;">
+                <?php wp_nonce_field('hieucon_save_password_action'); ?>
+                <h3 style="margin-top:0; margin-bottom:8px; font-size:14px; color:#1d2327;">Cấu hình Mật khẩu bảo mật xem kết quả</h3>
+                <p class="description" style="margin:0 0 12px 0;">Mật khẩu này được sử dụng khi truy cập trực tiếp bằng liên kết không đi kèm mã xác thực (Ví dụ: từ link chia sẻ hoặc truy cập trực tiếp bằng mã hồ sơ).</p>
+                <div style="display:flex; gap:10px; align-items:center;">
+                    <input type="text" name="hieucon_checklist_view_password" value="<?php echo esc_attr(get_option('hieucon_checklist_view_password', 'hieucon2026')); ?>" style="width:250px; margin:0;" class="regular-text" required>
+                    <button type="submit" name="hieucon_save_password" class="button button-secondary">Lưu mật khẩu</button>
+                </div>
+            </form>
+        </div>
         
         <table class="wp-list-table widefat fixed striped table-view-list">
             <thead>
@@ -458,20 +479,15 @@ function hieucon_dh_public_checklist_result() {
     // 3. Check POST submission
     elseif (isset($_POST['hieucon_pass'])) {
         $pass_input = sanitize_text_field($_POST['hieucon_pass']);
-        $clean_input = preg_replace('/[^0-9a-zA-Z@.]/', '', $pass_input);
-        $clean_phone = preg_replace('/[^0-9]/', '', $row->parent_phone);
-        $clean_phone_input = preg_replace('/[^0-9]/', '', $pass_input);
-        
-        $email_match = (strtolower($clean_input) === strtolower(preg_replace('/[^0-9a-zA-Z@.]/', '', $row->parent_email)));
-        $phone_match = (!empty($clean_phone) && !empty($clean_phone_input) && (substr($clean_phone, -9) === substr($clean_phone_input, -9)));
+        $configured_pass = get_option('hieucon_checklist_view_password', 'hieucon2026');
 
-        if ($email_match || $phone_match) {
+        if (trim($pass_input) === trim($configured_pass)) {
             $authenticated = true;
             setcookie('hieucon_auth_' . $row->user_code, $expected_hash, time() + 30 * DAY_IN_SECONDS, COOKIEPATH, COOKIE_DOMAIN);
             wp_safe_redirect(add_query_arg('auth', $expected_hash));
             exit;
         } else {
-            $auth_error = 'Thông tin xác thực không đúng. Vui lòng nhập đúng Số điện thoại hoặc Email phụ huynh đã dùng để đăng ký.';
+            $auth_error = 'Mật khẩu bảo mật không chính xác. Vui lòng nhập đúng mật khẩu để mở khóa kết quả.';
         }
     }
 
@@ -491,7 +507,7 @@ function hieucon_dh_public_checklist_result() {
                 <div style="font-size: 48px; margin-bottom: 16px;">🔒</div>
                 <h2 style="font-family: 'Oswald', sans-serif; font-size: 22px; color: #0D2A78; margin: 0 0 12px 0; text-transform: uppercase; font-weight: 700; letter-spacing: 0.5px;">Xác thực bảo mật</h2>
                 <p style="font-size: 14px; color: #475569; line-height: 1.6; margin: 0 0 24px 0;">
-                    Báo cáo kết quả của con được bảo mật. Vui lòng nhập <strong>Số điện thoại</strong> hoặc <strong>Email</strong> phụ huynh đã dùng khi đăng ký để mở khóa:
+                    Báo cáo kết quả của con được bảo mật. Vui lòng nhập <strong>Mật khẩu bảo mật</strong> được cung cấp để mở khóa xem chi tiết:
                 </p>
                 
                 <form method="POST" style="margin: 0; padding: 0;">
@@ -502,14 +518,14 @@ function hieucon_dh_public_checklist_result() {
                     <?php endif; ?>
                     
                     <div style="margin-bottom: 20px; text-align: left;">
-                        <input type="text" name="hieucon_pass" placeholder="Nhập số điện thoại hoặc email..." required 
+                        <input type="password" name="hieucon_pass" placeholder="Nhập mật khẩu mở khóa..." required 
                             style="width: 100%; padding: 12px 16px; border: 1.5px solid #CBD5E1; border-radius: 8px; font-size: 14px; font-family: 'Quicksand', sans-serif; box-sizing: border-box; outline: none; transition: border-color 0.2s;"
                             onfocus="this.style.borderColor='#0D2A78'" onblur="this.style.borderColor='#CBD5E1'">
                     </div>
                     
                     <button type="submit" style="width: 100%; background: linear-gradient(135deg, #0d2a78 0%, #163ca3 100%); color: #ffffff; padding: 12px; border: none; border-radius: 8px; font-size: 14px; font-weight: 700; font-family: 'Quicksand', sans-serif; cursor: pointer; box-shadow: 0 4px 12px rgba(13, 42, 120, 0.2); transition: opacity 0.2s; box-sizing: border-box;"
                         onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'">
-                        Xác nhận & Xem kết quả
+                        Mở khóa kết quả
                     </button>
                 </form>
             </div>
