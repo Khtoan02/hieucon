@@ -1497,7 +1497,7 @@
                                             Kết quả nhận diện các vấn đề sức khỏe của bé đã được tổng hợp. Quý phụ huynh vui lòng nhấn vào nút dưới đây để xem chi tiết:
                                         </div>
                                         <a href="\${resultUrl}" class="btn-view-report" target="_blank" style="background-color: #0D2A78; color: #ffffff !important; padding: 12px 24px; text-decoration: none; font-size: 14px; font-weight: 700; border-radius: 8px; display: inline-block; box-shadow: 0 3px 10px rgba(13, 42, 120, 0.2); transition: background-color 0.2s ease;">
-                                            Xem báo cáo chi tiết (Mã hồ sơ: \${userCode})
+                                            Xem kết quả
                                         </a>
                                     </div>
 
