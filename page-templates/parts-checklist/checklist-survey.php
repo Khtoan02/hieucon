@@ -28,7 +28,7 @@
               <div
                 style="color: var(--navy); font-weight:800; width:20px; height:20px; display:flex; align-items:center; justify-content:center; border-radius:50%; background: var(--yellow); margin-top:2px; font-size: 10px;"
                 class="shrink-0">2</div>
-              <p class="m-0" style="margin:0; font-weight:500;">Nhấn nút "Tiếp theo →" (hoặc nhấn trực tiếp vào tên nhóm ở thanh tiến trình phía trên) để chuyển phần.</p>
+              <p class="m-0" style="margin:0; font-weight:500;">Nhấn nút "Tiếp theo →" ở phía cuối để chuyển sang nhóm dấu hiệu tiếp theo.</p>
             </div>
             <div class="flex gap-2.5 items-start">
               <div
@@ -98,7 +98,7 @@
           <div
             style="color: var(--navy); font-weight:800; width:20px; height:20px; display:flex; align-items:center; justify-content:center; border-radius:50%; background: var(--yellow); margin-top:2px; font-size: 10px;"
             class="shrink-0">2</div>
-          <p class="m-0" style="margin:0; font-weight:500;">Nhấn nút "Tiếp theo →" (hoặc nhấn trực tiếp vào tên nhóm ở thanh tiến trình phía trên) để chuyển phần.</p>
+          <p class="m-0" style="margin:0; font-weight:500;">Nhấn nút "Tiếp theo →" ở phía cuối để chuyển sang nhóm dấu hiệu tiếp theo.</p>
         </div>
         <div class="flex gap-2.5 items-start">
           <div
