@@ -1447,8 +1447,8 @@
           const desc = groupDescs[s.id] || '';
           topIssuesHtml += `
               <div style="margin-bottom: 16px; line-height: 1.6;">
-                <div style="font-size: 15px; font-weight: 700; color: #0D2A78;">Vấn đề \${count + 1}: \${s.name}</div>
-                \${desc ? `<div style="font-size: 13px; color: #475569; margin-top: 4px; padding-left: 12px; border-left: 2px solid #CBD5E1;">- \${desc}</div>` : ''}
+                <div style="font-size: 15px; font-weight: 700; color: #0D2A78;">Vấn đề ${count + 1}: ${s.name}</div>
+                ${desc ? `<div style="font-size: 13px; color: #475569; margin-top: 4px; padding-left: 12px; border-left: 2px solid #CBD5E1;">- ${desc}</div>` : ''}
               </div>`;
           count++;
         }
@@ -1458,7 +1458,7 @@
       }
 
       const userCode = ChecklistApp.state.userCode || '12345678';
-      const resultUrl = `${window.location.origin}/ket-qua-dh?code=\${userCode}`;
+      const resultUrl = window.location.origin + '/ket-qua-dh?code=' + userCode;
       const parentName = ModuleParentInfo.getParentName() || 'Nguyễn Văn A';
       const childName = ModuleChildInfo.getChildName() || 'Bé An';
       const childAge = ModuleChildInfo.getChildAge() || '5 tuổi';
@@ -1489,14 +1489,14 @@
 
                                 <!-- Main Content Body -->
                                 <div class="content" style="padding: 24px 24px 20px 24px;">
-                                    <div class="greeting" style="font-size: 15px; line-height: 1.4; color: #0D2A78; font-weight: 700; margin-bottom: 12px;">Kính gửi Quý phụ huynh \${parentName},</div>
+                                    <div class="greeting" style="font-size: 15px; line-height: 1.4; color: #0D2A78; font-weight: 700; margin-bottom: 12px;">Kính gửi Quý phụ huynh ${parentName},</div>
                                     
                                     <!-- Streamlined Result Link Section -->
                                     <div class="result-compact-box" style="background-color: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 12px; padding: 18px 16px; margin: 16px 0 20px 0; text-align: center;">
                                         <div class="result-compact-text" style="font-size: 13px; line-height: 1.5; color: #334155; margin-bottom: 14px; text-align: left;">
                                             Kết quả nhận diện các vấn đề sức khỏe của bé đã được tổng hợp. Quý phụ huynh vui lòng nhấn vào nút dưới đây để xem chi tiết:
                                         </div>
-                                        <a href="\${resultUrl}" class="btn-view-report" target="_blank" style="background-color: #0D2A78; color: #ffffff !important; padding: 12px 24px; text-decoration: none; font-size: 14px; font-weight: 700; border-radius: 8px; display: inline-block; box-shadow: 0 3px 10px rgba(13, 42, 120, 0.2); transition: background-color 0.2s ease;">
+                                        <a href="${resultUrl}" class="btn-view-report" target="_blank" style="background-color: #0D2A78; color: #ffffff !important; padding: 12px 24px; text-decoration: none; font-size: 14px; font-weight: 700; border-radius: 8px; display: inline-block; box-shadow: 0 3px 10px rgba(13, 42, 120, 0.2); transition: background-color 0.2s ease;">
                                             Xem kết quả
                                         </a>
                                     </div>
@@ -1507,7 +1507,7 @@
                                             📋 Ba vấn đề sức khoẻ cần quan tâm:
                                         </div>
                                         <div style="margin: 0; color: #451A03; font-size: 13px; line-height: 1.6;">
-                                            \${topIssuesHtml}
+                                            ${topIssuesHtml}
                                         </div>
                                     </div>
 
