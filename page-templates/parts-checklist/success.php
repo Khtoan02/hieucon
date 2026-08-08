@@ -16,18 +16,15 @@
   </p>
   <!-- Sub Nav matching the header buttons color scheme -->
   <div style="border-top: 1px solid #e2e8f0; padding-top: 32px; margin-top: 40px; text-align: center;">
-    <p style="font-size: 14px; font-weight: 700; color: var(--navy); margin: 0 0 16px 0; font-family: 'Quicksand', sans-serif;">
-      Kênh tương tác và hỗ trợ từ Hiểu Con Từ Gốc:
+    <p style="font-size: 14.5px; font-weight: 700; color: var(--navy); margin: 0 auto 20px auto; max-width: 580px; line-height: 1.6; font-family: 'Quicksand', sans-serif;">
+      Nếu Quý phụ huynh có thắc mắc hoặc cần tư vấn định hướng can thiệp chuyên sâu cho con, xin vui lòng kết nối trực tiếp với chúng tôi:
     </p>
-    <div style="display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; margin-bottom: 20px;">
-      <a href="https://zalo.me/0985391881" target="_blank" rel="noopener" class="btn-success-nav" style="display: inline-flex; align-items: center; justify-content: center; text-decoration: none; padding: 11px 24px; font-weight: 700; background: linear-gradient(135deg, #F05A25 0%, #FF7A45 100%); color: #ffffff !important; border-radius: 12px; font-size: 13.5px; font-family: 'Quicksand', sans-serif; box-shadow: 0 4px 10px rgba(240, 90, 37, 0.2); transition: all 0.2s ease;">
-        Tư vấn
+    <div style="display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; margin-bottom: 24px;">
+      <a href="https://zalo.me/0985391881" target="_blank" rel="noopener" class="btn-success-nav" style="display: inline-flex; align-items: center; justify-content: center; text-decoration: none; padding: 12px 28px; font-weight: 700; background: linear-gradient(135deg, #F05A25 0%, #FF7A45 100%); color: #ffffff !important; border-radius: 12px; font-size: 14px; font-family: 'Quicksand', sans-serif; box-shadow: 0 4px 12px rgba(240, 90, 37, 0.2); transition: all 0.2s ease;">
+        Kết nối tư vấn trực tiếp
       </a>
-      <a href="https://zalo.me/g/vmgfxy834?joinSrc=9" target="_blank" rel="noopener" class="btn-success-nav" style="display: inline-flex; align-items: center; justify-content: center; text-decoration: none; padding: 11px 24px; font-weight: 700; background: linear-gradient(135deg, #00A1FF 0%, #0068FF 100%); color: #ffffff !important; border-radius: 12px; font-size: 13.5px; font-family: 'Quicksand', sans-serif; box-shadow: 0 4px 10px rgba(0, 104, 255, 0.2); transition: all 0.2s ease;">
-        Hỏi đáp Zalo
-      </a>
-      <a href="https://www.facebook.com/groups/tukylaroiloantoanthan" target="_blank" rel="noopener" class="btn-success-nav" style="display: inline-flex; align-items: center; justify-content: center; text-decoration: none; padding: 11px 24px; font-weight: 700; background: linear-gradient(135deg, #1877F2 0%, #0A58CA 100%); color: #ffffff !important; border-radius: 12px; font-size: 13.5px; font-family: 'Quicksand', sans-serif; box-shadow: 0 4px 10px rgba(24, 119, 242, 0.2); transition: all 0.2s ease;">
-        Cộng đồng
+      <a href="/check-list-tong-quan-hanh-vi-cua-tre/" class="btn-success-nav" style="display: inline-flex; align-items: center; justify-content: center; text-decoration: none; padding: 12px 28px; font-weight: 700; background: #0D2A78; color: #ffffff !important; border-radius: 12px; font-size: 14px; font-family: 'Quicksand', sans-serif; box-shadow: 0 4px 12px rgba(13, 42, 120, 0.15); transition: all 0.2s ease;">
+        Quay lại trang bắt đầu
       </a>
     </div>
     <div style="font-size: 11.5px; color: #64748b; font-family: 'Quicksand', sans-serif;">
