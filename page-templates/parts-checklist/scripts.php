@@ -1540,7 +1540,7 @@
                                       <div class="greeting-text" style="font-size: 15px; line-height: 1.5; color: #0D2A78; font-weight: 700; margin-bottom: 8px;">Kính gửi Quý phụ huynh ${parentName},</div>
                                       
                                       <p class="body-paragraph" style="font-size: 14px; line-height: 1.6; color: #334155; margin: 0 0 16px 0; padding: 0;">
-                                          Kết quả nhận diện các vấn đề sức khỏe của bé đã được tổng hợp. Quý phụ huynh vui lòng nhấn vào nút dưới đây để xem chi tiết báo cáo:
+                                          Kết quả nhận diện các vấn đề sức khỏe của con đã được tổng hợp. Quý phụ huynh vui lòng nhấn vào nút dưới đây để xem chi tiết báo cáo:
                                       </p>
                                       
                                       <div style="margin: 0 0 24px 0; text-align: left;">
@@ -1552,7 +1552,7 @@
                                       <!-- Top Issues Summary Card -->
                                       <div class="issues-card" style="background-color: #F0F4FA; border: 1px solid rgba(13, 42, 120, 0.15); border-radius: 12px; padding: 20px 18px; margin: 20px 0;">
                                           <div class="issues-card-title" style="font-size: 15px; font-weight: 700; color: #0D2A78; margin-bottom: 16px;">
-                                              📋 Ba vấn đề sức khoẻ cần quan tâm:
+                                              Ba vấn đề sức khoẻ cần quan tâm:
                                           </div>
                                           <div style="margin: 0; color: #334155; font-size: 14px; line-height: 1.6;">
                                               ${topIssuesHtml}
@@ -1561,7 +1561,7 @@
           
                                       <!-- Disclaimer Box -->
                                       <div class="disclaimer-box" style="background-color: #FAF5FF; border: 1px solid #E9D5FF; border-radius: 8px; padding: 12px 14px; margin-top: 20px; font-size: 12px; color: #6B21A8; line-height: 1.5;">
-                                          <strong style="color: #581C87;">⚠️ Lưu ý:</strong> Kết quả từ bộ công cụ mang tính chất tổng hợp thông tin quan sát nhằm hỗ trợ Quý phụ huynh định hướng theo dõi. Đây không phải là kết luận hay chẩn đoán y khoa chính thức.
+                                          <strong style="color: #581C87;">⚠️ Lưu ý:</strong> Bảng kiểm tra này là công cụ hỗ trợ nhận diện dấu hiệu, không thay thế chẩn đoán lâm sàng hoặc tư vấn y tế chuyên nghiệp. Mọi quyết định can thiệp cho trẻ cần được thảo luận với bác sĩ hoặc chuyên gia có chuyên môn phù hợp.
                                       </div>
           
                                   </div>

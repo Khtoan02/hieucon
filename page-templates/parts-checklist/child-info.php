@@ -50,9 +50,8 @@
           <span style="font-size:16px;">⚠️</span> Lưu ý quan trọng
         </h3>
         <p class="text-xs text-[#713f12] leading-relaxed m-0 font-light"
-          style="margin:0; font-size:12px; line-height:1.6;">Bộ công cụ chỉ hỗ trợ phụ huynh nhận diện các dấu hiệu sức
-          khỏe của con, không thay thế chẩn đoán lâm sàng hoặc tư vấn y tế chuyên nghiệp. Mọi quyết định can thiệp cho
-          trẻ cần được thảo luận với bác sĩ hoặc chuyên gia có chuyên môn phù hợp
+          style="margin:0; font-size:12px; line-height:1.6;">
+          Bảng kiểm tra này là công cụ hỗ trợ nhận diện dấu hiệu, không thay thế chẩn đoán lâm sàng hoặc tư vấn y tế chuyên nghiệp. Mọi quyết định can thiệp cho trẻ cần được thảo luận với bác sĩ hoặc chuyên gia có chuyên môn phù hợp.
         </p>
       </div>
 

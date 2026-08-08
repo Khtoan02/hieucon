@@ -124,8 +124,7 @@
       </h3>
       <p class="text-xs text-[#713f12] leading-relaxed m-0 font-light"
         style="margin:0; font-size:11px; line-height:1.5;">
-        Kết quả và biểu đồ này là công cụ hỗ trợ nhận diện dấu hiệu, không thay thế chẩn đoán chuyên khoa hoặc chỉ định
-        y khoa chính thức.
+        Bảng kiểm tra này là công cụ hỗ trợ nhận diện dấu hiệu, không thay thế chẩn đoán lâm sàng hoặc tư vấn y tế chuyên nghiệp. Mọi quyết định can thiệp cho trẻ cần được thảo luận với bác sĩ hoặc chuyên gia có chuyên môn phù hợp.
       </p>
     </div>
 

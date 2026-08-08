@@ -141,11 +141,9 @@
                             </div>
 
                             <!-- Disclaimer Box -->
-                            <div class="disclaimer-box"
+                             <div class="disclaimer-box"
                                 style="background-color: #FAF5FF; border: 1px solid #E9D5FF; border-radius: 8px; padding: 12px 14px; margin-top: 20px; font-size: 12px; color: #6B21A8; line-height: 1.5;">
-                                <strong style="color: #581C87;">⚠️ Lưu ý:</strong> Kết quả từ bộ công cụ mang tính chất
-                                tổng hợp thông tin quan sát nhằm hỗ trợ Quý phụ huynh định hướng theo dõi. Đây không
-                                phải là kết luận hay chẩn đoán y khoa chính thức.
+                                <strong style="color: #581C87;">⚠️ Lưu ý:</strong> Bảng kiểm tra này là công cụ hỗ trợ nhận diện dấu hiệu, không thay thế chẩn đoán lâm sàng hoặc tư vấn y tế chuyên nghiệp. Mọi quyết định can thiệp cho trẻ cần được thảo luận với bác sĩ hoặc chuyên gia có chuyên môn phù hợp.
                             </div>
 
                         </div>
