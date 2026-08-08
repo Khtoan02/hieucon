@@ -814,6 +814,11 @@ function hieucon_dh_public_checklist_result() {
                                 endforeach; 
                                 ?>
                             </div>
+                            
+                            <!-- Soft context-relevant CTA -->
+                            <div style="margin-top:20px; background-color:#F0F4FA; border:1px solid rgba(13, 42, 120, 0.12); padding:14px 16px; border-radius:12px; font-size:13.5px; color:#0D2A78; line-height:1.6; text-align:left; font-weight:500;">
+                                💡 <strong>Khuyến nghị từ chuyên gia:</strong> Các vấn đề liệt kê ở trên đại diện cho những nhóm dấu hiệu có tỷ lệ ghi nhận nổi bật nhất. Để hiểu rõ căn nguyên y sinh học của con và xây dựng lộ trình hỗ trợ tối ưu nhất, Quý phụ huynh vui lòng nhấn vào nút <strong>"Liên hệ chuyên gia"</strong> ở cột bên trái để gửi kết quả và nhận tham vấn trực tiếp (hoàn toàn miễn phí).
+                            </div>
                         </div>
                         <?php endif; ?>
                     </div>
