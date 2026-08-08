@@ -671,7 +671,7 @@ function hieucon_dh_public_checklist_result() {
         <div class="max-w-7xl mx-auto px-6">
             
             <!-- Header Banner -->
-            <div class="bg-[#002795] text-white rounded-2xl p-6 mb-8 text-center shadow-md border border-solid border-white/10 relative overflow-hidden has-pattern-bg">
+            <div class="bg-[#002795] text-white rounded-2xl p-6 mb-8 text-center shadow-md border border-solid border-white/10 relative overflow-hidden has-pattern-bg sticky top-4 z-50">
                 <div class="absolute -right-24 -bottom-24 w-64 h-64 bg-white/5 rounded-full pointer-events-none"></div>
                 <h1 class="text-xl md:text-2xl font-bold panel-title uppercase tracking-wide m-0" style="color: white; line-height: 1.4;">BẢNG GHI DẤU HIỆU DỰA TRÊN DỮ LIỆU PHỤ HUYNH CUNG CẤP</h1>
             </div>
@@ -680,7 +680,7 @@ function hieucon_dh_public_checklist_result() {
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch mb-8">
                 
                 <!-- 1/3 Left Column: Profile Info & Action CTAs -->
-                <div class="lg:col-span-1 flex flex-col gap-6">
+                <div class="lg:col-span-1 lg:sticky lg:top-[128px] self-start flex flex-col gap-6">
                     <div class="bg-white rounded-2xl shadow-sm border border-solid border-[#e2e8f0] p-6 flex-grow flex flex-col">
                         <h2 class="panel-title border-b border-solid border-[#e2e8f0] pb-3 mb-4 text-[#002795] font-bold text-base uppercase tracking-wider m-0">Thông Tin Hồ Sơ</h2>
                         
@@ -865,44 +865,44 @@ function hieucon_dh_public_checklist_result() {
                         </div>
                         <?php endif; ?>
                     </div>
+                    
+                    <!-- Bottom Section: Chi Tiết Dấu Hiệu Ghi Nhận (Moved inside right column) -->
+                    <?php if (!empty($behaviors)): ?>
+                    <div class="bg-white rounded-2xl shadow-sm border border-solid border-[#e2e8f0] p-6 mt-8">
+                        <h2 class="panel-title border-b border-solid border-[#e2e8f0] pb-3 mb-6 text-[#002795] font-bold text-base uppercase tracking-wider m-0">Chi Tiết Dấu Hiệu Ghi Nhận</h2>
+                        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+                            <?php foreach ($scores as $sg): 
+                                $items = isset($behaviors[$sg['id']]) ? $behaviors[$sg['id']] : (isset($behaviors[$sg['name']]) ? $behaviors[$sg['name']] : []);
+                                if (empty($items)) continue;
+                            ?>
+                              <div class="bg-[#f8fafc] border border-solid border-[#e2e8f0] rounded-xl p-4 transition-all hover:border-[#002795]/20 hover:shadow-sm" style="border-radius:12px;">
+                                <h4 class="text-sm font-bold text-[#002795] pb-2 mb-3 border-b border-solid border-slate-200 flex items-center gap-1.5 mt-0">
+                                  <span style="font-size: 16px;"><?php echo esc_html(isset($sg['icon']) ? $sg['icon'] : ''); ?></span>
+                                  <span class="panel-title"><?php echo esc_html($sg['name']); ?></span>
+                                </h4>
+                                <ul class="list-none p-0 m-0 flex flex-col gap-2">
+                                  <?php foreach ($items as $item): ?>
+                                    <li style="font-size:12.5px; color:#334155; padding-left:18px; position:relative; line-height:1.4; text-align: left;">
+                                      <span style="position:absolute; left:0; color:#d97706; font-weight:900;">✓</span>
+                                      <span><?php echo esc_html($item); ?></span>
+                                    </li>
+                                  <?php endforeach; ?>
+                                </ul>
+                              </div>
+                            <?php endforeach; ?>
+                        </div>
+                    </div>
+                    <?php endif; ?>
+
+                    <!-- Extra Symptoms Note (Moved inside right column) -->
+                    <?php if (!empty($row->extra_symptoms)): ?>
+                    <div class="bg-white rounded-2xl shadow-sm border border-solid border-[#e2e8f0] p-6 mt-8">
+                        <h2 class="panel-title border-b border-solid border-[#e2e8f0] pb-3 mb-4 text-[#002795] font-bold text-base uppercase tracking-wider m-0">Ghi chú khác từ phụ huynh</h2>
+                        <p style="font-size:13.5px; color:#475569; white-space:pre-wrap; margin:0; line-height:1.6; text-align: left;"><?php echo esc_html($row->extra_symptoms); ?></p>
+                    </div>
+                    <?php endif; ?>
                 </div>
             </div>
-
-            <!-- Bottom Section: Chi Tiết Dấu Hiệu Ghi Nhận -->
-            <?php if (!empty($behaviors)): ?>
-            <div class="bg-white rounded-2xl shadow-sm border border-solid border-[#e2e8f0] p-6 mb-8">
-                <h2 class="panel-title border-b border-solid border-[#e2e8f0] pb-3 mb-6 text-[#002795] font-bold text-base uppercase tracking-wider m-0">Chi Tiết Dấu Hiệu Ghi Nhận</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                    <?php foreach ($scores as $sg): 
-                        $items = isset($behaviors[$sg['id']]) ? $behaviors[$sg['id']] : (isset($behaviors[$sg['name']]) ? $behaviors[$sg['name']] : []);
-                        if (empty($items)) continue;
-                    ?>
-                      <div class="bg-[#f8fafc] border border-solid border-[#e2e8f0] rounded-xl p-4 transition-all hover:border-[#002795]/20 hover:shadow-sm <?php echo (isset($scores[0]) && $sg['id'] === $scores[0]['id'] && $sg['pct'] > 0) ? 'alarm-pulse border border-solid border-[#fda4af]' : ''; ?>" style="<?php echo (isset($scores[0]) && $sg['id'] === $scores[0]['id'] && $sg['pct'] > 0) ? 'border-radius:12px; border: 1.5px solid #fda4af;' : ''; ?>">
-                        <h4 class="text-sm font-bold text-[#002795] pb-2 mb-3 border-b border-solid border-slate-200 flex items-center gap-1.5 mt-0">
-                          <span style="font-size: 16px;"><?php echo esc_html(isset($sg['icon']) ? $sg['icon'] : ''); ?></span>
-                          <span class="panel-title" style="<?php echo (isset($scores[0]) && $sg['id'] === $scores[0]['id'] && $sg['pct'] > 0) ? 'color:#be123c;' : ''; ?>"><?php echo esc_html($sg['name']); ?></span>
-                        </h4>
-                        <ul class="list-none p-0 m-0 flex flex-col gap-2">
-                          <?php foreach ($items as $item): ?>
-                            <li style="font-size:12.5px; color:#334155; padding-left:18px; position:relative; line-height:1.4; text-align: left;">
-                              <span style="position:absolute; left:0; color:#d97706; font-weight:900;">✓</span>
-                              <span><?php echo esc_html($item); ?></span>
-                            </li>
-                          <?php endforeach; ?>
-                        </ul>
-                      </div>
-                    <?php endforeach; ?>
-                </div>
-            </div>
-            <?php endif; ?>
-
-            <!-- Extra Symptoms Note -->
-            <?php if (!empty($row->extra_symptoms)): ?>
-            <div class="bg-white rounded-2xl shadow-sm border border-solid border-[#e2e8f0] p-6 mb-8">
-                <h2 class="panel-title border-b border-solid border-[#e2e8f0] pb-3 mb-4 text-[#002795] font-bold text-base uppercase tracking-wider m-0">Ghi chú khác từ phụ huynh</h2>
-                <p style="font-size:13.5px; color:#475569; white-space:pre-wrap; margin:0; line-height:1.6; text-align: left;"><?php echo esc_html($row->extra_symptoms); ?></p>
-            </div>
-            <?php endif; ?>
             
             <p class="text-center text-xs text-gray-400 mt-10">© <?php echo date('Y'); ?> Hiểu Con Từ Gốc.</p>
         </div>
