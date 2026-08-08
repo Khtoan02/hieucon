@@ -230,7 +230,13 @@
           </p>
           <div class="mt-4 pt-3 border-t border-solid border-[#fef08a] text-[11px] text-[#854d0e] font-medium"
             style="margin-top:16px; padding-top:12px; border-top:1px solid #fef08a; font-size:11px; font-weight:500;">
-            Tài liệu tham khảo: Documenting Hope
+            <div style="font-weight:700; margin-bottom:6px; font-size:11px; text-transform:uppercase; letter-spacing:0.5px;">📚 Tài liệu tham khảo:</div>
+            <ul style="margin:0; padding:0; list-style:none; line-height:1.5;">
+              <li style="margin-bottom:4px;">• <a href="https://www.massgeneral.org/psychiatry/treatments-and-services/pediatric-symptom-checklist/" target="_blank" rel="noopener noreferrer" style="color: #0d2a78; font-weight:700; text-decoration:underline;">PSC</a>: Sàng lọc hành vi & cảm xúc.</li>
+              <li style="margin-bottom:4px;">• <a href="https://site.thoracic.org/assemblies/srn/sleep-related-questionnaires/cshq" target="_blank" rel="noopener noreferrer" style="color: #0d2a78; font-weight:700; text-decoration:underline;">CSHQ</a>: Sàng lọc rối loạn giấc ngủ.</li>
+              <li style="margin-bottom:4px;">• <a href="https://www.autismspeaks.org/" target="_blank" rel="noopener noreferrer" style="color: #0d2a78; font-weight:700; text-decoration:underline;">BAMBI</a>: Khảo sát hành vi ăn uống.</li>
+              <li style="margin-bottom:0;">• <a href="https://www.nichq.org/resource/vanderbilt-assessment-scales" target="_blank" rel="noopener noreferrer" style="color: #0d2a78; font-weight:700; text-decoration:underline;">VADRS</a>: Đánh giá Tăng động - Giảm chú ý.</li>
+            </ul>
           </div>
         </div>
 
