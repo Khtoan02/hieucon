@@ -16,18 +16,66 @@
  */
 ?>
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="vi" style="color-scheme: light; supported-color-schemes: light;">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="light">
+    <meta name="supported-color-schemes" content="light">
     <title><?php echo esc_html($subject); ?></title>
+    <style>
+        :root {
+            color-scheme: light;
+            supported-color-schemes: light;
+        }
+        /* Override dark mode dynamic colors for email clients */
+        @media (prefers-color-scheme: dark) {
+            body, .wrapper-bg {
+                background-color: #EBF1FA !important;
+            }
+            .main-container {
+                background-color: #ffffff !important;
+                border-color: #D6E2F5 !important;
+            }
+            .content-area {
+                background-color: #ffffff !important;
+            }
+            .greeting-text {
+                color: #0D2A78 !important;
+            }
+            .body-paragraph {
+                color: #334155 !important;
+            }
+            .issues-card {
+                background-color: #F0F4FA !important;
+                border-color: rgba(13, 42, 120, 0.15) !important;
+            }
+            .issues-card-title {
+                color: #0D2A78 !important;
+            }
+            .issue-item-title {
+                color: #0D2A78 !important;
+            }
+            .issue-item-desc {
+                color: #475569 !important;
+            }
+            .disclaimer-box {
+                background-color: #FAF5FF !important;
+                border-color: #E9D5FF !important;
+                color: #6B21A8 !important;
+            }
+            .disclaimer-box strong {
+                color: #581C87 !important;
+            }
+        }
+    </style>
 </head>
-<body style="margin: 0; padding: 0; background-color: #EBF1FA; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #1E293B; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%;">
-    <div class="wrapper" style="width: 100%; background-color: #EBF1FA; padding: 24px 10px; box-sizing: border-box;">
+<body style="margin: 0; padding: 0; background-color: #EBF1FA; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #1E293B; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; color-scheme: light; supported-color-schemes: light;">
+    <div class="wrapper-bg" style="width: 100%; background-color: #EBF1FA; padding: 24px 10px; box-sizing: border-box; color-scheme: light; supported-color-schemes: light;">
         <table role="presentation" width="100%" style="border-spacing: 0; border-collapse: collapse;">
             <tr>
                 <td align="center">
-                    <div class="main-container" style="background-color: #ffffff; margin: 0 auto; width: 100%; max-width: 580px; border-radius: 16px; overflow: hidden; box-shadow: 0 8px 24px rgba(13, 42, 120, 0.08); border: 1px solid #D6E2F5; text-align: left;">
+                    <div class="main-container" style="background-color: #ffffff; margin: 0 auto; width: 100%; max-width: 580px; border-radius: 16px; overflow: hidden; box-shadow: 0 8px 24px rgba(13, 42, 120, 0.08); border: 1px solid #D6E2F5; text-align: left; color-scheme: light; supported-color-schemes: light;">
                         
                         <!-- Header Banner -->
                         <div class="header" style="background: linear-gradient(150deg, #0A2268 0%, #0D2A78 50%, #163CA3 100%); padding: 24px 24px 20px 24px; text-align: center; color: #ffffff;">
@@ -39,31 +87,31 @@
                         </div>
 
                         <!-- Main Content Body -->
-                        <div class="content" style="padding: 24px 24px 20px 24px;">
-                            <div class="greeting" style="font-size: 15px; line-height: 1.4; color: #0D2A78; font-weight: 700; margin-bottom: 12px;">Kính gửi Quý phụ huynh <?php echo esc_html($parent_name); ?>,</div>
+                        <div class="content-area" style="padding: 24px 24px 20px 24px; background-color: #ffffff;">
+                            <div class="greeting-text" style="font-size: 15px; line-height: 1.5; color: #0D2A78; font-weight: 700; margin-bottom: 8px;">Kính gửi Quý phụ huynh <?php echo esc_html($parent_name); ?>,</div>
                             
-                            <!-- Streamlined Result Link Section -->
-                            <div class="result-compact-box" style="background-color: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 12px; padding: 18px 16px; margin: 16px 0 20px 0; text-align: center;">
-                                <div class="result-compact-text" style="font-size: 13px; line-height: 1.5; color: #334155; margin-bottom: 14px; text-align: left;">
-                                    Kết quả nhận diện các vấn đề sức khỏe của bé đã được tổng hợp. Quý phụ huynh vui lòng nhấn vào nút dưới đây để xem chi tiết:
-                                </div>
-                                <a href="<?php echo $result_url; ?>" class="btn-view-report" target="_blank" style="background-color: #0D2A78; color: #ffffff !important; padding: 12px 24px; text-decoration: none; font-size: 14px; font-weight: 700; border-radius: 8px; display: inline-block; box-shadow: 0 3px 10px rgba(13, 42, 120, 0.2); transition: background-color 0.2s ease;">
+                            <p class="body-paragraph" style="font-size: 14px; line-height: 1.6; color: #334155; margin: 0 0 16px 0; padding: 0;">
+                                Kết quả nhận diện các vấn đề sức khỏe của bé đã được tổng hợp. Quý phụ huynh vui lòng nhấn vào nút dưới đây để xem chi tiết báo cáo:
+                            </p>
+                            
+                            <div style="margin: 0 0 24px 0; text-align: left;">
+                                <a href="<?php echo $result_url; ?>" class="btn-view-report" target="_blank" style="background-color: #0D2A78; color: #ffffff !important; padding: 12px 28px; text-decoration: none; font-size: 14px; font-weight: 700; border-radius: 8px; display: inline-block; box-shadow: 0 3px 10px rgba(13, 42, 120, 0.2); transition: background-color 0.2s ease;">
                                     Xem kết quả
                                 </a>
                             </div>
 
                             <!-- Top Issues Summary Card -->
-                            <div style="background-color: #FFFDF5; border: 1px solid #FFEAA5; border-radius: 12px; padding: 20px 18px; margin: 20px 0;">
-                                <div style="font-size: 15px; font-weight: 700; color: #854D0E; margin-bottom: 16px;">
+                            <div class="issues-card" style="background-color: #F0F4FA; border: 1px solid rgba(13, 42, 120, 0.15); border-radius: 12px; padding: 20px 18px; margin: 20px 0;">
+                                <div class="issues-card-title" style="font-size: 15px; font-weight: 700; color: #0D2A78; margin-bottom: 16px;">
                                     📋 Ba vấn đề sức khoẻ cần quan tâm:
                                 </div>
-                                <div style="margin: 0; color: #451A03; font-size: 13px; line-height: 1.6;">
+                                <div style="margin: 0; color: #334155; font-size: 14px; line-height: 1.6;">
                                     <?php echo $top_issues_html; ?>
                                 </div>
                             </div>
 
                             <!-- Disclaimer Box -->
-                            <div class="disclaimer-box" style="background-color: #FAF5FF; border: 1px solid #E9D5FF; border-radius: 8px; padding: 12px 14px; margin-top: 20px; font-size: 11px; color: #6B21A8; line-height: 1.5;">
+                            <div class="disclaimer-box" style="background-color: #FAF5FF; border: 1px solid #E9D5FF; border-radius: 8px; padding: 12px 14px; margin-top: 20px; font-size: 12px; color: #6B21A8; line-height: 1.5;">
                                 <strong style="color: #581C87;">⚠️ Lưu ý:</strong> Kết quả từ bộ công cụ mang tính chất tổng hợp thông tin quan sát nhằm hỗ trợ Quý phụ huynh định hướng theo dõi. Đây không phải là kết luận hay chẩn đoán y khoa chính thức.
                             </div>
 
@@ -84,7 +132,7 @@
                                 </a>
                             </div>
 
-                            <div style="font-size: 11px; color: #94A3B8;">
+                            <div style="font-size: 12px; color: #94A3B8;">
                                 © <?php echo date('Y'); ?> Hiểu Con Từ Gốc | <a href="https://hieucontugoc.online" class="site-link" target="_blank" style="color: #F3BA2F; text-decoration: none; font-weight: 700;">hieucontugoc.online</a>
                             </div>
                         </div>

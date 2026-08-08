@@ -1047,9 +1047,9 @@ function hieucon_send_checklist_email($user_code, $parent_name, $parent_email, $
             $desc = isset($group_descs[$id_or_name]) ? $group_descs[$id_or_name] : '';
             
             $top_issues_html .= '<div style="margin-bottom: 16px; line-height: 1.6;">';
-            $top_issues_html .= '<div style="font-size: 15px; font-weight: 700; color: #0D2A78;">Vấn đề ' . ($count + 1) . ': ' . esc_html($sg['name']) . '</div>';
+            $top_issues_html .= '<div class="issue-item-title" style="font-size: 14px; font-weight: 700; color: #0D2A78;">Vấn đề ' . ($count + 1) . ': ' . esc_html($sg['name']) . '</div>';
             if ($desc) {
-                $top_issues_html .= '<div style="font-size: 13px; color: #475569; margin-top: 4px; padding-left: 12px; border-left: 2px solid #CBD5E1;">- ' . esc_html($desc) . '</div>';
+                $top_issues_html .= '<div class="issue-item-desc" style="font-size: 13.5px; color: #475569; margin-top: 4px; padding-left: 12px; border-left: 2px solid #CBD5E1;">- ' . esc_html($desc) . '</div>';
             }
             $top_issues_html .= '</div>';
             $count++;
