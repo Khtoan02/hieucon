@@ -672,6 +672,12 @@ function hieucon_dh_public_checklist_result() {
         }
 
         @media (min-width: 1024px) {
+          .main-grid-container {
+            display: grid !important;
+            grid-template-columns: 300px 1fr !important;
+            gap: 32px !important;
+            align-items: start !important;
+          }
           .sticky-header-banner {
             position: -webkit-sticky !important;
             position: sticky !important;
@@ -702,11 +708,11 @@ function hieucon_dh_public_checklist_result() {
                 <h1 class="text-xl md:text-2xl font-bold panel-title uppercase tracking-wide m-0" style="color: white; line-height: 1.4;">BẢNG GHI DẤU HIỆU DỰA TRÊN DỮ LIỆU PHỤ HUYNH CUNG CẤP</h1>
             </div>
 
-            <!-- Top Grid Layout: 1/3 Left, 2/3 Right -->
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch mb-8 main-grid-container">
+            <!-- Top Grid Layout: Custom 300px sidebar on Desktop -->
+            <div class="grid grid-cols-1 gap-8 mb-8 main-grid-container">
                 
                 <!-- 1/3 Left Column: Profile Info & Action CTAs -->
-                <div class="lg:col-span-1 sticky-profile-sidebar flex flex-col gap-6">
+                <div class="sticky-profile-sidebar flex flex-col gap-6">
                     <div class="bg-white rounded-2xl shadow-sm border border-solid border-[#e2e8f0] p-6 flex-grow flex flex-col">
                         <h2 class="panel-title border-b border-solid border-[#e2e8f0] pb-3 mb-4 text-[#002795] font-bold text-base uppercase tracking-wider m-0">Thông Tin Hồ Sơ</h2>
                         
@@ -820,7 +826,7 @@ function hieucon_dh_public_checklist_result() {
                 </div>
 
                 <!-- 2/3 Right Column: Combined Radar Chart & Priority Issues -->
-                <div class="lg:col-span-2 flex flex-col h-full">
+                <div class="right-content-column flex flex-col h-full">
                     <div class="bg-white rounded-2xl shadow-sm border border-solid border-[#e2e8f0] p-6 flex flex-col flex-grow">
                         <!-- Card Header -->
                         <h2 class="panel-title border-b border-solid border-[#e2e8f0] pb-3 mb-4 text-[#002795] font-bold text-base uppercase tracking-wider m-0 text-center">
