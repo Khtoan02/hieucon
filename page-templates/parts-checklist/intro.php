@@ -2,7 +2,7 @@
 <div
   class="landing-checklist-wrapper antialiased relative z-10 bg-[var(--cream)] text-[var(--charcoal)] font-quicksand">
   <!-- HERO -->
-  <section class="relative bg-navy pt-32 pb-24 md:pt-40 md:pb-32 px-6 overflow-hidden has-pattern-bg" id="hero-section"
+  <section class="relative bg-navy pt-20 pb-12 md:pt-40 md:pb-32 px-6 overflow-hidden has-pattern-bg" id="hero-section"
     <?php if ($is_start)
       echo 'style="display:none;"'; ?>>
     <div class="absolute top-0 left-0 w-full h-full overflow-hidden z-0">
@@ -14,8 +14,8 @@
       </div>
     </div>
 
-    <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center relative z-10">
-      <div class="text-left flex flex-col justify-center">
+    <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center relative z-10">
+      <div class="text-left flex flex-col justify-center order-2 lg:order-1">
         <h1 class="font-oswald mb-6 text-white uppercase" style="line-height: 1.4; letter-spacing: 0;">
           <span class="block font-bold whitespace-nowrap"
             style="font-size: clamp(26px, 3.5vw, 44px); letter-spacing: 0;">BỘ CÔNG CỤ NHẬN DIỆN CÁC</span>
@@ -103,15 +103,16 @@
         </div>
       </div>
 
-      <div class="relative hidden lg:block">
-        <div class="absolute inset-0 bg-[rgba(255,209,84,0.2)] rounded-3xl transform rotate-2 scale-105"></div>
+      <!-- Image Column (First on mobile, second on desktop) -->
+      <div class="relative order-1 lg:order-2 block w-full h-32 sm:h-44 lg:h-auto overflow-hidden rounded-2xl lg:rounded-none">
+        <div class="absolute inset-0 bg-[rgba(255,209,84,0.2)] rounded-2xl transform rotate-1 lg:rotate-2 scale-105"></div>
         <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/bang-check-list.png"
           alt="Bộ công cụ nhận diện các rào cản sức khỏe"
-          class="relative rounded-3xl shadow-[0_25px_50px_-12px_rgba(0,0,0,0.25)] border border-solid border-[rgba(255,255,255,0.1)] object-cover w-full aspect-square"
-          style="aspect-ratio: 1 / 1;" />
+          class="relative rounded-2xl lg:rounded-3xl shadow-lg lg:shadow-[0_25px_50px_-12px_rgba(0,0,0,0.25)] border border-solid border-[rgba(255,255,255,0.1)] object-cover w-full h-full lg:aspect-square"
+          style="object-position: center;" />
         <!-- Badge: Phù hợp với trẻ từ 2 đến 12 tuổi -->
-        <div class="absolute top-4 left-4 bg-yellow text-navy font-bold text-[11px] sm:text-xs px-4 py-2.5 rounded-2xl shadow-[0_8px_20px_rgba(0,0,0,0.15)] z-20 flex items-center gap-2 border border-solid border-white/20 select-none uppercase tracking-wider">
-          <span class="text-sm">👶</span>
+        <div class="absolute top-3 left-3 lg:top-4 lg:left-4 bg-yellow text-navy font-bold text-[9px] sm:text-xs px-3 py-1.5 lg:px-4 lg:py-2.5 rounded-xl lg:rounded-2xl shadow-[0_8px_20px_rgba(0,0,0,0.15)] z-20 flex items-center gap-1.5 lg:gap-2 border border-solid border-white/20 select-none uppercase tracking-wider">
+          <span class="text-xs lg:text-sm">👶</span>
           <span>Phù hợp với trẻ từ 2 đến 12 tuổi</span>
         </div>
       </div>
