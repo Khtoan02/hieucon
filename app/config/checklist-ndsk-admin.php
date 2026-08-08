@@ -4,9 +4,9 @@
  */
 
 // 1. Install Custom Table
-function hieucon_install_dh_checklist_table() {
+function hieucon_install_ndsk_checklist_table() {
     global $wpdb;
-    $table_name = $wpdb->prefix . 'hieucon_dh_checklists';
+    $table_name = $wpdb->prefix . 'hieucon_ndsk_checklists';
     $charset_collate = $wpdb->get_charset_collate();
 
     $sql = "CREATE TABLE IF NOT EXISTS $table_name (
@@ -66,195 +66,209 @@ function hieucon_install_dh_checklist_table() {
         $wpdb->query( "ALTER TABLE $table_name ADD COLUMN child_gender varchar(20) DEFAULT NULL AFTER child_age" );
     }
 }
-add_action('after_setup_theme', 'hieucon_install_dh_checklist_table');
+add_action('after_setup_theme', 'hieucon_install_ndsk_checklist_table');
 
 // 2. Register Admin Menu
-function hieucon_dh_checklist_admin_menu() {
+function hieucon_ndsk_checklist_admin_menu() {
     // Đăng ký dưới dạng Submenu của menu chính gộp
     add_submenu_page(
         'hieucon-checklist-main',
-        'DocumentingHope',
-        'DocumentingHope',
+        'Nhận Diện Sức Khỏe',
+        'Nhận Diện Sức Khỏe',
         'manage_options',
-        'hieucon-dh-checklist',
-        'hieucon_dh_checklist_admin_page'
+        'hieucon-ndsk-checklist',
+        'hieucon_ndsk_checklist_admin_page'
     );
 }
-add_action('admin_menu', 'hieucon_dh_checklist_admin_menu', 11);
+add_action('admin_menu', 'hieucon_ndsk_checklist_admin_menu', 11);
 
 // 3. Helper Parse User Agent
-function hieucon_parse_user_agent($ua) {
-    if (empty($ua)) return 'Không rõ thiết bị';
-    
-    $os = 'Khác';
-    if (preg_match('/iphone/i', $ua)) {
-        $os = 'iPhone';
-    } elseif (preg_match('/ipad/i', $ua)) {
-        $os = 'iPad';
-    } elseif (preg_match('/android/i', $ua)) {
-        $os = 'Android';
-    } elseif (preg_match('/macintosh|mac os x/i', $ua)) {
-        $os = 'Mac';
-    } elseif (preg_match('/windows|win32/i', $ua)) {
-        $os = 'Windows';
-    } elseif (preg_match('/linux/i', $ua)) {
-        $os = 'Linux';
-    }
+if (!function_exists('hieucon_parse_user_agent')) {
+    function hieucon_parse_user_agent($ua) {
+        if (empty($ua)) return 'Không rõ thiết bị';
+        
+        $os = 'Khác';
+        if (preg_match('/iphone/i', $ua)) {
+            $os = 'iPhone';
+        } elseif (preg_match('/ipad/i', $ua)) {
+            $os = 'iPad';
+        } elseif (preg_match('/android/i', $ua)) {
+            $os = 'Android';
+        } elseif (preg_match('/macintosh|mac os x/i', $ua)) {
+            $os = 'Mac';
+        } elseif (preg_match('/windows|win32/i', $ua)) {
+            $os = 'Windows';
+        } elseif (preg_match('/linux/i', $ua)) {
+            $os = 'Linux';
+        }
 
-    $browser = 'Khác';
-    if (preg_match('/Zalo/i', $ua)) {
-        $browser = 'Zalo App';
-    } elseif (preg_match('/FBAV|FBAN|FB_IAB/i', $ua)) {
-        $browser = 'Facebook App';
-    } elseif (preg_match('/CocCoc|coc_coc/i', $ua)) {
-        $browser = 'Cốc Cốc';
-    } elseif (preg_match('/Edg/i', $ua)) {
-        $browser = 'Edge';
-    } elseif (preg_match('/Brave/i', $ua)) {
-        $browser = 'Brave';
-    } elseif (preg_match('/Chrome|CriOS/i', $ua)) {
-        $browser = 'Chrome';
-    } elseif (preg_match('/Firefox|FxiOS/i', $ua)) {
-        $browser = 'Firefox';
-    } elseif (preg_match('/Safari/i', $ua)) {
-        $browser = 'Safari';
-    }
+        $browser = 'Khác';
+        if (preg_match('/Zalo/i', $ua)) {
+            $browser = 'Zalo App';
+        } elseif (preg_match('/FBAV|FBAN|FB_IAB/i', $ua)) {
+            $browser = 'Facebook App';
+        } elseif (preg_match('/CocCoc|coc_coc/i', $ua)) {
+            $browser = 'Cốc Cốc';
+        } elseif (preg_match('/Edg/i', $ua)) {
+            $browser = 'Edge';
+        } elseif (preg_match('/Brave/i', $ua)) {
+            $browser = 'Brave';
+        } elseif (preg_match('/Chrome|CriOS/i', $ua)) {
+            $browser = 'Chrome';
+        } elseif (preg_match('/Firefox|FxiOS/i', $ua)) {
+            $browser = 'Firefox';
+        } elseif (preg_match('/Safari/i', $ua)) {
+            $browser = 'Safari';
+        }
 
-    return "$os - $browser";
+        return "$os - $browser";
+    }
 }
 
 // 4. Admin Page HTML/PHP
-function hieucon_dh_checklist_admin_page() {
+function hieucon_ndsk_checklist_admin_page() {
     global $wpdb;
-    $table_name = $wpdb->prefix . 'hieucon_dh_checklists';
+    $table_name = $wpdb->prefix . 'hieucon_ndsk_checklists';
     
     // Save password option if posted
     if (isset($_POST['hieucon_save_password'])) {
         check_admin_referer('hieucon_save_password_action');
-        $new_pass = sanitize_text_field($_POST['hieucon_checklist_view_password']);
-        update_option('hieucon_checklist_view_password', $new_pass);
+        $new_pass = sanitize_text_field($_POST['hieucon_ndsk_view_password']);
+        update_option('hieucon_ndsk_view_password', $new_pass);
         echo '<div class="notice notice-success is-dismissible"><p>Đã lưu mật khẩu bảo mật xem kết quả thành công!</p></div>';
     }
 
+    $active_tab = isset($_GET['tab']) ? sanitize_text_field($_GET['tab']) : 'submissions';
     $results = $wpdb->get_results("SELECT * FROM $table_name ORDER BY updated_at DESC LIMIT 500");
     ?>
     <div class="wrap">
-        <h1 class="wp-heading-inline">Checklist DocumentingHope</h1>
-        <a href="<?php echo admin_url('admin-post.php?action=hieucon_dh_export_csv'); ?>" class="page-title-action">Xuất CSV toàn bộ dữ liệu</a>
-        <p>Danh sách khách hàng đã điền Checklist Toàn Diện (DocumentingHope).</p>
+        <h1 class="wp-heading-inline">Nhận Diện Sức Khỏe Thường Gặp</h1>
+        <hr class="wp-header-end">
         
-        <!-- Password Settings Form -->
-        <div style="background:#ffffff; border:1px solid #ccd0d4; padding:15px; margin-bottom:20px; max-width:600px; border-radius:4px; box-shadow:0 1px 3px rgba(0,0,0,0.05);">
-            <form method="POST" style="margin:0; padding:0;">
-                <?php wp_nonce_field('hieucon_save_password_action'); ?>
-                <h3 style="margin-top:0; margin-bottom:8px; font-size:14px; color:#1d2327;">Cấu hình Mật khẩu bảo mật xem kết quả</h3>
-                <p class="description" style="margin:0 0 12px 0;">Mật khẩu này được sử dụng khi truy cập trực tiếp bằng liên kết không đi kèm mã xác thực (Ví dụ: từ link chia sẻ hoặc truy cập trực tiếp bằng mã hồ sơ).</p>
-                <div style="display:flex; gap:10px; align-items:center;">
-                    <input type="text" name="hieucon_checklist_view_password" value="<?php echo esc_attr(get_option('hieucon_checklist_view_password', 'hieucon2026')); ?>" style="width:250px; margin:0;" class="regular-text" required>
-                    <button type="submit" name="hieucon_save_password" class="button button-secondary">Lưu mật khẩu</button>
-                </div>
-            </form>
-        </div>
-        
-        <table class="wp-list-table widefat fixed striped table-view-list">
-            <thead>
-                <tr>
-                    <th style="width:60px;">ID</th>
-                    <th style="width:100px;">Mã KH (8 số)</th>
-                    <th style="width:160px;">Phụ huynh</th>
-                    <th style="width:120px;">SĐT</th>
-                    <th style="width:150px;">Tuổi / Chẩn đoán</th>
-                    <th style="width:200px;">Analyst (Hành vi)</th>
-                    <th>Thời gian</th>
-                    <th style="width:120px;">Hành động</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php if (empty($results)): ?>
-                <tr><td colspan="7">Chưa có kết quả nào.</td></tr>
-                <?php else: ?>
-                    <?php foreach ($results as $row): ?>
-                        <tr>
-                            <td><?php echo esc_html($row->id); ?></td>
-                            <td><strong><?php echo esc_html($row->user_code); ?></strong></td>
-                            <td>
-                                <?php echo esc_html($row->parent_name ? $row->parent_name : '---'); ?><br>
-                                <span style="font-size:11px; color:#666;"><?php echo esc_html($row->parent_email ? $row->parent_email : '---'); ?></span>
-                            </td>
-                            <td><?php echo esc_html($row->parent_phone ? $row->parent_phone : '---'); ?></td>
-                            <td>
-                                Bé: <strong><?php echo esc_html($row->child_name ? $row->child_name : '---'); ?></strong><br>
-                                Tuổi: <?php echo esc_html($row->child_age); ?><br>
-                                CĐ: <?php echo esc_html($row->child_diagnosis); ?>
-                            </td>
-                            <td>
-                                <span style="font-size:12px;">⏱ <strong><?php echo intval($row->time_spent ?? 0); ?></strong> giây</span><br>
-                                <span style="font-size:11px; color:#666;" title="<?php echo esc_attr($row->device_info ?? ''); ?>">📱 <?php echo esc_html(hieucon_parse_user_agent($row->device_info ?? '')); ?></span>
-                                
-                                <?php if (!empty($row->deep_analytics)): 
-                                    $da = json_decode($row->deep_analytics, true);
-                                    if (is_string($da)) $da = json_decode($da, true); // Fix cho dữ liệu cũ bị mã hoá 2 lần
-                                    if (is_array($da)):
-                                ?>
-                                <details style="margin-top: 8px; font-size: 11px; background: #f0f0f1; padding: 5px; border-radius: 4px;">
-                                    <summary style="cursor:pointer; font-weight:bold; color:#2271b1;">Xem hành vi sâu</summary>
-                                    <div style="margin-top:5px; border-top:1px solid #ccc; padding-top:5px;">
-                                        <strong>Active Tab:</strong> <?php echo intval($da['activeTime'] ?? 0); ?>s<br>
-                                        <strong>Vị trí:</strong> <?php echo esc_html(($da['location'] ?? 'N/A') . ' (IP: ' . ($da['ip'] ?? '') . ')'); ?><br>
-                                        <strong>UTM:</strong> <?php echo esc_html(json_encode($da['utms'] ?? [])); ?><br>
-                                        
-                                        <?php 
-                                        $toggles = $da['toggles'] ?? [];
-                                        $hesitations = [];
-                                        if (is_array($toggles) || is_object($toggles)) {
-                                            foreach ($toggles as $itemName => $count) {
-                                                if ($count > 1) $hesitations[] = "$itemName ($count lần)";
-                                            }
-                                        }
-                                        if (!empty($hesitations)): ?>
-                                        <strong style="color:#d97706;">Lưỡng lự ở:</strong> <?php echo esc_html(implode(' | ', $hesitations)); ?><br>
-                                        <?php endif; ?>
+        <h2 class="nav-tab-wrapper" style="margin-bottom: 20px;">
+            <a href="?page=hieucon-ndsk-checklists&tab=submissions" class="nav-tab <?php echo $active_tab == 'submissions' ? 'nav-tab-active' : ''; ?>">Danh sách hồ sơ</a>
+            <a href="?page=hieucon-ndsk-checklists&tab=password" class="nav-tab <?php echo $active_tab == 'password' ? 'nav-tab-active' : ''; ?>">Mật khẩu truy cập</a>
+        </h2>
 
-                                        <?php if (!empty($da['thinkTimes']) && is_array($da['thinkTimes'])): 
-                                            $maxThink = -1; $maxThinkGroup = '';
-                                            foreach($da['thinkTimes'] as $grp => $sec) {
-                                                if ($sec > $maxThink) { $maxThink = $sec; $maxThinkGroup = $grp; }
+        <?php if ($active_tab == 'password'): ?>
+            <!-- Password Settings Form -->
+            <div style="background:#ffffff; border:1px solid #ccd0d4; padding:20px; max-width:600px; border-radius:6px; box-shadow:0 1px 3px rgba(0,0,0,0.05);">
+                <form method="POST" style="margin:0; padding:0;">
+                    <?php wp_nonce_field('hieucon_save_password_action'); ?>
+                    <h3 style="margin-top:0; margin-bottom:8px; font-size:15px; color:#1d2327;">Cấu hình Mật khẩu bảo mật</h3>
+                    <p class="description" style="margin:0 0 16px 0; line-height:1.5;">Mật khẩu này được sử dụng để bảo mật trang kết quả khi phụ huynh truy cập trực tiếp bằng mã hồ sơ, và bảo mật trang Dashboard phân tích số liệu.</p>
+                    <div style="display:flex; gap:10px; align-items:center;">
+                        <input type="text" name="hieucon_ndsk_view_password" value="<?php echo esc_attr(get_option('hieucon_ndsk_view_password', 'hieucon2026')); ?>" style="width:250px; margin:0; padding: 6px 10px;" class="regular-text" required>
+                        <button type="submit" name="hieucon_save_password" class="button button-primary">Lưu mật khẩu</button>
+                    </div>
+                </form>
+            </div>
+        <?php else: ?>
+            <div style="margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center;">
+                <p style="margin:0;">Danh sách khách hàng đã điền Bộ công cụ nhận diện các vấn đề sức khoẻ thường gặp.</p>
+                <a href="<?php echo admin_url('admin-post.php?action=hieucon_ndsk_export_csv'); ?>" class="button button-secondary">Xuất CSV toàn bộ dữ liệu</a>
+            </div>
+            
+            <table class="wp-list-table widefat fixed striped table-view-list">
+                <thead>
+                    <tr>
+                        <th style="width:60px;">ID</th>
+                        <th style="width:100px;">Mã KH (8 số)</th>
+                        <th style="width:160px;">Phụ huynh</th>
+                        <th style="width:120px;">SĐT</th>
+                        <th style="width:150px;">Tuổi / Chẩn đoán</th>
+                        <th style="width:200px;">Analyst (Hành vi)</th>
+                        <th>Thời gian</th>
+                        <th style="width:120px; text-align:right;">Thao tác</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php if (empty($results)): ?>
+                    <tr><td colspan="8">Chưa có kết quả nào.</td></tr>
+                    <?php else: ?>
+                        <?php foreach ($results as $row): ?>
+                            <tr>
+                                <td><?php echo esc_html($row->id); ?></td>
+                                <td><strong>#<?php echo esc_html($row->user_code); ?></strong></td>
+                                <td>
+                                    <strong><?php echo esc_html($row->parent_name ? $row->parent_name : '---'); ?></strong><br>
+                                    <span style="font-size:11px; color:#666;"><?php echo esc_html($row->parent_email ? $row->parent_email : '---'); ?></span>
+                                </td>
+                                <td><?php echo esc_html($row->parent_phone ? $row->parent_phone : '---'); ?></td>
+                                <td>
+                                    Bé: <strong><?php echo esc_html($row->child_name ? $row->child_name : '---'); ?></strong><br>
+                                    Tuổi: <?php echo esc_html($row->child_age); ?><br>
+                                    CĐ: <?php echo esc_html($row->child_diagnosis); ?>
+                                </td>
+                                <td>
+                                    <span style="font-size:12px;">⏱ <strong><?php echo intval($row->time_spent ?? 0); ?></strong> giây</span><br>
+                                    <span style="font-size:11px; color:#666;" title="<?php echo esc_attr($row->device_info ?? ''); ?>">📱 <?php echo esc_html(hieucon_parse_user_agent($row->device_info ?? '')); ?></span>
+                                    
+                                    <?php if (!empty($row->deep_analytics)): 
+                                        $da = json_decode($row->deep_analytics, true);
+                                        if (is_string($da)) $da = json_decode($da, true);
+                                        if (is_array($da)):
+                                    ?>
+                                    <details style="margin-top: 8px; font-size: 11px; background: #f0f0f1; padding: 5px; border-radius: 4px;">
+                                        <summary style="cursor:pointer; font-weight:bold; color:#2271b1;">Xem hành vi sâu</summary>
+                                        <div style="margin-top:5px; border-top:1px solid #ccc; padding-top:5px;">
+                                            <strong>Active Tab:</strong> <?php echo intval($da['activeTime'] ?? 0); ?>s<br>
+                                            <strong>Vị trí:</strong> <?php echo esc_html(($da['location'] ?? 'N/A') . ' (IP: ' . ($da['ip'] ?? '') . ')'); ?><br>
+                                            <strong>UTM:</strong> <?php echo esc_html(json_encode($da['utms'] ?? [])); ?><br>
+                                            
+                                            <?php 
+                                            $toggles = $da['toggles'] ?? [];
+                                            $hesitations = [];
+                                            if (is_array($toggles) || is_object($toggles)) {
+                                                foreach ($toggles as $itemName => $count) {
+                                                    if ($count > 1) $hesitations[] = "$itemName ($count lần)";
+                                                }
                                             }
-                                            if ($maxThink >= 0):
-                                        ?>
-                                        <strong>Suy nghĩ lâu nhất tại:</strong> <?php echo esc_html($maxThinkGroup) . " ($maxThink giây)"; ?><br>
-                                        <?php endif; endif; ?>
-
-                                        <strong>Ký tự đã xoá:</strong> <?php echo intval($da['deletedChars'] ?? 0); ?><br>
-                                        <?php if(!empty($da['highlighted'])): ?>
-                                        <strong>Đã bôi đen:</strong> <?php echo esc_html(implode(', ', $da['highlighted'])); ?>
-                                        <?php endif; ?>
-                                        <?php if(!empty($da['drop_point'])): ?>
-                                        <br><strong style="color:red;">Trạng thái:</strong> <?php echo esc_html($da['drop_point']); ?>
-                                        <?php endif; ?>
-                                    </div>
-                                </details>
-                                <?php endif; endif; ?>
-                            </td>
-                            <td><?php echo esc_html($row->created_at); ?></td>
-                            <td>
-                                <a href="<?php echo esc_url(site_url('/ket-qua-dh?code=' . $row->user_code . '&auth=' . md5($row->user_code . 'hieucon_secret_salt'))); ?>" target="_blank" class="button button-primary">Xem chi tiết</a>
-                            </td>
-                        </tr>
-                    <?php endforeach; ?>
-                <?php endif; ?>
-            </tbody>
-        </table>
+                                            if (!empty($hesitations)): ?>
+                                            <strong style="color:#d97706;">Lưỡng lự ở:</strong> <?php echo esc_html(implode(' | ', $hesitations)); ?><br>
+                                            <?php endif; ?>
+    
+                                            <?php if (!empty($da['thinkTimes']) && is_array($da['thinkTimes'])): 
+                                                $maxThink = -1; $maxThinkGroup = '';
+                                                foreach($da['thinkTimes'] as $grp => $sec) {
+                                                    if ($sec > $maxThink) { $maxThink = $sec; $maxThinkGroup = $grp; }
+                                                }
+                                                if ($maxThink >= 0):
+                                            ?>
+                                            <strong>Suy nghĩ lâu nhất tại:</strong> <?php echo esc_html($maxThinkGroup) . " ($maxThink giây)"; ?><br>
+                                            <?php endif; endif; ?>
+    
+                                            <strong>Ký tự đã xoá:</strong> <?php echo intval($da['deletedChars'] ?? 0); ?><br>
+                                            <?php if(!empty($da['highlighted'])): ?>
+                                            <strong>Đã bôi đen:</strong> <?php echo esc_html(implode(', ', $da['highlighted'])); ?>
+                                            <?php endif; ?>
+                                            <?php if(!empty($da['drop_point'])): ?>
+                                            <br><strong style="color:red;">Trạng thái:</strong> <?php echo esc_html($da['drop_point']); ?>
+                                            <?php endif; ?>
+                                        </div>
+                                    </details>
+                                    <?php endif; endif; ?>
+                                </td>
+                                <td><?php echo esc_html($row->created_at); ?></td>
+                                <td style="text-align:right;">
+                                    <a href="<?php echo esc_url(site_url('/ket-qua-bo-cong-cu-nhan-dien-suc-khoe-thuong-gap?code=' . $row->user_code . '&auth=' . md5($row->user_code . 'hieucon_secret_salt'))); ?>" target="_blank" class="button button-small">Xem kết quả</a>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
+                </tbody>
+            </table>
+        <?php endif; ?>
     </div>
     <?php
 }
 
 // 4. AJAX Endpoint to receive data
-add_action('wp_ajax_hieucon_dh_submit_checklist', 'hieucon_dh_submit_checklist');
-add_action('wp_ajax_nopriv_hieucon_dh_submit_checklist', 'hieucon_dh_submit_checklist');
-function hieucon_dh_submit_checklist() {
+add_action('wp_ajax_hieucon_ndsk_submit_checklist', 'hieucon_ndsk_submit_checklist');
+add_action('wp_ajax_nopriv_hieucon_ndsk_submit_checklist', 'hieucon_ndsk_submit_checklist');
+function hieucon_ndsk_submit_checklist() {
     global $wpdb;
-    $table_name = $wpdb->prefix . 'hieucon_dh_checklists';
+    $table_name = $wpdb->prefix . 'hieucon_ndsk_checklists';
     
     $user_code = isset($_POST['user_code']) ? sanitize_text_field($_POST['user_code']) : '';
     if (!$user_code) {
@@ -342,18 +356,18 @@ function hieucon_dh_submit_checklist() {
     $is_final = !empty($parent_email) && !empty($scores_json);
     $already_sent = ($existing && !empty($existing->parent_email));
     if ($is_final && !$already_sent) {
-        hieucon_send_checklist_email($user_code, $parent_name, $parent_email, $child_name, $child_age, $child_gender, $scores_json);
+        hieucon_ndsk_send_checklist_email($user_code, $parent_name, $parent_email, $child_name, $child_age, $child_gender, $scores_json);
     }
 
     wp_send_json_success(['user_code' => $user_code, 'auth' => md5($user_code . 'hieucon_secret_salt')]);
 }
 
 // 4.5 AJAX Tracking Endpoint
-add_action('wp_ajax_hieucon_dh_track_view', 'hieucon_dh_track_view');
-add_action('wp_ajax_nopriv_hieucon_dh_track_view', 'hieucon_dh_track_view');
-function hieucon_dh_track_view() {
+add_action('wp_ajax_hieucon_ndsk_track_view', 'hieucon_ndsk_track_view');
+add_action('wp_ajax_nopriv_hieucon_ndsk_track_view', 'hieucon_ndsk_track_view');
+function hieucon_ndsk_track_view() {
     global $wpdb;
-    $table_name = $wpdb->prefix . 'hieucon_dh_checklists';
+    $table_name = $wpdb->prefix . 'hieucon_ndsk_checklists';
     
     $code = isset($_POST['code']) ? sanitize_text_field($_POST['code']) : '';
     $track_type = isset($_POST['track_type']) ? sanitize_text_field($_POST['track_type']) : '';
@@ -442,14 +456,14 @@ function hieucon_dh_track_view() {
 }
 
 // 5. Export CSV
-add_action('admin_post_hieucon_dh_export_csv', 'hieucon_dh_export_csv_handler');
-function hieucon_dh_export_csv_handler() {
+add_action('admin_post_hieucon_ndsk_export_csv', 'hieucon_ndsk_export_csv_handler');
+function hieucon_ndsk_export_csv_handler() {
     if (!current_user_can('manage_options')) {
         wp_die('Bạn không có quyền truy cập.');
     }
 
     global $wpdb;
-    $table_name = $wpdb->prefix . 'hieucon_dh_checklists';
+    $table_name = $wpdb->prefix . 'hieucon_ndsk_checklists';
     $results = $wpdb->get_results("SELECT * FROM $table_name ORDER BY created_at DESC");
 
     header('Content-Type: text/csv; charset=utf-8');
@@ -535,13 +549,13 @@ function hieucon_dh_export_csv_handler() {
 }
 
 // 6. Public Results View - Hiển thị kết quả đẹp (Không chẩn đoán)
-add_action('template_redirect', 'hieucon_dh_public_checklist_result');
-function hieucon_dh_public_checklist_result() {
-    if ( strpos($_SERVER['REQUEST_URI'], '/ket-qua-dh') !== 0 || !isset($_GET['code']) ) return;
+add_action('template_redirect', 'hieucon_ndsk_public_checklist_result');
+function hieucon_ndsk_public_checklist_result() {
+    if ( strpos($_SERVER['REQUEST_URI'], '/ket-qua-bo-cong-cu-nhan-dien-suc-khoe-thuong-gap') !== 0 || !isset($_GET['code']) ) return;
 
     $code = sanitize_text_field($_GET['code']);
     global $wpdb;
-    $table_name = $wpdb->prefix . 'hieucon_dh_checklists';
+    $table_name = $wpdb->prefix . 'hieucon_ndsk_checklists';
     $row = $wpdb->get_row($wpdb->prepare(
         "SELECT * FROM $table_name WHERE user_code = %s OR parent_email = %s OR parent_phone = %s ORDER BY id DESC LIMIT 1",
         $code, $code, $code
@@ -563,20 +577,20 @@ function hieucon_dh_public_checklist_result() {
     // 1. Check auth query parameter
     if (isset($_GET['auth']) && $_GET['auth'] === $expected_hash) {
         $authenticated = true;
-        setcookie('hieucon_auth_' . $row->user_code, $expected_hash, time() + 30 * DAY_IN_SECONDS, COOKIEPATH, COOKIE_DOMAIN);
+        setcookie('hieucon_ndsk_auth_' . $row->user_code, $expected_hash, time() + 30 * DAY_IN_SECONDS, COOKIEPATH, COOKIE_DOMAIN);
     }
     // 2. Check cookie
-    elseif (isset($_COOKIE['hieucon_auth_' . $row->user_code]) && $_COOKIE['hieucon_auth_' . $row->user_code] === $expected_hash) {
+    elseif (isset($_COOKIE['hieucon_ndsk_auth_' . $row->user_code]) && $_COOKIE['hieucon_ndsk_auth_' . $row->user_code] === $expected_hash) {
         $authenticated = true;
     }
     // 3. Check POST submission
     elseif (isset($_POST['hieucon_pass'])) {
         $pass_input = sanitize_text_field($_POST['hieucon_pass']);
-        $configured_pass = get_option('hieucon_checklist_view_password', 'hieucon2026');
+        $configured_pass = get_option('hieucon_ndsk_view_password', 'hieucon2026');
 
         if (trim($pass_input) === trim($configured_pass)) {
             $authenticated = true;
-            setcookie('hieucon_auth_' . $row->user_code, $expected_hash, time() + 30 * DAY_IN_SECONDS, COOKIEPATH, COOKIE_DOMAIN);
+            setcookie('hieucon_ndsk_auth_' . $row->user_code, $expected_hash, time() + 30 * DAY_IN_SECONDS, COOKIEPATH, COOKIE_DOMAIN);
             wp_safe_redirect(add_query_arg('auth', $expected_hash));
             exit;
         } else {
@@ -1031,7 +1045,7 @@ function hieucon_dh_public_checklist_result() {
                                         </div>
                                         
                                         <?php 
-                                        $group_descs = hieucon_dh_get_group_descriptions();
+                                        $group_descs = hieucon_ndsk_get_group_descriptions();
                                         $id_or_name = !empty($sg['id']) ? $sg['id'] : $sg['name'];
                                         $desc = isset($group_descs[$id_or_name]) ? $group_descs[$id_or_name] : '';
                                         if ($desc): 
@@ -1415,7 +1429,7 @@ function hieucon_dh_public_checklist_result() {
           const xhr = new XMLHttpRequest();
           xhr.open('POST', adminAjax, true);
           xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-          xhr.send('action=hieucon_dh_track_view&track_type=init&code=' + encodeURIComponent(code) +
+          xhr.send('action=hieucon_ndsk_track_view&track_type=init&code=' + encodeURIComponent(code) +
                    '&browser=' + encodeURIComponent(device.browser) +
                    '&os=' + encodeURIComponent(device.os) +
                    '&screen=' + encodeURIComponent(device.screen) +
@@ -1430,7 +1444,7 @@ function hieucon_dh_public_checklist_result() {
               const heartbeatXhr = new XMLHttpRequest();
               heartbeatXhr.open('POST', adminAjax, true);
               heartbeatXhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-              heartbeatXhr.send('action=hieucon_dh_track_view&track_type=heartbeat&code=' + encodeURIComponent(code));
+              heartbeatXhr.send('action=hieucon_ndsk_track_view&track_type=heartbeat&code=' + encodeURIComponent(code));
           }, 10000);
           
           // Global conversion click logger
@@ -1438,7 +1452,7 @@ function hieucon_dh_public_checklist_result() {
               const clickXhr = new XMLHttpRequest();
               clickXhr.open('POST', adminAjax, true);
               clickXhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-              clickXhr.send('action=hieucon_dh_track_view&track_type=conversion&code=' + encodeURIComponent(code));
+              clickXhr.send('action=hieucon_ndsk_track_view&track_type=conversion&code=' + encodeURIComponent(code));
           };
       })();
       </script>    <?php
@@ -1449,7 +1463,7 @@ function hieucon_dh_public_checklist_result() {
 /**
  * Gửi email kết quả Checklist cho phụ huynh dưới dạng HTML đẹp mắt.
  */
-function hieucon_send_checklist_email($user_code, $parent_name, $parent_email, $child_name, $child_age, $child_gender, $scores_json) {
+function hieucon_ndsk_send_checklist_email($user_code, $parent_name, $parent_email, $child_name, $child_age, $child_gender, $scores_json) {
     $scores = json_decode($scores_json, true) ?: [];
     
     // Sắp xếp các nhóm theo tỉ lệ % dấu hiệu giảm dần
@@ -1457,7 +1471,7 @@ function hieucon_send_checklist_email($user_code, $parent_name, $parent_email, $
         return $b['pct'] <=> $a['pct'];
     });
     
-    $group_descs = hieucon_dh_get_group_descriptions();
+    $group_descs = hieucon_ndsk_get_group_descriptions();
     
     $top_issues_html = '';
     $count = 0;
@@ -1482,7 +1496,7 @@ function hieucon_send_checklist_email($user_code, $parent_name, $parent_email, $
     }
 
     $auth_token = md5($user_code . 'hieucon_secret_salt');
-    $result_url = esc_url(site_url('/ket-qua-dh?code=' . $user_code . '&auth=' . $auth_token));
+    $result_url = esc_url(site_url('/ket-qua-bo-cong-cu-nhan-dien-suc-khoe-thuong-gap?code=' . $user_code . '&auth=' . $auth_token));
     $subject = 'Kết quả bộ công cụ nhận diện các vấn đề sức khoẻ thường gặp.';
     
     ob_start();
@@ -1493,7 +1507,7 @@ function hieucon_send_checklist_email($user_code, $parent_name, $parent_email, $
 }
 
 // 7. Group Descriptions Helper
-function hieucon_dh_get_group_descriptions() {
+function hieucon_ndsk_get_group_descriptions() {
     return [
         'tieuHoa'  => 'Sức khỏe hệ tiêu hóa là nền tảng quan trọng giúp trẻ phát triển thể chất, ổn định hành vi và nâng cao hiệu quả can thiệp. Rối loạn tiêu hóa ảnh hưởng trực tiếp đến dinh dưỡng, giấc ngủ, cảm xúc, khả năng học tập, hành vi của trẻ.',
         'anUong'   => 'Tình trạng rối loạn ăn uống kéo dài có thể dẫn đến thiếu hụt dinh dưỡng, chậm tăng trưởng, suy giảm thể lực, đồng thời làm gia tăng căng thẳng, hành vi chống đối và khó khăn trong sinh hoạt gia đình.',
@@ -1518,8 +1532,8 @@ function hieucon_dh_get_group_descriptions() {
 }
 
 // 8. Body class filter for iframe
-add_filter('body_class', 'hieucon_dh_iframe_body_class');
-function hieucon_dh_iframe_body_class($classes) {
+add_filter('body_class', 'hieucon_ndsk_iframe_body_class');
+function hieucon_ndsk_iframe_body_class($classes) {
     if (isset($_GET['iframe'])) {
         $classes[] = 'is-iframe-view';
     }
@@ -1527,11 +1541,11 @@ function hieucon_dh_iframe_body_class($classes) {
 }
 
 // 9. Dashboard Page Routing
-add_action('template_redirect', 'hieucon_dh_dashboard_page');
-function hieucon_dh_dashboard_page() {
-    if ( strpos($_SERVER['REQUEST_URI'], '/dashboard-dh') !== 0 ) return;
+add_action('template_redirect', 'hieucon_ndsk_dashboard_page');
+function hieucon_ndsk_dashboard_page() {
+    if ( strpos($_SERVER['REQUEST_URI'], '/dashboard-bo-cong-cu-nhan-dien-suc-khoe-thuong-gap') !== 0 ) return;
 
-    $configured_pass = get_option('hieucon_checklist_view_password', 'hieucon2026');
+    $configured_pass = get_option('hieucon_ndsk_view_password', 'hieucon2026');
     $expected_hash = md5('hieucon_dashboard_secret_salt_' . $configured_pass);
     $authenticated = false;
     $auth_error = '';
@@ -1546,7 +1560,7 @@ function hieucon_dh_dashboard_page() {
         if (trim($pass_input) === trim($configured_pass)) {
             $authenticated = true;
             setcookie('hieucon_dashboard_auth', $expected_hash, time() + 30 * DAY_IN_SECONDS, COOKIEPATH, COOKIE_DOMAIN);
-            wp_safe_redirect(site_url('/dashboard-dh'));
+            wp_safe_redirect(site_url('/dashboard-bo-cong-cu-nhan-dien-suc-khoe-thuong-gap'));
             exit;
         } else {
             $auth_error = 'Mật khẩu bảo mật không chính xác. Vui lòng nhập đúng mật khẩu để vào dashboard.';
@@ -1593,13 +1607,13 @@ function hieucon_dh_dashboard_page() {
         exit;
     }
 
-    hieucon_dh_render_dashboard();
+    hieucon_ndsk_render_dashboard();
 }
 
 // 10. Dashboard Page Renderer
-function hieucon_dh_render_dashboard() {
+function hieucon_ndsk_render_dashboard() {
     global $wpdb;
-    $table_name = $wpdb->prefix . 'hieucon_dh_checklists';
+    $table_name = $wpdb->prefix . 'hieucon_ndsk_checklists';
     
     // Fetch all submissions
     $rows = $wpdb->get_results("SELECT * FROM $table_name ORDER BY id DESC");
@@ -1824,7 +1838,7 @@ function hieucon_dh_render_dashboard() {
         const loading = document.getElementById('modalLoading');
         
         loading.style.display = 'flex';
-        iframe.src = '<?php echo esc_js(site_url('/ket-qua-dh')); ?>?code=' + code + '&auth=' + auth + '&iframe=1';
+        iframe.src = '<?php echo esc_js(site_url('/ket-qua-bo-cong-cu-nhan-dien-suc-khoe-thuong-gap')); ?>?code=' + code + '&auth=' + auth + '&iframe=1';
         modal.style.display = 'flex';
         
         // Prevent parent body scroll

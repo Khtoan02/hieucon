@@ -209,7 +209,7 @@
       };
 
       const formData = new FormData();
-      formData.append('action', 'hieucon_dh_submit_checklist');
+      formData.append('action', 'hieucon_ndsk_submit_checklist');
       formData.append('user_code', this.state.userCode);
       formData.append('child_name', ModuleChildInfo.getChildName());
       formData.append('child_age', ModuleChildInfo.getChildAge());
@@ -454,7 +454,7 @@
       };
 
       const formData = new FormData();
-      formData.append('action', 'hieucon_dh_submit_checklist');
+      formData.append('action', 'hieucon_ndsk_submit_checklist');
       formData.append('user_code', this.app.state.userCode);
       formData.append('child_name', this.getChildName());
       formData.append('child_age', this.getChildAge());
@@ -898,7 +898,7 @@
       const deviceInfo = navigator.userAgent;
 
       const formData = new FormData();
-      formData.append('action', 'hieucon_dh_submit_checklist');
+      formData.append('action', 'hieucon_ndsk_submit_checklist');
       formData.append('user_code', this.app.state.userCode);
       formData.append('child_name', childName);
       formData.append('parent_name', name);
@@ -1392,7 +1392,7 @@
       });
 
       const formData = new FormData();
-      formData.append('action', 'hieucon_dh_submit_checklist');
+      formData.append('action', 'hieucon_ndsk_submit_checklist');
       formData.append('user_code', ChecklistApp.state.userCode || Math.floor(10000000 + Math.random() * 90000000).toString());
       formData.append('child_name', childName);
       formData.append('parent_name', name);

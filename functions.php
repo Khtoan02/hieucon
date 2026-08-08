@@ -55,6 +55,7 @@ require_once HIEUCON_THEME_DIR . '/app/config/theme-settings.php';
 require_once HIEUCON_THEME_DIR . '/app/config/payment-settings.php';
 require_once HIEUCON_THEME_DIR . '/app/config/checklist-admin.php';
 require_once HIEUCON_THEME_DIR . '/app/config/checklist-dh-admin.php';
+require_once HIEUCON_THEME_DIR . '/app/config/checklist-ndsk-admin.php';
 require_once HIEUCON_THEME_DIR . '/app/config/page-generator.php';
 require_once HIEUCON_THEME_DIR . '/app/config/html-page.php';
 require_once HIEUCON_THEME_DIR . '/app/config/db-setup.php';
