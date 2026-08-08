@@ -2,7 +2,7 @@
 <div
   class="landing-checklist-wrapper antialiased relative z-10 bg-[var(--cream)] text-[var(--charcoal)] font-quicksand">
   <!-- HERO -->
-  <section class="relative bg-navy pt-20 pb-12 md:pt-40 md:pb-32 px-6 overflow-hidden has-pattern-bg" id="hero-section"
+  <section class="relative bg-navy pt-10 pb-12 md:pt-40 md:pb-32 px-6 overflow-hidden has-pattern-bg" id="hero-section"
     <?php if ($is_start)
       echo 'style="display:none;"'; ?>>
     <div class="absolute top-0 left-0 w-full h-full overflow-hidden z-0">
@@ -104,7 +104,7 @@
       </div>
 
       <!-- Image Column (First on mobile, second on desktop) -->
-      <div class="relative order-1 lg:order-2 block w-full h-32 sm:h-44 lg:h-auto overflow-hidden rounded-2xl lg:rounded-none">
+      <div class="relative order-1 lg:order-2 block w-full h-40 sm:h-48 lg:h-auto overflow-hidden rounded-2xl lg:rounded-none">
         <div class="absolute inset-0 bg-[rgba(255,209,84,0.2)] rounded-2xl transform rotate-1 lg:rotate-2 scale-105"></div>
         <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/bang-check-list.png"
           alt="Bộ công cụ nhận diện các rào cản sức khỏe"
