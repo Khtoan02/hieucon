@@ -1018,25 +1018,50 @@ function hieucon_send_checklist_email($user_code, $parent_name, $parent_email, $
         return $b['pct'] <=> $a['pct'];
     });
     
+    $group_descs = [
+        'tieuHoa'  => 'Tình trạng đường ruột và các vấn đề về tiêu hóa hàng ngày',
+        'anUong'   => 'Các hành vi kén ăn, nhạy cảm thực phẩm và khó khăn trong bữa ăn',
+        'giacNgu'  => 'Tình trạng giấc ngủ và nhịp sinh học của trẻ',
+        'camGiac'  => 'Cách trẻ tiếp nhận và phản ứng với các kích thích từ môi trường',
+        'tangDong' => 'Mức độ hoạt động, khả năng tập trung và tự kiểm soát của trẻ',
+        'camXuc'   => 'Khả năng điều tiết cảm xúc, lo âu và các phản ứng khi khủng hoảng',
+        'mienDich' => 'Tình trạng đề kháng, phản ứng viêm và các nhạy cảm thể chất',
+        'vanDong'  => 'Phối hợp vận động thô/tinh và các hoạt động tự phục vụ của trẻ',
+        // Fallbacks by Name
+        'Rối loạn tiêu hóa' => 'Tình trạng đường ruột và các vấn đề về tiêu hóa hàng ngày',
+        'Rối loạn ăn uống'  => 'Các hành vi kén ăn, nhạy cảm thực phẩm và khó khăn trong bữa ăn',
+        'Rối loạn giấc ngủ' => 'Tình trạng giấc ngủ và nhịp sinh học của trẻ',
+        'Xử lý giác quan'    => 'Cách trẻ tiếp nhận và phản ứng với các kích thích từ môi trường',
+        'Tăng động - Giảm chú ý' => 'Mức độ hoạt động, khả năng tập trung và tự kiểm soát của trẻ',
+        'Cảm xúc - Hành vi'  => 'Khả năng điều tiết cảm xúc, lo âu và các phản ứng khi khủng hoảng',
+        'Miễn dịch - Dị ứng' => 'Tình trạng đề kháng, phản ứng viêm và các nhạy cảm thể chất',
+        'Chức năng vận động' => 'Phối hợp vận động thô/tinh và các hoạt động tự phục vụ của trẻ',
+    ];
+    
     $top_issues_html = '';
     $count = 0;
     foreach ($scores as $sg) {
         if ($count >= 3) break;
         if ($sg['pct'] > 0) {
-            $top_issues_html .= '<li style="margin-bottom: 12px; font-size: 15px; line-height: 1.6;">';
-            $top_issues_html .= '<strong style="color: #be123c;">🚨 ' . esc_html($sg['name']) . ':</strong> ';
-            $top_issues_html .= 'Ghi nhận <strong>' . intval($sg['ticked']) . '/' . intval($sg['total']) . '</strong> dấu hiệu (' . intval($sg['pct']) . '%)';
-            $top_issues_html .= '</li>';
+            $id_or_name = !empty($sg['id']) ? $sg['id'] : $sg['name'];
+            $desc = isset($group_descs[$id_or_name]) ? $group_descs[$id_or_name] : '';
+            
+            $top_issues_html .= '<div style="margin-bottom: 16px; line-height: 1.6;">';
+            $top_issues_html .= '<div style="font-size: 15px; font-weight: 700; color: #0D2A78;">Vấn đề ' . ($count + 1) . ': ' . esc_html($sg['name']) . '</div>';
+            if ($desc) {
+                $top_issues_html .= '<div style="font-size: 13px; color: #475569; margin-top: 4px; padding-left: 12px; border-left: 2px solid #CBD5E1;">- ' . esc_html($desc) . '</div>';
+            }
+            $top_issues_html .= '</div>';
             $count++;
         }
     }
     
     if (empty($top_issues_html)) {
-        $top_issues_html = '<li style="font-size: 15px; color: #475569; font-style: italic;">Chưa ghi nhận dấu hiệu bất thường nổi bật nào.</li>';
+        $top_issues_html = '<div style="font-size: 14px; color: #475569; font-style: italic;">Chưa ghi nhận vấn đề sức khỏe nổi bật nào.</div>';
     }
 
     $result_url = esc_url(site_url('/ket-qua-dh?code=' . $user_code));
-    $subject = '[Hồ sơ #' . $user_code . '] Kết quả Checklist phân tích 8 nhóm dấu hiệu của con';
+    $subject = 'Kết quả bộ công cụ nhận diện các vấn đề sức khoẻ thường gặp.';
     
     ob_start();
     include get_template_directory() . '/page-templates/parts-checklist/mail-template.php';

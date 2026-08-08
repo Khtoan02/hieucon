@@ -1427,21 +1427,34 @@
 
     previewEmailHtml() {
       const scores = ModuleSurvey.calculateScores();
+      
+      const groupDescs = {
+        'tieuHoa': 'Tình trạng đường ruột và các vấn đề về tiêu hóa hàng ngày',
+        'anUong': 'Các hành vi kén ăn, nhạy cảm thực phẩm và khó khăn trong bữa ăn',
+        'giacNgu': 'Tình trạng giấc ngủ và nhịp sinh học của trẻ',
+        'camGiac': 'Cách trẻ tiếp nhận và phản ứng với các kích thích từ môi trường',
+        'tangDong': 'Mức độ hoạt động, khả năng tập trung và tự kiểm soát của trẻ',
+        'camXuc': 'Khả năng điều tiết cảm xúc, lo âu và các phản ứng khi khủng hoảng',
+        'mienDich': 'Tình trạng đề kháng, phản ứng viêm và các nhạy cảm thể chất',
+        'vanDong': 'Phối hợp vận động thô/tinh và các hoạt động tự phục vụ của trẻ'
+      };
+
       let topIssuesHtml = '';
       let count = 0;
       scores.forEach(s => {
         if (count >= 3) return;
         if (s.pct > 0) {
+          const desc = groupDescs[s.id] || '';
           topIssuesHtml += `
-              <li style="margin-bottom: 12px; font-size: 15px; line-height: 1.6;">
-                <strong style="color: #be123c;">🚨 \${s.name}:</strong> 
-                Ghi nhận <strong>\${s.ticked}/\${s.total}</strong> dấu hiệu (\${s.pct}%)
-              </li>`;
+              <div style="margin-bottom: 16px; line-height: 1.6;">
+                <div style="font-size: 15px; font-weight: 700; color: #0D2A78;">Vấn đề \${count + 1}: \${s.name}</div>
+                \${desc ? `<div style="font-size: 13px; color: #475569; margin-top: 4px; padding-left: 12px; border-left: 2px solid #CBD5E1;">- \${desc}</div>` : ''}
+              </div>`;
           count++;
         }
       });
       if (!topIssuesHtml) {
-        topIssuesHtml = '<li style="font-size: 15px; color: #475569; font-style: italic;">Chưa ghi nhận dấu hiệu bất thường nổi bật nào.</li>';
+        topIssuesHtml = '<div style="font-size: 14px; color: #475569; font-style: italic;">Chưa ghi nhận vấn đề sức khỏe nổi bật nào.</div>';
       }
 
       const userCode = ChecklistApp.state.userCode || '12345678';
@@ -1468,29 +1481,34 @@
                                 <!-- Header Banner -->
                                 <div class="header" style="background: linear-gradient(150deg, #0A2268 0%, #0D2A78 50%, #163CA3 100%); padding: 24px 24px 20px 24px; text-align: center; color: #ffffff;">
                                     <div class="badge-pill" style="display: inline-block; background: rgba(255, 255, 255, 0.15); padding: 4px 14px; border-radius: 20px; font-size: 12px; font-weight: 600; color: #F3BA2F; border: 1px solid rgba(255, 255, 255, 0.2); margin-bottom: 10px;">🟡 HIỂU CON TỪ GỐC</div>
-                                    <h1 style="margin: 0; font-size: 20px; line-height: 1.35; font-weight: 800; color: #FFFFFF; letter-spacing: 0.5px; text-transform: uppercase;">
-                                        CÔNG CỤ ĐÁNH GIÁ
-                                        <span class="highlight" style="color: #F3BA2F; display: block;">SỨC KHỎE TOÀN DIỆN</span>
+                                    <h1 style="margin: 0; font-size: 18px; line-height: 1.35; font-weight: 800; color: #FFFFFF; letter-spacing: 0.5px; text-transform: uppercase;">
+                                        KẾT QUẢ BỘ CÔNG CỤ NHẬN DIỆN
+                                        <span class="highlight" style="color: #F3BA2F; display: block;">CÁC VẤN ĐỀ SỨC KHỎE THƯỜNG GẶP</span>
                                     </h1>
                                 </div>
 
                                 <!-- Main Content Body -->
                                 <div class="content" style="padding: 24px 24px 20px 24px;">
-                                    <!-- Code Badge & Greeting -->
-                                    <div style="margin-bottom: 14px;">
-                                        <span class="profile-badge" style="display: inline-block; background-color: #F0F5FF; border: 1px solid #C7DCFE; color: #163CA3; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 700;">Mã hồ sơ: \${userCode}</span>
-                                    </div>
-                                    <div class="greeting" style="font-size: 15px; line-height: 1.4; color: #0D2A78; font-weight: 700; margin-bottom: 10px;">Xin chào \${parentName},</div>
+                                    <div class="greeting" style="font-size: 15px; line-height: 1.4; color: #0D2A78; font-weight: 700; margin-bottom: 12px;">Kính gửi Quý phụ huynh \${parentName},</div>
                                     
                                     <!-- Streamlined Result Link Section -->
                                     <div class="result-compact-box" style="background-color: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 12px; padding: 18px 16px; margin: 16px 0 20px 0; text-align: center;">
-                                        <div class="result-compact-text" style="font-size: 13px; line-height: 1.5; color: #334155; margin-bottom: 12px;">
-                                            Kết quả đánh giá của bé đã hoàn tất. Quý phụ huynh có thể xem chi tiết trực tiếp tại đường link: <br>
-                                            <a href="\${resultUrl}" target="_blank" style="color: #0284C7; font-weight: 600; word-break: break-all; text-decoration: underline;">\${resultUrl}</a>
+                                        <div class="result-compact-text" style="font-size: 13px; line-height: 1.5; color: #334155; margin-bottom: 14px; text-align: left;">
+                                            Kết quả nhận diện các vấn đề sức khỏe của bé đã được tổng hợp. Quý phụ huynh vui lòng nhấn vào nút dưới đây để xem chi tiết:
                                         </div>
                                         <a href="\${resultUrl}" class="btn-view-report" target="_blank" style="background-color: #0D2A78; color: #ffffff !important; padding: 12px 24px; text-decoration: none; font-size: 14px; font-weight: 700; border-radius: 8px; display: inline-block; box-shadow: 0 3px 10px rgba(13, 42, 120, 0.2); transition: background-color 0.2s ease;">
-                                            Kết quả: \${userCode}
+                                            Xem báo cáo chi tiết (Mã hồ sơ: \${userCode})
                                         </a>
+                                    </div>
+
+                                    <!-- Top Issues Summary Card -->
+                                    <div style="background-color: #FFFDF5; border: 1px solid #FFEAA5; border-radius: 12px; padding: 20px 18px; margin: 20px 0;">
+                                        <div style="font-size: 15px; font-weight: 700; color: #854D0E; margin-bottom: 16px;">
+                                            📋 Ba vấn đề sức khoẻ cần quan tâm:
+                                        </div>
+                                        <div style="margin: 0; color: #451A03; font-size: 13px; line-height: 1.6;">
+                                            \${topIssuesHtml}
+                                        </div>
                                     </div>
 
                                     <!-- Disclaimer Box -->

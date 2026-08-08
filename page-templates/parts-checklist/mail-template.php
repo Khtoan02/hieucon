@@ -32,39 +32,34 @@
                         <!-- Header Banner -->
                         <div class="header" style="background: linear-gradient(150deg, #0A2268 0%, #0D2A78 50%, #163CA3 100%); padding: 24px 24px 20px 24px; text-align: center; color: #ffffff;">
                             <div class="badge-pill" style="display: inline-block; background: rgba(255, 255, 255, 0.15); padding: 4px 14px; border-radius: 20px; font-size: 12px; font-weight: 600; color: #F3BA2F; border: 1px solid rgba(255, 255, 255, 0.2); margin-bottom: 10px;">🟡 HIỂU CON TỪ GỐC</div>
-                            <h1 style="margin: 0; font-size: 20px; line-height: 1.35; font-weight: 800; color: #FFFFFF; letter-spacing: 0.5px; text-transform: uppercase;">
-                                CÔNG CỤ ĐÁNH GIÁ
-                                <span class="highlight" style="color: #F3BA2F; display: block;">SỨC KHỎE TOÀN DIỆN</span>
+                            <h1 style="margin: 0; font-size: 18px; line-height: 1.35; font-weight: 800; color: #FFFFFF; letter-spacing: 0.5px; text-transform: uppercase;">
+                                KẾT QUẢ BỘ CÔNG CỤ NHẬN DIỆN
+                                <span class="highlight" style="color: #F3BA2F; display: block;">CÁC VẤN ĐỀ SỨC KHỎE THƯỜNG GẶP</span>
                             </h1>
                         </div>
 
                         <!-- Main Content Body -->
                         <div class="content" style="padding: 24px 24px 20px 24px;">
-                            <!-- Code Badge & Greeting -->
-                            <div style="margin-bottom: 14px;">
-                                <span class="profile-badge" style="display: inline-block; background-color: #F0F5FF; border: 1px solid #C7DCFE; color: #163CA3; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 700;">Mã hồ sơ: <?php echo esc_html($user_code); ?></span>
-                            </div>
-                            <div class="greeting" style="font-size: 15px; line-height: 1.4; color: #0D2A78; font-weight: 700; margin-bottom: 10px;">Xin chào <?php echo esc_html($parent_name); ?>,</div>
+                            <div class="greeting" style="font-size: 15px; line-height: 1.4; color: #0D2A78; font-weight: 700; margin-bottom: 12px;">Kính gửi Quý phụ huynh <?php echo esc_html($parent_name); ?>,</div>
                             
                             <!-- Streamlined Result Link Section -->
                             <div class="result-compact-box" style="background-color: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 12px; padding: 18px 16px; margin: 16px 0 20px 0; text-align: center;">
-                                <div class="result-compact-text" style="font-size: 13px; line-height: 1.5; color: #334155; margin-bottom: 12px;">
-                                    Kết quả đánh giá của bé đã hoàn tất. Quý phụ huynh có thể xem chi tiết trực tiếp tại đường link: <br>
-                                    <a href="<?php echo $result_url; ?>" target="_blank" style="color: #0284C7; font-weight: 600; word-break: break-all; text-decoration: underline;"><?php echo $result_url; ?></a>
+                                <div class="result-compact-text" style="font-size: 13px; line-height: 1.5; color: #334155; margin-bottom: 14px; text-align: left;">
+                                    Kết quả nhận diện các vấn đề sức khỏe của bé đã được tổng hợp. Quý phụ huynh vui lòng nhấn vào nút dưới đây để xem chi tiết:
                                 </div>
                                 <a href="<?php echo $result_url; ?>" class="btn-view-report" target="_blank" style="background-color: #0D2A78; color: #ffffff !important; padding: 12px 24px; text-decoration: none; font-size: 14px; font-weight: 700; border-radius: 8px; display: inline-block; box-shadow: 0 3px 10px rgba(13, 42, 120, 0.2); transition: background-color 0.2s ease;">
-                                    Kết quả: <?php echo esc_html($user_code); ?>
+                                    Xem báo cáo chi tiết (Mã hồ sơ: <?php echo esc_html($user_code); ?>)
                                 </a>
                             </div>
 
                             <!-- Top Issues Summary Card -->
                             <div style="background-color: #FFFDF5; border: 1px solid #FFEAA5; border-radius: 12px; padding: 20px 18px; margin: 20px 0;">
-                                <div style="font-size: 14px; font-weight: 700; color: #854D0E; margin-bottom: 12px; display: flex; align-items: center; gap: 6px;">
-                                    📊 TỔNG QUAN DẤU HIỆU GHI NHẬN NỔI BẬT:
+                                <div style="font-size: 15px; font-weight: 700; color: #854D0E; margin-bottom: 16px;">
+                                    📋 Ba vấn đề sức khoẻ cần quan tâm:
                                 </div>
-                                <ul style="margin: 0; padding-left: 20px; color: #451A03; font-size: 13px; line-height: 1.6;">
+                                <div style="margin: 0; color: #451A03; font-size: 13px; line-height: 1.6;">
                                     <?php echo $top_issues_html; ?>
-                                </ul>
+                                </div>
                             </div>
 
                             <!-- Disclaimer Box -->
