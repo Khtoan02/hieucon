@@ -828,7 +828,7 @@ function hieucon_dh_public_checklist_result() {
                                     if ($sg['pct'] <= 0) continue; // Skip if 0%
                                     $is_top = true;
                                     $bar_color = '#ffffff';
-                                    $wrap_class = 'priority-card-red-pulse border-0 rounded-2xl flex flex-col justify-between';
+                                    $wrap_class = 'priority-card-red-pulse border-0 rounded-2xl flex flex-col';
                                     $wrap_style = 'padding:16px; border-radius:16px; background: linear-gradient(135deg, #e11d48 0%, #be123c 100%); transition: all 0.3s ease; text-align: left; border: none;';
                                 ?>
                                     <div class="<?php echo $wrap_class; ?>" style="<?php echo $wrap_style; ?>">
