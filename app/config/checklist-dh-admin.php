@@ -775,9 +775,12 @@ function hieucon_dh_public_checklist_result() {
                             usort($scores, function($a, $b) { return $b['pct'] <=> $a['pct']; });
                         ?>
                         <div class="border-t border-solid border-slate-100 pt-6">
-                            <h3 class="panel-title text-sm font-bold text-[#002795] uppercase tracking-wider mb-4 mt-0">
+                            <h3 class="panel-title text-sm font-bold text-[#002795] uppercase tracking-wider mb-2 mt-0">
                                 🚨 Các vấn đề cần ưu tiên hỗ trợ sớm
                             </h3>
+                            <p class="text-xs text-gray-500 mb-4 leading-relaxed" style="margin: 0 0 16px 0;">
+                                Đây là các nhóm dấu hiệu nổi bật nhất được ghi nhận qua quan sát. Quý phụ huynh vui lòng liên hệ với chuyên gia để nhận phân tích chi tiết và lộ trình hỗ trợ phù hợp cho con.
+                            </p>
                             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                                 <?php 
                                 $count = 0;
@@ -813,11 +816,6 @@ function hieucon_dh_public_checklist_result() {
                                     $count++;
                                 endforeach; 
                                 ?>
-                            </div>
-                            
-                            <!-- Soft context-relevant CTA -->
-                            <div style="margin-top:20px; background-color:#F0F4FA; border:1px solid rgba(13, 42, 120, 0.12); padding:14px 16px; border-radius:12px; font-size:13.5px; color:#0D2A78; line-height:1.6; text-align:left; font-weight:500;">
-                                💡 <strong>Khuyến nghị từ chuyên gia:</strong> Các vấn đề liệt kê ở trên đại diện cho những nhóm dấu hiệu có tỷ lệ ghi nhận nổi bật nhất. Để hiểu rõ căn nguyên y sinh học của con và xây dựng lộ trình hỗ trợ tối ưu nhất, Quý phụ huynh vui lòng nhấn vào nút <strong>"Liên hệ chuyên gia"</strong> ở cột bên trái để gửi kết quả và nhận tham vấn trực tiếp (hoàn toàn miễn phí).
                             </div>
                         </div>
                         <?php endif; ?>
