@@ -581,41 +581,41 @@ function hieucon_dh_public_checklist_result() {
           font-family: 'Oswald', sans-serif;
         }
 
-        /* Premium Card Border & Shadow Soft Pulse Animation */
-        @keyframes card-border-pulse {
+        /* High-Impact Crimson Red Warning Card Glow Animation */
+        @keyframes red-glow-pulse {
           0%, 100% {
-            border-color: #f3f4f6;
-            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02);
+            box-shadow: 0 4px 10px rgba(190, 18, 60, 0.2);
+            transform: scale(1);
           }
           50% {
-            border-color: #fca5a5;
-            box-shadow: 0 8px 20px -3px rgba(239, 68, 68, 0.06);
+            box-shadow: 0 10px 25px rgba(190, 18, 60, 0.45);
+            transform: scale(1.015);
           }
         }
-        .priority-card-pulsing {
-          animation: card-border-pulse 2.5s infinite ease-in-out;
+        .priority-card-red-pulse {
+          animation: red-glow-pulse 2.5s infinite ease-in-out;
         }
 
-        /* Tiny Warning Beacon Pulse */
-        @keyframes beacon-pulse {
+        /* Tiny White Warning Beacon Pulse for Crimson background */
+        @keyframes white-beacon-pulse {
           0%, 100% {
             transform: scale(1);
             opacity: 1;
-            box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4);
+            box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.6);
           }
           50% {
             transform: scale(1.2);
             opacity: 0.7;
-            box-shadow: 0 0 0 5px rgba(239, 68, 68, 0);
+            box-shadow: 0 0 0 6px rgba(255, 255, 255, 0);
           }
         }
-        .beacon-dot {
+        .white-beacon-dot {
           display: inline-block;
           width: 8px;
           height: 8px;
-          background-color: #ef4444;
+          background-color: #ffffff;
           border-radius: 50%;
-          animation: beacon-pulse 1.8s infinite ease-in-out;
+          animation: white-beacon-pulse 1.8s infinite ease-in-out;
           flex-shrink: 0;
         }
         
@@ -827,22 +827,22 @@ function hieucon_dh_public_checklist_result() {
                                     if ($count >= 3) break; // Only show top 3
                                     if ($sg['pct'] <= 0) continue; // Skip if 0%
                                     $is_top = true;
-                                    $bar_color = '#ef4444';
-                                    $wrap_class = 'priority-card-pulsing border border-solid rounded-2xl flex flex-col justify-between';
-                                    $wrap_style = 'padding:16px; border-radius:16px; border:1px solid #e2e8f0; border-top:4px solid #ef4444; background:#ffffff; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02), 0 2px 4px -1px rgba(0,0,0,0.01); transition: all 0.3s ease; text-align: left;';
+                                    $bar_color = '#ffffff';
+                                    $wrap_class = 'priority-card-red-pulse border-0 rounded-2xl flex flex-col justify-between';
+                                    $wrap_style = 'padding:16px; border-radius:16px; background: linear-gradient(135deg, #e11d48 0%, #be123c 100%); transition: all 0.3s ease; text-align: left; border: none;';
                                 ?>
                                     <div class="<?php echo $wrap_class; ?>" style="<?php echo $wrap_style; ?>">
                                         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; gap:8px;">
-                                            <span style="font-family: 'Oswald', sans-serif; font-size:14px; font-weight:700; color:#0D2A78; letter-spacing:0.2px; display:flex; align-items:center; gap:6px;">
-                                                <span class="beacon-dot"></span>
+                                            <span style="font-family: 'Oswald', sans-serif; font-size:14.5px; font-weight:700; color:#ffffff; letter-spacing:0.2px; display:flex; align-items:center; gap:6px;">
+                                                <span class="white-beacon-dot"></span>
                                                 <?php echo esc_html($sg['name']); ?>
                                             </span>
-                                            <span style="background:#fee2e2; color:#ef4444; font-size:11.5px; font-weight:700; padding:2px 8px; border-radius:9999px; white-space:nowrap; font-family:\'Quicksand\', sans-serif;">
+                                            <span style="background:rgba(255,255,255,0.2); color:#ffffff; font-size:11px; font-weight:700; padding:2px 8px; border-radius:9999px; white-space:nowrap; font-family:\'Quicksand\', sans-serif;">
                                                 <?php echo intval($sg['pct']); ?>%
                                             </span>
                                         </div>
                                         
-                                        <div style="height:5px; background:#f1f5f9; border-radius:4px; overflow:hidden; margin-bottom:12px; width:100%;">
+                                        <div style="height:5px; background:rgba(255,255,255,0.25); border-radius:4px; overflow:hidden; margin-bottom:12px; width:100%;">
                                             <div style="height:100%; width:<?php echo intval($sg['pct']); ?>%; background:<?php echo $bar_color; ?>; border-radius:4px;"></div>
                                         </div>
                                         
@@ -852,7 +852,7 @@ function hieucon_dh_public_checklist_result() {
                                         $desc = isset($group_descs[$id_or_name]) ? $group_descs[$id_or_name] : '';
                                         if ($desc): 
                                         ?>
-                                            <p style="font-size:12.5px; color:#475569; line-height:1.6; margin:0; font-weight:400; font-family:\'Quicksand\', sans-serif;">
+                                            <p style="font-size:12.5px; color:rgba(255,255,255,0.95); line-height:1.6; margin:0; font-weight:400; font-family:\'Quicksand\', sans-serif;">
                                                 <?php echo esc_html($desc); ?>
                                             </p>
                                         <?php endif; ?>
