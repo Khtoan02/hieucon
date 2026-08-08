@@ -697,6 +697,52 @@ function hieucon_dh_public_checklist_result() {
             top: 160px !important;
           }
         }
+        @media (max-width: 1023px) {
+          .results-page-body {
+            padding-bottom: 96px !important;
+          }
+        }
+        .mobile-sticky-actions {
+          position: fixed;
+          bottom: 0;
+          left: 0;
+          right: 0;
+          background: rgba(255, 255, 255, 0.95);
+          backdrop-filter: blur(8px);
+          -webkit-backdrop-filter: blur(8px);
+          box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.08);
+          padding: 12px 24px;
+          z-index: 1000;
+          display: flex;
+          flex-direction: column;
+          gap: 4px !important;
+          border-top: 1px solid rgba(226, 232, 240, 0.8);
+        }
+        .mobile-sticky-actions button {
+          width: 100% !important;
+          max-width: 480px !important;
+          margin: 0 auto !important;
+        }
+        .mobile-sticky-actions p {
+          text-align: center !important;
+          width: 100% !important;
+        }
+        @media (min-width: 1024px) {
+          .mobile-sticky-actions {
+            position: static !important;
+            background: transparent !important;
+            backdrop-filter: none !important;
+            box-shadow: none !important;
+            padding: 0 !important;
+            z-index: auto !important;
+            border-top: none !important;
+            gap: 12px !important;
+          }
+          .mobile-sticky-actions button {
+            width: auto !important;
+            max-width: none !important;
+          }
+        }
       </style>
 
       <div class="results-page-body py-10 antialiased">
@@ -817,7 +863,7 @@ function hieucon_dh_public_checklist_result() {
                     </div>
 
                     <!-- Actions -->
-                    <div class="flex flex-col gap-3">
+                    <div class="mobile-sticky-actions">
                         <button onclick="consultAndCopyLink()" class="flex items-center justify-center font-bold py-3.5 px-4 rounded-xl text-white hover:opacity-90 transition-all text-sm text-center border-0 cursor-pointer font-family-inherit btn-pulse-orange" style="background: linear-gradient(135deg, #F05A25 0%, #FF7A45 100%); color: #ffffff !important; outline: none;">
                             💬 Tư vấn
                         </button>
