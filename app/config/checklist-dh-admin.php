@@ -660,7 +660,7 @@ function hieucon_dh_public_checklist_result() {
                 
                 <!-- 1/3 Left Column: Profile Info & Action CTAs -->
                 <div class="lg:col-span-1 flex flex-col gap-6">
-                    <div class="bg-white rounded-2xl shadow-sm border border-solid border-[#e2e8f0] p-6">
+                    <div class="bg-white rounded-2xl shadow-sm border border-solid border-[#e2e8f0] p-6 flex-grow flex flex-col">
                         <h2 class="panel-title border-b border-solid border-[#e2e8f0] pb-3 mb-4 text-[#002795] font-bold text-base uppercase tracking-wider m-0">Thông Tin Hồ Sơ</h2>
                         
                         <div class="grid grid-cols-2 gap-4 mt-4">
@@ -756,8 +756,10 @@ function hieucon_dh_public_checklist_result() {
                             <?php endif; ?>
                         </div>
 
-                        <div class="mt-6 p-4 rounded-xl bg-[#fffbeb] border border-solid border-[#fef08a] text-xs text-[#854d0e] leading-relaxed">
-                            <strong>Lưu ý:</strong> Bảng đánh giá dựa trên dữ liệu phụ huynh cung cấp. Không thay thế chẩn đoán y tế chuyên khoa.
+                        <div class="mt-auto pt-6">
+                            <div class="p-4 rounded-xl bg-[#fffbeb] border border-solid border-[#fef08a] text-xs text-[#854d0e] leading-relaxed">
+                                <strong>Lưu ý:</strong> Bảng đánh giá dựa trên dữ liệu phụ huynh cung cấp. Không thay thế chẩn đoán y tế chuyên khoa.
+                            </div>
                         </div>
                     </div>
 
