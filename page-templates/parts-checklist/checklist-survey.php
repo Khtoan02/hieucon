@@ -22,22 +22,19 @@
               <div
                 style="color: var(--navy); font-weight:800; width:20px; height:20px; display:flex; align-items:center; justify-content:center; border-radius:50%; background: var(--yellow); margin-top:2px; font-size: 10px;"
                 class="shrink-0">1</div>
-              <p class="m-0" style="margin:0; font-weight:500;">Tích chọn các dấu hiệu quan sát thấy ở con trong nhóm
-                hiện tại.</p>
+              <p class="m-0" style="margin:0; font-weight:500;">Tích chọn các biểu hiện thực tế quan sát thấy ở con (có thể tích chọn nhiều biểu hiện hoặc để trống nếu con không có dấu hiệu đó).</p>
             </div>
             <div class="flex gap-2.5 items-start">
               <div
                 style="color: var(--navy); font-weight:800; width:20px; height:20px; display:flex; align-items:center; justify-content:center; border-radius:50%; background: var(--yellow); margin-top:2px; font-size: 10px;"
                 class="shrink-0">2</div>
-              <p class="m-0" style="margin:0; font-weight:500;">Nhấn "Tiếp theo →" hoặc click tên nhóm ở trên để chuyển
-                phần.</p>
+              <p class="m-0" style="margin:0; font-weight:500;">Nhấn nút "Tiếp theo →" (hoặc nhấn trực tiếp vào tên nhóm ở thanh tiến trình phía trên) để chuyển phần.</p>
             </div>
             <div class="flex gap-2.5 items-start">
               <div
                 style="color: var(--navy); font-weight:800; width:20px; height:20px; display:flex; align-items:center; justify-content:center; border-radius:50%; background: var(--yellow); margin-top:2px; font-size: 10px;"
                 class="shrink-0">3</div>
-              <p class="m-0" style="margin:0; font-weight:500;">Nhấn "Hoàn thiện & nhận kết quả" sau khi điền xong nhóm
-                thứ 8.</p>
+              <p class="m-0" style="margin:0; font-weight:500;">Sau khi điền đủ cả 8 nhóm dấu hiệu, nhấn nút "Hoàn thiện & nhận kết quả" để gửi thông tin và xem báo cáo chi tiết.</p>
             </div>
           </div>
         </div>
@@ -95,22 +92,19 @@
           <div
             style="color: var(--navy); font-weight:800; width:20px; height:20px; display:flex; align-items:center; justify-content:center; border-radius:50%; background: var(--yellow); margin-top:2px; font-size: 10px;"
             class="shrink-0">1</div>
-          <p class="m-0" style="margin:0; font-weight:500;">Tích chọn các dấu hiệu quan sát thấy ở con trong nhóm hiện
-            tại.</p>
+          <p class="m-0" style="margin:0; font-weight:500;">Tích chọn các biểu hiện thực tế quan sát thấy ở con (có thể tích chọn nhiều biểu hiện hoặc để trống nếu con không có dấu hiệu đó).</p>
         </div>
         <div class="flex gap-2.5 items-start">
           <div
             style="color: var(--navy); font-weight:800; width:20px; height:20px; display:flex; align-items:center; justify-content:center; border-radius:50%; background: var(--yellow); margin-top:2px; font-size: 10px;"
             class="shrink-0">2</div>
-          <p class="m-0" style="margin:0; font-weight:500;">Nhấn "Tiếp theo →" hoặc click tên nhóm ở trên để chuyển
-            phần.</p>
+          <p class="m-0" style="margin:0; font-weight:500;">Nhấn nút "Tiếp theo →" (hoặc nhấn trực tiếp vào tên nhóm ở thanh tiến trình phía trên) để chuyển phần.</p>
         </div>
         <div class="flex gap-2.5 items-start">
           <div
             style="color: var(--navy); font-weight:800; width:20px; height:20px; display:flex; align-items:center; justify-content:center; border-radius:50%; background: var(--yellow); margin-top:2px; font-size: 10px;"
             class="shrink-0">3</div>
-          <p class="m-0" style="margin:0; font-weight:500;">Nhấn "Hoàn thiện & nhận kết quả" sau khi điền xong nhóm thứ
-            8.</p>
+          <p class="m-0" style="margin:0; font-weight:500;">Sau khi điền đủ cả 8 nhóm dấu hiệu, nhấn nút "Hoàn thiện & nhận kết quả" để gửi thông tin và xem báo cáo chi tiết.</p>
         </div>
       </div>
     </div>
