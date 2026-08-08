@@ -146,8 +146,8 @@ function hieucon_ndsk_checklist_admin_page() {
         <hr class="wp-header-end">
         
         <h2 class="nav-tab-wrapper" style="margin-bottom: 20px;">
-            <a href="?page=hieucon-ndsk-checklists&tab=submissions" class="nav-tab <?php echo $active_tab == 'submissions' ? 'nav-tab-active' : ''; ?>">Danh sách hồ sơ</a>
-            <a href="?page=hieucon-ndsk-checklists&tab=password" class="nav-tab <?php echo $active_tab == 'password' ? 'nav-tab-active' : ''; ?>">Mật khẩu truy cập</a>
+            <a href="?page=hieucon-ndsk-checklist&tab=submissions" class="nav-tab <?php echo $active_tab == 'submissions' ? 'nav-tab-active' : ''; ?>">Danh sách hồ sơ</a>
+            <a href="?page=hieucon-ndsk-checklist&tab=password" class="nav-tab <?php echo $active_tab == 'password' ? 'nav-tab-active' : ''; ?>">Mật khẩu truy cập</a>
         </h2>
 
         <?php if ($active_tab == 'password'): ?>
