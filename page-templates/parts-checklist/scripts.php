@@ -1418,7 +1418,8 @@
         .then(res => res.json())
         .then(res => {
           const code = (res && res.data && res.data.user_code) ? res.data.user_code : ChecklistApp.state.userCode;
-          window.open(`<?php echo site_url('/ket-qua-bo-cong-cu-nhan-dien-suc-khoe-thuong-gap?code='); ?>` + code, '_blank');
+          const auth = (res && res.data && res.data.auth) ? res.data.auth : '';
+          window.open(`<?php echo site_url('/ket-qua-bo-cong-cu-nhan-dien-suc-khoe-thuong-gap?code='); ?>` + code + (auth ? '&auth=' + auth : ''), '_blank');
         })
         .catch(err => {
           window.open(`<?php echo site_url('/ket-qua-bo-cong-cu-nhan-dien-suc-khoe-thuong-gap?code='); ?>` + ChecklistApp.state.userCode, '_blank');

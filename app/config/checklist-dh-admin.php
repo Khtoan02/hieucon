@@ -217,7 +217,7 @@ function hieucon_dh_checklist_admin_page() {
                             </td>
                             <td><?php echo esc_html($row->created_at); ?></td>
                             <td>
-                                <a href="<?php echo esc_url(site_url('/ket-qua-bo-cong-cu-nhan-dien-suc-khoe-thuong-gap?code=' . $row->user_code)); ?>" target="_blank" class="button button-primary">Xem chi tiết</a>
+                                <a href="<?php echo esc_url(site_url('/ket-qua-bo-cong-cu-nhan-dien-suc-khoe-thuong-gap?code=' . $row->user_code . '&auth=' . md5($row->user_code . 'hieucon_secret_salt'))); ?>" target="_blank" class="button button-primary">Xem chi tiết</a>
                             </td>
                         </tr>
                     <?php endforeach; ?>
@@ -324,7 +324,7 @@ function hieucon_dh_submit_checklist() {
         hieucon_send_checklist_email($user_code, $parent_name, $parent_email, $child_name, $child_age, $child_gender, $scores_json);
     }
 
-    wp_send_json_success(['user_code' => $user_code]);
+    wp_send_json_success(['user_code' => $user_code, 'auth' => md5($user_code . 'hieucon_secret_salt')]);
 }
 
 // 5. Export CSV
@@ -436,6 +436,85 @@ function hieucon_dh_public_checklist_result() {
     if (!$row) {
         get_header();
         echo '<div style="padding:40px; text-align:center; font-family:sans-serif; color:#b91c1c;">Không tìm thấy kết quả cho mã hồ sơ này.</div>';
+        get_footer();
+        exit;
+    }
+
+    // Check authentication
+    $secret_salt = 'hieucon_secret_salt';
+    $expected_hash = md5($row->user_code . $secret_salt);
+    $authenticated = false;
+    $auth_error = '';
+
+    // 1. Check auth query parameter
+    if (isset($_GET['auth']) && $_GET['auth'] === $expected_hash) {
+        $authenticated = true;
+        setcookie('hieucon_auth_' . $row->user_code, $expected_hash, time() + 30 * DAY_IN_SECONDS, COOKIEPATH, COOKIE_DOMAIN);
+    }
+    // 2. Check cookie
+    elseif (isset($_COOKIE['hieucon_auth_' . $row->user_code]) && $_COOKIE['hieucon_auth_' . $row->user_code] === $expected_hash) {
+        $authenticated = true;
+    }
+    // 3. Check POST submission
+    elseif (isset($_POST['hieucon_pass'])) {
+        $pass_input = sanitize_text_field($_POST['hieucon_pass']);
+        $clean_input = preg_replace('/[^0-9a-zA-Z@.]/', '', $pass_input);
+        $clean_phone = preg_replace('/[^0-9]/', '', $row->parent_phone);
+        $clean_phone_input = preg_replace('/[^0-9]/', '', $pass_input);
+        
+        $email_match = (strtolower($clean_input) === strtolower(preg_replace('/[^0-9a-zA-Z@.]/', '', $row->parent_email)));
+        $phone_match = (!empty($clean_phone) && !empty($clean_phone_input) && (substr($clean_phone, -9) === substr($clean_phone_input, -9)));
+
+        if ($email_match || $phone_match) {
+            $authenticated = true;
+            setcookie('hieucon_auth_' . $row->user_code, $expected_hash, time() + 30 * DAY_IN_SECONDS, COOKIEPATH, COOKIE_DOMAIN);
+            wp_safe_redirect(add_query_arg('auth', $expected_hash));
+            exit;
+        } else {
+            $auth_error = 'Thông tin xác thực không đúng. Vui lòng nhập đúng Số điện thoại hoặc Email phụ huynh đã dùng để đăng ký.';
+        }
+    }
+
+    if (!$authenticated) {
+        global $wp_query;
+        $wp_query->is_404 = false;
+        status_header(200);
+        
+        add_filter('pre_get_document_title', function() {
+            return 'Xác thực bảo mật kết quả - Hiểu Con Từ Gốc';
+        }, 999);
+
+        get_header();
+        ?>
+        <div class="results-page-body flex items-center justify-center px-4 py-16" style="background-color: #faf9f6; font-family: 'Quicksand', sans-serif; min-height: 70vh; display: flex; align-items: center; justify-content: center; width: 100%;">
+            <div style="background: #ffffff; border: 1px solid #D6E2F5; max-width: 480px; width: 100%; border-radius: 16px; box-shadow: 0 10px 30px rgba(13, 42, 120, 0.08); padding: 32px 24px; text-align: center; box-sizing: border-box;">
+                <div style="font-size: 48px; margin-bottom: 16px;">🔒</div>
+                <h2 style="font-family: 'Oswald', sans-serif; font-size: 22px; color: #0D2A78; margin: 0 0 12px 0; text-transform: uppercase; font-weight: 700; letter-spacing: 0.5px;">Xác thực bảo mật</h2>
+                <p style="font-size: 14px; color: #475569; line-height: 1.6; margin: 0 0 24px 0;">
+                    Báo cáo kết quả của con được bảo mật. Vui lòng nhập <strong>Số điện thoại</strong> hoặc <strong>Email</strong> phụ huynh đã dùng khi đăng ký để mở khóa:
+                </p>
+                
+                <form method="POST" style="margin: 0; padding: 0;">
+                    <?php if (!empty($auth_error)): ?>
+                        <div style="background-color: #fef2f2; border: 1px solid #fee2e2; color: #991b1b; padding: 12px; border-radius: 8px; font-size: 13px; text-align: left; margin-bottom: 16px; line-height: 1.5; box-sizing: border-box;">
+                            ⚠️ <?php echo esc_html($auth_error); ?>
+                        </div>
+                    <?php endif; ?>
+                    
+                    <div style="margin-bottom: 20px; text-align: left;">
+                        <input type="text" name="hieucon_pass" placeholder="Nhập số điện thoại hoặc email..." required 
+                            style="width: 100%; padding: 12px 16px; border: 1.5px solid #CBD5E1; border-radius: 8px; font-size: 14px; font-family: 'Quicksand', sans-serif; box-sizing: border-box; outline: none; transition: border-color 0.2s;"
+                            onfocus="this.style.borderColor='#0D2A78'" onblur="this.style.borderColor='#CBD5E1'">
+                    </div>
+                    
+                    <button type="submit" style="width: 100%; background: linear-gradient(135deg, #0d2a78 0%, #163ca3 100%); color: #ffffff; padding: 12px; border: none; border-radius: 8px; font-size: 14px; font-weight: 700; font-family: 'Quicksand', sans-serif; cursor: pointer; box-shadow: 0 4px 12px rgba(13, 42, 120, 0.2); transition: opacity 0.2s; box-sizing: border-box;"
+                        onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'">
+                        Xác nhận & Xem kết quả
+                    </button>
+                </form>
+            </div>
+        </div>
+        <?php
         get_footer();
         exit;
     }
@@ -1063,7 +1142,8 @@ function hieucon_send_checklist_email($user_code, $parent_name, $parent_email, $
         $top_issues_html = '<div style="font-size: 14px; color: #475569; font-style: italic;">Chưa ghi nhận vấn đề sức khỏe nổi bật nào.</div>';
     }
 
-    $result_url = esc_url(site_url('/ket-qua-bo-cong-cu-nhan-dien-suc-khoe-thuong-gap?code=' . $user_code));
+    $auth_token = md5($user_code . 'hieucon_secret_salt');
+    $result_url = esc_url(site_url('/ket-qua-bo-cong-cu-nhan-dien-suc-khoe-thuong-gap?code=' . $user_code . '&auth=' . $auth_token));
     $subject = 'Kết quả bộ công cụ nhận diện các vấn đề sức khoẻ thường gặp.';
     
     ob_start();
