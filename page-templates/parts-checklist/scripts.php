@@ -1418,10 +1418,10 @@
         .then(res => res.json())
         .then(res => {
           const code = (res && res.data && res.data.user_code) ? res.data.user_code : ChecklistApp.state.userCode;
-          window.open(`<?php echo site_url('/ket-qua-dh?code='); ?>` + code, '_blank');
+          window.open(`<?php echo site_url('/ket-qua-bo-cong-cu-nhan-dien-suc-khoe-thuong-gap?code='); ?>` + code, '_blank');
         })
         .catch(err => {
-          window.open(`<?php echo site_url('/ket-qua-dh?code='); ?>` + ChecklistApp.state.userCode, '_blank');
+          window.open(`<?php echo site_url('/ket-qua-bo-cong-cu-nhan-dien-suc-khoe-thuong-gap?code='); ?>` + ChecklistApp.state.userCode, '_blank');
         });
     },
 
@@ -1458,7 +1458,7 @@
       }
 
       const userCode = ChecklistApp.state.userCode || '12345678';
-      const resultUrl = window.location.origin + '/ket-qua-dh?code=' + userCode;
+      const resultUrl = window.location.origin + '/ket-qua-bo-cong-cu-nhan-dien-suc-khoe-thuong-gap?code=' + userCode;
       const parentName = ModuleParentInfo.getParentName() || 'Nguyễn Văn A';
       const childName = ModuleChildInfo.getChildName() || 'Bé An';
       const childAge = ModuleChildInfo.getChildAge() || '5 tuổi';

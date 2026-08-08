@@ -17,7 +17,7 @@
   <!-- Sub Nav matching the header buttons color scheme -->
   <div style="border-top: 1px solid #e2e8f0; padding-top: 32px; margin-top: 40px; text-align: center;">
     <p style="font-size: 14.5px; font-weight: 700; color: var(--navy); margin: 0 auto 20px auto; max-width: 580px; line-height: 1.6; font-family: 'Quicksand', sans-serif;">
-      Nếu Quý phụ huynh có thắc mắc hoặc cần tư vấn định hướng can thiệp chuyên sâu cho con, xin vui lòng kết nối trực tiếp với chúng tôi:
+      Nếu Quý phụ huynh có thắc mắc hoặc cần tư vấn, xin vui lòng kết nối trực tiếp với chúng tôi:
     </p>
     <div style="display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; margin-bottom: 24px;">
       <a href="https://zalo.me/0985391881" target="_blank" rel="noopener" class="btn-success-nav" style="display: inline-flex; align-items: center; justify-content: center; text-decoration: none; padding: 12px 28px; font-weight: 700; background: linear-gradient(135deg, #F05A25 0%, #FF7A45 100%); color: #ffffff !important; border-radius: 12px; font-size: 14px; font-family: 'Quicksand', sans-serif; box-shadow: 0 4px 12px rgba(240, 90, 37, 0.2); transition: all 0.2s ease;">

@@ -217,7 +217,7 @@ function hieucon_dh_checklist_admin_page() {
                             </td>
                             <td><?php echo esc_html($row->created_at); ?></td>
                             <td>
-                                <a href="<?php echo esc_url(site_url('/ket-qua-dh?code=' . $row->user_code)); ?>" target="_blank" class="button button-primary">Xem chi tiết</a>
+                                <a href="<?php echo esc_url(site_url('/ket-qua-bo-cong-cu-nhan-dien-suc-khoe-thuong-gap?code=' . $row->user_code)); ?>" target="_blank" class="button button-primary">Xem chi tiết</a>
                             </td>
                         </tr>
                     <?php endforeach; ?>
@@ -423,12 +423,15 @@ function hieucon_dh_export_csv_handler() {
 // 6. Public Results View - Hiển thị kết quả đẹp (Không chẩn đoán)
 add_action('template_redirect', 'hieucon_dh_public_checklist_result');
 function hieucon_dh_public_checklist_result() {
-    if ( strpos($_SERVER['REQUEST_URI'], '/ket-qua-dh') !== 0 || !isset($_GET['code']) ) return;
+    if ( strpos($_SERVER['REQUEST_URI'], '/ket-qua-bo-cong-cu-nhan-dien-suc-khoe-thuong-gap') !== 0 || !isset($_GET['code']) ) return;
 
     $code = sanitize_text_field($_GET['code']);
     global $wpdb;
     $table_name = $wpdb->prefix . 'hieucon_dh_checklists';
-    $row = $wpdb->get_row($wpdb->prepare("SELECT * FROM $table_name WHERE user_code = %s", $code));
+    $row = $wpdb->get_row($wpdb->prepare(
+        "SELECT * FROM $table_name WHERE user_code = %s OR parent_email = %s OR parent_phone = %s ORDER BY id DESC LIMIT 1",
+        $code, $code, $code
+    ));
 
     if (!$row) {
         get_header();
@@ -1060,7 +1063,7 @@ function hieucon_send_checklist_email($user_code, $parent_name, $parent_email, $
         $top_issues_html = '<div style="font-size: 14px; color: #475569; font-style: italic;">Chưa ghi nhận vấn đề sức khỏe nổi bật nào.</div>';
     }
 
-    $result_url = esc_url(site_url('/ket-qua-dh?code=' . $user_code));
+    $result_url = esc_url(site_url('/ket-qua-bo-cong-cu-nhan-dien-suc-khoe-thuong-gap?code=' . $user_code));
     $subject = 'Kết quả bộ công cụ nhận diện các vấn đề sức khoẻ thường gặp.';
     
     ob_start();
