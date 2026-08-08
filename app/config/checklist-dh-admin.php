@@ -675,8 +675,22 @@ function hieucon_dh_public_checklist_result() {
             max-width: 80rem !important;
             z-index: 999 !important;
           }
+          .admin-bar .sticky-header-banner {
+            top: 48px !important;
+          }
+          .sticky-profile-sidebar {
+            position: sticky !important;
+            top: 128px !important;
+            align-self: start !important;
+          }
+          .admin-bar .sticky-profile-sidebar {
+            top: 160px !important;
+          }
           .main-grid-container {
             margin-top: 128px !important;
+          }
+          .admin-bar .main-grid-container {
+            margin-top: 160px !important;
           }
         }
       </style>
@@ -694,7 +708,7 @@ function hieucon_dh_public_checklist_result() {
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch mb-8 main-grid-container">
                 
                 <!-- 1/3 Left Column: Profile Info & Action CTAs -->
-                <div class="lg:col-span-1 lg:sticky lg:top-[128px] self-start flex flex-col gap-6">
+                <div class="lg:col-span-1 sticky-profile-sidebar flex flex-col gap-6">
                     <div class="bg-white rounded-2xl shadow-sm border border-solid border-[#e2e8f0] p-6 flex-grow flex flex-col">
                         <h2 class="panel-title border-b border-solid border-[#e2e8f0] pb-3 mb-4 text-[#002795] font-bold text-base uppercase tracking-wider m-0">Thông Tin Hồ Sơ</h2>
                         
