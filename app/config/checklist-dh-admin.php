@@ -348,6 +348,99 @@ function hieucon_dh_submit_checklist() {
     wp_send_json_success(['user_code' => $user_code, 'auth' => md5($user_code . 'hieucon_secret_salt')]);
 }
 
+// 4.5 AJAX Tracking Endpoint
+add_action('wp_ajax_hieucon_dh_track_view', 'hieucon_dh_track_view');
+add_action('wp_ajax_nopriv_hieucon_dh_track_view', 'hieucon_dh_track_view');
+function hieucon_dh_track_view() {
+    global $wpdb;
+    $table_name = $wpdb->prefix . 'hieucon_dh_checklists';
+    
+    $code = isset($_POST['code']) ? sanitize_text_field($_POST['code']) : '';
+    $track_type = isset($_POST['track_type']) ? sanitize_text_field($_POST['track_type']) : '';
+    
+    if (empty($code)) {
+        wp_send_json_error('Missing code');
+    }
+    
+    $row = $wpdb->get_row($wpdb->prepare("SELECT * FROM $table_name WHERE user_code = %s", $code));
+    if (!$row) {
+        wp_send_json_error('Record not found');
+    }
+    
+    // Decode deep analytics
+    $analytics = !empty($row->deep_analytics) ? json_decode($row->deep_analytics, true) : [];
+    if (!is_array($analytics)) {
+        $analytics = [];
+    }
+    
+    // Initialize default keys
+    if (!isset($analytics['pageviews'])) $analytics['pageviews'] = 0;
+    if (!isset($analytics['time_on_page'])) $analytics['time_on_page'] = 0;
+    if (!isset($analytics['zalo_clicks'])) $analytics['zalo_clicks'] = 0;
+    if (!isset($analytics['history'])) $analytics['history'] = [];
+    
+    if ($track_type === 'init') {
+        $analytics['pageviews']++;
+        
+        $browser = isset($_POST['browser']) ? sanitize_text_field($_POST['browser']) : '';
+        $os = isset($_POST['os']) ? sanitize_text_field($_POST['os']) : '';
+        $screen = isset($_POST['screen']) ? sanitize_text_field($_POST['screen']) : '';
+        $is_mobile = isset($_POST['is_mobile']) ? sanitize_text_field($_POST['is_mobile']) : '';
+        $referrer = isset($_POST['referrer']) ? sanitize_text_field($_POST['referrer']) : '';
+        $utm_source = isset($_POST['utm_source']) ? sanitize_text_field($_POST['utm_source']) : '';
+        $utm_medium = isset($_POST['utm_medium']) ? sanitize_text_field($_POST['utm_medium']) : '';
+        $utm_campaign = isset($_POST['utm_campaign']) ? sanitize_text_field($_POST['utm_campaign']) : '';
+        
+        // Log access history
+        $analytics['history'][] = [
+            'timestamp' => current_time('mysql'),
+            'browser' => $browser,
+            'os' => $os,
+            'screen' => $screen,
+            'is_mobile' => $is_mobile,
+            'referrer' => $referrer,
+            'utm_source' => $utm_source,
+            'utm_medium' => $utm_medium,
+            'utm_campaign' => $utm_campaign
+        ];
+        
+        // Update device_info if empty or keep it simple as string
+        $device_desc = "$browser on $os ($is_mobile)";
+        $wpdb->update(
+            $table_name,
+            [
+                'device_info' => $device_desc,
+                'deep_analytics' => json_encode($analytics)
+            ],
+            ['id' => $row->id]
+        );
+        
+    } elseif ($track_type === 'heartbeat') {
+        $analytics['time_on_page'] += 10; // add 10 seconds per heartbeat
+        
+        $wpdb->update(
+            $table_name,
+            [
+                'deep_analytics' => json_encode($analytics)
+            ],
+            ['id' => $row->id]
+        );
+        
+    } elseif ($track_type === 'conversion') {
+        $analytics['zalo_clicks']++;
+        
+        $wpdb->update(
+            $table_name,
+            [
+                'deep_analytics' => json_encode($analytics)
+            ],
+            ['id' => $row->id]
+        );
+    }
+    
+    wp_send_json_success();
+}
+
 // 5. Export CSV
 add_action('admin_post_hieucon_dh_export_csv', 'hieucon_dh_export_csv_handler');
 function hieucon_dh_export_csv_handler() {
@@ -669,6 +762,19 @@ function hieucon_dh_public_checklist_result() {
         html, body, #page, #content, .site-content, .site {
           overflow: visible !important;
           overflow-x: visible !important;
+        }
+        /* Iframe view hide global layout components */
+        body.is-iframe-view #wpadminbar,
+        body.is-iframe-view header,
+        body.is-iframe-view footer,
+        body.is-iframe-view .site-header,
+        body.is-iframe-view .site-footer,
+        body.is-iframe-view #masthead,
+        body.is-iframe-view #colophon {
+          display: none !important;
+        }
+        html.is-iframe-view {
+          margin-top: 0 !important;
         }
 
         @media (min-width: 1024px) {
@@ -1015,6 +1121,9 @@ function hieucon_dh_public_checklist_result() {
           }, 300);
         }, 4000);
         
+        if (typeof window.hieuconTrackConsultClick === 'function') {
+          window.hieuconTrackConsultClick();
+        }
         setTimeout(function() {
           window.open("https://zalo.me/0985391881", "_blank");
         }, 1000);
@@ -1263,6 +1372,75 @@ function hieucon_dh_public_checklist_result() {
           }
           requestAnimationFrame(pulse);
       });
+
+      // Front-end Analytics Tracking Script
+      (function() {
+          const code = '<?php echo esc_js($row->user_code); ?>';
+          const adminAjax = '<?php echo esc_js(admin_url('admin-ajax.php')); ?>';
+          
+          function getDeviceDetails() {
+              const ua = navigator.userAgent;
+              let os = "Unknown OS";
+              let browser = "Unknown Browser";
+              
+              if (ua.indexOf("Win") !== -1) os = "Windows";
+              else if (ua.indexOf("Mac") !== -1) os = "macOS";
+              else if (ua.indexOf("Linux") !== -1) os = "Linux";
+              else if (ua.indexOf("Android") !== -1) os = "Android";
+              else if (ua.indexOf("like Mac") !== -1) os = "iOS";
+              
+              if (ua.indexOf("Chrome") !== -1) browser = "Chrome";
+              else if (ua.indexOf("Safari") !== -1) browser = "Safari";
+              else if (ua.indexOf("Firefox") !== -1) browser = "Firefox";
+              else if (ua.indexOf("Edge") !== -1) browser = "Edge";
+              else if (ua.indexOf("MSIE") !== -1 || !!document.documentMode) browser = "IE";
+              
+              const screen = window.screen.width + "x" + window.screen.height;
+              const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(ua) ? "Mobile" : "Desktop";
+              
+              return { os, browser, screen, isMobile };
+          }
+          
+          const device = getDeviceDetails();
+          const referrer = document.referrer || '';
+          
+          const urlParams = new URLSearchParams(window.location.search);
+          const utm = {
+              source: urlParams.get('utm_source') || '',
+              medium: urlParams.get('utm_medium') || '',
+              campaign: urlParams.get('utm_campaign') || ''
+          };
+          
+          // Send Initial Log (pageview)
+          const xhr = new XMLHttpRequest();
+          xhr.open('POST', adminAjax, true);
+          xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+          xhr.send('action=hieucon_dh_track_view&track_type=init&code=' + encodeURIComponent(code) +
+                   '&browser=' + encodeURIComponent(device.browser) +
+                   '&os=' + encodeURIComponent(device.os) +
+                   '&screen=' + encodeURIComponent(device.screen) +
+                   '&is_mobile=' + encodeURIComponent(device.isMobile) +
+                   '&referrer=' + encodeURIComponent(referrer) +
+                   '&utm_source=' + encodeURIComponent(utm.source) +
+                   '&utm_medium=' + encodeURIComponent(utm.medium) +
+                   '&utm_campaign=' + encodeURIComponent(utm.campaign));
+          
+          // Reading time heartbeat (every 10 seconds)
+          setInterval(function() {
+              const heartbeatXhr = new XMLHttpRequest();
+              heartbeatXhr.open('POST', adminAjax, true);
+              heartbeatXhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+              heartbeatXhr.send('action=hieucon_dh_track_view&track_type=heartbeat&code=' + encodeURIComponent(code));
+          }, 10000);
+          
+          // Global conversion click logger
+          window.hieuconTrackConsultClick = function() {
+              const clickXhr = new XMLHttpRequest();
+              clickXhr.open('POST', adminAjax, true);
+              clickXhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+              clickXhr.send('action=hieucon_dh_track_view&track_type=conversion&code=' + encodeURIComponent(code));
+          };
+      })();
       </script>    <?php
     get_footer();
     exit;
@@ -1337,4 +1515,334 @@ function hieucon_dh_get_group_descriptions() {
         'Chức năng vận động' => 'Chức năng vận động là nền tảng giúp trẻ giữ thăng bằng, phối hợp cơ thể và thực hiện các hoạt động hằng ngày. Khó khăn về vận động có thể hạn chế khả năng tự lập, vui chơi, học tập và hòa nhập xã hội của trẻ.',
         'Cảm xúc - Hành vi'  => 'Khó khăn trong điều hòa cảm xúc khiến trẻ dễ lo âu, cáu gắt, bùng nổ, hạn chế khả năng giao tiếp xã hội, ảnh hưởng đến khả năng giao tiếp, học tập và sinh hoạt.',
     ];
+}
+
+// 8. Body class filter for iframe
+add_filter('body_class', 'hieucon_dh_iframe_body_class');
+function hieucon_dh_iframe_body_class($classes) {
+    if (isset($_GET['iframe'])) {
+        $classes[] = 'is-iframe-view';
+    }
+    return $classes;
+}
+
+// 9. Dashboard Page Routing
+add_action('template_redirect', 'hieucon_dh_dashboard_page');
+function hieucon_dh_dashboard_page() {
+    if ( strpos($_SERVER['REQUEST_URI'], '/dashboard-bo-cong-cu-nhan-dien-suc-khoe-thuong-gap') !== 0 ) return;
+
+    $configured_pass = get_option('hieucon_checklist_view_password', 'hieucon2026');
+    $expected_hash = md5('hieucon_dashboard_secret_salt_' . $configured_pass);
+    $authenticated = false;
+    $auth_error = '';
+
+    // Check cookie
+    if (isset($_COOKIE['hieucon_dashboard_auth']) && $_COOKIE['hieucon_dashboard_auth'] === $expected_hash) {
+        $authenticated = true;
+    }
+    // Check POST
+    elseif (isset($_POST['hieucon_dashboard_pass'])) {
+        $pass_input = sanitize_text_field($_POST['hieucon_dashboard_pass']);
+        if (trim($pass_input) === trim($configured_pass)) {
+            $authenticated = true;
+            setcookie('hieucon_dashboard_auth', $expected_hash, time() + 30 * DAY_IN_SECONDS, COOKIEPATH, COOKIE_DOMAIN);
+            wp_safe_redirect(site_url('/dashboard-bo-cong-cu-nhan-dien-suc-khoe-thuong-gap'));
+            exit;
+        } else {
+            $auth_error = 'Mật khẩu bảo mật không chính xác. Vui lòng nhập đúng mật khẩu để vào dashboard.';
+        }
+    }
+
+    if (!$authenticated) {
+        global $wp_query;
+        $wp_query->is_404 = false;
+        status_header(200);
+        
+        add_filter('pre_get_document_title', function() {
+            return 'Xác thực bảo mật Dashboard - Hiểu Con Từ Gốc';
+        }, 999);
+
+        get_header();
+        ?>
+        <div class="dashboard-auth-body" style="background-color: #faf9f6; font-family: 'Quicksand', sans-serif; min-height: 70vh; display: flex; align-items: center; justify-content: center; width: 100%; box-sizing: border-box; padding: 40px 16px;">
+            <div style="background: #ffffff; border: 1px solid #D6E2F5; max-width: 480px; width: 100%; border-radius: 16px; box-shadow: 0 10px 30px rgba(13, 42, 120, 0.08); padding: 32px 24px; text-align: center; box-sizing: border-box;">
+                <div style="font-size: 48px; margin-bottom: 16px;">📊</div>
+                <h2 style="font-size: 20px; font-weight: 700; color: #002795; margin: 0 0 8px 0; font-family: 'Oswald', sans-serif; text-transform: uppercase;">Xác thực bảo mật Dashboard</h2>
+                <p style="font-size: 13.5px; color: #64748b; margin: 0 0 24px 0; line-height: 1.5;">Vui lòng nhập mật khóa bảo mật để truy cập danh sách và phân tích số liệu.</p>
+                
+                <?php if ($auth_error): ?>
+                    <div style="background-color: #fef2f2; border: 1px solid #fee2e2; color: #ef4444; font-size: 13px; padding: 12px; border-radius: 8px; margin-bottom: 20px; text-align: left; line-height: 1.4;">
+                        ⚠️ <?php echo esc_html($auth_error); ?>
+                    </div>
+                <?php endif; ?>
+
+                <form method="post" action="" style="display: flex; flex-direction: column; gap: 12px;">
+                    <input type="password" name="hieucon_dashboard_pass" placeholder="Nhập mật khẩu truy cập..." required 
+                           style="width: 100%; padding: 12px 16px; border: 1px solid #cbd5e1; border-radius: 10px; font-size: 14px; outline: none; transition: border-color 0.2s; box-sizing: border-box; text-align: center;"
+                           onfocus="this.style.borderColor='#002795'" onblur="this.style.borderColor='#cbd5e1'">
+                    <button type="submit" 
+                            style="width: 100%; padding: 12px 16px; border: none; border-radius: 10px; font-size: 14px; font-weight: bold; color: #ffffff; background-color: #002795; cursor: pointer; transition: background-color 0.2s; font-family: 'Quicksand', sans-serif;"
+                            onmouseover="this.style.backgroundColor='#0c3bb0'" onmouseout="this.style.backgroundColor='#002795'">
+                        Vào Dashboard
+                    </button>
+                </form>
+            </div>
+        </div>
+        <?php
+        get_footer();
+        exit;
+    }
+
+    hieucon_dh_render_dashboard();
+}
+
+// 10. Dashboard Page Renderer
+function hieucon_dh_render_dashboard() {
+    global $wpdb;
+    $table_name = $wpdb->prefix . 'hieucon_dh_checklists';
+    
+    // Fetch all submissions
+    $rows = $wpdb->get_results("SELECT * FROM $table_name ORDER BY id DESC");
+    
+    // Calculate Summary Statistics
+    $total_surveys = count($rows);
+    $total_views = 0;
+    $total_time_on_page = 0;
+    $total_zalo_clicks = 0;
+    
+    foreach ($rows as $r) {
+        $da = !empty($r->deep_analytics) ? json_decode($r->deep_analytics, true) : [];
+        if (is_array($da)) {
+            $total_views += intval($da['pageviews'] ?? 0);
+            $total_time_on_page += intval($da['time_on_page'] ?? 0);
+            $total_zalo_clicks += intval($da['zalo_clicks'] ?? 0);
+        }
+    }
+    
+    // Avg view duration format
+    $avg_time_secs = $total_views > 0 ? round($total_time_on_page / $total_views) : 0;
+    if ($avg_time_secs < 60) {
+        $avg_time_formatted = $avg_time_secs . 's';
+    } else {
+        $avg_time_formatted = floor($avg_time_secs / 60) . 'm ' . ($avg_time_secs % 60) . 's';
+    }
+    
+    // Conversion rate calculation
+    $conversion_rate = $total_views > 0 ? round(($total_zalo_clicks / $total_views) * 100, 1) : 0;
+
+    // Set page header title
+    add_filter('pre_get_document_title', function() {
+        return 'Dashboard Phân Tích Đo Lường - Hiểu Con Từ Gốc';
+    }, 999);
+
+    get_header();
+    ?>
+    <div class="results-page-body py-10 antialiased" style="background-color: #faf9f6; font-family: 'Quicksand', sans-serif; min-height: 100vh;">
+        <div class="max-w-7xl mx-auto px-6">
+            
+            <!-- Dashboard Header -->
+            <div class="bg-[#002795] text-white rounded-2xl p-6 mb-8 text-center shadow-md relative overflow-hidden has-pattern-bg">
+                <div class="absolute -right-24 -bottom-24 w-64 h-64 bg-white/5 rounded-full pointer-events-none"></div>
+                <h1 class="text-xl md:text-2xl font-bold panel-title uppercase tracking-wide m-0" style="color: white; line-height: 1.4;">Dashboard Phân Tích & Đo Lường Kết Quả</h1>
+            </div>
+
+            <!-- Stats Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-solid border-[#e2e8f0] flex flex-col justify-between">
+                    <div class="text-[10px] text-gray-400 uppercase font-bold tracking-wider mb-2">Tổng số hồ sơ</div>
+                    <div class="text-3xl font-extrabold text-[#002795]" style="font-family:'Oswald', sans-serif;"><?php echo number_format($total_surveys); ?></div>
+                </div>
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-solid border-[#e2e8f0] flex flex-col justify-between">
+                    <div class="text-[10px] text-gray-400 uppercase font-bold tracking-wider mb-2">Tổng lượt xem kết quả</div>
+                    <div class="text-3xl font-extrabold text-[#002795]" style="font-family:'Oswald', sans-serif;"><?php echo number_format($total_views); ?></div>
+                </div>
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-solid border-[#e2e8f0] flex flex-col justify-between">
+                    <div class="text-[10px] text-gray-400 uppercase font-bold tracking-wider mb-2">Thời gian đọc trung bình</div>
+                    <div class="text-3xl font-extrabold text-[#002795]" style="font-family:'Oswald', sans-serif;"><?php echo esc_html($avg_time_formatted); ?></div>
+                </div>
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-solid border-[#e2e8f0] flex flex-col justify-between">
+                    <div class="text-[10px] text-gray-400 uppercase font-bold tracking-wider mb-2">Chuyển đổi Zalo (C.R)</div>
+                    <div class="text-3xl font-extrabold text-[#F05A25]" style="font-family:'Oswald', sans-serif;">
+                        <?php echo number_format($total_zalo_clicks); ?> <span class="text-xs text-gray-400 font-normal">(<?php echo $conversion_rate; ?>%)</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main List Table -->
+            <div class="bg-white rounded-2xl shadow-sm border border-solid border-[#e2e8f0] p-6">
+                <div class="flex flex-col sm:flex-row justify-between items-center gap-4 mb-6">
+                    <h3 class="text-base font-bold text-[#002795] uppercase tracking-wide m-0" style="font-family:'Oswald', sans-serif;">Danh Sách Phụ Huynh Đánh Giá</h3>
+                    <div class="relative w-full sm:w-80">
+                        <input type="text" id="dashboardSearch" onkeyup="filterDashboardTable()" placeholder="Tìm tên, SĐT, Email hoặc Mã..." 
+                               class="w-full px-4 py-2.5 border border-solid border-slate-200 rounded-xl text-sm outline-none transition-all focus:border-[#002795]"
+                               style="box-sizing:border-box;">
+                    </div>
+                </div>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse" id="dashboardTable">
+                        <thead>
+                            <tr class="border-b border-solid border-slate-100 text-[10px] text-gray-400 uppercase tracking-wider font-bold">
+                                <th class="pb-3 pl-4">Hồ sơ của con</th>
+                                <th class="pb-3">Thông tin phụ huynh</th>
+                                <th class="pb-3">Thời gian ghi nhận</th>
+                                <th class="pb-3 text-center">Lượt xem</th>
+                                <th class="pb-3 text-center">Thời gian đọc</th>
+                                <th class="pb-3 text-center">Thiết bị</th>
+                                <th class="pb-3 text-center">Zalo Click</th>
+                                <th class="pb-3 pr-4 text-right">Xem kết quả</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-100 text-sm">
+                            <?php if (empty($rows)): ?>
+                                <tr>
+                                    <td colspan="8" class="py-8 text-center text-gray-400 italic">Chưa có dữ liệu khảo sát.</td>
+                                </tr>
+                            <?php else: ?>
+                                <?php foreach ($rows as $r): 
+                                    $da = !empty($r->deep_analytics) ? json_decode($r->deep_analytics, true) : [];
+                                    $views = intval($da['pageviews'] ?? 0);
+                                    $time_on_page = intval($da['time_on_page'] ?? 0);
+                                    $zalo_clicks = intval($da['zalo_clicks'] ?? 0);
+                                    $auth_token = md5($r->user_code . 'hieucon_secret_salt');
+                                    
+                                    // Device Badge
+                                    $device_badge = '';
+                                    if (!empty($r->device_info)) {
+                                        if (strpos($r->device_info, 'Mobile') !== false) {
+                                            $device_badge = '<span class="px-2 py-0.5 rounded bg-indigo-50 text-indigo-600 border border-solid border-indigo-100 text-[10px] font-bold">📱 Di động</span>';
+                                        } else {
+                                            $device_badge = '<span class="px-2 py-0.5 rounded bg-emerald-50 text-emerald-600 border border-solid border-emerald-100 text-[10px] font-bold">💻 Máy tính</span>';
+                                        }
+                                    } else {
+                                        $device_badge = '<span class="text-gray-300">-</span>';
+                                    }
+                                    
+                                    // Duration format
+                                    $duration_html = '';
+                                    if ($time_on_page <= 0) {
+                                        $duration_html = '<span class="text-gray-300">0s</span>';
+                                    } elseif ($time_on_page < 60) {
+                                        $duration_html = '<strong>' . $time_on_page . '</strong>s';
+                                    } else {
+                                        $duration_html = '<strong>' . floor($time_on_page / 60) . '</strong>m <strong>' . ($time_on_page % 60) . '</strong>s';
+                                    }
+                                ?>
+                                    <tr class="hover:bg-slate-50 transition-colors">
+                                        <td class="py-4 pl-4">
+                                            <div class="font-bold text-slate-800" style="font-family:'Oswald', sans-serif; font-size:14px;"><?php echo esc_html($r->child_name); ?></div>
+                                            <div class="text-[11px] text-gray-500 mt-0.5">
+                                                <?php echo esc_html($r->child_gender); ?> • <?php echo esc_html($r->child_age); ?>
+                                            </div>
+                                        </td>
+                                        <td class="py-4">
+                                            <div class="font-semibold text-slate-700"><?php echo esc_html($r->parent_name); ?></div>
+                                            <div class="text-[11px] text-gray-500 mt-0.5">
+                                                📞 <?php echo esc_html($r->parent_phone); ?> <br>
+                                                ✉️ <?php echo esc_html($r->parent_email); ?>
+                                            </div>
+                                        </td>
+                                        <td class="py-4 text-xs text-gray-500">
+                                            <?php echo date('d/m/Y H:i', strtotime($r->created_at)); ?> <br>
+                                            <span class="text-[10px] text-gray-400 font-mono">Mã: #<?php echo esc_html($r->user_code); ?></span>
+                                        </td>
+                                        <td class="py-4 text-center font-bold text-slate-700"><?php echo $views; ?></td>
+                                        <td class="py-4 text-center text-xs text-slate-600"><?php echo $duration_html; ?></td>
+                                        <td class="py-4 text-center"><?php echo $device_badge; ?></td>
+                                        <td class="py-4 text-center">
+                                            <?php if ($zalo_clicks > 0): ?>
+                                                <span class="px-2 py-0.5 rounded bg-orange-100 text-orange-700 font-bold text-xs"><?php echo $zalo_clicks; ?> Click</span>
+                                            <?php else: ?>
+                                                <span class="text-gray-300">-</span>
+                                            <?php endif; ?>
+                                        </td>
+                                        <td class="py-4 pr-4 text-right">
+                                            <button onclick="openResultModal('<?php echo esc_js($r->user_code); ?>', '<?php echo esc_js($auth_token); ?>')" 
+                                                    class="inline-flex items-center justify-center font-bold px-3 py-1.5 rounded-lg text-xs text-white border-none cursor-pointer transition-all bg-[#002795] hover:bg-[#0c3bb0] font-family-inherit">
+                                                Xem chi tiết
+                                            </button>
+                                        </td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            <?php endif; ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Details Result Popup Modal -->
+    <div id="resultModal" class="hieucon-modal-overlay" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.5); z-index:9999; align-items:center; justify-content:center; padding:16px; box-sizing:border-box;">
+        <div style="background:#ffffff; width:100%; max-width:1150px; height:90vh; border-radius:16px; display:flex; flex-direction:column; overflow:hidden; box-shadow:0 20px 50px rgba(0,0,0,0.25); position:relative;">
+            <!-- Modal Header -->
+            <div style="background:#002795; color:#ffffff; padding:16px 24px; display:flex; justify-content:space-between; align-items:center; box-sizing:border-box;">
+                <h3 style="margin:0; font-family:'Oswald', sans-serif; font-size:16px; text-transform:uppercase; letter-spacing:0.5px;">Báo cáo chi tiết kết quả đánh giá</h3>
+                <button onclick="closeResultModal()" style="background:transparent; border:none; color:#ffffff; font-size:28px; cursor:pointer; line-height:1; outline:none; padding:0; margin:0;">&times;</button>
+            </div>
+            <!-- Modal Body / Iframe -->
+            <div style="flex-grow:1; background:#faf9f6; position:relative;">
+                <div id="modalLoading" style="position:absolute; top:0; left:0; right:0; bottom:0; background:rgba(255,255,255,0.85); display:flex; align-items:center; justify-content:center; z-index:10;">
+                    <div style="border:4px solid #f3f3f3; border-top:4px solid #002795; border-radius:50%; width:40px; height:40px; animation:spin 1s linear infinite;"></div>
+                </div>
+                <iframe id="resultIframe" src="" style="width:100%; height:100%; border:none; display:block;" onload="document.getElementById('modalLoading').style.display='none';"></iframe>
+            </div>
+        </div>
+    </div>
+    
+    <style>
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+    </style>
+
+    <script>
+    function filterDashboardTable() {
+        const input = document.getElementById('dashboardSearch');
+        const filter = input.value.toLowerCase().trim();
+        const table = document.getElementById('dashboardTable');
+        const trs = table.getElementsByTagName('tr');
+        
+        for (let i = 1; i < trs.length; i++) {
+            const tr = trs[i];
+            // Skip empty list message row if present
+            if (tr.cells.length === 1) continue;
+            
+            const text = tr.textContent || tr.innerText;
+            if (text.toLowerCase().indexOf(filter) > -1) {
+                tr.style.display = '';
+            } else {
+                tr.style.display = 'none';
+            }
+        }
+    }
+
+    function openResultModal(code, auth) {
+        const modal = document.getElementById('resultModal');
+        const iframe = document.getElementById('resultIframe');
+        const loading = document.getElementById('modalLoading');
+        
+        loading.style.display = 'flex';
+        iframe.src = '<?php echo esc_js(site_url('/ket-qua-bo-cong-cu-nhan-dien-suc-khoe-thuong-gap')); ?>?code=' + code + '&auth=' + auth + '&iframe=1';
+        modal.style.display = 'flex';
+        
+        // Prevent parent body scroll
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeResultModal() {
+        const modal = document.getElementById('resultModal');
+        const iframe = document.getElementById('resultIframe');
+        
+        modal.style.display = 'none';
+        iframe.src = '';
+        
+        // Restore parent body scroll
+        document.body.style.overflow = '';
+    }
+    </script>
+    <?php
+    get_footer();
+    exit;
 }
