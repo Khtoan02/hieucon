@@ -18,12 +18,12 @@
       <div class="text-left flex flex-col justify-center">
         <h1 class="font-oswald mb-6 text-white uppercase" style="line-height: 1.4; letter-spacing: 0;">
           <span class="block font-bold whitespace-nowrap"
-            style="font-size: clamp(18px, 3.2vw, 44px); letter-spacing: 0;">BỘ CÔNG CỤ NHẬN DIỆN CÁC</span>
+            style="font-size: clamp(22px, 4.5vw, 44px); letter-spacing: 0;">BỘ CÔNG CỤ NHẬN DIỆN CÁC</span>
           <span class="text-yellow uppercase block my-1 sm:my-1.5 font-bold whitespace-nowrap"
-            style="color: var(--yellow); font-size: clamp(24px, 5.2vw, 72px); letter-spacing: 0;">VẤN ĐỀ SỨC
+            style="color: var(--yellow); font-size: clamp(32px, 7.5vw, 72px); letter-spacing: 0;">VẤN ĐỀ SỨC
             KHỎE</span>
           <span class="block font-bold whitespace-nowrap"
-            style="font-size: clamp(18px, 3.2vw, 44px); letter-spacing: 0;">THƯỜNG GẶP Ở TRẺ TỰ KỶ</span>
+            style="font-size: clamp(22px, 4.5vw, 44px); letter-spacing: 0;">THƯỜNG GẶP Ở TRẺ TỰ KỶ</span>
         </h1>
 
         <p
