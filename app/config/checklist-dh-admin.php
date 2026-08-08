@@ -581,21 +581,42 @@ function hieucon_dh_public_checklist_result() {
           font-family: 'Oswald', sans-serif;
         }
 
-        /* Alarm Pulse Animation */
-        @keyframes pulse-red {
+        /* Premium Card Border & Shadow Soft Pulse Animation */
+        @keyframes card-border-pulse {
           0%, 100% {
-            border-color: #fda4af;
-            background-color: #fff1f2;
-            box-shadow: 0 0 0 0 rgba(225, 29, 72, 0.2);
+            border-color: #f3f4f6;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02);
           }
           50% {
-            border-color: #e11d48;
-            background-color: #ffe4e6;
-            box-shadow: 0 0 10px 2px rgba(225, 29, 72, 0.15);
+            border-color: #fca5a5;
+            box-shadow: 0 8px 20px -3px rgba(239, 68, 68, 0.06);
           }
         }
-        .alarm-pulse {
-          animation: pulse-red 2s infinite ease-in-out;
+        .priority-card-pulsing {
+          animation: card-border-pulse 2.5s infinite ease-in-out;
+        }
+
+        /* Tiny Warning Beacon Pulse */
+        @keyframes beacon-pulse {
+          0%, 100% {
+            transform: scale(1);
+            opacity: 1;
+            box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4);
+          }
+          50% {
+            transform: scale(1.2);
+            opacity: 0.7;
+            box-shadow: 0 0 0 5px rgba(239, 68, 68, 0);
+          }
+        }
+        .beacon-dot {
+          display: inline-block;
+          width: 8px;
+          height: 8px;
+          background-color: #ef4444;
+          border-radius: 50%;
+          animation: beacon-pulse 1.8s infinite ease-in-out;
+          flex-shrink: 0;
         }
         
         /* Orange Pulse Glow Animation for consult button */
@@ -788,47 +809,52 @@ function hieucon_dh_public_checklist_result() {
                             Tỷ lệ biểu hiện dấu hiệu của từng hệ cơ quan.
                         </p>
 
-                        <!-- 2. Priority Issues -->
+                        <!-- 2. Priority Issues (3 items side-by-side below the chart) -->
                         <?php if (!empty($scores)): 
                             usort($scores, function($a, $b) { return $b['pct'] <=> $a['pct']; });
                         ?>
                         <div class="border-t border-solid border-slate-100 pt-6">
-                            <h3 class="panel-title text-sm font-bold text-[#002795] uppercase tracking-wider mb-6 mt-0">
+                            <h3 class="panel-title text-sm font-bold text-[#002795] uppercase tracking-wider mb-2 mt-0">
                                 🚨 Các vấn đề cần ưu tiên hỗ trợ sớm
                             </h3>
-                            <div class="flex flex-col gap-4">
+                            <p class="text-xs text-gray-500 mb-4 leading-relaxed" style="margin: 0 0 16px 0;">
+                                Quý phụ huynh vui lòng liên hệ với chuyên gia để nhận tư vấn chi tiết hơn.
+                            </p>
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                                 <?php 
                                 $count = 0;
-                                $group_descs = hieucon_dh_get_group_descriptions();
                                 foreach ($scores as $sg): 
-                                    if ($count >= 3) break; 
-                                    if ($sg['pct'] <= 0) continue; 
-                                    
-                                    $id_or_name = !empty($sg['id']) ? $sg['id'] : $sg['name'];
-                                    $desc = isset($group_descs[$id_or_name]) ? $group_descs[$id_or_name] : '';
+                                    if ($count >= 3) break; // Only show top 3
+                                    if ($sg['pct'] <= 0) continue; // Skip if 0%
+                                    $is_top = true;
+                                    $bar_color = '#ef4444';
+                                    $wrap_class = 'priority-card-pulsing border border-solid rounded-2xl flex flex-col justify-between';
+                                    $wrap_style = 'padding:16px; border-radius:16px; border:1px solid #e2e8f0; border-top:4px solid #ef4444; background:#ffffff; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02), 0 2px 4px -1px rgba(0,0,0,0.01); transition: all 0.3s ease; text-align: left;';
                                 ?>
-                                    <div class="bg-slate-50/80 rounded-2xl p-5 border border-solid border-slate-200/60 flex flex-col md:flex-row gap-5 items-start hover:bg-slate-50 transition-all duration-200">
-                                        <!-- Left side: Number & Name & Percent -->
-                                        <div class="flex-shrink-0 w-full md:w-60 flex flex-col justify-between">
-                                            <div class="flex items-center gap-3">
-                                                <div class="w-8 h-8 rounded-full bg-[#0D2A78]/10 text-[#0D2A78] flex items-center justify-center font-bold text-sm flex-shrink-0">
-                                                    0<?php echo ($count + 1); ?>
-                                                </div>
-                                                <div class="flex-grow">
-                                                    <h4 class="font-bold text-slate-800 text-[14.5px] m-0"><?php echo esc_html($sg['name']); ?></h4>
-                                                    <span class="text-[11.5px] text-rose-600 font-bold">Tỷ lệ biểu hiện: <?php echo intval($sg['pct']); ?>%</span>
-                                                </div>
-                                            </div>
-                                            <!-- Progress bar -->
-                                            <div class="w-full bg-slate-200/80 h-1.5 rounded-full mt-3.5 overflow-hidden">
-                                                <div class="bg-rose-500 h-full rounded-full" style="width: <?php echo intval($sg['pct']); ?>%;"></div>
-                                            </div>
+                                    <div class="<?php echo $wrap_class; ?>" style="<?php echo $wrap_style; ?>">
+                                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; gap:8px;">
+                                            <span style="font-family: 'Oswald', sans-serif; font-size:14px; font-weight:700; color:#0D2A78; letter-spacing:0.2px; display:flex; align-items:center; gap:6px;">
+                                                <span class="beacon-dot"></span>
+                                                <?php echo esc_html($sg['name']); ?>
+                                            </span>
+                                            <span style="background:#fee2e2; color:#ef4444; font-size:11.5px; font-weight:700; padding:2px 8px; border-radius:9999px; white-space:nowrap; font-family:\'Quicksand\', sans-serif;">
+                                                <?php echo intval($sg['pct']); ?>%
+                                            </span>
                                         </div>
-                                        <!-- Right side: Description -->
-                                        <?php if ($desc): ?>
-                                            <div class="flex-grow text-[13.5px] text-slate-600 leading-relaxed md:pl-6 md:border-l border-solid border-slate-200/80 pt-3 md:pt-0 w-full text-justify md:text-left">
+                                        
+                                        <div style="height:5px; background:#f1f5f9; border-radius:4px; overflow:hidden; margin-bottom:12px; width:100%;">
+                                            <div style="height:100%; width:<?php echo intval($sg['pct']); ?>%; background:<?php echo $bar_color; ?>; border-radius:4px;"></div>
+                                        </div>
+                                        
+                                        <?php 
+                                        $group_descs = hieucon_dh_get_group_descriptions();
+                                        $id_or_name = !empty($sg['id']) ? $sg['id'] : $sg['name'];
+                                        $desc = isset($group_descs[$id_or_name]) ? $group_descs[$id_or_name] : '';
+                                        if ($desc): 
+                                        ?>
+                                            <p style="font-size:12.5px; color:#475569; line-height:1.6; margin:0; font-weight:400; font-family:\'Quicksand\', sans-serif;">
                                                 <?php echo esc_html($desc); ?>
-                                            </div>
+                                            </p>
                                         <?php endif; ?>
                                     </div>
                                 <?php 
