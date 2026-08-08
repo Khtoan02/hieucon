@@ -48,3 +48,14 @@ function hieucon_custom_smtp_setup( $phpmailer ) {
     }
 }
 add_action( 'phpmailer_init', 'hieucon_custom_smtp_setup', 999 );
+
+/**
+ * Log wp_mail failures to options for easy admin debugging
+ */
+function hieucon_log_mail_errors( $wp_error ) {
+    if ( is_wp_error( $wp_error ) ) {
+        update_option( 'hieucon_smtp_last_error', $wp_error->get_error_message() );
+        error_log( 'wp_mail failed: ' . $wp_error->get_error_message() );
+    }
+}
+add_action( 'wp_mail_failed', 'hieucon_log_mail_errors', 10, 1 );

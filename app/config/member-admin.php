@@ -69,13 +69,17 @@ function hieucon_member_settings_page_html() {
             $subject = 'Thư thử nghiệm cấu hình SMTP - Hieucon';
             $body    = 'Chúc mừng! Cấu hình SMTP của bạn đang hoạt động cực kỳ hoàn hảo.';
             
+            // Xóa lỗi cũ trước khi test
+            delete_option( 'hieucon_smtp_last_error' );
+            
             // Buộc tải cấu hình SMTP ngay lập tức để gửi thử
             $mail_sent = wp_mail( $test_email, $subject, $body );
             if ( $mail_sent ) {
                 $test_message = 'Email thử nghiệm đã được gửi thành công đến ' . esc_html( $test_email ) . '. Hãy kiểm tra hộp thư (và cả mục Spam/Junk nếu không thấy).';
                 $test_status  = 'success';
             } else {
-                $test_message = 'Không thể gửi email thử nghiệm. Vui lòng kiểm tra lại cấu hình SMTP của bạn.';
+                $last_error = get_option( 'hieucon_smtp_last_error', 'Không rõ nguyên nhân (vui lòng kiểm tra cổng SMTP hoặc SSL/TLS)' );
+                $test_message = 'Không thể gửi email thử nghiệm. Chi tiết lỗi: ' . esc_html( $last_error );
                 $test_status  = 'error';
             }
         } else {
@@ -100,6 +104,14 @@ function hieucon_member_settings_page_html() {
             do_settings_sections( 'hieucon_member_settings_group' );
             ?>
             <h2>1. Cấu hình SMTP gửi Email OTP</h2>
+            <?php
+            $last_error = get_option( 'hieucon_smtp_last_error', '' );
+            if ( ! empty( $last_error ) ) :
+            ?>
+                <div class="notice notice-error inline-notice" style="margin: 10px 0 20px 0; padding: 10px 15px; background: #fff0f0; border-left: 4px solid #d63636; border-radius: 4px;">
+                    <p style="margin: 0; color: #d63636;"><strong>Lỗi gửi thư gần nhất ghi nhận được:</strong> <?php echo esc_html( $last_error ); ?></p>
+                </div>
+            <?php endif; ?>
             <table class="form-table">
                 <tr>
                     <th scope="row">Bật SMTP Tùy chỉnh</th>

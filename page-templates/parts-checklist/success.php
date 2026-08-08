@@ -11,7 +11,7 @@
       style="color:var(--navy);">[email]</strong>.
   </p>
   <p style="font-size:14px; color:#64748b; max-width:500px; margin:0 auto 32px; line-height:1.6; font-style:italic;">
-    Phụ huynh vui lòng kiểm tra hộp thư đến (Inbox). Nếu không tìm thấy thư trong vòng 3-5 phút, vui lòng kiểm tra thêm thư
+    Quý phụ huynh vui lòng kiểm tra hộp thư đến (Inbox). Nếu không tìm thấy thư trong vòng 3-5 phút, vui lòng kiểm tra thêm thư
     mục <strong>Spam (Thư rác)</strong> hoặc <strong>Promotions (Quảng cáo)</strong>.
   </p>
   <!-- Sub Nav matching the header buttons color scheme -->
