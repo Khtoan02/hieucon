@@ -597,6 +597,21 @@ function hieucon_dh_public_checklist_result() {
         .alarm-pulse {
           animation: pulse-red 2s infinite ease-in-out;
         }
+        
+        /* Orange Pulse Glow Animation for consult button */
+        @keyframes orange-pulse-glow {
+          0%, 100% {
+            transform: scale(1);
+            box-shadow: 0 4px 12px rgba(240, 90, 37, 0.3);
+          }
+          50% {
+            transform: scale(1.02);
+            box-shadow: 0 6px 20px rgba(240, 90, 37, 0.5), 0 0 0 4px rgba(240, 90, 37, 0.15);
+          }
+        }
+        .btn-pulse-orange {
+          animation: orange-pulse-glow 2s infinite ease-in-out;
+        }
         .has-pattern-bg {
           position: relative !important;
           background: transparent !important;
@@ -748,9 +763,10 @@ function hieucon_dh_public_checklist_result() {
 
                     <!-- Actions -->
                     <div class="flex flex-col gap-3">
-                        <a href="https://m.me/884864428052710?ref=1002533683" target="_blank" class="flex items-center justify-center bg-[#002795] text-white font-bold py-3.5 px-4 rounded-xl shadow-md hover:bg-[#001e73] transition-all text-sm text-center border-0" style="text-decoration:none;">💬 Liên hệ chuyên gia</a>
-                        <button onclick="copyResultLink()" class="flex items-center justify-center bg-white text-[#002795] border border-solid border-[#002795]/20 font-bold py-3.5 px-4 rounded-xl hover:bg-slate-50 transition-all text-sm cursor-pointer font-family-inherit">🔗 Link kết quả</button>
-                        <p class="text-[11px] text-gray-500 text-center m-0">(Copy link kết quả để gửi cho chuyên gia tư vấn)</p>
+                        <button onclick="consultAndCopyLink()" class="flex items-center justify-center font-bold py-3.5 px-4 rounded-xl text-white hover:opacity-90 transition-all text-sm text-center border-0 cursor-pointer font-family-inherit btn-pulse-orange" style="background: linear-gradient(135deg, #F05A25 0%, #FF7A45 100%); color: #ffffff !important; outline: none;">
+                            💬 Tư vấn
+                        </button>
+                        <p class="text-[11px] text-gray-500 text-center m-0">(Hệ thống tự động sao chép link kết quả để gửi chuyên gia qua Zalo)</p>
                     </div>
                 </div>
 
@@ -870,6 +886,33 @@ function hieucon_dh_public_checklist_result() {
       </div>
 
       <script>
+      function consultAndCopyLink() {
+        const dummy = document.createElement('input');
+        document.body.appendChild(dummy);
+        dummy.value = window.location.href;
+        dummy.select();
+        document.execCommand('copy');
+        document.body.removeChild(dummy);
+        
+        const toast = document.getElementById("copy-toast");
+        toast.innerHTML = '<strong>Đã copy link kết quả thành công!</strong><br><div style="opacity:0.9; font-size: 13px; margin-top:8px; line-height:1.5;">Đang tự động chuyển hướng đến Zalo hỗ trợ để bạn gửi link kết quả vừa copy...</div>';
+        toast.style.visibility = "visible";
+        toast.style.opacity = "1";
+        toast.style.transform = "translate(-50%, -50%) scale(1)";
+        
+        setTimeout(function(){
+          toast.style.opacity = "0";
+          toast.style.transform = "translate(-50%, -50%) scale(0.9)";
+          setTimeout(function(){
+            toast.style.visibility = "hidden";
+          }, 300);
+        }, 4000);
+        
+        setTimeout(function() {
+          window.open("https://zalo.me/0985391881", "_blank");
+        }, 1000);
+      }
+
       function copyResultLink() {
         const dummy = document.createElement('input');
         document.body.appendChild(dummy);
