@@ -665,32 +665,30 @@ function hieucon_dh_public_checklist_result() {
           z-index: -1 !important;
           pointer-events: none !important;
         }
+        /* Force parent containers to allow sticky positioning */
+        html, body, #page, #content, .site-content, .site {
+          overflow: visible !important;
+          overflow-x: visible !important;
+        }
+
         @media (min-width: 1024px) {
           .sticky-header-banner {
-            position: fixed !important;
+            position: -webkit-sticky !important;
+            position: sticky !important;
             top: 16px !important;
-            left: 50% !important;
-            transform: translateX(-50%) !important;
-            width: calc(100% - 48px) !important;
-            max-width: 80rem !important;
             z-index: 999 !important;
           }
           .admin-bar .sticky-header-banner {
             top: 48px !important;
           }
           .sticky-profile-sidebar {
+            position: -webkit-sticky !important;
             position: sticky !important;
             top: 128px !important;
             align-self: start !important;
           }
           .admin-bar .sticky-profile-sidebar {
             top: 160px !important;
-          }
-          .main-grid-container {
-            margin-top: 128px !important;
-          }
-          .admin-bar .main-grid-container {
-            margin-top: 160px !important;
           }
         }
       </style>
