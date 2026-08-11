@@ -1046,38 +1046,7 @@ function hieucon_sub_public_checklist_result()
     // Tự động map điểm & màu sắc
     $color_palette = ['#EF4444', '#F59E0B', '#10B981', '#3B82F6', '#8B5CF6', '#EC4899', '#6366F1', '#14B8A6'];
     ?>
-    <script>
-      // Kế thừa và mở rộng Tailwind Config từ theme cha để tránh mất màu/font của theme chính ở header/footer
-      if (typeof tailwind !== 'undefined' && tailwind.config) {
-          tailwind.config.corePlugins = tailwind.config.corePlugins || {};
-          tailwind.config.corePlugins.preflight = false;
-          
-          tailwind.config.theme = tailwind.config.theme || {};
-          tailwind.config.theme.extend = tailwind.config.theme.extend || {};
-          
-          // Merge colors
-          tailwind.config.theme.extend.colors = Object.assign(
-              tailwind.config.theme.extend.colors || {},
-              {
-                  navy: '#002795',
-                  yellow: '#FFD154',
-              }
-          );
-      } else {
-          window.tailwind = window.tailwind || {};
-          window.tailwind.config = {
-              corePlugins: { preflight: false },
-              theme: {
-                  extend: {
-                      colors: {
-                          navy: '#002795',
-                          yellow: '#FFD154',
-                      }
-                  }
-              }
-          };
-      }
-    </script>
+
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link
         href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Quicksand:wght@400;500;600;700&display=swap"

@@ -17,57 +17,7 @@ $groups = json_decode($questions_json, true) ?: [];
 <!-- Google Fonts & Tailwind -->
 <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
-<script>
-  // Kế thừa và mở rộng Tailwind Config từ theme cha để tránh mất màu/font của theme chính ở header/footer
-  if (typeof tailwind !== 'undefined' && tailwind.config) {
-      tailwind.config.corePlugins = tailwind.config.corePlugins || {};
-      tailwind.config.corePlugins.preflight = false;
-      
-      tailwind.config.theme = tailwind.config.theme || {};
-      tailwind.config.theme.extend = tailwind.config.theme.extend || {};
-      
-      // Merge colors
-      tailwind.config.theme.extend.colors = Object.assign(
-          tailwind.config.theme.extend.colors || {},
-          {
-              navy: '#002795',
-              yellow: '#FFD154',
-              cream: '#FAF9F6',
-              'text-dark': '#3D3D3D',
-              'text-soft': '#555555'
-          }
-      );
-      
-      // Merge font families
-      tailwind.config.theme.extend.fontFamily = Object.assign(
-          tailwind.config.theme.extend.fontFamily || {},
-          {
-              oswald: ['Oswald', 'sans-serif'],
-              quicksand: ['Quicksand', 'sans-serif']
-          }
-      );
-  } else {
-      window.tailwind = window.tailwind || {};
-      window.tailwind.config = {
-          corePlugins: { preflight: false },
-          theme: {
-              extend: {
-                  colors: {
-                      navy: '#002795',
-                      yellow: '#FFD154',
-                      cream: '#FAF9F6',
-                      'text-dark': '#3D3D3D',
-                      'text-soft': '#555555'
-                  },
-                  fontFamily: {
-                      oswald: ['Oswald', 'sans-serif'],
-                      quicksand: ['Quicksand', 'sans-serif']
-                  }
-              }
-          }
-      };
-  }
-</script>
+
 
 <style>
     .sub-chk-body {

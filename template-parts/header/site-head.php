@@ -5,19 +5,6 @@
     <meta name="google-site-verification" content="Jae7HEZAmpvimQlqC_16GUHrVA_68FfoQS4fUYSqn1g" />
     <link rel="profile" href="https://gmpg.org/xfn/11">
     
-    <?php
-    $is_sub_checklist_page = defined('IS_SUB_CHECKLIST') || defined('IS_SUB_CHECKLIST_RESULT') || is_singular('hieucon_sub_chk') || (strpos($_SERVER['REQUEST_URI'], '/ket-qua-nhan-dien') !== false);
-    if ($is_sub_checklist_page): ?>
-    <script>
-      window.tailwind = {
-        config: {
-          corePlugins: {
-            preflight: false
-          }
-        }
-      };
-    </script>
-    <?php endif; ?>
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Thư viện Icon -->
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -52,9 +39,6 @@
 
     <script>
         tailwind.config = {
-            corePlugins: {
-                preflight: <?php echo $is_sub_checklist_page ? 'false' : 'true'; ?>
-            },
             theme: {
                 extend: {
                     fontFamily: {
