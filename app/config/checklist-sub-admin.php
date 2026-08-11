@@ -1254,13 +1254,13 @@ function hieucon_sub_public_checklist_result()
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M13 5l7 7-7 7M5 5l7 7-7 7" />
                                 </svg>
                                 <p class="font-bold text-sm md:text-base text-blue-900 m-0 leading-relaxed">
-                                    Thực hiện Bộ công cụ quan sát sức khỏe toàn diện 8 nhóm để nhìn bức tranh của con đầy đủ hơn.
+                                    Thực hiện Bộ công cụ nhận diện các vấn đề sức khỏe thường gặp ở trẻ tự kỷ để nhìn bức tranh của con đầy đủ hơn.
                                 </p>
                             </div>
                             
                             <!-- Bên phải: Button -->
                             <div class="shrink-0 w-full md:w-auto text-center md:text-right">
-                                <a href="/check-list-tong-quan-hanh-vi-cua-tre/"
+                                <a href="/bo-cong-cu-suc-khoe/"
                                     class="inline-flex items-center justify-center gap-2 bg-yellow hover:bg-yellow/95 text-slate-800 font-bold px-7 py-3 rounded-full shadow-lg transition-all text-sm no-underline w-full md:w-auto"
                                     style="background:#FFD154; color:#002795; white-space: nowrap;">
                                     <svg class="w-4.5 h-4.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" style="stroke: #002795;">
