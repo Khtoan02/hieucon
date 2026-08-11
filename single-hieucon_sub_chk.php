@@ -289,6 +289,7 @@ $groups = json_decode($questions_json, true) ?: [];
                         </div>
                     </div>
                 </div>
+            </div> <!-- Đóng thẻ div nội dung nhập liệu -->
         </form>
 
         <!-- THÔNG BÁO GỬI THÀNH CÔNG -->
