@@ -96,7 +96,7 @@ $groups = json_decode($questions_json, true) ?: [];
     }
 </style>
 
-<div class="sub-chk-body md:px-6">
+<div class="sub-chk-body py-12 px-4 md:px-6">
     <div class="mx-auto" style="max-width: 60rem; width: 100%;">
         <!-- FORM CONTAINER -->
         <form id="hieucon-sub-checklist-form" class="bg-white rounded-3xl shadow-xl border border-slate-100 overflow-hidden">

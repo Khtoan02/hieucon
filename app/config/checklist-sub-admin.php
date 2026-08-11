@@ -1173,11 +1173,6 @@ function hieucon_sub_public_checklist_result()
                         </a>
                     </div>
 
-                    <div class="text-xs text-slate-400 border-t pt-3 mt-4 border-slate-200"
-                        style="border-top-style: dashed;">
-                        * Các ngưỡng trên nên được hiểu là logic phân luồng trải nghiệm của Hiểu con từ Gốc, không phải
-                        ngưỡng chẩn đoán đã được chuẩn hóa.
-                    </div>
                 </div>
 
                 <!-- Chi tiết các biểu hiện đã tích chọn -->
