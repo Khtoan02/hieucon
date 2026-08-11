@@ -272,7 +272,7 @@ if (have_posts()):
         <div class="premium-doc-wrap pt-24 pb-20 md:pt-32 md:pb-28 relative">
             
             <!-- WATERMARK LOGO ẨN CHÌM TRÊN BACKGROUND -->
-            <div class="pointer-events-none fixed top-[400px] left-0 right-0 z-0 opacity-[0.5] flex justify-center">
+            <div class="pointer-events-none fixed top-[400px] left-0 right-0 z-0 opacity-[0.1] flex justify-center">
                 <img src="<?php echo esc_url(get_stylesheet_directory_uri() . '/assets/images/pattern-hieu-con.png'); ?>" alt="Hiểu Con Từ Gốc Logo Pattern" class="w-[500px] sm:w-[700px] md:w-[800px] h-auto object-contain">
             </div>
 
