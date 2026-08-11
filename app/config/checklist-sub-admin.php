@@ -916,6 +916,8 @@ function hieucon_sub_public_checklist_result()
     if (strpos($_SERVER['REQUEST_URI'], '/ket-qua-nhan-dien') !== 0 || !isset($_GET['code']) || !isset($_GET['checklist_id']))
         return;
 
+    define('IS_SUB_CHECKLIST_RESULT', true);
+
     $code = sanitize_text_field($_GET['code']);
     $checklist_id = intval($_GET['checklist_id']);
 

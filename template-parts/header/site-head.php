@@ -6,7 +6,7 @@
     <link rel="profile" href="https://gmpg.org/xfn/11">
     
     <?php
-    $is_sub_checklist_page = is_singular('hieucon_sub_chk') || (strpos($_SERVER['REQUEST_URI'], '/ket-qua-nhan-dien') !== false);
+    $is_sub_checklist_page = defined('IS_SUB_CHECKLIST') || defined('IS_SUB_CHECKLIST_RESULT') || is_singular('hieucon_sub_chk') || (strpos($_SERVER['REQUEST_URI'], '/ket-qua-nhan-dien') !== false);
     if ($is_sub_checklist_page): ?>
     <script>
       window.tailwind = {

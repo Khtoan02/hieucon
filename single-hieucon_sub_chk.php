@@ -3,6 +3,7 @@
  * Template Name: Single Sub-Checklist
  * Post Type: hieucon_sub_chk
  */
+define('IS_SUB_CHECKLIST', true);
 get_header();
 
 $checklist_id = get_the_ID();
