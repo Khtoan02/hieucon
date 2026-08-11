@@ -653,7 +653,7 @@ if (have_posts()):
 
                 <!-- CỘT 1: SIDEBAR / WIDGET (Đặt tuyệt đối bên ngoài container 1400px ở góc trái trên Desktop) -->
                 <aside
-                    class="w-full lg:absolute lg:right-full lg:top-0 lg:bottom-0 lg:mr-8 lg:w-[280px] xl:w-[300px] z-20 mt-8 lg:mt-0">
+                    class="hidden lg:block lg:absolute lg:right-full lg:top-0 lg:bottom-0 lg:mr-8 lg:w-[280px] xl:w-[300px] z-20">
                     <div class="lg:sticky lg:top-[100px] space-y-6">
 
                         <!-- Mục lục động (Nền trơn, không viền, không bóng) -->
@@ -681,8 +681,8 @@ if (have_posts()):
                             </p>
                             <a href="https://www.facebook.com/groups/tukylaroiloantoanthan" target="_blank"
                                 rel="noopener noreferrer"
-                                class="inline-flex items-center gap-2 bg-secondary hover:bg-secondary_dark text-white font-bold py-2.5 px-5 rounded-full text-xs transition-all w-full justify-center">
-                                Tham gia cộng đồng
+                                class="inline-flex items-center gap-2 bg-[#f89202] hover:bg-[#ea580c] text-white font-bold py-2.5 px-5 rounded-full text-xs transition-all w-full justify-center no-underline">
+                                Hiểu Con Từ Gốc
                                 <i data-lucide="arrow-right" class="w-4 h-4"></i>
                             </a>
                         </div>
@@ -691,6 +691,13 @@ if (have_posts()):
                 </aside>
             </div> <!-- Closes relative content wrapper -->
         </div> <!-- Closes max-w-[1400px] -->
+        
+        <!-- FLOATING BRAND BADGE (sticky in bottom right) -->
+        <a href="https://www.facebook.com/groups/tukylaroiloantoanthan" target="_blank" rel="noopener noreferrer" 
+           class="fixed bottom-6 right-6 z-50 inline-flex items-center gap-2 bg-[#f89202] hover:bg-[#ea580c] text-white font-bold py-3 px-5 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 text-xs tracking-wider uppercase no-underline">
+            <i data-lucide="users" class="w-4 h-4"></i>
+            Hiểu Con Từ Gốc
+        </a>
     </div> <!-- Closes premium-doc-wrap -->
         <?php
     endwhile;
