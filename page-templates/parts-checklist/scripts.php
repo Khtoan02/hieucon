@@ -22,8 +22,8 @@
       items: [
         { main: 'Trẻ chỉ chấp nhận một số rất ít món ăn quen thuộc?', example: 'Trẻ có xu hướng kén ăn, chỉ chấp nhận một danh mục thực phẩm rất hạn hẹp (ví dụ: chỉ ăn đồ chiên, chỉ ăn cơm trắng)?' },
         { main: 'Trẻ rất nhạy với mùi, màu, vị hoặc kết cấu thức ăn?', example: 'Trẻ cực kỳ nhạy cảm với kết cấu (mềm, nhão, giòn), màu sắc hoặc mùi vị của thức ăn, dễ dàng phát hiện ra sự thay đổi nhỏ trong món ăn?' },
-        { main: 'Trẻ hay ngậm lâu, không nhai nuốt, buồn nôn hoặc oẹ khi gặp món lạ?', example: 'Trẻ thường xuyên ngậm thức ăn rất lâu trong miệng không chịu nhai nuốt, hoặc có hành vi nôn trớ, oẹ khi ngửi/thấy thức ăn lạ?' },
-        { main: 'Chế độ ăn hạn hẹp khiến trẻ chậm tăng cân, sụt cân, mệt mỏi hoặc có dấu hiệu thiếu chất?', example: 'Chế độ ăn quá hạn hẹp (dưới 10 món) khiến trẻ có dấu hiệu thiếu chất (da xanh xao, móng tay có vệt trắng, hay mệt mỏi) hoặc sụt cân/chậm tăng cân?' },
+        { main: 'Trẻ hay ngậm lâu, không nhai, nhai nuốt kém, buồn nôn hoặc oẹ khi gặp món lạ?', example: 'Trẻ thường xuyên ngậm thức ăn rất lâu trong miệng không chịu nhai nuốt, hoặc có hành vi nôn trớ, oẹ khi ngửi/thấy thức ăn lạ?' },
+        { main: 'Chế độ ăn kém đa dạng khiến con chậm tăng cân, sụt cân, mệt mỏi hoặc có các dấu hiệu thiếu vi chất?', example: 'Chế độ ăn quá hạn hẹp (dưới 10 món) khiến trẻ có dấu hiệu thiếu chất (da xanh xao, móng tay có vệt trắng, hay mệt mỏi) hoặc sụt cân/chậm tăng cân?' },
         { main: 'Trẻ ăn/nhai vật không phải thức ăn hoặc bùng nổ dữ dội khi bị ép ăn?', example: 'Trẻ có hành vi ăn, nhai các vật không phải thực phẩm (như giấy, đất, cát, đồ nhựa - hội chứng Pica) hoặc bùng nổ dữ dội nếu bị ép ăn món không thích?' }
       ]
     },
@@ -33,7 +33,7 @@
       icon: '🌙',
       desc: 'Tình trạng giấc ngủ và nhịp sinh học của trẻ',
       items: [
-        { main: 'Trẻ thường mất hơn 60 phút mới ngủ được?', example: 'Trẻ thường xuyên mất hơn 60 phút trằn trọc mới có thể đi vào giấc ngủ?' },
+        { main: 'Trẻ khó vào giấc, trằn trọc, cần hơn 60 phút mới ngủ được?', example: 'Trẻ thường xuyên mất hơn 60 phút trằn trọc mới có thể đi vào giấc ngủ?' },
         { main: 'Trẻ phải có điều kiện đặc biệt mới ngủ, như ôm chặt, tiếng ồn trắng hoặc bật đèn?', example: 'Trẻ lệ thuộc hoàn toàn vào các hỗ trợ giác quan hoặc quy trình cứng nhắc để ngủ (phải ôm chặt, phải có tiếng ồn trắng, hoặc phải bật đèn)?' },
         { main: 'Trẻ thức giấc nhiều lần trong đêm và khó ngủ lại?', example: 'Trẻ hay thức giấc giữa đêm (từ 2 lần trở lên) và mất rất nhiều thời gian để dỗ ngủ lại?' },
         { main: 'Khi ngủ, trẻ nghiến răng, đổ mồ hôi nhiều hoặc cử động chân tay liên tục?', example: 'Khi ngủ, trẻ có các biểu hiện thực thể như nghiến răng ken két, đổ mồ hôi trộm đầm đìa hoặc chân tay cử động không ngừng?' },
@@ -47,10 +47,10 @@
       desc: 'Cách trẻ tiếp nhận và phản ứng với các kích thích từ môi trường',
       items: [
         { main: 'Trẻ sợ tiếng ồn, ánh sáng hoặc khó chịu với một số chất liệu quần áo?', example: 'Trẻ có biểu hiện quá nhạy cảm với các kích thích môi trường như: sợ tiếng ồn bình thường, khó chịu với ánh sáng đèn, hay từ chối mặc quần áo có chất liệu nhất định?' },
-        { main: 'Trẻ thích va chạm mạnh, nhìn vật xoay, ngửi đồ vật hoặc tìm cảm giác mạnh?', example: 'Trẻ có xu hướng tìm kiếm cảm giác mạnh như: thích va chạm mạnh vào người khác, nhìn chằm chằm vào vật xoay tròn, hoặc thích ngửi đồ vật/người lạ?' },
-        { main: 'Trẻ vụng về, hay vấp ngã, nhảy liên tục hoặc khó điều chỉnh lực tay?', example: 'Trẻ gặp khó khăn về thăng bằng và nhận thức cơ thể: thường xuyên vấp ngã, vụng về, nhảy lên xuống liên tục hoặc không biết điều chỉnh lực tay (quá mạnh hoặc quá nhẹ)?' },
+        { main: 'Trẻ thích cọ xát, nhìn vật xoay tròn, ngửi đồ vật hoặc tìm cảm giác mạnh (chạy, nhảy từ trên cao, thích chạm vào râu,...)', example: 'Trẻ có xu hướng tìm kiếm cảm giác mạnh như: thích va chạm mạnh vào người khác, nhìn chằm chằm vào vật xoay tròn, hoặc thích ngửi đồ vật/người lạ?' },
+        { main: 'Trẻ hay vấp ngã, mất thăng bằng, chạy nhảy liên tục, khó điều chỉnh lực tay, khó cầm nắm, khó viết,...?', example: 'Trẻ gặp khó khăn về thăng bằng và nhận thức cơ thể: thường xuyên vấp ngã, vụng về, nhảy lên xuống liên tục hoặc không biết điều chỉnh lực tay (quá mạnh hoặc quá nhẹ)?' },
         { main: 'Trẻ khó nhận biết đói, đau, buồn vệ sinh hoặc tín hiệu bên trong cơ thể?', example: 'Trẻ dường như không nhận biết được các tín hiệu nội tại của cơ thể: không cảm thấy đói, đau khi bị thương, hoặc gặp khó khăn lớn trong việc tập đi vệ sinh đúng lúc?' },
-        { main: 'Trẻ dễ bùng nổ hoặc đóng băng khi ở nơi quá đông, ồn hoặc nhiều kích thích?', example: 'Trẻ thường xuyên có các cơn bùng nổ (la hét, mất kiểm soát) hoặc đóng băng (im lặng, ngắt kết nối hoàn toàn) khi phải ở nơi có quá nhiều kích thích?' }
+        { main: 'Trẻ dễ bùng nổ, khó kiểm soát hành vi và cảm xúc nơi đông người, nhiều âm thanh hoặc nhiều kích thích?', example: 'Trẻ thường xuyên có các cơn bùng nổ (la hét, mất kiểm soát) hoặc đóng băng (im lặng, ngắt kết nối hoàn toàn) khi phải ở nơi có quá nhiều kích thích?' }
       ]
     },
     {
@@ -59,7 +59,7 @@
       icon: '⚡',
       desc: 'Mức độ hoạt động, khả năng tập trung và tự kiểm soát của trẻ',
       items: [
-        { main: 'Trẻ thường không phản hồi khi được gọi hoặc khó theo hướng dẫn?', example: 'Trẻ dường như không nghe thấy khi được gọi tên hoặc không để ý đến hướng dẫn của người lớn vì đang bị thu hút quá mức bởi một chi tiết nhỏ?' },
+        { main: 'Trẻ thường không phản hồi khi được gọi, khó làm theo các hướng dẫn?', example: 'Trẻ dường như không nghe thấy khi được gọi tên hoặc không để ý đến hướng dẫn của người lớn vì đang bị thu hút quá mức bởi một chi tiết nhỏ?' },
         { main: 'Trẻ rất khó chuyển hoạt động, dễ khựng lại hoặc bùng nổ khi bị yêu cầu dừng việc đang thích?', example: 'Trẻ có thể cực kỳ tập trung vào thứ mình thích nhưng lại "khựng lại" hoặc bùng nổ khi được yêu cầu chuyển sang một hoạt động khác (như đi tắm, đi ăn)?' },
         { main: 'Trẻ luôn bồn chồn, di chuyển, nhún nhảy hoặc táy máy tay chân?', example: 'Trẻ có biểu hiện bồn chồn, luôn phải di chuyển, nhún nhảy hoặc táy máy tay chân ngay cả khi cơ thể đã mệt mỏi hoặc trong môi trường cần sự yên tĩnh?' },
         { main: 'Trẻ hay lao đi, leo trèo, nhảy từ cao hoặc làm việc nguy hiểm mà chưa kịp cân nhắc?', example: 'Trẻ thường lao đi hoặc thực hiện các hành động nguy hiểm (nhảy từ trên cao, lao ra đường) mà dường như không có sự cân nhắc hay nhận thức được hậu quả ngay lúc đó?' },
@@ -72,8 +72,8 @@
       icon: '🤝',
       desc: 'Khả năng điều tiết cảm xúc, lo âu và các phản ứng khi khủng hoảng',
       items: [
-        { main: 'Trẻ có thay đổi cảm xúc thất thường mà không rõ nguyên nhân?', example: 'Trẻ có những cơn vui buồn thất thường mà không có lý do ngoại cảnh rõ ràng (ví dụ: đang chơi bình thường bỗng khóc thét hoặc cười ngặt nghẽo)?' },
-        { main: 'Trẻ rất căng thẳng hoặc bùng nổ khi lịch trình thay đổi?', example: 'Trẻ cực kỳ căng thẳng, lo âu hoặc bùng nổ nếu lịch trình sinh hoạt bị thay đổi nhỏ, hoặc gặp khó khăn lớn khi phải dừng việc đang làm để chuyển sang việc khác?' },
+        { main: 'Trẻ có thay đổi cảm xúc thất thường (dễ khóc, dễ cười) mà không rõ nguyên nhân?', example: 'Trẻ có những cơn vui buồn thất thường mà không có lý do ngoại cảnh rõ ràng (ví dụ: đang chơi bình thường bỗng khóc thét hoặc cười ngặt nghẽo)?' },
+        { main: 'Trẻ căng thẳng, bùng nổ khi lịch trình thay đổi, không được đáp ứng nguyện vọng?', example: 'Trẻ cực kỳ căng thẳng, lo âu hoặc bùng nổ nếu lịch trình sinh hoạt bị thay đổi nhỏ, hoặc gặp khó khăn lớn khi phải dừng việc đang làm để chuyển sang việc khác?' },
         { main: 'Hành vi lặp lại tăng mạnh khi trẻ lo lắng hoặc áp lực?', example: 'Trẻ thực hiện các hành vi lặp đi lặp lại (như vẫy tay, xoay đồ vật, lặp lại lời nói) với cường độ cao hơn hẳn mỗi khi gặp áp lực hoặc lo lắng?' },
         { main: 'Trẻ thường la hét, khóc kéo dài và rất khó dỗ?', example: 'Trẻ thường xuyên có những cơn la hét, khóc lóc dữ dội kéo dài (trên 15-30 phút) mà mọi nỗ lực dỗ dành hay đe dọa của người lớn đều không có tác dụng?' },
         { main: 'Khi khủng hoảng, trẻ tự làm đau hoặc tấn công người khác?', example: 'Khi gặp khủng hoảng, trẻ có hành vi tự làm đau (đập đầu, cắn tay mình) hoặc tấn công người khác (cắn, cào cấu, ném đồ vật)?' }
@@ -85,7 +85,7 @@
       icon: '🛡️',
       desc: 'Tình trạng đề kháng, phản ứng viêm và các nhạy cảm thể chất',
       items: [
-        { main: 'Trẻ hay hắt hơi, sổ mũi, dụi mắt/mũi, mẩn đỏ hoặc ngứa da?', example: 'Trẻ thường xuyên có các biểu hiện dị ứng như: hay hắt hơi, sổ mũi khi thời tiết thay đổi, dụi mắt/mũi liên tục, hoặc da dễ bị mẩn đỏ, ngứa ngáy, viêm da cơ địa?' },
+        { main: 'Trẻ hay hắt hơi, sổ mũi, dụi mắt/mũi, mẩn đỏ, ngứa da, có quầng thâm ở mắt?', example: 'Trẻ thường xuyên có các biểu hiện dị ứng như: hay hắt hơi, sổ mũi khi thời tiết thay đổi, dụi mắt/mũi liên tục, hoặc da dễ bị mẩn đỏ, ngứa ngáy, viêm da cơ địa?' },
         { main: 'Trẻ có biểu hiện lạ sau khi ăn một số thực phẩm hoặc tiếp xúc mùi hóa chất?', example: 'Trẻ có biểu hiện lạ sau khi ăn thực phẩm nhất định (sữa, bột mì, đồ ngọt) hoặc ngửi mùi hóa chất như: đỏ tai, đỏ má, quầng thâm mắt đậm lên hoặc đột ngột kích động?' },
         { main: 'Trẻ hay bị viêm tai, viêm họng, viêm amidan hoặc sưng nướu lặp lại?', example: 'Trẻ thường xuyên bị các đợt viêm nhiễm lặp đi lặp lại như: viêm tai giữa, viêm họng, viêm amidan hoặc sưng nướu răng mãn tính?' },
         { main: 'Trẻ dễ ốm, lâu khỏi và sau ốm thường mệt mỏi kéo dài?', example: 'Trẻ rất dễ bị lây bệnh từ người khác (đề kháng kém), mỗi đợt ốm thường kéo dài lâu khỏi hơn bình thường và sau khi khỏi, trẻ vẫn bị sụt giảm năng lượng, mệt mỏi kéo dài?' },
@@ -127,6 +127,7 @@
         highlighted: new Set(),
         location: 'Đang lấy...',
         ip: '',
+        referrer: '',
         utms: {},
         drop_point: 'Chưa bắt đầu',
         lastFocus: Date.now()
@@ -138,11 +139,21 @@
       this.initUTM();
       this.initDeepTracking();
 
+      // Sinh mã hồ sơ khi tải trang để ghi nhận lượt truy cập
+      if (!this.state.userCode) {
+        this.state.userCode = Math.floor(10000000 + Math.random() * 90000000).toString();
+      }
+
       // Khởi trị các module con
       ModuleChildInfo.init(this);
       ModuleSurvey.init(this);
       ModuleParentInfo.init(this);
       ModuleSuccess.init(this);
+
+      // Gửi tín hiệu khởi tạo ngay sau 1.5 giây để cập nhật Live Visitors
+      setTimeout(() => {
+        this.pingServerDropOff();
+      }, 1500);
     },
 
     initUTM() {
@@ -155,6 +166,9 @@
     },
 
     initDeepTracking() {
+      // Ghi nhận nguồn referrer
+      this.state.deepTracker.referrer = document.referrer || '';
+
       // Lấy IP & Vị trí
       fetch('https://api.db-ip.com/v2/free/self')
         .then(res => res.json())

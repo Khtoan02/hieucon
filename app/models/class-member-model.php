@@ -21,6 +21,13 @@ class Member_Model {
         return $wpdb->get_row( $query );
     }
 
+    public static function get_by_phone( $phone ) {
+        global $wpdb;
+        $table = self::get_table_name();
+        $query = $wpdb->prepare( "SELECT * FROM $table WHERE phone_number = %s LIMIT 1", $phone );
+        return $wpdb->get_row( $query );
+    }
+
     public static function get_by_id( $id ) {
         global $wpdb;
         $table = self::get_table_name();
@@ -35,17 +42,23 @@ class Member_Model {
         $inserted = $wpdb->insert(
             $table,
             [
-                'email'         => sanitize_email( $data['email'] ),
-                'password_hash' => password_hash( $data['password'], PASSWORD_BCRYPT ),
-                'full_name'     => sanitize_text_field( $data['full_name'] ),
-                'date_of_birth' => ! empty( $data['date_of_birth'] ) ? sanitize_text_field( $data['date_of_birth'] ) : null,
-                'phone_number'  => ! empty( $data['phone_number'] ) ? sanitize_text_field( $data['phone_number'] ) : null,
-                'role'          => ! empty( $data['role'] ) ? sanitize_text_field( $data['role'] ) : 'user',
-                'status'        => 'active',
-                'created_at'    => current_time( 'mysql' ),
-                'updated_at'    => current_time( 'mysql' )
+                'email'                   => sanitize_email( $data['email'] ),
+                'password_hash'           => ! empty( $data['password'] ) ? password_hash( $data['password'], PASSWORD_BCRYPT ) : '',
+                'full_name'               => sanitize_text_field( $data['full_name'] ),
+                'date_of_birth'           => ! empty( $data['date_of_birth'] ) ? sanitize_text_field( $data['date_of_birth'] ) : null,
+                'phone_number'            => ! empty( $data['phone_number'] ) ? sanitize_text_field( $data['phone_number'] ) : null,
+                'role'                    => ! empty( $data['role'] ) ? sanitize_text_field( $data['role'] ) : 'user',
+                'status'                  => ! empty( $data['status'] ) ? sanitize_text_field( $data['status'] ) : 'active',
+                'child_name'              => ! empty( $data['child_name'] ) ? sanitize_text_field( $data['child_name'] ) : null,
+                'child_dob'               => ! empty( $data['child_dob'] ) ? sanitize_text_field( $data['child_dob'] ) : null,
+                'child_gender'            => ! empty( $data['child_gender'] ) ? sanitize_text_field( $data['child_gender'] ) : null,
+                'child_diagnosis'         => ! empty( $data['child_diagnosis'] ) ? sanitize_text_field( $data['child_diagnosis'] ) : null,
+                'participated_checklists' => ! empty( $data['participated_checklists'] ) ? sanitize_text_field( $data['participated_checklists'] ) : null,
+                'has_password'            => isset( $data['has_password'] ) ? intval( $data['has_password'] ) : 1,
+                'created_at'              => current_time( 'mysql' ),
+                'updated_at'              => current_time( 'mysql' )
             ],
-            [ '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s' ]
+            [ '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%d', '%s', '%s' ]
         );
 
         if ( $inserted ) {
@@ -81,9 +94,33 @@ class Member_Model {
             $update_data['status'] = sanitize_text_field( $data['status'] );
             $format[] = '%s';
         }
-        if ( ! empty( $data['password'] ) ) {
-            $update_data['password_hash'] = password_hash( $data['password'], PASSWORD_BCRYPT );
+        if ( isset( $data['password'] ) ) {
+            $update_data['password_hash'] = ! empty( $data['password'] ) ? password_hash( $data['password'], PASSWORD_BCRYPT ) : '';
             $format[] = '%s';
+        }
+        if ( isset( $data['child_name'] ) ) {
+            $update_data['child_name'] = sanitize_text_field( $data['child_name'] );
+            $format[] = '%s';
+        }
+        if ( isset( $data['child_dob'] ) ) {
+            $update_data['child_dob'] = sanitize_text_field( $data['child_dob'] );
+            $format[] = '%s';
+        }
+        if ( isset( $data['child_gender'] ) ) {
+            $update_data['child_gender'] = sanitize_text_field( $data['child_gender'] );
+            $format[] = '%s';
+        }
+        if ( isset( $data['child_diagnosis'] ) ) {
+            $update_data['child_diagnosis'] = sanitize_text_field( $data['child_diagnosis'] );
+            $format[] = '%s';
+        }
+        if ( isset( $data['participated_checklists'] ) ) {
+            $update_data['participated_checklists'] = sanitize_text_field( $data['participated_checklists'] );
+            $format[] = '%s';
+        }
+        if ( isset( $data['has_password'] ) ) {
+            $update_data['has_password'] = intval( $data['has_password'] );
+            $format[] = '%d';
         }
 
         if ( empty( $update_data ) ) {
@@ -313,6 +350,80 @@ class Member_Model {
             is_ssl(),
             true
         );
+    }
+
+    public static function sync_survey($parent_name, $parent_phone, $parent_email, $child_name, $child_age, $child_gender, $child_diagnosis, $checklist_title) {
+        if (empty($parent_phone)) {
+            return false;
+        }
+
+        // Tìm theo SĐT
+        $member = self::get_by_phone($parent_phone);
+        
+        if ($member) {
+            // Đã tồn tại hội viên
+            $checklists_array = [];
+            if (!empty($member->participated_checklists)) {
+                $checklists_array = json_decode($member->participated_checklists, true) ?: [];
+            }
+            if (!in_array($checklist_title, $checklists_array)) {
+                $checklists_array[] = $checklist_title;
+            }
+
+            self::update($member->id, [
+                'full_name' => $parent_name,
+                'email' => !empty($parent_email) ? $parent_email : $member->email,
+                'child_name' => $child_name,
+                'child_dob' => $child_age,
+                'child_gender' => $child_gender,
+                'child_diagnosis' => $child_diagnosis,
+                'participated_checklists' => json_encode($checklists_array, JSON_UNESCAPED_UNICODE)
+            ]);
+            return $member->id;
+        } else {
+            // Chưa có hội viên
+            // Tạo email ngẫu nhiên nếu không có email
+            $member_email = !empty($parent_email) ? $parent_email : "{$parent_phone}@hieucon.vn";
+            
+            // Đề phòng email bị trùng (nếu SĐT khác nhưng dùng chung email)
+            $existing_by_email = self::get_by_email($member_email);
+            if ($existing_by_email) {
+                // Nếu trùng email nhưng khác SĐT, ta cập nhật SĐT của họ
+                $checklists_array = [];
+                if (!empty($existing_by_email->participated_checklists)) {
+                    $checklists_array = json_decode($existing_by_email->participated_checklists, true) ?: [];
+                }
+                if (!in_array($checklist_title, $checklists_array)) {
+                    $checklists_array[] = $checklist_title;
+                }
+
+                self::update($existing_by_email->id, [
+                    'full_name' => $parent_name,
+                    'phone_number' => $parent_phone,
+                    'child_name' => $child_name,
+                    'child_dob' => $child_age,
+                    'child_gender' => $child_gender,
+                    'child_diagnosis' => $child_diagnosis,
+                    'participated_checklists' => json_encode($checklists_array, JSON_UNESCAPED_UNICODE)
+                ]);
+                return $existing_by_email->id;
+            } else {
+                // Tạo mới hoàn toàn
+                $checklists_array = [$checklist_title];
+                return self::create([
+                    'email' => $member_email,
+                    'password' => '', // Mật khẩu trống
+                    'full_name' => $parent_name,
+                    'phone_number' => $parent_phone,
+                    'child_name' => $child_name,
+                    'child_dob' => $child_age,
+                    'child_gender' => $child_gender,
+                    'child_diagnosis' => $child_diagnosis,
+                    'participated_checklists' => json_encode($checklists_array, JSON_UNESCAPED_UNICODE),
+                    'has_password' => 0 // Đánh dấu chưa tạo mật khẩu
+                ]);
+            }
+        }
     }
 
     public static function get_client_ip() {

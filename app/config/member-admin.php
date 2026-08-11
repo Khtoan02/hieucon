@@ -218,13 +218,18 @@ function hieucon_members_page_html() {
     
     // A. Xử lý Thêm / Chỉnh sửa Hội viên
     if ( isset( $_POST['hieucon_member_submit'] ) && check_admin_referer( 'hieucon_member_nonce' ) ) {
-        $email         = sanitize_email( $_POST['email'] );
-        $full_name     = sanitize_text_field( $_POST['full_name'] );
-        $phone_number  = sanitize_text_field( $_POST['phone_number'] );
-        $date_of_birth = sanitize_text_field( $_POST['date_of_birth'] );
-        $role          = sanitize_text_field( $_POST['role'] );
-        $status        = sanitize_text_field( $_POST['status'] );
-        $password      = $_POST['password'];
+        $email           = sanitize_email( $_POST['email'] );
+        $full_name       = sanitize_text_field( $_POST['full_name'] );
+        $phone_number    = sanitize_text_field( $_POST['phone_number'] );
+        $date_of_birth   = sanitize_text_field( $_POST['date_of_birth'] );
+        $role            = sanitize_text_field( $_POST['role'] );
+        $status          = sanitize_text_field( $_POST['status'] );
+        $password        = $_POST['password'];
+        $child_name      = sanitize_text_field( $_POST['child_name'] );
+        $child_dob       = sanitize_text_field( $_POST['child_dob'] );
+        $child_gender    = sanitize_text_field( $_POST['child_gender'] );
+        $child_diagnosis = sanitize_text_field( $_POST['child_diagnosis'] );
+        $has_password    = isset( $_POST['has_password'] ) ? intval( $_POST['has_password'] ) : 1;
 
         if ( empty( $email ) || empty( $full_name ) ) {
             echo '<div class="notice notice-error"><p><strong>Vui lòng điền Email và Họ tên bắt buộc.</strong></p></div>';
@@ -232,11 +237,16 @@ function hieucon_members_page_html() {
             if ( $id > 0 ) {
                 // Sửa hội viên
                 $update_data = [
-                    'full_name'     => $full_name,
-                    'phone_number'  => $phone_number,
-                    'date_of_birth' => $date_of_birth,
-                    'role'          => $role,
-                    'status'        => $status,
+                    'full_name'       => $full_name,
+                    'phone_number'    => $phone_number,
+                    'date_of_birth'   => $date_of_birth,
+                    'role'            => $role,
+                    'status'          => $status,
+                    'child_name'      => $child_name,
+                    'child_dob'       => $child_dob,
+                    'child_gender'    => $child_gender,
+                    'child_diagnosis' => $child_diagnosis,
+                    'has_password'    => $has_password,
                 ];
                 if ( ! empty( $password ) ) {
                     $update_data['password'] = $password;
@@ -255,12 +265,17 @@ function hieucon_members_page_html() {
                     echo '<div class="notice notice-error"><p><strong>Email này đã tồn tại trên hệ thống.</strong></p></div>';
                 } else {
                     $new_id = \Hieucon\Model\Member_Model::create( [
-                        'email'         => $email,
-                        'password'      => $password,
-                        'full_name'     => $full_name,
-                        'phone_number'  => $phone_number,
-                        'date_of_birth' => $date_of_birth,
-                        'role'          => $role
+                        'email'           => $email,
+                        'password'        => $password,
+                        'full_name'       => $full_name,
+                        'phone_number'    => $phone_number,
+                        'date_of_birth'   => $date_of_birth,
+                        'role'            => $role,
+                        'child_name'      => $child_name,
+                        'child_dob'       => $child_dob,
+                        'child_gender'    => $child_gender,
+                        'child_diagnosis' => $child_diagnosis,
+                        'has_password'    => $has_password,
                     ] );
                     if ( $new_id ) {
                         echo '<div class="notice notice-success"><p><strong>Thêm hội viên mới thành công!</strong> Mật khẩu mặc định: ' . esc_html( $password ) . '</p></div>';
@@ -359,6 +374,66 @@ function hieucon_members_page_html() {
                             </td>
                         </tr>
                     <?php endif; ?>
+                    
+                    <tr style="border-top: 1px solid #eee;"><th colspan="2" style="padding-top:20px; padding-bottom:5px;"><h3 style="margin:0;">Thông tin của Con (CRM)</h3></th></tr>
+                    <tr>
+                        <th scope="row"><label for="child_name">Họ và Tên con</label></th>
+                        <td>
+                            <input type="text" name="child_name" id="child_name" value="<?php echo $member ? esc_attr( $member->child_name ) : ''; ?>" class="regular-text" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row"><label for="child_dob">Ngày sinh con</label></th>
+                        <td>
+                            <input type="text" name="child_dob" id="child_dob" value="<?php echo $member ? esc_attr( $member->child_dob ) : ''; ?>" class="regular-text" placeholder="DD/MM/YYYY" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row"><label for="child_gender">Giới tính con</label></th>
+                        <td>
+                            <select name="child_gender" id="child_gender">
+                                <option value="">-- Chọn giới tính --</option>
+                                <option value="Bé Trai" <?php selected( $member ? $member->child_gender : '', 'Bé Trai' ); ?>>Bé Trai</option>
+                                <option value="Bé Gái" <?php selected( $member ? $member->child_gender : '', 'Bé Gái' ); ?>>Bé Gái</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row"><label for="child_diagnosis">Chẩn đoán / Mô tả thêm</label></th>
+                        <td>
+                            <input type="text" name="child_diagnosis" id="child_diagnosis" value="<?php echo $member ? esc_attr( $member->child_diagnosis ) : ''; ?>" class="regular-text" placeholder="Ví dụ: Tăng động, kén ăn..." />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row"><label for="has_password">Trạng thái tài khoản</label></th>
+                        <td>
+                            <select name="has_password" id="has_password">
+                                <option value="1" <?php selected( $member ? $member->has_password : 1, 1 ); ?>>Đã thiết lập mật khẩu</option>
+                                <option value="0" <?php selected( $member ? $member->has_password : 1, 0 ); ?>>Chưa thiết lập mật khẩu (Tạo tự động từ khảo sát)</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <?php if ( $member && ! empty( $member->participated_checklists ) ) : ?>
+                    <tr>
+                        <th scope="row">Checklist đã làm</th>
+                        <td>
+                            <div style="max-height: 120px; overflow-y: auto; background: #f9f9f9; padding: 10px; border: 1px solid #ddd; border-radius: 4px; max-width: 350px;">
+                                <?php 
+                                $chks = json_decode($member->participated_checklists, true) ?: [];
+                                if ( ! empty($chks) ) {
+                                    echo '<ul style="margin:0; padding-left:15px; list-style-type:disc;">';
+                                    foreach ($chks as $chk) {
+                                        echo '<li>' . esc_html($chk) . '</li>';
+                                    }
+                                    echo '</ul>';
+                                } else {
+                                    echo '—';
+                                }
+                                ?>
+                            </div>
+                        </td>
+                    </tr>
+                    <?php endif; ?>
                 </table>
                 <?php submit_button( $member ? 'Lưu thay đổi' : 'Thêm hội viên mới', 'primary', 'hieucon_member_submit' ); ?>
             </form>
@@ -440,12 +515,13 @@ function hieucon_members_page_html() {
             <thead>
                 <tr>
                     <th scope="col" style="width: 50px;">ID</th>
-                    <th scope="col">Họ và Tên</th>
+                    <th scope="col">Họ và Tên phụ huynh</th>
                     <th scope="col">Email</th>
                     <th scope="col">Số Điện Thoại</th>
-                    <th scope="col">Ngày Sinh</th>
+                    <th scope="col">Thông tin Con (CRM)</th>
+                    <th scope="col">Checklist tham gia</th>
                     <th scope="col">Vai Trò</th>
-                    <th scope="col">Trạng Thái</th>
+                    <th scope="col">Trạng Thái / Mật khẩu</th>
                     <th scope="col">Ngày Tham Gia</th>
                     <th scope="col" style="text-align: right; width: 220px;">Hành Động</th>
                 </tr>
@@ -456,9 +532,36 @@ function hieucon_members_page_html() {
                         <tr>
                             <td><?php echo intval( $m->id ); ?></td>
                             <td><strong><?php echo esc_html( $m->full_name ); ?></strong></td>
-                            <td><?php echo esc_html( $m->email ); ?></td>
+                            <td><?php echo esc_html( (strpos($m->email, '@hieucon.vn') !== false) ? '—' : $m->email ); ?></td>
                             <td><?php echo esc_html( $m->phone_number ? $m->phone_number : '—' ); ?></td>
-                            <td><?php echo esc_html( $m->date_of_birth ? date('d/m/Y', strtotime($m->date_of_birth)) : '—' ); ?></td>
+                            <td>
+                                <?php if ( $m->child_name ) : ?>
+                                    <div style="font-size:12px; line-height:1.4;">
+                                        <strong>Tên con:</strong> <?php echo esc_html( $m->child_name ); ?><br>
+                                        <strong>Sinh:</strong> <?php echo esc_html( $m->child_dob ? $m->child_dob : '—' ); ?> 
+                                        <?php if($m->child_gender) echo ' (' . esc_html($m->child_gender) . ')'; ?><br>
+                                        <?php if($m->child_diagnosis) : ?>
+                                            <strong>Mô tả:</strong> <span class="description" style="font-style:italic;"><?php echo esc_html($m->child_diagnosis); ?></span>
+                                        <?php endif; ?>
+                                    </div>
+                                <?php else : ?>
+                                    <span style="color:#aaa;">—</span>
+                                <?php endif; ?>
+                            </td>
+                            <td>
+                                <?php 
+                                $chks = json_decode($m->participated_checklists, true) ?: [];
+                                if ( ! empty($chks) ) {
+                                    echo '<div style="font-size:11px; max-height: 80px; overflow-y:auto; line-height: 1.3;">';
+                                    foreach ($chks as $chk) {
+                                        echo '<span style="background:#eaeaea; color:#333; padding:2px 5px; border-radius:3px; display:inline-block; margin-bottom:3px; margin-right:3px;">' . esc_html($chk) . '</span>';
+                                    }
+                                    echo '</div>';
+                                } else {
+                                    echo '<span style="color:#aaa;">—</span>';
+                                }
+                                ?>
+                            </td>
                             <td>
                                 <?php
                                 if ( $m->role === 'expert' ) {
@@ -471,11 +574,19 @@ function hieucon_members_page_html() {
                                 ?>
                             </td>
                             <td>
-                                <?php if ( $m->status === 'active' ) : ?>
-                                    <span style="color: #22c55e; font-weight: bold;">● Đang hoạt động</span>
-                                <?php else : ?>
-                                    <span style="color: #ef4444; font-weight: bold;">● Đang bị khóa</span>
-                                <?php endif; ?>
+                                <div style="font-size:12px; line-height:1.5;">
+                                    <?php if ( $m->status === 'active' ) : ?>
+                                        <span style="color: #22c55e; font-weight: bold;">● Hoạt động</span>
+                                    <?php else : ?>
+                                        <span style="color: #ef4444; font-weight: bold;">● Khóa</span>
+                                    <?php endif; ?><br>
+                                    
+                                    <?php if ( intval($m->has_password) === 1 ) : ?>
+                                        <span style="color: #3b82f6; font-size: 11px;">🔒 Đã lập MK</span>
+                                    <?php else : ?>
+                                        <span style="color: #f59e0b; font-size: 11px;">🔓 Chưa lập MK</span>
+                                    <?php endif; ?>
+                                </div>
                             </td>
                             <td><?php echo date( 'H:i d/m/Y', strtotime( $m->created_at ) ); ?></td>
                             <td style="text-align: right;">
@@ -489,7 +600,7 @@ function hieucon_members_page_html() {
                     <?php endforeach; ?>
                 <?php else : ?>
                     <tr>
-                        <td colspan="9" style="text-align: center; padding: 20px 0;">Không tìm thấy hội viên nào khớp với bộ lọc.</td>
+                        <td colspan="10" style="text-align: center; padding: 20px 0;">Không tìm thấy hội viên nào khớp với bộ lọc.</td>
                     </tr>
                 <?php endif; ?>
             </tbody>
