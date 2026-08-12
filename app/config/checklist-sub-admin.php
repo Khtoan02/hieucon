@@ -179,6 +179,34 @@ function hieucon_sub_checklist_questions_metabox_html($post)
         <p class="description" style="margin-bottom:15px; font-style:italic; font-size: 13px;">Thiết kế danh sách câu hỏi và mô tả giải thích cho Checklist này.
             Dữ liệu sẽ tự động được lưu trữ dưới dạng JSON khi cập nhật bài viết.</p>
 
+        <div class="checklist-json-importer">
+            <div class="checklist-json-importer-header">
+                <div>
+                    <strong>Nhập nhanh danh sách câu hỏi bằng JSON</strong>
+                    <p class="description">Dán JSON và bấm <strong>Áp dụng JSON</strong>. Hãy kiểm tra danh sách bên dưới trước khi bấm Cập nhật bài viết.</p>
+                </div>
+                <button type="button" class="button" id="btn-load-current-json">Lấy JSON hiện tại</button>
+            </div>
+
+            <textarea id="questions-json-import" rows="12" spellcheck="false"
+                placeholder='[
+  {
+    "main": "Câu hỏi hiển thị?",
+    "exp": "Giải thích dễ hiểu cho ba mẹ.",
+    "mechanism": "Thông tin chuyên môn hoặc cơ chế.",
+    "guide": "Hướng dẫn ba mẹ theo dõi.",
+    "warning": "Dấu hiệu cần đi khám."
+  }
+]'></textarea>
+
+            <div class="checklist-json-actions">
+                <button type="button" class="button button-primary" id="btn-apply-json">Áp dụng JSON</button>
+                <button type="button" class="button" id="btn-format-json">Định dạng JSON</button>
+                <button type="button" class="button" id="btn-json-example">Chèn JSON mẫu</button>
+                <span id="questions-json-status" role="status" aria-live="polite"></span>
+            </div>
+        </div>
+
         <div id="questions-container"></div>
 
         <button type="button" class="button button-primary" id="btn-add-question"
@@ -211,6 +239,61 @@ function hieucon_sub_checklist_questions_metabox_html($post)
             box-shadow: 0 0 0 1px #2271b1;
             outline: 2px solid transparent;
         }
+        .checklist-json-importer {
+            margin-bottom: 20px;
+            padding: 16px;
+            background: #fff;
+            border: 1px solid #c3c4c7;
+            border-left: 4px solid #2271b1;
+            border-radius: 6px;
+        }
+        .checklist-json-importer-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 16px;
+            margin-bottom: 10px;
+        }
+        .checklist-json-importer-header .description {
+            margin: 4px 0 0;
+        }
+        #questions-json-import {
+            display: block;
+            width: 100%;
+            min-height: 220px;
+            padding: 12px;
+            border: 1px solid #8c8f94;
+            border-radius: 4px;
+            background: #f8fafc;
+            color: #1e293b;
+            font-family: Consolas, Monaco, monospace;
+            font-size: 12px;
+            line-height: 1.55;
+            tab-size: 2;
+        }
+        #questions-json-import:focus {
+            border-color: #2271b1;
+            box-shadow: 0 0 0 1px #2271b1;
+            outline: 2px solid transparent;
+        }
+        .checklist-json-actions {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 10px;
+        }
+        #questions-json-status {
+            font-weight: 600;
+            font-size: 13px;
+        }
+        #questions-json-status.is-success { color: #008a20; }
+        #questions-json-status.is-error { color: #b32d2e; }
+        @media (max-width: 782px) {
+            .checklist-json-importer-header {
+                flex-direction: column;
+            }
+        }
     </style>
 
     <!-- Script điều khiển Builder -->
@@ -219,6 +302,12 @@ function hieucon_sub_checklist_questions_metabox_html($post)
             const inputData = document.getElementById('questions-data-input');
             const container = document.getElementById('questions-container');
             const btnAddQuestion = document.getElementById('btn-add-question');
+            const jsonInput = document.getElementById('questions-json-import');
+            const jsonStatus = document.getElementById('questions-json-status');
+            const btnApplyJson = document.getElementById('btn-apply-json');
+            const btnFormatJson = document.getElementById('btn-format-json');
+            const btnJsonExample = document.getElementById('btn-json-example');
+            const btnLoadCurrentJson = document.getElementById('btn-load-current-json');
 
             // Đọc dữ liệu từ DB
             let rawData = [];
@@ -240,6 +329,85 @@ function hieucon_sub_checklist_questions_metabox_html($post)
             } else if (Array.isArray(rawData)) {
                 // Đề phòng trường hợp trước đó đã lưu dạng phẳng hoặc lỗi
                 items = rawData;
+            }
+
+            const exampleItems = [
+                {
+                    main: 'Câu hỏi hiển thị?',
+                    exp: 'Giải thích ngắn gọn, dễ hiểu cho ba mẹ.',
+                    mechanism: 'Thông tin chuyên môn hoặc cơ chế liên quan.',
+                    guide: 'Hướng dẫn ba mẹ quan sát và theo dõi.',
+                    warning: 'Dấu hiệu cần trao đổi với bác sĩ hoặc đi khám.'
+                }
+            ];
+
+            function setJsonStatus(message, type) {
+                jsonStatus.textContent = message || '';
+                jsonStatus.className = type ? `is-${type}` : '';
+            }
+
+            function normalizeItem(item, index) {
+                if (!item || typeof item !== 'object' || Array.isArray(item)) {
+                    throw new Error(`Câu hỏi số ${index + 1} phải là một object JSON.`);
+                }
+
+                const normalized = {
+                    main: String(item.main || item.question || item.title || '').trim(),
+                    example: String(item.example || '').trim(),
+                    exp: String(item.exp || item.explanation || '').trim(),
+                    mechanism: String(item.mechanism || '').trim(),
+                    guide: String(item.guide || item.guidance || '').trim(),
+                    warning: String(item.warning || '').trim()
+                };
+
+                if (!normalized.main) {
+                    throw new Error(`Câu hỏi số ${index + 1} thiếu trường "main".`);
+                }
+
+                return normalized;
+            }
+
+            function extractItemsFromJson(parsed) {
+                if (parsed && !Array.isArray(parsed) && Array.isArray(parsed.items)) {
+                    return parsed.items;
+                }
+
+                if (!Array.isArray(parsed)) {
+                    throw new Error('JSON phải là một mảng câu hỏi hoặc object có trường "items".');
+                }
+
+                const hasGroups = parsed.some(entry => entry && typeof entry === 'object' && Array.isArray(entry.items));
+                if (hasGroups) {
+                    return parsed.reduce((allItems, group) => {
+                        if (group && Array.isArray(group.items)) {
+                            return allItems.concat(group.items);
+                        }
+                        return allItems;
+                    }, []);
+                }
+
+                return parsed;
+            }
+
+            function parseJsonInput() {
+                const source = jsonInput.value.trim();
+                if (!source) {
+                    throw new Error('Vui lòng dán JSON vào ô nhập.');
+                }
+
+                let parsed;
+                try {
+                    parsed = JSON.parse(source);
+                } catch (error) {
+                    throw new Error(`JSON không hợp lệ: ${error.message}`);
+                }
+
+                const extractedItems = extractItemsFromJson(parsed);
+                if (extractedItems.length === 0) {
+                    throw new Error('JSON không có câu hỏi nào.');
+                }
+
+                return extractedItems.map(normalizeItem);
             }
 
             // Di chuyển dữ liệu cũ sang 4 trường mới nếu cần
@@ -407,6 +575,38 @@ function hieucon_sub_checklist_questions_metabox_html($post)
                     const inputs = container.querySelectorAll('.item-main');
                     if (inputs.length > 0) inputs[inputs.length - 1].focus();
                 }, 50);
+            };
+
+            btnApplyJson.onclick = function () {
+                try {
+                    items = parseJsonInput();
+                    saveState();
+                    render();
+                    setJsonStatus(`Đã áp dụng ${items.length} câu hỏi. Bấm “Cập nhật” để lưu bài viết.`, 'success');
+                } catch (error) {
+                    setJsonStatus(error.message, 'error');
+                }
+            };
+
+            btnFormatJson.onclick = function () {
+                try {
+                    const parsed = JSON.parse(jsonInput.value);
+                    jsonInput.value = JSON.stringify(parsed, null, 2);
+                    setJsonStatus('Đã định dạng lại JSON.', 'success');
+                } catch (error) {
+                    setJsonStatus(`Không thể định dạng: ${error.message}`, 'error');
+                }
+            };
+
+            btnJsonExample.onclick = function () {
+                jsonInput.value = JSON.stringify(exampleItems, null, 2);
+                setJsonStatus('Đã chèn JSON mẫu. Bạn có thể sửa rồi bấm “Áp dụng JSON”.', 'success');
+            };
+
+            btnLoadCurrentJson.onclick = function () {
+                const currentItems = Array.isArray(items) ? items : [];
+                jsonInput.value = JSON.stringify(currentItems, null, 2);
+                setJsonStatus(`Đã tải ${currentItems.length} câu hỏi hiện tại.`, 'success');
             };
 
             function escapeHtml(text) {
