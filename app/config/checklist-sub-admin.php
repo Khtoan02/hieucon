@@ -102,6 +102,18 @@ function hieucon_sub_checklist_parse_request($query) {
     }
 }
 
+// Ép buộc WordPress nạp đúng file single-hieucon_sub_chk.php khi xem chi tiết Checklist Nhánh
+add_filter('template_include', 'hieucon_sub_checklist_template_include', 99);
+function hieucon_sub_checklist_template_include($template) {
+    if (is_singular('hieucon_sub_chk')) {
+        $custom_template = get_template_directory() . '/single-hieucon_sub_chk.php';
+        if (file_exists($custom_template)) {
+            return $custom_template;
+        }
+    }
+    return $template;
+}
+
 // 3. Add Custom Metabox for Question Structure Configuration
 function hieucon_sub_checklist_add_metabox()
 {

@@ -27,7 +27,26 @@ $questions_json = get_post_meta($checklist_id, '_hieucon_sub_checklist_questions
 if (empty($questions_json)) {
     $questions_json = '[]';
 }
-$groups = json_decode($questions_json, true) ?: [];
+$raw_questions = json_decode($questions_json, true) ?: [];
+
+// Chuẩn hóa dữ liệu câu hỏi hỗ trợ mảng phẳng lẫn mảng nhóm
+$groups = [];
+if (!empty($raw_questions) && is_array($raw_questions)) {
+    $first_item = reset($raw_questions);
+    if (is_array($first_item) && isset($first_item['items']) && is_array($first_item['items'])) {
+        $groups = $raw_questions;
+    } else {
+        $groups = [
+            [
+                'id' => 'mac-dinh',
+                'name' => '',
+                'icon' => '',
+                'desc' => '',
+                'items' => $raw_questions
+            ]
+        ];
+    }
+}
 
 function hieucon_render_sub_checklist_explanation($text)
 {
