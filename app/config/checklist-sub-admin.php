@@ -107,14 +107,63 @@ function hieucon_sub_checklist_add_metabox()
 {
     add_meta_box(
         'hieucon_sub_checklist_questions_metabox',
-        'Cấu hình Nhóm và Câu hỏi Checklist',
+        'Cấu hình Câu hỏi Checklist',
         'hieucon_sub_checklist_questions_metabox_html',
         'hieucon_sub_chk',
         'normal',
         'high'
     );
+
+    add_meta_box(
+        'hieucon_sub_checklist_extra_metabox',
+        'Cấu hình Thông tin Bổ sung & Tài liệu tham khảo',
+        'hieucon_sub_checklist_extra_metabox_html',
+        'hieucon_sub_chk',
+        'normal',
+        'default'
+    );
 }
 add_action('add_meta_boxes', 'hieucon_sub_checklist_add_metabox');
+
+function hieucon_sub_checklist_extra_metabox_html($post)
+{
+    // Lấy dữ liệu đã lưu
+    $edu_title = get_post_meta($post->ID, '_hieucon_sub_edu_title', true);
+    $legacy_edu_title = '🧭 Tiêu hóa chỉ là một mảnh ghép trong bức tranh sức khỏe của con';
+    if (empty($edu_title) || $edu_title === $legacy_edu_title) {
+        $edu_title = '[Title] chỉ là một mảnh ghép trong bức tranh sức khỏe của con';
+    }
+
+    $edu_content = get_post_meta($post->ID, '_hieucon_sub_edu_content', true);
+    if (empty($edu_content)) {
+        $edu_content = "Các vấn đề tiêu hóa, giấc ngủ, hành vi, dinh dưỡng và miễn dịch thường liên kết chặt chẽ với nhau qua trục Não – Ruột và các cơ chế sinh học chung.\nĐể hiểu được bức tranh sức khỏe đó của con, ba mẹ có thể tham khảo:";
+    }
+
+    $references = get_post_meta($post->ID, '_hieucon_sub_references', true);
+    ?>
+    <div style="background:#f6f7f7; border:1px solid #ccd0d4; padding:20px; border-radius:8px; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen-Sans,Ubuntu,Cantarell,'Helvetica Neue',sans-serif;">
+        <p class="description" style="margin-bottom:15px; font-style:italic; font-size: 13px;">
+            Cấu hình khối “Bức tranh toàn diện” và tài liệu tham khảo ở cuối trang. Dùng <code>[Title]</code> để tự động chèn tên Checklist hiện tại.
+        </p>
+
+        <div style="margin-bottom: 20px;">
+            <label style="display:block; font-weight:bold; margin-bottom:8px; font-size:13px;">Tiêu đề khối Bức tranh toàn diện:</label>
+            <input type="text" name="hieucon_sub_edu_title" value="<?php echo esc_attr($edu_title); ?>" style="width:100%; padding:8px; border:1px solid #8c8f94; border-radius:4px; font-size:13px;">
+            <p class="description" style="margin-top:6px;"><code>[Title]</code> luôn lấy đúng tiêu đề Checklist hiện tại. Ví dụ: <code>Rối loạn tiêu hóa chỉ là một mảnh ghép trong bức tranh sức khỏe của con</code>.</p>
+        </div>
+
+        <div style="margin-bottom: 20px;">
+            <label style="display:block; font-weight:bold; margin-bottom:8px; font-size:13px;">Nội dung Khối giáo dục:</label>
+            <textarea name="hieucon_sub_edu_content" rows="4" style="width:100%; padding:8px; border:1px solid #8c8f94; border-radius:4px; font-size:13px;"><?php echo esc_textarea($edu_content); ?></textarea>
+        </div>
+
+        <div>
+            <label style="display:block; font-weight:bold; margin-bottom:8px; font-size:13px;">📚 Tài liệu tham khảo:</label>
+            <textarea name="hieucon_sub_references" rows="6" placeholder="Ví dụ:&#10;[1] Nghiên cứu tổng hợp về hệ vi sinh đường ruột (2023).&#10;[2] Hướng dẫn can thiệp trục Não - Ruột của bác sĩ nhi khoa." style="width:100%; padding:8px; border:1px solid #8c8f94; border-radius:4px; font-size:13px;"><?php echo esc_textarea($references); ?></textarea>
+        </div>
+    </div>
+    <?php
+}
 
 function hieucon_sub_checklist_questions_metabox_html($post)
 {
@@ -127,13 +176,13 @@ function hieucon_sub_checklist_questions_metabox_html($post)
     ?>
     <div id="hieucon-checklist-builder-app"
         style="background:#f6f7f7; border:1px solid #ccd0d4; padding:20px; border-radius:8px;">
-        <p class="description" style="margin-bottom:15px; font-style:italic;">Thiết kế các nhóm câu hỏi và câu hỏi chi tiết.
+        <p class="description" style="margin-bottom:15px; font-style:italic; font-size: 13px;">Thiết kế danh sách câu hỏi và mô tả giải thích cho Checklist này.
             Dữ liệu sẽ tự động được lưu trữ dưới dạng JSON khi cập nhật bài viết.</p>
 
-        <div id="groups-container"></div>
+        <div id="questions-container"></div>
 
-        <button type="button" class="button button-secondary" id="btn-add-group"
-            style="margin-top:15px; font-weight:bold;">+ Thêm Nhóm câu hỏi</button>
+        <button type="button" class="button button-primary" id="btn-add-question"
+            style="margin-top:10px; font-weight:bold; height: auto; padding: 6px 14px; font-size: 13px;">+ Thêm câu hỏi</button>
 
         <input type="hidden" name="hieucon_sub_checklist_questions_data" id="questions-data-input"
             value="<?php echo esc_attr($questions_json); ?>">
@@ -141,74 +190,26 @@ function hieucon_sub_checklist_questions_metabox_html($post)
 
     <!-- Style dành cho builder -->
     <style>
-        .checklist-builder-group {
+        .checklist-builder-item-row {
             background: #fff;
             border: 1px solid #c3c4c7;
             border-radius: 6px;
             padding: 15px;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
             box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
             position: relative;
         }
-
-        .checklist-builder-group-header {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 12px;
-            align-items: center;
-        }
-
-        .checklist-builder-group-header input {
-            font-weight: bold;
-        }
-
-        .checklist-builder-items-container {
-            margin-left: 25px;
-            padding-left: 15px;
-            border-left: 2px solid #2271b1;
-        }
-
-        .checklist-builder-item-row {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 8px;
-            align-items: center;
-            background: #f9fafb;
-            padding: 8px;
+        .checklist-builder-item-row input, 
+        .checklist-builder-item-row textarea {
+            border: 1px solid #8c8f94;
             border-radius: 4px;
-            border: 1px dashed #dcdcde;
+            box-shadow: inset 0 1px 2px rgba(0,0,0,.07);
         }
-
-        .checklist-builder-item-row input {
-            flex: 1;
-        }
-
-        .btn-delete-group {
-            position: absolute;
-            top: 12px;
-            right: 12px;
-            color: #b32d2e;
-            border-color: #b32d2e;
-            cursor: pointer;
-            background: none;
-            border: none;
-            font-size: 16px;
-        }
-
-        .btn-delete-group:hover {
-            color: #d93f40;
-        }
-
-        .btn-delete-item {
-            color: #b32d2e;
-            border: none;
-            background: none;
-            cursor: pointer;
-            font-size: 15px;
-        }
-
-        .btn-delete-item:hover {
-            color: #d93f40;
+        .checklist-builder-item-row input:focus, 
+        .checklist-builder-item-row textarea:focus {
+            border-color: #2271b1;
+            box-shadow: 0 0 0 1px #2271b1;
+            outline: 2px solid transparent;
         }
     </style>
 
@@ -216,182 +217,202 @@ function hieucon_sub_checklist_questions_metabox_html($post)
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const inputData = document.getElementById('questions-data-input');
-            const container = document.getElementById('groups-container');
-            const btnAddGroup = document.getElementById('btn-add-group');
+            const container = document.getElementById('questions-container');
+            const btnAddQuestion = document.getElementById('btn-add-question');
 
-            let data = [];
+            // Đọc dữ liệu từ DB
+            let rawData = [];
             try {
-                data = JSON.parse(inputData.value || '[]');
+                rawData = JSON.parse(inputData.value || '[]');
             } catch (e) {
-                data = [];
+                rawData = [];
             }
+
+            // Đảm bảo rawData luôn là mảng
+            if (!Array.isArray(rawData)) {
+                rawData = [];
+            }
+
+            // Lấy danh sách câu hỏi phẳng
+            let items = [];
+            if (rawData.length > 0 && rawData[0] && rawData[0].items && Array.isArray(rawData[0].items)) {
+                items = rawData[0].items;
+            } else if (Array.isArray(rawData)) {
+                // Đề phòng trường hợp trước đó đã lưu dạng phẳng hoặc lỗi
+                items = rawData;
+            }
+
+            // Di chuyển dữ liệu cũ sang 4 trường mới nếu cần
+            items.forEach(item => {
+                if (item && item.example && (!item.exp && !item.mechanism && !item.guide && !item.warning)) {
+                    // Phân tách nội dung dựa trên emoji
+                    const lines = item.example.split("\n");
+                    lines.forEach(line => {
+                        line = line.trim();
+                        if (line.indexOf('💟') !== -1) {
+                            item.exp = line.replace('💟', '').trim();
+                        } else if (line.indexOf('🎯') !== -1) {
+                            item.mechanism = line.replace('🎯', '').trim();
+                        } else if (line.indexOf('📋') !== -1) {
+                            item.guide = line.replace('📋', '').trim();
+                        } else if (line.indexOf('⚠️') !== -1) {
+                            item.warning = line.replace('⚠️', '').trim();
+                        }
+                    });
+                }
+            });
 
             function render() {
                 container.innerHTML = '';
-                if (data.length === 0) {
-                    container.innerHTML = '<p style="color:#64748b; font-style:italic; padding:10px 0;">Chưa có nhóm câu hỏi nào. Hãy bấm nút phía dưới để thêm mới.</p>';
+                if (!Array.isArray(items) || items.length === 0) {
+                    container.innerHTML = '<p style="color:#64748b; font-style:italic; padding:10px 0;">Chưa có câu hỏi nào. Hãy bấm nút dưới để thêm mới.</p>';
                     return;
                 }
 
-                data.forEach((group, gIdx) => {
-                    const groupDiv = document.createElement('div');
-                    groupDiv.className = 'checklist-builder-group';
-
-                    groupDiv.innerHTML = `
-                        <button type="button" class="btn-delete-group" title="Xóa nhóm này" data-gidx="${gIdx}">✖</button>
-                        <div class="checklist-builder-group-header">
-                            <span style="font-size:18px;">🏷️ Nhóm ${gIdx + 1}:</span>
-                            <input type="text" placeholder="Tên nhóm (ví dụ: Rối loạn ăn uống)" class="group-name regular-text" value="${escapeHtml(group.name || '')}" data-gidx="${gIdx}" style="width:250px;" required>
-                            <input type="text" placeholder="Emoji (ví dụ: 🍽️)" class="group-icon" value="${escapeHtml(group.icon || '')}" data-gidx="${gIdx}" style="width:70px; text-align:center;">
-                            <input type="text" placeholder="Slug ID (ví dụ: anUong)" class="group-slug" value="${escapeHtml(group.id || '')}" data-gidx="${gIdx}" style="width:120px;" required>
+                items.forEach((item, idx) => {
+                    if (!item) {
+                        item = { main: '', example: '', exp: '', mechanism: '', guide: '', warning: '' };
+                        items[idx] = item;
+                    }
+                    const rowDiv = document.createElement('div');
+                    rowDiv.className = 'checklist-builder-item-row';
+                    rowDiv.style = 'display: flex; gap: 15px; margin-bottom: 12px; align-items: flex-start; background: #fff; padding: 15px; border-radius: 6px; border: 1px solid #c3c4c7;';
+                    rowDiv.innerHTML = `
+                        <div style="font-weight: bold; min-width: 25px; padding-top: 6px; color: #1d2327; font-size: 14px;">Q${idx + 1}:</div>
+                        <div style="flex: 1; display: flex; flex-direction: column; gap: 8px;">
+                            <input type="text" placeholder="Câu hỏi chính" class="item-main regular-text" value="${escapeHtml(item.main || '')}" data-idx="${idx}" style="width: 100%;">
+                            
+                            <!-- Bốn phần giải thích chi tiết -->
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 4px;">
+                                <div>
+                                    <label style="font-weight: bold; font-size: 11px; color: #4f46e5; display: block; margin-bottom: 3px;">💟 Giải thích</label>
+                                    <textarea class="item-exp" data-idx="${idx}" rows="3" style="width: 100%; font-family: sans-serif; font-size: 12px; padding: 6px;" placeholder="Nhập lời giải thích...">${escapeHtml(item.exp || '')}</textarea>
+                                </div>
+                                <div>
+                                    <label style="font-weight: bold; font-size: 11px; color: #3730a3; display: block; margin-bottom: 3px;">🎯 Thông tin chuyên môn / Cơ chế</label>
+                                    <textarea class="item-mechanism" data-idx="${idx}" rows="3" style="width: 100%; font-family: sans-serif; font-size: 12px; padding: 6px;" placeholder="Nhập cơ chế y sinh...">${escapeHtml(item.mechanism || '')}</textarea>
+                                </div>
+                                <div>
+                                    <label style="font-weight: bold; font-size: 11px; color: #065f46; display: block; margin-bottom: 3px;">📋 Hướng dẫn thực hành</label>
+                                    <textarea class="item-guide" data-idx="${idx}" rows="3" style="width: 100%; font-family: sans-serif; font-size: 12px; padding: 6px;" placeholder="Nhập hướng dẫn thực hành...">${escapeHtml(item.guide || '')}</textarea>
+                                </div>
+                                <div>
+                                    <label style="font-weight: bold; font-size: 11px; color: #9f1239; display: block; margin-bottom: 3px;">⚠️ Cảnh báo y khoa</label>
+                                    <textarea class="item-warning" data-idx="${idx}" rows="3" style="width: 100%; font-family: sans-serif; font-size: 12px; padding: 6px;" placeholder="Nhập cảnh báo y khoa...">${escapeHtml(item.warning || '')}</textarea>
+                                </div>
+                            </div>
                         </div>
-                        <div style="margin-bottom:12px; margin-left:25px;">
-                            <input type="text" placeholder="Mô tả nhóm (ví dụ: Các biểu hiện kén chọn thực phẩm của con...)" class="group-desc large-text" value="${escapeHtml(group.desc || '')}" data-gidx="${gIdx}" style="width:90%; font-size:12px; padding:4px 8px;">
-                        </div>
-                        <div class="checklist-builder-items-container" id="items-container-${gIdx}"></div>
-                        <button type="button" class="button button-small btn-add-item" data-gidx="${gIdx}" style="margin-top:10px; margin-left:25px;">+ Thêm câu hỏi</button>
+                        <button type="button" class="btn-delete-item button button-link-delete" title="Xóa câu hỏi" data-idx="${idx}" style="color: #b32d2e; font-size: 18px; line-height: 1; padding: 4px; margin-top: 2px; border: none; background: none; cursor: pointer;">✖</button>
                     `;
-
-                    container.appendChild(groupDiv);
-
-                    // Render Items của Group
-                    const itemsContainer = document.getElementById(`items-container-${gIdx}`);
-                    const items = group.items || [];
-
-                    items.forEach((item, iIdx) => {
-                        const itemDiv = document.createElement('div');
-                        itemDiv.className = 'checklist-builder-item-row';
-                        itemDiv.innerHTML = `
-                            <span style="font-size:11px; color:#64748b;">Q${iIdx + 1}:</span>
-                            <input type="text" placeholder="Câu hỏi chính" class="item-main" value="${escapeHtml(item.main || '')}" data-gidx="${gIdx}" data-iidx="${iIdx}" required>
-                            <input type="text" placeholder="Mô tả chi tiết / Ví dụ giải thích" class="item-example" value="${escapeHtml(item.example || '')}" data-gidx="${gIdx}" data-iidx="${iIdx}">
-                            <button type="button" class="btn-delete-item" title="Xóa câu hỏi" data-gidx="${gIdx}" data-iidx="${iIdx}">✖</button>
-                        `;
-                        itemsContainer.appendChild(itemDiv);
-                    });
+                    container.appendChild(rowDiv);
                 });
 
                 bindEvents();
             }
 
             function saveState() {
-                inputData.value = JSON.stringify(data);
+                // Đóng gói thành cấu trúc nhóm mặc định để giữ tương thích
+                const structuredData = [
+                    {
+                        id: 'mac-dinh',
+                        name: '',
+                        icon: '',
+                        desc: '',
+                        items: items
+                    }
+                ];
+                inputData.value = JSON.stringify(structuredData);
             }
 
             function bindEvents() {
-                // Sửa Group Name
-                document.querySelectorAll('.group-name').forEach(input => {
-                    input.addEventListener('change', function () {
-                        const gIdx = parseInt(this.dataset.gidx);
-                        data[gIdx].name = this.value;
-                        saveState();
-                    });
-                });
-
-                // Sửa Group Icon
-                document.querySelectorAll('.group-icon').forEach(input => {
-                    input.addEventListener('change', function () {
-                        const gIdx = parseInt(this.dataset.gidx);
-                        data[gIdx].icon = this.value;
-                        saveState();
-                    });
-                });
-
-                // Sửa Group Slug ID
-                document.querySelectorAll('.group-slug').forEach(input => {
-                    input.addEventListener('change', function () {
-                        const gIdx = parseInt(this.dataset.gidx);
-                        data[gIdx].id = this.value.replace(/[^a-zA-Z0-9]/g, ''); // Chỉ cho nhập ký tự alpha-numeric
-                        this.value = data[gIdx].id;
-                        saveState();
-                    });
-                });
-
-                // Sửa Group Desc
-                document.querySelectorAll('.group-desc').forEach(input => {
-                    input.addEventListener('change', function () {
-                        const gIdx = parseInt(this.dataset.gidx);
-                        data[gIdx].desc = this.value;
-                        saveState();
-                    });
-                });
-
                 // Sửa Item Main
                 document.querySelectorAll('.item-main').forEach(input => {
-                    input.addEventListener('change', function () {
-                        const gIdx = parseInt(this.dataset.gidx);
-                        const iIdx = parseInt(this.dataset.iidx);
-                        data[gIdx].items[iIdx].main = this.value;
-                        saveState();
-                    });
-                });
-
-                // Sửa Item Example
-                document.querySelectorAll('.item-example').forEach(input => {
-                    input.addEventListener('change', function () {
-                        const gIdx = parseInt(this.dataset.gidx);
-                        const iIdx = parseInt(this.dataset.iidx);
-                        data[gIdx].items[iIdx].example = this.value;
-                        saveState();
-                    });
-                });
-
-                // Xóa Group
-                document.querySelectorAll('.btn-delete-group').forEach(btn => {
-                    btn.onclick = function () {
-                        const gIdx = parseInt(this.dataset.gidx);
-                        if (confirm('Bạn có chắc muốn xóa nhóm này cùng toàn bộ câu hỏi bên trong không?')) {
-                            data.splice(gIdx, 1);
+                    input.addEventListener('input', function () {
+                        const idx = parseInt(this.dataset.idx);
+                        if (items[idx]) {
+                            items[idx].main = this.value;
                             saveState();
-                            render();
                         }
-                    };
+                    });
+                });
+
+                // Sửa Item Exp (💟)
+                document.querySelectorAll('.item-exp').forEach(textarea => {
+                    textarea.addEventListener('input', function () {
+                        const idx = parseInt(this.dataset.idx);
+                        if (items[idx]) {
+                            items[idx].exp = this.value;
+                            saveState();
+                        }
+                    });
+                });
+
+                // Sửa Item Mechanism (🎯)
+                document.querySelectorAll('.item-mechanism').forEach(textarea => {
+                    textarea.addEventListener('input', function () {
+                        const idx = parseInt(this.dataset.idx);
+                        if (items[idx]) {
+                            items[idx].mechanism = this.value;
+                            saveState();
+                        }
+                    });
+                });
+
+                // Sửa Item Guide (📋)
+                document.querySelectorAll('.item-guide').forEach(textarea => {
+                    textarea.addEventListener('input', function () {
+                        const idx = parseInt(this.dataset.idx);
+                        if (items[idx]) {
+                            items[idx].guide = this.value;
+                            saveState();
+                        }
+                    });
+                });
+
+                // Sửa Item Warning (⚠️)
+                document.querySelectorAll('.item-warning').forEach(textarea => {
+                    textarea.addEventListener('input', function () {
+                        const idx = parseInt(this.dataset.idx);
+                        if (items[idx]) {
+                            items[idx].warning = this.value;
+                            saveState();
+                        }
+                    });
                 });
 
                 // Xóa Item
                 document.querySelectorAll('.btn-delete-item').forEach(btn => {
                     btn.onclick = function () {
-                        const gIdx = parseInt(this.dataset.gidx);
-                        const iIdx = parseInt(this.dataset.iidx);
-                        data[gIdx].items.splice(iIdx, 1);
-                        saveState();
-                        render();
-                    };
-                });
-
-                // Thêm Item
-                document.querySelectorAll('.btn-add-item').forEach(btn => {
-                    btn.onclick = function () {
-                        const gIdx = parseInt(this.dataset.gidx);
-                        if (!data[gIdx].items) data[gIdx].items = [];
-                        data[gIdx].items.push({ main: '', example: '' });
-                        saveState();
-                        render();
-
-                        // Focus vào ô input vừa thêm
-                        setTimeout(() => {
-                            const rows = document.getElementById(`items-container-${gIdx}`).querySelectorAll('.item-main');
-                            if (rows.length > 0) rows[rows.length - 1].focus();
-                        }, 50);
+                        const idx = parseInt(this.dataset.idx);
+                        if (confirm(`Bạn có chắc chắn muốn xóa Câu hỏi Q${idx + 1} không?`)) {
+                            items.splice(idx, 1);
+                            saveState();
+                            render();
+                        }
                     };
                 });
             }
 
-            // Nút thêm Group chính
-            btnAddGroup.onclick = function () {
-                const defaultId = 'group_' + (data.length + 1);
-                data.push({
-                    id: defaultId,
-                    name: '',
-                    icon: '📝',
-                    desc: '',
-                    items: []
-                });
+            // Nút thêm câu hỏi
+            btnAddQuestion.onclick = function () {
+                if (!Array.isArray(items)) {
+                    items = [];
+                }
+                items.push({ main: '', example: '', exp: '', mechanism: '', guide: '', warning: '' });
                 saveState();
                 render();
+
+                // Focus vào ô input vừa thêm
+                setTimeout(() => {
+                    const inputs = container.querySelectorAll('.item-main');
+                    if (inputs.length > 0) inputs[inputs.length - 1].focus();
+                }, 50);
             };
 
             function escapeHtml(text) {
+                if (typeof text !== 'string') {
+                    text = String(text || '');
+                }
                 return text
                     .replace(/&/g, "&amp;")
                     .replace(/</g, "&lt;")
@@ -433,15 +454,29 @@ function hieucon_sub_checklist_save_meta_data($post_id)
                 if (isset($grp['items']) && is_array($grp['items'])) {
                     foreach ($grp['items'] as &$item) {
                         $item['main'] = sanitize_text_field($item['main'] ?? '');
-                        $item['example'] = sanitize_text_field($item['example'] ?? '');
+                        $item['example'] = sanitize_textarea_field($item['example'] ?? '');
+                        $item['exp'] = sanitize_textarea_field($item['exp'] ?? '');
+                        $item['mechanism'] = sanitize_textarea_field($item['mechanism'] ?? '');
+                        $item['guide'] = sanitize_textarea_field($item['guide'] ?? '');
+                        $item['warning'] = sanitize_textarea_field($item['warning'] ?? '');
                     }
                 } else {
                     $grp['items'] = [];
                 }
             }
             unset($grp);
-            update_post_meta($post_id, '_hieucon_sub_checklist_questions', wp_json_encode($questions_arr, JSON_UNESCAPED_UNICODE));
+            update_post_meta($post_id, '_hieucon_sub_checklist_questions', wp_slash(wp_json_encode($questions_arr, JSON_UNESCAPED_UNICODE)));
         }
+    }
+
+    if (isset($_POST['hieucon_sub_edu_title'])) {
+        update_post_meta($post_id, '_hieucon_sub_edu_title', sanitize_text_field($_POST['hieucon_sub_edu_title']));
+    }
+    if (isset($_POST['hieucon_sub_edu_content'])) {
+        update_post_meta($post_id, '_hieucon_sub_edu_content', sanitize_textarea_field($_POST['hieucon_sub_edu_content']));
+    }
+    if (isset($_POST['hieucon_sub_references'])) {
+        update_post_meta($post_id, '_hieucon_sub_references', sanitize_textarea_field($_POST['hieucon_sub_references']));
     }
 }
 add_action('save_post_hieucon_sub_chk', 'hieucon_sub_checklist_save_meta_data');
