@@ -58,7 +58,7 @@
       <!-- WIDGET LIÊN KẾT NHANH (Nút Bấm Từ Header) -->
       <div class="desktop-only-widget sidebar-widget-card-white">
         <!-- Nút: Cộng đồng Facebook -->
-        <a href="https://www.facebook.com/groups/tukylaroiloantoanthan" target="_blank" rel="noopener noreferrer"
+        <a href="<?php echo home_url('/facebook-group'); ?>" target="_blank" rel="noopener noreferrer"
           title="Cộng Đồng"
           class="flex items-center justify-center gap-2 bg-gradient-to-br from-[#1877F2] to-[#0A58CA] hover:from-[#1464CC] hover:to-[#084298] text-white px-3.5 py-2.5 font-bold text-xs transition-all duration-300 shadow-[0_4px_12px_rgba(24,119,242,0.25)] hover:shadow-[0_6px_16px_rgba(24,119,242,0.35)] hover:-translate-y-0.5 border border-white/10 group w-full text-center"
           aria-label="Cộng đồng Facebook"
@@ -71,14 +71,14 @@
           <span>Cộng đồng</span>
         </a>
 
-        <!-- Nút: Hỏi đáp Zalo -->
-        <a href="https://zalo.me/g/vmgfxy834?joinSrc=9" target="_blank" rel="noopener noreferrer"
-          title="Kết Nối Chuyên Gia"
+        <!-- Nút: Góc chia sẻ Zalo -->
+        <a href="<?php echo home_url('/zalo-group'); ?>" target="_blank" rel="noopener noreferrer"
+          title="Góc Chia Sẻ"
           class="flex items-center justify-center gap-2 bg-gradient-to-br from-[#00A1FF] to-[#0068FF] hover:from-[#008CE6] hover:to-[#0052CC] text-white px-3.5 py-2.5 font-bold text-xs transition-all duration-300 shadow-[0_4px_12px_rgba(0,104,255,0.25)] hover:shadow-[0_6px_16px_rgba(0,104,255,0.35)] hover:-translate-y-0.5 border border-white/10 group w-full text-center"
-          aria-label="Kết nối Zalo"
+          aria-label="Góc chia sẻ Zalo"
           style="text-decoration:none; display:flex; border-radius:12px !important; margin-bottom:12px !important;">
           <span class="font-black text-xs text-white leading-none group-hover:scale-110 transition-transform">Z</span>
-          <span>Hỏi đáp Zalo</span>
+          <span>Góc chia sẻ</span>
         </a>
 
         <!-- Nút: Đăng nhập / Tài khoản -->
@@ -243,7 +243,7 @@
         <!-- WIDGET LIÊN KẾT NHANH (Nút Bấm Từ Header) -->
         <div class="sidebar-widget-card-white">
           <!-- Nút: Cộng đồng Facebook -->
-          <a href="https://www.facebook.com/groups/tukylaroiloantoanthan" target="_blank" rel="noopener noreferrer"
+          <a href="<?php echo home_url('/facebook-group'); ?>" target="_blank" rel="noopener noreferrer"
             title="Cộng Đồng"
             class="flex items-center justify-center gap-2 bg-gradient-to-br from-[#1877F2] to-[#0A58CA] hover:from-[#1464CC] hover:to-[#084298] text-white px-3.5 py-2.5 font-bold text-xs transition-all duration-300 shadow-[0_4px_12px_rgba(24,119,242,0.25)] hover:shadow-[0_6px_16px_rgba(24,119,242,0.35)] hover:-translate-y-0.5 border border-white/10 group w-full text-center"
             aria-label="Cộng đồng Facebook"
@@ -256,14 +256,14 @@
             <span>Cộng đồng</span>
           </a>
 
-          <!-- Nút: Hỏi đáp Zalo -->
-          <a href="https://zalo.me/g/vmgfxy834?joinSrc=9" target="_blank" rel="noopener noreferrer"
-            title="Kết Nối Chuyên Gia"
+          <!-- Nút: Góc chia sẻ Zalo -->
+          <a href="<?php echo home_url('/zalo-group'); ?>" target="_blank" rel="noopener noreferrer"
+            title="Góc Chia Sẻ"
             class="flex items-center justify-center gap-2 bg-gradient-to-br from-[#00A1FF] to-[#0068FF] hover:from-[#008CE6] hover:to-[#0052CC] text-white px-3.5 py-2.5 font-bold text-xs transition-all duration-300 shadow-[0_4px_12px_rgba(0,104,255,0.25)] hover:shadow-[0_6px_16px_rgba(0,104,255,0.35)] hover:-translate-y-0.5 border border-white/10 group w-full text-center"
-            aria-label="Kết nối Zalo"
+            aria-label="Góc chia sẻ Zalo"
             style="text-decoration:none; display:flex; border-radius:12px !important; margin-bottom:12px !important;">
             <span class="font-black text-xs text-white leading-none group-hover:scale-110 transition-transform">Z</span>
-            <span>Hỏi đáp Zalo</span>
+            <span>Góc chia sẻ</span>
           </a>
 
           <!-- Nút: Đăng nhập / Tài khoản -->

@@ -1130,7 +1130,7 @@ function hieucon_dh_public_checklist_result() {
           window.hieuconTrackConsultClick();
         }
         setTimeout(function() {
-          window.open("https://zalo.me/0985391881", "_blank");
+          window.open("<?php echo home_url('/zalo'); ?>", "_blank");
         }, 1000);
       }
 

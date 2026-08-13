@@ -507,7 +507,7 @@
                         <li class="flex items-center">
                             <span class="text-xl mr-3">🌐</span>
                             <span><strong>Cộng đồng:</strong> <a
-                                    href="https://www.facebook.com/groups/tukylaroiloantoanthan" target="_blank"
+                                    href="<?php echo home_url('/facebook-group'); ?>" target="_blank"
                                     class="text-brand-light hover:text-white underline transition">Tự kỷ là Rối loạn
                                     toàn thân</a></span>
                         </li>
@@ -519,11 +519,11 @@
                         </li>
                         <li class="flex items-center">
                             <span class="text-xl mr-3">📞</span>
-                            <span><strong>Hotline/Zalo:</strong> <span onclick="navigator.clipboard.writeText('0985391881'); alert('Đã copy số điện thoại: 0985.391.881');" class="text-brand-light hover:text-white cursor-pointer transition underline" title="Nhấn để copy">0985.391.881</span></span>
+                            <span><strong>Hotline/Zalo:</strong> <a href="<?php echo home_url('/zalo'); ?>" target="_blank" rel="noopener noreferrer" class="text-brand-light hover:text-white transition underline" title="Nhắn qua Zalo">0985.391.881</a></span>
                         </li>
                         <li class="flex items-center">
                             <span class="text-xl mr-3">💬</span>
-                            <span><strong>Nhóm Zalo:</strong> <a href="https://zalo.me/g/vmgfxy834" target="_blank"
+                            <span><strong>Góc chia sẻ:</strong> <a href="<?php echo home_url('/zalo-group'); ?>" target="_blank"
                                     class="text-brand-light hover:text-white underline transition">Tham gia giải
                                     đáp</a></span>
                         </li>

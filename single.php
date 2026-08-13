@@ -196,10 +196,14 @@ get_header(); ?>
                                     <p class="text-navy/70 text-sm font-medium leading-relaxed mb-6">
                                         Cùng tham gia cộng đồng <strong class="text-navy">Hiểu Con Từ Gốc</strong> để chia sẻ kiến thức y sinh và nhận sự đồng hành.
                                     </p>
-                                    <a href="https://www.facebook.com/groups/tukylaroiloantoanthan" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-secondary hover:bg-secondary_dark text-white font-bold py-3 px-6 rounded-full text-sm transition-all duration-300 shadow-md hover:shadow-lg hover:-translate-y-0.5 w-full justify-center">
-                                        Tham gia nhóm
-                                        <i data-lucide="arrow-right" class="w-4 h-4"></i>
-                                    </a>
+                                    <div class="grid grid-cols-1 gap-2.5">
+                                        <a href="<?php echo home_url('/facebook-group'); ?>" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-[#1877F2] hover:bg-[#0d6edc] text-white font-bold py-2.5 px-4 rounded-xl text-xs transition-all duration-300 shadow-md hover:shadow-lg w-full justify-center">
+                                            <i data-lucide="users" class="w-4 h-4"></i> Cộng đồng
+                                        </a>
+                                        <a href="<?php echo home_url('/zalo-group'); ?>" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-[#0068FF] hover:bg-[#0054cc] text-white font-bold py-2.5 px-4 rounded-xl text-xs transition-all duration-300 shadow-md hover:shadow-lg w-full justify-center">
+                                            <span class="font-black text-xs text-white leading-none">Z</span> Góc chia sẻ
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
 

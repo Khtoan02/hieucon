@@ -10,12 +10,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 // Thêm menu cài đặt vào admin
 function hieucon_add_theme_options_page() {
     add_menu_page(
-        'Cài đặt Popup',          // Page title
-        'Cài đặt Popup',          // Menu title
-        'manage_options',         // Capability
-        'hieucon-popup-settings', // Menu slug
+        'Cài đặt Hiểu Con',          // Page title
+        'Cài đặt Hiểu Con',          // Menu title
+        'manage_options',             // Capability
+        'hieucon-popup-settings',     // Menu slug
         'hieucon_theme_options_page_html', // Callback function
-        'dashicons-format-chat',
+        'dashicons-share-alt2',
         66
     );
 }
@@ -23,6 +23,7 @@ add_action( 'admin_menu', 'hieucon_add_theme_options_page' );
 
 // Đăng ký các setting
 function hieucon_register_settings() {
+    // Setting Popup
     register_setting( 'hieucon_popup_options', 'hieucon_popup_enable' );
     register_setting( 'hieucon_popup_options', 'hieucon_popup_title' );
     register_setting( 'hieucon_popup_options', 'hieucon_popup_desc' );
@@ -30,8 +31,103 @@ function hieucon_register_settings() {
     register_setting( 'hieucon_popup_options', 'hieucon_popup_btn_link' );
     register_setting( 'hieucon_popup_options', 'hieucon_popup_delay' );
     register_setting( 'hieucon_popup_options', 'hieucon_popup_custom_code' );
+
+    // Setting Redirect Links
+    register_setting( 'hieucon_popup_options', 'hieucon_link_facebook_group' );
+    register_setting( 'hieucon_popup_options', 'hieucon_link_zalo_group' );
+    register_setting( 'hieucon_popup_options', 'hieucon_link_zalo_tuvan' );
+
+    // Setting Danh sách Zalo Groups & Active Selection
+    register_setting( 'hieucon_popup_options', 'hieucon_zalo_groups_list' );
+    register_setting( 'hieucon_popup_options', 'hieucon_active_zalo_group_id' );
 }
 add_action( 'admin_init', 'hieucon_register_settings' );
+
+/**
+ * Lấy URL Zalo Group đang được Kích Hoạt (Active) trong danh sách
+ */
+function hieucon_get_active_zalo_group_url() {
+    $list      = get_option( 'hieucon_zalo_groups_list', array() );
+    $active_id = get_option( 'hieucon_active_zalo_group_id', '' );
+
+    if ( is_array( $list ) && ! empty( $list ) ) {
+        if ( ! empty( $active_id ) ) {
+            foreach ( $list as $group ) {
+                if ( isset( $group['id'] ) && $group['id'] === $active_id && ! empty( $group['url'] ) ) {
+                    return $group['url'];
+                }
+            }
+        }
+        if ( isset( $list[0]['url'] ) && ! empty( $list[0]['url'] ) ) {
+            return $list[0]['url'];
+        }
+    }
+
+    return get_option( 'hieucon_link_zalo_group', 'https://zalo.me/g/vmgfxy834?joinSrc=9' );
+}
+
+/**
+ * Sync hieucon_link_zalo_group whenever active_zalo_group_id or zalo_groups_list changes
+ */
+function hieucon_sync_active_zalo_group_on_id_change( $new_id, $old_id ) {
+    $list = get_option( 'hieucon_zalo_groups_list', array() );
+    if ( is_array( $list ) ) {
+        foreach ( $list as $group ) {
+            if ( isset( $group['id'] ) && $group['id'] === $new_id && ! empty( $group['url'] ) ) {
+                update_option( 'hieucon_link_zalo_group', $group['url'] );
+                break;
+            }
+        }
+    }
+    return $new_id;
+}
+add_filter( 'pre_update_option_hieucon_active_zalo_group_id', 'hieucon_sync_active_zalo_group_on_id_change', 10, 2 );
+
+function hieucon_sync_active_zalo_group_on_list_change( $new_list, $old_list ) {
+    $active_id = get_option( 'hieucon_active_zalo_group_id', '' );
+    if ( is_array( $new_list ) ) {
+        foreach ( $new_list as $group ) {
+            if ( isset( $group['id'] ) && $group['id'] === $active_id && ! empty( $group['url'] ) ) {
+                update_option( 'hieucon_link_zalo_group', $group['url'] );
+                break;
+            }
+        }
+    }
+    return $new_list;
+}
+add_filter( 'pre_update_option_hieucon_zalo_groups_list', 'hieucon_sync_active_zalo_group_on_list_change', 10, 2 );
+
+/**
+ * Xử lý chuyển hướng Shortlink linh hoạt (template_redirect)
+ */
+function hieucon_handle_custom_redirects() {
+    $request_path = trim( parse_url( $_SERVER['REQUEST_URI'], PHP_URL_PATH ), '/' );
+
+    if ( $request_path === 'facebook-group' ) {
+        $target = get_option( 'hieucon_link_facebook_group', 'https://www.facebook.com/groups/tukylaroiloantoanthan' );
+        if ( ! empty( $target ) ) {
+            wp_redirect( esc_url_raw( $target ), 302 );
+            exit;
+        }
+    }
+
+    if ( $request_path === 'zalo-group' ) {
+        $target = hieucon_get_active_zalo_group_url();
+        if ( ! empty( $target ) ) {
+            wp_redirect( esc_url_raw( $target ), 302 );
+            exit;
+        }
+    }
+
+    if ( $request_path === 'zalo' ) {
+        $target = get_option( 'hieucon_link_zalo_tuvan', 'https://zalo.me/0985391881' );
+        if ( ! empty( $target ) ) {
+            wp_redirect( esc_url_raw( $target ), 302 );
+            exit;
+        }
+    }
+}
+add_action( 'template_redirect', 'hieucon_handle_custom_redirects', 1 );
 
 // Giao diện trang cài đặt
 function hieucon_theme_options_page_html() {
@@ -39,7 +135,7 @@ function hieucon_theme_options_page_html() {
         return;
     }
     
-    // Giá trị mặc định
+    // Giá trị mặc định Popup
     $enable   = get_option( 'hieucon_popup_enable', '1' ) ? 'checked' : '';
     $title    = get_option( 'hieucon_popup_title', 'Chào mừng ba mẹ!' );
     $desc     = get_option( 'hieucon_popup_desc', 'Mời ba mẹ tham gia Group <strong>Hiểu con từ gốc</strong> để nhận thêm nhiều chia sẻ hữu ích.' );
@@ -47,70 +143,469 @@ function hieucon_theme_options_page_html() {
     $btn_link = get_option( 'hieucon_popup_btn_link', '#' );
     $delay    = get_option( 'hieucon_popup_delay', '5' );
     $custom   = get_option( 'hieucon_popup_custom_code', '' );
+
+
+    // Giá trị mặc định Redirect Links
+    $fb_group_url   = get_option( 'hieucon_link_facebook_group', 'https://www.facebook.com/groups/tukylaroiloantoanthan' );
+    $zalo_tuvan_url = get_option( 'hieucon_link_zalo_tuvan', 'https://zalo.me/0985391881' );
+
+    // Giá trị mặc định Zalo Groups List
+    $zalo_groups = get_option( 'hieucon_zalo_groups_list', array() );
+    if ( empty( $zalo_groups ) || ! is_array( $zalo_groups ) ) {
+        $zalo_groups = array(
+            array(
+                'id'   => 'zg_default',
+                'name' => 'Góc chia sẻ #1 (Mặc định)',
+                'url'  => get_option( 'hieucon_link_zalo_group', 'https://zalo.me/g/vmgfxy834?joinSrc=9' ),
+            )
+        );
+    }
+    $active_zalo_id = get_option( 'hieucon_active_zalo_group_id', 'zg_default' );
+    
+    $found_active = false;
+    foreach ( $zalo_groups as $g ) {
+        if ( isset( $g['id'] ) && $g['id'] === $active_zalo_id ) {
+            $found_active = true;
+            break;
+        }
+    }
+    if ( ! $found_active && ! empty( $zalo_groups[0]['id'] ) ) {
+        $active_zalo_id = $zalo_groups[0]['id'];
+    }
+
+    $site_fb_short   = home_url( '/facebook-group' );
+    $site_zalo_group = home_url( '/zalo-group' );
+    $site_zalo_tuvan = home_url( '/zalo' );
     ?>
-    <div class="wrap">
-        <h1>Cài đặt Popup "Hiểu con từ gốc"</h1>
+    <style>
+        .hc-admin-wrap {
+            max-width: 1100px;
+            margin: 20px 20px 40px 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+        }
+        .hc-admin-header {
+            background: linear-gradient(135deg, #0D2A78 0%, #1877F2 100%);
+            color: #ffffff;
+            padding: 24px 32px;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(13, 42, 120, 0.15);
+            margin-bottom: 24px;
+        }
+        .hc-admin-header h1 {
+            color: #ffffff !important;
+            font-size: 24px;
+            font-weight: 800;
+            margin: 0 0 6px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .hc-admin-header p {
+            margin: 0;
+            opacity: 0.85;
+            font-size: 14px;
+        }
+        .hc-card {
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 28px;
+            margin-bottom: 24px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+        }
+        .hc-card-title {
+            font-size: 17px;
+            font-weight: 700;
+            color: #0F172A;
+            margin: 0 0 20px 0;
+            padding-bottom: 14px;
+            border-bottom: 2px solid #F1F5F9;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .hc-link-row {
+            display: grid;
+            grid-template-columns: 240px 1fr 140px;
+            gap: 16px;
+            align-items: center;
+            background: #F8FAFC;
+            padding: 16px 20px;
+            border-radius: 12px;
+            border: 1px solid #E2E8F0;
+            margin-bottom: 16px;
+        }
+        @media (max-width: 900px) {
+            .hc-link-row {
+                grid-template-columns: 1fr;
+            }
+        }
+        .hc-link-info h4 {
+            margin: 0 0 4px 0;
+            font-size: 14px;
+            font-weight: 700;
+            color: #1E293B;
+        }
+        .hc-shortlink-badge {
+            display: inline-block;
+            background: #E0F2FE;
+            color: #0369A1;
+            font-family: monospace;
+            font-size: 12px;
+            padding: 3px 8px;
+            border-radius: 6px;
+            font-weight: 600;
+        }
+        .hc-input-text {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid #CBD5E1;
+            border-radius: 8px;
+            font-size: 13.5px;
+            transition: all 0.2s ease;
+        }
+        .hc-input-text:focus {
+            border-color: #1877F2;
+            box-shadow: 0 0 0 3px rgba(24, 119, 242, 0.15);
+            outline: none;
+        }
+        .hc-btn-copy {
+            background: #ffffff;
+            color: #475569;
+            border: 1px solid #CBD5E1;
+            padding: 8px 14px;
+            border-radius: 8px;
+            font-size: 12.5px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: center;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+        .hc-btn-copy:hover {
+            background: #F1F5F9;
+            color: #0F172A;
+            border-color: #94A3B8;
+        }
+        .hc-btn-test {
+            background: #EFF6FF;
+            color: #1D4ED8;
+            border: 1px solid #BFDBFE;
+        }
+        .hc-btn-test:hover {
+            background: #DBEAFE;
+            color: #1E40AF;
+        }
+        .hc-save-btn {
+            background: #1877F2 !important;
+            color: #ffffff !important;
+            border: none !important;
+            padding: 10px 28px !important;
+            font-size: 14px !important;
+            font-weight: 700 !important;
+            border-radius: 10px !important;
+            cursor: pointer !important;
+            box-shadow: 0 4px 12px rgba(24, 119, 242, 0.25) !important;
+            transition: all 0.2s ease !important;
+        }
+        .hc-save-btn:hover {
+            background: #0d6edc !important;
+            transform: translateY(-1px);
+        }
+        .hc-toast {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #0F172A;
+            color: #ffffff;
+            padding: 12px 20px;
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 600;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+            pointer-events: none;
+            z-index: 99999;
+        }
+        .hc-toast.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+
+    <div class="hc-admin-wrap">
+        <div class="hc-admin-header">
+            <h1>🌐 Cài Đặt Hệ Thống & Quản Lý Link Chuyển Hướng</h1>
+            <p>Tự động chuyển hướng link thông minh, giúp quản lý toàn bộ link Facebook, Zalo trên website và email một cách chủ động mà không lo bị hỏng liên kết.</p>
+        </div>
+
         <form action="options.php" method="post">
             <?php
-            // Security field
             settings_fields( 'hieucon_popup_options' );
             do_settings_sections( 'hieucon_popup_options' );
             ?>
-            <table class="form-table">
-                <tr>
-                    <th scope="row">Bật Popup?</th>
-                    <td>
-                        <input type="checkbox" name="hieucon_popup_enable" value="1" <?php echo $enable; ?> />
-                        <p class="description">Check để bật hiển thị popup trên website.</p>
-                    </td>
-                </tr>
-                <tr>
-                    <th scope="row">Tiêu đề Popup</th>
-                    <td>
-                        <input type="text" name="hieucon_popup_title" value="<?php echo esc_attr( $title ); ?>" class="regular-text" />
-                    </td>
-                </tr>
-                <tr>
-                    <th scope="row">Nội dung Popup (hỗ trợ HTML)</th>
-                    <td>
-                        <textarea name="hieucon_popup_desc" rows="5" cols="50" class="large-text code"><?php echo esc_textarea( $desc ); ?></textarea>
-                    </td>
-                </tr>
-                <tr>
-                    <th scope="row">Chữ trên Nút</th>
-                    <td>
-                        <input type="text" name="hieucon_popup_btn_text" value="<?php echo esc_attr( $btn_text ); ?>" class="regular-text" />
-                    </td>
-                </tr>
-                <tr>
-                    <th scope="row">Link của Nút</th>
-                    <td>
-                        <input type="url" name="hieucon_popup_btn_link" value="<?php echo esc_attr( $btn_link ); ?>" class="regular-text" />
-                        <p class="description">Ví dụ: https://zalo.me/g/xxxxxx hoặc link Facebook Group</p>
-                    </td>
-                </tr>
-                <tr>
-                    <th scope="row">Thời gian hiển thị (giây)</th>
-                    <td>
-                        <input type="number" name="hieucon_popup_delay" value="<?php echo esc_attr( $delay ); ?>" class="small-text" min="0" />
-                        <p class="description">Số giây chờ trước khi Popup hiện lên lần đầu tiên (Mặc định: 5 giây).</p>
-                    </td>
-                </tr>
-                <tr>
-                    <th scope="row" style="color: #d63638;">Custom Code (Toàn quyền)</th>
-                    <td>
-                        <textarea name="hieucon_popup_custom_code" rows="8" cols="50" class="large-text code"><?php echo esc_textarea( $custom ); ?></textarea>
-                        <p class="description">Nếu bạn điền mã HTML/JS/CSS vào đây, hệ thống sẽ sử dụng <strong>toàn bộ mã này</strong> để làm Popup và sẽ bỏ qua tất cả cấu hình mặc định (Tiêu đề, Mô tả, Nút, Thời gian hiển thị...) phía trên.</p>
-                    </td>
-                </tr>
-            </table>
-            <?php submit_button( 'Lưu thay đổi' ); ?>
+
+            <!-- PHẦN 1: QUẢN LÝ LINK CHUYỂN HƯỚNG -->
+            <div class="hc-card">
+                <div class="hc-card-title">
+                    <span>🔗 Quản Lý Link Chuyển Hướng (Shortlink Direct)</span>
+                </div>
+
+                <p style="font-size: 13.5px; color: #64748b; margin-bottom: 20px; line-height: 1.5;">
+                    Tất cả các nút bấm trên website và liên kết trong Email đã gửi tới khách hàng đều trỏ qua đường dẫn rút gọn nội bộ bên dưới. 
+                    Khi bạn thay đổi URL Đích ở ô bên phải và bấm <strong>Lưu thay đổi</strong>, mọi lượt click từ người dùng sẽ tự động chuyển tới URL mới!
+                </p>
+
+                <!-- Link 1: Facebook Group -->
+                <div class="hc-link-row">
+                    <div class="hc-link-info">
+                        <h4>📘 Cộng đồng Facebook</h4>
+                        <span class="hc-shortlink-badge">/facebook-group</span>
+                    </div>
+                    <div>
+                        <label style="display:block; font-size:11px; font-weight:700; color:#64748b; margin-bottom:4px; text-transform:uppercase;">URL Đích (Destination URL):</label>
+                        <input type="url" name="hieucon_link_facebook_group" value="<?php echo esc_attr( $fb_group_url ); ?>" class="hc-input-text" placeholder="https://www.facebook.com/groups/..." required />
+                    </div>
+                    <div style="display:flex; flex-direction:column; gap:6px;">
+                        <button type="button" class="hc-btn-copy" onclick="copyShortlink('<?php echo esc_js( $site_fb_short ); ?>')">📋 Copy Shortlink</button>
+                        <a href="<?php echo esc_url( $site_fb_short ); ?>" target="_blank" class="hc-btn-copy hc-btn-test">🔗 Thử nghiệm</a>
+                    </div>
+                </div>
+
+                <!-- Link 2: Zalo Group (List Manager) -->
+                <div style="background: #F8FAFC; border: 1px solid #E2E8F0; padding: 20px; border-radius: 14px; margin-bottom: 16px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1.5px solid #E2E8F0; padding-bottom: 12px; margin-bottom: 12px;">
+                        <div>
+                            <h4 style="margin:0 0 4px 0; font-size:15px; font-weight:700; color:#1E293B;">💬 Góc Chia Sẻ (Danh sách Link Zalo Group)</h4>
+                            <span class="hc-shortlink-badge">/zalo-group</span>
+                        </div>
+                        <div style="display:flex; gap:8px;">
+                            <button type="button" class="hc-btn-copy" onclick="copyShortlink('<?php echo esc_js( $site_zalo_group ); ?>')">📋 Copy Shortlink</button>
+                            <a href="<?php echo esc_url( $site_zalo_group ); ?>" target="_blank" class="hc-btn-copy hc-btn-test">🔗 Thử nghiệm link active</a>
+                        </div>
+                    </div>
+
+                    <p style="font-size: 13px; color: #64748b; margin: 4px 0 14px 0; line-height: 1.5;">
+                        Do mỗi nhóm Zalo giới hạn số lượng thành viên (ví dụ 1,000 TV), bạn hãy tạo danh sách các nhóm bên dưới và tích chọn <strong>🔘 Kích hoạt</strong> nhóm Zalo đang mở nhận thành viên mới. 
+                        Shortlink <code>/zalo-group</code> trên toàn bộ website và email sẽ tự động chuyển hướng sang nhóm được tích chọn!
+                    </p>
+
+                    <!-- REPEATER CONTAINER -->
+                    <div id="hc-zalo-groups-container" style="display: flex; flex-direction: column; gap: 10px;">
+                        <?php foreach ( $zalo_groups as $index => $group ) : 
+                            $gid    = esc_attr( isset( $group['id'] ) ? $group['id'] : 'zg_' . $index );
+                            $gname  = esc_attr( isset( $group['name'] ) ? $group['name'] : '' );
+                            $gurl   = esc_url( isset( $group['url'] ) ? $group['url'] : '' );
+                            $is_act = ( $gid === $active_zalo_id );
+                        ?>
+                            <div class="hc-zg-item <?php echo $is_act ? 'hc-zg-active' : ''; ?>" style="display: grid; grid-template-columns: 140px 1fr 1fr 70px; gap: 12px; align-items: center; background: <?php echo $is_act ? '#F0F9FF' : '#FFFFFF'; ?>; padding: 12px 16px; border-radius: 10px; border: 1.5px solid <?php echo $is_act ? '#0284C7' : '#CBD5E1'; ?>;">
+                                
+                                <!-- Active Selection -->
+                                <label style="display: flex; align-items: center; gap: 6px; font-weight: 700; font-size: 13px; cursor: pointer; color: <?php echo $is_act ? '#0369A1' : '#475569'; ?>;">
+                                    <input type="radio" name="hieucon_active_zalo_group_id" value="<?php echo $gid; ?>" <?php checked( $is_act, true ); ?> onchange="highlightActiveZaloGroup(this)" />
+                                    <span><?php echo $is_act ? '🟢 Kích hoạt' : '⚪ Chọn dùng'; ?></span>
+                                </label>
+
+                                <!-- Name / Note -->
+                                <div>
+                                    <input type="hidden" name="hieucon_zalo_groups_list[<?php echo $index; ?>][id]" value="<?php echo $gid; ?>" />
+                                    <input type="text" name="hieucon_zalo_groups_list[<?php echo $index; ?>][name]" value="<?php echo $gname; ?>" class="hc-input-text" placeholder="Tên nhóm (VD: Group #1 - Full 1000 TV)" required />
+                                </div>
+
+                                <!-- Destination URL -->
+                                <div>
+                                    <input type="url" name="hieucon_zalo_groups_list[<?php echo $index; ?>][url]" value="<?php echo $gurl; ?>" class="hc-input-text" placeholder="https://zalo.me/g/..." required />
+                                </div>
+
+                                <!-- Action Delete -->
+                                <div style="text-align: right;">
+                                    <button type="button" class="button button-link-delete" onclick="removeZaloGroupRow(this)" style="color: #EF4444; font-weight: 600; text-decoration: none; font-size: 13px;">❌ Xóa</button>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+
+                    <!-- ADD BUTTON -->
+                    <div style="margin-top: 10px;">
+                        <button type="button" class="hc-btn-copy" onclick="addZaloGroupRow()" style="background: #0EA5E9; color: #ffffff; border: none; font-weight: 700; padding: 9px 16px;">➕ Thêm Link Nhóm Zalo Mới</button>
+                    </div>
+                </div>
+
+                <!-- Link 3: Zalo Tư Vấn -->
+                <div class="hc-link-row">
+                    <div class="hc-link-info">
+                        <h4>📞 Zalo Tư Vấn / SĐT</h4>
+                        <span class="hc-shortlink-badge">/zalo</span>
+                    </div>
+                    <div>
+                        <label style="display:block; font-size:11px; font-weight:700; color:#64748b; margin-bottom:4px; text-transform:uppercase;">URL Đích (Destination URL):</label>
+                        <input type="url" name="hieucon_link_zalo_tuvan" value="<?php echo esc_attr( $zalo_tuvan_url ); ?>" class="hc-input-text" placeholder="https://zalo.me/..." required />
+                    </div>
+                    <div style="display:flex; flex-direction:column; gap:6px;">
+                        <button type="button" class="hc-btn-copy" onclick="copyShortlink('<?php echo esc_js( $site_zalo_tuvan ); ?>')">📋 Copy Shortlink</button>
+                        <a href="<?php echo esc_url( $site_zalo_tuvan ); ?>" target="_blank" class="hc-btn-copy hc-btn-test">🔗 Thử nghiệm</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PHẦN 2: CẤU HÌNH POPUP WEBSITE -->
+            <div class="hc-card">
+                <div class="hc-card-title">
+                    <span>💬 Cấu Hình Popup Thông Báo Website</span>
+                </div>
+
+                <table class="form-table">
+                    <tr>
+                        <th scope="row">Bật Popup?</th>
+                        <td>
+                            <input type="checkbox" name="hieucon_popup_enable" value="1" <?php echo $enable; ?> />
+                            <span class="description">Bật / Tắt hiển thị Popup tự động trên toàn website.</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Tiêu đề Popup</th>
+                        <td>
+                            <input type="text" name="hieucon_popup_title" value="<?php echo esc_attr( $title ); ?>" class="regular-text hc-input-text" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Nội dung Popup</th>
+                        <td>
+                            <textarea name="hieucon_popup_desc" rows="4" cols="50" class="large-text code hc-input-text"><?php echo esc_textarea( $desc ); ?></textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Chữ trên Nút</th>
+                        <td>
+                            <input type="text" name="hieucon_popup_btn_text" value="<?php echo esc_attr( $btn_text ); ?>" class="regular-text hc-input-text" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Link của Nút</th>
+                        <td>
+                            <input type="text" name="hieucon_popup_btn_link" value="<?php echo esc_attr( $btn_link ); ?>" class="regular-text hc-input-text" />
+                            <p class="description">Mẹo: Bạn có thể điền <code>/facebook-group</code>, <code>/zalo-group</code> hoặc <code>/zalo</code> để sử dụng hệ thống chuyển hướng tự động.</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Thời gian chờ (giây)</th>
+                        <td>
+                            <input type="number" name="hieucon_popup_delay" value="<?php echo esc_attr( $delay ); ?>" class="small-text hc-input-text" min="0" style="width: 100px;" />
+                            <span class="description">Số giây chờ trước khi Popup hiện lên lần đầu tiên.</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row" style="color: #d63638;">Custom Code (Nâng cao)</th>
+                        <td>
+                            <textarea name="hieucon_popup_custom_code" rows="6" cols="50" class="large-text code hc-input-text"><?php echo esc_textarea( $custom ); ?></textarea>
+                            <p class="description">Điền mã HTML/JS tùy chỉnh nếu muốn thay thế toàn bộ giao diện Popup mặc định.</p>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <div style="margin-top: 24px;">
+                <input type="submit" name="submit" id="submit" class="hc-save-btn" value="💾 Lưu Tất Cả Thay Đổi">
+            </div>
         </form>
     </div>
+
+    <div id="hc-toast" class="hc-toast">Đã copy link!</div>
+
+    <script>
+        function copyShortlink(url) {
+            navigator.clipboard.writeText(url).then(function() {
+                var toast = document.getElementById('hc-toast');
+                toast.innerText = '✅ Đã copy shortlink: ' + url;
+                toast.classList.add('show');
+                setTimeout(function() {
+                    toast.classList.remove('show');
+                }, 3000);
+            });
+        }
+
+        function addZaloGroupRow() {
+            var container = document.getElementById('hc-zalo-groups-container');
+            var index = container.children.length;
+            var uniqueId = 'zg_' + Date.now();
+            
+            var div = document.createElement('div');
+            div.className = 'hc-zg-item';
+            div.style.cssText = 'display: grid; grid-template-columns: 140px 1fr 1fr 70px; gap: 12px; align-items: center; background: #FFFFFF; padding: 12px 16px; border-radius: 10px; border: 1.5px solid #CBD5E1;';
+            
+            div.innerHTML = `
+                <label style="display: flex; align-items: center; gap: 6px; font-weight: 700; font-size: 13px; cursor: pointer; color: #475569;">
+                    <input type="radio" name="hieucon_active_zalo_group_id" value="${uniqueId}" onchange="highlightActiveZaloGroup(this)" />
+                    <span>⚪ Chọn dùng</span>
+                </label>
+                <div>
+                    <input type="hidden" name="hieucon_zalo_groups_list[${index}][id]" value="${uniqueId}" />
+                    <input type="text" name="hieucon_zalo_groups_list[${index}][name]" value="Góc chia sẻ #${index + 1}" class="hc-input-text" placeholder="Tên nhóm / Ghi chú TV..." required />
+                </div>
+                <div>
+                    <input type="url" name="hieucon_zalo_groups_list[${index}][url]" value="" class="hc-input-text" placeholder="https://zalo.me/g/..." required />
+                </div>
+                <div style="text-align: right;">
+                    <button type="button" class="button button-link-delete" onclick="removeZaloGroupRow(this)" style="color: #EF4444; font-weight: 600; text-decoration: none; font-size: 13px;">❌ Xóa</button>
+                </div>
+            `;
+            
+            container.appendChild(div);
+        }
+
+        function removeZaloGroupRow(btn) {
+            var container = document.getElementById('hc-zalo-groups-container');
+            if (container.children.length <= 1) {
+                alert('Phải giữ lại ít nhất 1 link nhóm Zalo trong danh sách!');
+                return;
+            }
+            var row = btn.closest('.hc-zg-item');
+            var radio = row.querySelector('input[type="radio"]');
+            var wasChecked = radio ? radio.checked : false;
+            
+            row.remove();
+            
+            if (wasChecked) {
+                var firstRadio = container.querySelector('input[type="radio"]');
+                if (firstRadio) {
+                    firstRadio.checked = true;
+                    highlightActiveZaloGroup(firstRadio);
+                }
+            }
+        }
+
+        function highlightActiveZaloGroup(radio) {
+            var items = document.querySelectorAll('.hc-zg-item');
+            items.forEach(function(item) {
+                var r = item.querySelector('input[type="radio"]');
+                var span = item.querySelector('label span');
+                if (r && r.checked) {
+                    item.style.background = '#F0F9FF';
+                    item.style.borderColor = '#0284C7';
+                    if (span) {
+                        span.innerText = '🟢 Kích hoạt';
+                        span.parentElement.style.color = '#0369A1';
+                    }
+                } else {
+                    item.style.background = '#FFFFFF';
+                    item.style.borderColor = '#CBD5E1';
+                    if (span) {
+                        span.innerText = '⚪ Chọn dùng';
+                        span.parentElement.style.color = '#475569';
+                    }
+                }
+            });
+        }
+    </script>
     <?php
 }
 
-// Hàm hiển thị Popup ở frontend
 function hieucon_render_popup() {
     // Kiểm tra xem Popup có được bật trong cài đặt không
     $hieucon_popup_enable = get_option('hieucon_popup_enable', '1');
@@ -635,7 +1130,7 @@ function hieucon_render_popup() {
         <div class="p-hctg-footer">
         <div class="p-hctg-btns">
 
-            <a href="https://www.facebook.com/groups/tukylaroiloantoanthan"
+            <a href="<?php echo home_url('/facebook-group'); ?>"
             target="_blank" rel="noopener noreferrer"
             class="p-hctg-btn p-hctg-btn-fb"
             onclick="phClose()"
@@ -648,7 +1143,7 @@ function hieucon_render_popup() {
             <span class="p-hctg-arr" aria-hidden="true">→</span>
             </a>
 
-            <a href="https://zalo.me/g/vmgfxy834"
+            <a href="<?php echo home_url('/zalo-group'); ?>"
             target="_blank" rel="noopener noreferrer"
             class="p-hctg-btn p-hctg-btn-zalo"
             onclick="phClose()"

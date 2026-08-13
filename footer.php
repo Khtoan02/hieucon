@@ -36,7 +36,7 @@
                     sinh học bên trong.
                 </p>
                 <div class="flex gap-4 mt-auto">
-                    <a href="https://www.facebook.com/groups/tukylaroiloantoanthan" target="_blank" rel="noopener"
+                    <a href="<?php echo home_url('/facebook-group'); ?>" target="_blank" rel="noopener"
                         aria-label="Facebook"
                         class="w-10 h-10 rounded-full bg-white/10 hover:bg-[#f97316] flex items-center justify-center transition-colors border border-white/20 text-white">
                         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
@@ -96,11 +96,18 @@
                         khỏe"</strong>.
                 </p>
 
-                <a href="https://www.facebook.com/groups/tukylaroiloantoanthan" target="_blank"
-                    rel="noopener noreferrer"
-                    class="w-full flex items-center justify-center gap-2 bg-[#f97316] hover:bg-[#d94f00] text-white font-bold py-3 px-6 rounded-xl transition-all shadow-md hover:shadow-lg">
-                    <i data-lucide="users" class="w-5 h-5"></i> Tham Gia Cộng Đồng
-                </a>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <a href="<?php echo home_url('/facebook-group'); ?>" target="_blank"
+                        rel="noopener noreferrer"
+                        class="flex items-center justify-center gap-2 bg-[#1877F2] hover:bg-[#0d6edc] text-white font-bold py-3 px-4 rounded-xl transition-all shadow-md hover:shadow-lg text-xs md:text-sm">
+                        <i data-lucide="users" class="w-4 h-4"></i> Cộng đồng
+                    </a>
+                    <a href="<?php echo home_url('/zalo-group'); ?>" target="_blank"
+                        rel="noopener noreferrer"
+                        class="flex items-center justify-center gap-2 bg-[#0068FF] hover:bg-[#0054cc] text-white font-bold py-3 px-4 rounded-xl transition-all shadow-md hover:shadow-lg text-xs md:text-sm">
+                        <span class="font-black text-sm text-white leading-none">Z</span> Góc chia sẻ
+                    </a>
+                </div>
             </div>
         </div>
 

@@ -417,7 +417,8 @@ function hieucon_render_sub_checklist_explanation_v2($item)
                     class="inline-block bg-yellow/20 text-yellow font-bold text-xs px-3.5 py-1.5 rounded-full border border-solid border-yellow/30 uppercase tracking-wider mb-4"
                     style="color:#FFD154;">Hiểu Con Từ Gốc</span>
                 <h1
-                    class="font-oswald text-2xl md:text-3.5xl font-bold uppercase tracking-wide text-white leading-tight mb-3">
+                    class="font-oswald font-bold uppercase tracking-wide text-white leading-tight mb-3"
+                    style="font-size: 3rem;">
                     <?php echo esc_html(get_the_title()); ?>
                 </h1>
                 <div
@@ -445,7 +446,7 @@ function hieucon_render_sub_checklist_explanation_v2($item)
                             <path stroke-linecap="round" stroke-linejoin="round"
                                 d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
                         </svg>
-                        Đánh giá dấu hiệu hành vi
+                        Các dấu hiệu thường gặp
                     </h3>
 
                     <?php if (empty($groups)): ?>
@@ -523,7 +524,7 @@ function hieucon_render_sub_checklist_explanation_v2($item)
                     </ul>
                     <div class="sub-chk-cta-row pt-5 border-t border-solid border-emerald-200/80 text-sm md:text-[15px] text-slate-700">
                         <span class="sub-chk-cta-copy font-semibold">Nếu ba mẹ cần hỗ trợ tư vấn các vấn đề trên, hãy liên hệ với chúng tôi:</span>
-                        <a href="https://zalo.me/0985391881" target="_blank" rel="noopener noreferrer"
+                        <a href="<?php echo home_url('/zalo'); ?>" target="_blank" rel="noopener noreferrer"
                             class="sub-chk-cta-button bg-[#0068ff] hover:bg-[#0056d6] text-white font-bold shadow-md shadow-blue-100 transition-all text-sm cursor-pointer">
                             <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" fill="none"
                                 viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
@@ -545,7 +546,7 @@ function hieucon_render_sub_checklist_explanation_v2($item)
         </form>
 
                 <!-- NAVIGATION TO MAIN CHECKLIST -->
-                <div class="sub-chk-section-divider"><span>Bức tranh toàn diện</span></div>
+                <div class="sub-chk-section-divider"><span></span></div>
                 <div class="sub-chk-overview-panel rounded-2xl p-6 md:p-8 text-left transition-all mb-8">
                     <!-- Header -->
                     <div class="relative z-10 flex items-start gap-4 mb-5">
@@ -622,18 +623,22 @@ function hieucon_render_sub_checklist_explanation_v2($item)
                     </div>
                 </div>
 
-                <!-- 📚 TÀI LIỆU THAM KHẢO (NỀN TRƠN, KHÔNG CARD) -->
+                <!-- 📚 TÀI LIỆU THAM KHẢO (DROPDOWN ACCORDION) -->
                 <?php if (!empty($references)): ?>
-                    <div class="my-8 text-left border-t border-solid border-slate-100 pt-6">
-                        <h3 class="font-bold text-sm md:text-base mb-3 flex items-center gap-3 uppercase tracking-wider text-slate-700"
-                            style="margin-top:0; font-family:'Oswald', sans-serif;">
-                            📚 Tài liệu tham khảo
-                        </h3>
-                        <div
-                            class="text-xs sm:text-sm leading-relaxed text-slate-500 font-medium space-y-2 whitespace-pre-line">
+                    <details class="group border border-slate-200/90 bg-slate-50/80 rounded-2xl transition-all my-8 overflow-hidden">
+                        <summary class="flex items-center justify-between gap-3 p-4 sm:px-5 cursor-pointer select-none font-bold text-sm md:text-base text-slate-700 hover:text-indigo-900 hover:bg-slate-100/70 transition-colors uppercase tracking-wider font-['Oswald',sans-serif]">
+                            <div class="flex items-center gap-2.5">
+                                <span class="text-base">📚</span>
+                                <span>Tài liệu tham khảo</span>
+                            </div>
+                            <svg class="w-5 h-5 text-slate-400 group-open:rotate-180 transition-transform duration-300 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </summary>
+                        <div class="px-5 pb-5 pt-3 text-xs sm:text-sm leading-relaxed text-slate-600 font-medium space-y-2 whitespace-pre-line border-t border-slate-200/70 bg-white/80">
                             <?php echo nl2br(esc_html($references)); ?>
                         </div>
-                    </div>
+                    </details>
                 <?php endif; ?>
     </div>
 </div>

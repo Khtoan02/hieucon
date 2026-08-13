@@ -20,7 +20,7 @@
       Nếu Quý phụ huynh có thắc mắc hoặc cần tư vấn, xin vui lòng kết nối trực tiếp với chúng tôi:
     </p>
     <div style="display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; margin-bottom: 24px;">
-      <a href="https://zalo.me/0985391881" target="_blank" rel="noopener" class="btn-success-nav" style="display: inline-flex; align-items: center; justify-content: center; text-decoration: none; padding: 12px 28px; font-weight: 700; background: linear-gradient(135deg, #F05A25 0%, #FF7A45 100%); color: #ffffff !important; border-radius: 12px; font-size: 14px; font-family: 'Quicksand', sans-serif; box-shadow: 0 4px 12px rgba(240, 90, 37, 0.2); transition: all 0.2s ease;">
+      <a href="<?php echo home_url('/zalo'); ?>" target="_blank" rel="noopener" class="btn-success-nav" style="display: inline-flex; align-items: center; justify-content: center; text-decoration: none; padding: 12px 28px; font-weight: 700; background: linear-gradient(135deg, #F05A25 0%, #FF7A45 100%); color: #ffffff !important; border-radius: 12px; font-size: 14px; font-family: 'Quicksand', sans-serif; box-shadow: 0 4px 12px rgba(240, 90, 37, 0.2); transition: all 0.2s ease;">
         Kết nối tư vấn trực tiếp
       </a>
       <a href="/bo-cong-cu-suc-khoe/" class="btn-success-nav" style="display: inline-flex; align-items: center; justify-content: center; text-decoration: none; padding: 12px 28px; font-weight: 700; background: #0D2A78; color: #ffffff !important; border-radius: 12px; font-size: 14px; font-family: 'Quicksand', sans-serif; box-shadow: 0 4px 12px rgba(13, 42, 120, 0.15); transition: all 0.2s ease;">

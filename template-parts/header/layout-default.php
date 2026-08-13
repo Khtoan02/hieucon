@@ -175,7 +175,7 @@ $course_cats = get_terms([
                     <div class="hidden lg:flex flex-1 justify-end items-center min-w-0 gap-3">
 
                         <!-- Nút: Cộng đồng Facebook -->
-                        <a href="https://www.facebook.com/groups/tukylaroiloantoanthan" target="_blank"
+                        <a href="<?php echo home_url('/facebook-group'); ?>" target="_blank"
                             rel="noopener noreferrer" title="Cộng Đồng Cha Mẹ"
                             class="flex items-center gap-2 bg-gradient-to-br from-[#1877F2] to-[#0A58CA] hover:from-[#1464CC] hover:to-[#084298] text-white px-3.5 py-2 rounded-xl font-bold text-[11px] xl:text-[12px] transition-all duration-300 shadow-[0_4px_12px_rgba(24,119,242,0.25)] hover:shadow-[0_6px_16px_rgba(24,119,242,0.35)] hover:-translate-y-0.5 border border-white/10 group shrink-0"
                             aria-label="Cộng đồng Facebook">
@@ -188,13 +188,13 @@ $course_cats = get_terms([
                         </a>
 
                         <!-- Nút: Kết nối Zalo -->
-                        <a href="https://zalo.me/g/vmgfxy834?joinSrc=9" target="_blank" rel="noopener noreferrer"
-                            title="Kết Nối Chuyên Gia"
+                        <a href="<?php echo home_url('/zalo-group'); ?>" target="_blank" rel="noopener noreferrer"
+                            title="Góc Chia Sẻ"
                             class="flex items-center gap-2 bg-gradient-to-br from-[#00A1FF] to-[#0068FF] hover:from-[#008CE6] hover:to-[#0052CC] text-white px-3.5 py-2 rounded-xl font-bold text-[11px] xl:text-[12px] transition-all duration-300 shadow-[0_4px_12px_rgba(0,104,255,0.25)] hover:shadow-[0_6px_16px_rgba(0,104,255,0.35)] hover:-translate-y-0.5 border border-white/10 group shrink-0"
-                            aria-label="Kết nối Zalo">
+                            aria-label="Góc chia sẻ Zalo">
                             <span
                                 class="font-black text-[13px] text-white leading-none group-hover:scale-110 transition-transform">Z</span>
-                            <span>Hỏi đáp Zalo</span>
+                            <span>Góc chia sẻ</span>
                         </a>
 
                         <!-- Divider -->
@@ -330,7 +330,7 @@ $course_cats = get_terms([
 
 
                 <!-- Nút: Cộng đồng Facebook -->
-                <a href="https://www.facebook.com/groups/tukylaroiloantoanthan" target="_blank"
+                <a href="<?php echo home_url('/facebook-group'); ?>" target="_blank"
                     class="bg-gradient-to-br from-[#1877F2] to-[#0A58CA] text-white p-3.5 rounded-2xl shadow-[0_4px_12px_rgba(24,119,242,0.25)] flex items-center gap-3 transition-transform hover:scale-[1.02] active:scale-95">
                     <div class="bg-white/20 w-9 h-9 rounded-xl flex items-center justify-center shrink-0">
                         <svg viewBox="0 0 320 512" class="w-4 h-4 text-white fill-current">
@@ -339,22 +339,22 @@ $course_cats = get_terms([
                         </svg>
                     </div>
                     <div class="flex flex-col text-left">
-                        <span class="font-extrabold text-[13px] leading-tight">Cộng Đồng Cha Mẹ</span>
+                        <span class="font-extrabold text-[13px] leading-tight">Cộng Đồng</span>
                         <span class="font-bold text-[10px] text-white/80 uppercase tracking-widest mt-0.5">Nơi chia
                             sẻ & đồng hành</span>
                     </div>
                 </a>
 
-                <!-- Nút: Kết nối Zalo -->
-                <a href="https://zalo.me/g/vmgfxy834?joinSrc=9" target="_blank"
+                <!-- Nút: Góc chia sẻ Zalo -->
+                <a href="<?php echo home_url('/zalo-group'); ?>" target="_blank"
                     class="bg-gradient-to-br from-[#00A1FF] to-[#0068FF] text-white p-3.5 rounded-2xl shadow-[0_4px_12px_rgba(0,104,255,0.25)] flex items-center gap-3 transition-transform hover:scale-[1.02] active:scale-95">
                     <div class="bg-white/20 w-9 h-9 rounded-xl flex items-center justify-center shrink-0">
                         <span class="font-black text-[18px] text-white leading-none">Z</span>
                     </div>
                     <div class="flex flex-col text-left">
-                        <span class="font-extrabold text-[13px] leading-tight">Kết Nối Chuyên Gia</span>
-                        <span class="font-bold text-[10px] text-white/80 uppercase tracking-widest mt-0.5">Hỏi đáp &
-                            tư vấn y sinh</span>
+                        <span class="font-extrabold text-[13px] leading-tight">Góc Chia Sẻ</span>
+                        <span class="font-bold text-[10px] text-white/80 uppercase tracking-widest mt-0.5">Cập nhật
+                            thông tin & kiến thức</span>
                     </div>
                 </a>
             </div>

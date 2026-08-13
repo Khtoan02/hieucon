@@ -564,7 +564,7 @@
                     <span class="text-sm text-slate-500 group-hover:text-white/70">Hotline tư vấn</span>
                 </a>
 
-                <a href="https://www.facebook.com/groups/tukylaroiloantoanthan" target="_blank" class="group bg-slate-800/50 hover:bg-blue-600 border border-slate-700 p-8 rounded-[2.5rem] transition-all duration-500 flex flex-col items-center text-center">
+                <a href="<?php echo home_url('/facebook-group'); ?>" target="_blank" class="group bg-slate-800/50 hover:bg-blue-600 border border-slate-700 p-8 rounded-[2.5rem] transition-all duration-500 flex flex-col items-center text-center">
                     <div class="w-16 h-16 bg-blue-500/20 group-hover:bg-white/20 rounded-2xl flex items-center justify-center text-blue-400 group-hover:text-white mb-6 text-2xl transition-all">
                         <i class="fa-brands fa-facebook"></i>
                     </div>
@@ -572,11 +572,11 @@
                     <span class="text-sm text-slate-500 group-hover:text-white/70">Hiểu con từ Gốc</span>
                 </a>
 
-                <a href="https://zalo.me/g/vmgfxy834" target="_blank" class="group bg-slate-800/50 hover:bg-sky-500 border border-slate-700 p-8 rounded-[2.5rem] transition-all duration-500 flex flex-col items-center text-center">
+                <a href="<?php echo home_url('/zalo-group'); ?>" target="_blank" class="group bg-slate-800/50 hover:bg-sky-500 border border-slate-700 p-8 rounded-[2.5rem] transition-all duration-500 flex flex-col items-center text-center">
                     <div class="w-16 h-16 bg-sky-500/20 group-hover:bg-white/20 rounded-2xl flex items-center justify-center text-sky-400 group-hover:text-white mb-6 text-2xl transition-all">
                         <i class="fa-solid fa-comment-dots"></i>
                     </div>
-                    <h4 class="font-bold text-xl mb-2">Nhóm Zalo</h4>
+                    <h4 class="font-bold text-xl mb-2">Góc chia sẻ</h4>
                     <span class="text-sm text-slate-500 group-hover:text-white/70">Hỏi đáp trực tiếp</span>
                 </a>
 

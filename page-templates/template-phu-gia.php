@@ -448,7 +448,7 @@
 
                 <!-- CTA Grid -->
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6 mb-16 anim d1">
-                    <a href="https://www.facebook.com/groups/tukylaroiloantoanthan" target="_blank"
+                    <a href="<?php echo home_url('/facebook-group'); ?>" target="_blank"
                        class="bg-white/10 hover:bg-[#1877F2] border border-white/10 hover:border-[#1877F2] text-white p-6 rounded-3xl transition-all duration-300 flex items-center gap-4 group backdrop-blur-sm hover:-translate-y-2 hover:shadow-[0_0_30px_rgba(24,119,242,0.3)]">
                         <div class="w-12 h-12 bg-white/10 group-hover:bg-white/20 rounded-2xl flex items-center justify-center shrink-0 transition-colors">
                             <i class="fa-brands fa-facebook-f text-2xl"></i>
@@ -459,13 +459,13 @@
                         </div>
                     </a>
 
-                    <a href="https://zalo.me/g/vmgfxy834" target="_blank"
+                    <a href="<?php echo home_url('/zalo-group'); ?>" target="_blank"
                        class="bg-white/10 hover:bg-[#0068FF] border border-white/10 hover:border-[#0068FF] text-white p-6 rounded-3xl transition-all duration-300 flex items-center gap-4 group backdrop-blur-sm hover:-translate-y-2 hover:shadow-[0_0_30px_rgba(0,104,255,0.3)]">
                         <div class="w-12 h-12 bg-white/10 group-hover:bg-white/20 rounded-2xl flex items-center justify-center shrink-0 transition-colors">
                             <i class="fa-solid fa-comments text-2xl"></i>
                         </div>
                         <div class="min-w-0">
-                            <span class="font-bold text-base block truncate">Nhóm Zalo</span>
+                            <span class="font-bold text-base block truncate">Góc chia sẻ</span>
                             <span class="text-sm text-slate-400 group-hover:text-blue-100 transition-colors">Hỗ trợ 24/7</span>
                         </div>
                     </a>

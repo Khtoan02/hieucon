@@ -679,12 +679,18 @@ if (have_posts()):
                             <p class="text-navy/70 text-xs font-medium leading-relaxed mb-4">
                                 Nhận sự đồng hành y sinh từ hàng ngàn cha mẹ đặc biệt tại cộng đồng Hiểu Con Từ Gốc.
                             </p>
-                            <a href="https://www.facebook.com/groups/tukylaroiloantoanthan" target="_blank"
-                                rel="noopener noreferrer"
-                                class="inline-flex items-center gap-2 bg-[#f89202] hover:bg-[#ea580c] text-white font-bold py-2.5 px-5 rounded-full text-xs transition-all w-full justify-center no-underline">
-                                Hiểu Con Từ Gốc
-                                <i data-lucide="arrow-right" class="w-4 h-4"></i>
-                            </a>
+                            <div class="grid grid-cols-1 gap-2">
+                                <a href="<?php echo home_url('/facebook-group'); ?>" target="_blank"
+                                    rel="noopener noreferrer"
+                                    class="inline-flex items-center gap-2 bg-[#1877F2] hover:bg-[#0d6edc] text-white font-bold py-2.5 px-4 rounded-xl text-xs transition-all w-full justify-center no-underline">
+                                    <i data-lucide="users" class="w-4 h-4"></i> Cộng đồng
+                                </a>
+                                <a href="<?php echo home_url('/zalo-group'); ?>" target="_blank"
+                                    rel="noopener noreferrer"
+                                    class="inline-flex items-center gap-2 bg-[#0068FF] hover:bg-[#0054cc] text-white font-bold py-2.5 px-4 rounded-xl text-xs transition-all w-full justify-center no-underline">
+                                    <span class="font-black text-xs text-white leading-none">Z</span> Góc chia sẻ
+                                </a>
+                            </div>
                         </div>
 
                     </div>
@@ -692,12 +698,19 @@ if (have_posts()):
             </div> <!-- Closes relative content wrapper -->
         </div> <!-- Closes max-w-[1400px] -->
         
-        <!-- FLOATING BRAND BADGE (sticky in bottom right) -->
-        <a href="https://www.facebook.com/groups/tukylaroiloantoanthan" target="_blank" rel="noopener noreferrer" 
-           class="fixed bottom-6 right-6 z-50 inline-flex items-center gap-2 bg-[#f89202] hover:bg-[#ea580c] text-white font-bold py-3 px-5 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 text-xs tracking-wider uppercase no-underline">
-            <i data-lucide="users" class="w-4 h-4"></i>
-            Hiểu Con Từ Gốc
-        </a>
+        <!-- FLOATING BRAND BADGES (sticky in bottom right) -->
+        <div class="fixed bottom-6 right-6 z-50 flex flex-col sm:flex-row gap-2">
+            <a href="<?php echo home_url('/facebook-group'); ?>" target="_blank" rel="noopener noreferrer" 
+               class="inline-flex items-center gap-2 bg-[#1877F2] hover:bg-[#0d6edc] text-white font-bold py-2.5 px-4 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 text-xs no-underline">
+                <i data-lucide="users" class="w-4 h-4"></i>
+                Cộng đồng
+            </a>
+            <a href="<?php echo home_url('/zalo-group'); ?>" target="_blank" rel="noopener noreferrer" 
+               class="inline-flex items-center gap-2 bg-[#0068FF] hover:bg-[#0054cc] text-white font-bold py-2.5 px-4 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 text-xs no-underline">
+                <span class="font-black text-xs text-white leading-none">Z</span>
+                Góc chia sẻ
+            </a>
+        </div>
     </div> <!-- Closes premium-doc-wrap -->
         <?php
     endwhile;

@@ -113,9 +113,14 @@
                     Về lại trang chủ
                 </a>
 
-                <a href="https://www.facebook.com/groups/tukylaroiloantoanthan" target="_blank" rel="noopener noreferrer" class="w-full sm:w-auto glass-elegant text-navy hover:bg-white/90 px-8 py-3.5 md:py-4 rounded-full font-bold transition-all shadow-soft hover:shadow-elegant flex items-center justify-center gap-3">
-                    <i data-lucide="users" class="w-5 h-5 text-secondary"></i>
-                    Tham gia nhóm "Hiểu Con Từ Gốc"
+                <a href="<?php echo home_url('/facebook-group'); ?>" target="_blank" rel="noopener noreferrer" class="w-full sm:w-auto bg-[#1877F2] hover:bg-[#0d6edc] text-white px-6 py-3.5 rounded-full font-bold transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2 text-sm">
+                    <i data-lucide="users" class="w-4 h-4"></i>
+                    Cộng đồng
+                </a>
+
+                <a href="<?php echo home_url('/zalo-group'); ?>" target="_blank" rel="noopener noreferrer" class="w-full sm:w-auto bg-[#0068FF] hover:bg-[#0054cc] text-white px-6 py-3.5 rounded-full font-bold transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2 text-sm">
+                    <span class="font-black text-sm text-white leading-none">Z</span>
+                    Góc chia sẻ
                 </a>
             </div>
         </div>

@@ -341,7 +341,7 @@
                 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <!-- FB Group -->
-                    <a href="https://www.facebook.com/groups/tukylaroiloantoanthan" target="_blank" class="flex items-start gap-4 p-4 rounded-xl bg-white/10 hover:bg-white/20 transition group border border-transparent hover:border-blue-400/30">
+                    <a href="<?php echo home_url('/facebook-group'); ?>" target="_blank" class="flex items-start gap-4 p-4 rounded-xl bg-white/10 hover:bg-white/20 transition group border border-transparent hover:border-blue-400/30">
                         <div class="w-12 h-12 shrink-0 bg-blue-600 text-white rounded-full flex items-center justify-center text-2xl group-hover:scale-110 transition-transform shadow-lg">
                             <i class="ph-fill ph-facebook-logo"></i>
                         </div>
@@ -352,12 +352,12 @@
                     </a>
 
                     <!-- Zalo Group -->
-                    <a href="https://zalo.me/g/vmgfxy834" target="_blank" class="flex items-start gap-4 p-4 rounded-xl bg-white/10 hover:bg-white/20 transition group border border-transparent hover:border-blue-400/30">
+                    <a href="<?php echo home_url('/zalo-group'); ?>" target="_blank" class="flex items-start gap-4 p-4 rounded-xl bg-white/10 hover:bg-white/20 transition group border border-transparent hover:border-blue-400/30">
                         <div class="w-12 h-12 shrink-0 bg-blue-400 text-white rounded-full flex items-center justify-center text-2xl group-hover:scale-110 transition-transform shadow-lg">
                             <i class="ph-fill ph-chat-circle-dots"></i>
                         </div>
                         <div>
-                            <h4 class="text-white font-bold text-sm mb-1">Nhóm Zalo giải đáp thắc mắc</h4>
+                            <h4 class="text-white font-bold text-sm mb-1">Góc chia sẻ</h4>
                             <p class="text-gray-400 text-xs leading-relaxed">Nơi trao đổi câu hỏi trực tiếp, nhận hướng dẫn, gỡ rối và được hỗ trợ nhanh chóng từ đội ngũ chuyên gia.</p>
                         </div>
                     </a>
@@ -381,7 +381,7 @@
                         <div>
                             <h4 class="text-white font-bold text-sm mb-1">Hotline tư vấn</h4>
                             <p class="text-amber-300 text-lg font-bold tracking-wider mb-1">0988.717.107</p>
-                            <p class="text-amber-300 text-lg font-bold tracking-wider">0985.391.881</p>
+                            <p class="text-amber-300 text-lg font-bold tracking-wider"><a href="<?php echo home_url('/zalo'); ?>" target="_blank" rel="noopener noreferrer" class="hover:underline">0985.391.881</a> (Zalo)</p>
                         </div>
                     </div>
                 </div>

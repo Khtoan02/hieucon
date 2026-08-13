@@ -533,7 +533,7 @@
             </p>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
-                <a href="https://www.facebook.com/groups/tukylaroiloantoanthan" target="_blank" class="bg-slate-800/80 hover:bg-[#1877F2] border border-slate-700 hover:border-[#1877F2] text-white p-8 rounded-3xl transition-all duration-300 flex flex-col items-center justify-center gap-4 group backdrop-blur-sm transform hover:-translate-y-2 hover:shadow-[0_0_30px_rgba(24,119,242,0.4)]">
+                <a href="<?php echo home_url('/facebook-group'); ?>" target="_blank" class="bg-slate-800/80 hover:bg-[#1877F2] border border-slate-700 hover:border-[#1877F2] text-white p-8 rounded-3xl transition-all duration-300 flex flex-col items-center justify-center gap-4 group backdrop-blur-sm transform hover:-translate-y-2 hover:shadow-[0_0_30px_rgba(24,119,242,0.4)]">
                     <div class="bg-slate-700/50 group-hover:bg-white/20 p-4 rounded-2xl transition-colors">
                         <i class="fab fa-facebook text-4xl group-hover:scale-110 transition-transform"></i>
                     </div>
@@ -543,12 +543,12 @@
                     </div>
                 </a>
                 
-                <a href="https://zalo.me/g/vmgfxy834" target="_blank" class="bg-slate-800/80 hover:bg-[#0068FF] border border-slate-700 hover:border-[#0068FF] text-white p-8 rounded-3xl transition-all duration-300 flex flex-col items-center justify-center gap-4 group backdrop-blur-sm transform hover:-translate-y-2 hover:shadow-[0_0_30px_rgba(0,104,255,0.4)]">
+                <a href="<?php echo home_url('/zalo-group'); ?>" target="_blank" class="bg-slate-800/80 hover:bg-[#0068FF] border border-slate-700 hover:border-[#0068FF] text-white p-8 rounded-3xl transition-all duration-300 flex flex-col items-center justify-center gap-4 group backdrop-blur-sm transform hover:-translate-y-2 hover:shadow-[0_0_30px_rgba(0,104,255,0.4)]">
                     <div class="bg-slate-700/50 group-hover:bg-white/20 p-4 rounded-2xl transition-colors">
                         <i class="fas fa-comment-dots text-4xl group-hover:scale-110 transition-transform"></i>
                     </div>
                     <div>
-                        <span class="font-bold text-lg block mb-1">Nhóm Zalo hỗ trợ</span>
+                        <span class="font-bold text-lg block mb-1">Góc chia sẻ</span>
                         <span class="text-sm text-slate-400 group-hover:text-blue-100 transition-colors">Giải đáp nhanh chóng</span>
                     </div>
                 </a>

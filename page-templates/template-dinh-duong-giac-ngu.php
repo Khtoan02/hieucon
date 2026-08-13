@@ -343,9 +343,9 @@
                     class="bg-calm-DEFAULT hover:bg-calm-dark text-white font-bold py-4 px-8 rounded-full transition-transform transform hover:-translate-y-1 flex items-center gap-3 w-full sm:w-auto justify-center shadow-lg">
                     <span class="text-xl">📞</span> Hotline/Zalo: 0988.71.71.07
                 </a>
-                <a href="https://zalo.me/g/vmgfxy834" target="_blank"
+                <a href="<?php echo home_url('/zalo-group'); ?>" target="_blank"
                     class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-4 px-8 rounded-full transition-transform transform hover:-translate-y-1 flex items-center gap-3 w-full sm:w-auto justify-center shadow-lg">
-                    <span class="text-xl">💬</span> Tham gia Nhóm Zalo Hỗ Trợ
+                    <span class="text-xl">💬</span> Tham gia Góc chia sẻ
                 </a>
             </div>
 
@@ -356,7 +356,7 @@
                     <span>🌐</span> Fanpage: Trợ lý Nam Khánh
                 </a>
                 <span class="hidden md:inline text-sleep-600">|</span>
-                <a href="https://www.facebook.com/groups/tukylaroiloantoanthan" target="_blank"
+                <a href="<?php echo home_url('/facebook-group'); ?>" target="_blank"
                     class="hover:text-calm-light transition-colors flex items-center gap-2">
                     <span>🤝</span> Cộng đồng FB: Hiểu con từ Gốc - Tự kỷ là Rối loạn toàn thân
                 </a>

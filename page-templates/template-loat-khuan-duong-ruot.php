@@ -472,13 +472,13 @@
 
                 <!-- Social Links -->
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mt-12 md:mt-16 relative z-10">
-                    <a href="https://www.facebook.com/groups/tukylaroiloantoanthan" target="_blank" class="cta-link p-4 md:p-6 rounded-[1.5rem] md:rounded-[2rem] bg-white border border-slate-200 text-center flex flex-col items-center shadow-[0_5px_15px_rgba(0,0,0,0.05)] hover:-translate-y-2 hover:shadow-[0_15px_30px_rgba(59,89,152,0.15)] hover:border-[#3b5998]/50 transition-all group overflow-hidden relative">
+                    <a href="<?php echo home_url('/facebook-group'); ?>" target="_blank" class="cta-link p-4 md:p-6 rounded-[1.5rem] md:rounded-[2rem] bg-white border border-slate-200 text-center flex flex-col items-center shadow-[0_5px_15px_rgba(0,0,0,0.05)] hover:-translate-y-2 hover:shadow-[0_15px_30px_rgba(59,89,152,0.15)] hover:border-[#3b5998]/50 transition-all group overflow-hidden relative">
                         <span class="text-3xl md:text-4xl mb-2 md:mb-3 transition-transform drop-shadow-sm group-hover:scale-110">&#128101;</span>
                         <span class="font-extrabold text-[10px] md:text-xs uppercase text-[#3b5998] tracking-wider mt-1 md:mt-2">Group Chuyên sâu</span>
                     </a>
-                    <a href="https://zalo.me/g/vmgfxy834" target="_blank" class="cta-link p-4 md:p-6 rounded-[1.5rem] md:rounded-[2rem] bg-white border border-slate-200 text-center flex flex-col items-center shadow-[0_5px_15px_rgba(0,0,0,0.05)] hover:-translate-y-2 hover:shadow-[0_15px_30px_rgba(0,104,255,0.15)] hover:border-[#0068ff]/50 transition-all group overflow-hidden relative">
+                    <a href="<?php echo home_url('/zalo-group'); ?>" target="_blank" class="cta-link p-4 md:p-6 rounded-[1.5rem] md:rounded-[2rem] bg-white border border-slate-200 text-center flex flex-col items-center shadow-[0_5px_15px_rgba(0,0,0,0.05)] hover:-translate-y-2 hover:shadow-[0_15px_30px_rgba(0,104,255,0.15)] hover:border-[#0068ff]/50 transition-all group overflow-hidden relative">
                         <span class="text-3xl md:text-4xl mb-2 md:mb-3 transition-transform drop-shadow-sm group-hover:scale-110">&#128172;</span>
-                        <span class="font-extrabold text-[10px] md:text-xs uppercase text-[#0068ff] tracking-wider mt-1 md:mt-2">Cộng đồng Zalo</span>
+                        <span class="font-extrabold text-[10px] md:text-xs uppercase text-[#0068ff] tracking-wider mt-1 md:mt-2">Góc chia sẻ</span>
                     </a>
                     <a href="https://www.facebook.com/trolynamkhanh" target="_blank" class="cta-link p-4 md:p-6 rounded-[1.5rem] md:rounded-[2rem] bg-white border border-slate-200 text-center flex flex-col items-center shadow-[0_5px_15px_rgba(0,0,0,0.05)] hover:-translate-y-2 hover:shadow-[0_15px_30px_rgba(100,116,139,0.15)] hover:border-slate-400 transition-all group overflow-hidden relative">
                         <span class="text-3xl md:text-4xl mb-2 md:mb-3 transition-transform drop-shadow-sm group-hover:scale-110">&#128100;</span>

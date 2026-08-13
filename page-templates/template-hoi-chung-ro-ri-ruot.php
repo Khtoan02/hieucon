@@ -399,7 +399,7 @@
                 <ul class="space-y-3 text-sm">
                     <li class="flex items-center">
                         <span class="mr-2">🌐</span>
-                        <a href="https://www.facebook.com/groups/tukylaroiloantoanthan" target="_blank"
+                        <a href="<?php echo home_url('/facebook-group'); ?>" target="_blank"
                             class="hover:text-white underline">Cộng đồng Facebook: Tự kỷ là Rối loạn toàn thân</a>
                     </li>
                     <li class="flex items-center">
@@ -409,15 +409,13 @@
                     </li>
                     <li class="flex items-center">
                         <span class="mr-2">📞</span>
-                        <span><strong>Hotline/Zalo:</strong> <span
-                                onclick="navigator.clipboard.writeText('0985391881'); alert('Đã copy số điện thoại: 0985.391.881');"
-                                class="text-brand-light hover:text-white cursor-pointer transition underline"
-                                title="Nhấn để copy">0985.391.881</span></span>
+                        <span><strong>Hotline/Zalo:</strong> <a href="<?php echo home_url('/zalo'); ?>" target="_blank" rel="noopener noreferrer"
+                                class="text-brand-light hover:text-white transition underline"
+                                title="Nhắn qua Zalo">0985.391.881</a></span>
                     </li>
                     <li class="flex items-center">
                         <span class="mr-2">💬</span>
-                        <a href="https://zalo.me/g/vmgfxy834" target="_blank" class="hover:text-white underline">Nhóm
-                            Zalo giải đáp thắc mắc</a>
+                        <a href="<?php echo home_url('/zalo-group'); ?>" target="_blank" class="hover:text-white underline">Góc chia sẻ</a>
                     </li>
                 </ul>
             </div>

@@ -542,18 +542,18 @@ $course_cats = get_terms([
                     <div class="w-px h-5 bg-navy/10"></div>
 
                     <!-- Facebook -->
-                    <a href="https://www.facebook.com/groups/tukylaroiloantoanthan" target="_blank" rel="noopener noreferrer"
-                       title="Cộng đồng Facebook"
+                    <a href="<?php echo home_url('/facebook-group'); ?>" target="_blank" rel="noopener noreferrer"
+                       title="Cộng đồng"
                        class="flex items-center justify-center bg-[#1877F2] hover:bg-[#0d6edc] text-white w-9 h-9 xl:w-10 xl:h-10 rounded-xl transition-all duration-200 shadow-sm hover:shadow-md shrink-0"
                        aria-label="Cộng đồng Facebook">
                         <svg class="w-4 h-4 xl:w-4.5 xl:h-4.5 fill-white" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
                     </a>
 
                     <!-- Zalo -->
-                    <a href="https://zalo.me/g/vmgfxy834?joinSrc=9" target="_blank" rel="noopener noreferrer"
-                       title="Kết nối Zalo"
+                    <a href="<?php echo home_url('/zalo-group'); ?>" target="_blank" rel="noopener noreferrer"
+                       title="Góc chia sẻ"
                        class="flex items-center justify-center bg-[#0068FF] hover:bg-[#0054cc] text-white w-9 h-9 xl:w-10 xl:h-10 rounded-xl transition-all duration-200 shadow-sm hover:shadow-md shrink-0"
-                       aria-label="Kết nối Zalo">
+                       aria-label="Góc chia sẻ Zalo">
                         <svg class="w-4.5 h-4.5 xl:w-5 xl:h-5 fill-white" viewBox="0 0 48 48"><path d="M24 4C12.95 4 4 12.95 4 24c0 3.67.99 7.12 2.72 10.09L4 44l10.22-2.68A19.9 19.9 0 0024 44c11.05 0 20-8.95 20-20S35.05 4 24 4zm9.54 27.46c-.39 1.1-2.28 2.09-3.17 2.22-.81.12-1.83.17-2.96-.19-.68-.22-1.55-.5-2.67-.99-4.7-2.03-7.76-6.76-8-7.07-.22-.3-1.84-2.45-1.84-4.67 0-2.22 1.16-3.31 1.58-3.76.39-.41.85-.52 1.13-.52.28 0 .57 0 .82.01.27.01.63-.1.99.76.39.9 1.32 3.22 1.44 3.45.12.23.2.5.04.8-.16.3-.24.49-.47.76-.22.27-.47.6-.67.81-.22.22-.46.47-.2.92.27.45 1.18 1.95 2.54 3.16 1.74 1.56 3.21 2.04 3.66 2.27.45.22.71.19.97-.11.27-.3 1.14-1.33 1.44-1.79.3-.45.6-.38 1.01-.22.41.15 2.6 1.23 3.05 1.45.45.22.75.34.86.52.11.19.11 1.09-.28 2.19z"/></svg>
                     </a>
 
@@ -710,9 +710,14 @@ $course_cats = get_terms([
                 </div>
             </a>
             
-            <a href="https://www.facebook.com/groups/tukylaroiloantoanthan" target="_blank" class="bg-navy hover:bg-navy-light text-white p-4 rounded-2xl font-bold text-center shadow-md flex items-center justify-center gap-2.5 text-sm">
-                <i data-lucide="users" class="w-4 h-4 text-secondary"></i> Tham gia nhóm "Hiểu Con Từ Gốc"
-            </a>
+            <div class="grid grid-cols-2 gap-2">
+                <a href="<?php echo home_url('/facebook-group'); ?>" target="_blank" rel="noopener noreferrer" class="bg-[#1877F2] hover:bg-[#0d6edc] text-white p-3 rounded-2xl font-bold text-center shadow-md flex items-center justify-center gap-2 text-xs">
+                    <i data-lucide="users" class="w-4 h-4"></i> Cộng đồng
+                </a>
+                <a href="<?php echo home_url('/zalo-group'); ?>" target="_blank" rel="noopener noreferrer" class="bg-[#0068FF] hover:bg-[#0054cc] text-white p-3 rounded-2xl font-bold text-center shadow-md flex items-center justify-center gap-2 text-xs">
+                    <span class="font-black text-sm text-white leading-none">Z</span> Góc chia sẻ
+                </a>
+            </div>
         </div>
     </nav>
 </header>

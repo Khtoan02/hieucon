@@ -196,7 +196,7 @@
 
             <!-- Community link -->
             <div class="pt-3 mt-1 border-t border-slate-100">
-                <a href="https://www.facebook.com/groups/tukylaroiloantoanthan"
+                <a href="<?php echo home_url('/facebook-group'); ?>"
                    target="_blank" rel="noopener noreferrer"
                    class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-pink-600 hover:bg-pink-50 transition-colors">
                     <i data-lucide="heart" class="w-4 h-4 shrink-0"></i> Cộng đồng hỗ trợ
@@ -251,11 +251,18 @@
                                     <i data-lucide="heart" class="text-pink-500 w-8 h-8 mb-4"></i>
                                     <h3 class="text-xl font-bold mb-2 text-slate-800">Cộng đồng đồng hành</h3>
                                     <p class="text-slate-600 text-sm leading-relaxed mb-4">Kết nối với nhóm cha mẹ "Hiểu con từ Gốc" để tiếp cận giải pháp phục hồi sinh học và giáo dục toàn diện.</p>
-                                    <a href="https://www.facebook.com/groups/tukylaroiloantoanthan"
-                                       target="_blank" rel="noopener noreferrer"
-                                       class="text-sm font-semibold text-pink-600 hover:text-pink-700 flex items-center gap-1">
-                                        Tham gia ngay &rarr;
-                                    </a>
+                                    <div class="flex flex-wrap gap-4">
+                                        <a href="<?php echo home_url('/facebook-group'); ?>"
+                                           target="_blank" rel="noopener noreferrer"
+                                           class="text-sm font-semibold text-pink-600 hover:text-pink-700 flex items-center gap-1">
+                                            Cộng đồng &rarr;
+                                        </a>
+                                        <a href="<?php echo home_url('/zalo-group'); ?>"
+                                           target="_blank" rel="noopener noreferrer"
+                                           class="text-sm font-semibold text-sky-600 hover:text-sky-700 flex items-center gap-1">
+                                            Góc chia sẻ &rarr;
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         </div>

@@ -1836,7 +1836,7 @@
       <div class="ncard">
         <div class="nicon iph">📞</div>
         <h4>Trao đổi nhanh qua Zalo</h4>
-        <p>Hotline / Zalo<br><strong>098 539 1881</strong></p><a href="tel:098 539 1881" class="btn-ch">Liên hệ ngay
+        <p>Hotline / Zalo<br><strong>098 539 1881</strong></p><a href="<?php echo home_url('/zalo'); ?>" target="_blank" rel="noopener noreferrer" class="btn-ch">Liên hệ ngay
           →</a>
       </div>
     </div>

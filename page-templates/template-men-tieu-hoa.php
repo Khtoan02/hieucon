@@ -405,7 +405,7 @@
             </p>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-16 anim d1">
-                <a href="https://www.facebook.com/groups/tukylaroiloantoanthan" target="_blank" class="bg-teal-50 hover:bg-blue-600 hover:text-white p-8 rounded-[2rem] border border-blue-100 transition-all duration-300 group card-hover text-center flex flex-col items-center">
+                <a href="<?php echo home_url('/facebook-group'); ?>" target="_blank" class="bg-teal-50 hover:bg-blue-600 hover:text-white p-8 rounded-[2rem] border border-blue-100 transition-all duration-300 group card-hover text-center flex flex-col items-center">
                     <div class="w-16 h-16 bg-white group-hover:bg-white/20 text-blue-600 group-hover:text-white rounded-[1.5rem] flex items-center justify-center mb-5 transition-all text-2xl shadow-sm">
                         <i class="fa-brands fa-facebook-f"></i>
                     </div>
@@ -429,11 +429,11 @@
                     <span class="text-sm opacity-60">Hotline / Zalo hỗ trợ</span>
                 </a>
 
-                <a href="https://zalo.me/g/vmgfxy834" target="_blank" class="bg-teal-50 hover:bg-sky-500 hover:text-white p-8 rounded-[2rem] border border-sky-100 transition-all duration-300 group card-hover text-center flex flex-col items-center">
+                <a href="<?php echo home_url('/zalo-group'); ?>" target="_blank" class="bg-teal-50 hover:bg-sky-500 hover:text-white p-8 rounded-[2rem] border border-sky-100 transition-all duration-300 group card-hover text-center flex flex-col items-center">
                     <div class="w-16 h-16 bg-white group-hover:bg-white/20 text-sky-500 group-hover:text-white rounded-[1.5rem] flex items-center justify-center mb-5 transition-all text-2xl shadow-sm">
                         <i class="fa-solid fa-comments"></i>
                     </div>
-                    <h4 class="font-bold text-lg mb-1">Nhóm Zalo</h4>
+                    <h4 class="font-bold text-lg mb-1">Góc chia sẻ</h4>
                     <span class="text-sm opacity-60">Hỏi đáp trực tiếp</span>
                 </a>
             </div>

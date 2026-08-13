@@ -555,7 +555,7 @@
             </div>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8">
-                <a href="https://www.facebook.com/groups/tukylaroiloantoanthan" target="_blank" rel="noopener noreferrer"
+                <a href="<?php echo home_url('/facebook-group'); ?>" target="_blank" rel="noopener noreferrer"
                    class="flex items-center gap-4 p-4 bg-white rounded-2xl hover:bg-emerald-50 transition-all border border-white hover:border-emerald-200 shadow-sm hover:shadow-md group">
                     <div class="bg-blue-100 rounded-xl p-2.5 shrink-0">
                         <span class="text-xl">👥</span>
@@ -567,13 +567,13 @@
                     <i data-lucide="arrow-up-right" class="w-4 h-4 text-slate-300 group-hover:text-emerald-500 ml-auto transition-colors shrink-0"></i>
                 </a>
 
-                <a href="https://zalo.me/g/vmgfxy834" target="_blank" rel="noopener noreferrer"
+                <a href="<?php echo home_url('/zalo-group'); ?>" target="_blank" rel="noopener noreferrer"
                    class="flex items-center gap-4 p-4 bg-white rounded-2xl hover:bg-emerald-50 transition-all border border-white hover:border-emerald-200 shadow-sm hover:shadow-md group">
                     <div class="bg-sky-100 rounded-xl p-2.5 shrink-0">
                         <span class="text-xl">💬</span>
                     </div>
                     <div class="min-w-0">
-                        <span class="text-sm font-bold text-slate-800 block group-hover:text-emerald-800 transition-colors">Nhóm Zalo Giải đáp</span>
+                        <span class="text-sm font-bold text-slate-800 block group-hover:text-emerald-800 transition-colors">Góc chia sẻ</span>
                         <span class="text-xs text-slate-400">Hỏi đáp trực tiếp</span>
                     </div>
                     <i data-lucide="arrow-up-right" class="w-4 h-4 text-slate-300 group-hover:text-emerald-500 ml-auto transition-colors shrink-0"></i>
