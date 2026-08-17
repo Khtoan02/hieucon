@@ -611,7 +611,7 @@ function hieucon_render_sub_checklist_explanation_v2($item)
 
                         <div class="sub-chk-cta-row mt-8 pt-6 border-t border-dashed border-indigo-100">
                             <span class="sub-chk-cta-copy text-slate-700 font-bold">Để đánh giá toàn diện bức tranh sức khỏe của con, ba mẹ có thể thực hiện tại đây:</span>
-                            <a href="/check-list"
+                            <a href="/bo-cong-cu-suc-khoe"
                                 class="sub-chk-cta-button bg-indigo-600 hover:bg-indigo-700 text-white font-bold shadow-md shadow-indigo-200/80 transition-all text-sm md:text-base cursor-pointer">
                                 <span>Thực hiện Bộ công cụ nhận diện</span>
                                 <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" fill="none"
