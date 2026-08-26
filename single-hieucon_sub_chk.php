@@ -403,6 +403,15 @@ function hieucon_render_sub_checklist_explanation_v2($item)
             white-space: normal;
         }
     }
+
+    /* Top Compact Overview Panel */
+    .sub-chk-top-overview {
+        position: relative;
+        background: linear-gradient(135deg, rgba(240, 244, 255, 0.85) 0%, rgba(245, 247, 255, 0.6) 100%);
+        border: 1px solid #c7d2fe;
+        border-left: 4px solid #002795;
+        box-shadow: 0 4px 16px -2px rgba(0, 39, 149, 0.06);
+    }
 </style>
 
 <div class="sub-chk-body py-12 px-4 md:px-6">
@@ -435,7 +444,38 @@ function hieucon_render_sub_checklist_explanation_v2($item)
             </div>
 
             <!-- NỘI DUNG NHẬP LIỆU -->
-            <div class="p-6 md:p-8 space-y-10">
+            <div class="p-6 md:p-8 space-y-8">
+
+                <!-- [MỚI] KHỐI GIỚI THIỆU BỘ CÔNG CỤ NHẬN DIỆN TOÀN DIỆN (TINH GỌN PHÍA TRÊN) -->
+                <div class="sub-chk-top-overview rounded-2xl p-4 sm:p-5 text-left">
+                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                        <div class="space-y-1.5 flex-1">
+                            <div class="flex items-center gap-2.5">
+                                <span class="inline-flex items-center justify-center w-7 h-7 rounded-lg bg-blue-100 text-[#002795] shrink-0 font-bold" aria-hidden="true">
+                                    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                                        <circle cx="12" cy="12" r="10" />
+                                        <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76" fill="currentColor" stroke="none" />
+                                    </svg>
+                                </span>
+                                <h2 class="font-oswald text-base sm:text-lg font-bold uppercase tracking-wide m-0 leading-snug" style="color: #002795;">
+                                    <?php echo esc_html($edu_title); ?>
+                                </h2>
+                            </div>
+                            <p class="text-xs sm:text-[13px] text-slate-600 leading-relaxed font-medium m-0 sm:pl-[38px]">
+                                Các khó khăn ở trẻ thường liên kết chặt chẽ qua trục Não – Ruột và các cơ chế sinh học chung. Ba mẹ có thể thực hiện bài nhận diện toàn diện để nhìn nhận bức tranh tổng thể đa chiều hơn về con:
+                            </p>
+                        </div>
+                        <div class="shrink-0 md:self-center sm:pl-[38px] md:pl-0">
+                            <a href="/bo-cong-cu-suc-khoe"
+                                class="inline-flex items-center justify-center gap-1.5 bg-[#002795] hover:bg-[#001f78] text-white font-bold px-4 py-2.5 rounded-xl text-xs sm:text-sm shadow-sm transition-all duration-200 hover:shadow-indigo-200/60 hover:translate-x-0.5 no-underline w-full sm:w-auto text-center">
+                                <span>Bộ công cụ nhận diện 8 nhóm</span>
+                                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
 
                 <!-- KHẢO SÁT CÁC NHÓM BIỂU HIỆN -->
                 <div>
