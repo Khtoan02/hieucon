@@ -156,6 +156,25 @@ function hieucon_auto_create_member_pages() {
     } else {
         update_post_meta( $booking_page->ID, '_wp_page_template', $booking_template );
     }
+
+    // 5. Trang Khảo sát tình trạng của con (Bước 2 độc lập)
+    $survey_slug = 'khao-sat-tu-van';
+    $survey_page = get_page_by_path( $survey_slug );
+    $survey_template = 'page-templates/template-booking-survey.php';
+
+    if ( ! $survey_page ) {
+        $survey_id = wp_insert_post( [
+            'post_title'  => 'Khảo sát tình trạng của con',
+            'post_name'   => $survey_slug,
+            'post_status' => 'publish',
+            'post_type'   => 'page',
+        ] );
+        if ( ! is_wp_error( $survey_id ) ) {
+            update_post_meta( $survey_id, '_wp_page_template', $survey_template );
+        }
+    } else {
+        update_post_meta( $survey_page->ID, '_wp_page_template', $survey_template );
+    }
 }
 add_action( 'init', 'hieucon_auto_create_member_pages' );
 

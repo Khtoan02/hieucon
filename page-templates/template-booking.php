@@ -6,6 +6,14 @@
  * @package Hieucon
  */
 
+if ( isset( $_GET['step'] ) && 'survey' === sanitize_key( wp_unslash( $_GET['step'] ) ) ) {
+    $survey_tpl = locate_template( 'page-templates/template-booking-survey.php' );
+    if ( $survey_tpl ) {
+        include $survey_tpl;
+        return;
+    }
+}
+
 get_header();
 
 $current_member     = class_exists( '\Hieucon\Model\Member_Model' ) ? \Hieucon\Model\Member_Model::get_current_member() : false;
@@ -1074,12 +1082,18 @@ document.addEventListener('DOMContentLoaded', function () {
             })
             .then(res => res.json())
             .then(res => {
-                step1Btn.disabled = false;
-                step1Btn.innerHTML = originalHtml;
-
                 if (res.success && res.data) {
+                    if (res.data.survey_url) {
+                        step1Btn.innerHTML = '<span>Đang mở trang khảo sát...</span>';
+                        window.location.href = res.data.survey_url;
+                        return;
+                    }
+                    step1Btn.disabled = false;
+                    step1Btn.innerHTML = originalHtml;
                     transitionToStep2(res.data);
                 } else {
+                    step1Btn.disabled = false;
+                    step1Btn.innerHTML = originalHtml;
                     step1Error.textContent = (res.data && res.data.message) ? res.data.message : 'Có lỗi xảy ra, vui lòng thử lại.';
                     step1Error.classList.remove('hidden');
                 }

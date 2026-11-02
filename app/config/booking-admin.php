@@ -12,11 +12,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * 1. Khởi tạo / Nâng cấp bảng CSDL wp_hieucon_bookings (v1.1.0 có thêm survey_data)
  */
-function hieucon_setup_bookings_table() {
+function hieucon_setup_bookings_table( $force_verify = false ) {
+    if ( ! $force_verify && get_option( 'hieucon_bookings_db_version' ) === '1.1.0' ) {
+        return;
+    }
+
     global $wpdb;
     $table_name = $wpdb->prefix . 'hieucon_bookings';
 
-    if ( get_option( 'hieucon_bookings_db_version' ) === '1.1.0' && $wpdb->get_var( $wpdb->prepare( 'SHOW TABLES LIKE %s', $table_name ) ) === $table_name ) {
+    if ( ! $force_verify && get_option( 'hieucon_bookings_db_version' ) === '1.1.0' && $wpdb->get_var( $wpdb->prepare( 'SHOW TABLES LIKE %s', $table_name ) ) === $table_name ) {
         return;
     }
 
@@ -50,7 +54,39 @@ function hieucon_setup_bookings_table() {
 add_action( 'init', 'hieucon_setup_bookings_table' );
 
 /**
- * 2A. BƯỚC 1: Xử lý AJAX Đặt lịch cơ bản (Lưu ngay thông tin liên hệ)
+ * Gửi email thông báo chạy ngầm sau khi đã trả JSON về trình duyệt để không làm chậm nút bấm
+ */
+function hieucon_send_async_booking_mail( $to, $subject, $body ) {
+    if ( empty( $to ) || ! is_email( $to ) ) {
+        return;
+    }
+    register_shutdown_function( function () use ( $to, $subject, $body ) {
+        if ( function_exists( 'fastcgi_finish_request' ) ) {
+            @fastcgi_finish_request();
+        }
+        $headers = [ 'Content-Type: text/html; charset=UTF-8' ];
+        @wp_mail( $to, $subject, $body, $headers );
+    } );
+}
+
+/**
+ * Lấy đường dẫn trang Khảo sát độc lập (Bước 2)
+ */
+function hieucon_get_booking_survey_url( $booking_id, $booking_code ) {
+    $survey_page = get_page_by_path( 'khao-sat-tu-van' );
+    $base_url    = $survey_page ? get_permalink( $survey_page->ID ) : home_url( '/dat-lich-tu-van/' );
+    $args        = [
+        'booking_id' => intval( $booking_id ),
+        'code'       => sanitize_text_field( $booking_code ),
+    ];
+    if ( ! $survey_page ) {
+        $args['step'] = 'survey';
+    }
+    return add_query_arg( $args, $base_url );
+}
+
+/**
+ * 2A. BƯỚC 1: Xử lý AJAX Đặt lịch cơ bản (Lưu ngay thông tin liên hệ & chuyển sang trang khảo sát riêng)
  */
 function hieucon_ajax_submit_booking() {
     check_ajax_referer( 'hieucon_booking_nonce', 'nonce' );
@@ -97,12 +133,31 @@ function hieucon_ajax_submit_booking() {
     );
 
     if ( ! $inserted ) {
+        // Phòng trường hợp bảng chưa tồn tại, tạo bảng rồi thử lại 1 lần
+        hieucon_setup_bookings_table( true );
+        $inserted = $wpdb->insert(
+            $table_name,
+            [
+                'booking_code'   => $booking_code,
+                'parent_name'    => $parent_name,
+                'phone'          => $phone,
+                'preferred_time' => $preferred_time,
+                'status'         => 'pending',
+                'member_id'      => $member_id,
+                'ip_address'     => $ip_address,
+                'created_at'     => current_time( 'mysql' ),
+            ],
+            [ '%s', '%s', '%s', '%s', '%s', '%d', '%s', '%s' ]
+        );
+    }
+
+    if ( ! $inserted ) {
         wp_send_json_error( [ 'message' => 'Có lỗi xảy ra khi lưu lịch hẹn. Vui lòng thử lại hoặc nhắn trực tiếp qua Zalo.' ] );
     }
 
     $booking_id = intval( $wpdb->insert_id );
 
-    // Gửi Email thông báo Bước 1 cho Admin
+    // Gửi Email thông báo Bước 1 cho Admin ở chế độ chạy ngầm (không chặn phản hồi người dùng)
     $notify_email = get_option( 'hieucon_booking_notify_email', get_option( 'admin_email' ) );
     if ( ! empty( $notify_email ) && is_email( $notify_email ) ) {
         $subject   = sprintf( '[Hiểu Con Từ Gốc] Đặt lịch tư vấn 1:1 mới từ %s (%s)', $parent_name, $phone );
@@ -140,17 +195,17 @@ function hieucon_ajax_submit_booking() {
             </div>
         </div>';
 
-        $headers = [ 'Content-Type: text/html; charset=UTF-8' ];
-        @wp_mail( $notify_email, $subject, $body, $headers );
+        hieucon_send_async_booking_mail( $notify_email, $subject, $body );
     }
 
     wp_send_json_success( [
-        'message'        => 'Đã lưu lịch hẹn! Mời ba mẹ hoàn thiện thêm vài thông tin khảo sát về bé.',
+        'message'        => 'Đã lưu lịch hẹn! Đang chuyển sang trang khảo sát tình trạng của bé...',
         'booking_id'     => $booking_id,
         'booking_code'   => $booking_code,
         'parent_name'    => $parent_name,
         'phone'          => $phone,
         'preferred_time' => $preferred_time,
+        'survey_url'     => hieucon_get_booking_survey_url( $booking_id, $booking_code ),
         'zalo_url'       => home_url( '/zalo' ),
     ] );
 }
@@ -251,8 +306,7 @@ function hieucon_ajax_submit_booking_survey() {
             </div>
         </div>';
 
-        $headers = [ 'Content-Type: text/html; charset=UTF-8' ];
-        @wp_mail( $notify_email, $subject, $body, $headers );
+        hieucon_send_async_booking_mail( $notify_email, $subject, $body );
     }
 
     wp_send_json_success( [
