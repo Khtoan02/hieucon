@@ -195,19 +195,19 @@ function hieucon_ajax_submit_booking_survey() {
         $summary_lines[] = '👶 Bé: ' . trim( $child_name . ( $child_age ? " ($child_age)" : '' ) );
     }
     if ( ! empty( $diagnosis ) ) {
-        $summary_lines[] = '🩺 Tình trạng: ' . $diagnosis;
+        $summary_lines[] = '🩺 Vấn đề nổi bật: ' . $diagnosis;
     }
     if ( ! empty( $bio_symptoms ) ) {
-        $summary_lines[] = '🧬 Tiêu hóa & Cơ thể: ' . implode( ', ', $bio_symptoms );
+        $summary_lines[] = '🧬 Tiêu hoá & Ăn uống: ' . implode( ', ', $bio_symptoms );
     }
     if ( ! empty( $behav_symptoms ) ) {
-        $summary_lines[] = '🧠 Ngôn ngữ & Hành vi: ' . implode( ', ', $behav_symptoms );
+        $summary_lines[] = '🔬 Bất dung nạp & Vi chất: ' . implode( ', ', $behav_symptoms );
     }
     if ( ! empty( $tried_methods ) ) {
-        $summary_lines[] = '🛠️ Đã áp dụng: ' . implode( ', ', $tried_methods );
+        $summary_lines[] = '🛠️ Đã thử: ' . implode( ', ', $tried_methods );
     }
     if ( ! empty( $parent_goal ) ) {
-        $summary_lines[] = '🎯 Mong muốn của mẹ: ' . $parent_goal;
+        $summary_lines[] = '🎯 Điều muốn làm rõ: ' . $parent_goal;
     }
     $issue_summary = implode( "\n", $summary_lines );
 
@@ -521,17 +521,17 @@ function hieucon_render_bookings_admin_page() {
                                             <?php endif; ?>
                                         </div>
                                         <?php if ( ! empty( $survey['bio_symptoms'] ) ) : ?>
-                                            <div><strong style="color:#0f766e;">🧬 Y sinh/Cơ thể:</strong> <?php echo esc_html( implode( ', ', (array) $survey['bio_symptoms'] ) ); ?></div>
+                                            <div><strong style="color:#0f766e;">🧬 Tiêu hoá & Ăn uống:</strong> <?php echo esc_html( implode( ', ', (array) $survey['bio_symptoms'] ) ); ?></div>
                                         <?php endif; ?>
                                         <?php if ( ! empty( $survey['behav_symptoms'] ) ) : ?>
-                                            <div><strong style="color:#c2410c;">🧠 Hành vi/Ngôn ngữ:</strong> <?php echo esc_html( implode( ', ', (array) $survey['behav_symptoms'] ) ); ?></div>
+                                            <div><strong style="color:#c2410c;">🔬 Bất dung nạp & Vi chất:</strong> <?php echo esc_html( implode( ', ', (array) $survey['behav_symptoms'] ) ); ?></div>
                                         <?php endif; ?>
                                         <?php if ( ! empty( $survey['tried_methods'] ) ) : ?>
-                                            <div><strong style="color:#475569;">🛠️ Đã áp dụng:</strong> <?php echo esc_html( implode( ', ', (array) $survey['tried_methods'] ) ); ?></div>
+                                            <div><strong style="color:#475569;">🛠️ Đã thử:</strong> <?php echo esc_html( implode( ', ', (array) $survey['tried_methods'] ) ); ?></div>
                                         <?php endif; ?>
                                         <?php if ( ! empty( $survey['parent_goal'] ) ) : ?>
                                             <div style="background:#f8fafc; border-left:3px solid #f97316; padding:4px 8px; color:#0A1931;">
-                                                <strong>🎯 Mong muốn:</strong> <?php echo esc_html( $survey['parent_goal'] ); ?>
+                                                <strong>🎯 Muốn làm rõ:</strong> <?php echo esc_html( $survey['parent_goal'] ); ?>
                                             </div>
                                         <?php endif; ?>
                                     </div>

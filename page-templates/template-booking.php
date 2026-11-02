@@ -1,7 +1,7 @@
 <?php
 /**
  * Template Name: Đặt Lịch Tư Vấn 1:1
- * Description: Trang Landing Page "30 Phút Để Nhìn Rõ Vấn Đề Của Con".
+ * Description: Trang Landing Page "30 Phút Để Nhìn Rõ Vấn Đề Của Con" — Tập trung chuyên sâu Tiêu hoá, Kén ăn, Táo bón, Bất dung nạp, Suy dinh dưỡng & Thiếu hụt vi chất.
  *
  * @package Hieucon
  */
@@ -208,7 +208,7 @@ $booking_nonce      = wp_create_nonce( 'hieucon_booking_nonce' );
                         </form>
                     </div>
 
-                    <!-- MÀN HÌNH 2: KHẢO SÁT NHANH TRƯỚC BUỔI HẸN -->
+                    <!-- MÀN HÌNH 2: KHẢO SÁT NHANH TRƯỚC BUỔI HẸN (TẬP TRUNG TIÊU HOÁ & DINH DƯỠNG) -->
                     <div id="booking-step2-container" class="hidden">
                         <div class="bg-emerald-50/90 border border-emerald-200 rounded-2xl p-4 mb-5 flex items-start gap-3">
                             <div class="w-7 h-7 rounded-full bg-emerald-500 text-white flex items-center justify-center shrink-0 mt-0.5">
@@ -219,7 +219,7 @@ $booking_nonce      = wp_create_nonce( 'hieucon_booking_nonce' );
                                     Đã ghi nhận thông tin liên hệ (<span id="step2-badge-code">TV-0000</span>)
                                 </p>
                                 <p class="font-medium mt-0.5">
-                                    Ba mẹ tích chọn nhanh tình trạng hiện tại của con để người phụ trách nắm rõ hồ sơ trước buổi trao đổi 30 phút nhé:
+                                    Ba mẹ tích chọn nhanh tình trạng tiêu hoá & dinh dưỡng hiện tại của con để người phụ trách nắm rõ hồ sơ trước buổi trao đổi 30 phút nhé:
                                 </p>
                             </div>
                         </div>
@@ -260,18 +260,18 @@ $booking_nonce      = wp_create_nonce( 'hieucon_booking_nonce' );
                                 </div>
                             </div>
 
-                            <!-- Tình trạng hiện tại -->
+                            <!-- Vấn đề trọng tâm nhất hiện tại -->
                             <div class="bg-white/75 border border-navy/10 rounded-2xl p-4">
-                                <label class="block text-xs font-extrabold text-navy mb-2">Tình trạng hiện tại của bé</label>
-                                <input type="hidden" id="survey-diagnosis" name="diagnosis" value="Chậm nói / Giao tiếp">
+                                <label class="block text-xs font-extrabold text-navy mb-2">Vấn đề nổi bật nhất ba mẹ đang lo lắng ở con</label>
+                                <input type="hidden" id="survey-diagnosis" name="diagnosis" value="Táo bón / Rối loạn tiêu hoá">
                                 <div class="flex flex-wrap gap-2" data-single-group="survey-diagnosis">
                                     <?php
                                     $diagnoses = [
-                                        'Chậm nói / Giao tiếp',
-                                        'Theo dõi / Nghi ngờ tự kỷ (ASD)',
-                                        'Đã có chẩn đoán Tự kỷ (ASD)',
-                                        'Tăng động giảm chú ý (ADHD)',
-                                        'Chưa thăm khám / Khác',
+                                        'Táo bón / Rối loạn tiêu hoá',
+                                        'Kén ăn / Nhai nuốt kém',
+                                        'Bất dung nạp / Dị ứng thực phẩm',
+                                        'Kém hấp thu / Suy dinh dưỡng',
+                                        'Thiếu hụt vi chất & dinh dưỡng',
                                     ];
                                     foreach ( $diagnoses as $idx => $diag ) :
                                         $active_cls = ( 0 === $idx ) ? 'is-selected' : '';
@@ -283,21 +283,19 @@ $booking_nonce      = wp_create_nonce( 'hieucon_booking_nonce' );
                                 </div>
                             </div>
 
-                            <!-- Ăn uống, Tiêu hoá, Giấc ngủ & Vi chất -->
+                            <!-- Biểu hiện Tiêu hoá & Kén ăn -->
                             <div class="bg-white/75 border border-navy/10 rounded-2xl p-4">
                                 <label class="block text-xs font-extrabold text-navy mb-2">
-                                    Vấn đề Ăn uống, Tiêu hoá, Giấc ngủ & Vi chất
+                                    Biểu hiện Tiêu hoá & Ăn uống của bé
                                 </label>
                                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
                                     <?php
                                     $bio_symptoms = [
-                                        'Táo bón / Phân cứng, vón cục',
-                                        'Phân sống, lỏng nát / Tiêu chảy',
-                                        'Đầy hơi, bụng căng phình, ợ chua',
-                                        'Kén ăn cực đoan / Chỉ ăn đồ mềm, tránh nhai',
-                                        'Khó vào giấc, ngủ trằn trọc, hay thức đêm',
-                                        'Hay ốm vặt, dị ứng, chàm da / mẩn ngứa',
-                                        'Hơi thở có mùi / Nghiến răng khi ngủ',
+                                        'Táo bón kéo dài, phân cứng, vón cục',
+                                        'Phân sống, lỏng nát, có bọt hoặc mùi chua',
+                                        'Bụng căng phình, đầy hơi, ợ chua, hôi miệng',
+                                        'Kén ăn cực đoan, chỉ ăn vài món cố định',
+                                        'Nhạy cảm độ thô, ngậm lâu, nhai nuốt kém',
                                         'Thèm đồ ngọt, sữa bò hoặc tinh bột quá mức',
                                     ];
                                     foreach ( $bio_symptoms as $item ) :
@@ -312,22 +310,20 @@ $booking_nonce      = wp_create_nonce( 'hieucon_booking_nonce' );
                                 </div>
                             </div>
 
-                            <!-- Hành vi, Cảm giác & Ngôn ngữ -->
+                            <!-- Dấu hiệu Bất dung nạp, Suy dinh dưỡng & Thiếu hụt vi chất -->
                             <div class="bg-white/75 border border-navy/10 rounded-2xl p-4">
                                 <label class="block text-xs font-extrabold text-navy mb-2">
-                                    Vấn đề Hành vi, Cảm giác & Ngôn ngữ
+                                    Dấu hiệu Bất dung nạp, Suy dinh dưỡng & Thiếu vi chất
                                 </label>
                                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
                                     <?php
                                     $behav_symptoms = [
-                                        'Chưa có ngôn ngữ / Chỉ kéo tay người lớn',
-                                        'Nói nhại lời / Phát âm không rõ, chảy dãi',
-                                        'Ít giao tiếp mắt / Gọi tên ít phản ứng',
-                                        'Hay la hét, ăn vạ, bùng nổ cảm xúc',
-                                        'Tăng động, chạy nhảy liên tục, mất tập trung',
-                                        'Hành vi lặp lại (nhón gót, vẫy tay, xoay tròn...)',
-                                        'Nhạy cảm âm thanh / Sợ cắt tóc, cắt móng tay',
-                                        'Khó chuyển đổi hoạt động / Dễ căng thẳng',
+                                        'Ăn được nhưng kém hấp thu, chậm tăng cân / chiều cao',
+                                        'Nghi ngờ bất dung nạp đạm sữa bò (Casein), Gluten, Lactose',
+                                        'Hay mẩn ngứa, chàm da, dị ứng hoặc ốm vặt',
+                                        'Khó vào giấc, ngủ trằn trọc, nghiến răng, mồ hôi trộm',
+                                        'Dễ bức bối, cáu gắt, mất tập trung khi bụng khó chịu',
+                                        'Có dấu hiệu thiếu Kẽm, Sắt, Canxi, Magie, Vitamin...',
                                     ];
                                     foreach ( $behav_symptoms as $item ) :
                                     ?>
@@ -349,10 +345,10 @@ $booking_nonce      = wp_create_nonce( 'hieucon_booking_nonce' );
                                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
                                     <?php
                                     $tried_methods = [
-                                        'Đang học can thiệp giáo dục đặc biệt / âm ngữ',
-                                        'Đã áp dụng chế độ ăn kiêng (GFCF / giảm đường, sữa)',
-                                        'Đang bổ sung men vi sinh / vi chất (Omega-3, GABA, Kẽm...)',
-                                        'Đã thử nhiều mẹo nhưng chưa rõ nên ưu tiên gì trước',
+                                        'Đã đổi nhiều loại men vi sinh, chất xơ nhưng chưa dứt điểm',
+                                        'Đang bổ sung nhiều loại vi chất nhưng chưa rõ con hấp thu không',
+                                        'Đã thử kiêng sữa bò / Gluten hoặc điều chỉnh chế độ ăn',
+                                        'Đã thử nhiều mẹo nhưng chưa rõ nên ưu tiên xử lý gì trước',
                                     ];
                                     foreach ( $tried_methods as $item ) :
                                     ?>
@@ -375,7 +371,7 @@ $booking_nonce      = wp_create_nonce( 'hieucon_booking_nonce' );
                                     id="survey-parent-goal"
                                     name="parent_goal"
                                     rows="2"
-                                    placeholder="Ví dụ: Con vừa táo bón vừa khó ngủ và hay la hét, muốn biết nên ưu tiên xử lý từ đâu trước..."
+                                    placeholder="Ví dụ: Con táo bón lâu ngày kèm kén ăn và chậm tăng cân, đã đổi nhiều loại men không đỡ, muốn biết nên ưu tiên xử lý từ đâu trước..."
                                     class="w-full px-3.5 py-2.5 rounded-xl bg-white border border-navy/15 focus:border-secondary outline-none text-navy font-medium text-xs transition-all resize-none"
                                 ></textarea>
                             </div>
@@ -439,66 +435,72 @@ $booking_nonce      = wp_create_nonce( 'hieucon_booking_nonce' );
         </section>
 
         <!-- =========================================================
-             1. NHỮNG VẤN ĐỀ THỰC TẾ CHA MẸ ĐANG GẶP VỚI CON
+             1. 5 VẤN ĐỀ TIÊU HOÁ & DINH DƯỠNG CHA MẸ ĐANG GẶP VỚI CON
+             (Kén ăn • Táo bón • Bất dung nạp • Suy dinh dưỡng • Thiếu hụt vi chất)
              ========================================================= -->
         <section class="mt-20 md:mt-28">
             <div class="max-w-3xl mb-10">
                 <h2 class="font-serif text-2xl sm:text-4xl font-bold text-navy leading-tight mb-3">
-                    Những Vấn Đề Nhiều Gia Đình Đang Gặp Phải Ở Con
+                    Những Vấn Đề Tiêu Hoá & Dinh Dưỡng Nhiều Gia Đình Đang Gặp Ở Con
                 </h2>
                 <p class="text-navy/70 text-sm sm:text-base font-medium leading-relaxed">
-                    Phần lớn ba mẹ tìm đến buổi trao đổi khi con đang gặp một hoặc nhiều biểu hiện kéo dài dưới đây:
+                    Phần lớn ba mẹ tìm đến buổi trao đổi khi con đang gặp một hoặc nhiều tình trạng kéo dài dưới đây:
                 </p>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-5">
+                <!-- 1. Kén ăn -->
                 <div class="glass-card-booking p-6 rounded-3xl shadow-soft">
                     <div class="w-11 h-11 rounded-2xl bg-orange-500/10 text-secondary flex items-center justify-center mb-4">
                         <i data-lucide="utensils" class="w-5 h-5"></i>
                     </div>
-                    <h3 class="font-serif font-bold text-lg text-navy mb-2">Ăn uống</h3>
+                    <h3 class="font-serif font-bold text-lg text-navy mb-2">Kén ăn</h3>
                     <p class="text-navy/75 text-xs sm:text-sm font-medium leading-relaxed">
-                        Kén ăn cực đoan, chỉ ăn lặp lại vài món cố định, nhạy cảm với độ thô, ngậm lâu, nhai nuốt kém hoặc thèm đồ ngọt, sữa, tinh bột quá mức.
+                        Biếng ăn, chỉ ăn lặp lại vài món cố định, nhạy cảm với độ thô, ngậm thức ăn lâu, nhai nuốt kém hoặc chỉ thèm đồ ngọt, sữa, tinh bột.
                     </p>
                 </div>
 
+                <!-- 2. Táo bón -->
                 <div class="glass-card-booking p-6 rounded-3xl shadow-soft">
                     <div class="w-11 h-11 rounded-2xl bg-amber-500/10 text-amber-600 flex items-center justify-center mb-4">
                         <i data-lucide="activity" class="w-5 h-5"></i>
                     </div>
-                    <h3 class="font-serif font-bold text-lg text-navy mb-2">Tiêu hoá</h3>
+                    <h3 class="font-serif font-bold text-lg text-navy mb-2">Táo bón</h3>
                     <p class="text-navy/75 text-xs sm:text-sm font-medium leading-relaxed">
-                        Táo bón kéo dài, phân cứng vón cục hoặc phân sống, lỏng nát thất thường; bụng hay căng phình, đầy hơi, ợ chua, hơi thở có mùi.
+                        Táo bón dai dẳng nhiều ngày, phân cứng vón cục hoặc phân sống, lỏng nát thất thường; bụng hay căng phình, đầy hơi, ợ chua, hơi thở có mùi.
                     </p>
                 </div>
 
-                <div class="glass-card-booking p-6 rounded-3xl shadow-soft">
-                    <div class="w-11 h-11 rounded-2xl bg-indigo-500/10 text-indigo-600 flex items-center justify-center mb-4">
-                        <i data-lucide="moon-star" class="w-5 h-5"></i>
-                    </div>
-                    <h3 class="font-serif font-bold text-lg text-navy mb-2">Giấc ngủ</h3>
-                    <p class="text-navy/75 text-xs sm:text-sm font-medium leading-relaxed">
-                        Khó vào giấc, trằn trọc lăn lộn, ngủ nông dễ giật mình, nghiến răng, đổ mồ hôi trộm hoặc thức dậy giữa đêm quấy khóc, tỉnh táo.
-                    </p>
-                </div>
-
+                <!-- 3. Bất dung nạp -->
                 <div class="glass-card-booking p-6 rounded-3xl shadow-soft">
                     <div class="w-11 h-11 rounded-2xl bg-rose-500/10 text-rose-600 flex items-center justify-center mb-4">
-                        <i data-lucide="zap" class="w-5 h-5"></i>
+                        <i data-lucide="shield-alert" class="w-5 h-5"></i>
                     </div>
-                    <h3 class="font-serif font-bold text-lg text-navy mb-2">Hành vi</h3>
+                    <h3 class="font-serif font-bold text-lg text-navy mb-2">Bất dung nạp</h3>
                     <p class="text-navy/75 text-xs sm:text-sm font-medium leading-relaxed">
-                        Dễ cáu gắt, la hét, ăn vạ kéo dài, bùng nổ cảm xúc; chạy nhảy liên tục, khó ngồi yên, mất tập trung làm việc học can thiệp chậm tiến bộ.
+                        Cơ thể nhạy cảm hoặc bất dung nạp đạm sữa bò (Casein), Gluten, Lactose... gây rối loạn tiêu hoá, mẩn ngứa, chàm da, bức bối và khó ngủ sau ăn.
                     </p>
                 </div>
 
+                <!-- 4. Suy dinh dưỡng -->
+                <div class="glass-card-booking p-6 rounded-3xl shadow-soft">
+                    <div class="w-11 h-11 rounded-2xl bg-indigo-500/10 text-indigo-600 flex items-center justify-center mb-4">
+                        <i data-lucide="trending-down" class="w-5 h-5"></i>
+                    </div>
+                    <h3 class="font-serif font-bold text-lg text-navy mb-2">Suy dinh dưỡng</h3>
+                    <p class="text-navy/75 text-xs sm:text-sm font-medium leading-relaxed">
+                        Đường ruột tổn thương dẫn đến kém hấp thu dưỡng chất; con ăn được nhưng chững cân, chậm phát triển chiều cao, thể trạng gầy yếu, hay ốm vặt.
+                    </p>
+                </div>
+
+                <!-- 5. Thiếu hụt vi chất & dinh dưỡng -->
                 <div class="glass-card-booking p-6 rounded-3xl shadow-soft">
                     <div class="w-11 h-11 rounded-2xl bg-teal-500/10 text-primary flex items-center justify-center mb-4">
                         <i data-lucide="flask-conical" class="w-5 h-5"></i>
                     </div>
-                    <h3 class="font-serif font-bold text-lg text-navy mb-2">Vi chất & Dinh dưỡng</h3>
+                    <h3 class="font-serif font-bold text-lg text-navy mb-2">Thiếu hụt vi chất</h3>
                     <p class="text-navy/75 text-xs sm:text-sm font-medium leading-relaxed">
-                        Cơ thể kém hấp thu, hay ốm vặt, chàm da; hoặc đã bổ sung nhiều loại men, vitamin, vi chất nhưng chưa thấy sự thay đổi rõ rệt.
+                        Thiếu kẽm, sắt, canxi, magie, vitamin... hoặc ba mẹ đã mua rất nhiều loại men, vi chất cho con uống nhưng chưa thấy cải thiện rõ rệt.
                     </p>
                 </div>
             </div>
@@ -518,10 +520,10 @@ $booking_nonce      = wp_create_nonce( 'hieucon_booking_nonce' );
 
                         <div class="space-y-4 text-navy/80 text-sm sm:text-base font-medium leading-relaxed">
                             <p>
-                                Một khó khăn của con thường liên quan đến nhiều yếu tố khác nhau. Khi đường ruột đang táo bón hoặc đầy hơi, con dễ bức bối trong người, dẫn đến ngủ trằn trọc ban đêm và dễ cáu gắt, mất tập trung vào ngày hôm sau.
+                                Một khó khăn về tiêu hoá và dinh dưỡng ít khi đứng một mình. Khi con bất dung nạp thực phẩm hoặc táo bón kéo dài, hệ vi sinh mất cân bằng và niêm mạc ruột tổn thương sẽ dẫn tới kém hấp thu, thiếu hụt vi chất — từ đó làm con càng kén ăn, suy dinh dưỡng, ngủ trằn trọc và dễ bức bối hơn.
                             </p>
                             <p>
-                                Ba mẹ rất dễ bị rối khi nhìn từng triệu chứng riêng biệt để tìm cách xử lý. Đọc nhiều, thử nhiều nhưng vẫn mệt mỏi vì chưa biết đâu mới là gốc rễ cần ưu tiên trước.
+                                Ba mẹ rất dễ bị rối khi nhìn từng triệu chứng riêng biệt để tìm cách xử lý: thấy táo bón thì đổi men, thấy biếng ăn thì mua thêm siro, thấy còi cọc lại bổ sung thêm nhiều loại vi chất. Đọc nhiều, thử nhiều nhưng vẫn mệt mỏi vì chưa biết đâu mới là gốc rễ cần ưu tiên trước.
                             </p>
                         </div>
                     </div>
@@ -531,7 +533,7 @@ $booking_nonce      = wp_create_nonce( 'hieucon_booking_nonce' );
                             <div class="bg-white/8 border border-white/15 rounded-2xl p-4">
                                 <span class="text-xs font-bold text-rose-300 block mb-1">Thay vì tiếp tục tìm kiếm:</span>
                                 <p class="font-serif italic text-base sm:text-lg text-white/85">
-                                    “Tôi cần thêm giải pháp hay mẹo mới để thử cho con.”
+                                    “Tôi cần thêm giải pháp hay mua thêm loại gì để thử tiếp cho con.”
                                 </p>
                             </div>
 
@@ -571,28 +573,28 @@ $booking_nonce      = wp_create_nonce( 'hieucon_booking_nonce' );
                         <div class="bg-white/80 border border-navy/8 rounded-2xl p-5">
                             <h3 class="font-serif font-bold text-lg text-navy mb-1.5">Xác định vấn đề nổi bật</h3>
                             <p class="text-navy/70 text-xs sm:text-sm font-medium leading-relaxed">
-                                Bóc tách giữa nhiều triệu chứng xem đâu là rào cản lớn nhất đang ảnh hưởng trực tiếp đến con lúc này.
+                                Bóc tách giữa kén ăn, táo bón, bất dung nạp hay kém hấp thu xem đâu là rào cản chính đang ảnh hưởng trực tiếp đến con lúc này.
                             </p>
                         </div>
 
                         <div class="bg-white/80 border border-navy/8 rounded-2xl p-5">
                             <h3 class="font-serif font-bold text-lg text-navy mb-1.5">Nhìn các yếu tố liên quan</h3>
                             <p class="text-navy/70 text-xs sm:text-sm font-medium leading-relaxed">
-                                Hiểu mối liên hệ giữa ăn uống, tiêu hoá, giấc ngủ, vi chất và biểu hiện hành vi hiện tại của con.
+                                Kết nối chế độ ăn hàng ngày, khả năng tiêu hoá – hấp thu với tình trạng suy dinh dưỡng và thiếu hụt vi chất hiện tại của con.
                             </p>
                         </div>
 
                         <div class="bg-white/80 border border-navy/8 rounded-2xl p-5">
                             <h3 class="font-serif font-bold text-lg text-navy mb-1.5">Xác định điều cần ưu tiên</h3>
                             <p class="text-navy/70 text-xs sm:text-sm font-medium leading-relaxed">
-                                Không ôm đồm làm quá nhiều thứ cùng lúc; biết rõ việc gì cần làm ngay và việc gì có thể gác lại sau.
+                                Không bổ sung dàn trải cùng lúc; biết rõ việc gì cần ưu tiên làm trước cho đường ruột và chế độ dinh dưỡng của con.
                             </p>
                         </div>
 
                         <div class="bg-white/80 border border-navy/8 rounded-2xl p-5">
                             <h3 class="font-serif font-bold text-lg text-navy mb-1.5">Biết bước tiếp theo là gì</h3>
                             <p class="text-navy/70 text-xs sm:text-sm font-medium leading-relaxed">
-                                Có hướng đi rõ ràng, thực tế và phù hợp với nhịp sinh hoạt của gia đình sau buổi trao đổi.
+                                Có hướng đi rõ ràng, thực tế và phù hợp với cơ địa tiêu hoá của con sau buổi trao đổi.
                             </p>
                         </div>
                     </div>
@@ -663,14 +665,14 @@ $booking_nonce      = wp_create_nonce( 'hieucon_booking_nonce' );
                 <div class="glass-card-booking p-6 rounded-3xl shadow-soft">
                     <h3 class="font-serif font-bold text-lg text-navy mb-2">Gia đình tôi có phù hợp không?</h3>
                     <p class="text-navy/75 text-xs sm:text-sm font-medium leading-relaxed">
-                        Phù hợp nếu con đang gặp khó khăn về ăn uống, tiêu hoá, giấc ngủ, hành vi, chậm nói, tự kỷ (ASD), tăng động (ADHD) hoặc vi chất mà ba mẹ đang rối chưa biết nguyên nhân liên quan hay nên ưu tiên xử lý từ đâu trước.
+                        Phù hợp nếu con đang gặp các vấn đề về <strong>kén ăn, táo bón, rối loạn tiêu hoá, bất dung nạp thực phẩm, kém hấp thu, suy dinh dưỡng hoặc thiếu hụt vi chất</strong> mà ba mẹ đang rối chưa biết nguyên nhân liên quan hay nên ưu tiên xử lý từ đâu trước.
                     </p>
                 </div>
 
                 <div class="glass-card-booking p-6 rounded-3xl shadow-soft">
                     <h3 class="font-serif font-bold text-lg text-navy mb-2">Tôi sẽ nhận được gì sau 30 phút?</h3>
                     <p class="text-navy/75 text-xs sm:text-sm font-medium leading-relaxed">
-                        Ba mẹ nhìn rõ bức tranh tổng thể về các biểu hiện của con, xác định được vấn đề nổi bật nhất cần ưu tiên trong giai đoạn hiện tại và biết bước tiếp theo nên thực hiện là gì.
+                        Ba mẹ nhìn rõ bức tranh tổng thể về các vấn đề tiêu hoá và dinh dưỡng của con, xác định được điều nổi bật nhất cần ưu tiên trong giai đoạn hiện tại và biết bước tiếp theo nên thực hiện là gì.
                     </p>
                 </div>
 
