@@ -80,18 +80,9 @@ $booking_nonce      = wp_create_nonce( 'hieucon_booking_nonce' );
                     <span class="text-secondary italic">Vấn Đề Của Con</span>
                 </h1>
 
-                <p class="font-serif italic text-xl sm:text-2xl text-navy/90 border-l-4 border-secondary pl-5 py-1 mb-7">
+                <p class="font-serif italic text-xl sm:text-2xl text-navy/90 border-l-4 border-secondary pl-5 py-1 mb-8">
                     “Hiểu trước khi can thiệp. Ưu tiên trước khi làm quá nhiều.”
                 </p>
-
-                <div class="space-y-4 text-navy/80 text-base sm:text-lg font-medium leading-relaxed mb-8">
-                    <p>
-                        Khi con gặp khó khăn về <strong class="text-navy">ăn uống, tiêu hoá, giấc ngủ, hành vi hay vi chất</strong>, điều làm ba mẹ mệt mỏi nhất thường là đã đọc rất nhiều, thử rất nhiều cách nhưng vẫn chưa rõ vấn đề của con bắt nguồn từ đâu.
-                    </p>
-                    <p>
-                        Buổi trao đổi 1:1 trong 30 phút giúp gia đình nhìn lại toàn diện bức tranh của con, xác định đúng điều cần ưu tiên lúc này để không phải thử thêm một cách ngẫu nhiên.
-                    </p>
-                </div>
 
                 <!-- 4 điểm rõ ràng nhận được sau 30 phút -->
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
