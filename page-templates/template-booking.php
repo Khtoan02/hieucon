@@ -195,7 +195,7 @@ $booking_nonce      = wp_create_nonce( 'hieucon_booking_nonce' );
                         Trong 30 phút, buổi trao đổi tập trung vào chính vấn đề gia đình đang gặp phải, giúp ba mẹ nhìn lại tình trạng hiện tại và xác định hướng đi rõ ràng hơn.
                     </p>
 
-                    <a href="#dang-ky-case" onclick="setTimeout(() => document.getElementById('booking-parent-name')?.focus(), 400);" class="inline-flex items-center gap-3 px-8 py-4.5 rounded-2xl bg-secondary hover:bg-secondary_dark text-white font-extrabold text-base uppercase tracking-wider shadow-[0_14px_30px_-8px_rgba(249,115,22,0.45)] hover:-translate-y-0.5 transition-all duration-200">
+                    <a href="#dang-ky-case" onclick="setTimeout(() => document.getElementById('booking-parent-name')?.focus(), 400);" class="inline-flex items-center justify-center gap-3 px-8 py-4 rounded-xl bg-secondary hover:bg-secondary_dark text-white font-extrabold text-base uppercase tracking-wider shadow-[0_14px_30px_-8px_rgba(249,115,22,0.45)] hover:-translate-y-0.5 transition-all duration-200">
                         <span>ĐĂNG KÝ CASE CỦA CON</span>
                         <i data-lucide="arrow-right" class="w-5 h-5"></i>
                     </a>
