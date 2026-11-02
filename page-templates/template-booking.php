@@ -1,7 +1,7 @@
 <?php
 /**
  * Template Name: Đặt Lịch Tư Vấn 1:1
- * Description: Trang Landing Page "30 Phút Để Nhìn Rõ Vấn Đề Của Con" — Thiết kế theo cấu trúc Master Card, Interactive Split Stage & Agenda Accordion.
+ * Description: Trang Landing Page "30 phút để nhìn rõ vấn đề của con" — Giao diện nền trắng sáng, tích cực, chuẩn chính tả tiếng Việt.
  *
  * @package Hieucon
  */
@@ -16,37 +16,48 @@ $booking_nonce      = wp_create_nonce( 'hieucon_booking_nonce' );
 ?>
 
 <style>
+    /* Nền trắng tinh khiết, nhẹ mắt */
+    #primary.hc-booking-page {
+        background: #ffffff !important;
+    }
+
     .hc-master-card {
         background: #ffffff;
-        border: 1.5px solid rgba(10, 25, 49, 0.12);
-        border-radius: 22px;
-        box-shadow: 0 22px 48px -24px rgba(10, 25, 49, 0.16);
+        border: 1px solid #e2e8f0;
+        border-radius: 20px;
+        box-shadow: 0 12px 32px -16px rgba(15, 23, 42, 0.07);
         overflow: hidden;
     }
     .hc-card-bar {
-        height: 6px;
-        background: linear-gradient(90deg, #0A1931 0%, #f97316 55%, #0d9488 100%);
-    }
-    .hc-glass-panel {
-        background: linear-gradient(135deg, rgba(255, 255, 255, 0.96) 0%, rgba(255, 255, 255, 0.88) 100%);
-        backdrop-filter: blur(18px);
-        -webkit-backdrop-filter: blur(18px);
-        border: 1.5px solid rgba(255, 255, 255, 0.95);
+        height: 4px;
+        background: #0d9488;
     }
 
     /* Interactive Split Stage (#hc-diff) */
     .hc-diff-tab {
         position: relative;
         overflow: hidden;
-        border: 1.5px solid rgba(10, 25, 49, 0.1);
+        border: 1px solid #e2e8f0;
         border-radius: 16px;
         background: #ffffff;
-        transition: all 0.25s ease;
+        transition: all 0.22s ease;
+    }
+    .hc-diff-tab:hover {
+        border-color: #99f6e4;
     }
     .hc-diff-tab.is-active {
-        border-color: #f97316;
-        box-shadow: 0 14px 30px -18px rgba(249, 115, 22, 0.45);
-        transform: translateY(-1px);
+        border-color: #0d9488;
+        background: #f0fdfa;
+        box-shadow: 0 10px 24px -16px rgba(13, 148, 136, 0.25);
+    }
+    .hc-diff-tab .hc-tab-num {
+        background: #f0fdfa;
+        color: #0d9488;
+        transition: all 0.22s ease;
+    }
+    .hc-diff-tab.is-active .hc-tab-num {
+        background: #0d9488;
+        color: #ffffff;
     }
     .hc-diff-tab .hc-tab-progress {
         position: absolute;
@@ -54,7 +65,7 @@ $booking_nonce      = wp_create_nonce( 'hieucon_booking_nonce' );
         bottom: 0;
         height: 3px;
         width: 100%;
-        background: linear-gradient(90deg, #f97316, #0d9488);
+        background: #0d9488;
         transform: scaleX(0);
         transform-origin: left center;
     }
@@ -67,7 +78,7 @@ $booking_nonce      = wp_create_nonce( 'hieucon_booking_nonce' );
     }
     .hc-diff-tab .hc-tab-mobile-body {
         display: none;
-        padding: 0 18px 16px 64px;
+        padding: 0 18px 16px 60px;
     }
     @media (max-width: 1023px) {
         .hc-diff-tab.is-active .hc-tab-mobile-body {
@@ -77,19 +88,28 @@ $booking_nonce      = wp_create_nonce( 'hieucon_booking_nonce' );
 
     /* Accordion (#hc-agenda) */
     .hc-agenda-part {
-        border: 1.5px solid rgba(10, 25, 49, 0.1);
+        border: 1px solid #e2e8f0;
         border-radius: 16px;
         background: #ffffff;
         transition: all 0.22s ease;
         overflow: hidden;
     }
     .hc-agenda-part.is-open {
-        border-color: rgba(13, 148, 136, 0.45);
-        box-shadow: 0 14px 28px -18px rgba(13, 148, 136, 0.28);
+        border-color: #99f6e4;
+        background: #f0fdfa;
+    }
+    .hc-agenda-part .hc-agenda-num {
+        background: #f0fdfa;
+        color: #0d9488;
+    }
+    .hc-agenda-part.is-open .hc-agenda-num {
+        background: #0d9488;
+        color: #ffffff;
     }
     .hc-agenda-part .hc-agenda-body {
         display: none;
-        border-top: 1px dashed rgba(10, 25, 49, 0.1);
+        background: #ffffff;
+        border-top: 1px solid #e2e8f0;
     }
     .hc-agenda-part.is-open .hc-agenda-body {
         display: block;
@@ -102,149 +122,125 @@ $booking_nonce      = wp_create_nonce( 'hieucon_booking_nonce' );
 
     /* Form Pills & Chips */
     .time-slot-pill.is-active {
-        background-color: #0A1931 !important;
+        background-color: #0d9488 !important;
         color: #ffffff !important;
-        border-color: #0A1931 !important;
-        box-shadow: 0 6px 18px -4px rgba(10, 25, 49, 0.25);
+        border-color: #0d9488 !important;
     }
     .survey-single-pill.is-selected {
-        background-color: #0A1931 !important;
+        background-color: #0d9488 !important;
         color: #ffffff !important;
-        border-color: #0A1931 !important;
-        box-shadow: 0 4px 12px -2px rgba(10, 25, 49, 0.2);
+        border-color: #0d9488 !important;
     }
     .survey-multi-chip {
-        transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+        transition: all 0.18s ease;
     }
     .survey-multi-chip.is-selected {
-        background-color: #fff7ed !important;
-        color: #c2410c !important;
-        border-color: #f97316 !important;
-        box-shadow: 0 4px 12px -2px rgba(249, 115, 22, 0.16);
-    }
-    .survey-multi-chip.is-selected .chip-check-icon {
-        background-color: #f97316 !important;
-        border-color: #f97316 !important;
-        color: #ffffff !important;
-    }
-    .survey-multi-chip.is-selected-teal {
         background-color: #f0fdfa !important;
         color: #0f766e !important;
         border-color: #0d9488 !important;
-        box-shadow: 0 4px 12px -2px rgba(13, 148, 136, 0.16);
     }
-    .survey-multi-chip.is-selected-teal .chip-check-icon {
+    .survey-multi-chip.is-selected .chip-check-icon {
         background-color: #0d9488 !important;
         border-color: #0d9488 !important;
         color: #ffffff !important;
     }
 </style>
 
-<main id="primary" class="site-main min-h-screen pb-24 pt-6 md:pt-12 relative overflow-hidden">
-    <!-- Decorative soft background blobs -->
-    <div class="pointer-events-none absolute -top-24 -right-24 w-96 h-96 rounded-full bg-secondary/10 blur-3xl"></div>
-    <div class="pointer-events-none absolute top-1/3 -left-24 w-80 h-80 rounded-full bg-primary/10 blur-3xl"></div>
-
-    <div class="max-w-[1160px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+<main id="primary" class="site-main hc-booking-page min-h-screen pb-24 pt-6 md:pt-12">
+    <div class="max-w-[1140px] mx-auto px-4 sm:px-6 lg:px-8">
 
         <!-- =========================================================
-             SECTION 1: HERO + THÔNG BÁO MỞ ĐỢT NHẬN CASE (SPECS CARD)
+             SECTION 1: MỞ ĐẦU & THÔNG TIN ĐỢT NHẬN CASE
              ========================================================= -->
-        <section class="pt-2 md:pt-6">
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+        <section class="pt-2 md:pt-4">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
 
-                <!-- Cột trái (7/12): Nội dung dẫn dắt trực diện -->
+                <!-- Cột trái (7/12): Nội dung cốt lõi -->
                 <div class="lg:col-span-7">
-                    <h1 class="font-serif text-3xl sm:text-5xl font-bold text-navy leading-[1.18] mb-5">
-                        30 Phút Để Nhìn Rõ<br class="hidden sm:inline" />
-                        <span class="text-secondary italic">Vấn Đề Của Con</span>
+                    <h1 class="font-serif text-3xl sm:text-5xl font-bold text-navy leading-[1.2] mb-5">
+                        30 phút để nhìn rõ<br class="hidden sm:inline" />
+                        <span class="text-primary">vấn đề của con</span>
                     </h1>
 
-                    <p class="text-navy/85 text-base sm:text-lg font-medium leading-relaxed mb-5">
+                    <p class="text-slate-700 text-base sm:text-lg leading-relaxed mb-5">
                         Đợt này, đội ngũ mở một số lịch trao đổi 1:1 dành cho cha mẹ đang có những băn khoăn về <strong class="text-navy">ăn uống, tiêu hóa, giấc ngủ, hành vi hoặc dinh dưỡng</strong> của con.
                     </p>
 
-                    <div class="bg-white/80 backdrop-blur-md border border-navy/10 rounded-2xl p-5 sm:p-6 mb-5 shadow-soft">
+                    <div class="bg-[#f8fafc] border border-slate-200/90 rounded-2xl p-5 sm:p-6 mb-5">
                         <p class="font-bold text-navy text-sm sm:text-base mb-3">
                             Có những gia đình đã thử rất nhiều cách nhưng vẫn chưa thực sự biết:
                         </p>
-                        <ul class="space-y-2.5 text-navy/85 text-sm sm:text-base font-semibold">
+                        <ul class="space-y-2.5 text-slate-700 text-sm sm:text-base">
                             <li class="flex items-start gap-2.5">
-                                <span class="w-5 h-5 rounded-full bg-secondary/15 text-secondary flex items-center justify-center shrink-0 mt-0.5 text-xs font-extrabold">•</span>
+                                <span class="w-5 h-5 rounded-full bg-teal-50 text-primary flex items-center justify-center shrink-0 mt-0.5 text-xs font-bold">•</span>
                                 <span>Vấn đề chính của con nằm ở đâu?</span>
                             </li>
                             <li class="flex items-start gap-2.5">
-                                <span class="w-5 h-5 rounded-full bg-secondary/15 text-secondary flex items-center justify-center shrink-0 mt-0.5 text-xs font-extrabold">•</span>
+                                <span class="w-5 h-5 rounded-full bg-teal-50 text-primary flex items-center justify-center shrink-0 mt-0.5 text-xs font-bold">•</span>
                                 <span>Điều gì cần được ưu tiên trước?</span>
                             </li>
                             <li class="flex items-start gap-2.5">
-                                <span class="w-5 h-5 rounded-full bg-secondary/15 text-secondary flex items-center justify-center shrink-0 mt-0.5 text-xs font-extrabold">•</span>
+                                <span class="w-5 h-5 rounded-full bg-teal-50 text-primary flex items-center justify-center shrink-0 mt-0.5 text-xs font-bold">•</span>
                                 <span>Gia đình nên tiếp tục theo dõi, điều chỉnh hay cần hỗ trợ sâu hơn?</span>
                             </li>
                         </ul>
                     </div>
 
-                    <p class="text-navy/80 text-sm sm:text-base font-medium leading-relaxed mb-7">
+                    <p class="text-slate-700 text-sm sm:text-base leading-relaxed mb-7">
                         Trong 30 phút, buổi trao đổi tập trung vào chính vấn đề gia đình đang gặp phải, giúp ba mẹ nhìn lại tình trạng hiện tại và xác định hướng đi rõ ràng hơn.
                     </p>
 
-                    <a href="#dang-ky-case" onclick="setTimeout(() => document.getElementById('booking-parent-name')?.focus(), 400);" class="inline-flex items-center gap-3 px-7 py-4 rounded-xl bg-gradient-to-r from-secondary to-secondary_dark hover:from-secondary_dark hover:to-secondary text-white font-extrabold text-sm sm:text-base uppercase tracking-wider shadow-[0_12px_28px_-6px_rgba(249,115,22,0.5)] hover:-translate-y-0.5 transition-all duration-300">
-                        <span>Đăng Ký Case Của Con</span>
+                    <a href="#dang-ky-case" onclick="setTimeout(() => document.getElementById('booking-parent-name')?.focus(), 400);" class="inline-flex items-center gap-2.5 px-7 py-4 rounded-xl bg-secondary hover:bg-secondary_dark text-white font-bold text-sm sm:text-base uppercase tracking-wider shadow-sm hover:-translate-y-0.5 transition-all duration-200">
+                        <span>ĐĂNG KÝ CASE CỦA CON</span>
                         <i data-lucide="arrow-right" class="w-5 h-5"></i>
                     </a>
                 </div>
 
-                <!-- Cột phải (5/12): Khung Thông Tin Đợt Nhận Case & 4 Ô Thông Số -->
+                <!-- Cột phải (5/12): Khung thông tin nhanh (Sáng, nhẹ nhàng) -->
                 <div class="lg:col-span-5">
                     <div class="hc-master-card">
                         <div class="hc-card-bar"></div>
                         <div class="p-6 sm:p-7">
-                            <!-- 4 ô thông số nhanh (Specs Grid) -->
-                            <div class="grid grid-cols-2 gap-3 mb-6">
-                                <div class="bg-[#fff7ed] border border-orange-200/80 rounded-2xl p-3.5">
-                                    <span class="block text-[11px] font-extrabold uppercase tracking-wider text-secondary mb-0.5">Thời lượng</span>
-                                    <span class="block font-serif font-bold text-navy text-base">30 Phút 1:1</span>
-                                    <span class="block text-[11px] text-navy/65 font-medium mt-0.5">Qua Zalo / Điện thoại</span>
+                            <div class="grid grid-cols-2 gap-3 mb-5">
+                                <div class="bg-[#f8fafc] border border-slate-200/80 rounded-xl p-3.5">
+                                    <span class="block text-xs text-slate-500 font-semibold mb-0.5">Thời lượng</span>
+                                    <span class="block font-serif font-bold text-navy text-base">30 phút 1:1</span>
                                 </div>
 
-                                <div class="bg-[#f0fdfa] border border-teal-200/80 rounded-2xl p-3.5">
-                                    <span class="block text-[11px] font-extrabold uppercase tracking-wider text-primary mb-0.5">Trọng tâm</span>
-                                    <span class="block font-serif font-bold text-navy text-base">Nhìn rõ gốc rễ</span>
-                                    <span class="block text-[11px] text-navy/65 font-medium mt-0.5">Xác định thứ tự ưu tiên</span>
+                                <div class="bg-[#f8fafc] border border-slate-200/80 rounded-xl p-3.5">
+                                    <span class="block text-xs text-slate-500 font-semibold mb-0.5">Hình thức</span>
+                                    <span class="block font-serif font-bold text-navy text-base">Qua Zalo / SĐT</span>
                                 </div>
 
-                                <div class="bg-slate-50 border border-navy/10 rounded-2xl p-3.5">
-                                    <span class="block text-[11px] font-extrabold uppercase tracking-wider text-navy/60 mb-0.5">Hình thức nhận</span>
+                                <div class="bg-[#f8fafc] border border-slate-200/80 rounded-xl p-3.5">
+                                    <span class="block text-xs text-slate-500 font-semibold mb-0.5">Số lượng nhận</span>
                                     <span class="block font-serif font-bold text-navy text-base">Giới hạn số case</span>
-                                    <span class="block text-[11px] text-navy/65 font-medium mt-0.5">Xem hồ sơ trước khi hẹn</span>
                                 </div>
 
-                                <div class="bg-emerald-50/80 border border-emerald-200/80 rounded-2xl p-3.5">
-                                    <span class="block text-[11px] font-extrabold uppercase tracking-wider text-emerald-700 mb-0.5">Chi phí</span>
-                                    <span class="block font-serif font-bold text-navy text-base">Miễn phí</span>
-                                    <span class="block text-[11px] text-navy/65 font-medium mt-0.5">Dành cho case phù hợp</span>
+                                <div class="bg-[#f8fafc] border border-slate-200/80 rounded-xl p-3.5">
+                                    <span class="block text-xs text-slate-500 font-semibold mb-0.5">Chi phí hỗ trợ</span>
+                                    <span class="block font-serif font-bold text-primary text-base">Miễn phí</span>
                                 </div>
                             </div>
 
-                            <!-- 3 Lưu ý về giới hạn & xét duyệt case -->
-                            <div class="bg-navy text-white rounded-2xl p-5 space-y-3.5">
-                                <div class="flex items-start gap-3">
-                                    <i data-lucide="clock" class="w-4 h-4 text-secondary shrink-0 mt-1"></i>
-                                    <p class="text-xs sm:text-sm text-white/90 leading-relaxed font-medium">
-                                        Để có đủ thời gian xem thông tin trước mỗi buổi trao đổi, <strong class="text-white">số lượng case được nhận trong đợt này sẽ có giới hạn</strong>.
+                            <div class="bg-[#f0fdfa] border border-teal-200/80 rounded-2xl p-5 space-y-3 text-slate-700 text-xs sm:text-sm leading-relaxed">
+                                <div class="flex items-start gap-2.5">
+                                    <i data-lucide="clock" class="w-4 h-4 text-primary shrink-0 mt-1"></i>
+                                    <p>
+                                        Để có đủ thời gian xem thông tin trước mỗi buổi trao đổi, <strong class="text-navy">số lượng case được nhận trong đợt này sẽ có giới hạn</strong>.
                                     </p>
                                 </div>
 
-                                <div class="flex items-start gap-3">
-                                    <i data-lucide="file-check-2" class="w-4 h-4 text-teal-300 shrink-0 mt-1"></i>
-                                    <p class="text-xs sm:text-sm text-white/90 leading-relaxed font-medium">
-                                        Sau khi ba mẹ gửi thông tin, đội ngũ sẽ tổng hợp và <strong class="text-white">liên hệ với những trường hợp phù hợp</strong> để sắp xếp lịch.
+                                <div class="flex items-start gap-2.5">
+                                    <i data-lucide="check-circle-2" class="w-4 h-4 text-primary shrink-0 mt-1"></i>
+                                    <p>
+                                        Sau khi ba mẹ gửi thông tin, đội ngũ sẽ tổng hợp và <strong class="text-navy">liên hệ với những trường hợp phù hợp</strong> để sắp xếp lịch.
                                     </p>
                                 </div>
 
-                                <div class="flex items-start gap-3 pt-2 border-t border-white/12">
-                                    <i data-lucide="alert-circle" class="w-4 h-4 text-amber-300 shrink-0 mt-0.5"></i>
-                                    <p class="text-xs text-amber-200 leading-relaxed font-semibold">
+                                <div class="flex items-start gap-2.5 pt-2 border-t border-teal-200/60 text-teal-900 font-semibold">
+                                    <i data-lucide="info" class="w-4 h-4 text-primary shrink-0 mt-0.5"></i>
+                                    <p>
                                         Form đăng ký sẽ được đóng khi đã đủ số lượng case có thể hỗ trợ trong đợt này.
                                     </p>
                                 </div>
@@ -257,237 +253,182 @@ $booking_nonce      = wp_create_nonce( 'hieucon_booking_nonce' );
         </section>
 
         <!-- =========================================================
-             SECTION 2: CÁC VẤN ĐỀ TRỌNG TÂM (BỐ CỤC MASTER CARD NHƯ #rbl-aud)
-             Kén ăn • Táo bón • Bất dung nạp • Suy dinh dưỡng • Thiếu hụt vi chất
+             SECTION 2: 5 VẤN ĐỀ TRỌNG TÂM (ĐỒNG NHẤT MÀU SẮC, NGẮN GỌN)
              ========================================================= -->
-        <section class="mt-20 md:mt-28">
-            <div class="text-center max-w-3xl mx-auto mb-9">
-                <h2 class="font-serif text-2xl sm:text-4xl font-bold text-navy leading-tight">
-                    Những Vấn Đề Trọng Tâm Trong Đợt Trao Đổi Này
+        <section class="mt-16 md:mt-24">
+            <div class="text-center max-w-2xl mx-auto mb-8">
+                <h2 class="font-serif text-2xl sm:text-3xl font-bold text-navy">
+                    Những vấn đề trọng tâm trong đợt trao đổi này
                 </h2>
             </div>
 
-            <!-- Master Card chia 5 cột có vạch ngăn -->
             <div class="hc-master-card">
                 <div class="hc-card-bar"></div>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 divide-y md:divide-y-0 md:divide-x divide-navy/10">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 divide-y md:divide-y-0 md:divide-x divide-slate-200/80">
 
-                    <!-- 01. Kén ăn -->
-                    <div class="p-6 flex flex-col justify-between">
-                        <div>
-                            <div class="flex items-center gap-2.5 mb-4">
-                                <span class="w-8 h-8 rounded-lg bg-secondary text-white font-extrabold text-xs flex items-center justify-center shrink-0">01</span>
-                                <span class="text-[11px] font-extrabold uppercase tracking-wider px-2.5 py-1 rounded-full bg-orange-50 text-secondary">Ăn uống</span>
-                            </div>
-                            <h3 class="font-serif font-bold text-lg text-navy mb-2">Kén ăn</h3>
-                            <p class="text-navy/75 text-xs sm:text-sm font-medium leading-relaxed">
-                                Biếng ăn, chỉ ăn lặp lại vài món cố định, nhạy cảm với độ thô, ngậm lâu, nhai nuốt kém hoặc thèm đồ ngọt, sữa, tinh bột quá mức.
-                            </p>
-                        </div>
+                    <div class="p-5 sm:p-6">
+                        <span class="inline-flex items-center justify-center w-7 h-7 rounded-lg bg-teal-50 text-primary font-bold text-xs mb-3">01</span>
+                        <h3 class="font-serif font-bold text-base sm:text-lg text-navy mb-1.5">Kén ăn</h3>
+                        <p class="text-slate-600 text-xs sm:text-sm leading-relaxed">
+                            Con ăn chọn lọc vài món quen thuộc, nhạy cảm với độ thô hoặc việc nhai nuốt còn hạn chế.
+                        </p>
                     </div>
 
-                    <!-- 02. Táo bón -->
-                    <div class="p-6 flex flex-col justify-between">
-                        <div>
-                            <div class="flex items-center gap-2.5 mb-4">
-                                <span class="w-8 h-8 rounded-lg bg-amber-600 text-white font-extrabold text-xs flex items-center justify-center shrink-0">02</span>
-                                <span class="text-[11px] font-extrabold uppercase tracking-wider px-2.5 py-1 rounded-full bg-amber-50 text-amber-700">Tiêu hóa</span>
-                            </div>
-                            <h3 class="font-serif font-bold text-lg text-navy mb-2">Táo bón</h3>
-                            <p class="text-navy/75 text-xs sm:text-sm font-medium leading-relaxed">
-                                Táo bón kéo dài nhiều ngày, phân cứng vón cục hoặc phân sống, lỏng nát thất thường; bụng căng phình, đầy hơi, ợ chua, hôi miệng.
-                            </p>
-                        </div>
+                    <div class="p-5 sm:p-6">
+                        <span class="inline-flex items-center justify-center w-7 h-7 rounded-lg bg-teal-50 text-primary font-bold text-xs mb-3">02</span>
+                        <h3 class="font-serif font-bold text-base sm:text-lg text-navy mb-1.5">Táo bón</h3>
+                        <p class="text-slate-600 text-xs sm:text-sm leading-relaxed">
+                            Đi ngoài chưa đều, phân cứng hoặc phân sống thất thường, bụng dễ đầy hơi, chướng khí.
+                        </p>
                     </div>
 
-                    <!-- 03. Bất dung nạp -->
-                    <div class="p-6 flex flex-col justify-between">
-                        <div>
-                            <div class="flex items-center gap-2.5 mb-4">
-                                <span class="w-8 h-8 rounded-lg bg-rose-600 text-white font-extrabold text-xs flex items-center justify-center shrink-0">03</span>
-                                <span class="text-[11px] font-extrabold uppercase tracking-wider px-2.5 py-1 rounded-full bg-rose-50 text-rose-700">Cơ địa</span>
-                            </div>
-                            <h3 class="font-serif font-bold text-lg text-navy mb-2">Bất dung nạp</h3>
-                            <p class="text-navy/75 text-xs sm:text-sm font-medium leading-relaxed">
-                                Nhạy cảm hoặc bất dung nạp đạm sữa bò (Casein), Gluten, Lactose... gây rối loạn tiêu hóa, mẩn ngứa, chàm da, khó ngủ và bức bối sau ăn.
-                            </p>
-                        </div>
+                    <div class="p-5 sm:p-6">
+                        <span class="inline-flex items-center justify-center w-7 h-7 rounded-lg bg-teal-50 text-primary font-bold text-xs mb-3">03</span>
+                        <h3 class="font-serif font-bold text-base sm:text-lg text-navy mb-1.5">Bất dung nạp</h3>
+                        <p class="text-slate-600 text-xs sm:text-sm leading-relaxed">
+                            Cơ thể nhạy cảm với một số nhóm thực phẩm (đạm sữa, Gluten, Lactose...) ảnh hưởng đến tiêu hóa và giấc ngủ.
+                        </p>
                     </div>
 
-                    <!-- 04. Suy dinh dưỡng -->
-                    <div class="p-6 flex flex-col justify-between">
-                        <div>
-                            <div class="flex items-center gap-2.5 mb-4">
-                                <span class="w-8 h-8 rounded-lg bg-navy text-white font-extrabold text-xs flex items-center justify-center shrink-0">04</span>
-                                <span class="text-[11px] font-extrabold uppercase tracking-wider px-2.5 py-1 rounded-full bg-slate-100 text-navy">Hấp thu</span>
-                            </div>
-                            <h3 class="font-serif font-bold text-lg text-navy mb-2">Suy dinh dưỡng</h3>
-                            <p class="text-navy/75 text-xs sm:text-sm font-medium leading-relaxed">
-                                Đường ruột tổn thương dẫn đến kém hấp thu dưỡng chất; con ăn được nhưng chững cân, chậm phát triển chiều cao, gầy yếu, hay ốm vặt.
-                            </p>
-                        </div>
+                    <div class="p-5 sm:p-6">
+                        <span class="inline-flex items-center justify-center w-7 h-7 rounded-lg bg-teal-50 text-primary font-bold text-xs mb-3">04</span>
+                        <h3 class="font-serif font-bold text-base sm:text-lg text-navy mb-1.5">Chậm tăng trưởng</h3>
+                        <p class="text-slate-600 text-xs sm:text-sm leading-relaxed">
+                            Đường ruột hấp thu chưa trọn vẹn khiến con chậm tăng cân, chững chiều cao hoặc suy dinh dưỡng.
+                        </p>
                     </div>
 
-                    <!-- 05. Thiếu hụt vi chất -->
-                    <div class="p-6 flex flex-col justify-between">
-                        <div>
-                            <div class="flex items-center gap-2.5 mb-4">
-                                <span class="w-8 h-8 rounded-lg bg-primary text-white font-extrabold text-xs flex items-center justify-center shrink-0">05</span>
-                                <span class="text-[11px] font-extrabold uppercase tracking-wider px-2.5 py-1 rounded-full bg-teal-50 text-primary">Vi chất</span>
-                            </div>
-                            <h3 class="font-serif font-bold text-lg text-navy mb-2">Thiếu hụt vi chất</h3>
-                            <p class="text-navy/75 text-xs sm:text-sm font-medium leading-relaxed">
-                                Thiếu kẽm, sắt, canxi, magie, vitamin... hoặc ba mẹ đã bổ sung nhiều loại men, vi chất cho con nhưng chưa thấy sự thay đổi rõ rệt.
-                            </p>
-                        </div>
+                    <div class="p-5 sm:p-6">
+                        <span class="inline-flex items-center justify-center w-7 h-7 rounded-lg bg-teal-50 text-primary font-bold text-xs mb-3">05</span>
+                        <h3 class="font-serif font-bold text-base sm:text-lg text-navy mb-1.5">Thiếu hụt vi chất</h3>
+                        <p class="text-slate-600 text-xs sm:text-sm leading-relaxed">
+                            Cần làm rõ cơ thể con đang thiếu hụt vi chất gì để bổ sung đúng, hợp lý và hiệu quả.
+                        </p>
                     </div>
 
                 </div>
             </div>
 
-            <!-- Thanh Note chốt hạ bên dưới Master Card -->
-            <div class="mt-5 bg-white/90 border border-navy/12 rounded-2xl p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-soft">
-                <div class="flex items-start gap-3.5">
-                    <div class="w-9 h-9 rounded-xl bg-secondary/15 text-secondary flex items-center justify-center shrink-0 mt-0.5">
-                        <i data-lucide="check-square" class="w-5 h-5"></i>
-                    </div>
-                    <p class="text-navy/85 text-xs sm:text-sm font-medium leading-relaxed">
-                        <strong class="text-navy font-extrabold">Đặc biệt phù hợp</strong> nếu con đang gặp đồng thời nhiều biểu hiện trên (kèm theo ngủ trằn trọc, dễ cáu gắt, chậm nói hoặc giảm chú ý) — ba mẹ biết cần hỗ trợ con nhưng chưa rõ các vấn đề liên quan với nhau thế nào và nên bắt đầu từ đâu.
-                    </p>
-                </div>
-                <a href="#dang-ky-case" class="shrink-0 px-5 py-3 rounded-xl bg-navy hover:bg-navy/90 text-white font-extrabold text-xs uppercase tracking-wider transition-all flex items-center gap-2">
-                    <span>Đăng Ký Case Của Con</span>
-                    <i data-lucide="arrow-right" class="w-4 h-4 text-secondary"></i>
+            <div class="mt-4 bg-[#f8fafc] border border-slate-200/90 rounded-2xl p-4 sm:p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                <p class="text-slate-700 text-xs sm:text-sm leading-relaxed">
+                    <strong class="text-navy">Đặc biệt phù hợp</strong> với gia đình muốn nhìn tổng thể mối liên hệ giữa tiêu hóa, dinh dưỡng, giấc ngủ và hành vi của con để biết nên bắt đầu hỗ trợ từ đâu.
+                </p>
+                <a href="#dang-ky-case" class="shrink-0 px-5 py-2.5 rounded-xl bg-primary hover:opacity-95 text-white font-bold text-xs uppercase tracking-wider transition-all flex items-center gap-1.5">
+                    <span>ĐĂNG KÝ CASE CỦA CON</span>
+                    <i data-lucide="arrow-right" class="w-4 h-4"></i>
                 </a>
             </div>
         </section>
 
         <!-- =========================================================
-             SECTION 3: VÌ SAO CẦN NHÌN RÕ TRƯỚC KHI LÀM THÊM?
-             (BỐ CỤC INTERACTIVE SPLIT STAGE 5:6 NHƯ #rbl-diff)
+             SECTION 3: HIỂU TRƯỚC KHI CAN THIỆP (SPLIT STAGE SÁNG, DỊU MẮT)
              ========================================================= -->
-        <section class="mt-20 md:mt-28" id="hc-diff-section">
-            <div class="text-center max-w-3xl mx-auto mb-9">
-                <h2 class="font-serif text-2xl sm:text-4xl font-bold text-navy leading-tight">
-                    Hiểu Trước Khi Can Thiệp.<br class="hidden sm:inline" />
-                    <span class="text-secondary italic">Ưu Tiên Trước Khi Làm Quá Nhiều.</span>
+        <section class="mt-16 md:mt-24" id="hc-diff-section">
+            <div class="text-center max-w-2xl mx-auto mb-8">
+                <h2 class="font-serif text-2xl sm:text-3xl font-bold text-navy leading-snug">
+                    Hiểu trước khi can thiệp.<br class="hidden sm:inline" />
+                    <span class="text-primary">Ưu tiên trước khi làm quá nhiều.</span>
                 </h2>
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-11 gap-6 items-stretch">
 
-                <!-- Cột trái (5/11): Danh sách 4 Tab tương tác -->
+                <!-- Cột trái (5/11): 4 Tab -->
                 <div class="lg:col-span-5 flex flex-col gap-3" role="tablist">
 
-                    <!-- Tab 01 -->
                     <div class="hc-diff-tab is-active" data-tab-index="0">
-                        <button type="button" class="w-full flex items-center gap-3.5 p-4 sm:p-5 text-left cursor-pointer">
-                            <span class="w-9 h-9 rounded-xl bg-secondary text-white font-extrabold text-xs flex items-center justify-center shrink-0">01</span>
-                            <span class="font-serif font-bold text-navy text-base sm:text-lg flex-1">Vấn đề của con không đứng riêng lẻ</span>
-                            <i data-lucide="chevron-right" class="w-5 h-5 text-navy/40 shrink-0"></i>
+                        <button type="button" class="w-full flex items-center gap-3.5 p-4 text-left cursor-pointer">
+                            <span class="hc-tab-num w-8 h-8 rounded-lg font-bold text-xs flex items-center justify-center shrink-0">01</span>
+                            <span class="font-serif font-bold text-navy text-base flex-1">Vấn đề của con không đứng riêng lẻ</span>
+                            <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400 shrink-0"></i>
                         </button>
-                        <div class="hc-tab-mobile-body text-xs sm:text-sm text-navy/75 font-medium leading-relaxed">
-                            Khi con bất dung nạp thực phẩm hoặc táo bón kéo dài, niêm mạc ruột tổn thương sẽ dẫn tới kém hấp thu và thiếu hụt vi chất — từ đó làm con càng kén ăn, suy dinh dưỡng, ngủ trằn trọc và dễ bức bối hơn.
+                        <div class="hc-tab-mobile-body text-xs sm:text-sm text-slate-600 leading-relaxed">
+                            Tiêu hóa, khả năng hấp thu, giấc ngủ và hành vi của con luôn liên kết chặt chẽ với nhau. Nhìn tổng thể giúp ba mẹ hiểu đúng nguyên nhân gốc rễ.
                         </div>
                         <span class="hc-tab-progress"></span>
                     </div>
 
-                    <!-- Tab 02 -->
                     <div class="hc-diff-tab" data-tab-index="1">
-                        <button type="button" class="w-full flex items-center gap-3.5 p-4 sm:p-5 text-left cursor-pointer">
-                            <span class="w-9 h-9 rounded-xl bg-primary text-white font-extrabold text-xs flex items-center justify-center shrink-0">02</span>
-                            <span class="font-serif font-bold text-navy text-base sm:text-lg flex-1">Không nên thử thêm một cách ngẫu nhiên</span>
-                            <i data-lucide="chevron-right" class="w-5 h-5 text-navy/40 shrink-0"></i>
+                        <button type="button" class="w-full flex items-center gap-3.5 p-4 text-left cursor-pointer">
+                            <span class="hc-tab-num w-8 h-8 rounded-lg font-bold text-xs flex items-center justify-center shrink-0">02</span>
+                            <span class="font-serif font-bold text-navy text-base flex-1">Hiểu rõ trước khi thử thêm giải pháp</span>
+                            <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400 shrink-0"></i>
                         </button>
-                        <div class="hc-tab-mobile-body text-xs sm:text-sm text-navy/75 font-medium leading-relaxed">
-                            Thấy táo bón thì đổi men, thấy biếng ăn thì mua siro, thấy còi cọc lại uống thêm đủ loại vi chất. Nhìn từng triệu chứng rời rạc để thử mẹo mới chỉ khiến gia đình thêm rối và tốn kém.
+                        <div class="hc-tab-mobile-body text-xs sm:text-sm text-slate-600 leading-relaxed">
+                            Thay vì đổi nhiều loại men hay thực phẩm bổ sung theo cảm tính, việc hiểu rõ cơ địa hiện tại của con giúp gia đình đi đúng hướng ngay từ đầu.
                         </div>
                         <span class="hc-tab-progress"></span>
                     </div>
 
-                    <!-- Tab 03 -->
                     <div class="hc-diff-tab" data-tab-index="2">
-                        <button type="button" class="w-full flex items-center gap-3.5 p-4 sm:p-5 text-left cursor-pointer">
-                            <span class="w-9 h-9 rounded-xl bg-navy text-white font-extrabold text-xs flex items-center justify-center shrink-0">03</span>
-                            <span class="font-serif font-bold text-navy text-base sm:text-lg flex-1">Xác định đúng điều cần ưu tiên trước</span>
-                            <i data-lucide="chevron-right" class="w-5 h-5 text-navy/40 shrink-0"></i>
+                        <button type="button" class="w-full flex items-center gap-3.5 p-4 text-left cursor-pointer">
+                            <span class="hc-tab-num w-8 h-8 rounded-lg font-bold text-xs flex items-center justify-center shrink-0">03</span>
+                            <span class="font-serif font-bold text-navy text-base flex-1">Xác định đúng điều cần ưu tiên</span>
+                            <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400 shrink-0"></i>
                         </button>
-                        <div class="hc-tab-mobile-body text-xs sm:text-sm text-navy/75 font-medium leading-relaxed">
-                            Cơ thể đang quá tải của con không thể nhận thêm quá nhiều thứ cùng lúc. Ba mẹ cần biết rõ việc gì phải ưu tiên xử lý trước cho đường ruột, việc gì tạm gác lại sau.
+                        <div class="hc-tab-mobile-body text-xs sm:text-sm text-slate-600 leading-relaxed">
+                            Cơ thể trẻ cần sự điều chỉnh từng bước nhẹ nhàng. Biết rõ 1–2 việc cần ưu tiên làm trước sẽ giúp con thích nghi tốt và tiến bộ bền vững.
                         </div>
                         <span class="hc-tab-progress"></span>
                     </div>
 
-                    <!-- Tab 04 -->
                     <div class="hc-diff-tab" data-tab-index="3">
-                        <button type="button" class="w-full flex items-center gap-3.5 p-4 sm:p-5 text-left cursor-pointer">
-                            <span class="w-9 h-9 rounded-xl bg-amber-600 text-white font-extrabold text-xs flex items-center justify-center shrink-0">04</span>
-                            <span class="font-serif font-bold text-navy text-base sm:text-lg flex-1">Đọc kỹ hồ sơ trước mỗi buổi trao đổi</span>
-                            <i data-lucide="chevron-right" class="w-5 h-5 text-navy/40 shrink-0"></i>
+                        <button type="button" class="w-full flex items-center gap-3.5 p-4 text-left cursor-pointer">
+                            <span class="hc-tab-num w-8 h-8 rounded-lg font-bold text-xs flex items-center justify-center shrink-0">04</span>
+                            <span class="font-serif font-bold text-navy text-base flex-1">Xem kỹ thông tin trước buổi hẹn</span>
+                            <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400 shrink-0"></i>
                         </button>
-                        <div class="hc-tab-mobile-body text-xs sm:text-sm text-navy/75 font-medium leading-relaxed">
-                            Đây không phải buổi tư vấn đại trà. Đội ngũ xem xét trước thông tin của từng bé để 30 phút đi thẳng vào phân tích tình trạng thực tế và hướng đi cho gia đình.
+                        <div class="hc-tab-mobile-body text-xs sm:text-sm text-slate-600 leading-relaxed">
+                            Đội ngũ xem trước thông tin khảo sát của từng bé để 30 phút trao đổi tập trung trọn vẹn vào hoàn cảnh thực tế của gia đình.
                         </div>
                         <span class="hc-tab-progress"></span>
                     </div>
 
                 </div>
 
-                <!-- Cột phải (6/11): Khung Spotlight Panel phóng đại trên Desktop -->
-                <div class="hidden lg:flex lg:col-span-6 hc-master-card p-8 xl:p-10 relative flex-col justify-center">
-                    <div id="hc-diff-pane-0" class="hc-diff-pane space-y-4">
-                        <span class="font-serif font-bold text-7xl text-secondary/12 absolute top-6 right-8 select-none">01</span>
-                        <div class="w-12 h-12 rounded-2xl bg-secondary/12 text-secondary flex items-center justify-center">
-                            <i data-lucide="network" class="w-6 h-6"></i>
+                <!-- Cột phải (6/11): Khung nội dung sáng, gọn -->
+                <div class="hidden lg:flex lg:col-span-6 hc-master-card p-8 relative flex-col justify-center bg-[#f8fafc]">
+                    <div id="hc-diff-pane-0" class="hc-diff-pane space-y-3">
+                        <span class="font-serif font-bold text-6xl text-teal-600/10 absolute top-6 right-8 select-none">01</span>
+                        <div class="w-11 h-11 rounded-xl bg-teal-50 text-primary flex items-center justify-center">
+                            <i data-lucide="network" class="w-5 h-5"></i>
                         </div>
-                        <h3 class="font-serif text-2xl font-bold text-navy">Vấn đề của con thường không đứng riêng lẻ</h3>
-                        <p class="text-navy/80 text-base font-medium leading-relaxed">
-                            Một khó khăn về tiêu hóa hay dinh dưỡng ít khi đứng một mình. Khi con <strong class="text-navy">bất dung nạp thực phẩm hoặc táo bón kéo dài</strong>, hệ vi sinh mất cân bằng và niêm mạc ruột tổn thương sẽ dẫn tới <strong class="text-navy">kém hấp thu, thiếu hụt vi chất</strong> — từ đó làm con càng kén ăn, suy dinh dưỡng, ngủ trằn trọc và dễ bức bối hơn.
-                        </p>
-                        <p class="text-navy/75 text-sm font-medium leading-relaxed">
-                            Vì vậy, gia đình cần nhìn tổng thể bức tranh liên kết này trước khi quyết định chọn giải pháp.
+                        <h3 class="font-serif text-xl font-bold text-navy">Vấn đề của con thường không đứng riêng lẻ</h3>
+                        <p class="text-slate-600 text-sm sm:text-base leading-relaxed">
+                            Ăn uống, tiêu hóa, khả năng hấp thu, giấc ngủ và cảm xúc của con luôn có sự liên kết chặt chẽ. Khi đường ruột êm dịu và hấp thu tốt, con sẽ ăn ngon miệng hơn, ngủ sâu giấc hơn và tập trung tốt hơn.
                         </p>
                     </div>
 
-                    <div id="hc-diff-pane-1" class="hc-diff-pane hidden space-y-4">
-                        <span class="font-serif font-bold text-7xl text-primary/12 absolute top-6 right-8 select-none">02</span>
-                        <div class="w-12 h-12 rounded-2xl bg-primary/12 text-primary flex items-center justify-center">
-                            <i data-lucide="compass" class="w-6 h-6"></i>
+                    <div id="hc-diff-pane-1" class="hc-diff-pane hidden space-y-3">
+                        <span class="font-serif font-bold text-6xl text-teal-600/10 absolute top-6 right-8 select-none">02</span>
+                        <div class="w-11 h-11 rounded-xl bg-teal-50 text-primary flex items-center justify-center">
+                            <i data-lucide="compass" class="w-5 h-5"></i>
                         </div>
-                        <h3 class="font-serif text-2xl font-bold text-navy">Điều ba mẹ thiếu không phải là thêm một mẹo</h3>
-                        <p class="text-navy/80 text-base font-medium leading-relaxed">
-                            Rất nhiều cha mẹ tìm đến buổi trao đổi khi trong nhà đã có đủ loại men vi sinh, chất xơ, siro ăn ngon và thực phẩm bổ sung. Thấy táo bón thì đổi men, thấy biếng ăn thì mua siro, thấy còi cọc lại bổ sung thêm vi chất.
-                        </p>
-                        <p class="text-navy/75 text-sm font-medium leading-relaxed">
-                            Khi chưa rõ nút thắt chính nằm ở đâu, <strong class="text-navy">việc thử thêm giải pháp một cách ngẫu nhiên chỉ làm cả con và ba mẹ thêm mệt mỏi</strong>.
+                        <h3 class="font-serif text-xl font-bold text-navy">Hiểu rõ trước khi thử thêm giải pháp</h3>
+                        <p class="text-slate-600 text-sm sm:text-base leading-relaxed">
+                            Điều ba mẹ cần thường không phải là thử thêm thật nhiều mẹo mới, mà là nhìn rõ nguyên nhân chính đang nằm ở đâu để chọn hướng điều chỉnh phù hợp và tiết kiệm công sức cho gia đình.
                         </p>
                     </div>
 
-                    <div id="hc-diff-pane-2" class="hc-diff-pane hidden space-y-4">
-                        <span class="font-serif font-bold text-7xl text-navy/10 absolute top-6 right-8 select-none">03</span>
-                        <div class="w-12 h-12 rounded-2xl bg-navy/10 text-navy flex items-center justify-center">
-                            <i data-lucide="list-filter" class="w-6 h-6"></i>
+                    <div id="hc-diff-pane-2" class="hc-diff-pane hidden space-y-3">
+                        <span class="font-serif font-bold text-6xl text-teal-600/10 absolute top-6 right-8 select-none">03</span>
+                        <div class="w-11 h-11 rounded-xl bg-teal-50 text-primary flex items-center justify-center">
+                            <i data-lucide="list-filter" class="w-5 h-5"></i>
                         </div>
-                        <h3 class="font-serif text-2xl font-bold text-navy">Xác định đúng điều cần ưu tiên trước</h3>
-                        <p class="text-navy/80 text-base font-medium leading-relaxed">
-                            Một hệ tiêu hóa đang nhạy cảm và quá tải không thể tiếp nhận quá nhiều sự can thiệp cùng một lúc.
-                        </p>
-                        <p class="text-navy/75 text-sm font-medium leading-relaxed">
-                            Buổi trao đổi giúp ba mẹ <strong class="text-navy">sắp xếp lại thứ tự ưu tiên</strong>: biết rõ việc gì cần làm ngay để làm dịu đường ruột, việc gì chưa cần vội và nên theo dõi phản ứng của con như thế nào.
+                        <h3 class="font-serif text-xl font-bold text-navy">Xác định đúng điều cần ưu tiên</h3>
+                        <p class="text-slate-600 text-sm sm:text-base leading-relaxed">
+                            Thay vì thay đổi quá nhiều thứ cùng lúc, buổi trao đổi giúp gia đình xác định 1–2 điều quan trọng nhất cần làm trước để cơ thể con thích nghi nhẹ nhàng và cải thiện từng bước.
                         </p>
                     </div>
 
-                    <div id="hc-diff-pane-3" class="hc-diff-pane hidden space-y-4">
-                        <span class="font-serif font-bold text-7xl text-amber-500/15 absolute top-6 right-8 select-none">04</span>
-                        <div class="w-12 h-12 rounded-2xl bg-amber-500/12 text-amber-700 flex items-center justify-center">
-                            <i data-lucide="file-search" class="w-6 h-6"></i>
+                    <div id="hc-diff-pane-3" class="hc-diff-pane hidden space-y-3">
+                        <span class="font-serif font-bold text-6xl text-teal-600/10 absolute top-6 right-8 select-none">04</span>
+                        <div class="w-11 h-11 rounded-xl bg-teal-50 text-primary flex items-center justify-center">
+                            <i data-lucide="file-search" class="w-5 h-5"></i>
                         </div>
-                        <h3 class="font-serif text-2xl font-bold text-navy">Đọc kỹ hồ sơ trước mỗi buổi trao đổi</h3>
-                        <p class="text-navy/80 text-base font-medium leading-relaxed">
-                            Chúng tôi không thực hiện các cuộc gọi tư vấn đại trà. Số lượng case mỗi đợt đều có giới hạn để đội ngũ có thời gian <strong class="text-navy">xem xét trước thông tin ăn uống, tiêu hóa và lịch sử bổ sung của từng bé</strong>.
-                        </p>
-                        <p class="text-navy/75 text-sm font-medium leading-relaxed">
-                            Nhờ đó, 30 phút trao đổi sẽ đi thẳng vào vấn đề cốt lõi của gia đình mà không mất thời gian hỏi lại từ đầu.
+                        <h3 class="font-serif text-xl font-bold text-navy">Xem kỹ thông tin trước buổi hẹn</h3>
+                        <p class="text-slate-600 text-sm sm:text-base leading-relaxed">
+                            Số lượng case mỗi đợt đều có giới hạn để người phụ trách đọc kỹ thông tin ăn uống, tiêu hóa và lịch sử bổ sung của từng bé trước khi cuộc trao đổi 30 phút diễn ra.
                         </p>
                     </div>
                 </div>
@@ -496,213 +437,129 @@ $booking_nonce      = wp_create_nonce( 'hieucon_booking_nonce' );
         </section>
 
         <!-- =========================================================
-             SECTION 4: NỘI DUNG 30 PHÚT & KẾT QUẢ ĐẦU RA
-             (BỐ CỤC AGENDA CARD + ACCORDION + 2 HỘP KẾT QUẢ NHƯ #rbl-ws)
+             SECTION 4: NỘI DUNG BUỔI TRAO ĐỔI 30 PHÚT
              ========================================================= -->
-        <section class="mt-20 md:mt-28">
-            <div class="max-w-3xl mb-8">
-                <h2 class="font-serif text-2xl sm:text-4xl font-bold text-navy leading-tight">
-                    Cấu Trúc Buổi Trao Đổi 30 Phút 1:1
+        <section class="mt-16 md:mt-24">
+            <div class="text-center max-w-2xl mx-auto mb-8">
+                <h2 class="font-serif text-2xl sm:text-3xl font-bold text-navy">
+                    Nội dung buổi trao đổi 30 phút
                 </h2>
             </div>
 
-            <!-- Master Agenda Card -->
             <div class="hc-master-card">
                 <div class="hc-card-bar"></div>
 
-                <!-- 3 Ô Meta ngang trên cùng -->
-                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 p-5 sm:p-6 bg-slate-50/70 border-b border-navy/10">
-                    <div class="flex items-center gap-3 bg-white p-3.5 rounded-xl border border-navy/8">
-                        <div class="w-9 h-9 rounded-lg bg-secondary text-white flex items-center justify-center shrink-0">
-                            <i data-lucide="clock" class="w-4 h-4"></i>
-                        </div>
-                        <div>
-                            <span class="block text-[10px] font-extrabold uppercase tracking-wider text-secondary">Thời lượng</span>
-                            <span class="block text-xs sm:text-sm font-extrabold text-navy">30 Phút làm việc 1:1</span>
-                        </div>
-                    </div>
-
-                    <div class="flex items-center gap-3 bg-white p-3.5 rounded-xl border border-navy/8">
-                        <div class="w-9 h-9 rounded-lg bg-primary text-white flex items-center justify-center shrink-0">
-                            <i data-lucide="phone-call" class="w-4 h-4"></i>
-                        </div>
-                        <div>
-                            <span class="block text-[10px] font-extrabold uppercase tracking-wider text-primary">Hình thức</span>
-                            <span class="block text-xs sm:text-sm font-extrabold text-navy">Trực tuyến qua Zalo / SĐT</span>
-                        </div>
-                    </div>
-
-                    <div class="flex items-center gap-3 bg-white p-3.5 rounded-xl border border-navy/8">
-                        <div class="w-9 h-9 rounded-lg bg-navy text-white flex items-center justify-center shrink-0">
-                            <i data-lucide="clipboard-list" class="w-4 h-4"></i>
-                        </div>
-                        <div>
-                            <span class="block text-[10px] font-extrabold uppercase tracking-wider text-navy/60">Chuẩn bị</span>
-                            <span class="block text-xs sm:text-sm font-extrabold text-navy">Xem trước thông tin case</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Danh sách Accordion 4 phần trong 30 phút -->
                 <div class="p-5 sm:p-7 space-y-3" id="hc-agenda-list">
 
-                    <!-- Phần 01 (Mở sẵn) -->
                     <div class="hc-agenda-part is-open">
-                        <button type="button" class="hc-agenda-trigger w-full flex items-center gap-3.5 p-4 sm:p-5 text-left cursor-pointer">
-                            <span class="w-8 h-8 rounded-lg bg-secondary text-white font-extrabold text-xs flex items-center justify-center shrink-0">01</span>
-                            <span class="font-serif font-bold text-navy text-base sm:text-lg flex-1">Xác định vấn đề nổi bật nhất hiện tại của con</span>
-                            <span class="hc-agenda-chevron w-7 h-7 rounded-full bg-slate-100 text-navy flex items-center justify-center transition-transform duration-200 shrink-0">
+                        <button type="button" class="hc-agenda-trigger w-full flex items-center gap-3.5 p-4 text-left cursor-pointer">
+                            <span class="hc-agenda-num w-7 h-7 rounded-lg font-bold text-xs flex items-center justify-center shrink-0">01</span>
+                            <span class="font-serif font-bold text-navy text-base flex-1">Xác định vấn đề nổi bật hiện tại của con</span>
+                            <span class="hc-agenda-chevron w-7 h-7 rounded-full bg-slate-100 text-slate-600 flex items-center justify-center transition-transform duration-200 shrink-0">
                                 <i data-lucide="chevron-down" class="w-4 h-4"></i>
                             </span>
                         </button>
-                        <div class="hc-agenda-body px-5 pb-5 pt-3 pl-16">
-                            <ul class="space-y-2 text-xs sm:text-sm text-navy/80 font-medium list-disc">
-                                <li>Nhìn lại toàn bộ biểu hiện về <strong>kén ăn, táo bón, phân sống, bất dung nạp, suy dinh dưỡng</strong> và giấc ngủ, hành vi của bé.</li>
-                                <li>Rà soát những phương pháp, chế độ ăn hoặc các loại men, vi chất gia đình đã thử nhưng chưa hiệu quả.</li>
-                                <li>Gọi tên chính xác <strong>vấn đề nổi bật nhất</strong> đang cản trở sự phục hồi của con lúc này.</li>
-                            </ul>
+                        <div class="hc-agenda-body px-5 pb-4 pt-3 pl-14 text-xs sm:text-sm text-slate-600 space-y-1.5">
+                            <p>• Rà soát các biểu hiện về ăn uống, tiêu hóa, hấp thu, giấc ngủ và hành vi của bé.</p>
+                            <p>• Nhìn lại những cách gia đình đã áp dụng để tìm ra nút thắt chính hiện tại.</p>
                         </div>
                     </div>
 
-                    <!-- Phần 02 -->
                     <div class="hc-agenda-part">
-                        <button type="button" class="hc-agenda-trigger w-full flex items-center gap-3.5 p-4 sm:p-5 text-left cursor-pointer">
-                            <span class="w-8 h-8 rounded-lg bg-primary text-white font-extrabold text-xs flex items-center justify-center shrink-0">02</span>
-                            <span class="font-serif font-bold text-navy text-base sm:text-lg flex-1">Nhìn rõ các yếu tố liên quan</span>
-                            <span class="hc-agenda-chevron w-7 h-7 rounded-full bg-slate-100 text-navy flex items-center justify-center transition-transform duration-200 shrink-0">
+                        <button type="button" class="hc-agenda-trigger w-full flex items-center gap-3.5 p-4 text-left cursor-pointer">
+                            <span class="hc-agenda-num w-7 h-7 rounded-lg font-bold text-xs flex items-center justify-center shrink-0">02</span>
+                            <span class="font-serif font-bold text-navy text-base flex-1">Nhìn rõ các yếu tố liên quan</span>
+                            <span class="hc-agenda-chevron w-7 h-7 rounded-full bg-slate-100 text-slate-600 flex items-center justify-center transition-transform duration-200 shrink-0">
                                 <i data-lucide="chevron-down" class="w-4 h-4"></i>
                             </span>
                         </button>
-                        <div class="hc-agenda-body px-5 pb-5 pt-3 pl-16">
-                            <ul class="space-y-2 text-xs sm:text-sm text-navy/80 font-medium list-disc">
-                                <li>Xâu chuỗi mối liên hệ giữa <strong>thực phẩm hàng ngày – khả năng tiêu hóa – độ nhạy cảm đường ruột</strong>.</li>
-                                <li>Làm rõ vì sao con ăn được nhưng vẫn <strong>kém hấp thu, chững cân hoặc thiếu hụt vi chất</strong>.</li>
-                                <li>Giải thích sự tác động qua lại giữa sự bức bối ở đường ruột với giấc ngủ trằn trọc và hành vi của con.</li>
-                            </ul>
+                        <div class="hc-agenda-body px-5 pb-4 pt-3 pl-14 text-xs sm:text-sm text-slate-600 space-y-1.5">
+                            <p>• Kết nối mối liên hệ giữa chế độ ăn hàng ngày, tiêu hóa và nhu cầu vi chất của con.</p>
+                            <p>• Hiểu rõ vì sao các biểu hiện của con lại xuất hiện cùng nhau.</p>
                         </div>
                     </div>
 
-                    <!-- Phần 03 -->
                     <div class="hc-agenda-part">
-                        <button type="button" class="hc-agenda-trigger w-full flex items-center gap-3.5 p-4 sm:p-5 text-left cursor-pointer">
-                            <span class="w-8 h-8 rounded-lg bg-navy text-white font-extrabold text-xs flex items-center justify-center shrink-0">03</span>
-                            <span class="font-serif font-bold text-navy text-base sm:text-lg flex-1">Xác định điều gì cần được ưu tiên trước</span>
-                            <span class="hc-agenda-chevron w-7 h-7 rounded-full bg-slate-100 text-navy flex items-center justify-center transition-transform duration-200 shrink-0">
+                        <button type="button" class="hc-agenda-trigger w-full flex items-center gap-3.5 p-4 text-left cursor-pointer">
+                            <span class="hc-agenda-num w-7 h-7 rounded-lg font-bold text-xs flex items-center justify-center shrink-0">03</span>
+                            <span class="font-serif font-bold text-navy text-base flex-1">Xác định điều cần được ưu tiên trước</span>
+                            <span class="hc-agenda-chevron w-7 h-7 rounded-full bg-slate-100 text-slate-600 flex items-center justify-center transition-transform duration-200 shrink-0">
                                 <i data-lucide="chevron-down" class="w-4 h-4"></i>
                             </span>
                         </button>
-                        <div class="hc-agenda-body px-5 pb-5 pt-3 pl-16">
-                            <ul class="space-y-2 text-xs sm:text-sm text-navy/80 font-medium list-disc">
-                                <li>Lược bỏ những việc làm dàn trải chưa thực sự cần thiết đang gây quá tải cho cả con và mẹ.</li>
-                                <li>Xác định rõ <strong>1–2 ưu tiên quan trọng nhất</strong> cần tập trung điều chỉnh trước trong giai đoạn hiện tại.</li>
-                            </ul>
+                        <div class="hc-agenda-body px-5 pb-4 pt-3 pl-14 text-xs sm:text-sm text-slate-600 space-y-1.5">
+                            <p>• Sắp xếp thứ tự ưu tiên rõ ràng để ba mẹ không phải làm quá nhiều việc cùng lúc.</p>
+                            <p>• Biết việc gì cần điều chỉnh ngay và việc gì có thể theo dõi thêm.</p>
                         </div>
                     </div>
 
-                    <!-- Phần 04 -->
                     <div class="hc-agenda-part">
-                        <button type="button" class="hc-agenda-trigger w-full flex items-center gap-3.5 p-4 sm:p-5 text-left cursor-pointer">
-                            <span class="w-8 h-8 rounded-lg bg-emerald-600 text-white font-extrabold text-xs flex items-center justify-center shrink-0">04</span>
-                            <span class="font-serif font-bold text-navy text-base sm:text-lg flex-1">Biết bước tiếp theo gia đình nên làm là gì</span>
-                            <span class="hc-agenda-chevron w-7 h-7 rounded-full bg-slate-100 text-navy flex items-center justify-center transition-transform duration-200 shrink-0">
+                        <button type="button" class="hc-agenda-trigger w-full flex items-center gap-3.5 p-4 text-left cursor-pointer">
+                            <span class="hc-agenda-num w-7 h-7 rounded-lg font-bold text-xs flex items-center justify-center shrink-0">04</span>
+                            <span class="font-serif font-bold text-navy text-base flex-1">Định hình bước tiếp theo cho gia đình</span>
+                            <span class="hc-agenda-chevron w-7 h-7 rounded-full bg-slate-100 text-slate-600 flex items-center justify-center transition-transform duration-200 shrink-0">
                                 <i data-lucide="chevron-down" class="w-4 h-4"></i>
                             </span>
                         </button>
-                        <div class="hc-agenda-body px-5 pb-5 pt-3 pl-16">
-                            <ul class="space-y-2 text-xs sm:text-sm text-navy/80 font-medium list-disc">
-                                <li>Định hình rõ gia đình nên <strong>tiếp tục theo dõi, tự điều chỉnh tại nhà hay cần hỗ trợ chuyên sâu hơn</strong>.</li>
-                                <li>Hướng dẫn những chỉ số và tín hiệu cơ thể ba mẹ cần quan sát ở con trong các tuần tiếp theo.</li>
-                            </ul>
+                        <div class="hc-agenda-body px-5 pb-4 pt-3 pl-14 text-xs sm:text-sm text-slate-600 space-y-1.5">
+                            <p>• Làm rõ gia đình nên tiếp tục theo dõi, tự điều chỉnh tại nhà hay cần hỗ trợ sâu hơn.</p>
+                            <p>• Nắm được các dấu hiệu tích cực cần quan sát ở con trong giai đoạn tới.</p>
                         </div>
                     </div>
 
-                </div>
-            </div>
-
-            <!-- 2 Hộp Kết quả đầu ra & Quy trình xét duyệt (Giống .gets của #rbl-ws) -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mt-6">
-                <div class="bg-[#fff7ed] border border-orange-200/90 rounded-2xl p-6">
-                    <div class="flex items-center gap-2.5 mb-2.5">
-                        <span class="w-7 h-7 rounded-lg bg-secondary text-white flex items-center justify-center">
-                            <i data-lucide="check-circle-2" class="w-4 h-4"></i>
-                        </span>
-                        <span class="text-xs font-extrabold uppercase tracking-wider text-secondary">Kết quả sau 30 phút</span>
-                    </div>
-                    <p class="text-navy/85 text-xs sm:text-sm font-medium leading-relaxed">
-                        Ba mẹ tháo gỡ được sự rối bời, nhìn rõ <strong class="text-navy">vấn đề chính của con nằm ở đâu, điều gì cần ưu tiên làm trước</strong> và có hướng đi rõ ràng, thực tế cho giai đoạn tiếp theo.
-                    </p>
-                </div>
-
-                <div class="bg-[#f0fdfa] border border-teal-200/90 rounded-2xl p-6">
-                    <div class="flex items-center gap-2.5 mb-2.5">
-                        <span class="w-7 h-7 rounded-lg bg-primary text-white flex items-center justify-center">
-                            <i data-lucide="calendar-check" class="w-4 h-4"></i>
-                        </span>
-                        <span class="text-xs font-extrabold uppercase tracking-wider text-primary">Quy trình sau khi gửi thông tin</span>
-                    </div>
-                    <p class="text-navy/85 text-xs sm:text-sm font-medium leading-relaxed">
-                        Sau khi ba mẹ hoàn tất đăng ký và khảo sát bên dưới, đội ngũ sẽ <strong class="text-navy">tổng hợp, xem xét kỹ hồ sơ và liên hệ qua Zalo</strong> với những trường hợp phù hợp để sắp xếp lịch trao đổi 1:1.
-                    </p>
                 </div>
             </div>
         </section>
 
         <!-- =========================================================
              SECTION 5: KHU VỰC ĐĂNG KÝ CASE CỦA CON (#dang-ky-case)
-             (Form 2 bước: Thông tin liên hệ -> Khảo sát tình trạng của con)
+             (Nền sáng, nhẹ nhàng, tích cực)
              ========================================================= -->
-        <section id="dang-ky-case" class="mt-20 md:mt-28 scroll-mt-24">
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-start">
+        <section id="dang-ky-case" class="mt-16 md:mt-24 scroll-mt-24">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
 
-                <!-- Cột trái (5/12): Tóm tắt thông tin đợt đăng ký -->
-                <div class="lg:col-span-5 bg-navy text-white rounded-[2rem] p-7 sm:p-9 shadow-premium">
-                    <span class="inline-block bg-secondary/20 text-secondary border border-secondary/40 font-extrabold text-[11px] uppercase tracking-widest px-3 py-1 rounded-full mb-4">
-                        Đợt nhận case hiện tại
-                    </span>
-                    <h2 class="font-serif text-2xl sm:text-3xl font-bold text-white leading-tight mb-4">
-                        Đăng Ký Case Của Con
+                <!-- Cột trái (5/12): Khung hướng dẫn sáng màu, tích cực -->
+                <div class="lg:col-span-5 bg-[#f0fdfa] border border-teal-200/80 rounded-[20px] p-6 sm:p-8">
+                    <h2 class="font-serif text-2xl sm:text-3xl font-bold text-navy mb-3">
+                        Đăng ký case của con
                     </h2>
-                    <p class="text-white/80 text-xs sm:text-sm font-medium leading-relaxed mb-6">
-                        Ba mẹ vui lòng điền thông tin liên hệ ở bước đầu, sau đó tích chọn nhanh tình trạng hiện tại của bé để đội ngũ có đầy đủ dữ liệu xem xét trước buổi trao đổi.
+                    <p class="text-slate-700 text-xs sm:text-sm leading-relaxed mb-6">
+                        Ba mẹ điền thông tin liên hệ ở bước đầu, sau đó tích chọn nhanh tình trạng hiện tại của bé để đội ngũ xem trước hồ sơ.
                     </p>
 
-                    <div class="space-y-4 pt-5 border-t border-white/12 text-xs sm:text-sm">
+                    <div class="space-y-4 pt-5 border-t border-teal-200/60 text-xs sm:text-sm text-slate-700">
                         <div class="flex items-start gap-3">
-                            <span class="w-6 h-6 rounded-full bg-white/10 text-secondary font-extrabold text-xs flex items-center justify-center shrink-0 mt-0.5">1</span>
-                            <p class="text-white/85 leading-relaxed">
-                                <strong class="text-white">Gửi thông tin cơ bản & khảo sát:</strong> Giúp người phụ trách nắm bắt trước các biểu hiện ăn uống, tiêu hóa, giấc ngủ và vi chất của con.
+                            <span class="w-6 h-6 rounded-full bg-primary text-white font-bold text-xs flex items-center justify-center shrink-0 mt-0.5">1</span>
+                            <p class="leading-relaxed">
+                                <strong class="text-navy">Gửi thông tin & khảo sát nhanh:</strong> Giúp người phụ trách nắm bắt trước các biểu hiện của con.
                             </p>
                         </div>
                         <div class="flex items-start gap-3">
-                            <span class="w-6 h-6 rounded-full bg-white/10 text-teal-300 font-extrabold text-xs flex items-center justify-center shrink-0 mt-0.5">2</span>
-                            <p class="text-white/85 leading-relaxed">
-                                <strong class="text-white">Xem xét & Liên hệ xếp lịch:</strong> Đội ngũ tổng hợp hồ sơ và nhắn qua Zalo cho những trường hợp phù hợp.
+                            <span class="w-6 h-6 rounded-full bg-primary text-white font-bold text-xs flex items-center justify-center shrink-0 mt-0.5">2</span>
+                            <p class="leading-relaxed">
+                                <strong class="text-navy">Tổng hợp & liên hệ xếp lịch:</strong> Đội ngũ xem xét hồ sơ và nhắn xác nhận qua Zalo với các trường hợp phù hợp.
                             </p>
                         </div>
                         <div class="flex items-start gap-3">
-                            <span class="w-6 h-6 rounded-full bg-white/10 text-amber-300 font-extrabold text-xs flex items-center justify-center shrink-0 mt-0.5">3</span>
-                            <p class="text-white/85 leading-relaxed">
-                                <strong class="text-white">Trao đổi 1:1 trong 30 phút:</strong> Tập trung tháo gỡ đúng vấn đề gia đình đang gặp phải.
+                            <span class="w-6 h-6 rounded-full bg-primary text-white font-bold text-xs flex items-center justify-center shrink-0 mt-0.5">3</span>
+                            <p class="leading-relaxed">
+                                <strong class="text-navy">Trao đổi 1:1 trong 30 phút:</strong> Tập trung làm rõ vấn đề và hướng đi cho gia đình.
                             </p>
                         </div>
-                    </div>
-
-                    <div class="mt-6 p-4 rounded-2xl bg-white/8 border border-white/12 text-xs text-amber-200 font-medium leading-relaxed">
-                        * Form đăng ký sẽ được đóng ngay khi đã nhận đủ số lượng case có thể hỗ trợ trong đợt này.
                     </div>
                 </div>
 
-                <!-- Cột phải (7/12): Khung Form 2 Bước -->
+                <!-- Cột phải (7/12): Khung Form 2 bước nền trắng -->
                 <div class="lg:col-span-7">
-                    <div id="booking-card-wrapper" class="hc-master-card p-6 sm:p-8 xl:p-9 relative">
+                    <div id="booking-card-wrapper" class="hc-master-card p-6 sm:p-8 relative">
                         <div class="hc-card-bar absolute top-0 left-0 right-0"></div>
 
-                        <!-- MÀN HÌNH 1: THÔNG TIN LIÊN HỆ CƠ BẢN -->
-                        <div id="booking-step1-container" class="pt-2">
-                            <div class="mb-6">
-                                <h3 class="font-serif text-2xl sm:text-3xl font-bold text-navy">Thông Tin Liên Hệ Của Ba Mẹ</h3>
-                                <p class="text-navy/65 text-xs sm:text-sm font-medium mt-1">
-                                    Điền thông tin liên hệ để hệ thống ghi nhận hồ sơ trước khi chuyển sang bảng câu hỏi nhanh về tình trạng của con.
+                        <!-- BƯỚC 1: THÔNG TIN LIÊN HỆ -->
+                        <div id="booking-step1-container" class="pt-1">
+                            <div class="mb-5">
+                                <h3 class="font-serif text-xl sm:text-2xl font-bold text-navy">Thông tin liên hệ của ba mẹ</h3>
+                                <p class="text-slate-500 text-xs sm:text-sm mt-1">
+                                    Điền thông tin liên hệ trước khi chuyển sang bảng tích chọn nhanh tình trạng của con.
                                 </p>
                             </div>
 
@@ -710,7 +567,7 @@ $booking_nonce      = wp_create_nonce( 'hieucon_booking_nonce' );
                                 <input type="hidden" name="nonce" id="booking-nonce" value="<?php echo esc_attr( $booking_nonce ); ?>">
 
                                 <div>
-                                    <label for="booking-parent-name" class="block text-xs font-extrabold text-navy mb-1.5">
+                                    <label for="booking-parent-name" class="block text-xs font-bold text-navy mb-1.5">
                                         Họ và tên ba/mẹ <span class="text-secondary">*</span>
                                     </label>
                                     <input
@@ -720,13 +577,13 @@ $booking_nonce      = wp_create_nonce( 'hieucon_booking_nonce' );
                                         value="<?php echo esc_attr( $prefill_name ); ?>"
                                         required
                                         placeholder="Ví dụ: Mẹ Nguyễn Thu Hà"
-                                        class="w-full px-4 py-3.5 rounded-xl bg-slate-50/70 border border-navy/15 focus:bg-white focus:border-secondary focus:ring-2 focus:ring-secondary/20 outline-none text-navy font-semibold text-sm transition-all"
+                                        class="w-full px-4 py-3 rounded-xl bg-[#f8fafc] border border-slate-200 focus:bg-white focus:border-primary outline-none text-navy font-medium text-sm transition-all"
                                     >
                                 </div>
 
                                 <div>
-                                    <label for="booking-phone" class="block text-xs font-extrabold text-navy mb-1.5">
-                                        Số điện thoại / Zalo nhận phản hồi <span class="text-secondary">*</span>
+                                    <label for="booking-phone" class="block text-xs font-bold text-navy mb-1.5">
+                                        Số điện thoại / Zalo liên hệ <span class="text-secondary">*</span>
                                     </label>
                                     <input
                                         type="tel"
@@ -735,30 +592,26 @@ $booking_nonce      = wp_create_nonce( 'hieucon_booking_nonce' );
                                         value="<?php echo esc_attr( $prefill_phone ); ?>"
                                         required
                                         placeholder="Nhập số điện thoại có dùng Zalo..."
-                                        class="w-full px-4 py-3.5 rounded-xl bg-slate-50/70 border border-navy/15 focus:bg-white focus:border-secondary focus:ring-2 focus:ring-secondary/20 outline-none text-navy font-semibold text-sm transition-all"
+                                        class="w-full px-4 py-3 rounded-xl bg-[#f8fafc] border border-slate-200 focus:bg-white focus:border-primary outline-none text-navy font-medium text-sm transition-all"
                                     >
                                 </div>
 
                                 <div>
-                                    <label class="block text-xs font-extrabold text-navy mb-1.5">
-                                        Khung giờ ba/mẹ thuận tiện trao đổi 30 phút <span class="text-secondary">*</span>
+                                    <label class="block text-xs font-bold text-navy mb-1.5">
+                                        Khung giờ thuận tiện trao đổi <span class="text-secondary">*</span>
                                     </label>
-                                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-2.5" id="time-slot-group">
-                                        <button type="button" data-slot="Sáng (08:30 - 11:30)" class="time-slot-pill is-active text-left px-3 py-2.5 rounded-xl border border-navy/15 bg-white text-navy text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer">
-                                            <i data-lucide="sun" class="w-3.5 h-3.5 text-secondary shrink-0"></i>
-                                            <span>Sáng (8h30–11h30)</span>
+                                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-2" id="time-slot-group">
+                                        <button type="button" data-slot="Sáng (08:30 - 11:30)" class="time-slot-pill is-active text-center px-3 py-2.5 rounded-xl border border-slate-200 bg-white text-navy text-xs font-semibold transition-all cursor-pointer">
+                                            Sáng (8h30–11h30)
                                         </button>
-                                        <button type="button" data-slot="Trưa (12:00 - 13:30)" class="time-slot-pill text-left px-3 py-2.5 rounded-xl border border-navy/15 bg-white text-navy text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer">
-                                            <i data-lucide="coffee" class="w-3.5 h-3.5 text-secondary shrink-0"></i>
-                                            <span>Trưa (12h–13h30)</span>
+                                        <button type="button" data-slot="Trưa (12:00 - 13:30)" class="time-slot-pill text-center px-3 py-2.5 rounded-xl border border-slate-200 bg-white text-navy text-xs font-semibold transition-all cursor-pointer">
+                                            Trưa (12h–13h30)
                                         </button>
-                                        <button type="button" data-slot="Chiều (14:00 - 17:30)" class="time-slot-pill text-left px-3 py-2.5 rounded-xl border border-navy/15 bg-white text-navy text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer">
-                                            <i data-lucide="cloud-sun" class="w-3.5 h-3.5 text-secondary shrink-0"></i>
-                                            <span>Chiều (14h–17h30)</span>
+                                        <button type="button" data-slot="Chiều (14:00 - 17:30)" class="time-slot-pill text-center px-3 py-2.5 rounded-xl border border-slate-200 bg-white text-navy text-xs font-semibold transition-all cursor-pointer">
+                                            Chiều (14h–17h30)
                                         </button>
-                                        <button type="button" data-slot="Tối (19:30 - 21:30)" class="time-slot-pill text-left px-3 py-2.5 rounded-xl border border-navy/15 bg-white text-navy text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer">
-                                            <i data-lucide="moon" class="w-3.5 h-3.5 text-secondary shrink-0"></i>
-                                            <span>Tối (19h30–21h30)</span>
+                                        <button type="button" data-slot="Tối (19:30 - 21:30)" class="time-slot-pill text-center px-3 py-2.5 rounded-xl border border-slate-200 bg-white text-navy text-xs font-semibold transition-all cursor-pointer">
+                                            Tối (19h30–21h30)
                                         </button>
                                     </div>
                                     <input
@@ -766,36 +619,36 @@ $booking_nonce      = wp_create_nonce( 'hieucon_booking_nonce' );
                                         id="booking-preferred-time"
                                         name="preferred_time"
                                         value="Sáng (08:30 - 11:30)"
-                                        placeholder="Hoặc ghi rõ ngày/giờ cụ thể ba mẹ mong muốn..."
-                                        class="w-full px-4 py-2.5 rounded-xl bg-slate-50/70 border border-navy/10 focus:bg-white focus:border-secondary outline-none text-navy font-semibold text-xs transition-all"
+                                        placeholder="Hoặc ghi rõ ngày/giờ ba mẹ mong muốn..."
+                                        class="w-full px-4 py-2.5 rounded-xl bg-[#f8fafc] border border-slate-200 focus:bg-white focus:border-primary outline-none text-navy font-medium text-xs transition-all"
                                     >
                                 </div>
 
-                                <div id="booking-step1-error" class="hidden rounded-xl bg-red-50 border border-red-200 text-red-700 text-xs font-bold px-4 py-3"></div>
+                                <div id="booking-step1-error" class="hidden rounded-xl bg-red-50 border border-red-200 text-red-700 text-xs font-semibold px-4 py-3"></div>
 
                                 <button
                                     type="submit"
                                     id="booking-step1-btn"
-                                    class="w-full py-4 px-6 rounded-xl bg-gradient-to-r from-secondary to-secondary_dark hover:from-secondary_dark hover:to-secondary text-white font-extrabold text-sm sm:text-base uppercase tracking-wider shadow-[0_10px_25px_-5px_rgba(249,115,22,0.45)] hover:-translate-y-0.5 transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer"
+                                    class="w-full py-3.5 px-6 rounded-xl bg-secondary hover:bg-secondary_dark text-white font-bold text-sm sm:text-base uppercase tracking-wider shadow-sm hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-center gap-2 cursor-pointer"
                                 >
-                                    <span>Đăng Ký Case Của Con</span>
+                                    <span>ĐĂNG KÝ CASE CỦA CON</span>
                                     <i data-lucide="arrow-right" class="w-5 h-5"></i>
                                 </button>
                             </form>
                         </div>
 
-                        <!-- MÀN HÌNH 2: KHẢO SÁT NHANH TRÊN 1 KHUNG -->
-                        <div id="booking-step2-container" class="hidden pt-2">
-                            <div class="bg-emerald-50/90 border border-emerald-200 rounded-2xl p-4 mb-5 flex items-start gap-3">
-                                <div class="w-7 h-7 rounded-full bg-emerald-500 text-white flex items-center justify-center shrink-0 mt-0.5">
-                                    <i data-lucide="check" class="w-4 h-4"></i>
+                        <!-- BƯỚC 2: KHẢO SÁT NHANH TRÊN 1 KHUNG -->
+                        <div id="booking-step2-container" class="hidden pt-1">
+                            <div class="bg-[#f0fdfa] border border-teal-200 rounded-xl p-4 mb-5 flex items-start gap-3">
+                                <div class="w-6 h-6 rounded-full bg-primary text-white flex items-center justify-center shrink-0 mt-0.5">
+                                    <i data-lucide="check" class="w-3.5 h-3.5"></i>
                                 </div>
-                                <div class="text-xs leading-relaxed text-emerald-950">
-                                    <p class="font-extrabold text-sm text-emerald-900">
-                                        Đã ghi nhận liên hệ (<span id="step2-badge-code">TV-0000</span>)
+                                <div class="text-xs leading-relaxed text-slate-700">
+                                    <p class="font-bold text-sm text-navy">
+                                        Đã lưu thông tin liên hệ (<span id="step2-badge-code">TV-0000</span>)
                                     </p>
-                                    <p class="font-medium mt-0.5">
-                                        Để đội ngũ có thông tin xem xét trước buổi trao đổi, ba mẹ tích chọn nhanh tình trạng hiện tại của con dưới đây nhé:
+                                    <p class="mt-0.5">
+                                        Ba mẹ tích chọn nhanh các biểu hiện của con dưới đây để đội ngũ xem trước hồ sơ nhé:
                                     </p>
                                 </div>
                             </div>
@@ -805,21 +658,21 @@ $booking_nonce      = wp_create_nonce( 'hieucon_booking_nonce' );
                                 <input type="hidden" id="survey-booking-code" name="booking_code" value="">
 
                                 <!-- Thông tin bé -->
-                                <div class="bg-slate-50/80 border border-navy/10 rounded-2xl p-4">
+                                <div class="bg-[#f8fafc] border border-slate-200/80 rounded-xl p-4">
                                     <div class="grid grid-cols-1 sm:grid-cols-12 gap-4">
                                         <div class="sm:col-span-5">
-                                            <label for="survey-child-name" class="block text-xs font-extrabold text-navy mb-1.5">Tên gọi của bé</label>
+                                            <label for="survey-child-name" class="block text-xs font-bold text-navy mb-1.5">Tên gọi của bé</label>
                                             <input
                                                 type="text"
                                                 id="survey-child-name"
                                                 name="child_name"
                                                 value="<?php echo esc_attr( $prefill_child_name ); ?>"
                                                 placeholder="VD: Bé Bắp / Minh Khôi"
-                                                class="w-full px-3.5 py-2.5 rounded-xl bg-white border border-navy/15 focus:border-secondary outline-none text-navy font-semibold text-xs"
+                                                class="w-full px-3.5 py-2 rounded-lg bg-white border border-slate-200 focus:border-primary outline-none text-navy text-xs"
                                             >
                                         </div>
                                         <div class="sm:col-span-7">
-                                            <label class="block text-xs font-extrabold text-navy mb-1.5">Độ tuổi của bé</label>
+                                            <label class="block text-xs font-bold text-navy mb-1.5">Độ tuổi của bé</label>
                                             <input type="hidden" id="survey-child-age" name="child_age" value="2 – 3 tuổi">
                                             <div class="flex flex-wrap gap-1.5" data-single-group="survey-child-age">
                                                 <?php
@@ -827,7 +680,7 @@ $booking_nonce      = wp_create_nonce( 'hieucon_booking_nonce' );
                                                 foreach ( $age_options as $idx => $age_label ) :
                                                     $active_cls = ( 1 === $idx ) ? 'is-selected' : '';
                                                 ?>
-                                                <button type="button" data-value="<?php echo esc_attr( $age_label ); ?>" class="survey-single-pill <?php echo esc_attr( $active_cls ); ?> px-3 py-2 rounded-xl border border-navy/15 bg-white text-navy text-xs font-bold transition-all cursor-pointer">
+                                                <button type="button" data-value="<?php echo esc_attr( $age_label ); ?>" class="survey-single-pill <?php echo esc_attr( $active_cls ); ?> px-3 py-1.5 rounded-lg border border-slate-200 bg-white text-navy text-xs font-semibold transition-all cursor-pointer">
                                                     <?php echo esc_html( $age_label ); ?>
                                                 </button>
                                                 <?php endforeach; ?>
@@ -837,139 +690,139 @@ $booking_nonce      = wp_create_nonce( 'hieucon_booking_nonce' );
                                 </div>
 
                                 <!-- Vấn đề nổi bật nhất -->
-                                <div class="bg-slate-50/80 border border-navy/10 rounded-2xl p-4">
-                                    <label class="block text-xs font-extrabold text-navy mb-2">Vấn đề nổi bật nhất ba mẹ đang băn khoăn ở con</label>
-                                    <input type="hidden" id="survey-diagnosis" name="diagnosis" value="Táo bón / Rối loạn tiêu hoá">
+                                <div class="bg-[#f8fafc] border border-slate-200/80 rounded-xl p-4">
+                                    <label class="block text-xs font-bold text-navy mb-2">Vấn đề ba mẹ đang quan tâm nhất ở con</label>
+                                    <input type="hidden" id="survey-diagnosis" name="diagnosis" value="Táo bón / tiêu hóa">
                                     <div class="flex flex-wrap gap-2" data-single-group="survey-diagnosis">
                                         <?php
                                         $diagnoses = [
-                                            'Táo bón / Rối loạn tiêu hoá',
-                                            'Kén ăn / Nhai nuốt kém',
-                                            'Bất dung nạp / Dị ứng thực phẩm',
-                                            'Kém hấp thu / Suy dinh dưỡng',
-                                            'Thiếu hụt vi chất & dinh dưỡng',
+                                            'Táo bón / tiêu hóa',
+                                            'Kén ăn / nhai nuốt',
+                                            'Bất dung nạp thực phẩm',
+                                            'Hấp thu / chậm tăng cân',
+                                            'Thiếu hụt vi chất',
                                         ];
                                         foreach ( $diagnoses as $idx => $diag ) :
                                             $active_cls = ( 0 === $idx ) ? 'is-selected' : '';
                                         ?>
-                                        <button type="button" data-value="<?php echo esc_attr( $diag ); ?>" class="survey-single-pill <?php echo esc_attr( $active_cls ); ?> px-3.5 py-2 rounded-xl border border-navy/15 bg-white text-navy text-xs font-bold transition-all cursor-pointer">
+                                        <button type="button" data-value="<?php echo esc_attr( $diag ); ?>" class="survey-single-pill <?php echo esc_attr( $active_cls ); ?> px-3 py-1.5 rounded-lg border border-slate-200 bg-white text-navy text-xs font-semibold transition-all cursor-pointer">
                                             <?php echo esc_html( $diag ); ?>
                                         </button>
                                         <?php endforeach; ?>
                                     </div>
                                 </div>
 
-                                <!-- Biểu hiện Tiêu hoá & Ăn uống -->
-                                <div class="bg-slate-50/80 border border-navy/10 rounded-2xl p-4">
-                                    <label class="block text-xs font-extrabold text-navy mb-2">
-                                        Biểu hiện Tiêu hoá & Ăn uống hiện tại
+                                <!-- Biểu hiện tiêu hóa & ăn uống -->
+                                <div class="bg-[#f8fafc] border border-slate-200/80 rounded-xl p-4">
+                                    <label class="block text-xs font-bold text-navy mb-2">
+                                        Biểu hiện ăn uống & tiêu hóa hiện tại
                                     </label>
                                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
                                         <?php
                                         $bio_symptoms = [
-                                            'Táo bón kéo dài, phân cứng, vón cục',
-                                            'Phân sống, lỏng nát, có bọt hoặc mùi chua',
-                                            'Bụng căng phình, đầy hơi, ợ chua, hôi miệng',
-                                            'Kén ăn cực đoan, chỉ ăn vài món cố định',
-                                            'Nhạy cảm độ thô, ngậm lâu, nhai nuốt kém',
-                                            'Thèm đồ ngọt, sữa bò hoặc tinh bột quá mức',
+                                            'Táo bón, đi ngoài chưa đều',
+                                            'Phân sống, lỏng hoặc có bọt',
+                                            'Bụng dễ đầy hơi, chướng khí',
+                                            'Kén ăn, chỉ ăn vài món quen thuộc',
+                                            'Nhạy cảm độ thô, ngậm thức ăn lâu',
+                                            'Thích đồ ngọt, sữa hoặc tinh bột',
                                         ];
                                         foreach ( $bio_symptoms as $item ) :
                                         ?>
-                                        <button type="button" data-multi-name="bio_symptoms[]" data-value="<?php echo esc_attr( $item ); ?>" data-active-class="is-selected" class="survey-multi-chip text-left px-3 py-2.5 rounded-xl border border-navy/12 bg-white hover:border-secondary/50 text-navy text-xs font-semibold flex items-center gap-2.5 cursor-pointer">
-                                            <span class="chip-check-icon w-4 h-4 rounded-md border border-navy/25 flex items-center justify-center shrink-0 text-transparent transition-colors">
+                                        <button type="button" data-multi-name="bio_symptoms[]" data-value="<?php echo esc_attr( $item ); ?>" data-active-class="is-selected" class="survey-multi-chip text-left px-3 py-2 rounded-lg border border-slate-200 bg-white hover:border-primary/50 text-slate-700 text-xs font-medium flex items-center gap-2 cursor-pointer">
+                                            <span class="chip-check-icon w-4 h-4 rounded border border-slate-300 flex items-center justify-center shrink-0 text-transparent transition-colors">
                                                 <i data-lucide="check" class="w-3 h-3"></i>
                                             </span>
-                                            <span class="leading-snug"><?php echo esc_html( $item ); ?></span>
+                                            <span><?php echo esc_html( $item ); ?></span>
                                         </button>
                                         <?php endforeach; ?>
                                     </div>
                                 </div>
 
-                                <!-- Dấu hiệu Bất dung nạp, Suy dinh dưỡng, Vi chất, Giấc ngủ & Hành vi -->
-                                <div class="bg-slate-50/80 border border-navy/10 rounded-2xl p-4">
-                                    <label class="block text-xs font-extrabold text-navy mb-2">
-                                        Dấu hiệu Bất dung nạp, Hấp thu, Vi chất, Giấc ngủ & Hành vi
+                                <!-- Dấu hiệu hấp thu, vi chất, giấc ngủ & hành vi -->
+                                <div class="bg-[#f8fafc] border border-slate-200/80 rounded-xl p-4">
+                                    <label class="block text-xs font-bold text-navy mb-2">
+                                        Biểu hiện hấp thu, vi chất, giấc ngủ & hành vi
                                     </label>
                                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
                                         <?php
                                         $behav_symptoms = [
-                                            'Ăn được nhưng kém hấp thu, chậm tăng cân / chiều cao',
-                                            'Nghi ngờ bất dung nạp đạm sữa bò (Casein), Gluten, Lactose',
-                                            'Hay mẩn ngứa, chàm da, dị ứng hoặc ốm vặt',
-                                            'Khó vào giấc, ngủ trằn trọc, nghiến răng, mồ hôi trộm',
-                                            'Dễ bức bối, cáu gắt, mất tập trung khi bụng khó chịu',
-                                            'Có dấu hiệu thiếu Kẽm, Sắt, Canxi, Magie, Vitamin...',
+                                            'Hấp thu chưa tốt, chậm tăng cân',
+                                            'Nhạy cảm với sữa bò, Gluten, Lactose',
+                                            'Da nhạy cảm, dễ mẩn ngứa hoặc ốm vặt',
+                                            'Khó vào giấc, ngủ chưa sâu giấc',
+                                            'Dễ cáu gắt hoặc giảm sự tập trung',
+                                            'Có dấu hiệu thiếu hụt vi chất (Kẽm, Sắt, Canxi...)',
                                         ];
                                         foreach ( $behav_symptoms as $item ) :
                                         ?>
-                                        <button type="button" data-multi-name="behav_symptoms[]" data-value="<?php echo esc_attr( $item ); ?>" data-active-class="is-selected-teal" class="survey-multi-chip text-left px-3 py-2.5 rounded-xl border border-navy/12 bg-white hover:border-primary/50 text-navy text-xs font-semibold flex items-center gap-2.5 cursor-pointer">
-                                            <span class="chip-check-icon w-4 h-4 rounded-md border border-navy/25 flex items-center justify-center shrink-0 text-transparent transition-colors">
+                                        <button type="button" data-multi-name="behav_symptoms[]" data-value="<?php echo esc_attr( $item ); ?>" data-active-class="is-selected" class="survey-multi-chip text-left px-3 py-2 rounded-lg border border-slate-200 bg-white hover:border-primary/50 text-slate-700 text-xs font-medium flex items-center gap-2 cursor-pointer">
+                                            <span class="chip-check-icon w-4 h-4 rounded border border-slate-300 flex items-center justify-center shrink-0 text-transparent transition-colors">
                                                 <i data-lucide="check" class="w-3 h-3"></i>
                                             </span>
-                                            <span class="leading-snug"><?php echo esc_html( $item ); ?></span>
+                                            <span><?php echo esc_html( $item ); ?></span>
                                         </button>
                                         <?php endforeach; ?>
                                     </div>
                                 </div>
 
-                                <!-- Những hướng gia đình đã thử -->
-                                <div class="bg-slate-50/80 border border-navy/10 rounded-2xl p-4">
-                                    <label class="block text-xs font-extrabold text-navy mb-2">
-                                        Gia đình đã hoặc đang thử những hướng nào?
+                                <!-- Những hướng gia đình đã áp dụng -->
+                                <div class="bg-[#f8fafc] border border-slate-200/80 rounded-xl p-4">
+                                    <label class="block text-xs font-bold text-navy mb-2">
+                                        Gia đình đã áp dụng những hướng nào?
                                     </label>
                                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
                                         <?php
                                         $tried_methods = [
-                                            'Đã đổi nhiều loại men vi sinh, chất xơ nhưng chưa dứt điểm',
-                                            'Đang bổ sung nhiều loại vi chất nhưng chưa rõ con hấp thu không',
-                                            'Đã thử kiêng sữa bò / Gluten hoặc điều chỉnh chế độ ăn',
-                                            'Đã thử nhiều cách nhưng chưa rõ nên ưu tiên xử lý gì trước',
+                                            'Đã dùng men vi sinh, chất xơ hỗ trợ',
+                                            'Đang bổ sung một số loại vitamin, vi chất',
+                                            'Đã thử điều chỉnh chế độ ăn tại nhà',
+                                            'Đang tìm hiểu hướng ưu tiên phù hợp cho con',
                                         ];
                                         foreach ( $tried_methods as $item ) :
                                         ?>
-                                        <button type="button" data-multi-name="tried_methods[]" data-value="<?php echo esc_attr( $item ); ?>" data-active-class="is-selected" class="survey-multi-chip text-left px-3 py-2.5 rounded-xl border border-navy/12 bg-white hover:border-secondary/50 text-navy text-xs font-semibold flex items-center gap-2.5 cursor-pointer">
-                                            <span class="chip-check-icon w-4 h-4 rounded-md border border-navy/25 flex items-center justify-center shrink-0 text-transparent transition-colors">
+                                        <button type="button" data-multi-name="tried_methods[]" data-value="<?php echo esc_attr( $item ); ?>" data-active-class="is-selected" class="survey-multi-chip text-left px-3 py-2 rounded-lg border border-slate-200 bg-white hover:border-primary/50 text-slate-700 text-xs font-medium flex items-center gap-2 cursor-pointer">
+                                            <span class="chip-check-icon w-4 h-4 rounded border border-slate-300 flex items-center justify-center shrink-0 text-transparent transition-colors">
                                                 <i data-lucide="check" class="w-3 h-3"></i>
                                             </span>
-                                            <span class="leading-snug"><?php echo esc_html( $item ); ?></span>
+                                            <span><?php echo esc_html( $item ); ?></span>
                                         </button>
                                         <?php endforeach; ?>
                                     </div>
                                 </div>
 
                                 <!-- Điều muốn làm rõ nhất -->
-                                <div class="bg-slate-50/80 border border-navy/10 rounded-2xl p-4">
-                                    <label for="survey-parent-goal" class="block text-xs font-extrabold text-navy mb-1.5">
-                                        Điều ba mẹ muốn làm rõ nhất trong 30 phút trao đổi này:
+                                <div class="bg-[#f8fafc] border border-slate-200/80 rounded-xl p-4">
+                                    <label for="survey-parent-goal" class="block text-xs font-bold text-navy mb-1.5">
+                                        Điều ba mẹ mong muốn làm rõ nhất trong 30 phút này:
                                     </label>
                                     <textarea
                                         id="survey-parent-goal"
                                         name="parent_goal"
                                         rows="2"
-                                        placeholder="Ví dụ: Con táo bón lâu ngày kèm kén ăn và chậm tăng cân, đã đổi nhiều loại men không đỡ, muốn biết vấn đề chính nằm ở đâu và ưu tiên gì trước..."
-                                        class="w-full px-3.5 py-2.5 rounded-xl bg-white border border-navy/15 focus:border-secondary outline-none text-navy font-medium text-xs transition-all resize-none"
+                                        placeholder="Chia sẻ ngắn gọn điều gia đình đang quan tâm nhất ở con..."
+                                        class="w-full px-3.5 py-2 rounded-lg bg-white border border-slate-200 focus:border-primary outline-none text-navy text-xs transition-all resize-none"
                                     ></textarea>
                                 </div>
 
-                                <div id="booking-step2-error" class="hidden rounded-xl bg-red-50 border border-red-200 text-red-700 text-xs font-bold px-4 py-3"></div>
+                                <div id="booking-step2-error" class="hidden rounded-xl bg-red-50 border border-red-200 text-red-700 text-xs font-semibold px-4 py-3"></div>
 
-                                <div class="space-y-2.5 pt-1">
+                                <div class="space-y-2 pt-1">
                                     <button
                                         type="submit"
                                         id="booking-step2-btn"
-                                        class="w-full py-4 px-6 rounded-xl bg-gradient-to-r from-primary to-teal-700 hover:opacity-95 text-white font-extrabold text-sm sm:text-base uppercase tracking-wider shadow-[0_10px_25px_-5px_rgba(13,148,136,0.4)] hover:-translate-y-0.5 transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer"
+                                        class="w-full py-3.5 px-6 rounded-xl bg-primary hover:opacity-95 text-white font-bold text-sm sm:text-base uppercase tracking-wider shadow-sm transition-all flex items-center justify-center gap-2 cursor-pointer"
                                     >
-                                        <i data-lucide="clipboard-check" class="w-5 h-5"></i>
-                                        <span>Hoàn Tất Hồ Sơ Case Của Con</span>
+                                        <i data-lucide="check-circle-2" class="w-5 h-5"></i>
+                                        <span>HOÀN TẤT ĐĂNG KÝ CASE CỦA CON</span>
                                     </button>
 
                                     <button
                                         type="button"
                                         id="booking-skip-survey-btn"
-                                        class="w-full py-2 text-center text-xs font-bold text-navy/55 hover:text-navy underline transition-colors cursor-pointer"
+                                        class="w-full py-1.5 text-center text-xs font-medium text-slate-500 hover:text-navy underline transition-colors cursor-pointer"
                                     >
-                                        Bỏ qua khảo sát và gửi thông tin liên hệ →
+                                        Bỏ qua bước khảo sát và gửi thông tin liên hệ →
                                     </button>
                                 </div>
                             </form>
@@ -977,30 +830,25 @@ $booking_nonce      = wp_create_nonce( 'hieucon_booking_nonce' );
 
                         <!-- MÀN HÌNH 3: HOÀN TẤT -->
                         <div id="booking-success-container" class="hidden text-center py-6">
-                            <div class="w-16 h-16 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto mb-4 shadow-sm">
-                                <i data-lucide="check-circle-2" class="w-9 h-9"></i>
+                            <div class="w-14 h-14 rounded-full bg-teal-50 text-primary flex items-center justify-center mx-auto mb-4">
+                                <i data-lucide="check-circle-2" class="w-8 h-8"></i>
                             </div>
-                            <span class="inline-block bg-emerald-50 text-emerald-700 border border-emerald-200 font-extrabold text-[11px] uppercase tracking-widest px-3 py-1 rounded-full mb-2">
+                            <span class="inline-block bg-teal-50 text-primary border border-teal-200 font-bold text-xs px-3 py-1 rounded-full mb-2">
                                 Mã hồ sơ: <span id="res-booking-code">TV-0000</span>
                             </span>
-                            <h3 class="font-serif text-2xl sm:text-3xl font-bold text-navy mb-2">Đã Tiếp Nhận Thông Tin Case!</h3>
-                            <p class="text-navy/75 text-sm font-medium leading-relaxed max-w-lg mx-auto mb-5">
-                                Cảm ơn <strong id="res-parent-name" class="text-navy">ba/mẹ</strong>. Đội ngũ sẽ tổng hợp, xem xét thông tin của bé và liên hệ qua số <strong id="res-phone" class="text-secondary"></strong> (khung giờ ưu tiên: <strong id="res-time" class="text-navy"></strong>) đối với các trường hợp phù hợp trong đợt này.
+                            <h3 class="font-serif text-2xl font-bold text-navy mb-2">Đã tiếp nhận thông tin của gia đình</h3>
+                            <p class="text-slate-600 text-sm leading-relaxed max-w-md mx-auto mb-5">
+                                Cảm ơn <strong id="res-parent-name" class="text-navy">ba/mẹ</strong>. Đội ngũ sẽ tổng hợp thông tin và liên hệ qua số <strong id="res-phone" class="text-primary"></strong> (khung giờ: <strong id="res-time" class="text-navy"></strong>) đối với các trường hợp phù hợp trong đợt này.
                             </p>
 
-                            <div id="res-survey-badge" class="hidden inline-flex items-center gap-1.5 bg-teal-50 text-teal-800 border border-teal-200 px-3.5 py-1.5 rounded-xl text-xs font-bold mb-6">
-                                <i data-lucide="file-check-2" class="w-4 h-4 text-teal-600"></i>
-                                <span>Đã lưu đầy đủ thông tin khảo sát tình trạng của bé</span>
+                            <div id="res-survey-badge" class="hidden inline-flex items-center gap-1.5 bg-teal-50 text-primary border border-teal-200 px-3.5 py-1.5 rounded-xl text-xs font-semibold mb-6">
+                                <i data-lucide="file-check-2" class="w-4 h-4"></i>
+                                <span>Đã lưu đầy đủ thông tin tình trạng của bé</span>
                             </div>
 
-                            <div class="max-w-md mx-auto space-y-3">
-                                <a id="res-zalo-link" href="<?php echo esc_url( home_url( '/zalo' ) ); ?>" target="_blank" rel="noopener noreferrer" class="w-full py-3.5 px-5 rounded-xl bg-gradient-to-r from-[#0068FF] to-[#0052CC] hover:opacity-95 text-white font-extrabold text-sm uppercase tracking-wider shadow-md flex items-center justify-center gap-2 transition-all">
-                                    <span class="font-black text-base leading-none">Z</span>
-                                    <span>Nhắn Xác Nhận Hồ Sơ Qua Zalo</span>
-                                </a>
-                                <a href="<?php echo esc_url( home_url( '/bo-cong-cu-suc-khoe/' ) ); ?>" class="w-full py-3 px-5 rounded-xl bg-navy hover:bg-navy/85 text-white font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition-all">
-                                    <i data-lucide="clipboard-check" class="w-4 h-4 text-secondary"></i>
-                                    <span>Xem Bộ Công Cụ Đánh Giá Sức Khỏe</span>
+                            <div class="max-w-sm mx-auto space-y-2.5">
+                                <a id="res-zalo-link" href="<?php echo esc_url( home_url( '/zalo' ) ); ?>" target="_blank" rel="noopener noreferrer" class="w-full py-3 px-5 rounded-xl bg-[#0068FF] hover:opacity-95 text-white font-bold text-sm flex items-center justify-center gap-2 transition-all">
+                                    <span>Nhắn xác nhận qua Zalo</span>
                                 </a>
                             </div>
                         </div>
@@ -1023,7 +871,7 @@ document.addEventListener('DOMContentLoaded', function () {
         lucide.createIcons({ strokeWidth: 1.5 });
     }
 
-    // 1. Interactive Split Stage (#hc-diff-section) - Tự động chuyển tab + click
+    // 1. Interactive Split Stage (#hc-diff-section)
     const diffTabs = document.querySelectorAll('.hc-diff-tab');
     const diffPanes = document.querySelectorAll('.hc-diff-pane');
     let currentDiffIdx = 0;
@@ -1034,7 +882,7 @@ document.addEventListener('DOMContentLoaded', function () {
         diffTabs.forEach((tab, i) => {
             if (i === idx) {
                 tab.classList.remove('is-active');
-                void tab.offsetWidth; // restart progress animation
+                void tab.offsetWidth;
                 tab.classList.add('is-active');
             } else {
                 tab.classList.remove('is-active');
@@ -1189,7 +1037,7 @@ document.addEventListener('DOMContentLoaded', function () {
             const preferredTime = timeInput.value.trim() || 'Sớm nhất có thể';
 
             if (!parentName || !phone) {
-                step1Error.textContent = 'Vui lòng nhập đầy đủ Họ tên và Số điện thoại/Zalo của ba/mẹ.';
+                step1Error.textContent = 'Vui lòng nhập đầy đủ họ tên và số điện thoại/Zalo của ba/mẹ.';
                 step1Error.classList.remove('hidden');
                 return;
             }
