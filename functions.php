@@ -68,6 +68,7 @@ require_once HIEUCON_THEME_DIR . '/app/config/elearning-settings.php';
 require_once HIEUCON_THEME_DIR . '/app/config/ebook-settings.php';
 require_once HIEUCON_THEME_DIR . '/app/config/promo-campaign.php';
 require_once HIEUCON_THEME_DIR . '/app/config/referral-codes.php';
+require_once HIEUCON_THEME_DIR . '/app/config/booking-admin.php';
 
 
 // Khởi chạy các Controller xác thực & tài khoản cho hệ thống hội viên

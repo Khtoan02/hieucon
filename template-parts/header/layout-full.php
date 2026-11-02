@@ -502,13 +502,13 @@ $symptom_groups_links = [
                 <!-- COL 3: CTAs & Chuyên Đề Y Sinh (RIGHT) -->
                 <div class="hidden lg:flex justify-end items-center gap-2 xl:gap-3">
 
-                    <!-- Tài liệu Y sinh (Chuyên đề chuẩn Sitemap) -->
+                    <!-- Chuyên đề (Chuẩn Sitemap) -->
                     <div class="group relative flex items-center">
                         <a href="<?php echo home_url('/bai-viet-kien-thuc/'); ?>" class="flex items-center gap-2 border border-navy/10 hover:border-secondary/40 bg-[#f5f7fa] hover:bg-white px-3 xl:px-3.5 py-2 rounded-xl transition-all duration-200 shadow-sm hover:shadow-md outline-none group/btn">
                             <div class="w-6 h-6 rounded-lg bg-secondary/10 flex items-center justify-center group-hover/btn:bg-secondary/20 transition-colors">
                                 <i data-lucide="book-open" class="w-3.5 h-3.5 text-secondary"></i>
                             </div>
-                            <span class="font-bold text-navy text-[11px] xl:text-[12px] uppercase tracking-wider group-hover/btn:text-secondary transition-colors">Chuyên đề Y sinh</span>
+                            <span class="font-bold text-navy text-[11px] xl:text-[12px] uppercase tracking-wider group-hover/btn:text-secondary transition-colors">Chuyên đề</span>
                         </a>
                         <!-- Chuyên Đề Dropdown -->
                         <div class="absolute top-full right-0 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 translate-y-2 group-hover:translate-y-0 w-[880px] xl:w-[980px] z-[200]">
@@ -558,7 +558,8 @@ $symptom_groups_links = [
                                     <div class="flex flex-col">
                                         <h5 class="text-secondary font-bold text-[12px] uppercase tracking-wider mb-3 border-b border-navy/5 pb-2">Đánh Giá & Công Cụ</h5>
                                         <div class="flex flex-col gap-2.5">
-                                            <a href="<?php echo home_url('/bo-cong-cu-suc-khoe/'); ?>" class="flex items-center gap-2 text-white bg-secondary hover:bg-secondary_dark text-[12px] font-bold py-2.5 px-4 rounded-xl shadow-sm transition-all justify-center"><i data-lucide="clipboard-check" class="w-4 h-4"></i>Bộ Công Cụ Sức Khỏe</a>
+                                            <a href="<?php echo home_url('/dat-lich-tu-van/'); ?>" class="flex items-center gap-2 text-white bg-secondary hover:bg-secondary_dark text-[12px] font-bold py-2.5 px-4 rounded-xl shadow-sm transition-all justify-center"><i data-lucide="calendar-heart" class="w-4 h-4"></i>Đặt Lịch Tư Vấn 1:1</a>
+                                            <a href="<?php echo home_url('/bo-cong-cu-suc-khoe/'); ?>" class="flex items-center gap-2 text-white bg-primary hover:bg-teal-700 text-[12px] font-bold py-2.5 px-4 rounded-xl shadow-sm transition-all justify-center"><i data-lucide="clipboard-check" class="w-4 h-4"></i>Bộ Công Cụ Sức Khỏe</a>
                                             <a href="<?php echo home_url('/trang-check-list/'); ?>" class="flex items-center gap-2 text-white bg-navy hover:bg-navy/80 text-[12px] font-bold py-2.5 px-4 rounded-xl shadow-sm transition-all justify-center"><i data-lucide="check-square" class="w-4 h-4"></i>Checklist Đánh Giá</a>
                                             <a href="<?php echo home_url('/bai-viet-kien-thuc/'); ?>" class="flex items-center gap-2 text-navy bg-[#f8fafc] hover:bg-secondary/10 hover:text-secondary border border-navy/10 text-[12px] font-bold py-2.5 px-4 rounded-xl transition-all justify-center"><i data-lucide="newspaper" class="w-4 h-4"></i>Bài Viết Kiến Thức</a>
                                         </div>
@@ -721,10 +722,10 @@ $symptom_groups_links = [
                 </div>
             </div>
 
-            <!-- 5. Accordion: Chuyên đề Y sinh -->
+            <!-- 5. Accordion: Chuyên đề -->
             <div class="flex flex-col border-b border-navy/5">
                 <button id="mobile-chuyende-toggle" aria-expanded="false" class="flex justify-between items-center py-4 text-navy font-bold uppercase tracking-widest text-sm w-full text-left outline-none rounded-lg">
-                    <span class="flex items-center gap-3"><i data-lucide="book-open" class="w-4 h-4 text-navy/40"></i> Chuyên Đề Y Sinh</span>
+                    <span class="flex items-center gap-3"><i data-lucide="book-open" class="w-4 h-4 text-navy/40"></i> Chuyên Đề</span>
                     <i data-lucide="chevron-down" class="w-4 h-4 text-navy/40 transition-transform duration-300" id="mobile-chuyende-icon"></i>
                 </button>
                 <div id="mobile-chuyende-content" class="hidden flex-col gap-1 pl-4 py-3 bg-white/60 rounded-2xl mb-4 border border-white shadow-[inset_0_2px_4px_rgba(0,0,0,0.02)]">
@@ -782,11 +783,19 @@ $symptom_groups_links = [
                 </a>
             <?php endif; ?>
 
-            <a href="<?php echo home_url('/trang-check-list/'); ?>" class="flex items-center gap-3 bg-white border border-secondary/20 hover:border-secondary p-3.5 rounded-2xl shadow-sm transition-all">
-                <div class="bg-secondary/10 p-2.5 rounded-xl text-secondary"><i data-lucide="clipboard-check" class="w-5 h-5"></i></div>
+            <a href="<?php echo home_url('/dat-lich-tu-van/'); ?>" class="flex items-center gap-3 bg-white border border-secondary/30 hover:border-secondary p-3.5 rounded-2xl shadow-sm transition-all">
+                <div class="bg-secondary/10 p-2.5 rounded-xl text-secondary"><i data-lucide="calendar-heart" class="w-5 h-5"></i></div>
+                <div class="flex flex-col text-left">
+                    <span class="font-extrabold text-navy text-[13px] leading-tight">Đặt Lịch Tư Vấn 1:1 Miễn Phí</span>
+                    <span class="text-[10px] font-extrabold text-secondary uppercase tracking-widest mt-0.5">Đồng hành gỡ rối cùng ba mẹ</span>
+                </div>
+            </a>
+
+            <a href="<?php echo home_url('/trang-check-list/'); ?>" class="flex items-center gap-3 bg-white border border-navy/10 hover:border-secondary p-3.5 rounded-2xl shadow-sm transition-all">
+                <div class="bg-navy/5 p-2.5 rounded-xl text-navy"><i data-lucide="clipboard-check" class="w-5 h-5"></i></div>
                 <div class="flex flex-col text-left">
                     <span class="font-extrabold text-navy text-[13px] leading-tight">Checklist Đánh Giá Sức Khỏe</span>
-                    <span class="text-[10px] font-extrabold text-secondary uppercase tracking-widest mt-0.5">Công cụ tầm soát toàn diện</span>
+                    <span class="text-[10px] font-extrabold text-navy/60 uppercase tracking-widest mt-0.5">Công cụ tầm soát toàn diện</span>
                 </div>
             </a>
             

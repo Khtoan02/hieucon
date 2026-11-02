@@ -137,6 +137,25 @@ function hieucon_auto_create_member_pages() {
         // Đảm bảo template luôn đúng
         update_post_meta( $payment_page->ID, '_wp_page_template', $payment_template );
     }
+
+    // 4. Trang Đặt lịch tư vấn miễn phí 1:1
+    $booking_slug = 'dat-lich-tu-van';
+    $booking_page = get_page_by_path( $booking_slug );
+    $booking_template = 'page-templates/template-booking.php';
+
+    if ( ! $booking_page ) {
+        $booking_id = wp_insert_post( [
+            'post_title'  => 'Đặt lịch tư vấn miễn phí 1:1',
+            'post_name'   => $booking_slug,
+            'post_status' => 'publish',
+            'post_type'   => 'page',
+        ] );
+        if ( ! is_wp_error( $booking_id ) ) {
+            update_post_meta( $booking_id, '_wp_page_template', $booking_template );
+        }
+    } else {
+        update_post_meta( $booking_page->ID, '_wp_page_template', $booking_template );
+    }
 }
 add_action( 'init', 'hieucon_auto_create_member_pages' );
 
