@@ -688,21 +688,21 @@ function hieucon_render_bookings_admin_page() {
         /* Toolbar */
         .hc-bk-toolbar {
             background: #ffffff;
-            border: 1.5px solid #e2e8f0;
-            border-radius: 14px;
-            padding: 14px 20px;
-            margin-bottom: 20px;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 12px 18px;
+            margin-bottom: 16px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
-            gap: 14px;
+            gap: 12px;
         }
         .hc-bk-input,
         .hc-bk-select {
-            height: 38px;
+            height: 36px;
             padding: 0 12px;
-            border-radius: 9px;
+            border-radius: 8px;
             border: 1px solid #cbd5e1;
             font-size: 13px;
             color: #0A1931;
@@ -716,18 +716,20 @@ function hieucon_render_bookings_admin_page() {
             box-shadow: 0 0 0 2px rgba(249, 115, 22, 0.15);
         }
 
-        /* Table Card */
+        /* Compact Data Grid Table */
         .hc-bk-table-card {
             background: #ffffff;
-            border: 1.5px solid #e2e8f0;
-            border-radius: 16px;
-            overflow: hidden;
-            box-shadow: 0 16px 40px -24px rgba(10, 25, 49, 0.07);
+            border: 1px solid #cbd5e1;
+            border-radius: 12px;
+            overflow-x: auto;
+            box-shadow: 0 4px 16px -6px rgba(10, 25, 49, 0.05);
         }
         .hc-bk-table {
             width: 100%;
             border-collapse: collapse;
             text-align: left;
+            table-layout: fixed;
+            min-width: 1180px;
         }
         .hc-bk-table th {
             background: #f8fafc;
@@ -735,34 +737,49 @@ function hieucon_render_bookings_admin_page() {
             font-size: 11.5px;
             font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 0.05em;
-            padding: 14px 18px;
-            border-bottom: 1.5px solid #e2e8f0;
+            letter-spacing: 0.04em;
+            padding: 12px 14px;
+            border-bottom: 1px solid #cbd5e1;
+            border-right: 1px solid #e2e8f0;
+            white-space: nowrap;
+        }
+        .hc-bk-table th:last-child {
+            border-right: none;
         }
         .hc-bk-table td {
-            padding: 18px;
-            border-bottom: 1px solid #f1f5f9;
-            vertical-align: top;
-            font-size: 13.5px;
+            padding: 11px 14px;
+            border-bottom: 1px solid #e2e8f0;
+            border-right: 1px solid #f1f5f9;
+            vertical-align: middle;
+            font-size: 13px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
-        .hc-bk-table tr:last-child td {
+        .hc-bk-table td:last-child {
+            border-right: none;
+        }
+        .hc-bk-table tbody tr {
+            transition: background 0.12s ease;
+        }
+        .hc-bk-table tbody tr:hover td {
+            background: #f8fafc;
+        }
+        .hc-bk-table tbody tr:last-child td {
             border-bottom: none;
-        }
-        .hc-bk-table tr:hover td {
-            background: #fcfdff;
         }
 
         /* Badges & Chips */
         .hc-bk-code {
             display: inline-block;
             font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-            font-size: 12.5px;
+            font-size: 12px;
             font-weight: 800;
             color: #0A1931;
             background: #f1f5f9;
             border: 1px solid #cbd5e1;
-            padding: 3px 9px;
-            border-radius: 7px;
+            padding: 2px 8px;
+            border-radius: 6px;
         }
         .hc-bk-pill {
             display: inline-flex;
@@ -772,39 +789,54 @@ function hieucon_render_bookings_admin_page() {
             border-radius: 99px;
             font-size: 11.5px;
             font-weight: 700;
+            line-height: 1.2;
         }
         .hc-bk-tag {
             display: inline-block;
             background: #f8fafc;
             border: 1px solid #e2e8f0;
             color: #334155;
-            border-radius: 7px;
+            border-radius: 6px;
             padding: 3px 8px;
             font-size: 12px;
             font-weight: 500;
-            margin: 2px 3px 2px 0;
+            margin: 2px 4px 2px 0;
+            white-space: normal;
         }
-        .hc-bk-action-chip {
+        .hc-bk-icon-btn {
             display: inline-flex;
             align-items: center;
+            justify-content: center;
             gap: 4px;
-            padding: 4px 9px;
-            border-radius: 7px;
-            font-size: 11.5px;
+            height: 26px;
+            padding: 0 8px;
+            border-radius: 6px;
+            font-size: 11px;
             font-weight: 600;
             text-decoration: none;
             cursor: pointer;
-            border: 1px solid #e2e8f0;
+            border: 1px solid #cbd5e1;
             background: #ffffff;
             color: #0A1931;
             transition: all 0.15s ease;
         }
-        .hc-bk-action-chip:hover {
+        .hc-bk-icon-btn:hover {
             border-color: #f97316;
             color: #f97316;
         }
+        .hc-bk-status-select {
+            height: 30px;
+            padding: 0 24px 0 10px;
+            border-radius: 99px;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            border: 1px solid transparent;
+            width: 100%;
+            max-width: 165px;
+        }
 
-        /* Modal */
+        /* Modal Pop-up */
         .hc-bk-modal-backdrop {
             position: fixed;
             inset: 0;
@@ -821,13 +853,40 @@ function hieucon_render_bookings_admin_page() {
         }
         .hc-bk-modal {
             background: #ffffff;
-            border-radius: 20px;
-            max-width: 680px;
+            border-radius: 18px;
+            max-width: 780px;
             width: 100%;
-            max-height: 88vh;
+            max-height: 90vh;
             overflow-y: auto;
             box-shadow: 0 25px 60px -15px rgba(10, 25, 49, 0.35);
             border: 1px solid #e2e8f0;
+        }
+        .hc-modal-grid-table {
+            width: 100%;
+            border-collapse: collapse;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 18px;
+        }
+        .hc-modal-grid-table th,
+        .hc-modal-grid-table td {
+            padding: 11px 14px;
+            border-bottom: 1px solid #e2e8f0;
+            font-size: 13px;
+            text-align: left;
+            vertical-align: top;
+        }
+        .hc-modal-grid-table th {
+            width: 210px;
+            background: #f8fafc;
+            color: #475569;
+            font-weight: 700;
+            border-right: 1px solid #e2e8f0;
+        }
+        .hc-modal-grid-table tr:last-child th,
+        .hc-modal-grid-table tr:last-child td {
+            border-bottom: none;
         }
     </style>
 
@@ -956,22 +1015,26 @@ function hieucon_render_bookings_admin_page() {
             </form>
         </div>
 
-        <!-- MAIN TABLE -->
+        <!-- COMPACT DATA GRID TABLE -->
         <div class="hc-bk-table-card">
             <table class="hc-bk-table">
                 <thead>
                     <tr>
-                        <th style="width: 12%; min-width: 140px;">Mã hồ sơ / Ngày</th>
-                        <th style="width: 17%; min-width: 190px;">Phụ huynh & Liên hệ</th>
-                        <th style="width: 13%; min-width: 150px;">Khung giờ trao đổi</th>
-                        <th style="width: 36%;">Hồ sơ khảo sát tình trạng của con (Bước 2)</th>
-                        <th style="width: 22%; min-width: 280px;">Trạng thái & Ghi chú phụ trách</th>
+                        <th style="width: 130px;">Mã hồ sơ</th>
+                        <th style="width: 135px;">Thời gian</th>
+                        <th style="width: 165px;">Phụ huynh</th>
+                        <th style="width: 210px;">SĐT / Zalo</th>
+                        <th style="width: 160px;">Khung giờ hẹn</th>
+                        <th>Tóm tắt hồ sơ khảo sát (Bước 2)</th>
+                        <th style="width: 175px;">Trạng thái</th>
+                        <th style="width: 190px;">Ghi chú phụ trách</th>
+                        <th style="width: 135px; text-align: center;">Thao tác</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php if ( empty( $bookings ) ) : ?>
                         <tr>
-                            <td colspan="5" style="padding: 48px 20px; text-align: center; color: #64748b;">
+                            <td colspan="9" style="padding: 48px 20px; text-align: center; color: #64748b;">
                                 <div style="font-size: 15px; font-weight: 700; color: #0A1931; margin-bottom: 4px;">Chưa có hồ sơ đăng ký nào khớp với bộ lọc</div>
                                 <div style="font-size: 13px;">Khi phụ huynh gửi thông tin tại trang <code>/dat-lich-tu-van/</code>, dữ liệu sẽ hiển thị ngay tại đây.</div>
                             </td>
@@ -983,178 +1046,140 @@ function hieucon_render_bookings_admin_page() {
                             $survey           = ! empty( $b->survey_data ) ? json_decode( $b->survey_data, true ) : null;
                             $has_survey       = is_array( $survey ) && ! empty( $survey );
                             $survey_link      = hieucon_get_booking_survey_url( $b->id, $b->booking_code );
-                            $modal_json       = wp_json_encode( [
-                                'id'             => $b->id,
+
+                            $symptom_count = 0;
+                            if ( $has_survey ) {
+                                $symptom_count = count( (array) ( $survey['bio_symptoms'] ?? [] ) ) + count( (array) ( $survey['behav_symptoms'] ?? [] ) );
+                            }
+
+                            $modal_json = wp_json_encode( [
+                                'id'             => intval( $b->id ),
                                 'booking_code'   => $b->booking_code,
                                 'parent_name'    => $b->parent_name,
                                 'phone'          => $b->phone,
+                                'clean_phone'    => $clean_zalo_phone,
                                 'preferred_time' => $b->preferred_time,
-                                'created_at'     => wp_date( 'H:i - d/m/Y', strtotime( $b->created_at ) ),
+                                'created_at'     => wp_date( 'H:i • d/m/Y', strtotime( $b->created_at ) ),
+                                'status'         => $b->status,
                                 'status_label'   => $st['label'],
-                                'admin_note'     => $b->admin_note,
+                                'admin_note'     => (string) $b->admin_note,
+                                'has_survey'     => $has_survey,
                                 'survey'         => $survey,
-                                'issue_note'     => $b->issue_note,
+                                'issue_note'     => (string) $b->issue_note,
                                 'survey_link'    => $survey_link,
                             ], JSON_UNESCAPED_UNICODE );
                         ?>
-                        <tr id="hc-booking-row-<?php echo intval( $b->id ); ?>">
-                            <!-- Cột 1: Mã & Thời gian -->
+                        <tr id="hc-booking-row-<?php echo intval( $b->id ); ?>" data-case="<?php echo esc_attr( $modal_json ); ?>">
+                            <!-- 1. Mã hồ sơ -->
                             <td>
                                 <span class="hc-bk-code"><?php echo esc_html( $b->booking_code ); ?></span>
-                                <div style="font-size: 12px; color: #64748b; margin-top: 6px; font-weight: 500;">
-                                    <?php echo esc_html( wp_date( 'H:i • d/m/Y', strtotime( $b->created_at ) ) ); ?>
-                                </div>
-                                <div style="margin-top: 8px;">
-                                    <?php if ( $has_survey ) : ?>
-                                        <span class="hc-bk-pill" style="background:#ecfdf5; color:#047857; border:1px solid #a7f3d0;">
-                                            ✓ Đã điền khảo sát
-                                        </span>
-                                    <?php else : ?>
-                                        <span class="hc-bk-pill" style="background:#fff7ed; color:#c2410c; border:1px solid #fed7aa;">
-                                            Mới điền Bước 1
-                                        </span>
-                                    <?php endif; ?>
-                                </div>
                             </td>
 
-                            <!-- Cột 2: Phụ huynh & Liên hệ -->
+                            <!-- 2. Thời gian -->
+                            <td style="color: #64748b; font-size: 12.5px; font-weight: 500;">
+                                <?php echo esc_html( wp_date( 'H:i • d/m/Y', strtotime( $b->created_at ) ) ); ?>
+                            </td>
+
+                            <!-- 3. Phụ huynh -->
+                            <td style="font-weight: 700; color: #0A1931;" title="<?php echo esc_attr( $b->parent_name ); ?>">
+                                <?php echo esc_html( $b->parent_name ); ?>
+                            </td>
+
+                            <!-- 4. SĐT / Zalo -->
                             <td>
-                                <div style="font-size: 14.5px; font-weight: 700; color: #0A1931; margin-bottom: 4px;">
-                                    <?php echo esc_html( $b->parent_name ); ?>
-                                </div>
-                                <div style="font-size: 14px; font-weight: 800; color: #f97316; margin-bottom: 8px;">
-                                    <?php echo esc_html( $b->phone ); ?>
-                                </div>
-                                <div style="display: flex; flex-wrap: wrap; gap: 5px;">
-                                    <button type="button" class="hc-bk-action-chip hc-copy-btn" data-copy="<?php echo esc_attr( $clean_zalo_phone ); ?>">
-                                        Copy SĐT
-                                    </button>
-                                    <a href="https://zalo.me/<?php echo esc_attr( $clean_zalo_phone ); ?>" target="_blank" rel="noopener" class="hc-bk-action-chip" style="background:#0068FF; color:#fff; border-color:#0068FF;">
-                                        Nhắn Zalo ↗
-                                    </a>
-                                    <?php if ( ! $has_survey ) : ?>
-                                        <button type="button" class="hc-bk-action-chip hc-copy-btn" data-copy="<?php echo esc_attr( $survey_link ); ?>" title="Copy link khảo sát Bước 2 để gửi cho phụ huynh">
-                                            Copy link khảo sát
+                                <div style="display: flex; align-items: center; justify-content: space-between; gap: 6px;">
+                                    <span style="font-weight: 800; color: #f97316; font-size: 13px;"><?php echo esc_html( $b->phone ); ?></span>
+                                    <div style="display: inline-flex; gap: 4px; shrink: 0;">
+                                        <button type="button" class="hc-bk-icon-btn hc-copy-btn" data-copy="<?php echo esc_attr( $clean_zalo_phone ); ?>" title="Copy số điện thoại">
+                                            Copy
                                         </button>
-                                    <?php endif; ?>
+                                        <a href="https://zalo.me/<?php echo esc_attr( $clean_zalo_phone ); ?>" target="_blank" rel="noopener" class="hc-bk-icon-btn" style="background:#0068FF; color:#fff; border-color:#0068FF;" title="Mở chat Zalo">
+                                            Zalo ↗
+                                        </a>
+                                    </div>
                                 </div>
                             </td>
 
-                            <!-- Cột 3: Khung giờ -->
+                            <!-- 5. Khung giờ hẹn -->
                             <td>
-                                <span style="display:inline-block; background:#f8fafc; color:#0A1931; border:1px solid #cbd5e1; padding:6px 11px; border-radius:9px; font-weight:700; font-size:12.5px; line-height:1.35;">
+                                <span style="font-weight: 600; color: #0A1931; font-size: 12.5px;">
                                     <?php echo esc_html( $b->preferred_time ); ?>
                                 </span>
                             </td>
 
-                            <!-- Cột 4: Hồ sơ khảo sát -->
+                            <!-- 6. Tóm tắt hồ sơ khảo sát (Gọn trên 1 dòng) -->
                             <td>
-                                <?php if ( $has_survey ) : ?>
-                                    <div style="display:flex; flex-direction:column; gap:8px;">
-                                        <!-- Dòng 1: Tên bé + Độ tuổi + Vấn đề chính -->
-                                        <div style="display:flex; flex-wrap:wrap; gap:6px; align-items:center;">
-                                            <?php if ( ! empty( $survey['child_name'] ) || ! empty( $survey['child_age'] ) ) : ?>
-                                                <span style="background:#0A1931; color:#ffffff; font-weight:700; font-size:12px; padding:3px 10px; border-radius:7px;">
-                                                    Bé: <?php echo esc_html( trim( ( $survey['child_name'] ?? 'Chưa rõ tên' ) . ( ! empty( $survey['child_age'] ) ? ' (' . $survey['child_age'] . ')' : '' ) ) ); ?>
-                                                </span>
-                                            <?php endif; ?>
-                                            <?php if ( ! empty( $survey['diagnosis'] ) ) : ?>
-                                                <span style="background:#fff7ed; color:#c2410c; border:1px solid #fdba74; font-weight:700; font-size:12px; padding:3px 10px; border-radius:7px;">
-                                                    Trọng tâm: <?php echo esc_html( $survey['diagnosis'] ); ?>
-                                                </span>
-                                            <?php endif; ?>
-                                        </div>
-
-                                        <!-- Dòng 2: Tiêu hóa & ăn uống -->
-                                        <?php if ( ! empty( $survey['bio_symptoms'] ) ) : ?>
-                                            <div>
-                                                <span style="font-size:11.5px; font-weight:700; color:#475569; display:block; margin-bottom:2px;">Ăn uống & tiêu hóa:</span>
-                                                <?php foreach ( (array) $survey['bio_symptoms'] as $sym ) : ?>
-                                                    <span class="hc-bk-tag"><?php echo esc_html( $sym ); ?></span>
-                                                <?php endforeach; ?>
-                                            </div>
+                                <?php if ( $has_survey ) :
+                                    $child_info = trim( ( $survey['child_name'] ?? '' ) . ( ! empty( $survey['child_age'] ) ? ' (' . $survey['child_age'] . ')' : '' ) );
+                                ?>
+                                    <div style="display: flex; align-items: center; gap: 6px; overflow: hidden;">
+                                        <span class="hc-bk-pill" style="background:#ecfdf5; color:#047857; border:1px solid #a7f3d0; shrink:0;">
+                                            ✓ Đã khảo sát
+                                        </span>
+                                        <?php if ( ! empty( $child_info ) ) : ?>
+                                            <strong style="color:#0A1931; font-size:12.5px; shrink:0;"><?php echo esc_html( $child_info ); ?></strong>
                                         <?php endif; ?>
-
-                                        <!-- Dòng 3: Hấp thu, vi chất, giấc ngủ & hành vi -->
-                                        <?php if ( ! empty( $survey['behav_symptoms'] ) ) : ?>
-                                            <div>
-                                                <span style="font-size:11.5px; font-weight:700; color:#475569; display:block; margin-bottom:2px;">Hấp thu, vi chất & giấc ngủ:</span>
-                                                <?php foreach ( (array) $survey['behav_symptoms'] as $sym ) : ?>
-                                                    <span class="hc-bk-tag"><?php echo esc_html( $sym ); ?></span>
-                                                <?php endforeach; ?>
-                                            </div>
+                                        <?php if ( ! empty( $survey['diagnosis'] ) ) : ?>
+                                            <span style="background:#fff7ed; color:#c2410c; border:1px solid #fdba74; font-weight:700; font-size:11.5px; padding:2px 8px; border-radius:6px; shrink:0;">
+                                                <?php echo esc_html( $survey['diagnosis'] ); ?>
+                                            </span>
                                         <?php endif; ?>
-
-                                        <!-- Dòng 4: Đã áp dụng -->
-                                        <?php if ( ! empty( $survey['tried_methods'] ) ) : ?>
-                                            <div style="font-size:12px; color:#475569;">
-                                                <strong>Đã áp dụng:</strong> <?php echo esc_html( implode( ' • ', (array) $survey['tried_methods'] ) ); ?>
-                                            </div>
+                                        <?php if ( $symptom_count > 0 ) : ?>
+                                            <span style="color:#64748b; font-size:12px;">(+<?php echo intval( $symptom_count ); ?> biểu hiện)</span>
                                         <?php endif; ?>
-
-                                        <!-- Dòng 5: Mong muốn làm rõ -->
-                                        <?php if ( ! empty( $survey['parent_goal'] ) ) : ?>
-                                            <div style="background:#fffaf5; border-left:3px solid #f97316; padding:7px 11px; border-radius:0 8px 8px 0; font-size:12.5px; color:#0A1931;">
-                                                <strong>Điều muốn làm rõ:</strong> <?php echo esc_html( $survey['parent_goal'] ); ?>
-                                            </div>
-                                        <?php endif; ?>
-
-                                        <div style="margin-top:2px;">
-                                            <button type="button" class="hc-bk-action-chip hc-open-modal-btn" data-case="<?php echo esc_attr( $modal_json ); ?>">
-                                                Xem toàn bộ phiếu khảo sát
-                                            </button>
-                                        </div>
                                     </div>
-                                <?php elseif ( ! empty( $b->issue_note ) ) : ?>
-                                    <div style="font-size:13px; color:#1e293b; line-height:1.5; white-space:pre-line;"><?php echo esc_html( $b->issue_note ); ?></div>
                                 <?php else : ?>
-                                    <div style="background:#f8fafc; border:1px dashed #cbd5e1; border-radius:10px; padding:12px 14px; color:#64748b; font-size:12.5px;">
-                                        Phụ huynh mới gửi thông tin liên hệ ở Bước 1, chưa hoàn tất bảng tích chọn khảo sát Bước 2.
-                                        <div style="margin-top:6px;">
-                                            <button type="button" class="hc-bk-action-chip hc-copy-btn" data-copy="<?php echo esc_attr( $survey_link ); ?>">
-                                                Copy link khảo sát để gửi phụ huynh
-                                            </button>
-                                        </div>
+                                    <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px;">
+                                        <span class="hc-bk-pill" style="background:#f8fafc; color:#64748b; border:1px solid #cbd5e1;">
+                                            Chưa điền khảo sát
+                                        </span>
+                                        <button type="button" class="hc-bk-icon-btn hc-copy-btn" data-copy="<?php echo esc_attr( $survey_link ); ?>" title="Copy link khảo sát Bước 2 gửi phụ huynh">
+                                            Copy link khảo sát
+                                        </button>
                                     </div>
                                 <?php endif; ?>
                             </td>
 
-                            <!-- Cột 5: Trạng thái & Ghi chú Tư vấn viên (Lưu AJAX không tải lại trang) -->
+                            <!-- 7. Trạng thái xử lý (Select đổi trực tiếp) -->
                             <td>
-                                <div class="hc-QuickUpdateBox" data-id="<?php echo intval( $b->id ); ?>" style="display:flex; flex-direction:column; gap:8px;">
-                                    <div style="display:flex; align-items:center; justify-content:space-between; gap:8px;">
-                                        <span class="hc-status-badge hc-bk-pill" style="background:<?php echo esc_attr( $st['bg'] ); ?>; color:<?php echo esc_attr( $st['color'] ); ?>; border:1px solid <?php echo esc_attr( $st['border'] ); ?>;">
-                                            <span style="width:6px; height:6px; border-radius:99px; background:<?php echo esc_attr( $st['dot'] ); ?>;"></span>
-                                            <span class="hc-status-label-text"><?php echo esc_html( $st['label'] ); ?></span>
-                                        </span>
+                                <select
+                                    class="hc-bk-status-select hc-row-status-select"
+                                    data-id="<?php echo intval( $b->id ); ?>"
+                                    style="background:<?php echo esc_attr( $st['bg'] ); ?>; color:<?php echo esc_attr( $st['color'] ); ?>; border-color:<?php echo esc_attr( $st['border'] ); ?>;"
+                                >
+                                    <option value="pending" <?php selected( $b->status, 'pending' ); ?>>Chờ liên hệ</option>
+                                    <option value="contacted" <?php selected( $b->status, 'contacted' ); ?>>Đã liên hệ xếp lịch</option>
+                                    <option value="completed" <?php selected( $b->status, 'completed' ); ?>>Đã trao đổi xong</option>
+                                    <option value="cancelled" <?php selected( $b->status, 'cancelled' ); ?>>Đã hủy</option>
+                                </select>
+                            </td>
 
-                                        <a href="<?php echo esc_url( wp_nonce_url( admin_url( 'admin.php?page=hieucon-bookings&delete_id=' . intval( $b->id ) ), 'hieucon_delete_booking_' . intval( $b->id ) ) ); ?>" onclick="return confirm('Bạn có chắc muốn xóa hồ sơ này?');" style="color:#94a3b8; font-size:11.5px; text-decoration:none;" onmouseover="this.style.color='#ef4444'" onmouseout="this.style.color='#94a3b8'">
-                                            Xóa
-                                        </a>
-                                    </div>
+                            <!-- 8. Ghi chú phụ trách (1 dòng gọn gàng) -->
+                            <td class="hc-row-note-cell hc-open-modal-trigger" style="cursor: pointer;" title="Bấm để xem hoặc sửa ghi chú">
+                                <?php if ( ! empty( $b->admin_note ) ) : ?>
+                                    <span class="hc-row-note-text" style="color: #0A1931; font-size: 12.5px;"><?php echo esc_html( $b->admin_note ); ?></span>
+                                <?php else : ?>
+                                    <span class="hc-row-note-text" style="color: #94a3b8; font-size: 12px; font-style: italic;">+ Thêm ghi chú...</span>
+                                <?php endif; ?>
+                            </td>
 
-                                    <select class="hc-bk-select hc-js-status" style="width:100%; height:34px; font-weight:600;">
-                                        <option value="pending" <?php selected( $b->status, 'pending' ); ?>>Chờ liên hệ</option>
-                                        <option value="contacted" <?php selected( $b->status, 'contacted' ); ?>>Đã liên hệ xếp lịch</option>
-                                        <option value="completed" <?php selected( $b->status, 'completed' ); ?>>Đã trao đổi xong</option>
-                                        <option value="cancelled" <?php selected( $b->status, 'cancelled' ); ?>>Đã hủy / Không phù hợp</option>
-                                    </select>
-
-                                    <textarea
-                                        class="hc-bk-input hc-js-note"
-                                        rows="2"
-                                        placeholder="Ghi chú người phụ trách (lịch hẹn, tình trạng...)"
-                                        style="width:100%; height:auto; padding:8px 10px; resize:vertical; font-size:12.5px;"
-                                    ><?php echo esc_textarea( $b->admin_note ); ?></textarea>
-
-                                    <div style="display:flex; align-items:center; justify-content:space-between; gap:8px;">
-                                        <button type="button" class="hc-bk-btn hc-js-save-btn" style="background:#0A1931; color:#ffffff; padding:6px 14px; font-size:12px; border-radius:8px;">
-                                            Lưu cập nhật
-                                        </button>
-                                        <span class="hc-js-save-msg" style="font-size:12px; font-weight:700; color:#047857; display:none;">
-                                            ✓ Đã lưu
-                                        </span>
-                                    </div>
+                            <!-- 9. Thao tác -->
+                            <td style="text-align: center;">
+                                <div style="display: inline-flex; align-items: center; gap: 6px;">
+                                    <button type="button" class="hc-bk-icon-btn hc-open-modal-trigger" style="background:#0A1931; color:#ffffff; border-color:#0A1931; padding:0 10px; height:28px;">
+                                        Chi tiết
+                                    </button>
+                                    <a
+                                        href="<?php echo esc_url( wp_nonce_url( admin_url( 'admin.php?page=hieucon-bookings&delete_id=' . intval( $b->id ) ), 'hieucon_delete_booking_' . intval( $b->id ) ) ); ?>"
+                                        onclick="return confirm('Bạn có chắc muốn xóa hồ sơ này?');"
+                                        class="hc-bk-icon-btn"
+                                        style="color:#94a3b8; border-color:#e2e8f0; height:28px;"
+                                        title="Xóa hồ sơ"
+                                        onmouseover="this.style.color='#ef4444';this.style.borderColor='#fecaca';"
+                                        onmouseout="this.style.color='#94a3b8';this.style.borderColor='#e2e8f0';"
+                                    >
+                                        ✕
+                                    </a>
                                 </div>
                             </td>
                         </tr>
@@ -1165,17 +1190,58 @@ function hieucon_render_bookings_admin_page() {
         </div>
     </div>
 
-    <!-- MODAL XEM CHI TIẾT HỒ SƠ CASE -->
+    <!-- POP-UP MODAL: XEM CHI TIẾT HỒ SƠ & CẬP NHẬT TRẠNG THÁI / GHI CHÚ -->
     <div id="hc-bk-modal-backdrop" class="hc-bk-modal-backdrop">
         <div class="hc-bk-modal">
-            <div style="background:#0A1931; color:#ffffff; padding:20px 26px; display:flex; justify-content:space-between; align-items:center;">
-                <div>
-                    <span id="hc-modal-code" style="font-family:monospace; font-size:12px; background:rgba(249,115,22,0.2); color:#f97316; border:1px solid rgba(249,115,22,0.4); padding:2px 8px; border-radius:6px; font-weight:700;">TV-0000</span>
-                    <h2 id="hc-modal-parent" style="color:#ffffff; margin:6px 0 0; font-size:19px; font-weight:700;">Hồ sơ chi tiết của con</h2>
+            <div style="background:#0A1931; color:#ffffff; padding:18px 24px; display:flex; justify-content:space-between; align-items:center; border-bottom:3px solid #f97316;">
+                <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
+                    <span id="hc-modal-code" style="font-family:monospace; font-size:12.5px; background:rgba(249,115,22,0.2); color:#f97316; border:1px solid rgba(249,115,22,0.45); padding:3px 10px; border-radius:6px; font-weight:800;">TV-0000</span>
+                    <h2 id="hc-modal-parent" style="color:#ffffff; margin:0; font-size:18px; font-weight:700;">Chi tiết hồ sơ đăng ký</h2>
                 </div>
-                <button type="button" id="hc-modal-close" style="background:rgba(255,255,255,0.1); color:#fff; border:none; width:34px; height:34px; border-radius:99px; font-size:18px; cursor:pointer;">✕</button>
+                <button type="button" id="hc-modal-close" style="background:rgba(255,255,255,0.12); color:#fff; border:none; width:32px; height:32px; border-radius:8px; font-size:16px; cursor:pointer;">✕</button>
             </div>
-            <div id="hc-modal-body" style="padding:24px 26px; font-size:14px; line-height:1.6; color:#0A1931;"></div>
+
+            <div style="padding:22px 24px; color:#0A1931;">
+                <!-- Bảng Grid Chi tiết Hồ sơ -->
+                <div id="hc-modal-body"></div>
+
+                <!-- Khung xử lý Trạng thái & Ghi chú ngay trong Pop-up -->
+                <div style="background:#f8fafc; border:1px solid #cbd5e1; border-radius:12px; padding:16px 18px; margin-top:16px;">
+                    <div style="font-size:12px; font-weight:800; text-transform:uppercase; letter-spacing:0.04em; color:#0A1931; margin-bottom:12px;">
+                        Cập nhật xử lý của người phụ trách
+                    </div>
+                    <input type="hidden" id="hc-modal-booking-id" value="">
+                    <div style="display:grid; grid-template-columns: 220px 1fr; gap:14px; align-items:start;">
+                        <div>
+                            <label style="display:block; font-size:12px; font-weight:700; color:#475569; margin-bottom:6px;">Trạng thái hồ sơ</label>
+                            <select id="hc-modal-status" class="hc-bk-select" style="width:100%; font-weight:700; background:#ffffff;">
+                                <option value="pending">Chờ liên hệ</option>
+                                <option value="contacted">Đã liên hệ xếp lịch</option>
+                                <option value="completed">Đã trao đổi xong</option>
+                                <option value="cancelled">Đã hủy / Không phù hợp</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label style="display:block; font-size:12px; font-weight:700; color:#475569; margin-bottom:6px;">Ghi chú tư vấn / Lịch hẹn</label>
+                            <textarea
+                                id="hc-modal-note"
+                                class="hc-bk-input"
+                                rows="3"
+                                placeholder="Nhập ghi chú về tình trạng của bé, lịch hẹn hoặc kết quả sau buổi trao đổi..."
+                                style="width:100%; height:auto; padding:8px 12px; background:#ffffff; resize:vertical;"
+                            ></textarea>
+                        </div>
+                    </div>
+                    <div style="display:flex; justify-content:flex-end; align-items:center; gap:12px; margin-top:14px;">
+                        <span id="hc-modal-save-msg" style="font-size:12.5px; font-weight:700; color:#047857; display:none;">
+                            ✓ Đã lưu cập nhật thành công
+                        </span>
+                        <button type="button" id="hc-modal-save-btn" class="hc-bk-btn hc-bk-btn-orange" style="padding:8px 20px;">
+                            Lưu cập nhật hồ sơ
+                        </button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -1185,137 +1251,216 @@ function hieucon_render_bookings_admin_page() {
         const adminNonce = '<?php echo esc_js( $admin_nonce ); ?>';
 
         const statusMeta = {
-            pending:   { label: 'Chờ liên hệ', bg: '#fff7ed', color: '#c2410c', border: '#fed7aa', dot: '#f97316' },
-            contacted: { label: 'Đã liên hệ xếp lịch', bg: '#eff6ff', color: '#1d4ed8', border: '#bfdbfe', dot: '#2563eb' },
-            completed: { label: 'Đã trao đổi xong', bg: '#ecfdf5', color: '#047857', border: '#a7f3d0', dot: '#10b981' },
-            cancelled: { label: 'Đã hủy / Không phù hợp', bg: '#f8fafc', color: '#64748b', border: '#e2e8f0', dot: '#94a3b8' }
+            pending:   { label: 'Chờ liên hệ', bg: '#fff7ed', color: '#c2410c', border: '#fed7aa' },
+            contacted: { label: 'Đã liên hệ xếp lịch', bg: '#eff6ff', color: '#1d4ed8', border: '#bfdbfe' },
+            completed: { label: 'Đã trao đổi xong', bg: '#ecfdf5', color: '#047857', border: '#a7f3d0' },
+            cancelled: { label: 'Đã hủy', bg: '#f8fafc', color: '#64748b', border: '#e2e8f0' }
         };
 
-        // 1. Copy nhanh SĐT / Link khảo sát
-        document.querySelectorAll('.hc-copy-btn').forEach(btn => {
-            btn.addEventListener('click', function () {
-                const text = btn.getAttribute('data-copy') || '';
-                if (!text) return;
-                const origText = btn.textContent;
-                navigator.clipboard.writeText(text).then(() => {
-                    btn.textContent = '✓ Đã copy';
-                    btn.style.borderColor = '#10b981';
-                    btn.style.color = '#047857';
-                    setTimeout(() => {
-                        btn.textContent = origText;
-                        btn.style.borderColor = '';
-                        btn.style.color = '';
-                    }, 1500);
+        function bindCopyButtons(root) {
+            (root || document).querySelectorAll('.hc-copy-btn').forEach(btn => {
+                if (btn.dataset.bound) return;
+                btn.dataset.bound = '1';
+                btn.addEventListener('click', function (e) {
+                    e.stopPropagation();
+                    const text = btn.getAttribute('data-copy') || '';
+                    if (!text) return;
+                    const origText = btn.textContent;
+                    navigator.clipboard.writeText(text).then(() => {
+                        btn.textContent = '✓ Đã copy';
+                        btn.style.borderColor = '#10b981';
+                        btn.style.color = '#047857';
+                        setTimeout(() => {
+                            btn.textContent = origText;
+                            btn.style.borderColor = '';
+                            btn.style.color = '';
+                        }, 1400);
+                    });
                 });
+            });
+        }
+        bindCopyButtons(document);
+
+        function saveBookingAjax(bookingId, newStatus, newNote, onDone) {
+            const fd = new FormData();
+            fd.append('action', 'hieucon_admin_update_booking');
+            fd.append('nonce', adminNonce);
+            fd.append('booking_id', bookingId);
+            fd.append('status', newStatus);
+            fd.append('admin_note', newNote);
+
+            fetch(ajaxUrl, { method: 'POST', body: fd })
+                .then(r => r.json())
+                .then(res => {
+                    const row = document.getElementById('hc-booking-row-' + bookingId);
+                    if (row && res.success) {
+                        const caseData = JSON.parse(row.getAttribute('data-case') || '{}');
+                        caseData.status = newStatus;
+                        caseData.admin_note = newNote;
+                        row.setAttribute('data-case', JSON.stringify(caseData));
+
+                        const rowSelect = row.querySelector('.hc-row-status-select');
+                        const st = statusMeta[newStatus] || statusMeta.pending;
+                        if (rowSelect) {
+                            rowSelect.value = newStatus;
+                            rowSelect.style.background = st.bg;
+                            rowSelect.style.color = st.color;
+                            rowSelect.style.borderColor = st.border;
+                        }
+
+                        const noteText = row.querySelector('.hc-row-note-text');
+                        if (noteText) {
+                            if (newNote.trim() !== '') {
+                                noteText.textContent = newNote;
+                                noteText.style.color = '#0A1931';
+                                noteText.style.fontStyle = 'normal';
+                            } else {
+                                noteText.textContent = '+ Thêm ghi chú...';
+                                noteText.style.color = '#94a3b8';
+                                noteText.style.fontStyle = 'italic';
+                            }
+                        }
+                    }
+                    if (onDone) onDone(res);
+                })
+                .catch(() => {
+                    if (onDone) onDone({ success: false });
+                });
+        }
+
+        // Đổi trạng thái trực tiếp trên dòng Grid Table
+        document.querySelectorAll('.hc-row-status-select').forEach(select => {
+            select.addEventListener('change', function () {
+                const bookingId = select.getAttribute('data-id');
+                const row = document.getElementById('hc-booking-row-' + bookingId);
+                const caseData = row ? JSON.parse(row.getAttribute('data-case') || '{}') : {};
+                saveBookingAjax(bookingId, select.value, caseData.admin_note || '');
             });
         });
 
-        // 2. Lưu nhanh Trạng thái & Ghi chú bằng AJAX (không load lại trang)
-        document.querySelectorAll('.hc-QuickUpdateBox').forEach(box => {
-            const bookingId = box.getAttribute('data-id');
-            const statusSelect = box.querySelector('.hc-js-status');
-            const noteInput = box.querySelector('.hc-js-note');
-            const saveBtn = box.querySelector('.hc-js-save-btn');
-            const saveMsg = box.querySelector('.hc-js-save-msg');
-            const badge = box.querySelector('.hc-status-badge');
-
-            function triggerSave() {
-                const newStatus = statusSelect.value;
-                const newNote = noteInput.value;
-
-                saveBtn.disabled = true;
-                saveBtn.textContent = 'Đang lưu...';
-
-                const fd = new FormData();
-                fd.append('action', 'hieucon_admin_update_booking');
-                fd.append('nonce', adminNonce);
-                fd.append('booking_id', bookingId);
-                fd.append('status', newStatus);
-                fd.append('admin_note', newNote);
-
-                fetch(ajaxUrl, { method: 'POST', body: fd })
-                    .then(r => r.json())
-                    .then(res => {
-                        saveBtn.disabled = false;
-                        saveBtn.textContent = 'Lưu cập nhật';
-                        if (res.success) {
-                            const st = statusMeta[newStatus] || statusMeta.pending;
-                            badge.style.background = st.bg;
-                            badge.style.color = st.color;
-                            badge.style.borderColor = st.border;
-                            badge.innerHTML = '<span style="width:6px;height:6px;border-radius:99px;background:' + st.dot + ';"></span><span>' + st.label + '</span>';
-
-                            saveMsg.style.display = 'inline';
-                            setTimeout(() => { saveMsg.style.display = 'none'; }, 2000);
-                        }
-                    })
-                    .catch(() => {
-                        saveBtn.disabled = false;
-                        saveBtn.textContent = 'Lưu cập nhật';
-                    });
-            }
-
-            saveBtn.addEventListener('click', triggerSave);
-            statusSelect.addEventListener('change', triggerSave);
-        });
-
-        // 3. Modal xem chi tiết phiếu khảo sát
+        // Mở Pop-up Chi tiết
         const modalBackdrop = document.getElementById('hc-bk-modal-backdrop');
         const modalClose = document.getElementById('hc-modal-close');
         const modalCode = document.getElementById('hc-modal-code');
         const modalParent = document.getElementById('hc-modal-parent');
         const modalBody = document.getElementById('hc-modal-body');
+        const modalBookingId = document.getElementById('hc-modal-booking-id');
+        const modalStatus = document.getElementById('hc-modal-status');
+        const modalNote = document.getElementById('hc-modal-note');
+        const modalSaveBtn = document.getElementById('hc-modal-save-btn');
+        const modalSaveMsg = document.getElementById('hc-modal-save-msg');
 
         function renderListTags(items) {
-            if (!items || !items.length) return '<em style="color:#94a3b8;">Không tích chọn</em>';
-            return items.map(i => '<span class="hc-bk-tag">' + i + '</span>').join(' ');
+            if (!items || !items.length) return '<span style="color:#94a3b8; font-style:italic;">Không tích chọn</span>';
+            return items.map(i => '<span class="hc-bk-tag">' + i + '</span>').join('');
         }
 
-        document.querySelectorAll('.hc-open-modal-btn').forEach(btn => {
-            btn.addEventListener('click', function () {
-                const data = JSON.parse(btn.getAttribute('data-case') || '{}');
-                const sv = data.survey || {};
-                modalCode.textContent = data.booking_code + ' • ' + data.created_at;
-                modalParent.textContent = data.parent_name + ' (' + data.phone + ')';
+        function openCaseModal(row) {
+            const data = JSON.parse(row.getAttribute('data-case') || '{}');
+            const sv = data.survey || {};
 
-                modalBody.innerHTML = `
-                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; background:#f8fafc; padding:14px 16px; border-radius:12px; border:1px solid #e2e8f0; margin-bottom:18px;">
-                        <div>
-                            <div style="font-size:11px; color:#64748b; text-transform:uppercase; font-weight:700;">Thông tin của bé</div>
-                            <div style="font-weight:700; font-size:15px; margin-top:2px;">${sv.child_name || 'Chưa điền tên'} (${sv.child_age || 'Chưa rõ tuổi'})</div>
-                        </div>
-                        <div>
-                            <div style="font-size:11px; color:#64748b; text-transform:uppercase; font-weight:700;">Khung giờ trao đổi</div>
-                            <div style="font-weight:700; font-size:15px; color:#f97316; margin-top:2px;">${data.preferred_time || ''}</div>
-                        </div>
-                    </div>
+            modalCode.textContent = data.booking_code + ' • ' + data.created_at;
+            modalParent.textContent = 'Phụ huynh: ' + data.parent_name;
+            modalBookingId.value = data.id;
+            modalStatus.value = data.status || 'pending';
+            modalNote.value = data.admin_note || '';
+            modalSaveMsg.style.display = 'none';
 
-                    <div style="display:flex; flex-direction:column; gap:14px;">
-                        <div>
-                            <div style="font-weight:700; margin-bottom:4px;">01. Vấn đề quan tâm trọng tâm:</div>
-                            <div><span style="background:#fff7ed; color:#c2410c; border:1px solid #fdba74; font-weight:700; padding:4px 12px; border-radius:8px; display:inline-block;">${sv.diagnosis || 'Chưa chọn'}</span></div>
-                        </div>
-                        <div>
-                            <div style="font-weight:700; margin-bottom:4px;">02. Biểu hiện ăn uống & tiêu hóa hiện tại:</div>
-                            <div>${renderListTags(sv.bio_symptoms)}</div>
-                        </div>
-                        <div>
-                            <div style="font-weight:700; margin-bottom:4px;">03. Biểu hiện hấp thu, vi chất, giấc ngủ & hành vi:</div>
-                            <div>${renderListTags(sv.behav_symptoms)}</div>
-                        </div>
-                        <div>
-                            <div style="font-weight:700; margin-bottom:4px;">04. Những hướng gia đình đã áp dụng:</div>
-                            <div>${renderListTags(sv.tried_methods)}</div>
-                        </div>
-                        <div>
-                            <div style="font-weight:700; margin-bottom:4px;">05. Điều ba mẹ mong muốn làm rõ nhất trong 30 phút:</div>
-                            <div style="background:#fffaf5; border-left:3px solid #f97316; padding:10px 14px; border-radius:0 10px 10px 0;">${sv.parent_goal || '<em style="color:#94a3b8;">Phụ huynh không ghi chú thêm</em>'}</div>
-                        </div>
-                    </div>
+            let surveyRowsHtml = '';
+            if (data.has_survey) {
+                surveyRowsHtml = `
+                    <tr>
+                        <th>Tên gọi & Độ tuổi của bé</th>
+                        <td><strong>${sv.child_name || 'Chưa ghi tên'}</strong> ${sv.child_age ? '(' + sv.child_age + ')' : ''}</td>
+                    </tr>
+                    <tr>
+                        <th>Vấn đề quan tâm trọng tâm</th>
+                        <td><span style="background:#fff7ed; color:#c2410c; border:1px solid #fdba74; font-weight:700; padding:3px 10px; border-radius:6px; display:inline-block;">${sv.diagnosis || 'Chưa chọn'}</span></td>
+                    </tr>
+                    <tr>
+                        <th>Biểu hiện ăn uống & tiêu hóa</th>
+                        <td>${renderListTags(sv.bio_symptoms)}</td>
+                    </tr>
+                    <tr>
+                        <th>Hấp thu, vi chất, giấc ngủ & hành vi</th>
+                        <td>${renderListTags(sv.behav_symptoms)}</td>
+                    </tr>
+                    <tr>
+                        <th>Hướng gia đình đã áp dụng</th>
+                        <td>${renderListTags(sv.tried_methods)}</td>
+                    </tr>
+                    <tr>
+                        <th>Điều muốn làm rõ trong 30 phút</th>
+                        <td><div style="background:#fffaf5; border-left:3px solid #f97316; padding:8px 12px; border-radius:0 8px 8px 0; font-weight:600;">${sv.parent_goal || '<span style="color:#94a3b8;font-weight:400;font-style:italic;">Không có ghi chú thêm</span>'}</div></td>
+                    </tr>
                 `;
-                modalBackdrop.classList.add('is-open');
+            } else {
+                surveyRowsHtml = `
+                    <tr>
+                        <th>Trạng thái khảo sát Bước 2</th>
+                        <td>
+                            <div style="display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap;">
+                                <span style="color:#c2410c; font-weight:600;">Phụ huynh mới gửi thông tin liên hệ ở Bước 1, chưa hoàn tất bảng khảo sát Bước 2.</span>
+                                <button type="button" class="hc-bk-icon-btn hc-copy-btn" data-copy="${data.survey_link || ''}">Copy link khảo sát gửi phụ huynh</button>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            }
+
+            modalBody.innerHTML = `
+                <table class="hc-modal-grid-table">
+                    <tbody>
+                        <tr>
+                            <th>Họ tên ba/mẹ</th>
+                            <td><strong style="font-size:14px;">${data.parent_name}</strong></td>
+                        </tr>
+                        <tr>
+                            <th>Số điện thoại / Zalo</th>
+                            <td>
+                                <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+                                    <strong style="color:#f97316; font-size:14px;">${data.phone}</strong>
+                                    <button type="button" class="hc-bk-icon-btn hc-copy-btn" data-copy="${data.clean_phone}">Copy SĐT</button>
+                                    <a href="https://zalo.me/${data.clean_phone}" target="_blank" rel="noopener" class="hc-bk-icon-btn" style="background:#0068FF; color:#fff; border-color:#0068FF;">Nhắn Zalo ↗</a>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Khung giờ hẹn trao đổi</th>
+                            <td><strong style="color:#0A1931;">${data.preferred_time}</strong></td>
+                        </tr>
+                        ${surveyRowsHtml}
+                    </tbody>
+                </table>
+            `;
+
+            bindCopyButtons(modalBody);
+            modalBackdrop.classList.add('is-open');
+        }
+
+        document.querySelectorAll('.hc-open-modal-trigger').forEach(el => {
+            el.addEventListener('click', function () {
+                const row = el.closest('tr');
+                if (row) openCaseModal(row);
             });
         });
+
+        if (modalSaveBtn) {
+            modalSaveBtn.addEventListener('click', function () {
+                const id = modalBookingId.value;
+                if (!id) return;
+                modalSaveBtn.disabled = true;
+                modalSaveBtn.textContent = 'Đang lưu...';
+                saveBookingAjax(id, modalStatus.value, modalNote.value, function (res) {
+                    modalSaveBtn.disabled = false;
+                    modalSaveBtn.textContent = 'Lưu cập nhật hồ sơ';
+                    if (res && res.success) {
+                        modalSaveMsg.style.display = 'inline';
+                        setTimeout(() => { modalSaveMsg.style.display = 'none'; }, 2200);
+                    }
+                });
+            });
+        }
 
         if (modalClose) {
             modalClose.addEventListener('click', () => modalBackdrop.classList.remove('is-open'));
