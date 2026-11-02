@@ -1,7 +1,7 @@
 <?php
 /**
  * Template Name: Đặt Lịch Tư Vấn 1:1
- * Description: Trang Landing Page đặt lịch tư vấn miễn phí 1:1 (Quy trình 2 bước: Giữ lịch cơ bản -> Khảo sát tình trạng của bé trên 1 khung).
+ * Description: Trang Landing Page "30 Phút Để Nhìn Rõ Vấn Đề Của Con" - Quy trình 2 bước (Giữ lịch cơ bản -> Khảo sát tình trạng của bé trên 1 khung).
  *
  * @package Hieucon
  */
@@ -17,7 +17,7 @@ $booking_nonce      = wp_create_nonce( 'hieucon_booking_nonce' );
 
 <style>
     .glass-card-booking {
-        background: linear-gradient(135deg, rgba(255, 255, 255, 0.94) 0%, rgba(255, 255, 255, 0.82) 100%);
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.84) 100%);
         backdrop-filter: blur(18px);
         -webkit-backdrop-filter: blur(18px);
         border: 1px solid rgba(255, 255, 255, 0.92);
@@ -61,92 +61,106 @@ $booking_nonce      = wp_create_nonce( 'hieucon_booking_nonce' );
     }
 </style>
 
-<main id="primary" class="site-main min-h-screen pb-24 pt-8 md:pt-12 relative overflow-hidden">
+<main id="primary" class="site-main min-h-screen pb-24 pt-6 md:pt-10 relative overflow-hidden">
     <!-- Decorative background blobs -->
     <div class="pointer-events-none absolute -top-24 -right-24 w-96 h-96 rounded-full bg-secondary/10 blur-3xl"></div>
     <div class="pointer-events-none absolute top-1/3 -left-24 w-80 h-80 rounded-full bg-primary/10 blur-3xl"></div>
 
     <div class="max-w-[1320px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
 
-        <!-- HERO + FORM 2 CỘT -->
-        <section id="booking-hero-grid" class="grid grid-cols-1 lg:grid-cols-12 gap-10 xl:gap-14 items-start pt-4 md:pt-8 transition-all duration-500">
+        <!-- =========================================================
+             PHẦN MỞ ĐẦU (HERO) + KHUNG ĐĂNG KÝ 2 BƯỚC
+             Câu lõi: 30 PHÚT ĐỂ NHÌN RÕ VẤN ĐỀ CỦA CON
+             Thông điệp: Hiểu trước khi can thiệp. Ưu tiên trước khi làm quá nhiều.
+             ========================================================= -->
+        <section id="booking-hero-grid" class="grid grid-cols-1 lg:grid-cols-12 gap-10 xl:gap-14 items-start pt-2 md:pt-6 transition-all duration-500">
 
-            <!-- CỘT TRÁI: THÔNG ĐIỆP & GIÁ TRỊ BUỔI TƯ VẤN (7/12 ở Bước 1, thu gọn nhẹ ở Bước 2) -->
+            <!-- CỘT TRÁI: THÔNG ĐIỆP CỐT LÕI (7/12 ở Bước 1, thu gọn 5/12 ở Bước 2) -->
             <div id="booking-left-col" class="lg:col-span-7 flex flex-col justify-center lg:pr-4 transition-all duration-500">
-                <div class="inline-flex items-center gap-2 self-start bg-white/80 backdrop-blur-md border border-white px-4 py-2 rounded-full shadow-soft mb-6">
+                <div class="inline-flex items-center gap-2 self-start bg-white/85 backdrop-blur-md border border-navy/10 px-4 py-2 rounded-full shadow-soft mb-6">
                     <span class="w-2 h-2 rounded-full bg-secondary animate-pulse"></span>
-                    <span class="text-secondary font-extrabold text-xs uppercase tracking-widest">Đồng hành 1:1 • Hoàn toàn miễn phí</span>
+                    <span class="text-navy font-extrabold text-xs uppercase tracking-widest">Phiên làm việc 1:1 • Giới hạn số ca mỗi tuần</span>
                 </div>
 
-                <h1 class="font-serif text-3xl sm:text-4xl xl:text-5xl font-bold text-navy leading-[1.2] mb-6">
-                    Đặt Lịch Tư Vấn 1:1<br class="hidden sm:inline" />
-                    <span class="text-secondary italic">Thấu Hiểu Cơ Thể Con Từ Gốc</span>
+                <h1 class="font-serif text-3xl sm:text-4xl xl:text-[2.9rem] font-bold text-navy leading-[1.18] mb-5">
+                    30 Phút Để Nhìn Rõ<br class="hidden sm:inline" />
+                    <span class="text-secondary italic">Vấn Đề Của Con</span>
                 </h1>
 
-                <div class="bg-white/60 backdrop-blur-md border-l-4 border-secondary rounded-r-2xl p-5 mb-8 shadow-soft">
-                    <p class="font-serif italic text-navy/90 text-base sm:text-lg leading-relaxed">
-                        “Mỗi em bé đặc biệt có một cơ địa sinh học riêng biệt. Đừng tự mò mẫm trong lo âu — hãy để đội ngũ <strong>Hiểu Con Từ Gốc</strong> cùng ba mẹ lắng nghe và giải mã những tín hiệu từ cơ thể con.”
+                <!-- Thông điệp phía sau -->
+                <div class="bg-navy text-white rounded-2xl p-5 sm:p-6 mb-7 shadow-premium relative overflow-hidden">
+                    <div class="absolute -right-8 -bottom-8 w-28 h-28 rounded-full bg-secondary/20 blur-xl pointer-events-none"></div>
+                    <p class="text-[11px] font-extrabold uppercase tracking-widest text-secondary mb-1.5">Nguyên tắc cốt lõi của Hiểu Con Từ Gốc</p>
+                    <p class="font-serif italic text-xl sm:text-2xl font-bold leading-snug text-white">
+                        “Hiểu trước khi can thiệp. Ưu tiên trước khi làm quá nhiều.”
                     </p>
                 </div>
 
-                <p class="text-navy/75 text-base sm:text-lg font-medium leading-relaxed mb-8">
-                    Buổi trò chuyện 1:1 giúp ba mẹ nhìn rõ bức tranh tổng thể về <strong class="text-navy">Trục Não - Ruột, Dinh dưỡng và Giấc ngủ</strong> của con, từ đó biết chính xác nên bắt đầu từ đâu để con tiến bộ vững chắc nhất.
+                <p class="text-navy/80 text-base sm:text-lg font-medium leading-relaxed mb-7">
+                    Khi con gặp khó khăn về <strong class="text-navy">ăn uống, tiêu hoá, giấc ngủ, hành vi hay vi chất</strong>, điều ba mẹ thiếu thường không phải là thêm một mẹo mới — mà là một khoảng lặng có chuyên môn để <strong class="text-navy">nhìn tổng thể những gì đang diễn ra trong cơ thể con</strong> và biết nên ưu tiên điều gì trước.
                 </p>
 
-                <!-- 3 Giá trị nhận được -->
-                <div class="space-y-4 mb-10">
-                    <div class="glass-card-booking p-5 rounded-2xl shadow-soft flex items-start gap-4 hover:-translate-y-0.5 transition-transform duration-300">
-                        <div class="w-12 h-12 rounded-2xl bg-secondary/10 text-secondary flex items-center justify-center shrink-0 mt-0.5">
-                            <i data-lucide="search-check" class="w-6 h-6"></i>
+                <!-- 4 Giá trị cốt lõi của buổi 30 phút -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5 mb-7">
+                    <div class="glass-card-booking p-4 rounded-2xl shadow-soft flex items-start gap-3.5">
+                        <div class="w-9 h-9 rounded-xl bg-secondary/12 text-secondary flex items-center justify-center shrink-0 mt-0.5">
+                            <i data-lucide="target" class="w-5 h-5"></i>
                         </div>
                         <div>
-                            <h3 class="font-serif font-bold text-navy text-lg mb-1">1. Giải mã tín hiệu cơ thể & hành vi của con</h3>
-                            <p class="text-navy/70 text-sm font-medium leading-relaxed">
-                                Kết nối các biểu hiện bề nổi (chậm nói, la hét, tăng động, khó ngủ, kén ăn, táo bón...) với nguyên nhân sinh học bên trong.
+                            <h3 class="font-serif font-bold text-navy text-sm sm:text-base mb-0.5">1. Xác định vấn đề nổi bật</h3>
+                            <p class="text-navy/70 text-xs font-medium leading-relaxed">
+                                Gọi tên đúng nút thắt lớn nhất đang cản trở con hiện tại.
                             </p>
                         </div>
                     </div>
 
-                    <div class="glass-card-booking p-5 rounded-2xl shadow-soft flex items-start gap-4 hover:-translate-y-0.5 transition-transform duration-300">
-                        <div class="w-12 h-12 rounded-2xl bg-primary/10 text-primary flex items-center justify-center shrink-0 mt-0.5">
-                            <i data-lucide="compass" class="w-6 h-6"></i>
+                    <div class="glass-card-booking p-4 rounded-2xl shadow-soft flex items-start gap-3.5">
+                        <div class="w-9 h-9 rounded-xl bg-primary/12 text-primary flex items-center justify-center shrink-0 mt-0.5">
+                            <i data-lucide="network" class="w-5 h-5"></i>
                         </div>
                         <div>
-                            <h3 class="font-serif font-bold text-navy text-lg mb-1">2. Định hướng lộ trình chăm sóc cá nhân hóa</h3>
-                            <p class="text-navy/70 text-sm font-medium leading-relaxed">
-                                Gợi ý thứ tự ưu tiên phù hợp riêng với độ tuổi và thể trạng của bé: chế độ ăn, phục hồi tiêu hóa và kỹ năng tương tác tại nhà.
+                            <h3 class="font-serif font-bold text-navy text-sm sm:text-base mb-0.5">2. Nhìn các yếu tố liên quan</h3>
+                            <p class="text-navy/70 text-xs font-medium leading-relaxed">
+                                Kết nối tiêu hoá, giấc ngủ, ăn uống với biểu hiện hành vi của con.
                             </p>
                         </div>
                     </div>
 
-                    <div class="glass-card-booking p-5 rounded-2xl shadow-soft flex items-start gap-4 hover:-translate-y-0.5 transition-transform duration-300">
-                        <div class="w-12 h-12 rounded-2xl bg-navy/10 text-navy flex items-center justify-center shrink-0 mt-0.5">
-                            <i data-lucide="heart-handshake" class="w-6 h-6"></i>
+                    <div class="glass-card-booking p-4 rounded-2xl shadow-soft flex items-start gap-3.5">
+                        <div class="w-9 h-9 rounded-xl bg-navy/10 text-navy flex items-center justify-center shrink-0 mt-0.5">
+                            <i data-lucide="list-filter" class="w-5 h-5"></i>
                         </div>
                         <div>
-                            <h3 class="font-serif font-bold text-navy text-lg mb-1">3. Gỡ rối trực tiếp & gửi tặng cẩm nang phù hợp</h3>
-                            <p class="text-navy/70 text-sm font-medium leading-relaxed">
-                                Giải đáp mọi thắc mắc của ba mẹ và gửi tặng bộ Checklist / Cẩm nang thực hành đúng với vấn đề con đang gặp phải.
+                            <h3 class="font-serif font-bold text-navy text-sm sm:text-base mb-0.5">3. Xác định điều cần ưu tiên</h3>
+                            <p class="text-navy/70 text-xs font-medium leading-relaxed">
+                                Biết việc gì cần làm trước, việc gì chưa cần vội để tránh quá tải.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="glass-card-booking p-4 rounded-2xl shadow-soft flex items-start gap-3.5">
+                        <div class="w-9 h-9 rounded-xl bg-emerald-500/12 text-emerald-700 flex items-center justify-center shrink-0 mt-0.5">
+                            <i data-lucide="compass" class="w-5 h-5"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-serif font-bold text-navy text-sm sm:text-base mb-0.5">4. Biết bước tiếp theo là gì</h3>
+                            <p class="text-navy/70 text-xs font-medium leading-relaxed">
+                                Có hướng đi rõ ràng, thực tế và phù hợp với hoàn cảnh gia đình.
                             </p>
                         </div>
                     </div>
                 </div>
 
-                <!-- Cam kết 3 Không -->
-                <div class="flex flex-wrap items-center gap-4 sm:gap-6 text-xs sm:text-sm font-bold text-navy/75 bg-white/50 backdrop-blur-md px-5 py-4 rounded-2xl border border-white/80">
-                    <span class="flex items-center gap-2">
-                        <i data-lucide="shield-check" class="w-4 h-4 text-primary"></i> 100% Miễn phí tư vấn
-                    </span>
-                    <span class="flex items-center gap-2">
-                        <i data-lucide="lock" class="w-4 h-4 text-secondary"></i> Bảo mật thông tin gia đình
-                    </span>
-                    <span class="flex items-center gap-2">
-                        <i data-lucide="clock" class="w-4 h-4 text-navy"></i> Linh hoạt theo giờ của mẹ
-                    </span>
+                <!-- Lưu ý: Không phải tư vấn đại trà -->
+                <div class="bg-amber-50/90 border border-amber-200/90 rounded-2xl p-4 flex items-start gap-3 text-xs sm:text-sm text-navy/85">
+                    <i data-lucide="sliders-horizontal" class="w-5 h-5 text-secondary shrink-0 mt-0.5"></i>
+                    <p class="leading-relaxed font-medium">
+                        <strong class="text-navy font-extrabold">Lưu ý trước khi đăng ký:</strong> Đây không phải buổi tư vấn đại trà. Đội ngũ có giới hạn số ca mỗi tuần và <strong class="text-navy">xem xét kỹ thông tin khảo sát trước buổi hẹn</strong> để chỉ nhận những trường hợp thực sự phù hợp.
+                    </p>
                 </div>
             </div>
 
-            <!-- CỘT PHẢI: KHUNG ĐẶT LỊCH 2 BƯỚC (5/12 ở Bước 1, mở rộng 7/12 ở Bước 2 để hiển thị trọn vẹn khảo sát) -->
+            <!-- CỘT PHẢI: KHUNG ĐĂNG KÝ 2 BƯỚC (5/12 ở Bước 1, mở rộng 7/12 ở Bước 2) -->
             <div id="booking-right-col" class="lg:col-span-5 w-full lg:sticky lg:top-28 transition-all duration-500">
                 <div id="booking-card-wrapper" class="glass-card-booking rounded-[2rem] p-6 sm:p-8 xl:p-9 shadow-premium relative overflow-hidden">
                     <!-- Top accent bar -->
@@ -170,7 +184,7 @@ $booking_nonce      = wp_create_nonce( 'hieucon_booking_nonce' );
                             <span id="step-badge-2" class="w-7 h-7 rounded-full bg-navy/10 text-navy text-xs font-extrabold flex items-center justify-center">2</span>
                             <div>
                                 <span class="block text-[10px] font-extrabold uppercase tracking-wider text-navy/60">Bước 2 / 2</span>
-                                <span class="block text-xs font-bold text-navy">Khảo sát tình trạng bé</span>
+                                <span class="block text-xs font-bold text-navy">Khảo sát trước buổi hẹn</span>
                             </div>
                         </div>
                     </div>
@@ -180,9 +194,9 @@ $booking_nonce      = wp_create_nonce( 'hieucon_booking_nonce' );
                          ========================================== -->
                     <div id="booking-step1-container">
                         <div class="mb-6">
-                            <h2 class="font-serif text-2xl sm:text-3xl font-bold text-navy">Đăng Ký Giữ Lịch Tư Vấn</h2>
+                            <h2 class="font-serif text-2xl sm:text-3xl font-bold text-navy">Đăng Ký Buổi 30 Phút 1:1</h2>
                             <p class="text-navy/65 text-xs sm:text-sm font-medium mt-1">
-                                Điền 3 thông tin cơ bản bên dưới (chỉ 15 giây) để hệ thống giữ lịch hẹn 1:1 trước cho gia đình mình.
+                                Điền thông tin liên hệ cơ bản trước, sau đó ba mẹ sẽ chuyển sang bước <strong>khảo sát nhanh tình trạng của con</strong> để đội ngũ xem xét hồ sơ trước buổi hẹn.
                             </p>
                         </div>
 
@@ -211,7 +225,7 @@ $booking_nonce      = wp_create_nonce( 'hieucon_booking_nonce' );
                             <!-- 2. Số điện thoại / Zalo -->
                             <div>
                                 <label for="booking-phone" class="block text-xs font-extrabold uppercase tracking-wider text-navy mb-2">
-                                    2. Số điện thoại / Zalo nhận tư vấn <span class="text-secondary">*</span>
+                                    2. Số điện thoại / Zalo liên hệ <span class="text-secondary">*</span>
                                 </label>
                                 <div class="relative">
                                     <i data-lucide="phone-call" class="w-4 h-4 text-navy/40 absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none"></i>
@@ -230,7 +244,7 @@ $booking_nonce      = wp_create_nonce( 'hieucon_booking_nonce' );
                             <!-- 3. Khung giờ mong muốn -->
                             <div>
                                 <label class="block text-xs font-extrabold uppercase tracking-wider text-navy mb-2">
-                                    3. Khung giờ thuận tiện nghe máy <span class="text-secondary">*</span>
+                                    3. Khung giờ ba/mẹ thuận tiện trao đổi 30 phút <span class="text-secondary">*</span>
                                 </label>
                                 <div class="grid grid-cols-2 gap-2 mb-2.5" id="time-slot-group">
                                     <button type="button" data-slot="Sáng (08:30 - 11:30)" class="time-slot-pill is-active text-left px-3.5 py-2.5 rounded-xl border border-navy/15 bg-white text-navy text-xs font-bold transition-all flex items-center gap-2 cursor-pointer">
@@ -269,14 +283,15 @@ $booking_nonce      = wp_create_nonce( 'hieucon_booking_nonce' );
                                 id="booking-step1-btn"
                                 class="w-full py-4 px-6 rounded-xl bg-gradient-to-r from-secondary to-secondary_dark hover:from-secondary_dark hover:to-secondary text-white font-extrabold text-sm sm:text-base uppercase tracking-wider shadow-[0_10px_25px_-5px_rgba(249,115,22,0.45)] hover:shadow-[0_14px_30px_-5px_rgba(249,115,22,0.6)] hover:-translate-y-0.5 transition-all duration-300 flex items-center justify-center gap-2.5 cursor-pointer"
                             >
-                                <span>Tiếp Tục: Khảo Sát Tình Trạng Của Bé</span>
+                                <span>Tiếp Tục: Khảo Sát Vấn Đề Của Con</span>
                                 <i data-lucide="arrow-right" class="w-5 h-5"></i>
                             </button>
 
-                            <p class="text-center text-[11px] text-navy/50 font-semibold">
-                                Cần hỗ trợ gấp ngay bây giờ?
-                                <a href="<?php echo esc_url( home_url( '/zalo' ) ); ?>" target="_blank" rel="noopener noreferrer" class="text-[#0068FF] font-extrabold underline hover:text-navy">Nhắn trực tiếp qua Zalo Tư Vấn ↗</a>
-                            </p>
+                            <div class="flex items-center justify-center gap-4 text-[11px] font-bold text-navy/55 pt-1">
+                                <span class="flex items-center gap-1"><i data-lucide="shield-check" class="w-3.5 h-3.5 text-primary"></i> Không chèo kéo, ép mua</span>
+                                <span>•</span>
+                                <span class="flex items-center gap-1"><i data-lucide="lock" class="w-3.5 h-3.5 text-secondary"></i> Bảo mật 100%</span>
+                            </div>
                         </form>
                     </div>
 
@@ -291,10 +306,10 @@ $booking_nonce      = wp_create_nonce( 'hieucon_booking_nonce' );
                             </div>
                             <div class="text-xs leading-relaxed text-emerald-950">
                                 <p class="font-extrabold text-sm text-emerald-900">
-                                    Đã giữ lịch hẹn (<span id="step2-badge-code" class="underline">TV-0000</span>)!
+                                    Đã ghi nhận thông tin liên hệ (<span id="step2-badge-code" class="underline">TV-0000</span>)!
                                 </p>
                                 <p class="font-medium mt-0.5">
-                                    Để buổi tư vấn 1:1 đi thẳng vào trọng tâm và sát nhất với cơ địa của con, ba mẹ dành thêm <strong>1 phút tích chọn nhanh</strong> các biểu hiện hiện tại của bé dưới đây nhé:
+                                    Vì đội ngũ <strong>xem xét kỹ thông tin trước mỗi buổi hẹn</strong> để chuẩn bị hướng phân tích sát nhất, ba mẹ dành thêm <strong>1 phút tích chọn các vấn đề con đang gặp</strong> dưới đây nhé:
                                 </p>
                             </div>
                         </div>
@@ -365,12 +380,12 @@ $booking_nonce      = wp_create_nonce( 'hieucon_booking_nonce' );
                                 </div>
                             </div>
 
-                            <!-- MỤC 3: TÍN HIỆU TIÊU HÓA, GIẤC NGỦ & Y SINH (CHỌN NHIỀU) -->
+                            <!-- MỤC 3: ĂN UỐNG, TIÊU HOÁ, GIẤC NGỦ & VI CHẤT (CHỌN NHIỀU) -->
                             <div class="bg-white/75 border border-navy/10 rounded-2xl p-4 sm:p-5">
                                 <div class="flex items-center justify-between gap-2 mb-2.5">
                                     <h3 class="text-xs font-extrabold uppercase tracking-wider text-navy flex items-center gap-2">
                                         <span class="w-5 h-5 rounded-full bg-secondary/15 text-secondary flex items-center justify-center text-[11px]">3</span>
-                                        Tín hiệu Tiêu hóa, Giấc ngủ & Cơ thể
+                                        Vấn đề Ăn uống, Tiêu hoá, Giấc ngủ & Vi chất
                                     </h3>
                                     <span class="text-[11px] font-bold text-secondary">Tích chọn nhiều mục</span>
                                 </div>
@@ -398,12 +413,12 @@ $booking_nonce      = wp_create_nonce( 'hieucon_booking_nonce' );
                                 </div>
                             </div>
 
-                            <!-- MỤC 4: BIỂU HIỆN NGÔN NGỮ, CẢM GIÁC & HÀNH VI (CHỌN NHIỀU) -->
+                            <!-- MỤC 4: BIỂU HIỆN HÀNH VI, CẢM XÚC & NGÔN NGỮ (CHỌN NHIỀU) -->
                             <div class="bg-white/75 border border-navy/10 rounded-2xl p-4 sm:p-5">
                                 <div class="flex items-center justify-between gap-2 mb-2.5">
                                     <h3 class="text-xs font-extrabold uppercase tracking-wider text-navy flex items-center gap-2">
                                         <span class="w-5 h-5 rounded-full bg-primary/15 text-primary flex items-center justify-center text-[11px]">4</span>
-                                        Biểu hiện Ngôn ngữ, Cảm giác & Hành vi
+                                        Vấn đề Hành vi, Cảm giác & Ngôn ngữ
                                     </h3>
                                     <span class="text-[11px] font-bold text-primary">Tích chọn nhiều mục</span>
                                 </div>
@@ -431,11 +446,11 @@ $booking_nonce      = wp_create_nonce( 'hieucon_booking_nonce' );
                                 </div>
                             </div>
 
-                            <!-- MỤC 5: PHƯƠNG PHÁP GIA ĐÌNH ĐÃ / ĐANG ÁP DỤNG -->
+                            <!-- MỤC 5: NHỮNG CÁCH GIA ĐÌNH ĐÃ THỬ -->
                             <div class="bg-white/75 border border-navy/10 rounded-2xl p-4 sm:p-5">
                                 <h3 class="text-xs font-extrabold uppercase tracking-wider text-navy mb-2.5 flex items-center gap-2">
                                     <span class="w-5 h-5 rounded-full bg-navy/10 text-navy flex items-center justify-center text-[11px]">5</span>
-                                    Gia đình đã hoặc đang áp dụng phương pháp nào chưa?
+                                    Gia đình đã hoặc đang thử những hướng nào?
                                 </h3>
                                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
                                     <?php
@@ -443,7 +458,7 @@ $booking_nonce      = wp_create_nonce( 'hieucon_booking_nonce' );
                                         'Đang học can thiệp giáo dục đặc biệt / âm ngữ',
                                         'Đã áp dụng chế độ ăn kiêng (GFCF / giảm đường, sữa)',
                                         'Đang bổ sung men vi sinh / vi chất (Omega-3, GABA, Kẽm...)',
-                                        'Chưa áp dụng phương pháp nào, đang tìm hướng đi từ gốc',
+                                        'Đã thử nhiều mẹo nhưng chưa rõ nên ưu tiên gì trước',
                                     ];
                                     foreach ( $tried_methods as $item ) :
                                     ?>
@@ -457,17 +472,17 @@ $booking_nonce      = wp_create_nonce( 'hieucon_booking_nonce' );
                                 </div>
                             </div>
 
-                            <!-- MỤC 6: MONG MUỐN LỚN NHẤT CỦA BA MẸ -->
+                            <!-- MỤC 6: ĐIỀU BA MẸ ĐANG RỐI HOẶC MONG MUỐN NHÌN RÕ NHẤT -->
                             <div class="bg-white/75 border border-navy/10 rounded-2xl p-4 sm:p-5">
                                 <label for="survey-parent-goal" class="block text-xs font-extrabold uppercase tracking-wider text-navy mb-2 flex items-center gap-2">
                                     <span class="w-5 h-5 rounded-full bg-secondary/15 text-secondary flex items-center justify-center text-[11px]">6</span>
-                                    Điều ba mẹ trăn trở hoặc mong muốn cải thiện nhất lúc này (Tùy chọn)
+                                    Điều ba mẹ đang bối rối nhất hoặc muốn làm rõ nhất trong 30 phút này:
                                 </label>
                                 <textarea
                                     id="survey-parent-goal"
                                     name="parent_goal"
                                     rows="2"
-                                    placeholder="Ví dụ: Mong muốn cải thiện táo bón lâu ngày, giúp con ngủ sâu giấc hơn và giảm la hét..."
+                                    placeholder="Ví dụ: Con vừa táo bón vừa khó ngủ và hay la hét, mẹ đã thử bổ sung men nhưng chưa cải thiện, muốn biết nên ưu tiên xử lý từ đâu trước..."
                                     class="w-full px-3.5 py-2.5 rounded-xl bg-white border border-navy/15 focus:border-secondary outline-none text-navy font-medium text-xs transition-all resize-none"
                                 ></textarea>
                             </div>
@@ -483,7 +498,7 @@ $booking_nonce      = wp_create_nonce( 'hieucon_booking_nonce' );
                                     class="w-full py-4 px-6 rounded-xl bg-gradient-to-r from-primary to-teal-700 hover:opacity-95 text-white font-extrabold text-sm sm:text-base uppercase tracking-wider shadow-[0_10px_25px_-5px_rgba(13,148,136,0.4)] hover:-translate-y-0.5 transition-all duration-300 flex items-center justify-center gap-2.5 cursor-pointer"
                                 >
                                     <i data-lucide="clipboard-check" class="w-5 h-5"></i>
-                                    <span>Hoàn Tất Hồ Sơ Tư Vấn Cho Bé</span>
+                                    <span>Hoàn Tất Hồ Sơ Cho Buổi 30 Phút</span>
                                 </button>
 
                                 <button
@@ -505,35 +520,35 @@ $booking_nonce      = wp_create_nonce( 'hieucon_booking_nonce' );
                             <i data-lucide="check-circle-2" class="w-9 h-9"></i>
                         </div>
                         <span class="inline-block bg-emerald-50 text-emerald-700 border border-emerald-200 font-extrabold text-[11px] uppercase tracking-widest px-3 py-1 rounded-full mb-2">
-                            Mã lịch hẹn: <span id="res-booking-code">TV-0000</span>
+                            Mã hồ sơ: <span id="res-booking-code">TV-0000</span>
                         </span>
-                        <h3 class="font-serif text-2xl sm:text-3xl font-bold text-navy mb-2">Đã Hoàn Tất Hồ Sơ Đặt Lịch!</h3>
+                        <h3 class="font-serif text-2xl sm:text-3xl font-bold text-navy mb-2">Đã Tiếp Nhận Hồ Sơ Của Gia Đình!</h3>
                         <p class="text-navy/70 text-sm font-medium leading-relaxed mb-4">
-                            Cảm ơn <strong id="res-parent-name" class="text-navy">ba/mẹ</strong>. Đội ngũ chuyên môn <strong>Hiểu Con Từ Gốc</strong> sẽ liên hệ qua số <strong id="res-phone" class="text-secondary"></strong> vào khung giờ <strong id="res-time" class="text-navy"></strong>.
+                            Cảm ơn <strong id="res-parent-name" class="text-navy">ba/mẹ</strong>. Đội ngũ chuyên môn <strong>Hiểu Con Từ Gốc</strong> sẽ xem xét kỹ thông tin của bé và liên hệ qua số <strong id="res-phone" class="text-secondary"></strong> vào khung giờ <strong id="res-time" class="text-navy"></strong>.
                         </p>
 
                         <div id="res-survey-badge" class="hidden inline-flex items-center gap-1.5 bg-teal-50 text-teal-800 border border-teal-200 px-3.5 py-1.5 rounded-xl text-xs font-bold mb-6">
                             <i data-lucide="file-check-2" class="w-4 h-4 text-teal-600"></i>
-                            <span>Chuyên gia đã nhận được phiếu khảo sát tình trạng của bé</span>
+                            <span>Hồ sơ khảo sát của bé đã được gửi tới bộ phận chuyên môn</span>
                         </div>
 
                         <div class="bg-[#f8fafc] border border-navy/10 rounded-2xl p-4 text-left mb-6">
                             <p class="text-xs font-extrabold text-navy uppercase tracking-wider mb-1.5 flex items-center gap-1.5">
-                                <i data-lucide="sparkles" class="w-4 h-4 text-secondary"></i> Bước tiếp theo dành cho ba mẹ:
+                                <i data-lucide="sparkles" class="w-4 h-4 text-secondary"></i> Quy trình tiếp theo:
                             </p>
                             <p class="text-xs text-navy/75 leading-relaxed">
-                                Ba mẹ có thể bấm nút bên dưới để nhắn xác nhận ngay qua <strong>Zalo Tư Vấn</strong> hoặc trải nghiệm thêm <strong>Bộ Công Cụ Đánh Giá Sức Khỏe</strong> của Hiểu Con Từ Gốc.
+                                Chuyên viên phụ trách sẽ đọc trước hồ sơ của bé và nhắn xác nhận lịch hẹn 30 phút qua <strong>Zalo</strong>. Ba mẹ có thể bấm nút bên dưới để chủ động kết nối Zalo ngay.
                             </p>
                         </div>
 
                         <div class="space-y-3">
                             <a id="res-zalo-link" href="<?php echo esc_url( home_url( '/zalo' ) ); ?>" target="_blank" rel="noopener noreferrer" class="w-full py-3.5 px-5 rounded-xl bg-gradient-to-r from-[#0068FF] to-[#0052CC] hover:opacity-95 text-white font-extrabold text-sm uppercase tracking-wider shadow-md flex items-center justify-center gap-2 transition-all">
                                 <span class="font-black text-base leading-none">Z</span>
-                                <span>Kết Nối Zalo Tư Vấn Ngay</span>
+                                <span>Kết Nối Zalo Xác Nhận Lịch Hẹn</span>
                             </a>
                             <a href="<?php echo esc_url( home_url( '/bo-cong-cu-suc-khoe/' ) ); ?>" class="w-full py-3 px-5 rounded-xl bg-navy hover:bg-navy/85 text-white font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition-all">
                                 <i data-lucide="clipboard-check" class="w-4 h-4 text-secondary"></i>
-                                <span>Khám Phá Bộ Công Cụ Sức Khỏe</span>
+                                <span>Xem Thêm Bộ Công Cụ Đánh Giá Sức Khỏe</span>
                             </a>
                         </div>
                     </div>
@@ -543,45 +558,346 @@ $booking_nonce      = wp_create_nonce( 'hieucon_booking_nonce' );
 
         </section>
 
-        <!-- QUY TRÌNH 3 BƯỚC ĐỒNG HÀNH -->
+        <!-- =========================================================
+             Ý CỐT LÕI 1: CHA MẸ ĐANG GẶP VẤN ĐỀ THẬT VỚI CON
+             (Ăn uống • Tiêu hoá • Giấc ngủ • Hành vi • Vi chất/Dinh dưỡng)
+             ========================================================= -->
         <section class="mt-20 md:mt-28">
-            <div class="text-center max-w-2xl mx-auto mb-12">
-                <span class="text-secondary font-extrabold text-xs uppercase tracking-widest block mb-2">Quy trình tận tâm & khoa học</span>
-                <h2 class="font-serif text-2xl sm:text-4xl font-bold text-navy">3 Bước Tư Vấn 1:1 Cùng Ba Mẹ</h2>
+            <div class="text-center max-w-3xl mx-auto mb-12">
+                <span class="text-secondary font-extrabold text-xs uppercase tracking-widest block mb-2">Bước 1 trong hành trình nhận thức</span>
+                <h2 class="font-serif text-2xl sm:text-4xl font-bold text-navy leading-tight mb-4">
+                    Có Phải Gia Đình Mình Đang Đối Mặt Với<br class="hidden sm:inline" /> Những Trăn Trở Này Mỗi Ngày?
+                </h2>
+                <p class="text-navy/70 text-sm sm:text-base font-medium leading-relaxed">
+                    Nhiều ba mẹ tìm đến <strong>Hiểu Con Từ Gốc</strong> khi những khó khăn dưới đây đã kéo dài nhiều tháng, thậm chí nhiều năm làm cả con và gia đình đều mệt mỏi:
+                </p>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
-                <div class="glass-card-booking p-7 rounded-[2rem] shadow-soft relative">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-5">
+                <!-- 1. Ăn uống -->
+                <div class="glass-card-booking p-6 rounded-3xl shadow-soft flex flex-col justify-between hover:-translate-y-1 transition-all duration-300">
+                    <div>
+                        <div class="w-12 h-12 rounded-2xl bg-orange-500/10 text-secondary flex items-center justify-center mb-4">
+                            <i data-lucide="utensils" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="font-serif font-bold text-lg text-navy mb-2">1. Ăn uống</h3>
+                        <p class="text-navy/75 text-xs sm:text-sm font-medium leading-relaxed">
+                            Kén ăn cực đoan, chỉ ăn lặp lại vài món cố định, nhạy cảm với độ thô, ngậm thức ăn lâu, nhai nuốt kém hoặc lại quá thèm đồ ngọt, sữa, tinh bột.
+                        </p>
+                    </div>
+                    <span class="mt-4 pt-3 border-t border-navy/5 text-[11px] font-extrabold text-secondary uppercase tracking-wider block">Bữa ăn luôn căng thẳng</span>
+                </div>
+
+                <!-- 2. Tiêu hoá -->
+                <div class="glass-card-booking p-6 rounded-3xl shadow-soft flex flex-col justify-between hover:-translate-y-1 transition-all duration-300">
+                    <div>
+                        <div class="w-12 h-12 rounded-2xl bg-amber-500/10 text-amber-600 flex items-center justify-center mb-4">
+                            <i data-lucide="activity" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="font-serif font-bold text-lg text-navy mb-2">2. Tiêu hoá</h3>
+                        <p class="text-navy/75 text-xs sm:text-sm font-medium leading-relaxed">
+                            Táo bón dai dẳng, phân cứng vón cục hoặc phân sống, lỏng nát thất thường; bụng thường xuyên căng phình, đầy hơi, ợ chua, hơi thở có mùi.
+                        </p>
+                    </div>
+                    <span class="mt-4 pt-3 border-t border-navy/5 text-[11px] font-extrabold text-amber-700 uppercase tracking-wider block">Đường ruột bất ổn</span>
+                </div>
+
+                <!-- 3. Giấc ngủ -->
+                <div class="glass-card-booking p-6 rounded-3xl shadow-soft flex flex-col justify-between hover:-translate-y-1 transition-all duration-300">
+                    <div>
+                        <div class="w-12 h-12 rounded-2xl bg-indigo-500/10 text-indigo-600 flex items-center justify-center mb-4">
+                            <i data-lucide="moon-star" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="font-serif font-bold text-lg text-navy mb-2">3. Giấc ngủ</h3>
+                        <p class="text-navy/75 text-xs sm:text-sm font-medium leading-relaxed">
+                            Rất khó vào giấc, trằn trọc lăn lộn hàng giờ, ngủ nông dễ giật mình, nghiến răng, đổ mồ hôi trộm hoặc thức dậy giữa đêm tỉnh táo, quấy khóc.
+                        </p>
+                    </div>
+                    <span class="mt-4 pt-3 border-t border-navy/5 text-[11px] font-extrabold text-indigo-600 uppercase tracking-wider block">Cơ thể khó phục hồi</span>
+                </div>
+
+                <!-- 4. Hành vi -->
+                <div class="glass-card-booking p-6 rounded-3xl shadow-soft flex flex-col justify-between hover:-translate-y-1 transition-all duration-300">
+                    <div>
+                        <div class="w-12 h-12 rounded-2xl bg-rose-500/10 text-rose-600 flex items-center justify-center mb-4">
+                            <i data-lucide="zap" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="font-serif font-bold text-lg text-navy mb-2">4. Hành vi</h3>
+                        <p class="text-navy/75 text-xs sm:text-sm font-medium leading-relaxed">
+                            Hay la hét, ăn vạ kéo dài, bùng nổ cảm xúc không rõ lý do; chạy nhảy liên tục, khó ngồi yên, mất tập trung khiến việc học can thiệp chậm tiến bộ.
+                        </p>
+                    </div>
+                    <span class="mt-4 pt-3 border-t border-navy/5 text-[11px] font-extrabold text-rose-600 uppercase tracking-wider block">Hệ thần kinh quá tải</span>
+                </div>
+
+                <!-- 5. Vi chất / Dinh dưỡng -->
+                <div class="glass-card-booking p-6 rounded-3xl shadow-soft flex flex-col justify-between hover:-translate-y-1 transition-all duration-300">
+                    <div>
+                        <div class="w-12 h-12 rounded-2xl bg-teal-500/10 text-primary flex items-center justify-center mb-4">
+                            <i data-lucide="flask-conical" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="font-serif font-bold text-lg text-navy mb-2">5. Vi chất & Dinh dưỡng</h3>
+                        <p class="text-navy/75 text-xs sm:text-sm font-medium leading-relaxed">
+                            Con thiếu hụt vi chất, hay ốm vặt, chàm da/dị ứng; hoặc ba mẹ đứng trước hàng chục loại men, vitamin, Omega-3 mà không biết con thực sự cần gì.
+                        </p>
+                    </div>
+                    <span class="mt-4 pt-3 border-t border-navy/5 text-[11px] font-extrabold text-primary uppercase tracking-wider block">Bổ sung nhưng kém hấp thu</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- =========================================================
+             Ý CỐT LÕI 2 & 3: VẤN ĐỀ KHÔNG ĐỨNG RIÊNG LẺ &
+             ĐIỀU CHA MẸ THIẾU KHÔNG PHẢI LÀ THÊM MỘT MẸO
+             ========================================================= -->
+        <section class="mt-20 md:mt-28">
+            <div class="glass-card-booking rounded-[2.5rem] p-7 sm:p-10 lg:p-14 shadow-premium">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+
+                    <!-- Cột trái: Phân tích vì sao cha mẹ bị rối -->
+                    <div class="lg:col-span-7 space-y-6">
+                        <span class="text-secondary font-extrabold text-xs uppercase tracking-widest block">Vì sao càng làm nhiều càng dễ rối?</span>
+                        <h2 class="font-serif text-2xl sm:text-4xl font-bold text-navy leading-tight">
+                            Vấn Đề Của Con Không Đứng Riêng Lẻ — Và Điều Ba Mẹ Thiếu Không Phải Là Thêm Một Mẹo
+                        </h2>
+
+                        <div class="space-y-4 text-navy/80 text-sm sm:text-base font-medium leading-relaxed">
+                            <p>
+                                Khi con khó ngủ, chúng ta tìm mẹo giúp ngủ ngon. Khi con táo bón, chúng ta đổi loại men hoặc chất xơ. Khi con mất tập trung hay bùng nổ hành vi, chúng ta lại vội vã tăng giờ học hoặc tìm thêm thực phẩm bổ não.
+                            </p>
+                            <p>
+                                Thực tế, <strong class="text-navy">một biểu hiện bề nổi của con thường là kết quả của nhiều yếu tố đang tác động qua lại</strong>: một đường ruột đang viêm hoặc táo bón có thể khiến con bức bối trong người, dẫn đến khó ngủ ban đêm và cáu gắt, giảm chú ý vào ngày hôm sau.
+                            </p>
+                            <p>
+                                Hầu hết ba mẹ đều đã đọc rất nhiều, thử rất nhiều cách. Nhưng nếu vẫn nhìn từng triệu chứng rời rạc và thử thêm giải pháp một cách ngẫu nhiên, gia đình sẽ rất dễ rơi vào vòng lặp <strong class="text-navy">tốn kém – quá tải – mà vẫn không biết đâu mới là điểm mấu chốt</strong>.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Cột phải: Khung Chuyển Dịch Nhận Thức -->
+                    <div class="lg:col-span-5">
+                        <div class="bg-navy text-white rounded-3xl p-6 sm:p-8 shadow-premium space-y-6 relative overflow-hidden">
+                            <div class="absolute -top-10 -right-10 w-36 h-36 rounded-full bg-secondary/15 blur-2xl pointer-events-none"></div>
+
+                            <div class="bg-white/8 border border-white/15 rounded-2xl p-4">
+                                <span class="text-[11px] font-extrabold uppercase tracking-wider text-rose-300 flex items-center gap-1.5 mb-1.5">
+                                    <i data-lucide="x-circle" class="w-4 h-4"></i> Thay vì tiếp tục hỏi:
+                                </span>
+                                <p class="font-serif italic text-base sm:text-lg text-white/85">
+                                    “Tôi cần tìm thêm mẹo gì, mua thêm loại gì để thử tiếp cho con?”
+                                </p>
+                            </div>
+
+                            <div class="flex justify-center">
+                                <div class="w-9 h-9 rounded-full bg-secondary text-white flex items-center justify-center shadow-md">
+                                    <i data-lucide="arrow-down" class="w-5 h-5"></i>
+                                </div>
+                            </div>
+
+                            <div class="bg-gradient-to-br from-secondary/25 to-primary/25 border border-secondary/50 rounded-2xl p-5">
+                                <span class="text-[11px] font-extrabold uppercase tracking-wider text-amber-300 flex items-center gap-1.5 mb-1.5">
+                                    <i data-lucide="check-circle-2" class="w-4 h-4"></i> Hãy chuyển sang bước đi vững chắc hơn:
+                                </span>
+                                <p class="font-serif font-bold text-lg sm:text-xl text-white leading-snug">
+                                    “Tôi cần nhìn tổng thể để hiểu rõ vấn đề của con trước — và biết chính xác điều gì cần ưu tiên làm đầu tiên.”
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- =========================================================
+             Ý CỐT LÕI 4: BUỔI 30 PHÚT GIÚP LÀM RÕ VẤN ĐỀ NHƯ THẾ NÀO?
+             ========================================================= -->
+        <section class="mt-20 md:mt-28">
+            <div class="text-center max-w-3xl mx-auto mb-12">
+                <span class="text-primary font-extrabold text-xs uppercase tracking-widest block mb-2">Giá trị thực sự của 30 phút 1:1</span>
+                <h2 class="font-serif text-2xl sm:text-4xl font-bold text-navy leading-tight mb-4">
+                    30 Phút Này Giúp Ba Mẹ Làm Rõ 4 Điều Quan Trọng Nhất
+                </h2>
+                <p class="text-navy/70 text-sm sm:text-base font-medium leading-relaxed">
+                    Giá trị cốt lõi của buổi hẹn không nằm ở hai chữ “miễn phí”, mà ở việc giúp ba mẹ gỡ bỏ sự mơ hồ và có được một bức tranh sáng rõ về tình trạng hiện tại của con:
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="glass-card-booking p-7 rounded-3xl shadow-soft relative">
                     <span class="font-serif font-bold text-4xl text-secondary/20 absolute top-5 right-6">01</span>
                     <div class="w-12 h-12 rounded-2xl bg-navy text-white flex items-center justify-center mb-5">
-                        <i data-lucide="calendar-plus" class="w-6 h-6"></i>
+                        <i data-lucide="focus" class="w-6 h-6"></i>
                     </div>
-                    <h3 class="font-serif font-bold text-xl text-navy mb-2">Đăng ký & Khảo sát nhanh</h3>
+                    <h3 class="font-serif font-bold text-xl text-navy mb-2.5">Xác định vấn đề nổi bật</h3>
                     <p class="text-navy/70 text-sm font-medium leading-relaxed">
-                        Ba mẹ để lại SĐT/Zalo giữ lịch hẹn, sau đó tích chọn nhanh các biểu hiện của bé để chuyên gia nắm bắt trước hồ sơ.
+                        Giữa hàng loạt triệu chứng làm ba mẹ lo lắng, cùng bóc tách xem đâu mới là rào cản cốt lõi nhất đang ảnh hưởng trực tiếp đến sức khỏe và sự phát triển của con.
                     </p>
                 </div>
 
-                <div class="glass-card-booking p-7 rounded-[2rem] shadow-soft relative">
+                <div class="glass-card-booking p-7 rounded-3xl shadow-soft relative">
                     <span class="font-serif font-bold text-4xl text-secondary/20 absolute top-5 right-6">02</span>
                     <div class="w-12 h-12 rounded-2xl bg-secondary text-white flex items-center justify-center mb-5">
-                        <i data-lucide="messages-square" class="w-6 h-6"></i>
+                        <i data-lucide="git-merge" class="w-6 h-6"></i>
                     </div>
-                    <h3 class="font-serif font-bold text-xl text-navy mb-2">Trò chuyện & Giải mã 1:1</h3>
+                    <h3 class="font-serif font-bold text-xl text-navy mb-2.5">Nhìn các yếu tố liên quan</h3>
                     <p class="text-navy/70 text-sm font-medium leading-relaxed">
-                        Cùng nhìn lại toàn diện tình trạng tiêu hóa, giấc ngủ, dinh dưỡng và hành vi của con để tìm ra nút thắt gốc rễ.
+                        Xâu chuỗi mối liên hệ giữa chế độ ăn, tiêu hoá, giấc ngủ, vi chất và hành vi để ba mẹ hiểu vì sao các biểu hiện đó lại xuất hiện cùng nhau ở con.
                     </p>
                 </div>
 
-                <div class="glass-card-booking p-7 rounded-[2rem] shadow-soft relative">
+                <div class="glass-card-booking p-7 rounded-3xl shadow-soft relative">
                     <span class="font-serif font-bold text-4xl text-secondary/20 absolute top-5 right-6">03</span>
                     <div class="w-12 h-12 rounded-2xl bg-primary text-white flex items-center justify-center mb-5">
-                        <i data-lucide="file-check-2" class="w-6 h-6"></i>
+                        <i data-lucide="list-ordered" class="w-6 h-6"></i>
                     </div>
-                    <h3 class="font-serif font-bold text-xl text-navy mb-2">Nhận lộ trình & Đồng hành</h3>
+                    <h3 class="font-serif font-bold text-xl text-navy mb-2.5">Xác định điều cần ưu tiên</h3>
                     <p class="text-navy/70 text-sm font-medium leading-relaxed">
-                        Nhận hướng dẫn thực hành từng bước tại nhà, tài liệu chuyên sâu và sự đồng hành sát sao từ cộng đồng Hiểu Con Từ Gốc.
+                        Không ôm đồm làm tất cả cùng lúc. Ba mẹ biết rõ 1–2 mục tiêu quan trọng nhất cần tập trung xử lý trước để tạo đà thay đổi bền vững cho cơ thể con.
                     </p>
+                </div>
+
+                <div class="glass-card-booking p-7 rounded-3xl shadow-soft relative">
+                    <span class="font-serif font-bold text-4xl text-secondary/20 absolute top-5 right-6">04</span>
+                    <div class="w-12 h-12 rounded-2xl bg-emerald-600 text-white flex items-center justify-center mb-5">
+                        <i data-lucide="footprints" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="font-serif font-bold text-xl text-navy mb-2.5">Biết bước tiếp theo là gì</h3>
+                    <p class="text-navy/70 text-sm font-medium leading-relaxed">
+                        Kết thúc 30 phút, ba mẹ có định hướng rõ ràng về bước tiếp theo nên thực hiện tại nhà hoặc cần theo dõi thêm chỉ số nào cho con.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- =========================================================
+             Ý CỐT LÕI 5: ĐÂY KHÔNG PHẢI TƯ VẤN ĐẠI TRÀ
+             ========================================================= -->
+        <section class="mt-20 md:mt-28">
+            <div class="bg-navy text-white rounded-[2.5rem] p-8 sm:p-12 lg:p-14 shadow-premium relative overflow-hidden">
+                <div class="absolute -bottom-20 -right-20 w-80 h-80 rounded-full bg-primary/20 blur-3xl pointer-events-none"></div>
+
+                <div class="max-w-3xl mb-10">
+                    <span class="inline-block bg-secondary/20 text-secondary border border-secondary/40 font-extrabold text-xs uppercase tracking-widest px-3.5 py-1 rounded-full mb-4">
+                        Sự nghiêm túc từ cả hai phía
+                    </span>
+                    <h2 class="font-serif text-2xl sm:text-4xl font-bold text-white leading-tight mb-4">
+                        Vì Sao Đây Không Phải Là Một Buổi Tư Vấn Đại Trà?
+                    </h2>
+                    <p class="text-white/75 text-sm sm:text-base font-medium leading-relaxed">
+                        Chúng tôi không tổ chức những cuộc gọi qua loa theo kịch bản có sẵn. Để 30 phút thực sự mang lại giá trị rõ ràng cho từng gia đình, quy trình làm việc được thiết kế có chọn lọc:
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="bg-white/8 border border-white/15 rounded-3xl p-6">
+                        <div class="w-11 h-11 rounded-2xl bg-secondary/20 text-secondary flex items-center justify-center mb-4">
+                            <i data-lucide="calendar-clock" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="font-serif font-bold text-lg text-white mb-2">1. Giới hạn số ca mỗi tuần</h3>
+                        <p class="text-white/70 text-xs sm:text-sm leading-relaxed">
+                            Mỗi tuần đội ngũ chỉ nhận một số lượng lịch hẹn giới hạn để đảm bảo người phụ trách có đủ thời gian nghiên cứu kỹ hồ sơ và lắng nghe sâu sát từng trường hợp.
+                        </p>
+                    </div>
+
+                    <div class="bg-white/8 border border-white/15 rounded-3xl p-6">
+                        <div class="w-11 h-11 rounded-2xl bg-primary/25 text-teal-300 flex items-center justify-center mb-4">
+                            <i data-lucide="file-search" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="font-serif font-bold text-lg text-white mb-2">2. Xem xét thông tin trước buổi hẹn</h3>
+                        <p class="text-white/70 text-xs sm:text-sm leading-relaxed">
+                            Thông tin khảo sát ở Bước 2 được xem xét trước để buổi 30 phút không mất thời gian hỏi lại từ đầu, mà đi thẳng vào phân tích vấn đề và thứ tự ưu tiên của con.
+                        </p>
+                    </div>
+
+                    <div class="bg-white/8 border border-white/15 rounded-3xl p-6">
+                        <div class="w-11 h-11 rounded-2xl bg-emerald-500/20 text-emerald-300 flex items-center justify-center mb-4">
+                            <i data-lucide="user-check" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="font-serif font-bold text-lg text-white mb-2">3. Chỉ nhận trường hợp phù hợp</h3>
+                        <p class="text-white/70 text-xs sm:text-sm leading-relaxed">
+                            Buổi 30 phút dành riêng cho những ba mẹ thực sự mong muốn tìm hiểu nguyên nhân gốc rễ bên trong cơ thể con và sẵn sàng đồng hành kiên trì, khoa học.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- =========================================================
+             Ý CỐT LÕI 6: 5 ĐIỀU GIÚP CHA MẸ HOÀN TOÀN AN TÂM KHI ĐĂNG KÝ
+             ========================================================= -->
+        <section class="mt-20 md:mt-28">
+            <div class="text-center max-w-3xl mx-auto mb-12">
+                <span class="text-secondary font-extrabold text-xs uppercase tracking-widest block mb-2">Giải đáp minh bạch trước khi đăng ký</span>
+                <h2 class="font-serif text-2xl sm:text-4xl font-bold text-navy leading-tight mb-4">
+                    5 Điều Giúp Ba Mẹ Hoàn Toàn An Tâm Khi Đặt Lịch
+                </h2>
+                <p class="text-navy/70 text-sm sm:text-base font-medium leading-relaxed">
+                    Chúng tôi hiểu việc chia sẻ câu chuyện của con cần rất nhiều sự tin tưởng. Dưới đây là những cam kết rõ ràng từ <strong>Hiểu Con Từ Gốc</strong>:
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Câu hỏi 1 -->
+                <div class="glass-card-booking p-6 sm:p-7 rounded-3xl shadow-soft">
+                    <h3 class="font-serif font-bold text-lg sm:text-xl text-navy mb-2.5 flex items-start gap-3">
+                        <span class="w-7 h-7 rounded-full bg-secondary/15 text-secondary text-xs font-extrabold flex items-center justify-center shrink-0 mt-0.5">?</span>
+                        <span>1. Gia đình tôi có phù hợp với buổi 30 phút này không?</span>
+                    </h3>
+                    <p class="text-navy/75 text-xs sm:text-sm font-medium leading-relaxed pl-10">
+                        Phù hợp nếu con đang gặp các vấn đề về <strong>ăn uống, tiêu hoá, giấc ngủ, hành vi, chậm nói, tự kỷ (ASD), tăng động (ADHD) hoặc rối loạn vi chất</strong> mà ba mẹ đang bối rối chưa rõ nguyên nhân liên quan hay nên ưu tiên xử lý từ đâu trước.
+                    </p>
+                </div>
+
+                <!-- Câu hỏi 2 -->
+                <div class="glass-card-booking p-6 sm:p-7 rounded-3xl shadow-soft">
+                    <h3 class="font-serif font-bold text-lg sm:text-xl text-navy mb-2.5 flex items-start gap-3">
+                        <span class="w-7 h-7 rounded-full bg-primary/15 text-primary text-xs font-extrabold flex items-center justify-center shrink-0 mt-0.5">?</span>
+                        <span>2. Sau 30 phút trao đổi, tôi sẽ nhận được gì?</span>
+                    </h3>
+                    <p class="text-navy/75 text-xs sm:text-sm font-medium leading-relaxed pl-10">
+                        Ba mẹ sẽ có cái nhìn tổng thể về mối liên hệ giữa các triệu chứng của con, xác định được <strong>vấn đề nổi bật nhất cần ưu tiên</strong> trong giai đoạn hiện tại, biết bước tiếp theo nên làm gì và nhận tài liệu/cẩm nang hướng dẫn thực hành phù hợp.
+                    </p>
+                </div>
+
+                <!-- Câu hỏi 3 -->
+                <div class="glass-card-booking p-6 sm:p-7 rounded-3xl shadow-soft">
+                    <h3 class="font-serif font-bold text-lg sm:text-xl text-navy mb-2.5 flex items-start gap-3">
+                        <span class="w-7 h-7 rounded-full bg-emerald-500/15 text-emerald-700 text-xs font-extrabold flex items-center justify-center shrink-0 mt-0.5">?</span>
+                        <span>3. Tôi có bị chèo kéo hay ép mua sản phẩm gì không?</span>
+                    </h3>
+                    <p class="text-navy/75 text-xs sm:text-sm font-medium leading-relaxed pl-10">
+                        <strong>Hoàn toàn không.</strong> Mục tiêu duy nhất của 30 phút này là giúp ba mẹ hiểu rõ vấn đề của con và định hình thứ tự ưu tiên. Mọi quyết định áp dụng hay đồng hành tiếp theo đều hoàn toàn thuộc về sự chủ động của gia đình.
+                    </p>
+                </div>
+
+                <!-- Câu hỏi 4 -->
+                <div class="glass-card-booking p-6 sm:p-7 rounded-3xl shadow-soft">
+                    <h3 class="font-serif font-bold text-lg sm:text-xl text-navy mb-2.5 flex items-start gap-3">
+                        <span class="w-7 h-7 rounded-full bg-navy/10 text-navy text-xs font-extrabold flex items-center justify-center shrink-0 mt-0.5">?</span>
+                        <span>4. Sau khi đăng ký trên trang này sẽ diễn ra thế nào?</span>
+                    </h3>
+                    <p class="text-navy/75 text-xs sm:text-sm font-medium leading-relaxed pl-10">
+                        (1) Ba mẹ điền thông tin liên hệ ở Bước 1 và tích chọn khảo sát nhanh ở Bước 2 → (2) Bộ phận chuyên môn xem xét hồ sơ và nhắn xác nhận lịch qua Zalo → (3) Thực hiện cuộc trò chuyện 1:1 trong 30 phút theo đúng khung giờ đã hẹn.
+                    </p>
+                </div>
+
+                <!-- Câu hỏi 5 (Full width on md) -->
+                <div class="glass-card-booking p-6 sm:p-7 rounded-3xl shadow-soft md:col-span-2 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+                    <div>
+                        <h3 class="font-serif font-bold text-lg sm:text-xl text-navy mb-2 flex items-start gap-3">
+                            <span class="w-7 h-7 rounded-full bg-secondary/15 text-secondary text-xs font-extrabold flex items-center justify-center shrink-0 mt-0.5">?</span>
+                            <span>5. Thông tin của con và gia đình có được lắng nghe nghiêm túc & bảo mật không?</span>
+                        </h3>
+                        <p class="text-navy/75 text-xs sm:text-sm font-medium leading-relaxed pl-10">
+                            Mọi thông tin khảo sát về tình trạng của bé chỉ phục vụ duy nhất cho việc chuẩn bị chuyên môn trước buổi hẹn 1:1, được lắng nghe với sự tôn trọng, thấu cảm và <strong>bảo mật tuyệt đối 100%</strong>.
+                        </p>
+                    </div>
+
+                    <a href="#booking-card-wrapper" onclick="document.getElementById('booking-parent-name')?.focus();" class="shrink-0 px-6 py-4 rounded-xl bg-gradient-to-r from-secondary to-secondary_dark text-white font-extrabold text-xs sm:text-sm uppercase tracking-wider shadow-md hover:-translate-y-0.5 transition-all flex items-center gap-2">
+                        <span>Đăng Ký 30 Phút Nhìn Rõ Vấn Đề Của Con</span>
+                        <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+                    </a>
                 </div>
             </div>
         </section>
@@ -740,7 +1056,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             step1Btn.disabled = true;
             const originalHtml = step1Btn.innerHTML;
-            step1Btn.innerHTML = '<span>Đang giữ lịch hẹn...</span>';
+            step1Btn.innerHTML = '<span>Đang lưu thông tin...</span>';
 
             const formData = new FormData();
             formData.append('action', 'hieucon_submit_booking');
@@ -793,7 +1109,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             step2Btn.disabled = true;
             const originalHtml = step2Btn.innerHTML;
-            step2Btn.innerHTML = '<span>Đang lưu hồ sơ khảo sát...</span>';
+            step2Btn.innerHTML = '<span>Đang gửi hồ sơ khảo sát...</span>';
 
             const formData = new FormData();
             formData.append('action', 'hieucon_submit_booking_survey');
