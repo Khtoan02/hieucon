@@ -133,7 +133,7 @@ $course_cats = get_terms([
 
                                             foreach ($mega_products_data as $product):
                                                 ?>
-                                                <a href="/<?php echo esc_attr($product['slug']); ?>"
+                                                <a href="<?php echo home_url('/san-pham/#' . esc_attr($product['slug'])); ?>"
                                                     class="shrink-0 w-[240px] snap-start bg-gradient-to-br from-white to-[#f8fafc] rounded-[1.5rem] p-4 border border-white hover:border-secondary/30 hover:shadow-elegant transition-all duration-300 group/card relative overflow-hidden flex flex-col">
                                                     <div
                                                         class="w-full h-[140px] bg-white rounded-xl mb-4 overflow-hidden shadow-sm flex items-center justify-center p-2 relative">
@@ -279,7 +279,7 @@ $course_cats = get_terms([
                             <?php
                             foreach ($mega_products_data as $product):
                                 ?>
-                                <a href="/<?php echo esc_attr($product['slug']); ?>"
+                                <a href="<?php echo home_url('/san-pham/#' . esc_attr($product['slug'])); ?>"
                                     class="shrink-0 w-[200px] snap-start bg-white border border-secondary/10 shadow-sm rounded-xl p-3 hover:border-secondary transition-colors group/mcard flex flex-col">
                                     <div
                                         class="w-full h-[120px] bg-[#f8fafc] rounded-lg mb-3 flex items-center justify-center overflow-hidden relative p-2">

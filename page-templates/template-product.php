@@ -201,9 +201,13 @@
 
             filteredData.forEach((product, index) => {
                 const card = document.createElement('div');
+                const productSlug = (product.product_link || '').replace(/^\/+/, '');
+                if (productSlug) {
+                    card.id = productSlug;
+                }
                 // Độ trễ animation cho từng card mượt mà
                 card.style.animationDelay = `${index * 0.05}s`;
-                card.className = 'glass-card rounded-[2rem] overflow-hidden flex flex-col h-full hover:-translate-y-2 transition-transform duration-500 shadow-soft hover:shadow-elegant group fade-in';
+                card.className = 'glass-card rounded-[2rem] overflow-hidden flex flex-col h-full hover:-translate-y-2 transition-transform duration-500 shadow-soft hover:shadow-elegant group fade-in scroll-mt-28 target:ring-2 target:ring-secondary';
                 
                 // Không dùng danh mục
 

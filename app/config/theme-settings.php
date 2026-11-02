@@ -31,6 +31,7 @@ function hieucon_register_theme_settings() {
     register_setting('hieucon_theme_options', 'hieucon_custom_body_code');
     register_setting('hieucon_theme_options', 'hieucon_custom_footer_code');
     register_setting('hieucon_theme_options', 'hieucon_custom_css');
+    register_setting('hieucon_theme_options', 'hieucon_show_courses_in_header');
     register_setting('hieucon_theme_options', 'hieucon_show_courses_in_account');
 }
 add_action('admin_init', 'hieucon_register_theme_settings');
@@ -131,7 +132,7 @@ function hieucon_theme_settings_html() {
                                     </svg>
                                 </div>
                                 <div class="hieucon-header-title">Header Đầy Đủ</div>
-                                <div class="hieucon-header-desc">3 Mega Menu (Sản phẩm, Doc Hope, Dinh dưỡng) và 1 nút tham gia.</div>
+                                <div class="hieucon-header-desc">Mega Menu Sản phẩm, Triệu chứng, Dinh dưỡng, Cẩm nang & Tài liệu Y sinh (Chuẩn Sitemap).</div>
                             </label>
 
                             <!-- Layout Landing -->
@@ -154,6 +155,30 @@ function hieucon_theme_settings_html() {
                             </label>
                         </div>
                         <p class="description" style="margin-top: 15px;">Header này sẽ hiển thị trên tất cả các trang, bài viết nếu trang đó không tự chọn Header riêng.</p>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row"><label for="hieucon_show_courses_in_header">Hiển thị Menu "Khóa học" trên Header?</label></th>
+                    <td>
+                        <?php $show_header_courses = get_option('hieucon_show_courses_in_header', '0'); ?>
+                        <style>
+                            .hc-toggle-wrap { display: inline-flex; align-items: center; gap: 12px; cursor: pointer; user-select: none; background: #fff; border: 1px solid #dcdcde; padding: 10px 16px; border-radius: 10px; box-shadow: 0 1px 2px rgba(0,0,0,0.04); }
+                            .hc-toggle-switch { position: relative; width: 46px; height: 24px; background: #cbd5e1; border-radius: 999px; transition: background 0.25s ease; flex-shrink: 0; }
+                            .hc-toggle-switch::after { content: ''; position: absolute; top: 3px; left: 3px; width: 18px; height: 18px; background: #fff; border-radius: 50%; transition: transform 0.25s ease; box-shadow: 0 1px 3px rgba(0,0,0,0.2); }
+                            .hc-toggle-input { display: none; }
+                            .hc-toggle-input:checked + .hc-toggle-switch { background: #0d9488; }
+                            .hc-toggle-input:checked + .hc-toggle-switch::after { transform: translateX(22px); }
+                            .hc-toggle-badge { font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 999px; text-transform: uppercase; }
+                            .hc-toggle-input:checked ~ .hc-toggle-badge { background: #ccfbf1; color: #0f766e; }
+                            .hc-toggle-input:not(:checked) ~ .hc-toggle-badge { background: #f1f5f9; color: #64748b; }
+                        </style>
+                        <label class="hc-toggle-wrap">
+                            <input type="checkbox" class="hc-toggle-input" id="hieucon_show_courses_in_header" name="hieucon_show_courses_in_header" value="1" <?php checked($show_header_courses, '1'); ?> onchange="this.parentElement.querySelector('.hc-toggle-badge').textContent = this.checked ? 'Đang BẬT' : 'Đang TẮT';">
+                            <span class="hc-toggle-switch"></span>
+                            <span style="font-weight: 600; color: #1d2327;">Bật / Tắt mục "Khóa học (E-Learning)" trên Menu Header (Desktop & Mobile)</span>
+                            <span class="hc-toggle-badge"><?php echo $show_header_courses === '1' ? 'Đang BẬT' : 'Đang TẮT'; ?></span>
+                        </label>
+                        <p class="description" style="margin-top: 8px;">Khi tắt, mục Mega Menu "Khóa học" trên thanh điều hướng chính và trong Menu Mobile sẽ được ẩn đi hoàn toàn.</p>
                     </td>
                 </tr>
             </table>
@@ -195,14 +220,16 @@ function hieucon_theme_settings_html() {
             <h2 class="title">3. Cài đặt Tài khoản Hội viên</h2>
             <table class="form-table">
                 <tr>
-                    <th scope="row"><label>Hiển thị Khóa học?</label></th>
+                    <th scope="row"><label for="hieucon_show_courses_in_account">Hiển thị Khóa học trong Tài khoản?</label></th>
                     <td>
                         <?php $show_courses = get_option('hieucon_show_courses_in_account', '0'); ?>
-                        <label>
-                            <input type="checkbox" name="hieucon_show_courses_in_account" value="1" <?php checked($show_courses, '1'); ?>>
-                            Cho phép hiển thị tab "Khóa học của tôi" và "Kích hoạt khóa học" ở trang tài khoản hội viên.
+                        <label class="hc-toggle-wrap">
+                            <input type="checkbox" class="hc-toggle-input" id="hieucon_show_courses_in_account" name="hieucon_show_courses_in_account" value="1" <?php checked($show_courses, '1'); ?> onchange="this.parentElement.querySelector('.hc-toggle-badge').textContent = this.checked ? 'Đang BẬT' : 'Đang TẮT';">
+                            <span class="hc-toggle-switch"></span>
+                            <span style="font-weight: 600; color: #1d2327;">Cho phép hiển thị tab "Khóa học của tôi" và "Kích hoạt khóa học" ở trang tài khoản hội viên</span>
+                            <span class="hc-toggle-badge"><?php echo $show_courses === '1' ? 'Đang BẬT' : 'Đang TẮT'; ?></span>
                         </label>
-                        <p class="description">Mặc định tính năng khóa học sẽ bị ẩn ở trang tài khoản, chỉ hiển thị tài liệu/cẩm nang.</p>
+                        <p class="description" style="margin-top: 8px;">Mặc định tính năng khóa học sẽ bị ẩn ở trang tài khoản, chỉ hiển thị tài liệu/cẩm nang.</p>
                     </td>
                 </tr>
             </table>
