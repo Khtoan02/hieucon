@@ -78,6 +78,10 @@ add_action( 'after_setup_theme', 'hieucon_setup_member_tables' );
  * Tự động tạo và gán Page Template cho trang Đăng nhập và Tài khoản nếu chưa tồn tại
  */
 function hieucon_auto_create_member_pages() {
+    if ( get_option( 'hieucon_pages_initialized_v2' ) === '1' ) {
+        return;
+    }
+
     // 1. Trang Đăng nhập & Đăng ký
     $auth_slug = 'dang-nhap';
     $auth_page = get_page_by_path( $auth_slug );
@@ -175,6 +179,8 @@ function hieucon_auto_create_member_pages() {
     } else {
         update_post_meta( $survey_page->ID, '_wp_page_template', $survey_template );
     }
+
+    update_option( 'hieucon_pages_initialized_v2', '1' );
 }
 add_action( 'init', 'hieucon_auto_create_member_pages' );
 

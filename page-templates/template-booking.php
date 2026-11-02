@@ -162,6 +162,11 @@ $booking_nonce      = wp_create_nonce( 'hieucon_booking_nonce' );
 <main id="primary" class="site-main hc-booking-page">
 
     <!-- =========================================================
+         TRANG 1: LANDING PAGE ĐẶT LỊCH (#hc-landing-view)
+         ========================================================= -->
+    <div id="hc-landing-view">
+
+    <!-- =========================================================
          SECTION 1: HERO (CHIẾM TRỌN MÀN HÌNH ĐẦU TIÊN - TẬP TRUNG TUYỆT ĐỐI)
          ========================================================= -->
     <section class="min-h-[calc(80vh-96px)] flex items-center py-12 md:py-16 lg:py-20 bg-white">
@@ -660,228 +665,259 @@ $booking_nonce      = wp_create_nonce( 'hieucon_booking_nonce' );
                             </form>
                         </div>
 
-                        <!-- BƯỚC 2: KHẢO SÁT NHANH TRÊN 1 KHUNG -->
-                        <div id="booking-step2-container" class="hidden pt-2">
-                            <div class="bg-[#fff7ed] border border-orange-200 rounded-xl p-4 mb-6 flex items-start gap-3">
-                                <div class="w-6 h-6 rounded-full bg-secondary text-white flex items-center justify-center shrink-0 mt-0.5">
-                                    <i data-lucide="check" class="w-3.5 h-3.5"></i>
-                                </div>
-                                <div class="text-xs sm:text-sm leading-relaxed text-slate-700">
-                                    <p class="font-bold text-navy">
-                                        Đã lưu thông tin liên hệ (<span id="step2-badge-code">TV-0000</span>)
-                                    </p>
-                                    <p class="mt-0.5">
-                                        Ba mẹ tích chọn nhanh các biểu hiện của con dưới đây để đội ngũ xem trước hồ sơ nhé:
-                                    </p>
-                                </div>
-                            </div>
-
-                            <form id="hieucon-booking-step2-form" class="space-y-5" novalidate>
-                                <input type="hidden" id="survey-booking-id" name="booking_id" value="">
-                                <input type="hidden" id="survey-booking-code" name="booking_code" value="">
-
-                                <!-- Thông tin bé -->
-                                <div class="bg-[#f8fafc] border border-slate-200/80 rounded-xl p-4 sm:p-5">
-                                    <div class="grid grid-cols-1 sm:grid-cols-12 gap-4">
-                                        <div class="sm:col-span-5">
-                                            <label for="survey-child-name" class="block text-xs font-bold text-navy mb-1.5">Tên gọi của bé</label>
-                                            <input
-                                                type="text"
-                                                id="survey-child-name"
-                                                name="child_name"
-                                                value="<?php echo esc_attr( $prefill_child_name ); ?>"
-                                                placeholder="VD: Bé Bắp / Minh Khôi"
-                                                class="w-full px-3.5 py-2 rounded-lg bg-white border border-slate-200 focus:border-secondary outline-none text-navy text-xs sm:text-sm"
-                                            >
-                                        </div>
-                                        <div class="sm:col-span-7">
-                                            <label class="block text-xs font-bold text-navy mb-1.5">Độ tuổi của bé</label>
-                                            <input type="hidden" id="survey-child-age" name="child_age" value="2 – 3 tuổi">
-                                            <div class="flex flex-wrap gap-1.5" data-single-group="survey-child-age">
-                                                <?php
-                                                $age_options = [ 'Dưới 2 tuổi', '2 – 3 tuổi', '3 – 5 tuổi', '5 – 7 tuổi', 'Trên 7 tuổi' ];
-                                                foreach ( $age_options as $idx => $age_label ) :
-                                                    $active_cls = ( 1 === $idx ) ? 'is-selected' : '';
-                                                ?>
-                                                <button type="button" data-value="<?php echo esc_attr( $age_label ); ?>" class="survey-single-pill <?php echo esc_attr( $active_cls ); ?> px-3 py-1.5 rounded-lg border border-slate-200 bg-white text-navy text-xs font-semibold transition-all cursor-pointer">
-                                                    <?php echo esc_html( $age_label ); ?>
-                                                </button>
-                                                <?php endforeach; ?>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- Vấn đề nổi bật nhất -->
-                                <div class="bg-[#f8fafc] border border-slate-200/80 rounded-xl p-4 sm:p-5">
-                                    <label class="block text-xs font-bold text-navy mb-2">Vấn đề ba mẹ đang quan tâm nhất ở con</label>
-                                    <input type="hidden" id="survey-diagnosis" name="diagnosis" value="Táo bón / tiêu hóa">
-                                    <div class="flex flex-wrap gap-2" data-single-group="survey-diagnosis">
-                                        <?php
-                                        $diagnoses = [
-                                            'Táo bón / tiêu hóa',
-                                            'Kén ăn / nhai nuốt',
-                                            'Bất dung nạp thực phẩm',
-                                            'Hấp thu / chậm tăng cân',
-                                            'Thiếu hụt vi chất',
-                                        ];
-                                        foreach ( $diagnoses as $idx => $diag ) :
-                                            $active_cls = ( 0 === $idx ) ? 'is-selected' : '';
-                                        ?>
-                                        <button type="button" data-value="<?php echo esc_attr( $diag ); ?>" class="survey-single-pill <?php echo esc_attr( $active_cls ); ?> px-3.5 py-2 rounded-lg border border-slate-200 bg-white text-navy text-xs font-semibold transition-all cursor-pointer">
-                                            <?php echo esc_html( $diag ); ?>
-                                        </button>
-                                        <?php endforeach; ?>
-                                    </div>
-                                </div>
-
-                                <!-- Biểu hiện tiêu hóa & ăn uống -->
-                                <div class="bg-[#f8fafc] border border-slate-200/80 rounded-xl p-4 sm:p-5">
-                                    <label class="block text-xs font-bold text-navy mb-2">
-                                        Biểu hiện ăn uống & tiêu hóa hiện tại
-                                    </label>
-                                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                                        <?php
-                                        $bio_symptoms = [
-                                            'Táo bón, đi ngoài chưa đều',
-                                            'Phân sống, lỏng hoặc có bọt',
-                                            'Bụng dễ đầy hơi, chướng khí',
-                                            'Kén ăn, chỉ ăn vài món quen thuộc',
-                                            'Nhạy cảm độ thô, ngậm thức ăn lâu',
-                                            'Thích đồ ngọt, sữa hoặc tinh bột',
-                                        ];
-                                        foreach ( $bio_symptoms as $item ) :
-                                        ?>
-                                        <button type="button" data-multi-name="bio_symptoms[]" data-value="<?php echo esc_attr( $item ); ?>" data-active-class="is-selected" class="survey-multi-chip text-left px-3 py-2.5 rounded-lg border border-slate-200 bg-white hover:border-secondary/50 text-slate-700 text-xs font-medium flex items-center gap-2 cursor-pointer">
-                                            <span class="chip-check-icon w-4 h-4 rounded border border-slate-300 flex items-center justify-center shrink-0 text-transparent transition-colors">
-                                                <i data-lucide="check" class="w-3 h-3"></i>
-                                            </span>
-                                            <span><?php echo esc_html( $item ); ?></span>
-                                        </button>
-                                        <?php endforeach; ?>
-                                    </div>
-                                </div>
-
-                                <!-- Dấu hiệu hấp thu, vi chất, giấc ngủ & hành vi -->
-                                <div class="bg-[#f8fafc] border border-slate-200/80 rounded-xl p-4 sm:p-5">
-                                    <label class="block text-xs font-bold text-navy mb-2">
-                                        Biểu hiện hấp thu, vi chất, giấc ngủ & hành vi
-                                    </label>
-                                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                                        <?php
-                                        $behav_symptoms = [
-                                            'Hấp thu chưa tốt, chậm tăng cân',
-                                            'Nhạy cảm với sữa bò, Gluten, Lactose',
-                                            'Da nhạy cảm, dễ mẩn ngứa hoặc ốm vặt',
-                                            'Khó vào giấc, ngủ chưa sâu giấc',
-                                            'Dễ cáu gắt hoặc giảm sự tập trung',
-                                            'Có dấu hiệu thiếu hụt vi chất (Kẽm, Sắt, Canxi...)',
-                                        ];
-                                        foreach ( $behav_symptoms as $item ) :
-                                        ?>
-                                        <button type="button" data-multi-name="behav_symptoms[]" data-value="<?php echo esc_attr( $item ); ?>" data-active-class="is-selected" class="survey-multi-chip text-left px-3 py-2.5 rounded-lg border border-slate-200 bg-white hover:border-secondary/50 text-slate-700 text-xs font-medium flex items-center gap-2 cursor-pointer">
-                                            <span class="chip-check-icon w-4 h-4 rounded border border-slate-300 flex items-center justify-center shrink-0 text-transparent transition-colors">
-                                                <i data-lucide="check" class="w-3 h-3"></i>
-                                            </span>
-                                            <span><?php echo esc_html( $item ); ?></span>
-                                        </button>
-                                        <?php endforeach; ?>
-                                    </div>
-                                </div>
-
-                                <!-- Những hướng gia đình đã áp dụng -->
-                                <div class="bg-[#f8fafc] border border-slate-200/80 rounded-xl p-4 sm:p-5">
-                                    <label class="block text-xs font-bold text-navy mb-2">
-                                        Gia đình đã áp dụng những hướng nào?
-                                    </label>
-                                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                                        <?php
-                                        $tried_methods = [
-                                            'Đã dùng men vi sinh, chất xơ hỗ trợ',
-                                            'Đang bổ sung một số loại vitamin, vi chất',
-                                            'Đã thử điều chỉnh chế độ ăn tại nhà',
-                                            'Đang tìm hiểu hướng ưu tiên phù hợp cho con',
-                                        ];
-                                        foreach ( $tried_methods as $item ) :
-                                        ?>
-                                        <button type="button" data-multi-name="tried_methods[]" data-value="<?php echo esc_attr( $item ); ?>" data-active-class="is-selected" class="survey-multi-chip text-left px-3 py-2.5 rounded-lg border border-slate-200 bg-white hover:border-secondary/50 text-slate-700 text-xs font-medium flex items-center gap-2 cursor-pointer">
-                                            <span class="chip-check-icon w-4 h-4 rounded border border-slate-300 flex items-center justify-center shrink-0 text-transparent transition-colors">
-                                                <i data-lucide="check" class="w-3 h-3"></i>
-                                            </span>
-                                            <span><?php echo esc_html( $item ); ?></span>
-                                        </button>
-                                        <?php endforeach; ?>
-                                    </div>
-                                </div>
-
-                                <!-- Điều muốn làm rõ nhất -->
-                                <div class="bg-[#f8fafc] border border-slate-200/80 rounded-xl p-4 sm:p-5">
-                                    <label for="survey-parent-goal" class="block text-xs font-bold text-navy mb-1.5">
-                                        Điều ba mẹ mong muốn làm rõ nhất trong 30 phút này:
-                                    </label>
-                                    <textarea
-                                        id="survey-parent-goal"
-                                        name="parent_goal"
-                                        rows="2"
-                                        placeholder="Chia sẻ ngắn gọn điều gia đình đang quan tâm nhất ở con..."
-                                        class="w-full px-3.5 py-2.5 rounded-lg bg-white border border-slate-200 focus:border-secondary outline-none text-navy text-xs sm:text-sm transition-all resize-none"
-                                    ></textarea>
-                                </div>
-
-                                <div id="booking-step2-error" class="hidden rounded-xl bg-red-50 border border-red-200 text-red-700 text-xs font-semibold px-4 py-3"></div>
-
-                                <div class="space-y-2.5 pt-1">
-                                    <button
-                                        type="submit"
-                                        id="booking-step2-btn"
-                                        class="w-full py-4 px-6 rounded-xl bg-secondary hover:bg-secondary_dark text-white font-extrabold text-sm sm:text-base uppercase tracking-wider shadow-sm transition-all flex items-center justify-center gap-2 cursor-pointer"
-                                    >
-                                        <i data-lucide="check-circle-2" class="w-5 h-5"></i>
-                                        <span>HOÀN TẤT ĐĂNG KÝ CASE CỦA CON</span>
-                                    </button>
-
-                                    <button
-                                        type="button"
-                                        id="booking-skip-survey-btn"
-                                        class="w-full py-1.5 text-center text-xs font-medium text-slate-500 hover:text-navy underline transition-colors cursor-pointer"
-                                    >
-                                        Bỏ qua bước khảo sát và gửi thông tin liên hệ →
-                                    </button>
-                                </div>
-                            </form>
-                        </div>
-
-                        <!-- MÀN HÌNH 3: HOÀN TẤT -->
-                        <div id="booking-success-container" class="hidden text-center py-8">
-                            <div class="w-16 h-16 rounded-full bg-[#fff7ed] text-secondary flex items-center justify-center mx-auto mb-4">
-                                <i data-lucide="check-circle-2" class="w-9 h-9"></i>
-                            </div>
-                            <span class="inline-block bg-[#fff7ed] text-secondary border border-orange-200 font-bold text-xs px-3.5 py-1 rounded-full mb-3">
-                                Mã hồ sơ: <span id="res-booking-code">TV-0000</span>
-                            </span>
-                            <h3 class="font-serif text-2xl sm:text-3xl font-bold text-navy mb-2">Đã tiếp nhận thông tin của gia đình</h3>
-                            <p class="text-slate-600 text-sm sm:text-base leading-relaxed max-w-md mx-auto mb-6">
-                                Cảm ơn <strong id="res-parent-name" class="text-navy">ba/mẹ</strong>. Đội ngũ sẽ tổng hợp thông tin và liên hệ qua số <strong id="res-phone" class="text-secondary"></strong> (khung giờ: <strong id="res-time" class="text-navy"></strong>) đối với các trường hợp phù hợp trong đợt này.
-                            </p>
-
-                            <div id="res-survey-badge" class="hidden inline-flex items-center gap-1.5 bg-[#f8fafc] text-navy border border-slate-200 px-4 py-2 rounded-xl text-xs font-semibold mb-6">
-                                <i data-lucide="file-check-2" class="w-4 h-4 text-secondary"></i>
-                                <span>Đã lưu đầy đủ thông tin tình trạng của bé</span>
-                            </div>
-
-                            <div class="max-w-sm mx-auto space-y-2.5">
-                                <a id="res-zalo-link" href="<?php echo esc_url( home_url( '/zalo' ) ); ?>" target="_blank" rel="noopener noreferrer" class="w-full py-3.5 px-5 rounded-xl bg-navy hover:bg-navy/90 text-white font-bold text-sm flex items-center justify-center gap-2 transition-all">
-                                    <span>Nhắn xác nhận qua Zalo</span>
-                                </a>
-                            </div>
-                        </div>
-
                     </div>
                 </div>
 
             </div>
         </div>
     </section>
+
+    </div><!-- /#hc-landing-view -->
+
+    <!-- =========================================================
+         TRANG 2 (MỞ TRANG MỚI TỨC THÌ 0MS): TRANG KHẢO SÁT ĐỘC LẬP (#hc-survey-page-view)
+         ========================================================= -->
+    <div id="hc-survey-page-view" class="hidden min-h-screen py-12 md:py-20 bg-white">
+        <div class="max-w-[820px] mx-auto px-4 sm:px-6 lg:px-8">
+
+            <div id="survey-card-wrapper" class="hc-master-card relative">
+                <div class="hc-card-bar"></div>
+
+                <div class="p-6 sm:p-10">
+
+                    <!-- BƯỚC 2: KHẢO SÁT NHANH TRÊN TRANG RIÊNG -->
+                    <div id="booking-step2-container">
+                        <div class="bg-[#fff7ed] border border-orange-200/90 rounded-2xl p-5 mb-8 flex items-start gap-3.5">
+                            <div class="w-8 h-8 rounded-full bg-secondary text-white flex items-center justify-center shrink-0 mt-0.5">
+                                <i data-lucide="check" class="w-4 h-4"></i>
+                            </div>
+                            <div class="text-sm sm:text-base leading-relaxed text-slate-700">
+                                <p class="font-bold text-navy text-base sm:text-lg">
+                                    Đã ghi nhận thông tin liên hệ của <span id="step2-parent-name">ba/mẹ</span>
+                                    <span class="inline-block ml-1 text-xs font-extrabold bg-white text-secondary border border-orange-200 px-2.5 py-0.5 rounded-full align-middle">
+                                        Mã hồ sơ: <span id="step2-badge-code">Đang cấp mã...</span>
+                                    </span>
+                                </p>
+                                <p class="mt-1">
+                                    Để đội ngũ nắm rõ tình trạng của bé trước buổi trao đổi 30 phút (khung giờ: <strong id="step2-preferred-time" class="text-navy"></strong>), ba mẹ dành 1 phút tích chọn nhanh các biểu hiện dưới đây nhé:
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="mb-7">
+                            <h1 class="font-serif text-2xl sm:text-3xl font-bold text-navy">
+                                Khảo sát nhanh tình trạng của con
+                            </h1>
+                        </div>
+
+                        <form id="hieucon-booking-step2-form" class="space-y-6" novalidate>
+                            <input type="hidden" id="survey-booking-id" name="booking_id" value="">
+                            <input type="hidden" id="survey-booking-code" name="booking_code" value="">
+
+                            <!-- 1. Thông tin bé -->
+                            <div class="bg-[#f8fafc] border border-slate-200/90 rounded-2xl p-5 sm:p-6">
+                                <div class="grid grid-cols-1 sm:grid-cols-12 gap-5">
+                                    <div class="sm:col-span-5">
+                                        <label for="survey-child-name" class="block text-sm font-bold text-navy mb-2">Tên gọi của bé</label>
+                                        <input
+                                            type="text"
+                                            id="survey-child-name"
+                                            name="child_name"
+                                            value="<?php echo esc_attr( $prefill_child_name ); ?>"
+                                            placeholder="VD: Bé Bắp / Minh Khôi"
+                                            class="w-full px-4 py-2.5 rounded-xl bg-white border border-slate-200 focus:border-secondary outline-none text-navy text-sm font-medium"
+                                        >
+                                    </div>
+                                    <div class="sm:col-span-7">
+                                        <label class="block text-sm font-bold text-navy mb-2">Độ tuổi của bé</label>
+                                        <input type="hidden" id="survey-child-age" name="child_age" value="2 – 3 tuổi">
+                                        <div class="flex flex-wrap gap-2" data-single-group="survey-child-age">
+                                            <?php
+                                            $age_options = [ 'Dưới 2 tuổi', '2 – 3 tuổi', '3 – 5 tuổi', '5 – 7 tuổi', 'Trên 7 tuổi' ];
+                                            foreach ( $age_options as $idx => $age_label ) :
+                                                $active_cls = ( 1 === $idx ) ? 'is-selected' : '';
+                                            ?>
+                                            <button type="button" data-value="<?php echo esc_attr( $age_label ); ?>" class="survey-single-pill <?php echo esc_attr( $active_cls ); ?> px-3.5 py-2 rounded-xl border border-slate-200 bg-white text-navy text-xs sm:text-sm font-semibold transition-all cursor-pointer">
+                                                <?php echo esc_html( $age_label ); ?>
+                                            </button>
+                                            <?php endforeach; ?>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 2. Vấn đề nổi bật nhất -->
+                            <div class="bg-[#f8fafc] border border-slate-200/90 rounded-2xl p-5 sm:p-6">
+                                <label class="block text-sm font-bold text-navy mb-3">Vấn đề ba mẹ đang quan tâm nhất ở con</label>
+                                <input type="hidden" id="survey-diagnosis" name="diagnosis" value="Táo bón / tiêu hóa">
+                                <div class="flex flex-wrap gap-2.5" data-single-group="survey-diagnosis">
+                                    <?php
+                                    $diagnoses = [
+                                        'Táo bón / tiêu hóa',
+                                        'Kén ăn / nhai nuốt',
+                                        'Bất dung nạp thực phẩm',
+                                        'Hấp thu / chậm tăng cân',
+                                        'Thiếu hụt vi chất',
+                                    ];
+                                    foreach ( $diagnoses as $idx => $diag ) :
+                                        $active_cls = ( 0 === $idx ) ? 'is-selected' : '';
+                                    ?>
+                                    <button type="button" data-value="<?php echo esc_attr( $diag ); ?>" class="survey-single-pill <?php echo esc_attr( $active_cls ); ?> px-4 py-2.5 rounded-xl border border-slate-200 bg-white text-navy text-xs sm:text-sm font-semibold transition-all cursor-pointer">
+                                        <?php echo esc_html( $diag ); ?>
+                                    </button>
+                                    <?php endforeach; ?>
+                                </div>
+                            </div>
+
+                            <!-- 3. Biểu hiện tiêu hóa & ăn uống -->
+                            <div class="bg-[#f8fafc] border border-slate-200/90 rounded-2xl p-5 sm:p-6">
+                                <label class="block text-sm font-bold text-navy mb-3">
+                                    Biểu hiện ăn uống & tiêu hóa hiện tại (có thể chọn nhiều)
+                                </label>
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                                    <?php
+                                    $bio_symptoms = [
+                                        'Táo bón, đi ngoài chưa đều',
+                                        'Phân sống, lỏng hoặc có bọt',
+                                        'Bụng dễ đầy hơi, chướng khí',
+                                        'Kén ăn, chỉ ăn vài món quen thuộc',
+                                        'Nhạy cảm độ thô, ngậm thức ăn lâu',
+                                        'Thích đồ ngọt, sữa hoặc tinh bột',
+                                    ];
+                                    foreach ( $bio_symptoms as $item ) :
+                                    ?>
+                                    <button type="button" data-multi-name="bio_symptoms[]" data-value="<?php echo esc_attr( $item ); ?>" data-active-class="is-selected" class="survey-multi-chip text-left px-3.5 py-3 rounded-xl border border-slate-200 bg-white hover:border-secondary/50 text-slate-700 text-xs sm:text-sm font-medium flex items-center gap-2.5 cursor-pointer">
+                                        <span class="chip-check-icon w-4 h-4 rounded border border-slate-300 flex items-center justify-center shrink-0 text-transparent transition-colors">
+                                            <i data-lucide="check" class="w-3 h-3"></i>
+                                        </span>
+                                        <span><?php echo esc_html( $item ); ?></span>
+                                    </button>
+                                    <?php endforeach; ?>
+                                </div>
+                            </div>
+
+                            <!-- 4. Dấu hiệu hấp thu, vi chất, giấc ngủ & hành vi -->
+                            <div class="bg-[#f8fafc] border border-slate-200/90 rounded-2xl p-5 sm:p-6">
+                                <label class="block text-sm font-bold text-navy mb-3">
+                                    Biểu hiện hấp thu, vi chất, giấc ngủ & hành vi (có thể chọn nhiều)
+                                </label>
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                                    <?php
+                                    $behav_symptoms = [
+                                        'Hấp thu chưa tốt, chậm tăng cân',
+                                        'Nhạy cảm với sữa bò, Gluten, Lactose',
+                                        'Da nhạy cảm, dễ mẩn ngứa hoặc ốm vặt',
+                                        'Khó vào giấc, ngủ chưa sâu giấc',
+                                        'Dễ cáu gắt hoặc giảm sự tập trung',
+                                        'Có dấu hiệu thiếu hụt vi chất (Kẽm, Sắt, Canxi...)',
+                                    ];
+                                    foreach ( $behav_symptoms as $item ) :
+                                    ?>
+                                    <button type="button" data-multi-name="behav_symptoms[]" data-value="<?php echo esc_attr( $item ); ?>" data-active-class="is-selected" class="survey-multi-chip text-left px-3.5 py-3 rounded-xl border border-slate-200 bg-white hover:border-secondary/50 text-slate-700 text-xs sm:text-sm font-medium flex items-center gap-2.5 cursor-pointer">
+                                        <span class="chip-check-icon w-4 h-4 rounded border border-slate-300 flex items-center justify-center shrink-0 text-transparent transition-colors">
+                                            <i data-lucide="check" class="w-3 h-3"></i>
+                                        </span>
+                                        <span><?php echo esc_html( $item ); ?></span>
+                                    </button>
+                                    <?php endforeach; ?>
+                                </div>
+                            </div>
+
+                            <!-- 5. Những hướng gia đình đã áp dụng -->
+                            <div class="bg-[#f8fafc] border border-slate-200/90 rounded-2xl p-5 sm:p-6">
+                                <label class="block text-sm font-bold text-navy mb-3">
+                                    Gia đình đã áp dụng những hướng nào?
+                                </label>
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                                    <?php
+                                    $tried_methods = [
+                                        'Đã dùng men vi sinh, chất xơ hỗ trợ',
+                                        'Đang bổ sung một số loại vitamin, vi chất',
+                                        'Đã thử điều chỉnh chế độ ăn tại nhà',
+                                        'Đang tìm hiểu hướng ưu tiên phù hợp cho con',
+                                    ];
+                                    foreach ( $tried_methods as $item ) :
+                                    ?>
+                                    <button type="button" data-multi-name="tried_methods[]" data-value="<?php echo esc_attr( $item ); ?>" data-active-class="is-selected" class="survey-multi-chip text-left px-3.5 py-3 rounded-xl border border-slate-200 bg-white hover:border-secondary/50 text-slate-700 text-xs sm:text-sm font-medium flex items-center gap-2.5 cursor-pointer">
+                                        <span class="chip-check-icon w-4 h-4 rounded border border-slate-300 flex items-center justify-center shrink-0 text-transparent transition-colors">
+                                            <i data-lucide="check" class="w-3 h-3"></i>
+                                        </span>
+                                        <span><?php echo esc_html( $item ); ?></span>
+                                    </button>
+                                    <?php endforeach; ?>
+                                </div>
+                            </div>
+
+                            <!-- 6. Điều muốn làm rõ nhất -->
+                            <div class="bg-[#f8fafc] border border-slate-200/90 rounded-2xl p-5 sm:p-6">
+                                <label for="survey-parent-goal" class="block text-sm font-bold text-navy mb-2">
+                                    Điều ba mẹ mong muốn làm rõ nhất trong 30 phút này:
+                                </label>
+                                <textarea
+                                    id="survey-parent-goal"
+                                    name="parent_goal"
+                                    rows="3"
+                                    placeholder="Chia sẻ ngắn gọn điều gia đình đang quan tâm nhất ở con..."
+                                    class="w-full px-4 py-3 rounded-xl bg-white border border-slate-200 focus:border-secondary outline-none text-navy text-sm transition-all resize-none"
+                                ></textarea>
+                            </div>
+
+                            <div id="booking-step2-error" class="hidden rounded-xl bg-red-50 border border-red-200 text-red-700 text-xs font-semibold px-4 py-3"></div>
+
+                            <div class="space-y-3 pt-2">
+                                <button
+                                    type="submit"
+                                    id="booking-step2-btn"
+                                    class="w-full py-4 px-6 rounded-xl bg-secondary hover:bg-secondary_dark text-white font-extrabold text-base uppercase tracking-wider shadow-[0_12px_24px_-6px_rgba(249,115,22,0.4)] hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2 cursor-pointer"
+                                >
+                                    <i data-lucide="check-circle-2" class="w-5 h-5"></i>
+                                    <span>HOÀN TẤT ĐĂNG KÝ CASE CỦA CON</span>
+                                </button>
+
+                                <button
+                                    type="button"
+                                    id="booking-skip-survey-btn"
+                                    class="w-full py-2 text-center text-xs sm:text-sm font-medium text-slate-500 hover:text-navy underline transition-colors cursor-pointer"
+                                >
+                                    Bỏ qua bước khảo sát này →
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- MÀN HÌNH 3: HOÀN TẤT -->
+                    <div id="booking-success-container" class="hidden text-center py-8">
+                        <div class="w-16 h-16 rounded-full bg-[#fff7ed] text-secondary flex items-center justify-center mx-auto mb-4">
+                            <i data-lucide="check-circle-2" class="w-9 h-9"></i>
+                        </div>
+                        <span class="inline-block bg-[#fff7ed] text-secondary border border-orange-200 font-bold text-xs px-3.5 py-1 rounded-full mb-3">
+                            Mã hồ sơ: <span id="res-booking-code">TV-0000</span>
+                        </span>
+                        <h3 class="font-serif text-2xl sm:text-3xl font-bold text-navy mb-2">Đã tiếp nhận đầy đủ thông tin của gia đình</h3>
+                        <p class="text-slate-600 text-sm sm:text-base leading-relaxed max-w-lg mx-auto mb-6">
+                            Cảm ơn <strong id="res-parent-name" class="text-navy">ba/mẹ</strong>. Đội ngũ sẽ tổng hợp thông tin và liên hệ qua số <strong id="res-phone" class="text-secondary"></strong> (khung giờ: <strong id="res-time" class="text-navy"></strong>) đối với các trường hợp phù hợp trong đợt này.
+                        </p>
+
+                        <div id="res-survey-badge" class="hidden inline-flex items-center gap-1.5 bg-[#f8fafc] text-navy border border-slate-200 px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold mb-7">
+                            <i data-lucide="file-check-2" class="w-4 h-4 text-secondary"></i>
+                            <span>Đã lưu thông tin khảo sát tình trạng của bé</span>
+                        </div>
+
+                        <div class="max-w-sm mx-auto space-y-3">
+                            <a id="res-zalo-link" href="<?php echo esc_url( home_url( '/zalo' ) ); ?>" target="_blank" rel="noopener noreferrer" class="w-full py-3.5 px-5 rounded-xl bg-navy hover:bg-navy/90 text-white font-bold text-sm flex items-center justify-center gap-2 transition-all">
+                                <span>Nhắn xác nhận qua Zalo</span>
+                            </a>
+                            <a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="block text-xs sm:text-sm font-semibold text-slate-500 hover:text-navy pt-2">
+                                ← Quay về trang chủ
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
 
 </main>
 
@@ -992,36 +1028,58 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    // 6. Chuyển đổi bước Form
-    const cardWrapper = document.getElementById('booking-card-wrapper');
-    const step1Container = document.getElementById('booking-step1-container');
+    // 6. Chuyển đổi sang Trang Khảo Sát Độc Lập TỨC THÌ (0ms, không chờ mạng)
+    const landingView = document.getElementById('hc-landing-view');
+    const surveyPageView = document.getElementById('hc-survey-page-view');
+    const surveyCardWrapper = document.getElementById('survey-card-wrapper');
     const step2Container = document.getElementById('booking-step2-container');
     const successContainer = document.getElementById('booking-success-container');
 
-    function transitionToStep2(data) {
-        document.getElementById('survey-booking-id').value = data.booking_id;
-        document.getElementById('survey-booking-code').value = data.booking_code;
-        document.getElementById('step2-badge-code').textContent = data.booking_code;
+    let latestParentName = '';
+    let latestPhone = '';
+    let latestPreferredTime = '';
 
-        document.getElementById('res-booking-code').textContent = data.booking_code;
-        document.getElementById('res-parent-name').textContent = data.parent_name;
-        document.getElementById('res-phone').textContent = data.phone;
-        document.getElementById('res-time').textContent = data.preferred_time;
-        if (data.zalo_url) {
-            document.getElementById('res-zalo-link').href = data.zalo_url;
+    function openStandaloneSurveyPageInstant(parentName, phone, preferredTime, tempCode) {
+        latestParentName = parentName;
+        latestPhone = phone;
+        latestPreferredTime = preferredTime;
+
+        document.getElementById('survey-booking-code').value = tempCode;
+        document.getElementById('step2-badge-code').textContent = tempCode;
+        document.getElementById('step2-parent-name').textContent = parentName;
+        document.getElementById('step2-preferred-time').textContent = preferredTime;
+
+        document.getElementById('res-booking-code').textContent = tempCode;
+        document.getElementById('res-parent-name').textContent = parentName;
+        document.getElementById('res-phone').textContent = phone;
+        document.getElementById('res-time').textContent = preferredTime;
+
+        // Ẩn toàn bộ Landing Page, mở Trang Khảo Sát mới ngay lập tức (0ms)
+        if (landingView) landingView.classList.add('hidden');
+        if (surveyPageView) surveyPageView.classList.remove('hidden');
+
+        window.scrollTo({ top: 0, behavior: 'instant' });
+
+        if (window.history && window.history.pushState) {
+            const newUrl = window.location.pathname + '?step=survey&code=' + encodeURIComponent(tempCode);
+            window.history.pushState({ view: 'survey' }, '', newUrl);
         }
-
-        step1Container.classList.add('hidden');
-        step2Container.classList.remove('hidden');
 
         if (typeof lucide !== 'undefined') {
             lucide.createIcons({ strokeWidth: 1.5 });
         }
-
-        if (cardWrapper) {
-            cardWrapper.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
     }
+
+    window.addEventListener('popstate', function () {
+        const params = new URLSearchParams(window.location.search);
+        if (params.get('step') === 'survey') {
+            if (landingView) landingView.classList.add('hidden');
+            if (surveyPageView) surveyPageView.classList.remove('hidden');
+        } else {
+            if (surveyPageView) surveyPageView.classList.add('hidden');
+            if (landingView) landingView.classList.remove('hidden');
+        }
+    });
 
     function transitionToFinalSuccess(hasSurvey) {
         step2Container.classList.add('hidden');
@@ -1040,14 +1098,11 @@ document.addEventListener('DOMContentLoaded', function () {
             lucide.createIcons({ strokeWidth: 1.5 });
         }
 
-        if (cardWrapper) {
-            cardWrapper.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    // Submit Bước 1
+    // Submit Bước 1: Mở trang khảo sát ngay tức thì (0ms) + lưu ngầm ở hậu trường
     const step1Form = document.getElementById('hieucon-booking-step1-form');
-    const step1Btn = document.getElementById('booking-step1-btn');
     const step1Error = document.getElementById('booking-step1-error');
 
     if (step1Form) {
@@ -1065,10 +1120,19 @@ document.addEventListener('DOMContentLoaded', function () {
                 return;
             }
 
-            step1Btn.disabled = true;
-            const originalHtml = step1Btn.innerHTML;
-            step1Btn.innerHTML = '<span>Đang xử lý...</span>';
+            const cleanPhone = phone.replace(/[^0-9+]/g, '');
+            if (cleanPhone.length < 9 || cleanPhone.length > 15) {
+                step1Error.textContent = 'Số điện thoại không hợp lệ. Vui lòng kiểm tra lại.';
+                step1Error.classList.remove('hidden');
+                return;
+            }
 
+            // Tạo mã tạm và mở ngay trang khảo sát mới trong 0ms (không đợi server)
+            const randSuffix = Math.random().toString(36).substring(2, 6).toUpperCase();
+            const tempCode = 'TV-' + randSuffix;
+            openStandaloneSurveyPageInstant(parentName, phone, preferredTime, tempCode);
+
+            // Gửi lưu thông tin Bước 1 chạy ngầm ở hậu trường
             const formData = new FormData();
             formData.append('action', 'hieucon_submit_booking');
             formData.append('nonce', nonceVal);
@@ -1078,39 +1142,30 @@ document.addEventListener('DOMContentLoaded', function () {
 
             fetch(ajaxUrl, {
                 method: 'POST',
-                body: formData
+                body: formData,
+                keepalive: true
             })
             .then(res => res.json())
             .then(res => {
                 if (res.success && res.data) {
-                    if (res.data.survey_url) {
-                        step1Btn.innerHTML = '<span>Đang mở trang khảo sát...</span>';
-                        window.location.href = res.data.survey_url;
-                        return;
+                    document.getElementById('survey-booking-id').value = res.data.booking_id;
+                    document.getElementById('survey-booking-code').value = res.data.booking_code;
+                    document.getElementById('step2-badge-code').textContent = res.data.booking_code;
+                    document.getElementById('res-booking-code').textContent = res.data.booking_code;
+                    if (res.data.zalo_url) {
+                        document.getElementById('res-zalo-link').href = res.data.zalo_url;
                     }
-                    step1Btn.disabled = false;
-                    step1Btn.innerHTML = originalHtml;
-                    transitionToStep2(res.data);
-                } else {
-                    step1Btn.disabled = false;
-                    step1Btn.innerHTML = originalHtml;
-                    step1Error.textContent = (res.data && res.data.message) ? res.data.message : 'Có lỗi xảy ra, vui lòng thử lại.';
-                    step1Error.classList.remove('hidden');
+                    if (res.data.survey_url && window.history && window.history.replaceState) {
+                        window.history.replaceState({ view: 'survey' }, '', res.data.survey_url);
+                    }
                 }
             })
-            .catch(() => {
-                step1Btn.disabled = false;
-                step1Btn.innerHTML = originalHtml;
-                step1Error.textContent = 'Không thể kết nối máy chủ. Vui lòng thử lại hoặc kết nối qua Zalo.';
-                step1Error.classList.remove('hidden');
-            });
+            .catch(() => {});
         });
     }
 
-    // Submit Bước 2
+    // Submit Bước 2: Hiển thị hoàn tất ngay tức thì (0ms) + lưu khảo sát chạy ngầm
     const step2Form = document.getElementById('hieucon-booking-step2-form');
-    const step2Btn = document.getElementById('booking-step2-btn');
-    const step2Error = document.getElementById('booking-step2-error');
     const skipSurveyBtn = document.getElementById('booking-skip-survey-btn');
 
     if (skipSurveyBtn) {
@@ -1122,17 +1177,15 @@ document.addEventListener('DOMContentLoaded', function () {
     if (step2Form) {
         step2Form.addEventListener('submit', function (e) {
             e.preventDefault();
-            step2Error.classList.add('hidden');
-
-            step2Btn.disabled = true;
-            const originalHtml = step2Btn.innerHTML;
-            step2Btn.innerHTML = '<span>Đang lưu thông tin...</span>';
 
             const formData = new FormData();
             formData.append('action', 'hieucon_submit_booking_survey');
             formData.append('nonce', nonceVal);
             formData.append('booking_id', document.getElementById('survey-booking-id').value);
             formData.append('booking_code', document.getElementById('survey-booking-code').value);
+            formData.append('parent_name', latestParentName);
+            formData.append('phone', latestPhone);
+            formData.append('preferred_time', latestPreferredTime);
             formData.append('child_name', document.getElementById('survey-child-name').value.trim());
             formData.append('child_age', document.getElementById('survey-child-age').value);
             formData.append('diagnosis', document.getElementById('survey-diagnosis').value);
@@ -1145,27 +1198,15 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
             });
 
+            // Chuyển sang màn hình Hoàn tất ngay lập tức (0ms)
+            transitionToFinalSuccess(true);
+
+            // Lưu dữ liệu khảo sát ở hậu trường
             fetch(ajaxUrl, {
                 method: 'POST',
-                body: formData
-            })
-            .then(res => res.json())
-            .then(res => {
-                step2Btn.disabled = false;
-                step2Btn.innerHTML = originalHtml;
-
-                if (res.success) {
-                    transitionToFinalSuccess(true);
-                } else {
-                    step2Error.textContent = (res.data && res.data.message) ? res.data.message : 'Có lỗi xảy ra khi lưu khảo sát.';
-                    step2Error.classList.remove('hidden');
-                }
-            })
-            .catch(() => {
-                step2Btn.disabled = false;
-                step2Btn.innerHTML = originalHtml;
-                transitionToFinalSuccess(false);
-            });
+                body: formData,
+                keepalive: true
+            }).catch(() => {});
         });
     }
 });

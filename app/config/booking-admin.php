@@ -54,20 +54,21 @@ function hieucon_setup_bookings_table( $force_verify = false ) {
 add_action( 'init', 'hieucon_setup_bookings_table' );
 
 /**
- * Gửi email thông báo chạy ngầm sau khi đã trả JSON về trình duyệt để không làm chậm nút bấm
+ * Đưa việc gửi email sang WP-Cron chạy nền (hẹn sau 45 giây để không kích hoạt spawn_cron hay SMTP trong lúc người dùng bấm nút)
  */
 function hieucon_send_async_booking_mail( $to, $subject, $body ) {
     if ( empty( $to ) || ! is_email( $to ) ) {
         return;
     }
-    register_shutdown_function( function () use ( $to, $subject, $body ) {
-        if ( function_exists( 'fastcgi_finish_request' ) ) {
-            @fastcgi_finish_request();
-        }
+    wp_schedule_single_event( time() + 45, 'hieucon_cron_send_booking_mail_event', [ $to, $subject, $body, uniqid( '', true ) ] );
+}
+
+add_action( 'hieucon_cron_send_booking_mail_event', function ( $to, $subject, $body ) {
+    if ( ! empty( $to ) && is_email( $to ) ) {
         $headers = [ 'Content-Type: text/html; charset=UTF-8' ];
         @wp_mail( $to, $subject, $body, $headers );
-    } );
-}
+    }
+}, 10, 3 );
 
 /**
  * Lấy đường dẫn trang Khảo sát độc lập (Bước 2)
@@ -218,12 +219,11 @@ add_action( 'wp_ajax_nopriv_hieucon_submit_booking', 'hieucon_ajax_submit_bookin
 function hieucon_ajax_submit_booking_survey() {
     check_ajax_referer( 'hieucon_booking_nonce', 'nonce' );
 
-    $booking_id   = isset( $_POST['booking_id'] ) ? intval( $_POST['booking_id'] ) : 0;
-    $booking_code = isset( $_POST['booking_code'] ) ? sanitize_text_field( wp_unslash( $_POST['booking_code'] ) ) : '';
-
-    if ( $booking_id <= 0 || empty( $booking_code ) ) {
-        wp_send_json_error( [ 'message' => 'Không tìm thấy mã lịch hẹn để cập nhật khảo sát.' ] );
-    }
+    $booking_id     = isset( $_POST['booking_id'] ) ? intval( $_POST['booking_id'] ) : 0;
+    $booking_code   = isset( $_POST['booking_code'] ) ? sanitize_text_field( wp_unslash( $_POST['booking_code'] ) ) : '';
+    $parent_name    = isset( $_POST['parent_name'] ) ? sanitize_text_field( wp_unslash( $_POST['parent_name'] ) ) : '';
+    $phone          = isset( $_POST['phone'] ) ? sanitize_text_field( wp_unslash( $_POST['phone'] ) ) : '';
+    $preferred_time = isset( $_POST['preferred_time'] ) ? sanitize_text_field( wp_unslash( $_POST['preferred_time'] ) ) : 'Sớm nhất có thể';
 
     $child_name      = isset( $_POST['child_name'] ) ? sanitize_text_field( wp_unslash( $_POST['child_name'] ) ) : '';
     $child_age       = isset( $_POST['child_age'] ) ? sanitize_text_field( wp_unslash( $_POST['child_age'] ) ) : '';
@@ -268,11 +268,42 @@ function hieucon_ajax_submit_booking_survey() {
 
     global $wpdb;
     $table_name = $wpdb->prefix . 'hieucon_bookings';
+    hieucon_setup_bookings_table();
 
-    $booking_row = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM $table_name WHERE id = %d AND booking_code = %s", $booking_id, $booking_code ) );
-    if ( ! $booking_row ) {
-        wp_send_json_error( [ 'message' => 'Lịch hẹn không hợp lệ.' ] );
+    $booking_row = null;
+    if ( $booking_id > 0 ) {
+        $booking_row = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM $table_name WHERE id = %d", $booking_id ) );
     }
+    if ( ! $booking_row && ! empty( $phone ) ) {
+        $booking_row = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM $table_name WHERE phone = %s ORDER BY id DESC LIMIT 1", $phone ) );
+    }
+    if ( ! $booking_row && ! empty( $phone ) ) {
+        // Tạo mới nếu request Bước 1 chạy nền chưa kịp hoàn tất
+        $new_code = ! empty( $booking_code ) ? $booking_code : ( 'TV' . wp_date( 'ymd' ) . '-' . strtoupper( wp_generate_password( 4, false, false ) ) );
+        $wpdb->insert(
+            $table_name,
+            [
+                'booking_code'   => $new_code,
+                'parent_name'    => ! empty( $parent_name ) ? $parent_name : 'Phụ huynh',
+                'phone'          => $phone,
+                'preferred_time' => $preferred_time,
+                'issue_note'     => $issue_summary,
+                'survey_data'    => wp_json_encode( $survey_payload, JSON_UNESCAPED_UNICODE ),
+                'status'         => 'pending',
+                'created_at'     => current_time( 'mysql' ),
+            ],
+            [ '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s' ]
+        );
+        $booking_id  = intval( $wpdb->insert_id );
+        $booking_row = $booking_id > 0 ? $wpdb->get_row( $wpdb->prepare( "SELECT * FROM $table_name WHERE id = %d", $booking_id ) ) : null;
+    }
+
+    if ( ! $booking_row ) {
+        wp_send_json_error( [ 'message' => 'Không tìm thấy mã lịch hẹn để cập nhật khảo sát.' ] );
+    }
+
+    $booking_id   = intval( $booking_row->id );
+    $booking_code = $booking_row->booking_code;
 
     $wpdb->update(
         $table_name,

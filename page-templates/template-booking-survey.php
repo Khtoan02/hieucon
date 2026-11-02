@@ -388,10 +388,6 @@ document.addEventListener('DOMContentLoaded', function () {
     if (step2Form) {
         step2Form.addEventListener('submit', function (e) {
             e.preventDefault();
-            step2Error.classList.add('hidden');
-
-            step2Btn.disabled = true;
-            step2Btn.innerHTML = '<span>Đang lưu hồ sơ...</span>';
 
             const formData = new FormData();
             formData.append('action', 'hieucon_submit_booking_survey');
@@ -410,24 +406,14 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
             });
 
+            // Hiển thị ngay kết quả hoàn tất (0ms) không bắt phụ huynh chờ
+            showSuccess(true);
+
             fetch(ajaxUrl, {
                 method: 'POST',
-                body: formData
-            })
-            .then(res => res.json())
-            .then(res => {
-                if (res.success) {
-                    showSuccess(true);
-                } else {
-                    step2Btn.disabled = false;
-                    step2Btn.innerHTML = '<span>HOÀN TẤT ĐĂNG KÝ CASE CỦA CON</span>';
-                    step2Error.textContent = (res.data && res.data.message) ? res.data.message : 'Có lỗi xảy ra khi lưu khảo sát.';
-                    step2Error.classList.remove('hidden');
-                }
-            })
-            .catch(() => {
-                showSuccess(false);
-            });
+                body: formData,
+                keepalive: true
+            }).catch(() => {});
         });
     }
 });
