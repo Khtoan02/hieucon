@@ -551,8 +551,9 @@ function hieucon_render_bookings_admin_page() {
     ?>
     <style>
         .hc-bk-wrap {
-            max-width: 1520px;
-            margin: 20px 20px 40px 0;
+            width: auto;
+            max-width: none;
+            margin: 20px 24px 40px 4px;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             color: #0A1931;
         }
@@ -629,9 +630,14 @@ function hieucon_render_bookings_admin_page() {
         /* Stat Cards */
         .hc-bk-stats {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 14px;
+            grid-template-columns: repeat(5, minmax(0, 1fr));
+            gap: 16px;
             margin-bottom: 20px;
+        }
+        @media (max-width: 1200px) {
+            .hc-bk-stats {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            }
         }
         .hc-bk-stat-card {
             background: #ffffff;
@@ -955,11 +961,11 @@ function hieucon_render_bookings_admin_page() {
             <table class="hc-bk-table">
                 <thead>
                     <tr>
-                        <th style="width: 155px;">Mã hồ sơ / Ngày</th>
-                        <th style="width: 220px;">Phụ huynh & Liên hệ</th>
-                        <th style="width: 165px;">Khung giờ trao đổi</th>
-                        <th>Hồ sơ khảo sát tình trạng của con (Bước 2)</th>
-                        <th style="width: 310px;">Trạng thái & Ghi chú phụ trách</th>
+                        <th style="width: 12%; min-width: 140px;">Mã hồ sơ / Ngày</th>
+                        <th style="width: 17%; min-width: 190px;">Phụ huynh & Liên hệ</th>
+                        <th style="width: 13%; min-width: 150px;">Khung giờ trao đổi</th>
+                        <th style="width: 36%;">Hồ sơ khảo sát tình trạng của con (Bước 2)</th>
+                        <th style="width: 22%; min-width: 280px;">Trạng thái & Ghi chú phụ trách</th>
                     </tr>
                 </thead>
                 <tbody>
