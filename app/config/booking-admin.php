@@ -116,7 +116,12 @@ function hieucon_ajax_submit_booking() {
     $current_member = class_exists( '\Hieucon\Model\Member_Model' ) ? \Hieucon\Model\Member_Model::get_current_member() : false;
     $member_id      = $current_member ? intval( $current_member->id ) : 0;
     $ip_address     = isset( $_SERVER['REMOTE_ADDR'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REMOTE_ADDR'] ) ) : '';
-    $booking_code   = 'TV' . wp_date( 'ymd' ) . '-' . strtoupper( wp_generate_password( 4, false, false ) );
+    $posted_code    = isset( $_POST['booking_code'] ) ? strtoupper( sanitize_text_field( wp_unslash( $_POST['booking_code'] ) ) ) : '';
+    if ( ! empty( $posted_code ) && preg_match( '/^TV[0-9]{6}-[A-Z0-9]{4}$/', $posted_code ) ) {
+        $booking_code = $posted_code;
+    } else {
+        $booking_code = 'TV' . wp_date( 'ymd' ) . '-' . strtoupper( wp_generate_password( 4, false, false ) );
+    }
 
     $inserted = $wpdb->insert(
         $table_name,

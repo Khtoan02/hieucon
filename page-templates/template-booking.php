@@ -139,18 +139,30 @@ $booking_nonce      = wp_create_nonce( 'hieucon_booking_nonce' );
         color: #ffffff !important;
         border-color: #0A1931 !important;
     }
+    .survey-single-pill {
+        transition: all 0.18s ease;
+    }
+    .survey-single-pill:hover {
+        border-color: #fdba74;
+    }
     .survey-single-pill.is-selected {
         background-color: #0A1931 !important;
         color: #ffffff !important;
         border-color: #0A1931 !important;
+        box-shadow: 0 8px 20px -6px rgba(10, 25, 49, 0.25);
     }
     .survey-multi-chip {
         transition: all 0.18s ease;
     }
+    .survey-multi-chip:hover {
+        border-color: #fdba74;
+        background-color: #fffaf5;
+    }
     .survey-multi-chip.is-selected {
         background-color: #fff7ed !important;
-        color: #c2410c !important;
+        color: #0A1931 !important;
         border-color: #f97316 !important;
+        font-weight: 600;
     }
     .survey-multi-chip.is-selected .chip-check-icon {
         background-color: #f97316 !important;
@@ -678,241 +690,296 @@ $booking_nonce      = wp_create_nonce( 'hieucon_booking_nonce' );
          TRANG 2 (MỞ TRANG MỚI TỨC THÌ 0MS): TRANG KHẢO SÁT ĐỘC LẬP (#hc-survey-page-view)
          ========================================================= -->
     <div id="hc-survey-page-view" class="hidden min-h-screen py-12 md:py-20 bg-white">
-        <div class="max-w-[820px] mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-[880px] mx-auto px-4 sm:px-6 lg:px-8">
 
-            <div id="survey-card-wrapper" class="hc-master-card relative">
-                <div class="hc-card-bar"></div>
+            <!-- BƯỚC 2: KHẢO SÁT NHANH TRÊN TRANG RIÊNG -->
+            <div id="booking-step2-container">
 
-                <div class="p-6 sm:p-10">
+                <!-- Tiêu đề trang khảo sát -->
+                <div class="text-center max-w-2xl mx-auto mb-8">
+                    <span class="inline-flex items-center gap-2 bg-[#fff7ed] text-secondary border border-orange-200 font-bold text-xs px-4 py-1.5 rounded-full mb-4">
+                        <span class="w-2 h-2 rounded-full bg-secondary"></span>
+                        <span>Bước 2 / 2 • Hồ sơ tình trạng của con</span>
+                    </span>
+                    <h1 class="font-serif text-3xl sm:text-4xl font-bold text-navy leading-tight mb-3">
+                        Thông tin tình trạng hiện tại của con
+                    </h1>
+                    <p class="text-slate-600 text-sm sm:text-base leading-relaxed">
+                        Ba mẹ tích chọn nhanh các biểu hiện dưới đây để người phụ trách xem trước hồ sơ trước buổi trao đổi 30 phút.
+                    </p>
+                </div>
 
-                    <!-- BƯỚC 2: KHẢO SÁT NHANH TRÊN TRANG RIÊNG -->
-                    <div id="booking-step2-container">
-                        <div class="bg-[#fff7ed] border border-orange-200/90 rounded-2xl p-5 mb-8 flex items-start gap-3.5">
-                            <div class="w-8 h-8 rounded-full bg-secondary text-white flex items-center justify-center shrink-0 mt-0.5">
-                                <i data-lucide="check" class="w-4 h-4"></i>
+                <!-- Thanh tóm tắt thông tin liên hệ Bước 1 (Nền Xanh than + điểm nhấn Cam) -->
+                <div class="bg-navy text-white rounded-2xl p-5 sm:p-6 mb-8 shadow-md">
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 items-center">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-xl bg-white/10 text-secondary flex items-center justify-center shrink-0">
+                                <i data-lucide="user-check" class="w-5 h-5"></i>
                             </div>
-                            <div class="text-sm sm:text-base leading-relaxed text-slate-700">
-                                <p class="font-bold text-navy text-base sm:text-lg">
-                                    Đã ghi nhận thông tin liên hệ của <span id="step2-parent-name">ba/mẹ</span>
-                                    <span class="inline-block ml-1 text-xs font-extrabold bg-white text-secondary border border-orange-200 px-2.5 py-0.5 rounded-full align-middle">
-                                        Mã hồ sơ: <span id="step2-badge-code">Đang cấp mã...</span>
+                            <div>
+                                <p class="text-[11px] text-white/60 uppercase tracking-wider font-semibold">Phụ huynh đăng ký</p>
+                                <p id="step2-parent-name" class="text-sm sm:text-base font-bold text-white">ba/mẹ</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-xl bg-white/10 text-secondary flex items-center justify-center shrink-0">
+                                <i data-lucide="clock" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <p class="text-[11px] text-white/60 uppercase tracking-wider font-semibold">Khung giờ trao đổi</p>
+                                <p id="step2-preferred-time" class="text-sm sm:text-base font-bold text-white">Sáng (08:30 - 11:30)</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center sm:justify-end">
+                            <span class="inline-flex items-center gap-2 bg-secondary/20 text-secondary border border-secondary/40 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-extrabold">
+                                <span>Mã hồ sơ:</span>
+                                <span id="step2-badge-code" class="text-white">TV-0000</span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Khung Form Khảo Sát Chính -->
+                <div id="survey-card-wrapper" class="hc-master-card relative">
+                    <div class="hc-card-bar"></div>
+
+                    <form id="hieucon-booking-step2-form" class="divide-y divide-slate-200/80" novalidate>
+                        <input type="hidden" id="survey-booking-id" name="booking_id" value="">
+                        <input type="hidden" id="survey-booking-code" name="booking_code" value="">
+
+                        <!-- MỤC 01: Thông tin cơ bản của bé -->
+                        <div class="p-6 sm:p-9">
+                            <div class="flex items-center gap-3 mb-5">
+                                <span class="w-8 h-8 rounded-lg bg-[#fff7ed] text-secondary border border-orange-200 font-extrabold text-xs flex items-center justify-center shrink-0">01</span>
+                                <h2 class="font-serif text-lg sm:text-xl font-bold text-navy">Thông tin cơ bản của bé</h2>
+                            </div>
+
+                            <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-start">
+                                <div class="md:col-span-5">
+                                    <label for="survey-child-name" class="block text-xs sm:text-sm font-bold text-navy mb-2">
+                                        Tên gọi của bé ở nhà
+                                    </label>
+                                    <input
+                                        type="text"
+                                        id="survey-child-name"
+                                        name="child_name"
+                                        value="<?php echo esc_attr( $prefill_child_name ); ?>"
+                                        placeholder="Ví dụ: Bé Bắp / Minh Khôi"
+                                        class="w-full px-4 py-3 rounded-xl bg-[#f8fafc] border border-slate-200 focus:bg-white focus:border-secondary outline-none text-navy text-sm sm:text-base font-medium transition-all"
+                                    >
+                                </div>
+
+                                <div class="md:col-span-7">
+                                    <label class="block text-xs sm:text-sm font-bold text-navy mb-2">
+                                        Độ tuổi hiện tại của bé
+                                    </label>
+                                    <input type="hidden" id="survey-child-age" name="child_age" value="2 – 3 tuổi">
+                                    <div class="flex flex-wrap gap-2" data-single-group="survey-child-age">
+                                        <?php
+                                        $age_options = [ 'Dưới 2 tuổi', '2 – 3 tuổi', '3 – 5 tuổi', '5 – 7 tuổi', 'Trên 7 tuổi' ];
+                                        foreach ( $age_options as $idx => $age_label ) :
+                                            $active_cls = ( 1 === $idx ) ? 'is-selected' : '';
+                                        ?>
+                                        <button type="button" data-value="<?php echo esc_attr( $age_label ); ?>" class="survey-single-pill <?php echo esc_attr( $active_cls ); ?> px-4 py-2.5 rounded-xl border border-slate-200 bg-white text-navy text-xs sm:text-sm font-semibold cursor-pointer">
+                                            <?php echo esc_html( $age_label ); ?>
+                                        </button>
+                                        <?php endforeach; ?>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- MỤC 02: Vấn đề ba mẹ đang quan tâm nhất -->
+                        <div class="p-6 sm:p-9">
+                            <div class="flex items-center gap-3 mb-2">
+                                <span class="w-8 h-8 rounded-lg bg-[#fff7ed] text-secondary border border-orange-200 font-extrabold text-xs flex items-center justify-center shrink-0">02</span>
+                                <h2 class="font-serif text-lg sm:text-xl font-bold text-navy">Vấn đề ba mẹ đang quan tâm nhất ở con</h2>
+                            </div>
+                            <p class="text-xs sm:text-sm text-slate-500 mb-4 pl-11">Chọn 1 nhóm vấn đề nổi bật nhất hiện tại:</p>
+
+                            <input type="hidden" id="survey-diagnosis" name="diagnosis" value="Táo bón / tiêu hóa">
+                            <div class="flex flex-wrap gap-2.5 pl-0 sm:pl-11" data-single-group="survey-diagnosis">
+                                <?php
+                                $diagnoses = [
+                                    'Táo bón / tiêu hóa',
+                                    'Kén ăn / nhai nuốt',
+                                    'Bất dung nạp thực phẩm',
+                                    'Hấp thu / chậm tăng cân',
+                                    'Thiếu hụt vi chất',
+                                ];
+                                foreach ( $diagnoses as $idx => $diag ) :
+                                    $active_cls = ( 0 === $idx ) ? 'is-selected' : '';
+                                ?>
+                                <button type="button" data-value="<?php echo esc_attr( $diag ); ?>" class="survey-single-pill <?php echo esc_attr( $active_cls ); ?> px-4 py-2.5 rounded-xl border border-slate-200 bg-white text-navy text-xs sm:text-sm font-semibold cursor-pointer">
+                                    <?php echo esc_html( $diag ); ?>
+                                </button>
+                                <?php endforeach; ?>
+                            </div>
+                        </div>
+
+                        <!-- MỤC 03: Biểu hiện ăn uống & tiêu hóa -->
+                        <div class="p-6 sm:p-9">
+                            <div class="flex items-center gap-3 mb-2">
+                                <span class="w-8 h-8 rounded-lg bg-[#fff7ed] text-secondary border border-orange-200 font-extrabold text-xs flex items-center justify-center shrink-0">03</span>
+                                <h2 class="font-serif text-lg sm:text-xl font-bold text-navy">Biểu hiện ăn uống và tiêu hóa hiện tại</h2>
+                            </div>
+                            <p class="text-xs sm:text-sm text-slate-500 mb-4 pl-11">Ba mẹ có thể tích chọn nhiều biểu hiện đúng với bé:</p>
+
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pl-0 sm:pl-11">
+                                <?php
+                                $bio_symptoms = [
+                                    'Táo bón, đi ngoài chưa đều',
+                                    'Phân sống, lỏng hoặc có bọt',
+                                    'Bụng dễ đầy hơi, chướng khí',
+                                    'Kén ăn, chỉ ăn vài món quen thuộc',
+                                    'Nhạy cảm độ thô, ngậm thức ăn lâu',
+                                    'Thích đồ ngọt, sữa hoặc tinh bột',
+                                ];
+                                foreach ( $bio_symptoms as $item ) :
+                                ?>
+                                <button type="button" data-multi-name="bio_symptoms[]" data-value="<?php echo esc_attr( $item ); ?>" data-active-class="is-selected" class="survey-multi-chip text-left px-4 py-3.5 rounded-xl border border-slate-200 bg-white text-slate-700 text-xs sm:text-sm font-medium flex items-center gap-3 cursor-pointer">
+                                    <span class="chip-check-icon w-5 h-5 rounded-md border border-slate-300 flex items-center justify-center shrink-0 text-transparent transition-colors">
+                                        <i data-lucide="check" class="w-3.5 h-3.5"></i>
                                     </span>
-                                </p>
-                                <p class="mt-1">
-                                    Để đội ngũ nắm rõ tình trạng của bé trước buổi trao đổi 30 phút (khung giờ: <strong id="step2-preferred-time" class="text-navy"></strong>), ba mẹ dành 1 phút tích chọn nhanh các biểu hiện dưới đây nhé:
-                                </p>
+                                    <span class="leading-snug"><?php echo esc_html( $item ); ?></span>
+                                </button>
+                                <?php endforeach; ?>
                             </div>
                         </div>
 
-                        <div class="mb-7">
-                            <h1 class="font-serif text-2xl sm:text-3xl font-bold text-navy">
-                                Khảo sát nhanh tình trạng của con
-                            </h1>
+                        <!-- MỤC 04: Biểu hiện hấp thu, vi chất, giấc ngủ & hành vi -->
+                        <div class="p-6 sm:p-9">
+                            <div class="flex items-center gap-3 mb-2">
+                                <span class="w-8 h-8 rounded-lg bg-[#fff7ed] text-secondary border border-orange-200 font-extrabold text-xs flex items-center justify-center shrink-0">04</span>
+                                <h2 class="font-serif text-lg sm:text-xl font-bold text-navy">Biểu hiện hấp thu, vi chất, giấc ngủ và hành vi</h2>
+                            </div>
+                            <p class="text-xs sm:text-sm text-slate-500 mb-4 pl-11">Ba mẹ có thể tích chọn nhiều biểu hiện đi kèm:</p>
+
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pl-0 sm:pl-11">
+                                <?php
+                                $behav_symptoms = [
+                                    'Hấp thu chưa tốt, chậm tăng cân',
+                                    'Nhạy cảm với sữa bò, Gluten, Lactose',
+                                    'Da nhạy cảm, dễ mẩn ngứa hoặc ốm vặt',
+                                    'Khó vào giấc, ngủ chưa sâu giấc',
+                                    'Dễ cáu gắt hoặc giảm sự tập trung',
+                                    'Có dấu hiệu thiếu hụt vi chất (Kẽm, Sắt, Canxi...)',
+                                ];
+                                foreach ( $behav_symptoms as $item ) :
+                                ?>
+                                <button type="button" data-multi-name="behav_symptoms[]" data-value="<?php echo esc_attr( $item ); ?>" data-active-class="is-selected" class="survey-multi-chip text-left px-4 py-3.5 rounded-xl border border-slate-200 bg-white text-slate-700 text-xs sm:text-sm font-medium flex items-center gap-3 cursor-pointer">
+                                    <span class="chip-check-icon w-5 h-5 rounded-md border border-slate-300 flex items-center justify-center shrink-0 text-transparent transition-colors">
+                                        <i data-lucide="check" class="w-3.5 h-3.5"></i>
+                                    </span>
+                                    <span class="leading-snug"><?php echo esc_html( $item ); ?></span>
+                                </button>
+                                <?php endforeach; ?>
+                            </div>
                         </div>
 
-                        <form id="hieucon-booking-step2-form" class="space-y-6" novalidate>
-                            <input type="hidden" id="survey-booking-id" name="booking_id" value="">
-                            <input type="hidden" id="survey-booking-code" name="booking_code" value="">
-
-                            <!-- 1. Thông tin bé -->
-                            <div class="bg-[#f8fafc] border border-slate-200/90 rounded-2xl p-5 sm:p-6">
-                                <div class="grid grid-cols-1 sm:grid-cols-12 gap-5">
-                                    <div class="sm:col-span-5">
-                                        <label for="survey-child-name" class="block text-sm font-bold text-navy mb-2">Tên gọi của bé</label>
-                                        <input
-                                            type="text"
-                                            id="survey-child-name"
-                                            name="child_name"
-                                            value="<?php echo esc_attr( $prefill_child_name ); ?>"
-                                            placeholder="VD: Bé Bắp / Minh Khôi"
-                                            class="w-full px-4 py-2.5 rounded-xl bg-white border border-slate-200 focus:border-secondary outline-none text-navy text-sm font-medium"
-                                        >
-                                    </div>
-                                    <div class="sm:col-span-7">
-                                        <label class="block text-sm font-bold text-navy mb-2">Độ tuổi của bé</label>
-                                        <input type="hidden" id="survey-child-age" name="child_age" value="2 – 3 tuổi">
-                                        <div class="flex flex-wrap gap-2" data-single-group="survey-child-age">
-                                            <?php
-                                            $age_options = [ 'Dưới 2 tuổi', '2 – 3 tuổi', '3 – 5 tuổi', '5 – 7 tuổi', 'Trên 7 tuổi' ];
-                                            foreach ( $age_options as $idx => $age_label ) :
-                                                $active_cls = ( 1 === $idx ) ? 'is-selected' : '';
-                                            ?>
-                                            <button type="button" data-value="<?php echo esc_attr( $age_label ); ?>" class="survey-single-pill <?php echo esc_attr( $active_cls ); ?> px-3.5 py-2 rounded-xl border border-slate-200 bg-white text-navy text-xs sm:text-sm font-semibold transition-all cursor-pointer">
-                                                <?php echo esc_html( $age_label ); ?>
-                                            </button>
-                                            <?php endforeach; ?>
-                                        </div>
-                                    </div>
-                                </div>
+                        <!-- MỤC 05: Những hướng gia đình đã áp dụng -->
+                        <div class="p-6 sm:p-9">
+                            <div class="flex items-center gap-3 mb-2">
+                                <span class="w-8 h-8 rounded-lg bg-[#fff7ed] text-secondary border border-orange-200 font-extrabold text-xs flex items-center justify-center shrink-0">05</span>
+                                <h2 class="font-serif text-lg sm:text-xl font-bold text-navy">Gia đình đã áp dụng những hướng nào?</h2>
                             </div>
+                            <p class="text-xs sm:text-sm text-slate-500 mb-4 pl-11">Giúp đội ngũ hiểu những cách gia đình đã thử qua:</p>
 
-                            <!-- 2. Vấn đề nổi bật nhất -->
-                            <div class="bg-[#f8fafc] border border-slate-200/90 rounded-2xl p-5 sm:p-6">
-                                <label class="block text-sm font-bold text-navy mb-3">Vấn đề ba mẹ đang quan tâm nhất ở con</label>
-                                <input type="hidden" id="survey-diagnosis" name="diagnosis" value="Táo bón / tiêu hóa">
-                                <div class="flex flex-wrap gap-2.5" data-single-group="survey-diagnosis">
-                                    <?php
-                                    $diagnoses = [
-                                        'Táo bón / tiêu hóa',
-                                        'Kén ăn / nhai nuốt',
-                                        'Bất dung nạp thực phẩm',
-                                        'Hấp thu / chậm tăng cân',
-                                        'Thiếu hụt vi chất',
-                                    ];
-                                    foreach ( $diagnoses as $idx => $diag ) :
-                                        $active_cls = ( 0 === $idx ) ? 'is-selected' : '';
-                                    ?>
-                                    <button type="button" data-value="<?php echo esc_attr( $diag ); ?>" class="survey-single-pill <?php echo esc_attr( $active_cls ); ?> px-4 py-2.5 rounded-xl border border-slate-200 bg-white text-navy text-xs sm:text-sm font-semibold transition-all cursor-pointer">
-                                        <?php echo esc_html( $diag ); ?>
-                                    </button>
-                                    <?php endforeach; ?>
-                                </div>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pl-0 sm:pl-11">
+                                <?php
+                                $tried_methods = [
+                                    'Đã dùng men vi sinh, chất xơ hỗ trợ',
+                                    'Đang bổ sung một số loại vitamin, vi chất',
+                                    'Đã thử điều chỉnh chế độ ăn tại nhà',
+                                    'Đang tìm hiểu hướng ưu tiên phù hợp cho con',
+                                ];
+                                foreach ( $tried_methods as $item ) :
+                                ?>
+                                <button type="button" data-multi-name="tried_methods[]" data-value="<?php echo esc_attr( $item ); ?>" data-active-class="is-selected" class="survey-multi-chip text-left px-4 py-3.5 rounded-xl border border-slate-200 bg-white text-slate-700 text-xs sm:text-sm font-medium flex items-center gap-3 cursor-pointer">
+                                    <span class="chip-check-icon w-5 h-5 rounded-md border border-slate-300 flex items-center justify-center shrink-0 text-transparent transition-colors">
+                                        <i data-lucide="check" class="w-3.5 h-3.5"></i>
+                                    </span>
+                                    <span class="leading-snug"><?php echo esc_html( $item ); ?></span>
+                                </button>
+                                <?php endforeach; ?>
                             </div>
+                        </div>
 
-                            <!-- 3. Biểu hiện tiêu hóa & ăn uống -->
-                            <div class="bg-[#f8fafc] border border-slate-200/90 rounded-2xl p-5 sm:p-6">
-                                <label class="block text-sm font-bold text-navy mb-3">
-                                    Biểu hiện ăn uống & tiêu hóa hiện tại (có thể chọn nhiều)
+                        <!-- MỤC 06: Điều mong muốn làm rõ nhất & Nút hoàn tất -->
+                        <div class="p-6 sm:p-9 bg-[#f8fafc]/60">
+                            <div class="flex items-center gap-3 mb-3">
+                                <span class="w-8 h-8 rounded-lg bg-[#fff7ed] text-secondary border border-orange-200 font-extrabold text-xs flex items-center justify-center shrink-0">06</span>
+                                <label for="survey-parent-goal" class="font-serif text-lg sm:text-xl font-bold text-navy">
+                                    Điều ba mẹ mong muốn làm rõ nhất trong 30 phút này
                                 </label>
-                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                                    <?php
-                                    $bio_symptoms = [
-                                        'Táo bón, đi ngoài chưa đều',
-                                        'Phân sống, lỏng hoặc có bọt',
-                                        'Bụng dễ đầy hơi, chướng khí',
-                                        'Kén ăn, chỉ ăn vài món quen thuộc',
-                                        'Nhạy cảm độ thô, ngậm thức ăn lâu',
-                                        'Thích đồ ngọt, sữa hoặc tinh bột',
-                                    ];
-                                    foreach ( $bio_symptoms as $item ) :
-                                    ?>
-                                    <button type="button" data-multi-name="bio_symptoms[]" data-value="<?php echo esc_attr( $item ); ?>" data-active-class="is-selected" class="survey-multi-chip text-left px-3.5 py-3 rounded-xl border border-slate-200 bg-white hover:border-secondary/50 text-slate-700 text-xs sm:text-sm font-medium flex items-center gap-2.5 cursor-pointer">
-                                        <span class="chip-check-icon w-4 h-4 rounded border border-slate-300 flex items-center justify-center shrink-0 text-transparent transition-colors">
-                                            <i data-lucide="check" class="w-3 h-3"></i>
-                                        </span>
-                                        <span><?php echo esc_html( $item ); ?></span>
-                                    </button>
-                                    <?php endforeach; ?>
-                                </div>
                             </div>
 
-                            <!-- 4. Dấu hiệu hấp thu, vi chất, giấc ngủ & hành vi -->
-                            <div class="bg-[#f8fafc] border border-slate-200/90 rounded-2xl p-5 sm:p-6">
-                                <label class="block text-sm font-bold text-navy mb-3">
-                                    Biểu hiện hấp thu, vi chất, giấc ngủ & hành vi (có thể chọn nhiều)
-                                </label>
-                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                                    <?php
-                                    $behav_symptoms = [
-                                        'Hấp thu chưa tốt, chậm tăng cân',
-                                        'Nhạy cảm với sữa bò, Gluten, Lactose',
-                                        'Da nhạy cảm, dễ mẩn ngứa hoặc ốm vặt',
-                                        'Khó vào giấc, ngủ chưa sâu giấc',
-                                        'Dễ cáu gắt hoặc giảm sự tập trung',
-                                        'Có dấu hiệu thiếu hụt vi chất (Kẽm, Sắt, Canxi...)',
-                                    ];
-                                    foreach ( $behav_symptoms as $item ) :
-                                    ?>
-                                    <button type="button" data-multi-name="behav_symptoms[]" data-value="<?php echo esc_attr( $item ); ?>" data-active-class="is-selected" class="survey-multi-chip text-left px-3.5 py-3 rounded-xl border border-slate-200 bg-white hover:border-secondary/50 text-slate-700 text-xs sm:text-sm font-medium flex items-center gap-2.5 cursor-pointer">
-                                        <span class="chip-check-icon w-4 h-4 rounded border border-slate-300 flex items-center justify-center shrink-0 text-transparent transition-colors">
-                                            <i data-lucide="check" class="w-3 h-3"></i>
-                                        </span>
-                                        <span><?php echo esc_html( $item ); ?></span>
-                                    </button>
-                                    <?php endforeach; ?>
-                                </div>
-                            </div>
-
-                            <!-- 5. Những hướng gia đình đã áp dụng -->
-                            <div class="bg-[#f8fafc] border border-slate-200/90 rounded-2xl p-5 sm:p-6">
-                                <label class="block text-sm font-bold text-navy mb-3">
-                                    Gia đình đã áp dụng những hướng nào?
-                                </label>
-                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                                    <?php
-                                    $tried_methods = [
-                                        'Đã dùng men vi sinh, chất xơ hỗ trợ',
-                                        'Đang bổ sung một số loại vitamin, vi chất',
-                                        'Đã thử điều chỉnh chế độ ăn tại nhà',
-                                        'Đang tìm hiểu hướng ưu tiên phù hợp cho con',
-                                    ];
-                                    foreach ( $tried_methods as $item ) :
-                                    ?>
-                                    <button type="button" data-multi-name="tried_methods[]" data-value="<?php echo esc_attr( $item ); ?>" data-active-class="is-selected" class="survey-multi-chip text-left px-3.5 py-3 rounded-xl border border-slate-200 bg-white hover:border-secondary/50 text-slate-700 text-xs sm:text-sm font-medium flex items-center gap-2.5 cursor-pointer">
-                                        <span class="chip-check-icon w-4 h-4 rounded border border-slate-300 flex items-center justify-center shrink-0 text-transparent transition-colors">
-                                            <i data-lucide="check" class="w-3 h-3"></i>
-                                        </span>
-                                        <span><?php echo esc_html( $item ); ?></span>
-                                    </button>
-                                    <?php endforeach; ?>
-                                </div>
-                            </div>
-
-                            <!-- 6. Điều muốn làm rõ nhất -->
-                            <div class="bg-[#f8fafc] border border-slate-200/90 rounded-2xl p-5 sm:p-6">
-                                <label for="survey-parent-goal" class="block text-sm font-bold text-navy mb-2">
-                                    Điều ba mẹ mong muốn làm rõ nhất trong 30 phút này:
-                                </label>
+                            <div class="pl-0 sm:pl-11 space-y-5">
                                 <textarea
                                     id="survey-parent-goal"
                                     name="parent_goal"
                                     rows="3"
-                                    placeholder="Chia sẻ ngắn gọn điều gia đình đang quan tâm nhất ở con..."
-                                    class="w-full px-4 py-3 rounded-xl bg-white border border-slate-200 focus:border-secondary outline-none text-navy text-sm transition-all resize-none"
+                                    placeholder="Chia sẻ ngắn gọn điều gia đình đang trăn trở nhất về tình trạng của con..."
+                                    class="w-full px-4 py-3.5 rounded-xl bg-white border border-slate-200 focus:border-secondary outline-none text-navy text-sm sm:text-base transition-all resize-none"
                                 ></textarea>
+
+                                <div class="space-y-3 pt-1">
+                                    <button
+                                        type="submit"
+                                        id="booking-step2-btn"
+                                        class="w-full py-4 px-8 rounded-xl bg-secondary hover:bg-secondary_dark text-white font-extrabold text-base uppercase tracking-wider shadow-[0_12px_24px_-6px_rgba(249,115,22,0.4)] hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2.5 cursor-pointer"
+                                    >
+                                        <i data-lucide="check-circle-2" class="w-5 h-5"></i>
+                                        <span>HOÀN TẤT ĐĂNG KÝ CASE CỦA CON</span>
+                                    </button>
+
+                                    <button
+                                        type="button"
+                                        id="booking-skip-survey-btn"
+                                        class="w-full py-1.5 text-center text-xs sm:text-sm font-medium text-slate-500 hover:text-navy underline transition-colors cursor-pointer"
+                                    >
+                                        Bỏ qua bước khảo sát này →
+                                    </button>
+                                </div>
                             </div>
+                        </div>
 
-                            <div id="booking-step2-error" class="hidden rounded-xl bg-red-50 border border-red-200 text-red-700 text-xs font-semibold px-4 py-3"></div>
+                    </form>
+                </div>
 
-                            <div class="space-y-3 pt-2">
-                                <button
-                                    type="submit"
-                                    id="booking-step2-btn"
-                                    class="w-full py-4 px-6 rounded-xl bg-secondary hover:bg-secondary_dark text-white font-extrabold text-base uppercase tracking-wider shadow-[0_12px_24px_-6px_rgba(249,115,22,0.4)] hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2 cursor-pointer"
-                                >
-                                    <i data-lucide="check-circle-2" class="w-5 h-5"></i>
-                                    <span>HOÀN TẤT ĐĂNG KÝ CASE CỦA CON</span>
-                                </button>
+            </div>
 
-                                <button
-                                    type="button"
-                                    id="booking-skip-survey-btn"
-                                    class="w-full py-2 text-center text-xs sm:text-sm font-medium text-slate-500 hover:text-navy underline transition-colors cursor-pointer"
-                                >
-                                    Bỏ qua bước khảo sát này →
-                                </button>
-                            </div>
-                        </form>
+            <!-- MÀN HÌNH 3: HOÀN TẤT -->
+            <div id="booking-success-container" class="hidden">
+                <div class="hc-master-card relative p-8 sm:p-12 text-center max-w-xl mx-auto">
+                    <div class="hc-card-bar absolute top-0 left-0 right-0"></div>
+
+                    <div class="w-16 h-16 rounded-full bg-[#fff7ed] text-secondary flex items-center justify-center mx-auto mb-5">
+                        <i data-lucide="check-circle-2" class="w-9 h-9"></i>
+                    </div>
+                    <span class="inline-block bg-[#fff7ed] text-secondary border border-orange-200 font-bold text-xs px-4 py-1.5 rounded-full mb-4">
+                        Mã hồ sơ: <span id="res-booking-code">TV-0000</span>
+                    </span>
+                    <h3 class="font-serif text-2xl sm:text-3xl font-bold text-navy mb-3">Đã tiếp nhận đầy đủ thông tin của gia đình</h3>
+                    <p class="text-slate-600 text-sm sm:text-base leading-relaxed max-w-md mx-auto mb-6">
+                        Cảm ơn <strong id="res-parent-name" class="text-navy">ba/mẹ</strong>. Đội ngũ sẽ tổng hợp thông tin và liên hệ qua số <strong id="res-phone" class="text-secondary"></strong> (khung giờ: <strong id="res-time" class="text-navy"></strong>) đối với các trường hợp phù hợp trong đợt này.
+                    </p>
+
+                    <div id="res-survey-badge" class="hidden inline-flex items-center gap-2 bg-[#f8fafc] text-navy border border-slate-200 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold mb-7">
+                        <i data-lucide="file-check-2" class="w-4 h-4 text-secondary"></i>
+                        <span>Đã lưu đầy đủ thông tin khảo sát tình trạng của bé</span>
                     </div>
 
-                    <!-- MÀN HÌNH 3: HOÀN TẤT -->
-                    <div id="booking-success-container" class="hidden text-center py-8">
-                        <div class="w-16 h-16 rounded-full bg-[#fff7ed] text-secondary flex items-center justify-center mx-auto mb-4">
-                            <i data-lucide="check-circle-2" class="w-9 h-9"></i>
-                        </div>
-                        <span class="inline-block bg-[#fff7ed] text-secondary border border-orange-200 font-bold text-xs px-3.5 py-1 rounded-full mb-3">
-                            Mã hồ sơ: <span id="res-booking-code">TV-0000</span>
-                        </span>
-                        <h3 class="font-serif text-2xl sm:text-3xl font-bold text-navy mb-2">Đã tiếp nhận đầy đủ thông tin của gia đình</h3>
-                        <p class="text-slate-600 text-sm sm:text-base leading-relaxed max-w-lg mx-auto mb-6">
-                            Cảm ơn <strong id="res-parent-name" class="text-navy">ba/mẹ</strong>. Đội ngũ sẽ tổng hợp thông tin và liên hệ qua số <strong id="res-phone" class="text-secondary"></strong> (khung giờ: <strong id="res-time" class="text-navy"></strong>) đối với các trường hợp phù hợp trong đợt này.
-                        </p>
-
-                        <div id="res-survey-badge" class="hidden inline-flex items-center gap-1.5 bg-[#f8fafc] text-navy border border-slate-200 px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold mb-7">
-                            <i data-lucide="file-check-2" class="w-4 h-4 text-secondary"></i>
-                            <span>Đã lưu thông tin khảo sát tình trạng của bé</span>
-                        </div>
-
-                        <div class="max-w-sm mx-auto space-y-3">
-                            <a id="res-zalo-link" href="<?php echo esc_url( home_url( '/zalo' ) ); ?>" target="_blank" rel="noopener noreferrer" class="w-full py-3.5 px-5 rounded-xl bg-navy hover:bg-navy/90 text-white font-bold text-sm flex items-center justify-center gap-2 transition-all">
-                                <span>Nhắn xác nhận qua Zalo</span>
-                            </a>
-                            <a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="block text-xs sm:text-sm font-semibold text-slate-500 hover:text-navy pt-2">
-                                ← Quay về trang chủ
-                            </a>
-                        </div>
+                    <div class="max-w-sm mx-auto space-y-3">
+                        <a id="res-zalo-link" href="<?php echo esc_url( home_url( '/zalo' ) ); ?>" target="_blank" rel="noopener noreferrer" class="w-full py-4 px-6 rounded-xl bg-navy hover:bg-navy/90 text-white font-bold text-sm sm:text-base flex items-center justify-center gap-2 transition-all">
+                            <span>Nhắn xác nhận qua Zalo</span>
+                        </a>
+                        <a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="block text-xs sm:text-sm font-semibold text-slate-500 hover:text-navy pt-2">
+                            ← Quay về trang chủ
+                        </a>
                     </div>
-
                 </div>
             </div>
 
@@ -1127,15 +1194,16 @@ document.addEventListener('DOMContentLoaded', function () {
                 return;
             }
 
-            // Tạo mã tạm và mở ngay trang khảo sát mới trong 0ms (không đợi server)
-            const randSuffix = Math.random().toString(36).substring(2, 6).toUpperCase();
-            const tempCode = 'TV-' + randSuffix;
+            // Tạo mã chuẩn TVyymmdd-XXXX và mở ngay trang khảo sát mới trong 0ms
+            const randSuffix = Math.random().toString(36).replace(/[^a-z0-9]/gi, '').substring(0, 4).toUpperCase().padEnd(4, '9');
+            const tempCode = 'TV<?php echo esc_js( wp_date( 'ymd' ) ); ?>-' + randSuffix;
             openStandaloneSurveyPageInstant(parentName, phone, preferredTime, tempCode);
 
-            // Gửi lưu thông tin Bước 1 chạy ngầm ở hậu trường
+            // Gửi lưu thông tin Bước 1 chạy ngầm ở hậu trường (kèm đúng mã hồ sơ đã cấp)
             const formData = new FormData();
             formData.append('action', 'hieucon_submit_booking');
             formData.append('nonce', nonceVal);
+            formData.append('booking_code', tempCode);
             formData.append('parent_name', parentName);
             formData.append('phone', phone);
             formData.append('preferred_time', preferredTime);
