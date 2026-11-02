@@ -156,7 +156,7 @@ $booking_nonce      = wp_create_nonce( 'hieucon_booking_nonce' );
     <!-- =========================================================
          SECTION 1: HERO (CHIẾM TRỌN MÀN HÌNH ĐẦU TIÊN - TẬP TRUNG TUYỆT ĐỐI)
          ========================================================= -->
-    <section class="min-h-[calc(100vh-96px)] flex items-center py-16 md:py-24 lg:py-28 bg-white">
+    <section class="min-h-[calc(80vh-96px)] flex items-center py-12 md:py-16 lg:py-20 bg-white">
         <div class="max-w-[1220px] w-full mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 xl:gap-16 items-center">
 
