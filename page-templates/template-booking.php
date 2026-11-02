@@ -654,54 +654,33 @@ $booking_nonce      = wp_create_nonce( 'hieucon_booking_nonce' );
         </section>
 
         <!-- =========================================================
-             4. NHỮNG CÂU HỎI GIÚP CHA MẸ AN TÂM ĐĂNG KÝ
+             4. ĐỐI TƯỢNG PHÙ HỢP & QUY TRÌNH SAU ĐĂNG KÝ
              ========================================================= -->
         <section class="mt-20 md:mt-24">
-            <h2 class="font-serif text-2xl sm:text-4xl font-bold text-navy mb-8">
-                Những Điều Ba Mẹ Thường Băn Khoăn Trước Khi Đăng Ký
-            </h2>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-                <div class="glass-card-booking p-6 rounded-3xl shadow-soft">
-                    <h3 class="font-serif font-bold text-lg text-navy mb-2">Gia đình tôi có phù hợp không?</h3>
-                    <p class="text-navy/75 text-xs sm:text-sm font-medium leading-relaxed">
-                        Phù hợp nếu con đang gặp các vấn đề về <strong>kén ăn, táo bón, rối loạn tiêu hoá, bất dung nạp thực phẩm, kém hấp thu, suy dinh dưỡng hoặc thiếu hụt vi chất</strong> mà ba mẹ đang rối chưa biết nguyên nhân liên quan hay nên ưu tiên xử lý từ đâu trước.
-                    </p>
-                </div>
-
-                <div class="glass-card-booking p-6 rounded-3xl shadow-soft">
-                    <h3 class="font-serif font-bold text-lg text-navy mb-2">Tôi sẽ nhận được gì sau 30 phút?</h3>
-                    <p class="text-navy/75 text-xs sm:text-sm font-medium leading-relaxed">
-                        Ba mẹ nhìn rõ bức tranh tổng thể về các vấn đề tiêu hoá và dinh dưỡng của con, xác định được điều nổi bật nhất cần ưu tiên trong giai đoạn hiện tại và biết bước tiếp theo nên thực hiện là gì.
-                    </p>
-                </div>
-
-                <div class="glass-card-booking p-6 rounded-3xl shadow-soft">
-                    <h3 class="font-serif font-bold text-lg text-navy mb-2">Có bị ép mua gì không?</h3>
-                    <p class="text-navy/75 text-xs sm:text-sm font-medium leading-relaxed">
-                        Hoàn toàn không. Mục tiêu của 30 phút là giúp gia đình hiểu rõ vấn đề của con và định hình thứ tự ưu tiên. Mọi quyết định tiếp theo đều hoàn toàn do gia đình chủ động.
-                    </p>
-                </div>
-
-                <div class="glass-card-booking p-6 rounded-3xl shadow-soft">
-                    <h3 class="font-serif font-bold text-lg text-navy mb-2">Sau khi đăng ký sẽ diễn ra thế nào?</h3>
-                    <p class="text-navy/75 text-xs sm:text-sm font-medium leading-relaxed">
-                        Sau khi ba mẹ điền thông tin liên hệ và tích chọn khảo sát tình trạng của bé, đội ngũ sẽ xem xét trước hồ sơ, nhắn xác nhận qua Zalo và trao đổi 1:1 trong 30 phút theo đúng lịch hẹn.
-                    </p>
-                </div>
-
-                <div class="glass-card-booking p-6 rounded-3xl shadow-soft md:col-span-2 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="glass-card-booking p-7 sm:p-8 rounded-3xl shadow-soft flex flex-col justify-between">
                     <div>
-                        <h3 class="font-serif font-bold text-lg text-navy mb-1.5">Thông tin của con có được lắng nghe nghiêm túc không?</h3>
-                        <p class="text-navy/75 text-xs sm:text-sm font-medium leading-relaxed">
-                            Mọi thông tin gia đình chia sẻ đều được bảo mật và chỉ dùng để người phụ trách chuẩn bị kỹ trước cuộc gọi, giúp 30 phút trao đổi thực sự tập trung vào trường hợp riêng của con.
+                        <h3 class="font-serif font-bold text-xl sm:text-2xl text-navy mb-3">Buổi trao đổi phù hợp với gia đình nào?</h3>
+                        <p class="text-navy/75 text-sm sm:text-base font-medium leading-relaxed">
+                            Phù hợp với những ba mẹ có con đang gặp tình trạng <strong>kén ăn, táo bón, rối loạn tiêu hoá, bất dung nạp thực phẩm, kém hấp thu, suy dinh dưỡng hoặc thiếu hụt vi chất</strong> đã kéo dài, mong muốn nhìn rõ nguyên nhân liên quan để biết nên ưu tiên xử lý từ đâu trước.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="glass-card-booking p-7 sm:p-8 rounded-3xl shadow-soft flex flex-col justify-between gap-6">
+                    <div>
+                        <h3 class="font-serif font-bold text-xl sm:text-2xl text-navy mb-3">Sau khi đăng ký sẽ diễn ra thế nào?</h3>
+                        <p class="text-navy/75 text-sm sm:text-base font-medium leading-relaxed">
+                            Sau khi ba mẹ điền thông tin liên hệ và tích chọn khảo sát tình trạng của bé, đội ngũ sẽ xem xét trước hồ sơ, nhắn xác nhận qua Zalo và tiến hành trao đổi 1:1 trong 30 phút theo đúng khung giờ đã hẹn.
                         </p>
                     </div>
 
-                    <a href="#booking-card-wrapper" onclick="document.getElementById('booking-parent-name')?.focus();" class="shrink-0 px-6 py-3.5 rounded-xl bg-gradient-to-r from-secondary to-secondary_dark text-white font-extrabold text-xs sm:text-sm uppercase tracking-wider shadow-md hover:-translate-y-0.5 transition-all flex items-center gap-2">
-                        <span>Đăng Ký Lịch Hẹn 30 Phút</span>
-                        <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
-                    </a>
+                    <div>
+                        <a href="#booking-card-wrapper" onclick="document.getElementById('booking-parent-name')?.focus();" class="inline-flex px-6 py-3.5 rounded-xl bg-gradient-to-r from-secondary to-secondary_dark text-white font-extrabold text-xs sm:text-sm uppercase tracking-wider shadow-md hover:-translate-y-0.5 transition-all items-center gap-2">
+                            <span>Đăng Ký Lịch Hẹn 30 Phút</span>
+                            <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+                        </a>
+                    </div>
                 </div>
             </div>
         </section>
