@@ -1,7 +1,7 @@
 <?php
 /**
  * Template Name: Đặt Lịch Tư Vấn 1:1
- * Description: Trang Landing Page "30 phút để nhìn rõ vấn đề của con" — Bố cục 1 màn hình duy nhất, đăng ký xong chuyển thẳng qua Zalo.
+ * Description: Trang Landing Page "30 phút để nhìn rõ vấn đề của con" — Bố cục 1 màn hình cân đối 50/50, đăng ký xong chuyển thẳng qua Zalo.
  *
  * @package Hieucon
  */
@@ -44,8 +44,8 @@ $zalo_target_url = get_option( 'hieucon_link_zalo_tuvan', home_url( '/zalo' ) );
         display: flex;
         align-items: center;
         gap: 10px;
-        padding: 11px 14px;
-        border-radius: 14px;
+        padding: 10px 14px;
+        border-radius: 12px;
         border: 1.5px solid #e2e8f0;
         background: #f8fafc;
         color: #0A1931;
@@ -61,8 +61,8 @@ $zalo_target_url = get_option( 'hieucon_link_zalo_tuvan', home_url( '/zalo' ) );
         background: #fffaf5;
     }
     .hc-issue-chip .hc-chip-box {
-        width: 20px;
-        height: 20px;
+        width: 19px;
+        height: 19px;
         border-radius: 6px;
         border: 1.5px solid #cbd5e1;
         background: #ffffff;
@@ -77,7 +77,7 @@ $zalo_target_url = get_option( 'hieucon_link_zalo_tuvan', home_url( '/zalo' ) );
         background: #fff7ed !important;
         border-color: #f97316 !important;
         color: #0A1931 !important;
-        box-shadow: 0 8px 20px -10px rgba(249, 115, 22, 0.35);
+        box-shadow: 0 6px 16px -8px rgba(249, 115, 22, 0.32);
     }
     .hc-issue-chip.is-selected .hc-chip-box {
         background: #f97316 !important;
@@ -85,17 +85,18 @@ $zalo_target_url = get_option( 'hieucon_link_zalo_tuvan', home_url( '/zalo' ) );
         color: #ffffff !important;
     }
 
-    /* Visual Time Slot Cards */
+    /* 4-Column Symmetrical Time Slot Cards */
     .hc-time-card {
-        position: relative;
         display: flex;
+        flex-direction: column;
         align-items: center;
-        gap: 11px;
-        padding: 11px 13px;
+        justify-content: center;
+        gap: 4px;
+        padding: 11px 8px;
         border-radius: 14px;
         border: 1.5px solid #e2e8f0;
         background: #f8fafc;
-        text-align: left;
+        text-align: center;
         transition: all 0.18s ease;
         cursor: pointer;
         user-select: none;
@@ -104,104 +105,71 @@ $zalo_target_url = get_option( 'hieucon_link_zalo_tuvan', home_url( '/zalo' ) );
         border-color: #94a3b8;
         background: #ffffff;
     }
-    .hc-time-card .hc-time-icon {
-        width: 36px;
-        height: 36px;
-        border-radius: 10px;
-        background: #ffffff;
-        border: 1px solid #e2e8f0;
-        color: #64748b;
+    .hc-time-card .hc-time-head {
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        flex-shrink: 0;
-        transition: all 0.18s ease;
-    }
-    .hc-time-card .hc-time-title {
-        display: block;
+        gap: 5px;
         font-size: 13.5px;
         font-weight: 700;
         color: #0A1931;
-        line-height: 1.25;
+        line-height: 1.2;
     }
-    .hc-time-card .hc-time-sub {
-        display: block;
-        font-size: 12px;
-        font-weight: 600;
-        color: #64748b;
-        margin-top: 2px;
-    }
-    .hc-time-card .hc-time-dot {
-        margin-left: auto;
-        width: 18px;
-        height: 18px;
-        border-radius: 999px;
-        border: 1.5px solid #cbd5e1;
-        background: #ffffff;
+    .hc-time-card .hc-time-icon {
+        color: #f97316;
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        flex-shrink: 0;
         transition: all 0.18s ease;
     }
-    .hc-time-card .hc-time-dot::after {
-        content: '';
-        width: 8px;
-        height: 8px;
-        border-radius: 999px;
-        background: transparent;
-        transition: all 0.18s ease;
+    .hc-time-card .hc-time-sub {
+        display: block;
+        font-size: 11.5px;
+        font-weight: 600;
+        color: #64748b;
+        line-height: 1.2;
     }
     .hc-time-card.is-active {
         background: #0A1931 !important;
         border-color: #0A1931 !important;
         box-shadow: 0 10px 22px -8px rgba(10, 25, 49, 0.32);
     }
-    .hc-time-card.is-active .hc-time-icon {
-        background: rgba(249, 115, 22, 0.18);
-        border-color: rgba(249, 115, 22, 0.45);
-        color: #f97316;
-    }
-    .hc-time-card.is-active .hc-time-title {
+    .hc-time-card.is-active .hc-time-head {
         color: #ffffff;
     }
+    .hc-time-card.is-active .hc-time-icon {
+        color: #f97316;
+    }
     .hc-time-card.is-active .hc-time-sub {
-        color: #cbd5e1;
-    }
-    .hc-time-card.is-active .hc-time-dot {
-        border-color: #f97316;
-        background: #f97316;
-    }
-    .hc-time-card.is-active .hc-time-dot::after {
-        background: #ffffff;
+        color: #fdba74;
     }
 </style>
 
 <main id="primary" class="site-main hc-booking-page">
 
     <!-- =========================================================
-         SECTION DUY NHẤT (100VH): THÔNG ĐIỆP MỞ ĐẦU (TRÁI) & FORM ĐĂNG KÝ (PHẢI)
+         SECTION DUY NHẤT: CÂN ĐỐI 2 CỘT 50/50 TRÊN CÙNG 1 MÀN HÌNH
          ========================================================= -->
-    <section id="dang-ky-case" class="min-h-screen flex items-center py-20 md:py-28 lg:py-36 bg-white">
-        <div class="max-w-[1240px] w-full mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-14 xl:gap-16 items-center">
+    <section id="dang-ky-case" class="min-h-[calc(100vh-104px)] flex items-center py-10 md:py-14 lg:py-16 bg-white">
+        <div class="max-w-[1280px] w-full mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 xl:gap-16 items-center">
 
-                <!-- Cột trái (7/12): Thông điệp mở đầu -->
-                <div class="lg:col-span-7">
-                    <h1 class="font-serif text-4xl sm:text-5xl xl:text-[3.5rem] font-bold text-navy leading-[1.16] mb-8">
+                <!-- Cột trái (6/12): Thông điệp mở đầu -->
+                <div class="lg:col-span-6">
+                    <h1 class="font-serif text-4xl sm:text-5xl xl:text-[3.25rem] font-bold text-navy leading-[1.16] mb-6">
                         30 phút để nhìn rõ<br class="hidden sm:inline" />
                         <span class="text-secondary">vấn đề của con</span>
                     </h1>
 
-                    <p class="text-slate-700 text-lg sm:text-xl leading-relaxed mb-8">
+                    <p class="text-slate-700 text-base sm:text-lg leading-relaxed mb-6">
                         Đợt này, đội ngũ HIỂU CON TỪ GỐC mở một số lịch trao đổi 1:1 dành cho cha mẹ đang có những băn khoăn về <strong class="text-navy">ăn uống, tiêu hóa, giấc ngủ, hành vi hoặc dinh dưỡng</strong> của con.
                     </p>
 
-                    <div class="bg-[#fff7ed] border border-orange-200/80 rounded-2xl p-6 sm:p-8 mb-8">
-                        <p class="font-bold text-navy text-base sm:text-lg mb-4">
+                    <div class="bg-[#fff7ed] border border-orange-200/80 rounded-2xl p-6 sm:p-7 mb-6">
+                        <p class="font-bold text-navy text-base sm:text-lg mb-3.5">
                             Có những gia đình đã thử rất nhiều cách nhưng vẫn chưa thực sự biết:
                         </p>
-                        <ul class="space-y-3.5 text-slate-800 text-base sm:text-lg">
+                        <ul class="space-y-3 text-slate-800 text-sm sm:text-base">
                             <li class="flex items-start gap-3">
                                 <span class="w-6 h-6 rounded-full bg-secondary text-white flex items-center justify-center shrink-0 mt-0.5 text-xs font-bold">1</span>
                                 <span>Vấn đề chính của con nằm ở đâu?</span>
@@ -217,27 +185,27 @@ $zalo_target_url = get_option( 'hieucon_link_zalo_tuvan', home_url( '/zalo' ) );
                         </ul>
                     </div>
 
-                    <p class="text-slate-700 text-base sm:text-lg leading-relaxed">
+                    <p class="text-slate-700 text-sm sm:text-base leading-relaxed">
                         Trong 30 phút, buổi trao đổi tập trung vào chính vấn đề gia đình đang gặp phải, giúp ba mẹ nhìn lại tình trạng hiện tại và xác định hướng đi rõ ràng hơn.
                     </p>
                 </div>
 
-                <!-- Cột phải (5/12): Form đăng ký 1 bước nhảy thẳng qua Zalo -->
-                <div class="lg:col-span-5">
+                <!-- Cột phải (6/12): Form đăng ký cân xứng chiều cao với cột trái -->
+                <div class="lg:col-span-6">
                     <div id="booking-card-wrapper" class="hc-master-card relative">
                         <div class="hc-card-bar"></div>
 
-                        <div id="booking-step1-container" class="p-6 sm:p-8 lg:p-9">
-                            <div class="mb-6">
-                                <h2 class="font-serif text-2xl sm:text-[1.7rem] font-bold text-navy leading-snug">
+                        <div id="booking-step1-container" class="p-6 sm:p-8">
+                            <div class="mb-5">
+                                <h2 class="font-serif text-2xl sm:text-[1.65rem] font-bold text-navy leading-snug">
                                     Thông tin liên hệ của ba mẹ
                                 </h2>
-                                <p class="text-slate-500 text-sm mt-1.5 leading-relaxed">
+                                <p class="text-slate-500 text-sm mt-1 leading-relaxed">
                                     Ba mẹ điền thông tin và chọn vấn đề của con để kết nối qua Zalo.
                                 </p>
                             </div>
 
-                            <form id="hieucon-booking-step1-form" class="space-y-5" novalidate>
+                            <form id="hieucon-booking-step1-form" class="space-y-4" novalidate>
                                 <input type="hidden" name="nonce" id="booking-nonce" value="<?php echo esc_attr( $booking_nonce ); ?>">
 
                                 <!-- 1. Họ và tên + SĐT/Zalo -->
@@ -252,14 +220,14 @@ $zalo_target_url = get_option( 'hieucon_link_zalo_tuvan', home_url( '/zalo' ) );
                                             name="parent_name"
                                             value="<?php echo esc_attr( $prefill_name ); ?>"
                                             required
-                                            placeholder="VD: Mẹ Thu Hà"
-                                            class="w-full px-3.5 py-3 rounded-xl bg-[#f8fafc] border border-slate-200 focus:bg-white focus:border-secondary outline-none text-navy font-medium text-sm transition-all"
+                                            placeholder="VD: Mẹ Nguyễn Thu Hà"
+                                            class="w-full px-3.5 py-2.5 rounded-xl bg-[#f8fafc] border border-slate-200 focus:bg-white focus:border-secondary outline-none text-navy font-medium text-sm transition-all"
                                         >
                                     </div>
 
                                     <div>
                                         <label for="booking-phone" class="block text-sm font-bold text-navy mb-1.5">
-                                            SĐT / Zalo liên hệ <span class="text-secondary">*</span>
+                                            Số điện thoại / Zalo <span class="text-secondary">*</span>
                                         </label>
                                         <input
                                             type="tel"
@@ -267,15 +235,15 @@ $zalo_target_url = get_option( 'hieucon_link_zalo_tuvan', home_url( '/zalo' ) );
                                             name="phone"
                                             value="<?php echo esc_attr( $prefill_phone ); ?>"
                                             required
-                                            placeholder="Số điện thoại Zalo..."
-                                            class="w-full px-3.5 py-3 rounded-xl bg-[#f8fafc] border border-slate-200 focus:bg-white focus:border-secondary outline-none text-navy font-medium text-sm transition-all"
+                                            placeholder="Nhập SĐT có dùng Zalo..."
+                                            class="w-full px-3.5 py-2.5 rounded-xl bg-[#f8fafc] border border-slate-200 focus:bg-white focus:border-secondary outline-none text-navy font-medium text-sm transition-all"
                                         >
                                     </div>
                                 </div>
 
                                 <!-- 2. Trẻ đang gặp vấn đề gì? (Chọn 1 hoặc nhiều) -->
                                 <div>
-                                    <div class="flex items-center justify-between gap-2 mb-2">
+                                    <div class="flex items-center justify-between gap-2 mb-1.5">
                                         <label class="block text-sm font-bold text-navy">
                                             Trẻ đang gặp vấn đề gì? <span class="text-secondary">*</span>
                                         </label>
@@ -307,71 +275,47 @@ $zalo_target_url = get_option( 'hieucon_link_zalo_tuvan', home_url( '/zalo' ) );
                                     </div>
                                 </div>
 
-                                <!-- 3. Khung giờ thuận tiện trao đổi (Visual Time Cards) -->
+                                <!-- 3. Khung giờ thuận tiện trao đổi (4 ô cân đối trên 1 hàng) -->
                                 <div>
-                                    <label class="block text-sm font-bold text-navy mb-2">
+                                    <label class="block text-sm font-bold text-navy mb-1.5">
                                         Khung giờ thuận tiện trao đổi <span class="text-secondary">*</span>
                                     </label>
 
-                                    <div class="grid grid-cols-2 gap-2.5 mb-2.5" id="time-slot-group">
+                                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-2" id="time-slot-group">
                                         <button type="button" data-slot="Buổi sáng (08:30 - 11:30)" class="hc-time-card is-active">
-                                            <span class="hc-time-icon">
-                                                <i data-lucide="sunrise" class="w-4 h-4"></i>
+                                            <span class="hc-time-head">
+                                                <span class="hc-time-icon"><i data-lucide="sunrise" class="w-3.5 h-3.5"></i></span>
+                                                <span>Buổi sáng</span>
                                             </span>
-                                            <span>
-                                                <span class="hc-time-title">Buổi sáng</span>
-                                                <span class="hc-time-sub">08:30 – 11:30</span>
-                                            </span>
-                                            <span class="hc-time-dot"></span>
+                                            <span class="hc-time-sub">08:30 – 11:30</span>
                                         </button>
 
                                         <button type="button" data-slot="Buổi trưa (12:00 - 13:30)" class="hc-time-card">
-                                            <span class="hc-time-icon">
-                                                <i data-lucide="sun" class="w-4 h-4"></i>
+                                            <span class="hc-time-head">
+                                                <span class="hc-time-icon"><i data-lucide="sun" class="w-3.5 h-3.5"></i></span>
+                                                <span>Buổi trưa</span>
                                             </span>
-                                            <span>
-                                                <span class="hc-time-title">Buổi trưa</span>
-                                                <span class="hc-time-sub">12:00 – 13:30</span>
-                                            </span>
-                                            <span class="hc-time-dot"></span>
+                                            <span class="hc-time-sub">12:00 – 13:30</span>
                                         </button>
 
                                         <button type="button" data-slot="Buổi chiều (14:00 - 17:30)" class="hc-time-card">
-                                            <span class="hc-time-icon">
-                                                <i data-lucide="sunset" class="w-4 h-4"></i>
+                                            <span class="hc-time-head">
+                                                <span class="hc-time-icon"><i data-lucide="sunset" class="w-3.5 h-3.5"></i></span>
+                                                <span>Buổi chiều</span>
                                             </span>
-                                            <span>
-                                                <span class="hc-time-title">Buổi chiều</span>
-                                                <span class="hc-time-sub">14:00 – 17:30</span>
-                                            </span>
-                                            <span class="hc-time-dot"></span>
+                                            <span class="hc-time-sub">14:00 – 17:30</span>
                                         </button>
 
                                         <button type="button" data-slot="Buổi tối (19:30 - 21:30)" class="hc-time-card">
-                                            <span class="hc-time-icon">
-                                                <i data-lucide="moon" class="w-4 h-4"></i>
+                                            <span class="hc-time-head">
+                                                <span class="hc-time-icon"><i data-lucide="moon" class="w-3.5 h-3.5"></i></span>
+                                                <span>Buổi tối</span>
                                             </span>
-                                            <span>
-                                                <span class="hc-time-title">Buổi tối</span>
-                                                <span class="hc-time-sub">19:30 – 21:30</span>
-                                            </span>
-                                            <span class="hc-time-dot"></span>
+                                            <span class="hc-time-sub">19:30 – 21:30</span>
                                         </button>
                                     </div>
 
                                     <input type="hidden" id="booking-preferred-time" name="preferred_time" value="Buổi sáng (08:30 - 11:30)">
-
-                                    <div class="relative">
-                                        <span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none">
-                                            <i data-lucide="calendar-clock" class="w-4 h-4"></i>
-                                        </span>
-                                        <input
-                                            type="text"
-                                            id="booking-custom-time-note"
-                                            placeholder="Ghi chú thêm giờ hoặc ngày cụ thể nếu cần..."
-                                            class="w-full pl-9 pr-3.5 py-2.5 rounded-xl bg-[#f8fafc] border border-slate-200 focus:bg-white focus:border-secondary outline-none text-navy font-medium text-xs sm:text-sm transition-all"
-                                        >
-                                    </div>
                                 </div>
 
                                 <div id="booking-step1-error" class="hidden rounded-xl bg-red-50 border border-red-200 text-red-700 text-xs font-semibold px-4 py-3"></div>
@@ -379,7 +323,7 @@ $zalo_target_url = get_option( 'hieucon_link_zalo_tuvan', home_url( '/zalo' ) );
                                 <button
                                     type="submit"
                                     id="booking-step1-btn"
-                                    class="w-full py-4 px-6 rounded-xl bg-secondary hover:bg-secondary_dark text-white font-extrabold text-base uppercase tracking-wider shadow-[0_12px_24px_-6px_rgba(249,115,22,0.4)] hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-center gap-2 cursor-pointer"
+                                    class="w-full py-3.5 px-6 rounded-xl bg-secondary hover:bg-secondary_dark text-white font-extrabold text-base uppercase tracking-wider shadow-[0_12px_24px_-6px_rgba(249,115,22,0.4)] hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-center gap-2 cursor-pointer"
                                 >
                                     <span>ĐĂNG KÝ</span>
                                     <i data-lucide="arrow-right" class="w-5 h-5"></i>
@@ -414,10 +358,9 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    // 2. Chọn khung giờ thuận tiện (Visual Time Cards)
+    // 2. Chọn khung giờ thuận tiện (4 ô cân đối)
     const timeCards = document.querySelectorAll('.hc-time-card');
     const timeInput = document.getElementById('booking-preferred-time');
-    const customTimeNote = document.getElementById('booking-custom-time-note');
 
     timeCards.forEach(card => {
         card.addEventListener('click', () => {
@@ -439,9 +382,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             const parentName = document.getElementById('booking-parent-name').value.trim();
             const phone = document.getElementById('booking-phone').value.trim();
-            const selectedSlot = timeInput.value.trim() || 'Buổi sáng (08:30 - 11:30)';
-            const extraTimeNote = customTimeNote ? customTimeNote.value.trim() : '';
-            const preferredTime = extraTimeNote ? (selectedSlot + ' • ' + extraTimeNote) : selectedSlot;
+            const preferredTime = timeInput.value.trim() || 'Buổi sáng (08:30 - 11:30)';
 
             const selectedIssues = [];
             issueChips.forEach(chip => {
@@ -484,7 +425,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 formData.append('child_issues[]', iss);
             });
 
-            // Đổi trạng thái nút và gửi ngầm bằng sendBeacon / fetch keepalive để chuyển thẳng qua Zalo không bị trễ
             if (submitBtn) {
                 submitBtn.disabled = true;
                 submitBtn.innerHTML = '<span>ĐANG CHUYỂN QUA ZALO...</span>';
