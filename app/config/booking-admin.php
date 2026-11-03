@@ -71,40 +71,190 @@ add_action( 'hieucon_cron_send_booking_mail_event', function ( $to, $subject, $b
 }, 10, 3 );
 
 /**
- * Lấy đường dẫn trang Khảo sát độc lập (Bước 2) có gắn thẳng mã hồ sơ
+ * Lấy đường dẫn trang Landing Đặt lịch tư vấn 1:1 (Bước 1) chuẩn theo trang thực tế đang xuất bản
  */
-function hieucon_get_booking_survey_url( $booking_id, $booking_code ) {
-    $survey_slug = 'khao-sat-tu-van';
-    $survey_page = get_page_by_path( $survey_slug );
+function hieucon_get_booking_landing_url() {
+    static $cached_landing_url = null;
+    if ( null !== $cached_landing_url ) {
+        return $cached_landing_url;
+    }
 
-    if ( ! $survey_page ) {
-        $survey_id = wp_insert_post( [
-            'post_title'  => 'Khảo sát tình trạng của con',
-            'post_name'   => $survey_slug,
+    $booking_slug     = 'dat-lich-tu-van';
+    $booking_template = 'page-templates/template-booking.php';
+    $booking_page     = null;
+
+    // 1. Ưu tiên tìm trang đang Publish có gán trực tiếp template Đặt lịch tư vấn 1:1
+    $tpl_pages = get_pages( [
+        'meta_key'    => '_wp_page_template',
+        'meta_value'  => $booking_template,
+        'post_type'   => 'page',
+        'post_status' => 'publish',
+        'sort_column' => 'post_modified',
+        'sort_order'  => 'DESC',
+        'number'      => 5,
+    ] );
+
+    if ( ! empty( $tpl_pages ) ) {
+        // Nếu có trang đúng slug chuẩn 'dat-lich-tu-van' trong danh sách thì ưu tiên, ngược lại lấy trang mới cập nhật nhất
+        foreach ( $tpl_pages as $p ) {
+            if ( $booking_slug === $p->post_name ) {
+                $booking_page = $p;
+                break;
+            }
+        }
+        if ( ! $booking_page ) {
+            $booking_page = $tpl_pages[0];
+        }
+    }
+
+    // 2. Nếu chưa tìm thấy theo template, kiểm tra theo slug 'dat-lich-tu-van'
+    if ( ! $booking_page ) {
+        $by_slug = get_page_by_path( $booking_slug );
+        if ( $by_slug ) {
+            if ( 'publish' !== $by_slug->post_status ) {
+                wp_update_post( [
+                    'ID'          => $by_slug->ID,
+                    'post_status' => 'publish',
+                ] );
+            }
+            $tpl = get_post_meta( $by_slug->ID, '_wp_page_template', true );
+            if ( $booking_template !== $tpl ) {
+                update_post_meta( $by_slug->ID, '_wp_page_template', $booking_template );
+            }
+            $booking_page = get_post( $by_slug->ID );
+        }
+    }
+
+    // 3. Nếu hoàn toàn chưa có trang nào, tự động khởi tạo trang chuẩn
+    if ( ! $booking_page ) {
+        $booking_id = wp_insert_post( [
+            'post_title'  => 'Đặt lịch tư vấn miễn phí 1:1',
+            'post_name'   => $booking_slug,
             'post_status' => 'publish',
             'post_type'   => 'page',
         ] );
-        if ( ! is_wp_error( $survey_id ) && $survey_id > 0 ) {
-            update_post_meta( $survey_id, '_wp_page_template', 'page-templates/template-booking-survey.php' );
-            $survey_page = get_post( $survey_id );
-        }
-    } else {
-        $tpl = get_post_meta( $survey_page->ID, '_wp_page_template', true );
-        if ( 'page-templates/template-booking-survey.php' !== $tpl ) {
-            update_post_meta( $survey_page->ID, '_wp_page_template', 'page-templates/template-booking-survey.php' );
+        if ( ! is_wp_error( $booking_id ) && $booking_id > 0 ) {
+            update_post_meta( $booking_id, '_wp_page_template', $booking_template );
+            $booking_page = get_post( $booking_id );
         }
     }
 
-    $base_url = $survey_page ? get_permalink( $survey_page->ID ) : home_url( '/khao-sat-tu-van/' );
-    $args     = [
-        'code' => sanitize_text_field( $booking_code ),
-    ];
-    if ( ! $survey_page && intval( $booking_id ) > 0 ) {
-        $args['booking_id'] = intval( $booking_id );
-        $args['step']       = 'survey';
-    }
-    return add_query_arg( $args, $base_url );
+    $cached_landing_url = $booking_page ? get_permalink( $booking_page->ID ) : home_url( '/dat-lich-tu-van/' );
+    return $cached_landing_url;
 }
+
+/**
+ * Lấy đường dẫn trang Khảo sát độc lập (Bước 2) có gắn thẳng mã hồ sơ
+ */
+function hieucon_get_booking_survey_url( $booking_id = 0, $booking_code = '' ) {
+    static $cached_survey_base_url = null;
+
+    if ( null === $cached_survey_base_url ) {
+        $survey_slug     = 'khao-sat-tu-van';
+        $survey_template = 'page-templates/template-booking-survey.php';
+        $survey_page     = null;
+
+        // 1. Ưu tiên tìm trang đang Publish có gán template Khảo sát Bước 2
+        $tpl_pages = get_pages( [
+            'meta_key'    => '_wp_page_template',
+            'meta_value'  => $survey_template,
+            'post_type'   => 'page',
+            'post_status' => 'publish',
+            'sort_column' => 'post_modified',
+            'sort_order'  => 'DESC',
+            'number'      => 5,
+        ] );
+
+        if ( ! empty( $tpl_pages ) ) {
+            foreach ( $tpl_pages as $p ) {
+                if ( $survey_slug === $p->post_name ) {
+                    $survey_page = $p;
+                    break;
+                }
+            }
+            if ( ! $survey_page ) {
+                $survey_page = $tpl_pages[0];
+            }
+        }
+
+        // 2. Nếu chưa tìm thấy theo template, kiểm tra theo slug 'khao-sat-tu-van'
+        if ( ! $survey_page ) {
+            $by_slug = get_page_by_path( $survey_slug );
+            if ( $by_slug ) {
+                if ( 'publish' !== $by_slug->post_status ) {
+                    wp_update_post( [
+                        'ID'          => $by_slug->ID,
+                        'post_status' => 'publish',
+                    ] );
+                }
+                $tpl = get_post_meta( $by_slug->ID, '_wp_page_template', true );
+                if ( $survey_template !== $tpl ) {
+                    update_post_meta( $by_slug->ID, '_wp_page_template', $survey_template );
+                }
+                $survey_page = get_post( $by_slug->ID );
+            }
+        }
+
+        // 3. Nếu chưa tồn tại, tự động tạo trang Khảo sát
+        if ( ! $survey_page ) {
+            $survey_id = wp_insert_post( [
+                'post_title'  => 'Khảo sát tình trạng của con',
+                'post_name'   => $survey_slug,
+                'post_status' => 'publish',
+                'post_type'   => 'page',
+            ] );
+            if ( ! is_wp_error( $survey_id ) && $survey_id > 0 ) {
+                update_post_meta( $survey_id, '_wp_page_template', $survey_template );
+                $survey_page = get_post( $survey_id );
+            }
+        }
+
+        $cached_survey_base_url = $survey_page ? get_permalink( $survey_page->ID ) : home_url( '/khao-sat-tu-van/' );
+    }
+
+    if ( empty( $booking_code ) && intval( $booking_id ) <= 0 ) {
+        return $cached_survey_base_url;
+    }
+
+    $args = [];
+    if ( ! empty( $booking_code ) ) {
+        $args['code'] = sanitize_text_field( $booking_code );
+    } elseif ( intval( $booking_id ) > 0 ) {
+        $args['booking_id'] = intval( $booking_id );
+    }
+
+    return add_query_arg( $args, $cached_survey_base_url );
+}
+
+/**
+ * Đảm bảo nếu truy cập vào /dat-lich-tu-van/ hoặc /khao-sat-tu-van/ khi trang thực tế có slug khác hoặc bị 404 thì tự động chuyển hướng chuẩn
+ */
+function hieucon_booking_routes_fallback() {
+    if ( is_admin() || ! is_404() ) {
+        return;
+    }
+    $req_uri  = isset( $_SERVER['REQUEST_URI'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ) ) : '';
+    $req_path = trim( (string) wp_parse_url( $req_uri, PHP_URL_PATH ), '/' );
+
+    if ( 'dat-lich-tu-van' === $req_path || str_ends_with( $req_path, '/dat-lich-tu-van' ) ) {
+        $target = hieucon_get_booking_landing_url();
+        if ( ! empty( $_GET ) ) {
+            $target = add_query_arg( wp_unslash( $_GET ), $target );
+        }
+        wp_safe_redirect( $target, 302 );
+        exit;
+    }
+
+    if ( 'khao-sat-tu-van' === $req_path || str_ends_with( $req_path, '/khao-sat-tu-van' ) ) {
+        $target = hieucon_get_booking_survey_url();
+        if ( ! empty( $_GET ) ) {
+            $target = add_query_arg( wp_unslash( $_GET ), $target );
+        }
+        wp_safe_redirect( $target, 302 );
+        exit;
+    }
+}
+add_action( 'template_redirect', 'hieucon_booking_routes_fallback', 1 );
 
 /**
  * 2A. BƯỚC 1: Xử lý AJAX Đặt lịch cơ bản (Lưu ngay thông tin liên hệ & chuyển sang trang khảo sát riêng)
@@ -657,6 +807,8 @@ function hieucon_render_bookings_admin_page() {
     $counts       = hieucon_get_booking_kpi_counts();
     $notify_email = get_option( 'hieucon_booking_notify_email', get_option( 'admin_email' ) );
     $admin_nonce  = wp_create_nonce( 'hieucon_booking_admin_nonce' );
+    $landing_url  = hieucon_get_booking_landing_url();
+    $landing_path = wp_parse_url( $landing_url, PHP_URL_PATH ) ?: '/dat-lich-tu-van/';
     $status_meta  = [
         'pending'   => [ 'label' => 'Chờ liên hệ', 'bg' => '#fff7ed', 'color' => '#c2410c', 'border' => '#fed7aa', 'dot' => '#f97316' ],
         'contacted' => [ 'label' => 'Đã liên hệ xếp lịch', 'bg' => '#eff6ff', 'color' => '#1d4ed8', 'border' => '#bfdbfe', 'dot' => '#2563eb' ],
@@ -1339,7 +1491,16 @@ function hieucon_render_bookings_admin_page() {
                 </p>
             </div>
             <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
-                <a href="<?php echo esc_url( home_url( '/dat-lich-tu-van/' ) ); ?>" target="_blank" class="hc-bk-btn hc-bk-btn-outline">
+                <button
+                    type="button"
+                    class="hc-bk-btn hc-bk-btn-outline hc-copy-survey-btn"
+                    data-url="<?php echo esc_attr( $landing_url ); ?>"
+                    data-default-label="📋 Copy link Landing"
+                    title="Sao chép đường dẫn trang Landing Đặt lịch tư vấn 1:1: <?php echo esc_attr( $landing_url ); ?>"
+                >
+                    <span>📋 Copy link Landing</span>
+                </button>
+                <a href="<?php echo esc_url( $landing_url ); ?>" target="_blank" rel="noopener noreferrer" class="hc-bk-btn hc-bk-btn-outline" title="<?php echo esc_attr( $landing_url ); ?>">
                     <span>Xem trang Landing</span>
                     <span>↗</span>
                 </a>
@@ -1586,7 +1747,7 @@ function hieucon_render_bookings_admin_page() {
                         <tr>
                             <td colspan="11" style="padding: 48px 20px; text-align: center; color: #64748b;">
                                 <div style="font-size: 15px; font-weight: 700; color: #0A1931; margin-bottom: 4px;">Chưa có hồ sơ đăng ký nào khớp với bộ lọc</div>
-                                <div style="font-size: 13px;">Khi phụ huynh gửi thông tin tại trang <code>/dat-lich-tu-van/</code>, dữ liệu sẽ hiển thị ngay tại đây.</div>
+                                <div style="font-size: 13px;">Khi phụ huynh gửi thông tin tại trang <a href="<?php echo esc_url( $landing_url ); ?>" target="_blank" rel="noopener noreferrer" style="color:#f97316; font-weight:700; text-decoration:underline;"><code><?php echo esc_html( $landing_path ); ?></code> ↗</a>, dữ liệu sẽ hiển thị ngay tại đây.</div>
                             </td>
                         </tr>
                     <?php else : ?>
@@ -1747,7 +1908,7 @@ function hieucon_render_bookings_admin_page() {
             <?php if ( empty( $prepared_items ) ) : ?>
                 <div style="background:#ffffff; border:1px solid #cbd5e1; border-radius:14px; padding:48px 20px; text-align:center; color:#64748b;">
                     <div style="font-size:15px; font-weight:700; color:#0A1931; margin-bottom:4px;">Chưa có hồ sơ đăng ký nào khớp với bộ lọc</div>
-                    <div style="font-size:13px;">Khi phụ huynh gửi thông tin tại trang <code>/dat-lich-tu-van/</code>, dữ liệu sẽ hiển thị ngay tại đây.</div>
+                    <div style="font-size:13px;">Khi phụ huynh gửi thông tin tại trang <a href="<?php echo esc_url( $landing_url ); ?>" target="_blank" rel="noopener noreferrer" style="color:#f97316; font-weight:700; text-decoration:underline;"><code><?php echo esc_html( $landing_path ); ?></code> ↗</a>, dữ liệu sẽ hiển thị ngay tại đây.</div>
                 </div>
             <?php else : ?>
                 <div class="hc-bk-cards-grid" id="hc-cards-container">

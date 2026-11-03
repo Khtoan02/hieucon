@@ -62,7 +62,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="<?php echo esc_url( home_url( '/dat-lich-tu-van/' ) ); ?>" class="hover:text-[#f97316] transition-colors">
+                        <a href="<?php echo esc_url( function_exists( 'hieucon_get_booking_landing_url' ) ? hieucon_get_booking_landing_url() : home_url( '/dat-lich-tu-van/' ) ); ?>" class="hover:text-[#f97316] transition-colors">
                             Đăng ký trao đổi 1:1
                         </a>
                     </li>

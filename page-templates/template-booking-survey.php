@@ -16,8 +16,10 @@ $booking_id   = isset( $_GET['booking_id'] ) ? intval( $_GET['booking_id'] ) : 0
 $raw_code     = isset( $_GET['code'] ) ? wp_unslash( $_GET['code'] ) : ( isset( $_GET['booking_code'] ) ? wp_unslash( $_GET['booking_code'] ) : '' );
 $booking_code = strtoupper( sanitize_text_field( $raw_code ) );
 
+$landing_page_url = function_exists( 'hieucon_get_booking_landing_url' ) ? hieucon_get_booking_landing_url() : home_url( '/dat-lich-tu-van/' );
+
 if ( empty( $booking_code ) && $booking_id <= 0 ) {
-    wp_safe_redirect( home_url( '/dat-lich-tu-van/' ) );
+    wp_safe_redirect( $landing_page_url );
     exit;
 }
 
@@ -39,7 +41,7 @@ if ( ! $booking_row && $booking_id > 0 ) {
 }
 
 if ( ! $booking_row ) {
-    wp_safe_redirect( home_url( '/dat-lich-tu-van/' ) );
+    wp_safe_redirect( $landing_page_url );
     exit;
 }
 

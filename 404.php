@@ -31,7 +31,7 @@ get_header();
                 <span>Trở về Trang chủ</span>
             </a>
 
-            <a href="<?php echo esc_url( home_url( '/dat-lich-tu-van/' ) ); ?>" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-[#f8fafc] hover:bg-slate-100 text-[#0A1931] border border-slate-200 px-6 py-3.5 rounded-xl font-semibold text-[15px] transition-all no-underline">
+            <a href="<?php echo esc_url( function_exists( 'hieucon_get_booking_landing_url' ) ? hieucon_get_booking_landing_url() : home_url( '/dat-lich-tu-van/' ) ); ?>" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-[#f8fafc] hover:bg-slate-100 text-[#0A1931] border border-slate-200 px-6 py-3.5 rounded-xl font-semibold text-[15px] transition-all no-underline">
                 <i data-lucide="calendar-check" class="w-4 h-4 text-[#f97316]"></i>
                 <span>Đăng ký tư vấn 1:1</span>
             </a>

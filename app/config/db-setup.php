@@ -78,7 +78,7 @@ add_action( 'after_setup_theme', 'hieucon_setup_member_tables' );
  * Tự động tạo và gán Page Template cho trang Đăng nhập và Tài khoản nếu chưa tồn tại
  */
 function hieucon_auto_create_member_pages() {
-    if ( get_option( 'hieucon_pages_initialized_v2' ) === '1' ) {
+    if ( get_option( 'hieucon_pages_initialized_v3' ) === '1' ) {
         return;
     }
 
@@ -180,7 +180,7 @@ function hieucon_auto_create_member_pages() {
         update_post_meta( $survey_page->ID, '_wp_page_template', $survey_template );
     }
 
-    update_option( 'hieucon_pages_initialized_v2', '1' );
+    update_option( 'hieucon_pages_initialized_v3', '1' );
 }
 add_action( 'init', 'hieucon_auto_create_member_pages' );
 

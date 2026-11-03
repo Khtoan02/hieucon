@@ -106,7 +106,7 @@ get_header();
 
             <!-- Cụm nút hành động (1 dòng gọn gàng, không rớt chữ) -->
             <div class="flex flex-col sm:flex-row items-center justify-center gap-3.5">
-                <a href="<?php echo esc_url( home_url( '/dat-lich-tu-van/' ) ); ?>" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-[#f97316] hover:bg-[#ea580c] text-white font-bold text-[15px] px-6 py-3.5 rounded-xl shadow-[0_12px_24px_-6px_rgba(249,115,22,0.4)] hover:-translate-y-0.5 transition-all whitespace-nowrap no-underline">
+                <a href="<?php echo esc_url( function_exists( 'hieucon_get_booking_landing_url' ) ? hieucon_get_booking_landing_url() : home_url( '/dat-lich-tu-van/' ) ); ?>" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-[#f97316] hover:bg-[#ea580c] text-white font-bold text-[15px] px-6 py-3.5 rounded-xl shadow-[0_12px_24px_-6px_rgba(249,115,22,0.4)] hover:-translate-y-0.5 transition-all whitespace-nowrap no-underline">
                     <i data-lucide="calendar-check" class="w-4 h-4 shrink-0"></i>
                     <span>Đăng ký tư vấn dinh dưỡng 1:1</span>
                 </a>
@@ -371,7 +371,7 @@ get_header();
                         <p class="text-slate-600 text-sm sm:text-[15px] mb-4">
                             Hiểu Con Từ Gốc dành tặng <strong class="text-[#f97316]">5 lịch tư vấn dinh dưỡng 1:1 (30 phút)</strong> cho bé từ <strong class="text-[#0A1931]">2–7 tuổi</strong> gặp vấn đề tiêu hóa, kén ăn, táo bón, chậm tăng trưởng:
                         </p>
-                        <a href="<?php echo esc_url( home_url( '/dat-lich-tu-van/' ) ); ?>" class="inline-flex items-center justify-center gap-2 bg-[#f97316] hover:bg-[#ea580c] text-white font-extrabold text-[15px] sm:text-base uppercase tracking-wider px-8 py-4 rounded-xl shadow-[0_12px_24px_-6px_rgba(249,115,22,0.4)] hover:-translate-y-0.5 transition-all whitespace-nowrap no-underline">
+                        <a href="<?php echo esc_url( function_exists( 'hieucon_get_booking_landing_url' ) ? hieucon_get_booking_landing_url() : home_url( '/dat-lich-tu-van/' ) ); ?>" class="inline-flex items-center justify-center gap-2 bg-[#f97316] hover:bg-[#ea580c] text-white font-extrabold text-[15px] sm:text-base uppercase tracking-wider px-8 py-4 rounded-xl shadow-[0_12px_24px_-6px_rgba(249,115,22,0.4)] hover:-translate-y-0.5 transition-all whitespace-nowrap no-underline">
                             <span>Đăng ký tư vấn 1:1 ngay</span>
                             <i data-lucide="arrow-right" class="w-5 h-5 shrink-0"></i>
                         </a>

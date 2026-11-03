@@ -13,7 +13,7 @@ if ( isset( $_GET['step'] ) && 'survey' === sanitize_key( wp_unslash( $_GET['ste
         wp_safe_redirect( hieucon_get_booking_survey_url( $redir_id, $redir_code ) );
         exit;
     }
-    wp_safe_redirect( home_url( '/dat-lich-tu-van/' ) );
+    wp_safe_redirect( function_exists( 'hieucon_get_booking_landing_url' ) ? hieucon_get_booking_landing_url() : home_url( '/dat-lich-tu-van/' ) );
     exit;
 }
 

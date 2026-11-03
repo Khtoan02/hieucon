@@ -554,7 +554,7 @@ $symptom_groups_links = [
                                     <div class="flex flex-col">
                                         <h5 class="text-secondary font-bold text-[12px] uppercase tracking-wider mb-3 border-b border-navy/5 pb-2">Đánh Giá & Công Cụ</h5>
                                         <div class="flex flex-col gap-2.5">
-                                            <a href="<?php echo home_url('/dat-lich-tu-van/'); ?>" class="flex items-center gap-2 text-white bg-secondary hover:bg-secondary_dark text-[12px] font-bold py-2.5 px-4 rounded-xl shadow-sm transition-all justify-center"><i data-lucide="calendar-heart" class="w-4 h-4"></i>Đặt Lịch Tư Vấn 1:1</a>
+                                            <a href="<?php echo esc_url( function_exists( 'hieucon_get_booking_landing_url' ) ? hieucon_get_booking_landing_url() : home_url( '/dat-lich-tu-van/' ) ); ?>" class="flex items-center gap-2 text-white bg-secondary hover:bg-secondary_dark text-[12px] font-bold py-2.5 px-4 rounded-xl shadow-sm transition-all justify-center"><i data-lucide="calendar-heart" class="w-4 h-4"></i>Đặt Lịch Tư Vấn 1:1</a>
                                             <a href="<?php echo home_url('/bo-cong-cu-suc-khoe/'); ?>" class="flex items-center gap-2 text-white bg-primary hover:bg-teal-700 text-[12px] font-bold py-2.5 px-4 rounded-xl shadow-sm transition-all justify-center"><i data-lucide="clipboard-check" class="w-4 h-4"></i>Bộ Công Cụ Sức Khỏe</a>
                                             <a href="<?php echo home_url('/bai-viet-kien-thuc/'); ?>" class="flex items-center gap-2 text-navy bg-[#f8fafc] hover:bg-secondary/10 hover:text-secondary border border-navy/10 text-[12px] font-bold py-2.5 px-4 rounded-xl transition-all justify-center"><i data-lucide="newspaper" class="w-4 h-4"></i>Bài Viết Kiến Thức</a>
                                         </div>
@@ -780,7 +780,7 @@ $symptom_groups_links = [
                 </a>
             <?php endif; ?>
 
-            <a href="<?php echo home_url('/dat-lich-tu-van/'); ?>" class="flex items-center gap-3 bg-white border border-secondary/30 hover:border-secondary p-3.5 rounded-2xl shadow-sm transition-all">
+            <a href="<?php echo esc_url( function_exists( 'hieucon_get_booking_landing_url' ) ? hieucon_get_booking_landing_url() : home_url( '/dat-lich-tu-van/' ) ); ?>" class="flex items-center gap-3 bg-white border border-secondary/30 hover:border-secondary p-3.5 rounded-2xl shadow-sm transition-all">
                 <div class="bg-secondary/10 p-2.5 rounded-xl text-secondary"><i data-lucide="calendar-heart" class="w-5 h-5"></i></div>
                 <div class="flex flex-col text-left">
                     <span class="font-extrabold text-navy text-[13px] leading-tight">Đặt Lịch Tư Vấn 1:1 Miễn Phí</span>
