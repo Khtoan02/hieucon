@@ -197,7 +197,7 @@ $init_secs    = str_pad( (string) ( $remaining_s % 60 ), 2, '0', STR_PAD_LEFT );
                 <div class="lg:col-span-6">
                     <h1 class="hc-hero-title font-serif text-[1.9rem] sm:text-4xl xl:text-[2.95rem] font-bold text-navy mb-5 sm:mb-6">
                         <span class="block">30 phút để nhìn rõ</span>
-                        <span class="block text-secondary">vấn đề của con</span>
+                        <span class="block text-secondary">vấn đề tiêu hoá của con</span>
                     </h1>
 
                     <p class="hc-hero-lead text-slate-700 text-[15.5px] sm:text-[17px] mb-4 sm:mb-5">
