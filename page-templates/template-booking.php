@@ -171,37 +171,37 @@ $zalo_target_url = get_option( 'hieucon_link_zalo_tuvan', home_url( '/zalo' ) );
         <div class="max-w-[1280px] w-full mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-7 sm:gap-10 lg:gap-12 xl:gap-14 items-center">
 
-                <!-- Cột trái (6/12): Thông điệp mở đầu -->
+                <!-- Cột trái (6/12): Thông điệp mở đầu thoáng đãng, phân tách rõ từng ý -->
                 <div class="lg:col-span-6">
-                    <h1 class="font-serif text-[1.85rem] sm:text-4xl xl:text-[2.9rem] font-bold text-navy leading-[1.2] mb-3.5 sm:mb-4">
+                    <h1 class="font-serif text-[1.9rem] sm:text-4xl xl:text-[2.95rem] font-bold text-navy leading-[1.28] mb-5 sm:mb-6">
                         30 phút để nhìn rõ<br class="hidden sm:inline" />
                         <span class="text-secondary">vấn đề của con</span>
                     </h1>
 
-                    <p class="text-slate-700 text-[15px] sm:text-[17px] leading-relaxed mb-4 sm:mb-5">
+                    <p class="text-slate-700 text-[15.5px] sm:text-[17px] leading-[1.78] mb-6 sm:mb-7">
                         <strong class="text-navy">HIỂU CON TỪ GỐC</strong> dành tặng <strong class="text-secondary">30 lịch tư vấn dinh dưỡng 1:1</strong> tặng các con có vấn đề về <strong class="text-navy">kén ăn, dị ứng, bất dung nạp thực phẩm, táo bón, rối loạn tiêu hóa, chậm tăng trưởng,...</strong>
                     </p>
 
-                    <div class="bg-[#fff7ed] border border-orange-200/80 rounded-2xl p-4 sm:p-6">
-                        <p class="font-bold text-navy text-[15px] sm:text-[17px] mb-3 sm:mb-3.5 leading-snug">
+                    <div class="bg-[#fff7ed] border border-orange-200/80 rounded-2xl p-5 sm:p-7">
+                        <p class="font-bold text-navy text-[15.5px] sm:text-[17px] leading-[1.55] mb-4 sm:mb-5">
                             Buổi tư vấn có thời gian 30 phút để ba mẹ hiểu và tìm ra các vấn đề:
                         </p>
-                        <ul class="space-y-2.5 text-slate-800 text-[14px] sm:text-[15px] leading-relaxed">
-                            <li class="flex items-start gap-2.5 sm:gap-3">
-                                <span class="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-secondary text-white flex items-center justify-center shrink-0 mt-0.5 text-[11px] sm:text-xs font-bold">1</span>
-                                <span>Nguyên nhân gốc rễ khiến con gặp các vấn đề về tiêu hóa: kén ăn, dị ứng, bất dung nạp thực phẩm, táo bón, rối loạn tiêu hóa, chậm tăng trưởng,...</span>
+                        <ul class="divide-y divide-orange-200/60 text-slate-700 text-[14.5px] sm:text-[15.5px] leading-[1.68]">
+                            <li class="flex items-start gap-3.5 pb-3.5">
+                                <span class="w-6 h-6 rounded-full bg-secondary text-white flex items-center justify-center shrink-0 mt-1 text-xs font-bold shadow-sm">1</span>
+                                <span><strong class="text-navy font-bold">Nguyên nhân gốc rễ khiến con gặp các vấn đề về tiêu hóa:</strong> kén ăn, dị ứng, bất dung nạp thực phẩm, táo bón, rối loạn tiêu hóa, chậm tăng trưởng,...</span>
                             </li>
-                            <li class="flex items-start gap-2.5 sm:gap-3">
-                                <span class="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-secondary text-white flex items-center justify-center shrink-0 mt-0.5 text-[11px] sm:text-xs font-bold">2</span>
-                                <span>Các vấn đề hệ tiêu hóa ảnh hưởng như thế nào đến sức khỏe não bộ, hành vi của con?</span>
+                            <li class="flex items-start gap-3.5 py-3.5">
+                                <span class="w-6 h-6 rounded-full bg-secondary text-white flex items-center justify-center shrink-0 mt-1 text-xs font-bold shadow-sm">2</span>
+                                <span><strong class="text-navy font-bold">Các vấn đề hệ tiêu hóa ảnh hưởng như thế nào</strong> đến sức khỏe não bộ, hành vi của con?</span>
                             </li>
-                            <li class="flex items-start gap-2.5 sm:gap-3">
-                                <span class="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-secondary text-white flex items-center justify-center shrink-0 mt-0.5 text-[11px] sm:text-xs font-bold">3</span>
-                                <span>Giải pháp từng bước để cải thiện các vấn đề tiêu hóa của trẻ</span>
+                            <li class="flex items-start gap-3.5 py-3.5">
+                                <span class="w-6 h-6 rounded-full bg-secondary text-white flex items-center justify-center shrink-0 mt-1 text-xs font-bold shadow-sm">3</span>
+                                <span><strong class="text-navy font-bold">Giải pháp từng bước</strong> để cải thiện các vấn đề tiêu hóa của trẻ</span>
                             </li>
-                            <li class="flex items-start gap-2.5 sm:gap-3">
-                                <span class="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-secondary text-white flex items-center justify-center shrink-0 mt-0.5 text-[11px] sm:text-xs font-bold">4</span>
-                                <span>Dinh dưỡng giúp nuôi dưỡng sức khỏe tiêu hóa và não bộ - nền tảng giúp con cải thiện các vấn đề hành vi, đạt hiệu quả can thiệp</span>
+                            <li class="flex items-start gap-3.5 pt-3.5">
+                                <span class="w-6 h-6 rounded-full bg-secondary text-white flex items-center justify-center shrink-0 mt-1 text-xs font-bold shadow-sm">4</span>
+                                <span><strong class="text-navy font-bold">Dinh dưỡng giúp nuôi dưỡng sức khỏe tiêu hóa và não bộ</strong> - nền tảng giúp con cải thiện các vấn đề hành vi, đạt hiệu quả can thiệp</span>
                             </li>
                         </ul>
                     </div>
@@ -212,17 +212,17 @@ $zalo_target_url = get_option( 'hieucon_link_zalo_tuvan', home_url( '/zalo' ) );
                     <div id="booking-card-wrapper" class="hc-master-card relative scroll-mt-24">
                         <div class="hc-card-bar"></div>
 
-                        <div id="booking-step1-container" class="p-5 sm:p-8">
-                            <div class="mb-4 sm:mb-5">
-                                <h2 class="font-serif text-[1.35rem] sm:text-[1.65rem] font-bold text-navy leading-snug">
+                        <div id="booking-step1-container" class="p-5 sm:p-8 lg:p-9">
+                            <div class="mb-5 sm:mb-6">
+                                <h2 class="font-serif text-[1.4rem] sm:text-[1.7rem] font-bold text-navy leading-snug">
                                     Thông tin liên hệ của ba mẹ
                                 </h2>
-                                <p class="text-slate-500 text-xs sm:text-sm mt-1 leading-relaxed">
+                                <p class="text-slate-500 text-xs sm:text-sm mt-1.5 leading-relaxed">
                                     Ba mẹ điền thông tin và chọn vấn đề của con để kết nối qua Zalo.
                                 </p>
                             </div>
 
-                            <form id="hieucon-booking-step1-form" class="space-y-4" novalidate>
+                            <form id="hieucon-booking-step1-form" class="space-y-5" novalidate>
                                 <input type="hidden" name="nonce" id="booking-nonce" value="<?php echo esc_attr( $booking_nonce ); ?>">
 
                                 <!-- 1. Họ và tên + SĐT/Zalo (font 16px trên mobile tránh iOS tự zoom) -->
