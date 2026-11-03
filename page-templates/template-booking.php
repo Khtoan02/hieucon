@@ -1,26 +1,23 @@
 <?php
 /**
  * Template Name: Đặt Lịch Tư Vấn 1:1
- * Description: Trang Landing Page "30 phút để nhìn rõ vấn đề của con" — Bố cục thoáng theo từng màn hình, tông màu Xanh than & Cam trên nền trắng.
+ * Description: Trang Landing Page "30 phút để nhìn rõ vấn đề của con" — Bố cục 1 màn hình duy nhất, đăng ký xong chuyển thẳng qua Zalo.
  *
  * @package Hieucon
  */
 
 if ( isset( $_GET['step'] ) && 'survey' === sanitize_key( wp_unslash( $_GET['step'] ) ) ) {
-    $survey_tpl = locate_template( 'page-templates/template-booking-survey.php' );
-    if ( $survey_tpl ) {
-        include $survey_tpl;
-        return;
-    }
+    wp_safe_redirect( home_url( '/dat-lich-tu-van/' ) );
+    exit;
 }
 
 get_header();
 
-$current_member     = class_exists( '\Hieucon\Model\Member_Model' ) ? \Hieucon\Model\Member_Model::get_current_member() : false;
-$prefill_name       = $current_member && ! empty( $current_member->full_name ) ? $current_member->full_name : '';
-$prefill_phone      = $current_member && ! empty( $current_member->phone_number ) ? $current_member->phone_number : '';
-$prefill_child_name = $current_member && ! empty( $current_member->child_name ) ? $current_member->child_name : '';
-$booking_nonce      = wp_create_nonce( 'hieucon_booking_nonce' );
+$current_member  = class_exists( '\Hieucon\Model\Member_Model' ) ? \Hieucon\Model\Member_Model::get_current_member() : false;
+$prefill_name    = $current_member && ! empty( $current_member->full_name ) ? $current_member->full_name : '';
+$prefill_phone   = $current_member && ! empty( $current_member->phone_number ) ? $current_member->phone_number : '';
+$booking_nonce   = wp_create_nonce( 'hieucon_booking_nonce' );
+$zalo_target_url = get_option( 'hieucon_link_zalo_tuvan', home_url( '/zalo' ) );
 ?>
 
 <style>
@@ -34,7 +31,7 @@ $booking_nonce      = wp_create_nonce( 'hieucon_booking_nonce' );
         background: #ffffff;
         border: 1.5px solid #e2e8f0;
         border-radius: 24px;
-        box-shadow: 0 20px 50px -24px rgba(10, 25, 49, 0.08);
+        box-shadow: 0 24px 54px -24px rgba(10, 25, 49, 0.10);
         overflow: hidden;
     }
     .hc-card-bar {
@@ -42,59 +39,154 @@ $booking_nonce      = wp_create_nonce( 'hieucon_booking_nonce' );
         background: linear-gradient(90deg, #0A1931 0%, #f97316 100%);
     }
 
-    /* Form Pills & Chips */
-    .time-slot-pill.is-active {
-        background-color: #0A1931 !important;
-        color: #ffffff !important;
-        border-color: #0A1931 !important;
-    }
-    .survey-single-pill {
-        transition: all 0.18s ease;
-    }
-    .survey-single-pill:hover {
-        border-color: #fdba74;
-    }
-    .survey-single-pill.is-selected {
-        background-color: #0A1931 !important;
-        color: #ffffff !important;
-        border-color: #0A1931 !important;
-        box-shadow: 0 8px 20px -6px rgba(10, 25, 49, 0.25);
-    }
-    .survey-multi-chip {
-        transition: all 0.18s ease;
-    }
-    .survey-multi-chip:hover {
-        border-color: #fdba74;
-        background-color: #fffaf5;
-    }
-    .survey-multi-chip.is-selected {
-        background-color: #fff7ed !important;
-        color: #0A1931 !important;
-        border-color: #f97316 !important;
+    /* Multi-select Issue Chips ("Trẻ đang gặp vấn đề gì?") */
+    .hc-issue-chip {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 11px 14px;
+        border-radius: 14px;
+        border: 1.5px solid #e2e8f0;
+        background: #f8fafc;
+        color: #0A1931;
+        font-size: 14px;
         font-weight: 600;
+        text-align: left;
+        transition: all 0.18s ease;
+        cursor: pointer;
+        user-select: none;
     }
-    .survey-multi-chip.is-selected .chip-check-icon {
-        background-color: #f97316 !important;
+    .hc-issue-chip:hover {
+        border-color: #fdba74;
+        background: #fffaf5;
+    }
+    .hc-issue-chip .hc-chip-box {
+        width: 20px;
+        height: 20px;
+        border-radius: 6px;
+        border: 1.5px solid #cbd5e1;
+        background: #ffffff;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        transition: all 0.18s ease;
+        color: transparent;
+    }
+    .hc-issue-chip.is-selected {
+        background: #fff7ed !important;
+        border-color: #f97316 !important;
+        color: #0A1931 !important;
+        box-shadow: 0 8px 20px -10px rgba(249, 115, 22, 0.35);
+    }
+    .hc-issue-chip.is-selected .hc-chip-box {
+        background: #f97316 !important;
         border-color: #f97316 !important;
         color: #ffffff !important;
+    }
+
+    /* Visual Time Slot Cards */
+    .hc-time-card {
+        position: relative;
+        display: flex;
+        align-items: center;
+        gap: 11px;
+        padding: 11px 13px;
+        border-radius: 14px;
+        border: 1.5px solid #e2e8f0;
+        background: #f8fafc;
+        text-align: left;
+        transition: all 0.18s ease;
+        cursor: pointer;
+        user-select: none;
+    }
+    .hc-time-card:hover {
+        border-color: #94a3b8;
+        background: #ffffff;
+    }
+    .hc-time-card .hc-time-icon {
+        width: 36px;
+        height: 36px;
+        border-radius: 10px;
+        background: #ffffff;
+        border: 1px solid #e2e8f0;
+        color: #64748b;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        transition: all 0.18s ease;
+    }
+    .hc-time-card .hc-time-title {
+        display: block;
+        font-size: 13.5px;
+        font-weight: 700;
+        color: #0A1931;
+        line-height: 1.25;
+    }
+    .hc-time-card .hc-time-sub {
+        display: block;
+        font-size: 12px;
+        font-weight: 600;
+        color: #64748b;
+        margin-top: 2px;
+    }
+    .hc-time-card .hc-time-dot {
+        margin-left: auto;
+        width: 18px;
+        height: 18px;
+        border-radius: 999px;
+        border: 1.5px solid #cbd5e1;
+        background: #ffffff;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        transition: all 0.18s ease;
+    }
+    .hc-time-card .hc-time-dot::after {
+        content: '';
+        width: 8px;
+        height: 8px;
+        border-radius: 999px;
+        background: transparent;
+        transition: all 0.18s ease;
+    }
+    .hc-time-card.is-active {
+        background: #0A1931 !important;
+        border-color: #0A1931 !important;
+        box-shadow: 0 10px 22px -8px rgba(10, 25, 49, 0.32);
+    }
+    .hc-time-card.is-active .hc-time-icon {
+        background: rgba(249, 115, 22, 0.18);
+        border-color: rgba(249, 115, 22, 0.45);
+        color: #f97316;
+    }
+    .hc-time-card.is-active .hc-time-title {
+        color: #ffffff;
+    }
+    .hc-time-card.is-active .hc-time-sub {
+        color: #cbd5e1;
+    }
+    .hc-time-card.is-active .hc-time-dot {
+        border-color: #f97316;
+        background: #f97316;
+    }
+    .hc-time-card.is-active .hc-time-dot::after {
+        background: #ffffff;
     }
 </style>
 
 <main id="primary" class="site-main hc-booking-page">
 
     <!-- =========================================================
-         TRANG 1: LANDING PAGE ĐẶT LỊCH (#hc-landing-view)
-         ========================================================= -->
-    <div id="hc-landing-view">
-
-    <!-- =========================================================
-         SECTION DUY NHẤT: THÔNG ĐIỆP MỞ ĐẦU (TRÁI) & FORM ĐĂNG KÝ (PHẢI)
+         SECTION DUY NHẤT (100VH): THÔNG ĐIỆP MỞ ĐẦU (TRÁI) & FORM ĐĂNG KÝ (PHẢI)
          ========================================================= -->
     <section id="dang-ky-case" class="min-h-screen flex items-center py-20 md:py-28 lg:py-36 bg-white">
-        <div class="max-w-[1220px] w-full mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 xl:gap-20 items-center">
+        <div class="max-w-[1240px] w-full mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-14 xl:gap-16 items-center">
 
-                <!-- Cột trái (7/12): Thông điệp mở đầu (không có nút CTA) -->
+                <!-- Cột trái (7/12): Thông điệp mở đầu -->
                 <div class="lg:col-span-7">
                     <h1 class="font-serif text-4xl sm:text-5xl xl:text-[3.5rem] font-bold text-navy leading-[1.16] mb-8">
                         30 phút để nhìn rõ<br class="hidden sm:inline" />
@@ -130,80 +222,156 @@ $booking_nonce      = wp_create_nonce( 'hieucon_booking_nonce' );
                     </p>
                 </div>
 
-                <!-- Cột phải (5/12): Form đăng ký thông tin liên hệ -->
+                <!-- Cột phải (5/12): Form đăng ký 1 bước nhảy thẳng qua Zalo -->
                 <div class="lg:col-span-5">
                     <div id="booking-card-wrapper" class="hc-master-card relative">
                         <div class="hc-card-bar"></div>
 
-                        <div id="booking-step1-container" class="p-7 sm:p-9 lg:p-10">
-                            <div class="mb-7">
-                                <h2 class="font-serif text-2xl sm:text-[1.75rem] font-bold text-navy leading-snug">
+                        <div id="booking-step1-container" class="p-6 sm:p-8 lg:p-9">
+                            <div class="mb-6">
+                                <h2 class="font-serif text-2xl sm:text-[1.7rem] font-bold text-navy leading-snug">
                                     Thông tin liên hệ của ba mẹ
                                 </h2>
-                                <p class="text-slate-500 text-sm mt-2 leading-relaxed">
-                                    Điền thông tin liên hệ trước khi chuyển sang bảng tích chọn nhanh tình trạng của con.
+                                <p class="text-slate-500 text-sm mt-1.5 leading-relaxed">
+                                    Ba mẹ điền thông tin và chọn vấn đề của con để kết nối qua Zalo.
                                 </p>
                             </div>
 
                             <form id="hieucon-booking-step1-form" class="space-y-5" novalidate>
                                 <input type="hidden" name="nonce" id="booking-nonce" value="<?php echo esc_attr( $booking_nonce ); ?>">
 
-                                <div>
-                                    <label for="booking-parent-name" class="block text-sm font-bold text-navy mb-1.5">
-                                        Họ và tên ba/mẹ <span class="text-secondary">*</span>
-                                    </label>
-                                    <input
-                                        type="text"
-                                        id="booking-parent-name"
-                                        name="parent_name"
-                                        value="<?php echo esc_attr( $prefill_name ); ?>"
-                                        required
-                                        placeholder="Ví dụ: Mẹ Nguyễn Thu Hà"
-                                        class="w-full px-4 py-3.5 rounded-xl bg-[#f8fafc] border border-slate-200 focus:bg-white focus:border-secondary outline-none text-navy font-medium text-base transition-all"
-                                    >
+                                <!-- 1. Họ và tên + SĐT/Zalo -->
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                                    <div>
+                                        <label for="booking-parent-name" class="block text-sm font-bold text-navy mb-1.5">
+                                            Họ và tên ba/mẹ <span class="text-secondary">*</span>
+                                        </label>
+                                        <input
+                                            type="text"
+                                            id="booking-parent-name"
+                                            name="parent_name"
+                                            value="<?php echo esc_attr( $prefill_name ); ?>"
+                                            required
+                                            placeholder="VD: Mẹ Thu Hà"
+                                            class="w-full px-3.5 py-3 rounded-xl bg-[#f8fafc] border border-slate-200 focus:bg-white focus:border-secondary outline-none text-navy font-medium text-sm transition-all"
+                                        >
+                                    </div>
+
+                                    <div>
+                                        <label for="booking-phone" class="block text-sm font-bold text-navy mb-1.5">
+                                            SĐT / Zalo liên hệ <span class="text-secondary">*</span>
+                                        </label>
+                                        <input
+                                            type="tel"
+                                            id="booking-phone"
+                                            name="phone"
+                                            value="<?php echo esc_attr( $prefill_phone ); ?>"
+                                            required
+                                            placeholder="Số điện thoại Zalo..."
+                                            class="w-full px-3.5 py-3 rounded-xl bg-[#f8fafc] border border-slate-200 focus:bg-white focus:border-secondary outline-none text-navy font-medium text-sm transition-all"
+                                        >
+                                    </div>
                                 </div>
 
+                                <!-- 2. Trẻ đang gặp vấn đề gì? (Chọn 1 hoặc nhiều) -->
                                 <div>
-                                    <label for="booking-phone" class="block text-sm font-bold text-navy mb-1.5">
-                                        Số điện thoại / Zalo liên hệ <span class="text-secondary">*</span>
-                                    </label>
-                                    <input
-                                        type="tel"
-                                        id="booking-phone"
-                                        name="phone"
-                                        value="<?php echo esc_attr( $prefill_phone ); ?>"
-                                        required
-                                        placeholder="Nhập số điện thoại có dùng Zalo..."
-                                        class="w-full px-4 py-3.5 rounded-xl bg-[#f8fafc] border border-slate-200 focus:bg-white focus:border-secondary outline-none text-navy font-medium text-base transition-all"
-                                    >
+                                    <div class="flex items-center justify-between gap-2 mb-2">
+                                        <label class="block text-sm font-bold text-navy">
+                                            Trẻ đang gặp vấn đề gì? <span class="text-secondary">*</span>
+                                        </label>
+                                        <span class="text-[11px] font-semibold text-slate-400">Chọn 1 hoặc nhiều</span>
+                                    </div>
+
+                                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2" id="child-issues-group">
+                                        <?php
+                                        $issue_options = [
+                                            [ 'label' => 'Kén Ăn', 'span' => '' ],
+                                            [ 'label' => 'Táo bón', 'span' => '' ],
+                                            [ 'label' => 'Bất dung nạp', 'span' => '' ],
+                                            [ 'label' => 'Suy dinh dưỡng', 'span' => '' ],
+                                            [ 'label' => 'Thiếu hụt vi chất và dinh dưỡng', 'span' => 'sm:col-span-2' ],
+                                        ];
+                                        foreach ( $issue_options as $opt ) :
+                                        ?>
+                                            <button
+                                                type="button"
+                                                data-issue="<?php echo esc_attr( $opt['label'] ); ?>"
+                                                class="hc-issue-chip <?php echo esc_attr( $opt['span'] ); ?>"
+                                            >
+                                                <span class="hc-chip-box">
+                                                    <svg class="w-3.5 h-3.5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.704 5.29a1 1 0 010 1.42l-7.5 7.5a1 1 0 01-1.42 0l-3.5-3.5a1 1 0 011.42-1.42L8.5 12.09l6.79-6.8a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                                                </span>
+                                                <span class="leading-snug"><?php echo esc_html( $opt['label'] ); ?></span>
+                                            </button>
+                                        <?php endforeach; ?>
+                                    </div>
                                 </div>
 
+                                <!-- 3. Khung giờ thuận tiện trao đổi (Visual Time Cards) -->
                                 <div>
-                                    <label class="block text-sm font-bold text-navy mb-1.5">
+                                    <label class="block text-sm font-bold text-navy mb-2">
                                         Khung giờ thuận tiện trao đổi <span class="text-secondary">*</span>
                                     </label>
-                                    <div class="grid grid-cols-2 gap-2 mb-2.5" id="time-slot-group">
-                                        <button type="button" data-slot="Sáng (08:30 - 11:30)" class="time-slot-pill is-active text-center px-3 py-2.5 rounded-xl border border-slate-200 bg-white text-navy text-xs sm:text-sm font-semibold transition-all cursor-pointer">
-                                            Sáng (8h30–11h30)
+
+                                    <div class="grid grid-cols-2 gap-2.5 mb-2.5" id="time-slot-group">
+                                        <button type="button" data-slot="Buổi sáng (08:30 - 11:30)" class="hc-time-card is-active">
+                                            <span class="hc-time-icon">
+                                                <i data-lucide="sunrise" class="w-4 h-4"></i>
+                                            </span>
+                                            <span>
+                                                <span class="hc-time-title">Buổi sáng</span>
+                                                <span class="hc-time-sub">08:30 – 11:30</span>
+                                            </span>
+                                            <span class="hc-time-dot"></span>
                                         </button>
-                                        <button type="button" data-slot="Trưa (12:00 - 13:30)" class="time-slot-pill text-center px-3 py-2.5 rounded-xl border border-slate-200 bg-white text-navy text-xs sm:text-sm font-semibold transition-all cursor-pointer">
-                                            Trưa (12h–13h30)
+
+                                        <button type="button" data-slot="Buổi trưa (12:00 - 13:30)" class="hc-time-card">
+                                            <span class="hc-time-icon">
+                                                <i data-lucide="sun" class="w-4 h-4"></i>
+                                            </span>
+                                            <span>
+                                                <span class="hc-time-title">Buổi trưa</span>
+                                                <span class="hc-time-sub">12:00 – 13:30</span>
+                                            </span>
+                                            <span class="hc-time-dot"></span>
                                         </button>
-                                        <button type="button" data-slot="Chiều (14:00 - 17:30)" class="time-slot-pill text-center px-3 py-2.5 rounded-xl border border-slate-200 bg-white text-navy text-xs sm:text-sm font-semibold transition-all cursor-pointer">
-                                            Chiều (14h–17h30)
+
+                                        <button type="button" data-slot="Buổi chiều (14:00 - 17:30)" class="hc-time-card">
+                                            <span class="hc-time-icon">
+                                                <i data-lucide="sunset" class="w-4 h-4"></i>
+                                            </span>
+                                            <span>
+                                                <span class="hc-time-title">Buổi chiều</span>
+                                                <span class="hc-time-sub">14:00 – 17:30</span>
+                                            </span>
+                                            <span class="hc-time-dot"></span>
                                         </button>
-                                        <button type="button" data-slot="Tối (19:30 - 21:30)" class="time-slot-pill text-center px-3 py-2.5 rounded-xl border border-slate-200 bg-white text-navy text-xs sm:text-sm font-semibold transition-all cursor-pointer">
-                                            Tối (19h30–21h30)
+
+                                        <button type="button" data-slot="Buổi tối (19:30 - 21:30)" class="hc-time-card">
+                                            <span class="hc-time-icon">
+                                                <i data-lucide="moon" class="w-4 h-4"></i>
+                                            </span>
+                                            <span>
+                                                <span class="hc-time-title">Buổi tối</span>
+                                                <span class="hc-time-sub">19:30 – 21:30</span>
+                                            </span>
+                                            <span class="hc-time-dot"></span>
                                         </button>
                                     </div>
-                                    <input
-                                        type="text"
-                                        id="booking-preferred-time"
-                                        name="preferred_time"
-                                        value="Sáng (08:30 - 11:30)"
-                                        placeholder="Hoặc ghi rõ ngày/giờ ba mẹ mong muốn..."
-                                        class="w-full px-4 py-3 rounded-xl bg-[#f8fafc] border border-slate-200 focus:bg-white focus:border-secondary outline-none text-navy font-medium text-sm transition-all"
-                                    >
+
+                                    <input type="hidden" id="booking-preferred-time" name="preferred_time" value="Buổi sáng (08:30 - 11:30)">
+
+                                    <div class="relative">
+                                        <span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none">
+                                            <i data-lucide="calendar-clock" class="w-4 h-4"></i>
+                                        </span>
+                                        <input
+                                            type="text"
+                                            id="booking-custom-time-note"
+                                            placeholder="Ghi chú thêm giờ hoặc ngày cụ thể nếu cần..."
+                                            class="w-full pl-9 pr-3.5 py-2.5 rounded-xl bg-[#f8fafc] border border-slate-200 focus:bg-white focus:border-secondary outline-none text-navy font-medium text-xs sm:text-sm transition-all"
+                                        >
+                                    </div>
                                 </div>
 
                                 <div id="booking-step1-error" class="hidden rounded-xl bg-red-50 border border-red-200 text-red-700 text-xs font-semibold px-4 py-3"></div>
@@ -226,434 +394,43 @@ $booking_nonce      = wp_create_nonce( 'hieucon_booking_nonce' );
         </div>
     </section>
 
-    </div><!-- /#hc-landing-view -->
-
-    <!-- =========================================================
-         TRANG 2 (MỞ TRANG MỚI TỨC THÌ 0MS): TRANG KHẢO SÁT ĐỘC LẬP (#hc-survey-page-view)
-         ========================================================= -->
-    <div id="hc-survey-page-view" class="hidden min-h-screen py-12 md:py-20 bg-white">
-        <div class="max-w-[880px] mx-auto px-4 sm:px-6 lg:px-8">
-
-            <!-- BƯỚC 2: KHẢO SÁT NHANH TRÊN TRANG RIÊNG -->
-            <div id="booking-step2-container">
-
-                <!-- Tiêu đề trang khảo sát -->
-                <div class="text-center max-w-2xl mx-auto mb-8">
-                    <span class="inline-flex items-center gap-2 bg-[#fff7ed] text-secondary border border-orange-200 font-bold text-xs px-4 py-1.5 rounded-full mb-4">
-                        <span class="w-2 h-2 rounded-full bg-secondary"></span>
-                        <span>Bước 2 / 2 • Hồ sơ tình trạng của con</span>
-                    </span>
-                    <h1 class="font-serif text-3xl sm:text-4xl font-bold text-navy leading-tight mb-3">
-                        Thông tin tình trạng hiện tại của con
-                    </h1>
-                    <p class="text-slate-600 text-sm sm:text-base leading-relaxed">
-                        Ba mẹ tích chọn nhanh các biểu hiện dưới đây để người phụ trách xem trước hồ sơ trước buổi trao đổi 30 phút.
-                    </p>
-                </div>
-
-                <!-- Thanh tóm tắt thông tin liên hệ Bước 1 (Nền Xanh than + điểm nhấn Cam) -->
-                <div class="bg-navy text-white rounded-2xl p-5 sm:p-6 mb-8 shadow-md">
-                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 items-center">
-                        <div class="flex items-center gap-3">
-                            <div class="w-10 h-10 rounded-xl bg-white/10 text-secondary flex items-center justify-center shrink-0">
-                                <i data-lucide="user-check" class="w-5 h-5"></i>
-                            </div>
-                            <div>
-                                <p class="text-[11px] text-white/60 uppercase tracking-wider font-semibold">Phụ huynh đăng ký</p>
-                                <p id="step2-parent-name" class="text-sm sm:text-base font-bold text-white">ba/mẹ</p>
-                            </div>
-                        </div>
-
-                        <div class="flex items-center gap-3">
-                            <div class="w-10 h-10 rounded-xl bg-white/10 text-secondary flex items-center justify-center shrink-0">
-                                <i data-lucide="clock" class="w-5 h-5"></i>
-                            </div>
-                            <div>
-                                <p class="text-[11px] text-white/60 uppercase tracking-wider font-semibold">Khung giờ trao đổi</p>
-                                <p id="step2-preferred-time" class="text-sm sm:text-base font-bold text-white">Sáng (08:30 - 11:30)</p>
-                            </div>
-                        </div>
-
-                        <div class="flex items-center sm:justify-end">
-                            <span class="inline-flex items-center gap-2 bg-secondary/20 text-secondary border border-secondary/40 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-extrabold">
-                                <span>Mã hồ sơ:</span>
-                                <span id="step2-badge-code" class="text-white">TV-0000</span>
-                            </span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Khung Form Khảo Sát Chính -->
-                <div id="survey-card-wrapper" class="hc-master-card relative">
-                    <div class="hc-card-bar"></div>
-
-                    <form id="hieucon-booking-step2-form" class="divide-y divide-slate-200/80" novalidate>
-                        <input type="hidden" id="survey-booking-id" name="booking_id" value="">
-                        <input type="hidden" id="survey-booking-code" name="booking_code" value="">
-
-                        <!-- MỤC 01: Thông tin cơ bản của bé -->
-                        <div class="p-6 sm:p-9">
-                            <div class="flex items-center gap-3 mb-5">
-                                <span class="w-8 h-8 rounded-lg bg-[#fff7ed] text-secondary border border-orange-200 font-extrabold text-xs flex items-center justify-center shrink-0">01</span>
-                                <h2 class="font-serif text-lg sm:text-xl font-bold text-navy">Thông tin cơ bản của bé</h2>
-                            </div>
-
-                            <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-start">
-                                <div class="md:col-span-5">
-                                    <label for="survey-child-name" class="block text-xs sm:text-sm font-bold text-navy mb-2">
-                                        Tên gọi của bé ở nhà
-                                    </label>
-                                    <input
-                                        type="text"
-                                        id="survey-child-name"
-                                        name="child_name"
-                                        value="<?php echo esc_attr( $prefill_child_name ); ?>"
-                                        placeholder="Ví dụ: Bé Bắp / Minh Khôi"
-                                        class="w-full px-4 py-3 rounded-xl bg-[#f8fafc] border border-slate-200 focus:bg-white focus:border-secondary outline-none text-navy text-sm sm:text-base font-medium transition-all"
-                                    >
-                                </div>
-
-                                <div class="md:col-span-7">
-                                    <label class="block text-xs sm:text-sm font-bold text-navy mb-2">
-                                        Độ tuổi hiện tại của bé
-                                    </label>
-                                    <input type="hidden" id="survey-child-age" name="child_age" value="2 – 3 tuổi">
-                                    <div class="flex flex-wrap gap-2" data-single-group="survey-child-age">
-                                        <?php
-                                        $age_options = [ 'Dưới 2 tuổi', '2 – 3 tuổi', '3 – 5 tuổi', '5 – 7 tuổi', 'Trên 7 tuổi' ];
-                                        foreach ( $age_options as $idx => $age_label ) :
-                                            $active_cls = ( 1 === $idx ) ? 'is-selected' : '';
-                                        ?>
-                                        <button type="button" data-value="<?php echo esc_attr( $age_label ); ?>" class="survey-single-pill <?php echo esc_attr( $active_cls ); ?> px-4 py-2.5 rounded-xl border border-slate-200 bg-white text-navy text-xs sm:text-sm font-semibold cursor-pointer">
-                                            <?php echo esc_html( $age_label ); ?>
-                                        </button>
-                                        <?php endforeach; ?>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- MỤC 02: Vấn đề ba mẹ đang quan tâm nhất -->
-                        <div class="p-6 sm:p-9">
-                            <div class="flex items-center gap-3 mb-2">
-                                <span class="w-8 h-8 rounded-lg bg-[#fff7ed] text-secondary border border-orange-200 font-extrabold text-xs flex items-center justify-center shrink-0">02</span>
-                                <h2 class="font-serif text-lg sm:text-xl font-bold text-navy">Vấn đề ba mẹ đang quan tâm nhất ở con</h2>
-                            </div>
-                            <p class="text-xs sm:text-sm text-slate-500 mb-4 pl-11">Chọn 1 nhóm vấn đề nổi bật nhất hiện tại:</p>
-
-                            <input type="hidden" id="survey-diagnosis" name="diagnosis" value="Táo bón / tiêu hóa">
-                            <div class="flex flex-wrap gap-2.5 pl-0 sm:pl-11" data-single-group="survey-diagnosis">
-                                <?php
-                                $diagnoses = [
-                                    'Táo bón / tiêu hóa',
-                                    'Kén ăn / nhai nuốt',
-                                    'Bất dung nạp thực phẩm',
-                                    'Hấp thu / chậm tăng cân',
-                                    'Thiếu hụt vi chất',
-                                ];
-                                foreach ( $diagnoses as $idx => $diag ) :
-                                    $active_cls = ( 0 === $idx ) ? 'is-selected' : '';
-                                ?>
-                                <button type="button" data-value="<?php echo esc_attr( $diag ); ?>" class="survey-single-pill <?php echo esc_attr( $active_cls ); ?> px-4 py-2.5 rounded-xl border border-slate-200 bg-white text-navy text-xs sm:text-sm font-semibold cursor-pointer">
-                                    <?php echo esc_html( $diag ); ?>
-                                </button>
-                                <?php endforeach; ?>
-                            </div>
-                        </div>
-
-                        <!-- MỤC 03: Biểu hiện ăn uống & tiêu hóa -->
-                        <div class="p-6 sm:p-9">
-                            <div class="flex items-center gap-3 mb-2">
-                                <span class="w-8 h-8 rounded-lg bg-[#fff7ed] text-secondary border border-orange-200 font-extrabold text-xs flex items-center justify-center shrink-0">03</span>
-                                <h2 class="font-serif text-lg sm:text-xl font-bold text-navy">Biểu hiện ăn uống và tiêu hóa hiện tại</h2>
-                            </div>
-                            <p class="text-xs sm:text-sm text-slate-500 mb-4 pl-11">Ba mẹ có thể tích chọn nhiều biểu hiện đúng với bé:</p>
-
-                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pl-0 sm:pl-11">
-                                <?php
-                                $bio_symptoms = [
-                                    'Táo bón, đi ngoài chưa đều',
-                                    'Phân sống, lỏng hoặc có bọt',
-                                    'Bụng dễ đầy hơi, chướng khí',
-                                    'Kén ăn, chỉ ăn vài món quen thuộc',
-                                    'Nhạy cảm độ thô, ngậm thức ăn lâu',
-                                    'Thích đồ ngọt, sữa hoặc tinh bột',
-                                ];
-                                foreach ( $bio_symptoms as $item ) :
-                                ?>
-                                <button type="button" data-multi-name="bio_symptoms[]" data-value="<?php echo esc_attr( $item ); ?>" data-active-class="is-selected" class="survey-multi-chip text-left px-4 py-3.5 rounded-xl border border-slate-200 bg-white text-slate-700 text-xs sm:text-sm font-medium flex items-center gap-3 cursor-pointer">
-                                    <span class="chip-check-icon w-5 h-5 rounded-md border border-slate-300 flex items-center justify-center shrink-0 text-transparent transition-colors">
-                                        <i data-lucide="check" class="w-3.5 h-3.5"></i>
-                                    </span>
-                                    <span class="leading-snug"><?php echo esc_html( $item ); ?></span>
-                                </button>
-                                <?php endforeach; ?>
-                            </div>
-                        </div>
-
-                        <!-- MỤC 04: Biểu hiện hấp thu, vi chất, giấc ngủ & hành vi -->
-                        <div class="p-6 sm:p-9">
-                            <div class="flex items-center gap-3 mb-2">
-                                <span class="w-8 h-8 rounded-lg bg-[#fff7ed] text-secondary border border-orange-200 font-extrabold text-xs flex items-center justify-center shrink-0">04</span>
-                                <h2 class="font-serif text-lg sm:text-xl font-bold text-navy">Biểu hiện hấp thu, vi chất, giấc ngủ và hành vi</h2>
-                            </div>
-                            <p class="text-xs sm:text-sm text-slate-500 mb-4 pl-11">Ba mẹ có thể tích chọn nhiều biểu hiện đi kèm:</p>
-
-                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pl-0 sm:pl-11">
-                                <?php
-                                $behav_symptoms = [
-                                    'Hấp thu chưa tốt, chậm tăng cân',
-                                    'Nhạy cảm với sữa bò, Gluten, Lactose',
-                                    'Da nhạy cảm, dễ mẩn ngứa hoặc ốm vặt',
-                                    'Khó vào giấc, ngủ chưa sâu giấc',
-                                    'Dễ cáu gắt hoặc giảm sự tập trung',
-                                    'Có dấu hiệu thiếu hụt vi chất (Kẽm, Sắt, Canxi...)',
-                                ];
-                                foreach ( $behav_symptoms as $item ) :
-                                ?>
-                                <button type="button" data-multi-name="behav_symptoms[]" data-value="<?php echo esc_attr( $item ); ?>" data-active-class="is-selected" class="survey-multi-chip text-left px-4 py-3.5 rounded-xl border border-slate-200 bg-white text-slate-700 text-xs sm:text-sm font-medium flex items-center gap-3 cursor-pointer">
-                                    <span class="chip-check-icon w-5 h-5 rounded-md border border-slate-300 flex items-center justify-center shrink-0 text-transparent transition-colors">
-                                        <i data-lucide="check" class="w-3.5 h-3.5"></i>
-                                    </span>
-                                    <span class="leading-snug"><?php echo esc_html( $item ); ?></span>
-                                </button>
-                                <?php endforeach; ?>
-                            </div>
-                        </div>
-
-                        <!-- MỤC 05: Những hướng gia đình đã áp dụng -->
-                        <div class="p-6 sm:p-9">
-                            <div class="flex items-center gap-3 mb-2">
-                                <span class="w-8 h-8 rounded-lg bg-[#fff7ed] text-secondary border border-orange-200 font-extrabold text-xs flex items-center justify-center shrink-0">05</span>
-                                <h2 class="font-serif text-lg sm:text-xl font-bold text-navy">Gia đình đã áp dụng những hướng nào?</h2>
-                            </div>
-                            <p class="text-xs sm:text-sm text-slate-500 mb-4 pl-11">Giúp đội ngũ hiểu những cách gia đình đã thử qua:</p>
-
-                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pl-0 sm:pl-11">
-                                <?php
-                                $tried_methods = [
-                                    'Đã dùng men vi sinh, chất xơ hỗ trợ',
-                                    'Đang bổ sung một số loại vitamin, vi chất',
-                                    'Đã thử điều chỉnh chế độ ăn tại nhà',
-                                    'Đang tìm hiểu hướng ưu tiên phù hợp cho con',
-                                ];
-                                foreach ( $tried_methods as $item ) :
-                                ?>
-                                <button type="button" data-multi-name="tried_methods[]" data-value="<?php echo esc_attr( $item ); ?>" data-active-class="is-selected" class="survey-multi-chip text-left px-4 py-3.5 rounded-xl border border-slate-200 bg-white text-slate-700 text-xs sm:text-sm font-medium flex items-center gap-3 cursor-pointer">
-                                    <span class="chip-check-icon w-5 h-5 rounded-md border border-slate-300 flex items-center justify-center shrink-0 text-transparent transition-colors">
-                                        <i data-lucide="check" class="w-3.5 h-3.5"></i>
-                                    </span>
-                                    <span class="leading-snug"><?php echo esc_html( $item ); ?></span>
-                                </button>
-                                <?php endforeach; ?>
-                            </div>
-                        </div>
-
-                        <!-- MỤC 06: Điều mong muốn làm rõ nhất & Nút hoàn tất -->
-                        <div class="p-6 sm:p-9 bg-[#f8fafc]/60">
-                            <div class="flex items-center gap-3 mb-3">
-                                <span class="w-8 h-8 rounded-lg bg-[#fff7ed] text-secondary border border-orange-200 font-extrabold text-xs flex items-center justify-center shrink-0">06</span>
-                                <label for="survey-parent-goal" class="font-serif text-lg sm:text-xl font-bold text-navy">
-                                    Điều ba mẹ mong muốn làm rõ nhất trong 30 phút này
-                                </label>
-                            </div>
-
-                            <div class="pl-0 sm:pl-11 space-y-5">
-                                <textarea
-                                    id="survey-parent-goal"
-                                    name="parent_goal"
-                                    rows="3"
-                                    placeholder="Chia sẻ ngắn gọn điều gia đình đang trăn trở nhất về tình trạng của con..."
-                                    class="w-full px-4 py-3.5 rounded-xl bg-white border border-slate-200 focus:border-secondary outline-none text-navy text-sm sm:text-base transition-all resize-none"
-                                ></textarea>
-
-                                <div class="space-y-3 pt-1">
-                                    <button
-                                        type="submit"
-                                        id="booking-step2-btn"
-                                        class="w-full py-4 px-8 rounded-xl bg-secondary hover:bg-secondary_dark text-white font-extrabold text-base uppercase tracking-wider shadow-[0_12px_24px_-6px_rgba(249,115,22,0.4)] hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2.5 cursor-pointer"
-                                    >
-                                        <i data-lucide="check-circle-2" class="w-5 h-5"></i>
-                                        <span>HOÀN TẤT ĐĂNG KÝ CASE CỦA CON</span>
-                                    </button>
-
-                                    <button
-                                        type="button"
-                                        id="booking-skip-survey-btn"
-                                        class="w-full py-1.5 text-center text-xs sm:text-sm font-medium text-slate-500 hover:text-navy underline transition-colors cursor-pointer"
-                                    >
-                                        Bỏ qua bước khảo sát này →
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-
-                    </form>
-                </div>
-
-            </div>
-
-            <!-- MÀN HÌNH 3: HOÀN TẤT -->
-            <div id="booking-success-container" class="hidden">
-                <div class="hc-master-card relative p-8 sm:p-12 text-center max-w-xl mx-auto">
-                    <div class="hc-card-bar absolute top-0 left-0 right-0"></div>
-
-                    <div class="w-16 h-16 rounded-full bg-[#fff7ed] text-secondary flex items-center justify-center mx-auto mb-5">
-                        <i data-lucide="check-circle-2" class="w-9 h-9"></i>
-                    </div>
-                    <span class="inline-block bg-[#fff7ed] text-secondary border border-orange-200 font-bold text-xs px-4 py-1.5 rounded-full mb-4">
-                        Mã hồ sơ: <span id="res-booking-code">TV-0000</span>
-                    </span>
-                    <h3 class="font-serif text-2xl sm:text-3xl font-bold text-navy mb-3">Đã tiếp nhận đầy đủ thông tin của gia đình</h3>
-                    <p class="text-slate-600 text-sm sm:text-base leading-relaxed max-w-md mx-auto mb-6">
-                        Cảm ơn <strong id="res-parent-name" class="text-navy">ba/mẹ</strong>. Đội ngũ sẽ tổng hợp thông tin và liên hệ qua số <strong id="res-phone" class="text-secondary"></strong> (khung giờ: <strong id="res-time" class="text-navy"></strong>) đối với các trường hợp phù hợp trong đợt này.
-                    </p>
-
-                    <div id="res-survey-badge" class="hidden inline-flex items-center gap-2 bg-[#f8fafc] text-navy border border-slate-200 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold mb-7">
-                        <i data-lucide="file-check-2" class="w-4 h-4 text-secondary"></i>
-                        <span>Đã lưu đầy đủ thông tin khảo sát tình trạng của bé</span>
-                    </div>
-
-                    <div class="max-w-sm mx-auto space-y-3">
-                        <a id="res-zalo-link" href="<?php echo esc_url( home_url( '/zalo' ) ); ?>" target="_blank" rel="noopener noreferrer" class="w-full py-4 px-6 rounded-xl bg-navy hover:bg-navy/90 text-white font-bold text-sm sm:text-base flex items-center justify-center gap-2 transition-all">
-                            <span>Nhắn xác nhận qua Zalo</span>
-                        </a>
-                        <a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="block text-xs sm:text-sm font-semibold text-slate-500 hover:text-navy pt-2">
-                            ← Quay về trang chủ
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </div>
-
 </main>
 
 <script>
 document.addEventListener('DOMContentLoaded', function () {
     const ajaxUrl = '<?php echo esc_url( admin_url( 'admin-ajax.php' ) ); ?>';
+    const zaloTargetUrl = '<?php echo esc_url( $zalo_target_url ); ?>';
     const nonceVal = document.getElementById('booking-nonce') ? document.getElementById('booking-nonce').value : '';
 
     if (typeof lucide !== 'undefined') {
-        lucide.createIcons({ strokeWidth: 1.5 });
+        lucide.createIcons({ strokeWidth: 1.75 });
     }
 
-    // 1. Chọn nhanh Khung giờ
-    const slotButtons = document.querySelectorAll('.time-slot-pill');
-    const timeInput = document.getElementById('booking-preferred-time');
-
-    slotButtons.forEach(btn => {
-        btn.addEventListener('click', () => {
-            slotButtons.forEach(b => b.classList.remove('is-active'));
-            btn.classList.add('is-active');
-            timeInput.value = btn.getAttribute('data-slot');
-        });
-    });
-
-    // 4. Chọn đơn (Độ tuổi & Vấn đề nổi bật)
-    const singleGroups = document.querySelectorAll('[data-single-group]');
-    singleGroups.forEach(group => {
-        const targetInputId = group.getAttribute('data-single-group');
-        const hiddenInput = document.getElementById(targetInputId);
-        const pills = group.querySelectorAll('.survey-single-pill');
-
-        pills.forEach(pill => {
-            pill.addEventListener('click', () => {
-                pills.forEach(p => p.classList.remove('is-selected'));
-                pill.classList.add('is-selected');
-                if (hiddenInput) {
-                    hiddenInput.value = pill.getAttribute('data-value');
-                }
-            });
-        });
-    });
-
-    // 5. Chọn nhiều (Khảo sát triệu chứng)
-    const multiChips = document.querySelectorAll('.survey-multi-chip');
-    multiChips.forEach(chip => {
+    // 1. Chọn 1 hoặc nhiều vấn đề của trẻ ("Trẻ đang gặp vấn đề gì?")
+    const issueChips = document.querySelectorAll('.hc-issue-chip');
+    issueChips.forEach(chip => {
         chip.addEventListener('click', () => {
-            const activeCls = chip.getAttribute('data-active-class') || 'is-selected';
-            chip.classList.toggle(activeCls);
+            chip.classList.toggle('is-selected');
         });
     });
 
-    // 6. Chuyển đổi sang Trang Khảo Sát Độc Lập TỨC THÌ (0ms, không chờ mạng)
-    const landingView = document.getElementById('hc-landing-view');
-    const surveyPageView = document.getElementById('hc-survey-page-view');
-    const surveyCardWrapper = document.getElementById('survey-card-wrapper');
-    const step2Container = document.getElementById('booking-step2-container');
-    const successContainer = document.getElementById('booking-success-container');
+    // 2. Chọn khung giờ thuận tiện (Visual Time Cards)
+    const timeCards = document.querySelectorAll('.hc-time-card');
+    const timeInput = document.getElementById('booking-preferred-time');
+    const customTimeNote = document.getElementById('booking-custom-time-note');
 
-    let latestParentName = '';
-    let latestPhone = '';
-    let latestPreferredTime = '';
-
-    function openStandaloneSurveyPageInstant(parentName, phone, preferredTime, tempCode) {
-        latestParentName = parentName;
-        latestPhone = phone;
-        latestPreferredTime = preferredTime;
-
-        document.getElementById('survey-booking-code').value = tempCode;
-        document.getElementById('step2-badge-code').textContent = tempCode;
-        document.getElementById('step2-parent-name').textContent = parentName;
-        document.getElementById('step2-preferred-time').textContent = preferredTime;
-
-        document.getElementById('res-booking-code').textContent = tempCode;
-        document.getElementById('res-parent-name').textContent = parentName;
-        document.getElementById('res-phone').textContent = phone;
-        document.getElementById('res-time').textContent = preferredTime;
-
-        // Ẩn toàn bộ Landing Page, mở Trang Khảo Sát mới ngay lập tức (0ms)
-        if (landingView) landingView.classList.add('hidden');
-        if (surveyPageView) surveyPageView.classList.remove('hidden');
-
-        window.scrollTo({ top: 0, behavior: 'instant' });
-
-        if (window.history && window.history.pushState) {
-            const newUrl = window.location.pathname + '?step=survey&code=' + encodeURIComponent(tempCode);
-            window.history.pushState({ view: 'survey' }, '', newUrl);
-        }
-
-        if (typeof lucide !== 'undefined') {
-            lucide.createIcons({ strokeWidth: 1.5 });
-        }
-    }
-
-    window.addEventListener('popstate', function () {
-        const params = new URLSearchParams(window.location.search);
-        if (params.get('step') === 'survey') {
-            if (landingView) landingView.classList.add('hidden');
-            if (surveyPageView) surveyPageView.classList.remove('hidden');
-        } else {
-            if (surveyPageView) surveyPageView.classList.add('hidden');
-            if (landingView) landingView.classList.remove('hidden');
-        }
+    timeCards.forEach(card => {
+        card.addEventListener('click', () => {
+            timeCards.forEach(c => c.classList.remove('is-active'));
+            card.classList.add('is-active');
+            timeInput.value = card.getAttribute('data-slot');
+        });
     });
 
-    function transitionToFinalSuccess(hasSurvey) {
-        step2Container.classList.add('hidden');
-        successContainer.classList.remove('hidden');
-
-        const surveyBadge = document.getElementById('res-survey-badge');
-        if (surveyBadge) {
-            if (hasSurvey) {
-                surveyBadge.classList.remove('hidden');
-            } else {
-                surveyBadge.classList.add('hidden');
-            }
-        }
-
-        if (typeof lucide !== 'undefined') {
-            lucide.createIcons({ strokeWidth: 1.5 });
-        }
-
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-
-    // Submit Bước 1: Mở trang khảo sát ngay tức thì (0ms) + lưu ngầm ở hậu trường
+    // 3. Submit Form -> Gửi ngầm & nhảy qua Zalo ngay lập tức (0ms)
     const step1Form = document.getElementById('hieucon-booking-step1-form');
     const step1Error = document.getElementById('booking-step1-error');
+    const submitBtn = document.getElementById('booking-step1-btn');
 
     if (step1Form) {
         step1Form.addEventListener('submit', function (e) {
@@ -662,7 +439,16 @@ document.addEventListener('DOMContentLoaded', function () {
 
             const parentName = document.getElementById('booking-parent-name').value.trim();
             const phone = document.getElementById('booking-phone').value.trim();
-            const preferredTime = timeInput.value.trim() || 'Sớm nhất có thể';
+            const selectedSlot = timeInput.value.trim() || 'Buổi sáng (08:30 - 11:30)';
+            const extraTimeNote = customTimeNote ? customTimeNote.value.trim() : '';
+            const preferredTime = extraTimeNote ? (selectedSlot + ' • ' + extraTimeNote) : selectedSlot;
+
+            const selectedIssues = [];
+            issueChips.forEach(chip => {
+                if (chip.classList.contains('is-selected')) {
+                    selectedIssues.push(chip.getAttribute('data-issue'));
+                }
+            });
 
             if (!parentName || !phone) {
                 step1Error.textContent = 'Vui lòng nhập đầy đủ họ tên và số điện thoại/Zalo của ba/mẹ.';
@@ -677,12 +463,15 @@ document.addEventListener('DOMContentLoaded', function () {
                 return;
             }
 
-            // Tạo mã chuẩn TVyymmdd-XXXX và mở ngay trang khảo sát mới trong 0ms
+            if (selectedIssues.length === 0) {
+                step1Error.textContent = 'Ba/mẹ vui lòng chọn ít nhất 1 vấn đề trẻ đang gặp phải.';
+                step1Error.classList.remove('hidden');
+                return;
+            }
+
             const randSuffix = Math.random().toString(36).replace(/[^a-z0-9]/gi, '').substring(0, 4).toUpperCase().padEnd(4, '9');
             const tempCode = 'TV<?php echo esc_js( wp_date( 'ymd' ) ); ?>-' + randSuffix;
-            openStandaloneSurveyPageInstant(parentName, phone, preferredTime, tempCode);
 
-            // Gửi lưu thông tin Bước 1 chạy ngầm ở hậu trường (kèm đúng mã hồ sơ đã cấp)
             const formData = new FormData();
             formData.append('action', 'hieucon_submit_booking');
             formData.append('nonce', nonceVal);
@@ -690,74 +479,35 @@ document.addEventListener('DOMContentLoaded', function () {
             formData.append('parent_name', parentName);
             formData.append('phone', phone);
             formData.append('preferred_time', preferredTime);
-
-            fetch(ajaxUrl, {
-                method: 'POST',
-                body: formData,
-                keepalive: true
-            })
-            .then(res => res.json())
-            .then(res => {
-                if (res.success && res.data) {
-                    document.getElementById('survey-booking-id').value = res.data.booking_id;
-                    document.getElementById('survey-booking-code').value = res.data.booking_code;
-                    document.getElementById('step2-badge-code').textContent = res.data.booking_code;
-                    document.getElementById('res-booking-code').textContent = res.data.booking_code;
-                    if (res.data.zalo_url) {
-                        document.getElementById('res-zalo-link').href = res.data.zalo_url;
-                    }
-                    if (res.data.survey_url && window.history && window.history.replaceState) {
-                        window.history.replaceState({ view: 'survey' }, '', res.data.survey_url);
-                    }
-                }
-            })
-            .catch(() => {});
-        });
-    }
-
-    // Submit Bước 2: Hiển thị hoàn tất ngay tức thì (0ms) + lưu khảo sát chạy ngầm
-    const step2Form = document.getElementById('hieucon-booking-step2-form');
-    const skipSurveyBtn = document.getElementById('booking-skip-survey-btn');
-
-    if (skipSurveyBtn) {
-        skipSurveyBtn.addEventListener('click', function () {
-            transitionToFinalSuccess(false);
-        });
-    }
-
-    if (step2Form) {
-        step2Form.addEventListener('submit', function (e) {
-            e.preventDefault();
-
-            const formData = new FormData();
-            formData.append('action', 'hieucon_submit_booking_survey');
-            formData.append('nonce', nonceVal);
-            formData.append('booking_id', document.getElementById('survey-booking-id').value);
-            formData.append('booking_code', document.getElementById('survey-booking-code').value);
-            formData.append('parent_name', latestParentName);
-            formData.append('phone', latestPhone);
-            formData.append('preferred_time', latestPreferredTime);
-            formData.append('child_name', document.getElementById('survey-child-name').value.trim());
-            formData.append('child_age', document.getElementById('survey-child-age').value);
-            formData.append('diagnosis', document.getElementById('survey-diagnosis').value);
-            formData.append('parent_goal', document.getElementById('survey-parent-goal').value.trim());
-
-            document.querySelectorAll('.survey-multi-chip').forEach(chip => {
-                const activeCls = chip.getAttribute('data-active-class') || 'is-selected';
-                if (chip.classList.contains(activeCls)) {
-                    formData.append(chip.getAttribute('data-multi-name'), chip.getAttribute('data-value'));
-                }
+            formData.append('diagnosis', selectedIssues.join(', '));
+            selectedIssues.forEach(iss => {
+                formData.append('child_issues[]', iss);
             });
 
-            // Chuyển sang màn hình Hoàn tất ngay lập tức (0ms)
-            transitionToFinalSuccess(true);
+            // Đổi trạng thái nút và gửi ngầm bằng sendBeacon / fetch keepalive để chuyển thẳng qua Zalo không bị trễ
+            if (submitBtn) {
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = '<span>ĐANG CHUYỂN QUA ZALO...</span>';
+            }
 
-            // Lưu dữ liệu khảo sát ở hậu trường
-            fetch(ajaxUrl, {
-                method: 'POST',
-                body: formData,
-                keepalive: true
-            }).catch(() => {});
+            let beaconSent = false;
+            if (navigator.sendBeacon) {
+                try {
+                    beaconSent = navigator.sendBeacon(ajaxUrl, formData);
+                } catch (err) {
+                    beaconSent = false;
+                }
+            }
+            if (!beaconSent) {
+                fetch(ajaxUrl, {
+                    method: 'POST',
+                    body: formData,
+                    keepalive: true
+                }).catch(() => {});
+            }
+
+            // Nhảy thẳng qua Zalo ngay lập tức
+            window.location.href = zaloTargetUrl;
         });
     }
 });

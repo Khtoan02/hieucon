@@ -10,16 +10,9 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-global $wpdb;
-$table_name   = $wpdb->prefix . 'hieucon_bookings';
-$booking_id   = isset( $_GET['booking_id'] ) ? intval( $_GET['booking_id'] ) : 0;
-$booking_code = isset( $_GET['code'] ) ? strtoupper( sanitize_text_field( wp_unslash( $_GET['code'] ) ) ) : '';
-
-// Nếu truy cập link trắng không có mã hoặc mã không tồn tại trong hệ thống -> Tự động trỏ về trang đăng ký
-if ( empty( $booking_code ) ) {
-    wp_safe_redirect( home_url( '/dat-lich-tu-van/' ) );
-    exit;
-}
+// Đã bỏ bước khảo sát phía sau: tự động trỏ thẳng về trang đăng ký
+wp_safe_redirect( home_url( '/dat-lich-tu-van/' ) );
+exit;
 
 $booking_row = null;
 if ( $booking_id > 0 ) {

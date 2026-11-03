@@ -95,6 +95,14 @@ function hieucon_ajax_submit_booking() {
     $parent_name    = isset( $_POST['parent_name'] ) ? sanitize_text_field( wp_unslash( $_POST['parent_name'] ) ) : '';
     $phone          = isset( $_POST['phone'] ) ? sanitize_text_field( wp_unslash( $_POST['phone'] ) ) : '';
     $preferred_time = isset( $_POST['preferred_time'] ) ? sanitize_text_field( wp_unslash( $_POST['preferred_time'] ) ) : '';
+    $child_issues   = isset( $_POST['child_issues'] ) && is_array( $_POST['child_issues'] )
+        ? array_values( array_filter( array_map( 'sanitize_text_field', wp_unslash( $_POST['child_issues'] ) ) ) )
+        : [];
+    $diagnosis_str  = isset( $_POST['diagnosis'] ) ? sanitize_text_field( wp_unslash( $_POST['diagnosis'] ) ) : '';
+    if ( empty( $child_issues ) && ! empty( $diagnosis_str ) ) {
+        $child_issues = array_values( array_filter( array_map( 'trim', explode( ',', $diagnosis_str ) ) ) );
+    }
+    $issues_joined  = ! empty( $child_issues ) ? implode( ', ', $child_issues ) : $diagnosis_str;
 
     if ( empty( $parent_name ) || empty( $phone ) ) {
         wp_send_json_error( [ 'message' => 'Vui lòng nhập đầy đủ Họ tên và Số điện thoại/Zalo của ba/mẹ.' ] );
@@ -123,38 +131,33 @@ function hieucon_ajax_submit_booking() {
         $booking_code = 'TV' . wp_date( 'ymd' ) . '-' . strtoupper( wp_generate_password( 4, false, false ) );
     }
 
-    $inserted = $wpdb->insert(
-        $table_name,
-        [
-            'booking_code'   => $booking_code,
-            'parent_name'    => $parent_name,
-            'phone'          => $phone,
-            'preferred_time' => $preferred_time,
-            'status'         => 'pending',
-            'member_id'      => $member_id,
-            'ip_address'     => $ip_address,
-            'created_at'     => current_time( 'mysql' ),
-        ],
-        [ '%s', '%s', '%s', '%s', '%s', '%d', '%s', '%s' ]
-    );
+    $issue_note  = ! empty( $issues_joined ) ? ( '🩺 Vấn đề của trẻ: ' . $issues_joined ) : '';
+    $survey_json = ! empty( $issues_joined ) ? wp_json_encode( [
+        'diagnosis'    => $issues_joined,
+        'child_issues' => $child_issues,
+        'submitted_at' => current_time( 'mysql' ),
+    ], JSON_UNESCAPED_UNICODE ) : null;
+
+    $insert_data = [
+        'booking_code'   => $booking_code,
+        'parent_name'    => $parent_name,
+        'phone'          => $phone,
+        'preferred_time' => $preferred_time,
+        'issue_note'     => $issue_note,
+        'survey_data'    => $survey_json,
+        'status'         => 'pending',
+        'member_id'      => $member_id,
+        'ip_address'     => $ip_address,
+        'created_at'     => current_time( 'mysql' ),
+    ];
+    $insert_format = [ '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%d', '%s', '%s' ];
+
+    $inserted = $wpdb->insert( $table_name, $insert_data, $insert_format );
 
     if ( ! $inserted ) {
         // Phòng trường hợp bảng chưa tồn tại, tạo bảng rồi thử lại 1 lần
         hieucon_setup_bookings_table( true );
-        $inserted = $wpdb->insert(
-            $table_name,
-            [
-                'booking_code'   => $booking_code,
-                'parent_name'    => $parent_name,
-                'phone'          => $phone,
-                'preferred_time' => $preferred_time,
-                'status'         => 'pending',
-                'member_id'      => $member_id,
-                'ip_address'     => $ip_address,
-                'created_at'     => current_time( 'mysql' ),
-            ],
-            [ '%s', '%s', '%s', '%s', '%s', '%d', '%s', '%s' ]
-        );
+        $inserted = $wpdb->insert( $table_name, $insert_data, $insert_format );
     }
 
     if ( ! $inserted ) {
@@ -163,16 +166,16 @@ function hieucon_ajax_submit_booking() {
 
     $booking_id = intval( $wpdb->insert_id );
 
-    // Gửi Email thông báo Bước 1 cho Admin ở chế độ chạy ngầm (không chặn phản hồi người dùng)
+    // Gửi Email thông báo cho Admin ở chế độ chạy ngầm (không chặn phản hồi người dùng)
     $notify_email = get_option( 'hieucon_booking_notify_email', get_option( 'admin_email' ) );
     if ( ! empty( $notify_email ) && is_email( $notify_email ) ) {
-        $subject   = sprintf( '[Hiểu Con Từ Gốc] Đặt lịch tư vấn 1:1 mới từ %s (%s)', $parent_name, $phone );
+        $subject   = sprintf( '[Hiểu Con Từ Gốc] Đăng ký tư vấn 1:1 mới từ %s (%s)', $parent_name, $phone );
         $admin_url = admin_url( 'admin.php?page=hieucon-bookings' );
 
         $body = '
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #e2e8f0; border-radius: 16px; overflow: hidden;">
             <div style="background: #0A1931; color: #ffffff; padding: 20px 24px;">
-                <h2 style="margin: 0; font-size: 18px;">📅 Đăng Ký Tư Vấn 1:1 Mới (Bước 1)</h2>
+                <h2 style="margin: 0; font-size: 18px;">📅 Đăng Ký Tư Vấn 1:1 Mới</h2>
                 <p style="margin: 4px 0 0; font-size: 13px; color: #cbd5e1;">Mã lịch hẹn: <strong>' . esc_html( $booking_code ) . '</strong></p>
             </div>
             <div style="padding: 24px; background: #ffffff; color: #1e293b; line-height: 1.6;">
@@ -186,6 +189,10 @@ function hieucon_ajax_submit_booking() {
                         <td style="padding: 8px 0; font-weight: bold; color: #f97316;">' . esc_html( $phone ) . '</td>
                     </tr>
                     <tr>
+                        <td style="padding: 8px 0; color: #64748b;"><strong>Vấn đề của trẻ:</strong></td>
+                        <td style="padding: 8px 0; font-weight: bold; color: #c2410c;">' . esc_html( ! empty( $issues_joined ) ? $issues_joined : 'Chưa chọn' ) . '</td>
+                    </tr>
+                    <tr>
                         <td style="padding: 8px 0; color: #64748b;"><strong>Khung giờ hẹn:</strong></td>
                         <td style="padding: 8px 0; font-weight: bold; color: #0d9488;">' . esc_html( $preferred_time ) . '</td>
                     </tr>
@@ -194,7 +201,6 @@ function hieucon_ajax_submit_booking() {
                         <td style="padding: 8px 0;">' . esc_html( wp_date( 'H:i - d/m/Y' ) ) . '</td>
                     </tr>
                 </table>
-                <p style="font-size: 12.5px; color: #64748b; margin-top: 14px;"><em>* Phụ huynh đang tiếp tục điền phiếu khảo sát chi tiết về bé ở Bước 2.</em></p>
                 <div style="margin-top: 20px; padding-top: 16px; border-top: 1px solid #f1f5f9; text-align: center;">
                     <a href="' . esc_url( $admin_url ) . '" style="display: inline-block; background: #f97316; color: #ffffff; text-decoration: none; font-weight: bold; padding: 12px 24px; border-radius: 10px; font-size: 14px;">Xem trong WP Admin</a>
                 </div>
@@ -204,15 +210,17 @@ function hieucon_ajax_submit_booking() {
         hieucon_send_async_booking_mail( $notify_email, $subject, $body );
     }
 
+    $zalo_target = get_option( 'hieucon_link_zalo_tuvan', home_url( '/zalo' ) );
+
     wp_send_json_success( [
-        'message'        => 'Đã lưu lịch hẹn! Đang chuyển sang trang khảo sát tình trạng của bé...',
+        'message'        => 'Đã lưu đăng ký! Đang chuyển sang Zalo...',
         'booking_id'     => $booking_id,
         'booking_code'   => $booking_code,
         'parent_name'    => $parent_name,
         'phone'          => $phone,
         'preferred_time' => $preferred_time,
-        'survey_url'     => hieucon_get_booking_survey_url( $booking_id, $booking_code ),
-        'zalo_url'       => home_url( '/zalo' ),
+        'diagnosis'      => $issues_joined,
+        'zalo_url'       => $zalo_target,
     ] );
 }
 add_action( 'wp_ajax_hieucon_submit_booking', 'hieucon_ajax_submit_booking' );
@@ -1025,7 +1033,7 @@ function hieucon_render_bookings_admin_page() {
                         <th style="width: 165px;">Phụ huynh</th>
                         <th style="width: 210px;">SĐT / Zalo</th>
                         <th style="width: 160px;">Khung giờ hẹn</th>
-                        <th>Tóm tắt hồ sơ khảo sát (Bước 2)</th>
+                        <th>Trẻ đang gặp vấn đề gì?</th>
                         <th style="width: 175px;">Trạng thái</th>
                         <th style="width: 190px;">Ghi chú phụ trách</th>
                         <th style="width: 135px; text-align: center;">Thao tác</th>
@@ -1107,36 +1115,29 @@ function hieucon_render_bookings_admin_page() {
                                 </span>
                             </td>
 
-                            <!-- 6. Tóm tắt hồ sơ khảo sát (Gọn trên 1 dòng) -->
+                            <!-- 6. Vấn đề trẻ đang gặp phải (Gọn trên 1 dòng) -->
                             <td>
-                                <?php if ( $has_survey ) :
-                                    $child_info = trim( ( $survey['child_name'] ?? '' ) . ( ! empty( $survey['child_age'] ) ? ' (' . $survey['child_age'] . ')' : '' ) );
+                                <?php
+                                $issues_list = [];
+                                if ( $has_survey && ! empty( $survey['child_issues'] ) && is_array( $survey['child_issues'] ) ) {
+                                    $issues_list = $survey['child_issues'];
+                                } elseif ( $has_survey && ! empty( $survey['diagnosis'] ) ) {
+                                    $issues_list = array_values( array_filter( array_map( 'trim', explode( ',', $survey['diagnosis'] ) ) ) );
+                                }
                                 ?>
+                                <?php if ( ! empty( $issues_list ) ) : ?>
                                     <div style="display: flex; align-items: center; gap: 6px; overflow: hidden;">
-                                        <span class="hc-bk-pill" style="background:#ecfdf5; color:#047857; border:1px solid #a7f3d0; shrink:0;">
-                                            ✓ Đã khảo sát
-                                        </span>
-                                        <?php if ( ! empty( $child_info ) ) : ?>
-                                            <strong style="color:#0A1931; font-size:12.5px; shrink:0;"><?php echo esc_html( $child_info ); ?></strong>
-                                        <?php endif; ?>
-                                        <?php if ( ! empty( $survey['diagnosis'] ) ) : ?>
+                                        <?php foreach ( array_slice( $issues_list, 0, 3 ) as $iss ) : ?>
                                             <span style="background:#fff7ed; color:#c2410c; border:1px solid #fdba74; font-weight:700; font-size:11.5px; padding:2px 8px; border-radius:6px; shrink:0;">
-                                                <?php echo esc_html( $survey['diagnosis'] ); ?>
+                                                <?php echo esc_html( $iss ); ?>
                                             </span>
-                                        <?php endif; ?>
-                                        <?php if ( $symptom_count > 0 ) : ?>
-                                            <span style="color:#64748b; font-size:12px;">(+<?php echo intval( $symptom_count ); ?> biểu hiện)</span>
+                                        <?php endforeach; ?>
+                                        <?php if ( count( $issues_list ) > 3 ) : ?>
+                                            <span style="color:#64748b; font-size:11.5px; font-weight:700;">+<?php echo intval( count( $issues_list ) - 3 ); ?></span>
                                         <?php endif; ?>
                                     </div>
                                 <?php else : ?>
-                                    <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px;">
-                                        <span class="hc-bk-pill" style="background:#f8fafc; color:#64748b; border:1px solid #cbd5e1;">
-                                            Chưa điền khảo sát
-                                        </span>
-                                        <button type="button" class="hc-bk-icon-btn hc-copy-btn" data-copy="<?php echo esc_attr( $survey_link ); ?>" title="Copy link khảo sát Bước 2 gửi phụ huynh">
-                                            Copy link khảo sát
-                                        </button>
-                                    </div>
+                                    <span style="color:#94a3b8; font-size:12px; font-style:italic;">Chưa chọn vấn đề</span>
                                 <?php endif; ?>
                             </td>
 
@@ -1367,16 +1368,24 @@ function hieucon_render_bookings_admin_page() {
             modalSaveMsg.style.display = 'none';
 
             let surveyRowsHtml = '';
-            if (data.has_survey) {
-                surveyRowsHtml = `
-                    <tr>
-                        <th>Tên gọi & Độ tuổi của bé</th>
-                        <td><strong>${sv.child_name || 'Chưa ghi tên'}</strong> ${sv.child_age ? '(' + sv.child_age + ')' : ''}</td>
-                    </tr>
-                    <tr>
-                        <th>Vấn đề quan tâm trọng tâm</th>
-                        <td><span style="background:#fff7ed; color:#c2410c; border:1px solid #fdba74; font-weight:700; padding:3px 10px; border-radius:6px; display:inline-block;">${sv.diagnosis || 'Chưa chọn'}</span></td>
-                    </tr>
+            const issueTags = (sv.child_issues && sv.child_issues.length)
+                ? sv.child_issues
+                : (sv.diagnosis ? sv.diagnosis.split(',').map(s => s.trim()).filter(Boolean) : []);
+
+            surveyRowsHtml = `
+                <tr>
+                    <th>Trẻ đang gặp vấn đề gì?</th>
+                    <td>
+                        ${issueTags.length
+                            ? issueTags.map(t => '<span style="background:#fff7ed; color:#c2410c; border:1px solid #fdba74; font-weight:700; padding:4px 10px; border-radius:6px; display:inline-block; margin:2px 6px 2px 0;">' + t + '</span>').join('')
+                            : '<span style="color:#94a3b8; font-style:italic;">Chưa chọn vấn đề</span>'
+                        }
+                    </td>
+                </tr>
+            `;
+
+            if (sv.bio_symptoms?.length || sv.behav_symptoms?.length || sv.tried_methods?.length || sv.parent_goal) {
+                surveyRowsHtml += `
                     <tr>
                         <th>Biểu hiện ăn uống & tiêu hóa</th>
                         <td>${renderListTags(sv.bio_symptoms)}</td>
@@ -1392,18 +1401,6 @@ function hieucon_render_bookings_admin_page() {
                     <tr>
                         <th>Điều muốn làm rõ trong 30 phút</th>
                         <td><div style="background:#fffaf5; border-left:3px solid #f97316; padding:8px 12px; border-radius:0 8px 8px 0; font-weight:600;">${sv.parent_goal || '<span style="color:#94a3b8;font-weight:400;font-style:italic;">Không có ghi chú thêm</span>'}</div></td>
-                    </tr>
-                `;
-            } else {
-                surveyRowsHtml = `
-                    <tr>
-                        <th>Trạng thái khảo sát Bước 2</th>
-                        <td>
-                            <div style="display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap;">
-                                <span style="color:#c2410c; font-weight:600;">Phụ huynh mới gửi thông tin liên hệ ở Bước 1, chưa hoàn tất bảng khảo sát Bước 2.</span>
-                                <button type="button" class="hc-bk-icon-btn hc-copy-btn" data-copy="${data.survey_link || ''}">Copy link khảo sát gửi phụ huynh</button>
-                            </div>
-                        </td>
                     </tr>
                 `;
             }
