@@ -18,6 +18,14 @@ $prefill_name    = $current_member && ! empty( $current_member->full_name ) ? $c
 $prefill_phone   = $current_member && ! empty( $current_member->phone_number ) ? $current_member->phone_number : '';
 $booking_nonce   = wp_create_nonce( 'hieucon_booking_nonce' );
 $zalo_target_url = get_option( 'hieucon_link_zalo_tuvan', home_url( '/zalo' ) );
+
+// Tính thời gian đếm ngược đến hết ngày 07/11/2026 (23:59:59 GMT+7)
+$deadline_ts  = strtotime( '2026-11-07 23:59:59 +0700' );
+$remaining_s  = max( 0, $deadline_ts - time() );
+$init_days    = str_pad( (string) floor( $remaining_s / 86400 ), 2, '0', STR_PAD_LEFT );
+$init_hours   = str_pad( (string) floor( ( $remaining_s % 86400 ) / 3600 ), 2, '0', STR_PAD_LEFT );
+$init_mins    = str_pad( (string) floor( ( $remaining_s % 3600 ) / 60 ), 2, '0', STR_PAD_LEFT );
+$init_secs    = str_pad( (string) ( $remaining_s % 60 ), 2, '0', STR_PAD_LEFT );
 ?>
 
 <style>
@@ -192,9 +200,43 @@ $zalo_target_url = get_option( 'hieucon_link_zalo_tuvan', home_url( '/zalo' ) );
                         <span class="block text-secondary">vấn đề của con</span>
                     </h1>
 
-                    <p class="hc-hero-lead text-slate-700 text-[15.5px] sm:text-[17px] mb-6 sm:mb-7">
-                        <strong class="text-navy">HIỂU CON TỪ GỐC</strong> dành tặng <strong class="text-secondary">30 lịch tư vấn dinh dưỡng 1:1</strong> tặng các con có vấn đề về <strong class="text-navy">kén ăn, dị ứng, bất dung nạp thực phẩm, táo bón, rối loạn tiêu hóa, chậm tăng trưởng,...</strong>
+                    <p class="hc-hero-lead text-slate-700 text-[15.5px] sm:text-[17px] mb-4 sm:mb-5">
+                        <strong class="text-navy">HIỂU CON TỪ GỐC</strong> dành tặng <strong class="text-secondary">5 lịch tư vấn dinh dưỡng 1:1</strong> cho bé từ <strong class="text-navy">2–7 tuổi</strong> có vấn đề về <strong class="text-navy">kén ăn, dị ứng, bất dung nạp thực phẩm, táo bón, rối loạn tiêu hóa, chậm tăng trưởng,...</strong>
                     </p>
+
+                    <!-- Bộ đếm thời gian đến hết ngày hạn 07/11/2026 -->
+                    <div class="bg-white border border-orange-200 rounded-2xl px-4 py-3 sm:px-5 sm:py-3.5 mb-5 sm:mb-6 shadow-[0_10px_24px_-14px_rgba(249,115,22,0.22)] flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2.5 sm:gap-4">
+                        <div class="flex items-center justify-between sm:justify-start gap-2">
+                            <span class="inline-flex items-center gap-2 text-xs sm:text-[13.5px] font-bold text-navy">
+                                <span class="w-7 h-7 rounded-lg bg-[#fff7ed] border border-orange-200/80 text-secondary flex items-center justify-center shrink-0">
+                                    <i data-lucide="clock" class="w-4 h-4"></i>
+                                </span>
+                                <span>Hạn đăng ký đến <strong class="text-secondary">07/11/2026</strong>:</span>
+                            </span>
+                            <span class="sm:hidden inline-flex items-center px-2 py-0.5 rounded-full bg-[#fff7ed] border border-orange-200 text-secondary text-[11px] font-bold">
+                                5 suất
+                            </span>
+                        </div>
+
+                        <div class="grid grid-cols-4 gap-1.5 sm:flex sm:items-center sm:gap-2" id="hc-booking-countdown" data-deadline="2026-11-07T23:59:59+07:00">
+                            <div class="bg-[#fff7ed] border border-orange-200/90 rounded-xl px-2.5 py-1.5 min-w-[56px] text-center">
+                                <span id="hc-cd-days" class="block font-sans font-extrabold text-[15px] sm:text-[17px] text-secondary leading-none tabular-nums"><?php echo esc_html( $init_days ); ?></span>
+                                <span class="block text-[10px] font-bold text-navy/65 uppercase tracking-wider mt-1 leading-none">Ngày</span>
+                            </div>
+                            <div class="bg-[#fff7ed] border border-orange-200/90 rounded-xl px-2.5 py-1.5 min-w-[56px] text-center">
+                                <span id="hc-cd-hours" class="block font-sans font-extrabold text-[15px] sm:text-[17px] text-secondary leading-none tabular-nums"><?php echo esc_html( $init_hours ); ?></span>
+                                <span class="block text-[10px] font-bold text-navy/65 uppercase tracking-wider mt-1 leading-none">Giờ</span>
+                            </div>
+                            <div class="bg-[#fff7ed] border border-orange-200/90 rounded-xl px-2.5 py-1.5 min-w-[56px] text-center">
+                                <span id="hc-cd-mins" class="block font-sans font-extrabold text-[15px] sm:text-[17px] text-secondary leading-none tabular-nums"><?php echo esc_html( $init_mins ); ?></span>
+                                <span class="block text-[10px] font-bold text-navy/65 uppercase tracking-wider mt-1 leading-none">Phút</span>
+                            </div>
+                            <div class="bg-[#fff7ed] border border-orange-200/90 rounded-xl px-2.5 py-1.5 min-w-[56px] text-center">
+                                <span id="hc-cd-secs" class="block font-sans font-extrabold text-[15px] sm:text-[17px] text-secondary leading-none tabular-nums"><?php echo esc_html( $init_secs ); ?></span>
+                                <span class="block text-[10px] font-bold text-navy/65 uppercase tracking-wider mt-1 leading-none">Giây</span>
+                            </div>
+                        </div>
+                    </div>
 
                     <div class="bg-[#fff7ed] border border-orange-200/80 rounded-2xl p-5 sm:p-7">
                         <p class="hc-focus-heading font-bold text-navy text-[15.5px] sm:text-[17px] mb-4 sm:mb-5">
@@ -374,6 +416,32 @@ document.addEventListener('DOMContentLoaded', function () {
 
     if (typeof lucide !== 'undefined') {
         lucide.createIcons({ strokeWidth: 1.75 });
+    }
+
+    // 0. Bộ đếm ngược thời gian thực đến hết ngày 07/11/2026 (23:59:59 GMT+7)
+    const cdContainer = document.getElementById('hc-booking-countdown');
+    if (cdContainer) {
+        const deadlineMs = new Date(cdContainer.getAttribute('data-deadline')).getTime();
+        const elDays  = document.getElementById('hc-cd-days');
+        const elHours = document.getElementById('hc-cd-hours');
+        const elMins  = document.getElementById('hc-cd-mins');
+        const elSecs  = document.getElementById('hc-cd-secs');
+
+        const updateCountdown = () => {
+            const diffSec = Math.max(0, Math.floor((deadlineMs - Date.now()) / 1000));
+            const d = String(Math.floor(diffSec / 86400)).padStart(2, '0');
+            const h = String(Math.floor((diffSec % 86400) / 3600)).padStart(2, '0');
+            const m = String(Math.floor((diffSec % 3600) / 60)).padStart(2, '0');
+            const s = String(diffSec % 60).padStart(2, '0');
+
+            if (elDays)  elDays.textContent  = d;
+            if (elHours) elHours.textContent = h;
+            if (elMins)  elMins.textContent  = m;
+            if (elSecs)  elSecs.textContent  = s;
+        };
+
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
     }
 
     // 1. Chọn 1 hoặc nhiều vấn đề của trẻ ("Trẻ đang gặp vấn đề gì?")

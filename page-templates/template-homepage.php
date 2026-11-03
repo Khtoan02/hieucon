@@ -369,7 +369,7 @@ get_header();
                     <!-- Nút kêu gọi đặt lịch 1:1 -->
                     <div class="text-center">
                         <p class="text-slate-600 text-sm sm:text-[15px] mb-4">
-                            Hiểu Con Từ Gốc dành tặng <strong class="text-[#f97316]">30 lịch tư vấn dinh dưỡng 1:1 (30 phút)</strong> cho các bé gặp vấn đề tiêu hóa, kén ăn, táo bón, chậm tăng trưởng:
+                            Hiểu Con Từ Gốc dành tặng <strong class="text-[#f97316]">5 lịch tư vấn dinh dưỡng 1:1 (30 phút)</strong> cho bé từ <strong class="text-[#0A1931]">2–7 tuổi</strong> gặp vấn đề tiêu hóa, kén ăn, táo bón, chậm tăng trưởng:
                         </p>
                         <a href="<?php echo esc_url( home_url( '/dat-lich-tu-van/' ) ); ?>" class="inline-flex items-center justify-center gap-2 bg-[#f97316] hover:bg-[#ea580c] text-white font-extrabold text-[15px] sm:text-base uppercase tracking-wider px-8 py-4 rounded-xl shadow-[0_12px_24px_-6px_rgba(249,115,22,0.4)] hover:-translate-y-0.5 transition-all whitespace-nowrap no-underline">
                             <span>Đăng ký tư vấn 1:1 ngay</span>
