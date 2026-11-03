@@ -217,37 +217,31 @@ $week_range    = sprintf( '%s - %s', $monday_date->format( 'd/m' ), $saturday_da
                         <strong class="text-navy">Hiểu con từ Gốc</strong> cùng ba mẹ tìm hiểu những khó khăn về tiêu hóa của con, từ đó định hướng chăm sóc phù hợp với từng trẻ.
                     </p>
 
-                    <!-- Thanh thông tin hoạt động trong tuần (Tự động tính tuần & ngày Thứ 2 -> Thứ 7) -->
-                    <div class="bg-[#fff7ed]/70 border border-orange-200/90 rounded-2xl p-3.5 sm:px-5 sm:py-4 mb-5 sm:mb-6 shadow-[0_10px_24px_-14px_rgba(249,115,22,0.18)] grid grid-cols-1 sm:grid-cols-3 divide-y sm:divide-y-0 sm:divide-x divide-orange-200/80 gap-3 sm:gap-0">
-                        <!-- Cột 1: Hoạt động trong tuần -->
+                    <!-- Thanh thông tin tuần & ngày tháng (Tự động tính tuần & ngày trong tuần) -->
+                    <div class="bg-[#fff7ed]/70 border border-orange-200/90 rounded-2xl p-3.5 sm:px-5 sm:py-3.5 mb-5 sm:mb-6 shadow-[0_10px_24px_-14px_rgba(249,115,22,0.18)] grid grid-cols-1 sm:grid-cols-3 divide-y sm:divide-y-0 sm:divide-x divide-orange-200/80 gap-3 sm:gap-0 items-center">
+                        <!-- Cột 1: Tuần 45/2026 -->
                         <div class="flex items-center gap-3 sm:pr-4">
-                            <span class="w-10 h-10 rounded-xl bg-white border border-orange-200 text-secondary flex items-center justify-center shrink-0 shadow-xs">
-                                <i data-lucide="calendar-days" class="w-5 h-5"></i>
+                            <span class="w-9 h-9 rounded-xl bg-white border border-orange-200 text-secondary flex items-center justify-center shrink-0 shadow-xs">
+                                <i data-lucide="calendar-days" class="w-4.5 h-4.5"></i>
                             </span>
-                            <div>
-                                <span class="block text-[11.5px] font-semibold text-slate-600 leading-tight">Hoạt động trong tuần</span>
-                                <strong id="hc-auto-week-num" class="block font-sans font-extrabold text-[15px] sm:text-[16px] text-navy leading-snug mt-0.5"><?php echo esc_html( $week_label ); ?></strong>
-                            </div>
+                            <strong id="hc-auto-week-num" class="block font-sans font-extrabold text-[15px] sm:text-[16px] text-navy leading-snug"><?php echo esc_html( $week_label ); ?></strong>
                         </div>
 
-                        <!-- Cột 2: Từ Thứ 2 đến Thứ 7 -->
+                        <!-- Cột 2: Ngày tháng trong tuần -->
                         <div class="flex items-center gap-3 pt-3 sm:pt-0 sm:px-4">
-                            <span class="w-10 h-10 rounded-xl bg-white border border-orange-200 text-navy flex items-center justify-center shrink-0 shadow-xs">
-                                <i data-lucide="calendar-range" class="w-5 h-5"></i>
+                            <span class="w-9 h-9 rounded-xl bg-white border border-orange-200 text-navy flex items-center justify-center shrink-0 shadow-xs">
+                                <i data-lucide="calendar-range" class="w-4.5 h-4.5"></i>
                             </span>
-                            <div>
-                                <span class="block text-[11.5px] font-semibold text-slate-600 leading-tight">Thứ 2 – Thứ 7</span>
-                                <strong id="hc-auto-week-range" class="block font-sans font-extrabold text-[14.5px] sm:text-[15px] text-navy leading-snug mt-0.5 tabular-nums"><?php echo esc_html( $week_range ); ?></strong>
-                            </div>
+                            <strong id="hc-auto-week-range" class="block font-sans font-extrabold text-[14.5px] sm:text-[15.5px] text-navy leading-snug tabular-nums"><?php echo esc_html( $week_range ); ?></strong>
                         </div>
 
                         <!-- Cột 3: 05 gia đình con từ 2-7 tuổi -->
                         <div class="flex items-center gap-3 pt-3 sm:pt-0 sm:pl-4">
-                            <span class="w-10 h-10 rounded-xl bg-white border border-orange-200 text-secondary flex items-center justify-center shrink-0 shadow-xs">
-                                <i data-lucide="users" class="w-5 h-5"></i>
+                            <span class="w-9 h-9 rounded-xl bg-white border border-orange-200 text-secondary flex items-center justify-center shrink-0 shadow-xs">
+                                <i data-lucide="users" class="w-4.5 h-4.5"></i>
                             </span>
                             <div>
-                                <strong class="block font-sans font-extrabold text-[15px] sm:text-[16px] text-navy leading-tight">05 gia đình</strong>
+                                <strong class="block font-sans font-extrabold text-[15px] sm:text-[15.5px] text-navy leading-tight">05 gia đình</strong>
                                 <span class="block text-[12px] font-semibold text-slate-600 leading-snug mt-0.5">Con từ 2–7 tuổi</span>
                             </div>
                         </div>
