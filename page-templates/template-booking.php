@@ -35,14 +35,14 @@ $zalo_target_url = get_option( 'hieucon_link_zalo_tuvan', home_url( '/zalo' ) );
 
     .hc-master-card {
         background: #ffffff;
-        border: 1.5px solid #fed7aa;
+        border: 1.5px solid #e2e8f0;
         border-radius: 24px;
-        box-shadow: 0 24px 54px -24px rgba(234, 88, 12, 0.12);
+        box-shadow: 0 24px 54px -24px rgba(10, 25, 49, 0.10);
         overflow: hidden;
     }
     .hc-card-bar {
         height: 5px;
-        background: linear-gradient(90deg, #ea580c 0%, #f97316 50%, #fb923c 100%);
+        background: linear-gradient(90deg, #0A1931 0%, #f97316 100%);
     }
 
     /* Typography chống dính dấu tiếng Việt tuyệt đối (không bị Tailwind sm:text-* ghi đè line-height) */
@@ -161,18 +161,18 @@ $zalo_target_url = get_option( 'hieucon_link_zalo_tuvan', home_url( '/zalo' ) );
         line-height: 1.2;
     }
     .hc-time-card.is-active {
-        background: #fff7ed !important;
-        border-color: #f97316 !important;
-        box-shadow: 0 6px 16px -8px rgba(249, 115, 22, 0.32);
+        background: #0A1931 !important;
+        border-color: #0A1931 !important;
+        box-shadow: 0 10px 22px -8px rgba(10, 25, 49, 0.32);
     }
     .hc-time-card.is-active .hc-time-head {
-        color: #c2410c;
+        color: #ffffff;
     }
     .hc-time-card.is-active .hc-time-icon {
         color: #f97316;
     }
     .hc-time-card.is-active .hc-time-sub {
-        color: #ea580c;
+        color: #fdba74;
     }
 </style>
 
