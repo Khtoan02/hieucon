@@ -4,6 +4,7 @@
  * 
  * @package Hieucon
  */
+get_header();
 ?>
 <!DOCTYPE html>
 <html lang="vi">
@@ -104,27 +105,7 @@
 
     <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
 
-    <nav class="fixed w-full bg-white shadow-sm z-50 top-0 left-0 border-b border-gray-200">
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-16">
-                <div class="flex items-center space-x-2">
-                    <span class="text-2xl">🧠</span>
-                    <span class="text-lg font-bold text-brand-primary hidden sm:block">Hiểu con từ Gốc</span>
-                </div>
-                <div
-                    class="flex items-center space-x-4 sm:space-x-6 text-sm font-medium text-brand-muted overflow-x-auto whitespace-nowrap px-2">
-                    <a href="#hien-tuong" class="hover:text-brand-primary transition">Hiện tượng</a>
-                    <a href="#co-che" class="hover:text-brand-primary transition">Cơ chế</a>
-                    <a href="#tac-dong" class="hover:text-brand-primary transition">Tác động</a>
-                    <a href="#giai-phap"
-                        class="hover:text-brand-primary transition bg-brand-light text-brand-primary px-4 py-1.5 rounded-full">Giải
-                        pháp</a>
-                </div>
-            </div>
-        </div>
-    </nav>
-
-    <main class="pt-16">
+    <main class="pt-20 lg:pt-24">
         <section class="bg-white py-16 sm:py-24 border-b border-gray-100">
             <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center fade-in">
                 <div class="inline-block p-3 bg-brand-light rounded-full mb-6">
@@ -495,55 +476,6 @@
         </section>
 
     </main>
-
-    <footer class="bg-gray-900 text-gray-300 py-16 border-t-4 border-brand-primary">
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-10 mb-10">
-                <div>
-                    <h4 class="text-white text-xl font-bold mb-4">Cùng bạn hiểu con</h4>
-                    <p class="text-gray-400 mb-6 leading-relaxed">Hành trình y sinh không phải là một con đường dễ dàng
-                        và không gia đình nào nên đi một mình. Liên hệ với chúng tôi để được hỗ trợ.</p>
-                    <ul class="space-y-4">
-                        <li class="flex items-center">
-                            <span class="text-xl mr-3">🌐</span>
-                            <span><strong>Cộng đồng:</strong> <a
-                                    href="<?php echo home_url('/facebook-group'); ?>" target="_blank"
-                                    class="text-brand-light hover:text-white underline transition">Tự kỷ là Rối loạn
-                                    toàn thân</a></span>
-                        </li>
-                        <li class="flex items-center">
-                            <span class="text-xl mr-3">👤</span>
-                            <span><strong>Hỗ trợ:</strong> <a href="https://www.facebook.com/trolynamkhanh"
-                                    target="_blank" class="text-brand-light hover:text-white underline transition">Trợ
-                                    lý Nam Khánh</a></span>
-                        </li>
-                        <li class="flex items-center">
-                            <span class="text-xl mr-3">📞</span>
-                            <span><strong>Hotline/Zalo:</strong> <a href="<?php echo home_url('/zalo'); ?>" target="_blank" rel="noopener noreferrer" class="text-brand-light hover:text-white transition underline" title="Nhắn qua Zalo">0985.391.881</a></span>
-                        </li>
-                        <li class="flex items-center">
-                            <span class="text-xl mr-3">💬</span>
-                            <span><strong>Góc chia sẻ:</strong> <a href="<?php echo home_url('/zalo-group'); ?>" target="_blank"
-                                    class="text-brand-light hover:text-white underline transition">Tham gia giải
-                                    đáp</a></span>
-                        </li>
-                    </ul>
-                </div>
-                <div
-                    class="bg-gray-800 p-6 rounded-xl text-sm leading-relaxed text-gray-400 border border-gray-700 shadow-inner">
-                    <h5 class="text-white font-bold mb-3 uppercase tracking-wider">Tuyên bố miễn trừ trách nhiệm</h5>
-                    <p class="mb-3">Nội dung hoàn toàn dựa trên phân tích khoa học thực chứng và cơ chế sinh hóa nội
-                        sinh, mục đích cung cấp thông tin y sinh học cho cộng đồng.</p>
-                    <p>Tài liệu không nhằm mục đích thay thế cho chẩn đoán, tư vấn, hoặc phác đồ điều trị y khoa chuyên
-                        nghiệp. Việc áp dụng cần được thực hiện dưới sự giám sát, đánh giá trực tiếp từ chuyên gia y tế
-                        dựa trên hồ sơ bệnh án độc bản.</p>
-                </div>
-            </div>
-            <div class="text-center text-sm text-gray-500 pt-8 border-t border-gray-800">
-                &copy; 2026 🩷 HIỂU CON TỪ GỐC - TỰ KỶ LÀ RỐI LOẠN TOÀN THÂN.
-            </div>
-        </div>
-    </footer>
 
     <script>
         let currentMechStep = 1;

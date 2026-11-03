@@ -4,6 +4,7 @@
  * 
  * @package Hieucon
  */
+get_header();
 ?>
 <head>
     <meta charset="UTF-8">
@@ -444,11 +445,6 @@
             </div>
         </div>
     </section>
-
-    <!-- Footer -->
-    <footer class="py-12 bg-[#f0f9ff] text-center text-slate-400 text-sm">
-        <p>@2026 Toàn quyền bản quyền thuộc về Cộng đồng Hiểu con từ Gốc</p>
-    </footer>
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {

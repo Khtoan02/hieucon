@@ -4,6 +4,7 @@
  * 
  * @package Hieucon
  */
+get_header();
 ?>
 
 <head>

@@ -4,6 +4,7 @@
  *
  * @package Hieucon
  */
+get_header();
 ?>
 <!DOCTYPE html>
 <html lang="vi" class="scroll-smooth">
@@ -159,31 +160,9 @@
 <div id="progress-bar"></div>
 
 <!-- ════════════════════════════════════════════ -->
-<!-- SITE HEADER (giống theme) -->
+<!-- THANH MỤC LỤC BÀI VIẾT -->
 <!-- ════════════════════════════════════════════ -->
-<header id="main-header" class="sticky top-0 z-[100] w-full bg-white/80 backdrop-blur-xl border-b border-emerald-100/60 shadow-sm" style="margin-top:3px">
-    <div class="max-w-4xl mx-auto px-4">
-        <div class="flex items-center justify-between h-14">
-            <!-- Logo / Back -->
-            <a href="<?php echo home_url('/'); ?>" class="flex items-center gap-2 text-emerald-800 hover:text-emerald-600 transition-colors group">
-                <i data-lucide="arrow-left" class="w-4 h-4 group-hover:-translate-x-1 transition-transform"></i>
-                <span class="font-serif font-bold text-sm hidden sm:inline">Hiểu con từ Gốc</span>
-            </a>
-
-            <!-- Article Title -->
-            <div class="flex flex-col items-center">
-                <span class="text-xs font-bold text-emerald-700 uppercase tracking-widest">Bài 14</span>
-                <h1 class="font-serif font-bold text-sm text-slate-800 hidden sm:block">Tái Tạo Hàng Rào Ruột</h1>
-            </div>
-
-            <!-- Meta -->
-            <div class="flex items-center gap-2">
-                <span class="bg-emerald-100 text-emerald-700 text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider">Y Sinh</span>
-                <span class="text-xs text-slate-400 hidden sm:inline font-medium">8 phút</span>
-            </div>
-        </div>
-    </div>
-
+<div id="article-subnav" class="pt-[74px] lg:pt-[86px] w-full bg-white/80 backdrop-blur-xl border-b border-emerald-100/60 shadow-sm">
     <!-- Horizontal Scroll Nav -->
     <nav class="border-t border-emerald-50 overflow-x-auto no-scrollbar bg-white/60">
         <div class="max-w-4xl mx-auto flex whitespace-nowrap px-4 gap-1">
@@ -195,7 +174,7 @@
             <button onclick="scrollToSection('contact')" id="nav-contact" class="py-2.5 px-3 text-xs font-semibold transition-all text-slate-400 hover:text-emerald-700">Liên Hệ</button>
         </div>
     </nav>
-</header>
+</div>
 
 <!-- ════════════════════════════════════════════ -->
 <!-- HERO SECTION -->

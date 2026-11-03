@@ -4,6 +4,7 @@
  * 
  * @package Hieucon
  */
+get_header();
 ?>
 
 <head>
@@ -158,20 +159,8 @@
 
     <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
 
-    <!-- Header / Nav -->
-    <header class="bg-white shadow-sm sticky top-0 z-50">
-        <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
-            <div class="text-xl font-bold text-warm-900 tracking-tight">Hiểu con từ Gốc</div>
-            <nav class="hidden md:flex space-x-6 text-sm font-medium text-warm-800">
-                <a href="#co-che" class="hover:text-heal">Cơ chế</a>
-                <a href="#hau-qua" class="hover:text-alert">Hậu quả</a>
-                <a href="#giai-phap" class="hover:text-heal">Giải pháp</a>
-            </nav>
-        </div>
-    </header>
-
     <!-- Main Content -->
-    <main class="max-w-6xl mx-auto px-4 py-8 space-y-20">
+    <main class="max-w-6xl mx-auto px-4 pt-24 lg:pt-28 pb-12 space-y-20">
 
         <!-- 1. Hero Section -->
         <section class="text-center max-w-4xl mx-auto pt-10 pb-8">
@@ -390,57 +379,6 @@
         </section>
 
     </main>
-
-    <!-- Footer / Resources -->
-    <footer class="bg-warm-900 text-warm-200 py-10 mt-12">
-        <div class="max-w-6xl mx-auto px-4 grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div>
-                <h3 class="text-xl font-bold text-white mb-4">Cùng bạn hiểu con</h3>
-                <ul class="space-y-3 text-sm">
-                    <li class="flex items-center">
-                        <span class="mr-2">🌐</span>
-                        <a href="<?php echo home_url('/facebook-group'); ?>" target="_blank"
-                            class="hover:text-white underline">Cộng đồng Facebook: Tự kỷ là Rối loạn toàn thân</a>
-                    </li>
-                    <li class="flex items-center">
-                        <span class="mr-2">👤</span>
-                        <a href="https://www.facebook.com/trolynamkhanh" target="_blank"
-                            class="hover:text-white underline">Trợ lý Nam Khánh</a>
-                    </li>
-                    <li class="flex items-center">
-                        <span class="mr-2">📞</span>
-                        <span><strong>Hotline/Zalo:</strong> <a href="<?php echo home_url('/zalo'); ?>" target="_blank" rel="noopener noreferrer"
-                                class="text-brand-light hover:text-white transition underline"
-                                title="Nhắn qua Zalo">0985.391.881</a></span>
-                    </li>
-                    <li class="flex items-center">
-                        <span class="mr-2">💬</span>
-                        <a href="<?php echo home_url('/zalo-group'); ?>" target="_blank" class="hover:text-white underline">Góc chia sẻ</a>
-                    </li>
-                </ul>
-            </div>
-
-            <!-- Right Column: Disclaimer (Bottom Right of Website) -->
-            <div class="flex flex-col justify-end mt-8 md:mt-0">
-                <div class="bg-warm-800 p-5 md:p-6 rounded-xl border border-warm-700 shadow-inner">
-                    <h4
-                        class="text-sm font-bold text-alert-light mb-3 uppercase tracking-wider flex items-center gap-2">
-                        <span class="text-lg">⚠️</span> TUYÊN BỐ MIỄN TRỪ TRÁCH NHIỆM (DISCLAIMER)
-                    </h4>
-                    <div class="text-xs text-warm-300 space-y-3 leading-relaxed text-justify">
-                        <p>Nội dung trong bài viết này hoàn toàn dựa trên các phân tích khoa học thực chứng và cơ chế
-                            sinh hóa nội sinh, được biên soạn với mục đích cung cấp thông tin và kiến thức y sinh học
-                            cho cộng đồng. Tất cả các thông tin, tài liệu và định hướng dinh dưỡng không nhằm mục đích
-                            thay thế cho các chẩn đoán, tư vấn, hoặc phác đồ điều trị y khoa chuyên nghiệp.</p>
-                        <p>Việc áp dụng bất kỳ thay đổi lớn nào về chế độ ăn, sử dụng thực phẩm bổ sung hoặc các liệu
-                            pháp y sinh cần được thực hiện dưới sự giám sát, đánh giá và chỉ định trực tiếp từ các
-                            chuyên gia y tế, bác sĩ chuyên khoa hoặc chuyên gia dinh dưỡng có giấy phép hành nghề, dựa
-                            trên hồ sơ bệnh án và tình trạng sinh lý độc bản của từng cá nhân.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </footer>
 
     <!-- Application Logic -->
     <script>

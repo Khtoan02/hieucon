@@ -4,6 +4,7 @@
  * 
  * @package Hieucon
  */
+get_header();
 ?>
 <!DOCTYPE html>
 <html lang="vi">
@@ -40,25 +41,8 @@
 </head>
 <body class="bg-[#FBFBFF] text-gray-800">
 
-    <!-- Header / Navigation -->
-    <nav class="sticky top-0 bg-white/80 backdrop-blur-md z-50 border-b border-purple-100">
-        <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
-            <div class="flex items-center gap-2">
-                <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-purple-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-                <span class="font-bold text-xl text-purple-900 tracking-tight">HealthPath</span>
-            </div>
-            <div class="hidden md:flex gap-8 text-sm font-semibold text-gray-600">
-                <a href="#overview" class="hover:text-purple-600 transition">Tổng quan</a>
-                <a href="#causes" class="hover:text-purple-600 transition">6 Nguyên nhân</a>
-                <a href="#nutrients" class="hover:text-purple-600 transition">Vi chất thiết yếu</a>
-                <a href="#contact-helen" class="hover:text-purple-600 transition">Liên hệ chuyên gia</a>
-            </div>
-            <a href="#contact-helen" class="bg-purple-600 text-white px-5 py-2 rounded-full text-sm font-bold hover:bg-purple-700 transition shadow-lg shadow-purple-200">Cần hỗ trợ ngay</a>
-        </div>
-    </nav>
-
     <!-- Hero Section -->
-    <header class="hero-gradient pt-16 pb-24 px-4">
+    <header class="hero-gradient pt-24 lg:pt-28 pb-24 px-4">
         <div class="max-w-4xl mx-auto text-center">
             <span class="inline-block bg-purple-100 text-purple-700 px-4 py-1 rounded-full text-sm font-bold mb-6 italic">Dành cho Cha mẹ có con chậm nói</span>
             <h1 class="text-4xl md:text-6xl font-bold text-gray-900 mb-6 leading-tight">
@@ -326,13 +310,5 @@
             <p class="mt-8 text-sm text-purple-300 italic">Đừng để rào cản y khoa ngăn cản tương lai của trẻ.</p>
         </div>
     </section>
-
-    <!-- Footer -->
-    <footer class="py-12 bg-gray-900 text-gray-500 px-4 text-center">
-        <div class="max-w-6xl mx-auto">
-            <p class="text-sm mb-4">© 2024 Dự án nâng cao nhận thức y sinh cho cha mẹ Việt. Mọi quyền được bảo lưu.</p>
-            <p class="text-xs italic">Nguồn tài liệu: TACA - The Autism Community in Action (Family Resources: Medical Causes of Speech Issues in Autism).</p>
-        </div>
-    </footer>
 
 <?php get_footer(); ?>

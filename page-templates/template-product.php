@@ -127,44 +127,6 @@
 
     </main>
 
-    <!-- Disclaimer & Footer -->
-    <footer class="border-t border-white/40 bg-white/30 backdrop-blur-md pt-16 pb-10 mt-10 relative z-10">
-        <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
-            
-            <!-- Disclaimer Box -->
-            <div class="glass-card rounded-[2rem] p-6 md:p-8 shadow-soft mb-16 flex flex-col md:flex-row gap-5 items-start relative overflow-hidden">
-                <!-- Watermark Icon -->
-                <div class="absolute -top-10 -right-10 opacity-5 pointer-events-none">
-                    <i data-lucide="shield-alert" class="w-48 h-48 text-navy"></i>
-                </div>
-                
-                <div class="bg-secondary/10 p-3 md:p-4 rounded-full shrink-0 relative z-10">
-                    <i data-lucide="info" class="w-6 h-6 md:w-8 md:h-8 text-secondary"></i>
-                </div>
-                
-                <div class="relative z-10">
-                    <h4 class="font-serif text-navy font-bold text-lg md:text-xl mb-3">Lưu ý quan trọng về Y Tế</h4>
-                    <p class="text-navy/70 font-medium text-sm md:text-base leading-relaxed">
-                        Các sản phẩm và thông tin trên trang web mang tính chất chia sẻ kiến thức, hỗ trợ dinh dưỡng và sức khỏe nền tảng. <strong>Thực phẩm này không phải là thuốc và không có tác dụng thay thế thuốc chữa bệnh.</strong> Mọi quyết định can thiệp y tế chuyên sâu hoặc sử dụng sản phẩm cho trẻ có nhu cầu đặc biệt cần có sự tham vấn của các y bác sĩ, chuyên gia có chuyên môn phù hợp với thể trạng riêng biệt của từng trẻ.
-                    </p>
-                </div>
-            </div>
-
-            <!-- Minimal Footer Info -->
-            <div class="flex flex-col md:flex-row justify-between items-center gap-6">
-                <div class="flex items-center gap-3 text-center md:text-left">
-                    <div class="p-2 bg-secondary/10 rounded-full text-secondary">
-                        <i data-lucide="heart" class="w-4 h-4"></i>
-                    </div>
-                    <span class="font-serif italic text-navy text-base md:text-lg">Hiểu con từ gốc, yêu thương trọn vẹn.</span>
-                </div>
-                <div class="text-sm font-medium text-navy/50 text-center md:text-right">
-                    &copy; <?php echo date('Y'); ?> Cộng đồng Hiểu Con Từ Gốc.<br class="md:hidden" /> All rights reserved.
-                </div>
-            </div>
-        </div>
-    </footer>
-
     <script>
 
         // Dữ liệu sản phẩm tĩnh (Bỏ phân loại)

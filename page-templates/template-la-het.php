@@ -294,14 +294,6 @@
     <div class="absolute top-0 right-0 w-64 h-64 bg-purple-800 rounded-full -mr-32 -mt-32 opacity-50"></div>
     <div class="absolute bottom-0 left-0 w-48 h-48 bg-purple-800 rounded-full -ml-24 -mb-24 opacity-50"></div>
   </section>
-
-  <!-- Footer -->
-  <footer class="py-12 px-6 bg-slate-950 text-slate-500 text-center text-sm border-t border-purple-900">
-    <div class="max-w-4xl mx-auto">
-      <p class="font-semibold text-purple-300">Helen Hoai - Love for Autism</p>
-      <p class="mt-2 text-slate-600">© 2024</p>
-    </div>
-  </footer>
 </div>
 
 <script>

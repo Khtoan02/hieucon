@@ -111,6 +111,14 @@
 </div><!-- #page -->
 
 <script>
+    if (typeof tailwind !== 'undefined' && tailwind.config && tailwind.config.theme) {
+        tailwind.config.theme.extend = tailwind.config.theme.extend || {};
+        tailwind.config.theme.extend.colors = Object.assign({
+            navy: { DEFAULT: '#0A1931', light: '#1A365D' },
+            secondary: '#f97316',
+            secondary_dark: '#ea580c'
+        }, tailwind.config.theme.extend.colors || {});
+    }
     if (typeof lucide !== 'undefined') {
         lucide.createIcons({ strokeWidth: 1.5 });
     }

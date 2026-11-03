@@ -225,35 +225,28 @@
         </p>
     </section>
 
-    <footer class="bg-[#002795] text-[#FAF9F6]/60 py-16 px-6">
-        <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12">
-            <div>
-                <h3 class="text-[#FAF9F6] text-2xl font-bold mb-6">Hiểu Con Từ Gốc</h3>
-                <p class="text-sm leading-relaxed mb-6">Đồng hành cùng cha mẹ thấu hiểu sâu sắc và khoa học về sức khỏe trẻ phát triển thần kinh khác biệt.</p>
-                <a href="https://hieucontugoc.online/bang-kiem-tra-suc-khoe-toan-dien/" class="cta-button">LÀM CHECKLIST NGAY</a>
-            </div>
-            <div>
-                <h4 class="text-[#FAF9F6] font-bold mb-4 uppercase text-sm">Nguồn tham khảo uy tín</h4>
-                <div class="grid grid-cols-1 gap-2 text-xs">
-                    <a href="https://www.healthline.com/health/autism/autism-and-constipation" class="hover:text-[#FFD154] transition-colors underline">1. Healthline - Autism and Constipation</a>
-                    <a href="https://www.medicalnewstoday.com/articles/autism-and-stomach-issues" class="hover:text-[#FFD154] transition-colors underline">2. Medical News Today - Autism and stomach issues</a>
-                    <a href="https://www.spectrumnews.org/news/gastrointestinal-problems-autism-explained/" class="hover:text-[#FFD154] transition-colors underline">3. Spectrum News - GI Problems Explained</a>
-                    <a href="https://www.psychologytoday.com/us/blog/the-fallible-mind/201701/the-gut-brain-connection-in-autism" class="hover:text-[#FFD154] transition-colors underline">4. Psychology Today - Gut-Brain Connection</a>
-                    <a href="https://www.autismspeaks.org/gastrointestinal-gi-issues-autism" class="hover:text-[#FFD154] transition-colors underline">5. Autism Speaks - GI Issues</a>
-                    <a href="https://www.autism.org.uk/advice-and-guidance/topics/physical-health/bowel-management" class="hover:text-[#FFD154] transition-colors underline">6. National Autistic Society - Bowel Management</a>
-                    <a href="https://childmind.org/article/autism-and-diet/" class="hover:text-[#FFD154] transition-colors underline">7. Child Mind Institute - Autism and Diet</a>
-                    <a href="https://drroseann.com/gut-health-and-autism/" class="hover:text-[#FFD154] transition-colors underline">8. Dr. Roseann - Gut Health and Autism</a>
-                    <a href="https://www.amenclinics.com/blog/how-the-gut-brain-connection-affects-autism/" class="hover:text-[#FFD154] transition-colors underline">9. Amen Clinics - Gut-Brain Connection</a>
-                    <a href="https://www.ifm.org/news-insights/gut-brain-axis-autism-spectrum-disorder/" class="hover:text-[#FFD154] transition-colors underline">10. IFM - Gut-Brain Axis in ASD</a>
-                    <a href="https://www.autismparentingmagazine.com/autism-constipation-issues/" class="hover:text-[#FFD154] transition-colors underline">11. Autism Parenting Magazine - Constipation</a>
-                    <a href="https://theautismcafe.com/autism-and-constipation/" class="hover:text-[#FFD154] transition-colors underline">12. The Autism Cafe - Autism & Constipation</a>
-                    <a href="https://findingcoopersvoice.com/2019/02/12/the-gut-and-autism/" class="hover:text-[#FFD154] transition-colors underline">13. Finding Cooper's Voice - The Gut & Autism</a>
-                    <a href="https://themighty.com/topic/autism-spectrum-disorder/autism-gi-issues-constipation/" class="hover:text-[#FFD154] transition-colors underline">14. The Mighty - ASD & GI Issues</a>
-                    <a href="https://geekclubbooks.com/2016/10/autism-and-gastrointestinal-issues/" class="hover:text-[#FFD154] transition-colors underline">15. Geek Club Books - Autism and GI</a>
-                    </div>
+    <section class="bg-slate-100 text-slate-600 py-12 px-6 border-t border-slate-200">
+        <div class="max-w-5xl mx-auto">
+            <h4 class="text-[#002795] font-bold mb-4 uppercase text-sm tracking-wider">Nguồn tham khảo uy tín</h4>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2.5 text-xs">
+                <a href="https://www.healthline.com/health/autism/autism-and-constipation" class="hover:text-[#002795] transition-colors underline">1. Healthline - Autism and Constipation</a>
+                <a href="https://www.medicalnewstoday.com/articles/autism-and-stomach-issues" class="hover:text-[#002795] transition-colors underline">2. Medical News Today - Autism and stomach issues</a>
+                <a href="https://www.spectrumnews.org/news/gastrointestinal-problems-autism-explained/" class="hover:text-[#002795] transition-colors underline">3. Spectrum News - GI Problems Explained</a>
+                <a href="https://www.psychologytoday.com/us/blog/the-fallible-mind/201701/the-gut-brain-connection-in-autism" class="hover:text-[#002795] transition-colors underline">4. Psychology Today - Gut-Brain Connection</a>
+                <a href="https://www.autismspeaks.org/gastrointestinal-gi-issues-autism" class="hover:text-[#002795] transition-colors underline">5. Autism Speaks - GI Issues</a>
+                <a href="https://www.autism.org.uk/advice-and-guidance/topics/physical-health/bowel-management" class="hover:text-[#002795] transition-colors underline">6. National Autistic Society - Bowel Management</a>
+                <a href="https://childmind.org/article/autism-and-diet/" class="hover:text-[#002795] transition-colors underline">7. Child Mind Institute - Autism and Diet</a>
+                <a href="https://drroseann.com/gut-health-and-autism/" class="hover:text-[#002795] transition-colors underline">8. Dr. Roseann - Gut Health and Autism</a>
+                <a href="https://www.amenclinics.com/blog/how-the-gut-brain-connection-affects-autism/" class="hover:text-[#002795] transition-colors underline">9. Amen Clinics - Gut-Brain Connection</a>
+                <a href="https://www.ifm.org/news-insights/gut-brain-axis-autism-spectrum-disorder/" class="hover:text-[#002795] transition-colors underline">10. IFM - Gut-Brain Axis in ASD</a>
+                <a href="https://www.autismparentingmagazine.com/autism-constipation-issues/" class="hover:text-[#002795] transition-colors underline">11. Autism Parenting Magazine - Constipation</a>
+                <a href="https://theautismcafe.com/autism-and-constipation/" class="hover:text-[#002795] transition-colors underline">12. The Autism Cafe - Autism & Constipation</a>
+                <a href="https://findingcoopersvoice.com/2019/02/12/the-gut-and-autism/" class="hover:text-[#002795] transition-colors underline">13. Finding Cooper's Voice - The Gut & Autism</a>
+                <a href="https://themighty.com/topic/autism-spectrum-disorder/autism-gi-issues-constipation/" class="hover:text-[#002795] transition-colors underline">14. The Mighty - ASD & GI Issues</a>
+                <a href="https://geekclubbooks.com/2016/10/autism-and-gastrointestinal-issues/" class="hover:text-[#002795] transition-colors underline">15. Geek Club Books - Autism and GI</a>
             </div>
         </div>
-    </footer>
+    </section>
 
 
 </div>

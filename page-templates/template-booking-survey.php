@@ -10,19 +10,31 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-// Đã bỏ bước khảo sát phía sau: tự động trỏ thẳng về trang đăng ký
-wp_safe_redirect( home_url( '/dat-lich-tu-van/' ) );
-exit;
+global $wpdb;
+$table_name   = $wpdb->prefix . 'hieucon_bookings';
+$booking_id   = isset( $_GET['booking_id'] ) ? intval( $_GET['booking_id'] ) : 0;
+$raw_code     = isset( $_GET['code'] ) ? wp_unslash( $_GET['code'] ) : ( isset( $_GET['booking_code'] ) ? wp_unslash( $_GET['booking_code'] ) : '' );
+$booking_code = strtoupper( sanitize_text_field( $raw_code ) );
+
+if ( empty( $booking_code ) && $booking_id <= 0 ) {
+    wp_safe_redirect( home_url( '/dat-lich-tu-van/' ) );
+    exit;
+}
 
 $booking_row = null;
-if ( $booking_id > 0 ) {
+if ( $booking_id > 0 && ! empty( $booking_code ) ) {
     $booking_row = $wpdb->get_row(
         $wpdb->prepare( "SELECT * FROM $table_name WHERE id = %d AND booking_code = %s LIMIT 1", $booking_id, $booking_code )
     );
 }
-if ( ! $booking_row ) {
+if ( ! $booking_row && ! empty( $booking_code ) ) {
     $booking_row = $wpdb->get_row(
         $wpdb->prepare( "SELECT * FROM $table_name WHERE booking_code = %s ORDER BY id DESC LIMIT 1", $booking_code )
+    );
+}
+if ( ! $booking_row && $booking_id > 0 ) {
+    $booking_row = $wpdb->get_row(
+        $wpdb->prepare( "SELECT * FROM $table_name WHERE id = %d LIMIT 1", $booking_id )
     );
 }
 
@@ -36,8 +48,21 @@ $booking_code       = $booking_row->booking_code;
 $parent_name        = $booking_row->parent_name;
 $phone              = $booking_row->phone;
 $preferred_time     = $booking_row->preferred_time;
+$existing_survey    = ! empty( $booking_row->survey_data ) ? json_decode( $booking_row->survey_data, true ) : [];
+if ( ! is_array( $existing_survey ) ) {
+    $existing_survey = [];
+}
+
 $current_member     = class_exists( '\Hieucon\Model\Member_Model' ) ? \Hieucon\Model\Member_Model::get_current_member() : false;
-$prefill_child_name = $current_member && ! empty( $current_member->child_name ) ? $current_member->child_name : '';
+$prefill_child_name = ! empty( $existing_survey['child_name'] )
+    ? $existing_survey['child_name']
+    : ( $current_member && ! empty( $current_member->child_name ) ? $current_member->child_name : '' );
+$prefill_child_age  = ! empty( $existing_survey['child_age'] ) ? $existing_survey['child_age'] : '2 – 3 tuổi';
+$prefill_diagnosis  = ! empty( $existing_survey['diagnosis'] ) ? $existing_survey['diagnosis'] : 'Táo bón / tiêu hóa';
+$prefill_bio        = isset( $existing_survey['bio_symptoms'] ) && is_array( $existing_survey['bio_symptoms'] ) ? $existing_survey['bio_symptoms'] : [];
+$prefill_behav      = isset( $existing_survey['behav_symptoms'] ) && is_array( $existing_survey['behav_symptoms'] ) ? $existing_survey['behav_symptoms'] : [];
+$prefill_tried      = isset( $existing_survey['tried_methods'] ) && is_array( $existing_survey['tried_methods'] ) ? $existing_survey['tried_methods'] : [];
+$prefill_goal       = ! empty( $existing_survey['parent_goal'] ) ? $existing_survey['parent_goal'] : '';
 $booking_nonce      = wp_create_nonce( 'hieucon_booking_nonce' );
 
 get_header();
@@ -178,12 +203,12 @@ get_header();
                                 <label class="block text-xs sm:text-sm font-bold text-navy mb-2">
                                     Độ tuổi hiện tại của bé
                                 </label>
-                                <input type="hidden" id="survey-child-age" name="child_age" value="2 – 3 tuổi">
+                                <input type="hidden" id="survey-child-age" name="child_age" value="<?php echo esc_attr( $prefill_child_age ); ?>">
                                 <div class="flex flex-wrap gap-2" data-single-group="survey-child-age">
                                     <?php
                                     $age_options = [ 'Dưới 2 tuổi', '2 – 3 tuổi', '3 – 5 tuổi', '5 – 7 tuổi', 'Trên 7 tuổi' ];
                                     foreach ( $age_options as $idx => $age_label ) :
-                                        $active_cls = ( 1 === $idx ) ? 'is-selected' : '';
+                                        $active_cls = ( $age_label === $prefill_child_age || ( ! in_array( $prefill_child_age, $age_options, true ) && 1 === $idx ) ) ? 'is-selected' : '';
                                     ?>
                                     <button type="button" data-value="<?php echo esc_attr( $age_label ); ?>" class="survey-single-pill <?php echo esc_attr( $active_cls ); ?> px-4 py-2.5 rounded-xl border border-slate-200 bg-white text-navy text-xs sm:text-sm font-semibold cursor-pointer">
                                         <?php echo esc_html( $age_label ); ?>
@@ -202,18 +227,27 @@ get_header();
                         </div>
                         <p class="text-xs sm:text-sm text-slate-500 mb-4 pl-11">Chọn 1 nhóm vấn đề nổi bật nhất hiện tại:</p>
 
-                        <input type="hidden" id="survey-diagnosis" name="diagnosis" value="Táo bón / tiêu hóa">
+                        <?php
+                        $diagnoses = [
+                            'Táo bón / tiêu hóa',
+                            'Kén ăn / nhai nuốt',
+                            'Bất dung nạp thực phẩm',
+                            'Hấp thu / chậm tăng cân',
+                            'Thiếu hụt vi chất',
+                        ];
+                        $matched_diag = $diagnoses[0];
+                        foreach ( $diagnoses as $d_opt ) {
+                            if ( $d_opt === $prefill_diagnosis || false !== mb_stripos( $prefill_diagnosis, explode( ' /', $d_opt )[0] ) ) {
+                                $matched_diag = $d_opt;
+                                break;
+                            }
+                        }
+                        ?>
+                        <input type="hidden" id="survey-diagnosis" name="diagnosis" value="<?php echo esc_attr( $matched_diag ); ?>">
                         <div class="flex flex-wrap gap-2.5 pl-0 sm:pl-11" data-single-group="survey-diagnosis">
                             <?php
-                            $diagnoses = [
-                                'Táo bón / tiêu hóa',
-                                'Kén ăn / nhai nuốt',
-                                'Bất dung nạp thực phẩm',
-                                'Hấp thu / chậm tăng cân',
-                                'Thiếu hụt vi chất',
-                            ];
                             foreach ( $diagnoses as $idx => $diag ) :
-                                $active_cls = ( 0 === $idx ) ? 'is-selected' : '';
+                                $active_cls = ( $diag === $matched_diag ) ? 'is-selected' : '';
                             ?>
                             <button type="button" data-value="<?php echo esc_attr( $diag ); ?>" class="survey-single-pill <?php echo esc_attr( $active_cls ); ?> px-4 py-2.5 rounded-xl border border-slate-200 bg-white text-navy text-xs sm:text-sm font-semibold cursor-pointer">
                                 <?php echo esc_html( $diag ); ?>
@@ -241,8 +275,9 @@ get_header();
                                 'Thích đồ ngọt, sữa hoặc tinh bột',
                             ];
                             foreach ( $bio_symptoms as $item ) :
+                                $chip_sel = in_array( $item, $prefill_bio, true ) ? 'is-selected' : '';
                             ?>
-                            <button type="button" data-multi-name="bio_symptoms[]" data-value="<?php echo esc_attr( $item ); ?>" data-active-class="is-selected" class="survey-multi-chip text-left px-4 py-3.5 rounded-xl border border-slate-200 bg-white text-slate-700 text-xs sm:text-sm font-medium flex items-center gap-3 cursor-pointer">
+                            <button type="button" data-multi-name="bio_symptoms[]" data-value="<?php echo esc_attr( $item ); ?>" data-active-class="is-selected" class="survey-multi-chip <?php echo esc_attr( $chip_sel ); ?> text-left px-4 py-3.5 rounded-xl border border-slate-200 bg-white text-slate-700 text-xs sm:text-sm font-medium flex items-center gap-3 cursor-pointer">
                                 <span class="chip-check-icon w-5 h-5 rounded-md border border-slate-300 flex items-center justify-center shrink-0 text-transparent transition-colors">
                                     <i data-lucide="check" class="w-3.5 h-3.5"></i>
                                 </span>
@@ -271,8 +306,9 @@ get_header();
                                 'Có dấu hiệu thiếu hụt vi chất (Kẽm, Sắt, Canxi...)',
                             ];
                             foreach ( $behav_symptoms as $item ) :
+                                $chip_sel = in_array( $item, $prefill_behav, true ) ? 'is-selected' : '';
                             ?>
-                            <button type="button" data-multi-name="behav_symptoms[]" data-value="<?php echo esc_attr( $item ); ?>" data-active-class="is-selected" class="survey-multi-chip text-left px-4 py-3.5 rounded-xl border border-slate-200 bg-white text-slate-700 text-xs sm:text-sm font-medium flex items-center gap-3 cursor-pointer">
+                            <button type="button" data-multi-name="behav_symptoms[]" data-value="<?php echo esc_attr( $item ); ?>" data-active-class="is-selected" class="survey-multi-chip <?php echo esc_attr( $chip_sel ); ?> text-left px-4 py-3.5 rounded-xl border border-slate-200 bg-white text-slate-700 text-xs sm:text-sm font-medium flex items-center gap-3 cursor-pointer">
                                 <span class="chip-check-icon w-5 h-5 rounded-md border border-slate-300 flex items-center justify-center shrink-0 text-transparent transition-colors">
                                     <i data-lucide="check" class="w-3.5 h-3.5"></i>
                                 </span>
@@ -299,8 +335,9 @@ get_header();
                                 'Đang tìm hiểu hướng ưu tiên phù hợp cho con',
                             ];
                             foreach ( $tried_methods as $item ) :
+                                $chip_sel = in_array( $item, $prefill_tried, true ) ? 'is-selected' : '';
                             ?>
-                            <button type="button" data-multi-name="tried_methods[]" data-value="<?php echo esc_attr( $item ); ?>" data-active-class="is-selected" class="survey-multi-chip text-left px-4 py-3.5 rounded-xl border border-slate-200 bg-white text-slate-700 text-xs sm:text-sm font-medium flex items-center gap-3 cursor-pointer">
+                            <button type="button" data-multi-name="tried_methods[]" data-value="<?php echo esc_attr( $item ); ?>" data-active-class="is-selected" class="survey-multi-chip <?php echo esc_attr( $chip_sel ); ?> text-left px-4 py-3.5 rounded-xl border border-slate-200 bg-white text-slate-700 text-xs sm:text-sm font-medium flex items-center gap-3 cursor-pointer">
                                 <span class="chip-check-icon w-5 h-5 rounded-md border border-slate-300 flex items-center justify-center shrink-0 text-transparent transition-colors">
                                     <i data-lucide="check" class="w-3.5 h-3.5"></i>
                                 </span>
@@ -326,7 +363,7 @@ get_header();
                                 rows="3"
                                 placeholder="Chia sẻ ngắn gọn điều gia đình đang trăn trở nhất về tình trạng của con..."
                                 class="w-full px-4 py-3.5 rounded-xl bg-white border border-slate-200 focus:border-secondary outline-none text-navy text-sm sm:text-base transition-all resize-none"
-                            ></textarea>
+                            ><?php echo esc_textarea( $prefill_goal ); ?></textarea>
 
                             <div class="space-y-3 pt-1">
                                 <button

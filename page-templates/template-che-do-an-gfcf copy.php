@@ -4,6 +4,7 @@
  * 
  * @package Hieucon
  */
+get_header();
 ?>
 <!DOCTYPE html>
 <html lang="vi">
@@ -323,24 +324,6 @@
             </div>
         </div>
     </section>
-
-    <!-- Footer -->
-    <footer class="py-12 border-t border-purple-100 px-4 bg-white">
-        <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
-            <div class="flex flex-col items-center md:items-start gap-1">
-                <div class="flex items-center gap-2">
-                    <span class="text-2xl">🌱</span>
-                    <span class="font-bold text-purple-800 text-sm uppercase tracking-widest">Hành Trình Ngôn Ngữ</span>
-                </div>
-                <span class="text-[10px] text-purple-400 font-semibold uppercase tracking-tighter">Helen Hoai - Love for Autism</span>
-            </div>
-            <div class="text-slate-400 text-[10px] text-center md:text-right">
-                <p>Dựa trên kiến thức khoa học từ Raising Children Network.</p>
-                <p>Nội dung mang tính chất tham khảo, hãy tham vấn ý kiến bác sĩ cho trường hợp cụ thể.</p>
-                <p class="mt-2 text-purple-300">© 2024 Helen Hoai. All rights reserved.</p>
-            </div>
-        </div>
-    </footer>
 
     <script>
         // Smooth scroll logic

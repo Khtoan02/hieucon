@@ -514,23 +514,18 @@ Template Name: Trang Van Dong Kinh
         </div>
     </section>
 
-    <!-- Footer / Conclusion -->
-    <footer class="bg-slate-900 text-slate-300 py-12 text-center">
+    <!-- Conclusion -->
+    <section class="bg-brand-50 border-t border-brand-100 py-12 text-center">
         <div class="max-w-3xl mx-auto px-6">
-            <i data-lucide="quote" class="w-10 h-10 text-slate-600 mx-auto mb-6"></i>
-            <p class="text-xl italic font-light leading-relaxed mb-8">
+            <i data-lucide="quote" class="w-10 h-10 text-brand-400 mx-auto mb-6"></i>
+            <p class="text-xl italic text-slate-700 leading-relaxed mb-6">
                 "Bộ não trẻ em có một đặc tính tuyệt vời là <strong>Sự dẻo dai thần kinh (Neuroplasticity)</strong> –
                 khả năng tự tổ chức lại và học hỏi không ngừng. Với sự đồng hành đúng đắn và tình yêu thương vô điều
                 kiện, trẻ hoàn toàn có thể vượt qua rào cản để phát huy tối đa tiềm năng."
             </p>
-            <div class="w-16 h-1 bg-brand-500 mx-auto rounded mb-6"></div>
-            <p class="text-sm opacity-60">
-                Thông tin được tổng hợp và biên dịch dựa trên nền tảng y khoa từ Dementech Neurosciences, Anh
-                Quốc.<br />
-                Luôn tham khảo ý kiến bác sĩ chuyên khoa cho trường hợp cụ thể của con bạn.
-            </p>
+            <div class="w-16 h-1 bg-brand-500 mx-auto rounded"></div>
         </div>
-    </footer>
+    </section>
 
     <!-- Initialize Icons -->
     <script>

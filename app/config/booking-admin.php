@@ -71,17 +71,37 @@ add_action( 'hieucon_cron_send_booking_mail_event', function ( $to, $subject, $b
 }, 10, 3 );
 
 /**
- * Lấy đường dẫn trang Khảo sát độc lập (Bước 2)
+ * Lấy đường dẫn trang Khảo sát độc lập (Bước 2) có gắn thẳng mã hồ sơ
  */
 function hieucon_get_booking_survey_url( $booking_id, $booking_code ) {
-    $survey_page = get_page_by_path( 'khao-sat-tu-van' );
-    $base_url    = $survey_page ? get_permalink( $survey_page->ID ) : home_url( '/dat-lich-tu-van/' );
-    $args        = [
-        'booking_id' => intval( $booking_id ),
-        'code'       => sanitize_text_field( $booking_code ),
-    ];
+    $survey_slug = 'khao-sat-tu-van';
+    $survey_page = get_page_by_path( $survey_slug );
+
     if ( ! $survey_page ) {
-        $args['step'] = 'survey';
+        $survey_id = wp_insert_post( [
+            'post_title'  => 'Khảo sát tình trạng của con',
+            'post_name'   => $survey_slug,
+            'post_status' => 'publish',
+            'post_type'   => 'page',
+        ] );
+        if ( ! is_wp_error( $survey_id ) && $survey_id > 0 ) {
+            update_post_meta( $survey_id, '_wp_page_template', 'page-templates/template-booking-survey.php' );
+            $survey_page = get_post( $survey_id );
+        }
+    } else {
+        $tpl = get_post_meta( $survey_page->ID, '_wp_page_template', true );
+        if ( 'page-templates/template-booking-survey.php' !== $tpl ) {
+            update_post_meta( $survey_page->ID, '_wp_page_template', 'page-templates/template-booking-survey.php' );
+        }
+    }
+
+    $base_url = $survey_page ? get_permalink( $survey_page->ID ) : home_url( '/khao-sat-tu-van/' );
+    $args     = [
+        'code' => sanitize_text_field( $booking_code ),
+    ];
+    if ( ! $survey_page && intval( $booking_id ) > 0 ) {
+        $args['booking_id'] = intval( $booking_id );
+        $args['step']       = 'survey';
     }
     return add_query_arg( $args, $base_url );
 }
@@ -246,21 +266,50 @@ function hieucon_ajax_submit_booking_survey() {
     $tried_methods   = isset( $_POST['tried_methods'] ) && is_array( $_POST['tried_methods'] ) ? array_map( 'sanitize_text_field', wp_unslash( $_POST['tried_methods'] ) ) : [];
     $parent_goal     = isset( $_POST['parent_goal'] ) ? sanitize_textarea_field( wp_unslash( $_POST['parent_goal'] ) ) : '';
 
+    global $wpdb;
+    $table_name = $wpdb->prefix . 'hieucon_bookings';
+    hieucon_setup_bookings_table();
+
+    $booking_row = null;
+    if ( $booking_id > 0 ) {
+        $booking_row = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM $table_name WHERE id = %d", $booking_id ) );
+    }
+    if ( ! $booking_row && ! empty( $booking_code ) ) {
+        $booking_row = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM $table_name WHERE booking_code = %s ORDER BY id DESC LIMIT 1", $booking_code ) );
+    }
+    if ( ! $booking_row && ! empty( $phone ) ) {
+        $booking_row = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM $table_name WHERE phone = %s ORDER BY id DESC LIMIT 1", $phone ) );
+    }
+
+    // Giữ lại danh sách child_issues đã chọn ở Bước 1 (nếu có)
+    $existing_issues = [];
+    if ( $booking_row && ! empty( $booking_row->survey_data ) ) {
+        $prev_sv = json_decode( $booking_row->survey_data, true );
+        if ( is_array( $prev_sv ) && ! empty( $prev_sv['child_issues'] ) && is_array( $prev_sv['child_issues'] ) ) {
+            $existing_issues = $prev_sv['child_issues'];
+        }
+    }
+
     $survey_payload = [
-        'child_name'     => $child_name,
-        'child_age'      => $child_age,
-        'diagnosis'      => $diagnosis,
-        'bio_symptoms'   => $bio_symptoms,
-        'behav_symptoms' => $behav_symptoms,
-        'tried_methods'  => $tried_methods,
-        'parent_goal'    => $parent_goal,
-        'submitted_at'   => current_time( 'mysql' ),
+        'survey_completed' => true,
+        'child_name'       => $child_name,
+        'child_age'        => $child_age,
+        'diagnosis'        => $diagnosis,
+        'child_issues'     => $existing_issues,
+        'bio_symptoms'     => $bio_symptoms,
+        'behav_symptoms'   => $behav_symptoms,
+        'tried_methods'    => $tried_methods,
+        'parent_goal'      => $parent_goal,
+        'submitted_at'     => current_time( 'mysql' ),
     ];
 
     // Tạo bản tóm tắt dễ đọc cho cột issue_note
     $summary_lines = [];
     if ( ! empty( $child_name ) || ! empty( $child_age ) ) {
         $summary_lines[] = '👶 Bé: ' . trim( $child_name . ( $child_age ? " ($child_age)" : '' ) );
+    }
+    if ( ! empty( $existing_issues ) ) {
+        $summary_lines[] = '📌 Vấn đề chọn ban đầu: ' . implode( ', ', $existing_issues );
     }
     if ( ! empty( $diagnosis ) ) {
         $summary_lines[] = '🩺 Vấn đề nổi bật: ' . $diagnosis;
@@ -279,17 +328,6 @@ function hieucon_ajax_submit_booking_survey() {
     }
     $issue_summary = implode( "\n", $summary_lines );
 
-    global $wpdb;
-    $table_name = $wpdb->prefix . 'hieucon_bookings';
-    hieucon_setup_bookings_table();
-
-    $booking_row = null;
-    if ( $booking_id > 0 ) {
-        $booking_row = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM $table_name WHERE id = %d", $booking_id ) );
-    }
-    if ( ! $booking_row && ! empty( $phone ) ) {
-        $booking_row = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM $table_name WHERE phone = %s ORDER BY id DESC LIMIT 1", $phone ) );
-    }
     if ( ! $booking_row && ! empty( $phone ) ) {
         // Tạo mới nếu request Bước 1 chạy nền chưa kịp hoàn tất
         $new_code = ! empty( $booking_code ) ? $booking_code : ( 'TV' . wp_date( 'ymd' ) . '-' . strtoupper( wp_generate_password( 4, false, false ) ) );

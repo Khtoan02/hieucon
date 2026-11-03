@@ -16,10 +16,5 @@ if (empty($header_layout) || $header_layout === 'global') {
     $header_layout = get_option('hieucon_global_header_layout', 'default');
 }
 
-// Chuyển hướng các file cũ để đảm bảo tương thích ngược
-if (is_page_template('page-templates/Che_Do_An_Khong_Gluten_Casein_GFCF_Cho_Tre_Tu_Ky_Landing.php')) {
-    $header_layout = 'landing';
-}
-
 // Nạp file giao diện tương ứng
 get_template_part('template-parts/header/layout', $header_layout);

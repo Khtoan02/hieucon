@@ -7,6 +7,12 @@
  */
 
 if ( isset( $_GET['step'] ) && 'survey' === sanitize_key( wp_unslash( $_GET['step'] ) ) ) {
+    $redir_id   = isset( $_GET['booking_id'] ) ? intval( $_GET['booking_id'] ) : 0;
+    $redir_code = isset( $_GET['code'] ) ? sanitize_text_field( wp_unslash( $_GET['code'] ) ) : '';
+    if ( function_exists( 'hieucon_get_booking_survey_url' ) && ( $redir_id > 0 || ! empty( $redir_code ) ) ) {
+        wp_safe_redirect( hieucon_get_booking_survey_url( $redir_id, $redir_code ) );
+        exit;
+    }
     wp_safe_redirect( home_url( '/dat-lich-tu-van/' ) );
     exit;
 }

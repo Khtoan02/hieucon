@@ -4,6 +4,7 @@
  * 
  * @package Hieucon
  */
+get_header();
 ?>
 <!DOCTYPE html>
 <html lang="vi">
@@ -141,7 +142,7 @@
     <!-- ═══════════════════════════════════════════════════════════
          APP WRAPPER — sidebar + content must be siblings in flex
     ═══════════════════════════════════════════════════════════ -->
-    <div class="flex h-screen overflow-hidden">
+    <div class="flex min-h-[calc(100vh-88px)] pt-[76px] lg:pt-[88px]">
 
     <!-- ═══════════════════════════════════════════════════════════
          SIDEBAR

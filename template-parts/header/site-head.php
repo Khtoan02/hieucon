@@ -77,13 +77,19 @@
             --header-fixed-offset-desktop: 16px; /* top-4 */
         }
 
-        /* Tự động đẩy nội dung xuống đối với các trang chuẩn dùng main#primary */
+        /* Tự động đẩy nội dung xuống đối với các trang chuẩn dùng main#primary hoặc Hero header trực tiếp */
         body.has-fixed-header main#primary {
             padding-top: calc(var(--header-height-mobile) + var(--header-fixed-offset-mobile) + 12px);
+        }
+        body.has-fixed-header #page > header:not(#main-header) {
+            padding-top: 96px;
         }
         @media (min-width: 1024px) {
             body.has-fixed-header main#primary {
                 padding-top: calc(var(--header-height-desktop) + var(--header-fixed-offset-desktop) + 16px);
+            }
+            body.has-fixed-header #page > header:not(#main-header) {
+                padding-top: 112px;
             }
         }
 
@@ -154,6 +160,15 @@
             -ms-overflow-style: none; /* IE and Edge */
             scrollbar-width: none; /* Firefox */
         }
+
+        /* Bảo vệ màu sắc Header & Mobile Drawer khi trang con ghi đè tailwind.config */
+        #main-header .text-navy, #mobile-drawer .text-navy { color: #0A1931; }
+        #main-header .bg-navy, #mobile-drawer .bg-navy { background-color: #0A1931; }
+        #main-header .text-secondary, #mobile-drawer .text-secondary { color: #f97316; }
+        #main-header .bg-secondary, #mobile-drawer .bg-secondary { background-color: #f97316; }
+        #main-header .hover\:bg-secondary:hover, #mobile-drawer .hover\:bg-secondary:hover { background-color: #f97316; }
+        #main-header .hover\:bg-secondary_dark:hover, #mobile-drawer .hover\:bg-secondary_dark:hover { background-color: #ea580c; }
+        #main-header .hover\:text-secondary:hover, #mobile-drawer .hover\:text-secondary:hover { color: #f97316; }
     </style>
     <?php wp_head(); ?>
     

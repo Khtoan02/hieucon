@@ -4,6 +4,7 @@
  * 
  * @package Hieucon
  */
+get_header();
 ?>
 <head>
     <meta charset="UTF-8">
@@ -361,23 +362,6 @@
             </div>
         </div>
     </section>
-
-    <!-- Footer / Disclaimer -->
-    <footer class="bg-purple-950 text-purple-300 py-10 px-4 text-center text-sm">
-        <div class="max-w-4xl mx-auto">
-            <i class="fas fa-info-circle text-2xl text-purple-400 mb-4 block"></i>
-            <h4 class="font-bold text-purple-200 mb-2 uppercase tracking-wider">LƯU Ý:</h4>
-            <p class="mb-4">
-                Các thông tin này <strong>không</strong> thay thế cho chẩn đoán y khoa, tư vấn chuyên môn hay phác đồ điều trị của bác sĩ chuyên khoa.
-            </p>
-            <p>
-                
-            </p>
-            <div class="mt-8 border-t border-purple-800 pt-8">
-                <p> Helen Hoai - Love for Autism</p>
-            </div>
-        </div>
-    </footer>
 
     <!-- Simple Intersection Observer for scroll animations -->
     <script>
