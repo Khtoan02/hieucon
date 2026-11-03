@@ -406,6 +406,11 @@ $week_range    = sprintf( '%s - %s', $monday_date->format( 'd/m' ), $saturday_da
                                     <i data-lucide="arrow-right" class="w-5 h-5"></i>
                                 </button>
                             </form>
+
+                            <div class="mt-4 pt-3.5 border-t border-slate-100 flex items-start gap-2 text-slate-500 text-xs italic leading-relaxed">
+                                <i data-lucide="info" class="w-4 h-4 text-secondary shrink-0 mt-0.5"></i>
+                                <span>Hoạt động chia sẻ và hướng dẫn dinh dưỡng không thay thế việc thăm khám, chẩn đoán hoặc điều trị y tế.</span>
+                            </div>
                         </div>
 
                     </div>
