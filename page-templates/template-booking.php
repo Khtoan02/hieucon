@@ -90,26 +90,26 @@ $booking_nonce      = wp_create_nonce( 'hieucon_booking_nonce' );
     <!-- =========================================================
          SECTION DUY NHẤT: THÔNG ĐIỆP MỞ ĐẦU (TRÁI) & FORM ĐĂNG KÝ (PHẢI)
          ========================================================= -->
-    <section id="dang-ky-case" class="min-h-[calc(80vh-96px)] flex items-center py-12 md:py-16 lg:py-20 bg-white">
+    <section id="dang-ky-case" class="min-h-screen flex items-center py-20 md:py-28 lg:py-36 bg-white">
         <div class="max-w-[1220px] w-full mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 xl:gap-16 items-center">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 xl:gap-20 items-center">
 
                 <!-- Cột trái (7/12): Thông điệp mở đầu (không có nút CTA) -->
                 <div class="lg:col-span-7">
-                    <h1 class="font-serif text-4xl sm:text-5xl xl:text-[3.5rem] font-bold text-navy leading-[1.16] mb-7">
+                    <h1 class="font-serif text-4xl sm:text-5xl xl:text-[3.5rem] font-bold text-navy leading-[1.16] mb-8">
                         30 phút để nhìn rõ<br class="hidden sm:inline" />
                         <span class="text-secondary">vấn đề của con</span>
                     </h1>
 
-                    <p class="text-slate-700 text-lg sm:text-xl leading-relaxed mb-7">
+                    <p class="text-slate-700 text-lg sm:text-xl leading-relaxed mb-8">
                         Đợt này, đội ngũ HIỂU CON TỪ GỐC mở một số lịch trao đổi 1:1 dành cho cha mẹ đang có những băn khoăn về <strong class="text-navy">ăn uống, tiêu hóa, giấc ngủ, hành vi hoặc dinh dưỡng</strong> của con.
                     </p>
 
-                    <div class="bg-[#fff7ed] border border-orange-200/80 rounded-2xl p-6 sm:p-7 mb-7">
+                    <div class="bg-[#fff7ed] border border-orange-200/80 rounded-2xl p-6 sm:p-8 mb-8">
                         <p class="font-bold text-navy text-base sm:text-lg mb-4">
                             Có những gia đình đã thử rất nhiều cách nhưng vẫn chưa thực sự biết:
                         </p>
-                        <ul class="space-y-3 text-slate-800 text-base sm:text-lg">
+                        <ul class="space-y-3.5 text-slate-800 text-base sm:text-lg">
                             <li class="flex items-start gap-3">
                                 <span class="w-6 h-6 rounded-full bg-secondary text-white flex items-center justify-center shrink-0 mt-0.5 text-xs font-bold">1</span>
                                 <span>Vấn đề chính của con nằm ở đâu?</span>
@@ -135,17 +135,17 @@ $booking_nonce      = wp_create_nonce( 'hieucon_booking_nonce' );
                     <div id="booking-card-wrapper" class="hc-master-card relative">
                         <div class="hc-card-bar"></div>
 
-                        <div id="booking-step1-container" class="p-6 sm:p-8 lg:p-9">
-                            <div class="mb-6">
-                                <h2 class="font-serif text-2xl sm:text-[1.7rem] font-bold text-navy leading-snug">
+                        <div id="booking-step1-container" class="p-7 sm:p-9 lg:p-10">
+                            <div class="mb-7">
+                                <h2 class="font-serif text-2xl sm:text-[1.75rem] font-bold text-navy leading-snug">
                                     Thông tin liên hệ của ba mẹ
                                 </h2>
-                                <p class="text-slate-500 text-sm mt-1.5 leading-relaxed">
+                                <p class="text-slate-500 text-sm mt-2 leading-relaxed">
                                     Điền thông tin liên hệ trước khi chuyển sang bảng tích chọn nhanh tình trạng của con.
                                 </p>
                             </div>
 
-                            <form id="hieucon-booking-step1-form" class="space-y-4" novalidate>
+                            <form id="hieucon-booking-step1-form" class="space-y-5" novalidate>
                                 <input type="hidden" name="nonce" id="booking-nonce" value="<?php echo esc_attr( $booking_nonce ); ?>">
 
                                 <div>
