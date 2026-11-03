@@ -71,7 +71,128 @@ add_action( 'hieucon_cron_send_booking_mail_event', function ( $to, $subject, $b
 }, 10, 3 );
 
 /**
- * Lấy đường dẫn trang Landing Đặt lịch tư vấn 1:1 (Bước 1) chuẩn theo trang thực tế đang xuất bản
+ * Tự động ghi nhận đúng ID trang Landing / Khảo sát ngay khi Admin chỉnh sửa trang hoặc đổi đường dẫn (slug) trên host
+ */
+function hieucon_sync_booking_template_page_on_save( $post_id, $post ) {
+    if ( wp_is_post_revision( $post_id ) || wp_is_post_autosave( $post_id ) ) {
+        return;
+    }
+    if ( ! $post || 'page' !== $post->post_type || 'publish' !== $post->post_status ) {
+        return;
+    }
+    $tpl = get_post_meta( $post_id, '_wp_page_template', true );
+    if ( 'page-templates/template-booking.php' === $tpl ) {
+        update_option( 'hieucon_booking_landing_page_id', intval( $post_id ) );
+    } elseif ( 'page-templates/template-booking-survey.php' === $tpl ) {
+        update_option( 'hieucon_booking_survey_page_id', intval( $post_id ) );
+    }
+}
+add_action( 'save_post_page', 'hieucon_sync_booking_template_page_on_save', 20, 2 );
+
+/**
+ * Hàm lõi tìm đúng Page đang gán Template (Ưu tiên trang đã đổi link riêng trên host, tự dọn bản trùng mặc định nếu có)
+ */
+function hieucon_resolve_booking_system_page( $template_file, $default_slug, $default_title, $option_id_key ) {
+    // 1. Lấy tất cả các trang đang Publish có gán đúng Page Template
+    $tpl_pages = get_posts( [
+        'post_type'              => 'page',
+        'post_status'            => 'publish',
+        'meta_key'               => '_wp_page_template',
+        'meta_value'             => $template_file,
+        'orderby'                => [ 'modified' => 'DESC', 'ID' => 'ASC' ],
+        'posts_per_page'         => 10,
+        'no_found_rows'          => true,
+        'update_post_term_cache' => false,
+    ] );
+
+    $chosen_page = null;
+
+    if ( ! empty( $tpl_pages ) ) {
+        $custom_slug_pages  = [];
+        $default_slug_pages = [];
+
+        foreach ( $tpl_pages as $p ) {
+            if ( $default_slug !== $p->post_name ) {
+                $custom_slug_pages[] = $p;
+            } else {
+                $default_slug_pages[] = $p;
+            }
+        }
+
+        // Nếu trên host đã đổi link sang slug khác, tuyệt đối ưu tiên trang mang link đã đổi trên host
+        // Đồng thời xoá bản trùng mang slug mặc định nếu trước đó bị tự sinh thừa
+        if ( ! empty( $custom_slug_pages ) ) {
+            $saved_id = intval( get_option( $option_id_key, 0 ) );
+            foreach ( $custom_slug_pages as $cp ) {
+                if ( intval( $cp->ID ) === $saved_id ) {
+                    $chosen_page = $cp;
+                    break;
+                }
+            }
+            if ( ! $chosen_page ) {
+                $chosen_page = $custom_slug_pages[0];
+            }
+
+            foreach ( $default_slug_pages as $dp ) {
+                if ( intval( $dp->ID ) !== intval( $chosen_page->ID ) && empty( trim( (string) $dp->post_content ) ) ) {
+                    wp_delete_post( $dp->ID, true );
+                }
+            }
+        } else {
+            $chosen_page = $tpl_pages[0];
+        }
+    }
+
+    // 2. Nếu chưa có trang Publish nào gắn template, kiểm tra theo ID đã lưu
+    if ( ! $chosen_page ) {
+        $saved_id = intval( get_option( $option_id_key, 0 ) );
+        if ( $saved_id > 0 ) {
+            $saved_post = get_post( $saved_id );
+            if ( $saved_post && 'page' === $saved_post->post_type && 'trash' !== $saved_post->post_status ) {
+                if ( 'publish' !== $saved_post->post_status ) {
+                    wp_update_post( [ 'ID' => $saved_post->ID, 'post_status' => 'publish' ] );
+                }
+                update_post_meta( $saved_post->ID, '_wp_page_template', $template_file );
+                $chosen_page = get_post( $saved_post->ID );
+            }
+        }
+    }
+
+    // 3. Nếu vẫn chưa tìm thấy, kiểm tra theo slug mặc định
+    if ( ! $chosen_page ) {
+        $by_slug = get_page_by_path( $default_slug );
+        if ( $by_slug && 'trash' !== $by_slug->post_status ) {
+            if ( 'publish' !== $by_slug->post_status ) {
+                wp_update_post( [ 'ID' => $by_slug->ID, 'post_status' => 'publish' ] );
+            }
+            update_post_meta( $by_slug->ID, '_wp_page_template', $template_file );
+            $chosen_page = get_post( $by_slug->ID );
+        }
+    }
+
+    // 4. Chỉ khi hoàn toàn chưa có bất kỳ trang nào trên hệ thống mới tự động khởi tạo
+    if ( ! $chosen_page ) {
+        $new_id = wp_insert_post( [
+            'post_title'  => $default_title,
+            'post_name'   => $default_slug,
+            'post_status' => 'publish',
+            'post_type'   => 'page',
+        ] );
+        if ( ! is_wp_error( $new_id ) && $new_id > 0 ) {
+            update_post_meta( $new_id, '_wp_page_template', $template_file );
+            $chosen_page = get_post( $new_id );
+        }
+    }
+
+    if ( $chosen_page ) {
+        update_option( $option_id_key, intval( $chosen_page->ID ) );
+    }
+
+    return $chosen_page;
+}
+
+/**
+ * Lấy đường dẫn trang Landing Đặt lịch tư vấn 1:1 (Bước 1) chuẩn theo trang thực tế đang xuất bản trên host
  */
 function hieucon_get_booking_landing_url() {
     static $cached_landing_url = null;
@@ -79,65 +200,12 @@ function hieucon_get_booking_landing_url() {
         return $cached_landing_url;
     }
 
-    $booking_slug     = 'dat-lich-tu-van';
-    $booking_template = 'page-templates/template-booking.php';
-    $booking_page     = null;
-
-    // 1. Ưu tiên tìm trang đang Publish có gán trực tiếp template Đặt lịch tư vấn 1:1
-    $tpl_pages = get_pages( [
-        'meta_key'    => '_wp_page_template',
-        'meta_value'  => $booking_template,
-        'post_type'   => 'page',
-        'post_status' => 'publish',
-        'sort_column' => 'post_modified',
-        'sort_order'  => 'DESC',
-        'number'      => 5,
-    ] );
-
-    if ( ! empty( $tpl_pages ) ) {
-        // Nếu có trang đúng slug chuẩn 'dat-lich-tu-van' trong danh sách thì ưu tiên, ngược lại lấy trang mới cập nhật nhất
-        foreach ( $tpl_pages as $p ) {
-            if ( $booking_slug === $p->post_name ) {
-                $booking_page = $p;
-                break;
-            }
-        }
-        if ( ! $booking_page ) {
-            $booking_page = $tpl_pages[0];
-        }
-    }
-
-    // 2. Nếu chưa tìm thấy theo template, kiểm tra theo slug 'dat-lich-tu-van'
-    if ( ! $booking_page ) {
-        $by_slug = get_page_by_path( $booking_slug );
-        if ( $by_slug ) {
-            if ( 'publish' !== $by_slug->post_status ) {
-                wp_update_post( [
-                    'ID'          => $by_slug->ID,
-                    'post_status' => 'publish',
-                ] );
-            }
-            $tpl = get_post_meta( $by_slug->ID, '_wp_page_template', true );
-            if ( $booking_template !== $tpl ) {
-                update_post_meta( $by_slug->ID, '_wp_page_template', $booking_template );
-            }
-            $booking_page = get_post( $by_slug->ID );
-        }
-    }
-
-    // 3. Nếu hoàn toàn chưa có trang nào, tự động khởi tạo trang chuẩn
-    if ( ! $booking_page ) {
-        $booking_id = wp_insert_post( [
-            'post_title'  => 'Đặt lịch tư vấn miễn phí 1:1',
-            'post_name'   => $booking_slug,
-            'post_status' => 'publish',
-            'post_type'   => 'page',
-        ] );
-        if ( ! is_wp_error( $booking_id ) && $booking_id > 0 ) {
-            update_post_meta( $booking_id, '_wp_page_template', $booking_template );
-            $booking_page = get_post( $booking_id );
-        }
-    }
+    $booking_page = hieucon_resolve_booking_system_page(
+        'page-templates/template-booking.php',
+        'dat-lich-tu-van',
+        'Đặt lịch tư vấn miễn phí 1:1',
+        'hieucon_booking_landing_page_id'
+    );
 
     $cached_landing_url = $booking_page ? get_permalink( $booking_page->ID ) : home_url( '/dat-lich-tu-van/' );
     return $cached_landing_url;
@@ -150,64 +218,12 @@ function hieucon_get_booking_survey_url( $booking_id = 0, $booking_code = '' ) {
     static $cached_survey_base_url = null;
 
     if ( null === $cached_survey_base_url ) {
-        $survey_slug     = 'khao-sat-tu-van';
-        $survey_template = 'page-templates/template-booking-survey.php';
-        $survey_page     = null;
-
-        // 1. Ưu tiên tìm trang đang Publish có gán template Khảo sát Bước 2
-        $tpl_pages = get_pages( [
-            'meta_key'    => '_wp_page_template',
-            'meta_value'  => $survey_template,
-            'post_type'   => 'page',
-            'post_status' => 'publish',
-            'sort_column' => 'post_modified',
-            'sort_order'  => 'DESC',
-            'number'      => 5,
-        ] );
-
-        if ( ! empty( $tpl_pages ) ) {
-            foreach ( $tpl_pages as $p ) {
-                if ( $survey_slug === $p->post_name ) {
-                    $survey_page = $p;
-                    break;
-                }
-            }
-            if ( ! $survey_page ) {
-                $survey_page = $tpl_pages[0];
-            }
-        }
-
-        // 2. Nếu chưa tìm thấy theo template, kiểm tra theo slug 'khao-sat-tu-van'
-        if ( ! $survey_page ) {
-            $by_slug = get_page_by_path( $survey_slug );
-            if ( $by_slug ) {
-                if ( 'publish' !== $by_slug->post_status ) {
-                    wp_update_post( [
-                        'ID'          => $by_slug->ID,
-                        'post_status' => 'publish',
-                    ] );
-                }
-                $tpl = get_post_meta( $by_slug->ID, '_wp_page_template', true );
-                if ( $survey_template !== $tpl ) {
-                    update_post_meta( $by_slug->ID, '_wp_page_template', $survey_template );
-                }
-                $survey_page = get_post( $by_slug->ID );
-            }
-        }
-
-        // 3. Nếu chưa tồn tại, tự động tạo trang Khảo sát
-        if ( ! $survey_page ) {
-            $survey_id = wp_insert_post( [
-                'post_title'  => 'Khảo sát tình trạng của con',
-                'post_name'   => $survey_slug,
-                'post_status' => 'publish',
-                'post_type'   => 'page',
-            ] );
-            if ( ! is_wp_error( $survey_id ) && $survey_id > 0 ) {
-                update_post_meta( $survey_id, '_wp_page_template', $survey_template );
-                $survey_page = get_post( $survey_id );
-            }
-        }
+        $survey_page = hieucon_resolve_booking_system_page(
+            'page-templates/template-booking-survey.php',
+            'khao-sat-tu-van',
+            'Khảo sát tình trạng của con',
+            'hieucon_booking_survey_page_id'
+        );
 
         $cached_survey_base_url = $survey_page ? get_permalink( $survey_page->ID ) : home_url( '/khao-sat-tu-van/' );
     }
@@ -227,31 +243,37 @@ function hieucon_get_booking_survey_url( $booking_id = 0, $booking_code = '' ) {
 }
 
 /**
- * Đảm bảo nếu truy cập vào /dat-lich-tu-van/ hoặc /khao-sat-tu-van/ khi trang thực tế có slug khác hoặc bị 404 thì tự động chuyển hướng chuẩn
+ * Đảm bảo nếu truy cập vào /dat-lich-tu-van/ hoặc /khao-sat-tu-van/ khi trên host đã đổi sang slug khác thì tự động chuyển hướng về đúng URL mới
  */
 function hieucon_booking_routes_fallback() {
-    if ( is_admin() || ! is_404() ) {
+    if ( is_admin() ) {
         return;
     }
     $req_uri  = isset( $_SERVER['REQUEST_URI'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ) ) : '';
     $req_path = trim( (string) wp_parse_url( $req_uri, PHP_URL_PATH ), '/' );
 
     if ( 'dat-lich-tu-van' === $req_path || str_ends_with( $req_path, '/dat-lich-tu-van' ) ) {
-        $target = hieucon_get_booking_landing_url();
-        if ( ! empty( $_GET ) ) {
-            $target = add_query_arg( wp_unslash( $_GET ), $target );
+        $target      = hieucon_get_booking_landing_url();
+        $target_path = trim( (string) wp_parse_url( $target, PHP_URL_PATH ), '/' );
+        if ( $target_path !== $req_path || is_404() ) {
+            if ( ! empty( $_GET ) ) {
+                $target = add_query_arg( wp_unslash( $_GET ), $target );
+            }
+            wp_safe_redirect( $target, 302 );
+            exit;
         }
-        wp_safe_redirect( $target, 302 );
-        exit;
     }
 
     if ( 'khao-sat-tu-van' === $req_path || str_ends_with( $req_path, '/khao-sat-tu-van' ) ) {
-        $target = hieucon_get_booking_survey_url();
-        if ( ! empty( $_GET ) ) {
-            $target = add_query_arg( wp_unslash( $_GET ), $target );
+        $target      = hieucon_get_booking_survey_url();
+        $target_path = trim( (string) wp_parse_url( $target, PHP_URL_PATH ), '/' );
+        if ( $target_path !== $req_path || is_404() ) {
+            if ( ! empty( $_GET ) ) {
+                $target = add_query_arg( wp_unslash( $_GET ), $target );
+            }
+            wp_safe_redirect( $target, 302 );
+            exit;
         }
-        wp_safe_redirect( $target, 302 );
-        exit;
     }
 }
 add_action( 'template_redirect', 'hieucon_booking_routes_fallback', 1 );

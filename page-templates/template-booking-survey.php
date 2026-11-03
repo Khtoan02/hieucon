@@ -10,6 +10,12 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
+if ( is_page() && get_queried_object_id() > 0 && 'publish' === get_post_status( get_queried_object_id() ) ) {
+    if ( intval( get_option( 'hieucon_booking_survey_page_id', 0 ) ) !== intval( get_queried_object_id() ) ) {
+        update_option( 'hieucon_booking_survey_page_id', intval( get_queried_object_id() ) );
+    }
+}
+
 global $wpdb;
 $table_name   = $wpdb->prefix . 'hieucon_bookings';
 $booking_id   = isset( $_GET['booking_id'] ) ? intval( $_GET['booking_id'] ) : 0;

@@ -6,6 +6,12 @@
  * @package Hieucon
  */
 
+if ( is_page() && get_queried_object_id() > 0 && 'publish' === get_post_status( get_queried_object_id() ) ) {
+    if ( intval( get_option( 'hieucon_booking_landing_page_id', 0 ) ) !== intval( get_queried_object_id() ) ) {
+        update_option( 'hieucon_booking_landing_page_id', intval( get_queried_object_id() ) );
+    }
+}
+
 if ( isset( $_GET['step'] ) && 'survey' === sanitize_key( wp_unslash( $_GET['step'] ) ) ) {
     $redir_id   = isset( $_GET['booking_id'] ) ? intval( $_GET['booking_id'] ) : 0;
     $redir_code = isset( $_GET['code'] ) ? sanitize_text_field( wp_unslash( $_GET['code'] ) ) : '';

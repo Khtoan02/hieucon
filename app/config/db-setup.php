@@ -75,112 +75,91 @@ function hieucon_setup_member_tables() {
 add_action( 'after_setup_theme', 'hieucon_setup_member_tables' );
 
 /**
- * Tự động tạo và gán Page Template cho trang Đăng nhập và Tài khoản nếu chưa tồn tại
+ * Đảm bảo trang hệ thống theo Page Template tồn tại mà không tạo trùng lặp khi trên host đã đổi đường dẫn (slug)
+ */
+function hieucon_ensure_system_template_page( $template_file, $default_slug, $default_title, $option_id_key = '' ) {
+    $existing_by_tpl = get_posts( [
+        'post_type'              => 'page',
+        'post_status'            => [ 'publish', 'draft', 'private', 'pending' ],
+        'meta_key'               => '_wp_page_template',
+        'meta_value'             => $template_file,
+        'orderby'                => [ 'modified' => 'DESC', 'ID' => 'ASC' ],
+        'posts_per_page'         => 10,
+        'no_found_rows'          => true,
+        'update_post_term_cache' => false,
+    ] );
+
+    if ( ! empty( $existing_by_tpl ) ) {
+        $custom_page  = null;
+        $default_page = null;
+
+        foreach ( $existing_by_tpl as $p ) {
+            if ( $default_slug !== $p->post_name && ! $custom_page ) {
+                $custom_page = $p;
+            } elseif ( $default_slug === $p->post_name && ! $default_page ) {
+                $default_page = $p;
+            }
+        }
+
+        // Nếu trên host đã đổi sang link/slug riêng mà trước đó lỡ tự sinh thêm trang slug mặc định trùng lặp -> xoá bản trùng mặc định
+        if ( $custom_page && $default_page && $custom_page->ID !== $default_page->ID ) {
+            if ( empty( trim( (string) $default_page->post_content ) ) ) {
+                wp_delete_post( $default_page->ID, true );
+            }
+            $chosen = $custom_page;
+        } else {
+            $chosen = $custom_page ? $custom_page : $existing_by_tpl[0];
+        }
+
+        if ( $option_id_key ) {
+            update_option( $option_id_key, intval( $chosen->ID ) );
+        }
+        return intval( $chosen->ID );
+    }
+
+    // Nếu chưa có trang nào gắn template này, kiểm tra theo slug mặc định
+    $by_slug = get_page_by_path( $default_slug );
+    if ( $by_slug ) {
+        update_post_meta( $by_slug->ID, '_wp_page_template', $template_file );
+        if ( $option_id_key ) {
+            update_option( $option_id_key, intval( $by_slug->ID ) );
+        }
+        return intval( $by_slug->ID );
+    }
+
+    // Chưa có cả theo template lẫn theo slug -> tạo mới 1 lần duy nhất
+    $new_id = wp_insert_post( [
+        'post_title'  => $default_title,
+        'post_name'   => $default_slug,
+        'post_status' => 'publish',
+        'post_type'   => 'page',
+    ] );
+    if ( ! is_wp_error( $new_id ) && $new_id > 0 ) {
+        update_post_meta( $new_id, '_wp_page_template', $template_file );
+        if ( $option_id_key ) {
+            update_option( $option_id_key, intval( $new_id ) );
+        }
+        return intval( $new_id );
+    }
+
+    return 0;
+}
+
+/**
+ * Tự động tạo và gán Page Template cho các trang hệ thống nếu chưa tồn tại
  */
 function hieucon_auto_create_member_pages() {
-    if ( get_option( 'hieucon_pages_initialized_v3' ) === '1' ) {
+    if ( get_option( 'hieucon_pages_initialized_v4' ) === '1' ) {
         return;
     }
 
-    // 1. Trang Đăng nhập & Đăng ký
-    $auth_slug = 'dang-nhap';
-    $auth_page = get_page_by_path( $auth_slug );
-    $auth_template = 'page-templates/template-auth.php';
+    hieucon_ensure_system_template_page( 'page-templates/template-auth.php', 'dang-nhap', 'Đăng nhập & Đăng ký' );
+    hieucon_ensure_system_template_page( 'page-templates/template-my-account.php', 'tai-khoan', 'Tài khoản của tôi' );
+    hieucon_ensure_system_template_page( 'page-templates/page-payment.php', 'thanh-toan', 'Thanh toán' );
+    hieucon_ensure_system_template_page( 'page-templates/template-booking.php', 'dat-lich-tu-van', 'Đặt lịch tư vấn miễn phí 1:1', 'hieucon_booking_landing_page_id' );
+    hieucon_ensure_system_template_page( 'page-templates/template-booking-survey.php', 'khao-sat-tu-van', 'Khảo sát tình trạng của con', 'hieucon_booking_survey_page_id' );
 
-    if ( ! $auth_page ) {
-        $auth_id = wp_insert_post( [
-            'post_title'  => 'Đăng nhập & Đăng ký',
-            'post_name'   => $auth_slug,
-            'post_status' => 'publish',
-            'post_type'   => 'page',
-        ] );
-        if ( ! is_wp_error( $auth_id ) ) {
-            update_post_meta( $auth_id, '_wp_page_template', $auth_template );
-        }
-    } else {
-        // Đảm bảo template luôn đúng
-        update_post_meta( $auth_page->ID, '_wp_page_template', $auth_template );
-    }
-
-    // 2. Trang Tài khoản
-    $account_slug = 'tai-khoan';
-    $account_page = get_page_by_path( $account_slug );
-    $account_template = 'page-templates/template-my-account.php';
-
-    if ( ! $account_page ) {
-        $account_id = wp_insert_post( [
-            'post_title'  => 'Tài khoản của tôi',
-            'post_name'   => $account_slug,
-            'post_status' => 'publish',
-            'post_type'   => 'page',
-        ] );
-        if ( ! is_wp_error( $account_id ) ) {
-            update_post_meta( $account_id, '_wp_page_template', $account_template );
-        }
-    } else {
-        // Đảm bảo template luôn đúng
-        update_post_meta( $account_page->ID, '_wp_page_template', $account_template );
-    }
-
-    // 3. Trang Thanh toán (SePay VietQR)
-    $payment_slug = 'thanh-toan';
-    $payment_page = get_page_by_path( $payment_slug );
-    $payment_template = 'page-templates/page-payment.php';
-
-    if ( ! $payment_page ) {
-        $payment_id = wp_insert_post( [
-            'post_title'  => 'Thanh toán',
-            'post_name'   => $payment_slug,
-            'post_status' => 'publish',
-            'post_type'   => 'page',
-        ] );
-        if ( ! is_wp_error( $payment_id ) ) {
-            update_post_meta( $payment_id, '_wp_page_template', $payment_template );
-        }
-    } else {
-        // Đảm bảo template luôn đúng
-        update_post_meta( $payment_page->ID, '_wp_page_template', $payment_template );
-    }
-
-    // 4. Trang Đặt lịch tư vấn miễn phí 1:1
-    $booking_slug = 'dat-lich-tu-van';
-    $booking_page = get_page_by_path( $booking_slug );
-    $booking_template = 'page-templates/template-booking.php';
-
-    if ( ! $booking_page ) {
-        $booking_id = wp_insert_post( [
-            'post_title'  => 'Đặt lịch tư vấn miễn phí 1:1',
-            'post_name'   => $booking_slug,
-            'post_status' => 'publish',
-            'post_type'   => 'page',
-        ] );
-        if ( ! is_wp_error( $booking_id ) ) {
-            update_post_meta( $booking_id, '_wp_page_template', $booking_template );
-        }
-    } else {
-        update_post_meta( $booking_page->ID, '_wp_page_template', $booking_template );
-    }
-
-    // 5. Trang Khảo sát tình trạng của con (Bước 2 độc lập)
-    $survey_slug = 'khao-sat-tu-van';
-    $survey_page = get_page_by_path( $survey_slug );
-    $survey_template = 'page-templates/template-booking-survey.php';
-
-    if ( ! $survey_page ) {
-        $survey_id = wp_insert_post( [
-            'post_title'  => 'Khảo sát tình trạng của con',
-            'post_name'   => $survey_slug,
-            'post_status' => 'publish',
-            'post_type'   => 'page',
-        ] );
-        if ( ! is_wp_error( $survey_id ) ) {
-            update_post_meta( $survey_id, '_wp_page_template', $survey_template );
-        }
-    } else {
-        update_post_meta( $survey_page->ID, '_wp_page_template', $survey_template );
-    }
-
-    update_option( 'hieucon_pages_initialized_v3', '1' );
+    update_option( 'hieucon_pages_initialized_v4', '1' );
 }
 add_action( 'init', 'hieucon_auto_create_member_pages' );
 
