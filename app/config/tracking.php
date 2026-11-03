@@ -15,14 +15,19 @@ function hieucon_track_view_ajax()
 {
     $post_id = isset($_POST['post_id']) ? intval($_POST['post_id']) : 0;
     $is_unique = isset($_POST['is_unique']) ? intval($_POST['is_unique']) : 0;
+    $estimated_time = isset($_POST['estimated_time']) ? intval($_POST['estimated_time']) : 0;
     
-    if ($post_id) {
+    if ($post_id > 0) {
         $views = get_post_meta($post_id, '_hieucon_page_views', true);
         update_post_meta($post_id, '_hieucon_page_views', intval($views) + 1);
 
         if ($is_unique === 1) {
             $uniques = get_post_meta($post_id, '_hieucon_unique_views', true);
             update_post_meta($post_id, '_hieucon_unique_views', intval($uniques) + 1);
+        }
+
+        if ($estimated_time > 0) {
+            update_post_meta($post_id, '_hieucon_estimated_time', max(30, $estimated_time));
         }
     }
     wp_die();
@@ -34,7 +39,7 @@ add_action('wp_ajax_nopriv_hieucon_track_view', 'hieucon_track_view_ajax');
 function hieucon_track_click_ajax()
 {
     $post_id = isset($_POST['post_id']) ? intval($_POST['post_id']) : 0;
-    if ($post_id) {
+    if ($post_id > 0) {
         $clicks = get_post_meta($post_id, '_hieucon_page_clicks', true);
         update_post_meta($post_id, '_hieucon_page_clicks', intval($clicks) + 1);
     }
@@ -50,13 +55,13 @@ function hieucon_track_time_ajax()
     $time_spent = isset($_POST['time_spent']) ? intval($_POST['time_spent']) : 0;
     $estimated_time = isset($_POST['estimated_time']) ? intval($_POST['estimated_time']) : 30;
 
-    if ($post_id && $time_spent > 0) {
+    if ($post_id > 0 && $time_spent > 0) {
         // Cộng dồn tổng thời gian (giây) mà tất cả user lưu lại
         $total_time = get_post_meta($post_id, '_hieucon_total_time', true);
         update_post_meta($post_id, '_hieucon_total_time', intval($total_time) + $time_spent);
         
         // Cập nhật lại thời gian đọc dự kiến
-        update_post_meta($post_id, '_hieucon_estimated_time', $estimated_time);
+        update_post_meta($post_id, '_hieucon_estimated_time', max(30, $estimated_time));
     }
     wp_die();
 }
@@ -66,94 +71,161 @@ add_action('wp_ajax_nopriv_hieucon_track_time', 'hieucon_track_time_ajax');
 // 4. Nhúng Script Bắt sự kiện Tổng hợp
 function hieucon_tracking_script()
 {
-    if (is_single() || is_page()) {
+    static $printed = false;
+    if ($printed) {
+        return;
+    }
+
+    $post_id = get_queried_object_id();
+    if (!$post_id) {
         global $post;
+        if (!empty($post->ID)) {
+            $post_id = intval($post->ID);
+        }
+    }
+    if (!$post_id && is_front_page()) {
+        $post_id = intval(get_option('page_on_front'));
+    }
+
+    if ($post_id > 0 && (is_singular() || is_front_page() || is_page() || is_single())) {
+        $printed = true;
         ?>
-        <script>
+        <script id="hieucon-analytics-tracker">
             document.addEventListener('DOMContentLoaded', function () {
-                var post_id = <?php echo $post->ID; ?>;
+                var post_id = <?php echo intval($post_id); ?>;
                 var ajaxurl = '<?php echo esc_url(admin_url('admin-ajax.php')); ?>';
-                
+
+                function sendTrackPayload(formData) {
+                    var sent = false;
+                    if (navigator.sendBeacon) {
+                        try {
+                            sent = navigator.sendBeacon(ajaxurl, formData);
+                        } catch (e) {
+                            sent = false;
+                        }
+                    }
+                    if (!sent && window.fetch) {
+                        fetch(ajaxurl, {
+                            method: 'POST',
+                            body: formData,
+                            keepalive: true,
+                            credentials: 'same-origin'
+                        }).catch(function () {});
+                    }
+                }
+
+                // Thuật toán đo tốc độ đọc trung bình (200 chữ/phút)
+                var textContent = document.body ? (document.body.innerText || '') : '';
+                var wordCount = textContent.trim() ? textContent.trim().split(/\s+/).length : 300;
+                var estimatedTimeSec = Math.max(30, Math.min(600, Math.ceil((wordCount / 200) * 60)));
+
                 // === A. KIỂM TRA UNIQUE VÀ ĐẾM VIEW ===
                 var cookieName = 'hieucon_visited_' + post_id;
                 var isUnique = 0;
-                // Kiểm tra Cookie - nếu chưa có tức là Unique
-                if (!document.cookie.split('; ').find(row => row.startsWith(cookieName + '='))) {
+                try {
+                    if (!document.cookie.split('; ').find(function (row) { return row.indexOf(cookieName + '=') === 0; })) {
+                        isUnique = 1;
+                        document.cookie = cookieName + '=1; max-age=' + (60 * 60 * 24 * 30) + '; path=/; SameSite=Lax';
+                    }
+                } catch (e) {
                     isUnique = 1;
-                    // Đặt cookie 30 ngày
-                    document.cookie = cookieName + '=1; max-age=' + (60*60*24*30) + '; path=/';
                 }
-                
-                var xhrView = new XMLHttpRequest();
-                xhrView.open('POST', ajaxurl, true);
-                xhrView.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded;');
-                xhrView.send('action=hieucon_track_view&post_id=' + post_id + '&is_unique=' + isUnique);
 
-                // === B. ĐẾM SỰ KIỆN CLICK OUT ===
+                var viewData = new FormData();
+                viewData.append('action', 'hieucon_track_view');
+                viewData.append('post_id', post_id);
+                viewData.append('is_unique', isUnique);
+                viewData.append('estimated_time', estimatedTimeSec);
+                sendTrackPayload(viewData);
+
+                // === B. ĐẾM SỰ KIỆN CLICK OUT (Link ngoài + Link chuyển đổi Zalo/FB/Tel + Form đăng ký) ===
                 var currentDomain = window.location.hostname;
-                var links = document.querySelectorAll('a[href^="http"]');
-                links.forEach(function (link) {
-                    if (link.hostname && link.hostname !== currentDomain) {
-                        link.addEventListener('click', function () {
-                            var xhrClick = new XMLHttpRequest();
-                            xhrClick.open('POST', ajaxurl, true);
-                            xhrClick.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded;');
-                            xhrClick.send('action=hieucon_track_click&post_id=' + post_id);
-                        });
-                    }
-                });
+                var outboundRedirectPaths = ['/zalo', '/zalo-group', '/facebook-group', '/youtube'];
 
-                // === C. ĐO LƯỜNG THỜI GIAN VÀ RETENTION ===
-                var startTime = Date.now();
-                // Thuật toán đo tốc độ đọc trung bình (200 chữ/phút)
-                var wordCount = document.body.innerText.split(/\s+/).length || 500;
-                var estimatedTimeSec = Math.max(30, Math.ceil((wordCount / 200) * 60)); 
-                
-                function logTimeSpent(isFinal) {
-                    var timeSpent = Math.floor((Date.now() - startTime) / 1000);
-                    // Lọc nhiễu: Chỉ lưu khi thời gian > 3s và < 2 tiếng (tránh máy treo)
-                    if (timeSpent > 3 && timeSpent < 7200) {
-                        var data = new FormData();
-                        data.append('action', 'hieucon_track_time');
-                        data.append('post_id', post_id);
-                        data.append('time_spent', timeSpent);
-                        data.append('estimated_time', estimatedTimeSec);
-                        
-                        if (navigator.sendBeacon) {
-                            navigator.sendBeacon(ajaxurl, data);
-                        } else {
-                            var xhrTime = new XMLHttpRequest();
-                            xhrTime.open('POST', ajaxurl, false); // đồng bộ
-                            xhrTime.send(data);
-                        }
+                function trackClickOut() {
+                    var clickData = new FormData();
+                    clickData.append('action', 'hieucon_track_click');
+                    clickData.append('post_id', post_id);
+                    sendTrackPayload(clickData);
+                }
+
+                document.addEventListener('click', function (e) {
+                    var link = e.target && e.target.closest ? e.target.closest('a[href]') : null;
+                    if (!link) return;
+
+                    var href = (link.getAttribute('href') || '').trim();
+                    if (!href || href.indexOf('#') === 0 || href.indexOf('javascript:') === 0) return;
+
+                    if (href.indexOf('tel:') === 0 || href.indexOf('mailto:') === 0) {
+                        trackClickOut();
+                        return;
                     }
-                    if (!isFinal) {
-                        // Reset lại mốc tính thời gian cho nhịp đo tiếp theo
-                        startTime = Date.now();
+
+                    if (link.hostname && link.hostname !== currentDomain) {
+                        trackClickOut();
+                        return;
+                    }
+
+                    var path = (link.pathname || '').replace(/\/+$/, '');
+                    if (outboundRedirectPaths.indexOf(path) !== -1) {
+                        trackClickOut();
+                    }
+                }, true);
+
+                var bookingForm = document.getElementById('hieucon-booking-step1-form');
+                if (bookingForm) {
+                    bookingForm.addEventListener('submit', function () {
+                        trackClickOut();
+                        logTimeSpent(true);
+                    });
+                }
+
+                // === C. ĐO LƯỜNG THỜI GIAN Ở LẠI VÀ TỈ LỆ GIỮ CHÂN ===
+                var startTime = Date.now();
+
+                function logTimeSpent(isFinal) {
+                    var now = Date.now();
+                    var timeSpent = Math.floor((now - startTime) / 1000);
+                    var minThreshold = isFinal ? 1 : 3;
+
+                    // Chỉ cộng dồn khi thời gian hợp lệ (từ 1s đến 1800s mỗi nhịp)
+                    if (timeSpent >= minThreshold && timeSpent <= 1800) {
+                        var timeData = new FormData();
+                        timeData.append('action', 'hieucon_track_time');
+                        timeData.append('post_id', post_id);
+                        timeData.append('time_spent', timeSpent);
+                        timeData.append('estimated_time', estimatedTimeSec);
+                        sendTrackPayload(timeData);
+                        startTime = now;
+                    } else if (!isFinal && timeSpent > 1800) {
+                        startTime = now;
                     }
                 }
 
-                // Khi user nhảy sang thẻ tab khác
-                document.addEventListener('visibilitychange', function() {
+                // Khi user chuyển tab hoặc ẩn ứng dụng trên điện thoại
+                document.addEventListener('visibilitychange', function () {
                     if (document.visibilityState === 'hidden') {
-                        logTimeSpent(false);
+                        logTimeSpent(true);
                     } else if (document.visibilityState === 'visible') {
-                        // Trở lại đọc bài
                         startTime = Date.now();
                     }
                 });
 
-                // Khi user đóng trình duyệt
-                window.addEventListener('beforeunload', function() {
-                     logTimeSpent(true);
+                // Hỗ trợ Safari / iOS / Mobile khi đóng trang hoặc chuyển hướng
+                window.addEventListener('pagehide', function () {
+                    logTimeSpent(true);
                 });
-                
-                // Backup gửi nhịp nhịp mỗi 30s phòng trường hợp safari/điện thoại ngắt ngang
-                setInterval(function() {
+
+                window.addEventListener('beforeunload', function () {
+                    logTimeSpent(true);
+                });
+
+                // Gửi nhịp định kỳ mỗi 10s khi đang mở trang để luôn ghi nhận chính xác
+                setInterval(function () {
                     if (document.visibilityState === 'visible') {
                         logTimeSpent(false);
                     }
-                }, 30000);
+                }, 10000);
             });
         </script>
         <?php

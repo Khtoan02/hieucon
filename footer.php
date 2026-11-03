@@ -130,6 +130,7 @@ $footer_code = get_option('hieucon_custom_footer_code', '');
 if (!empty(trim($footer_code))) {
     echo $footer_code . "\n";
 }
+wp_footer();
 ?>
 
 </body>
