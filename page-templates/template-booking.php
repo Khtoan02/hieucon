@@ -47,7 +47,7 @@ $zalo_target_url = get_option( 'hieucon_link_zalo_tuvan', home_url( '/zalo' ) );
 
     /* Typography chống dính dấu tiếng Việt tuyệt đối (không bị Tailwind sm:text-* ghi đè line-height) */
     .hc-hero-title {
-        line-height: 1.35 !important;
+        line-height: 1.26 !important;
     }
     .hc-hero-lead {
         line-height: 1.8 !important;
@@ -189,7 +189,7 @@ $zalo_target_url = get_option( 'hieucon_link_zalo_tuvan', home_url( '/zalo' ) );
                 <div class="lg:col-span-6">
                     <h1 class="hc-hero-title font-serif text-[1.9rem] sm:text-4xl xl:text-[2.95rem] font-bold text-navy mb-5 sm:mb-6">
                         <span class="block">30 phút để nhìn rõ</span>
-                        <span class="block text-secondary mt-2 sm:mt-3">vấn đề của con</span>
+                        <span class="block text-secondary">vấn đề của con</span>
                     </h1>
 
                     <p class="hc-hero-lead text-slate-700 text-[15.5px] sm:text-[17px] mb-6 sm:mb-7">
