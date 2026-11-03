@@ -213,12 +213,6 @@ $symptom_groups_links = [
                                         </a>
                                         <?php endforeach; ?>
                                     </div>
-
-                                    <div class="mt-auto pt-3 border-t border-navy/5">
-                                        <a href="<?php echo home_url('/trang-check-list/'); ?>" class="flex items-center justify-center gap-2 bg-navy hover:bg-secondary text-white text-[11px] font-extrabold uppercase tracking-wider p-3 rounded-xl shadow-sm transition-colors">
-                                            <i data-lucide="check-square" class="w-4 h-4"></i> Checklist Đánh Giá Toàn Diện
-                                        </a>
-                                    </div>
                                 </div>
                                 
                                 <!-- Right Pane: Content for Tabs -->
@@ -562,7 +556,6 @@ $symptom_groups_links = [
                                         <div class="flex flex-col gap-2.5">
                                             <a href="<?php echo home_url('/dat-lich-tu-van/'); ?>" class="flex items-center gap-2 text-white bg-secondary hover:bg-secondary_dark text-[12px] font-bold py-2.5 px-4 rounded-xl shadow-sm transition-all justify-center"><i data-lucide="calendar-heart" class="w-4 h-4"></i>Đặt Lịch Tư Vấn 1:1</a>
                                             <a href="<?php echo home_url('/bo-cong-cu-suc-khoe/'); ?>" class="flex items-center gap-2 text-white bg-primary hover:bg-teal-700 text-[12px] font-bold py-2.5 px-4 rounded-xl shadow-sm transition-all justify-center"><i data-lucide="clipboard-check" class="w-4 h-4"></i>Bộ Công Cụ Sức Khỏe</a>
-                                            <a href="<?php echo home_url('/trang-check-list/'); ?>" class="flex items-center gap-2 text-white bg-navy hover:bg-navy/80 text-[12px] font-bold py-2.5 px-4 rounded-xl shadow-sm transition-all justify-center"><i data-lucide="check-square" class="w-4 h-4"></i>Checklist Đánh Giá</a>
                                             <a href="<?php echo home_url('/bai-viet-kien-thuc/'); ?>" class="flex items-center gap-2 text-navy bg-[#f8fafc] hover:bg-secondary/10 hover:text-secondary border border-navy/10 text-[12px] font-bold py-2.5 px-4 rounded-xl transition-all justify-center"><i data-lucide="newspaper" class="w-4 h-4"></i>Bài Viết Kiến Thức</a>
                                         </div>
                                     </div>
@@ -795,11 +788,11 @@ $symptom_groups_links = [
                 </div>
             </a>
 
-            <a href="<?php echo home_url('/trang-check-list/'); ?>" class="flex items-center gap-3 bg-white border border-navy/10 hover:border-secondary p-3.5 rounded-2xl shadow-sm transition-all">
+            <a href="<?php echo home_url('/bo-cong-cu-suc-khoe/'); ?>" class="flex items-center gap-3 bg-white border border-navy/10 hover:border-secondary p-3.5 rounded-2xl shadow-sm transition-all">
                 <div class="bg-navy/5 p-2.5 rounded-xl text-navy"><i data-lucide="clipboard-check" class="w-5 h-5"></i></div>
                 <div class="flex flex-col text-left">
-                    <span class="font-extrabold text-navy text-[13px] leading-tight">Checklist Đánh Giá Sức Khỏe</span>
-                    <span class="text-[10px] font-extrabold text-navy/60 uppercase tracking-widest mt-0.5">Công cụ tầm soát toàn diện</span>
+                    <span class="font-extrabold text-navy text-[13px] leading-tight">Bộ Công Cụ Sức Khỏe</span>
+                    <span class="text-[10px] font-extrabold text-navy/60 uppercase tracking-widest mt-0.5">Nhận diện tín hiệu cơ thể con</span>
                 </div>
             </a>
             
