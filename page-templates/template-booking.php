@@ -25,6 +25,12 @@ $zalo_target_url = get_option( 'hieucon_link_zalo_tuvan', home_url( '/zalo' ) );
     #primary.hc-booking-page {
         background: #ffffff !important;
         color: #0A1931;
+        padding-top: 76px !important;
+    }
+    @media (min-width: 1024px) {
+        #primary.hc-booking-page {
+            padding-top: 86px !important;
+        }
     }
 
     .hc-master-card {
@@ -148,28 +154,28 @@ $zalo_target_url = get_option( 'hieucon_link_zalo_tuvan', home_url( '/zalo' ) );
 <main id="primary" class="site-main hc-booking-page">
 
     <!-- =========================================================
-         SECTION DUY NHẤT: CÂN ĐỐI 2 CỘT 50/50 TRÊN CÙNG 1 MÀN HÌNH
+         SECTION DUY NHẤT: CÂN ĐỐI TÂM THỊ GIÁC & ĐỒNG ĐỀU CHIỀU CAO 2 CỘT
          ========================================================= -->
-    <section id="dang-ky-case" class="min-h-[calc(100vh-104px)] flex items-center py-10 md:py-14 lg:py-16 bg-white">
+    <section id="dang-ky-case" class="min-h-[calc(100vh-86px)] flex items-center pt-4 pb-14 md:pt-6 md:pb-20 lg:pt-6 lg:pb-24 bg-white">
         <div class="max-w-[1280px] w-full mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 xl:gap-16 items-center">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 xl:gap-14 items-center">
 
                 <!-- Cột trái (6/12): Thông điệp mở đầu -->
                 <div class="lg:col-span-6">
-                    <h1 class="font-serif text-4xl sm:text-5xl xl:text-[3.25rem] font-bold text-navy leading-[1.16] mb-5">
+                    <h1 class="font-serif text-3xl sm:text-4xl xl:text-[2.9rem] font-bold text-navy leading-[1.18] mb-4">
                         30 phút để nhìn rõ<br class="hidden sm:inline" />
                         <span class="text-secondary">vấn đề của con</span>
                     </h1>
 
-                    <p class="text-slate-700 text-base sm:text-lg leading-relaxed mb-6">
+                    <p class="text-slate-700 text-base sm:text-[17px] leading-relaxed mb-5">
                         <strong class="text-navy">Hiểu Con Từ Gốc</strong> dành tặng <strong class="text-secondary">30 lịch tư vấn dinh dưỡng 1:1</strong> tặng các con có vấn đề về <strong class="text-navy">kén ăn, dị ứng, bất dung nạp thực phẩm, táo bón, rối loạn tiêu hóa, chậm tăng trưởng,...</strong>
                     </p>
 
-                    <div class="bg-[#fff7ed] border border-orange-200/80 rounded-2xl p-6 sm:p-7">
-                        <p class="font-bold text-navy text-base sm:text-lg mb-4">
+                    <div class="bg-[#fff7ed] border border-orange-200/80 rounded-2xl p-5 sm:p-6">
+                        <p class="font-bold text-navy text-base sm:text-[17px] mb-3.5">
                             Buổi tư vấn có thời gian 30 phút để ba mẹ hiểu và tìm ra các vấn đề:
                         </p>
-                        <ul class="space-y-3.5 text-slate-800 text-sm sm:text-base leading-relaxed">
+                        <ul class="space-y-2.5 text-slate-800 text-sm sm:text-[15px] leading-relaxed">
                             <li class="flex items-start gap-3">
                                 <span class="w-6 h-6 rounded-full bg-secondary text-white flex items-center justify-center shrink-0 mt-0.5 text-xs font-bold">1</span>
                                 <span>Nguyên nhân gốc rễ khiến con gặp các vấn đề về tiêu hóa: kén ăn, dị ứng, bất dung nạp thực phẩm, táo bón, rối loạn tiêu hóa, chậm tăng trưởng,...</span>
