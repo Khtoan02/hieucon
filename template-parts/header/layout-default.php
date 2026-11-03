@@ -44,6 +44,7 @@ $course_cats = get_terms([
                     <nav
                         class="hidden lg:flex items-center h-full absolute left-1/2 -translate-x-1/2 space-x-6 xl:space-x-8 2xl:space-x-10">
 
+                        <?php if ( false ) : /* Tạm ẩn mục Sản phẩm theo yêu cầu */ ?>
                         <!-- Mega Menu "Sản phẩm" -->
                         <div class="group h-full flex items-center">
                             <button
@@ -160,6 +161,7 @@ $course_cats = get_terms([
                                 </div>
                             </div>
                         </div>
+                        <?php endif; ?>
 
                         <!-- Link: Ebook -->
                         <a href="<?php echo esc_url(get_post_type_archive_link('ebook')); ?>"
@@ -260,6 +262,7 @@ $course_cats = get_terms([
 
             <div class="flex flex-col py-2 px-5 gap-1 flex-grow">
 
+                <?php if ( false ) : /* Tạm ẩn mục Sản phẩm theo yêu cầu */ ?>
                 <!-- Accordion: Sản phẩm -->
                 <div class="flex flex-col border-b border-navy/5">
                     <button id="mobile-products-toggle" aria-expanded="false"
@@ -300,6 +303,7 @@ $course_cats = get_terms([
                                 data-lucide="box" class="w-4 h-4 text-navy/30"></i> Xem tất cả sản phẩm</a>
                     </div>
                 </div>
+                <?php endif; ?>
 
                 <!-- Link: Ebook -->
                 <div class="flex flex-col border-b border-navy/5">

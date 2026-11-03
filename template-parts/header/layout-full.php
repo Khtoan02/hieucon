@@ -89,12 +89,12 @@ $symptom_groups_links = [
 <div id="page" class="site">
     <header id="main-header" class="fixed top-3 lg:top-4 left-1/2 -translate-x-1/2 z-[100] w-[96%] max-w-[1440px] transition-all duration-500" aria-label="Main Navigation">
         <div class="glass-header relative rounded-2xl lg:rounded-[2rem] backdrop-blur-2xl bg-white/90 border border-white/70 shadow-[0_4px_24px_rgba(0,0,0,0.07)] px-4 sm:px-5 lg:px-6 xl:px-8">
-            <!-- Header Container: 3-column CSS Grid for perfect balance -->
-            <div class="grid grid-cols-[1fr_auto_1fr] items-center h-[60px] lg:h-[70px] gap-3 xl:gap-4">
+            <!-- Header Container: Flex on Mobile/Tablet, 3-column Grid on Desktop -->
+            <div class="flex items-center justify-between lg:grid lg:grid-cols-[auto_1fr_auto] xl:grid-cols-[1fr_auto_1fr] h-[60px] lg:h-[70px] gap-3 lg:gap-4 xl:gap-6">
                 
                 <!-- COL 1: Logo & Brand (LEFT) -->
-                <div class="flex justify-start items-center">
-                    <a href="<?php echo home_url('/'); ?>" class="flex items-center gap-2.5 cursor-pointer group outline-none rounded-xl" aria-label="Trang chủ Hiểu Con Từ Gốc">
+                <div class="flex justify-start items-center shrink-0">
+                    <a href="<?php echo home_url('/'); ?>" class="flex items-center gap-2.5 cursor-pointer group outline-none rounded-xl shrink-0" aria-label="Trang chủ Hiểu Con Từ Gốc">
                         <div class="relative shrink-0">
                             <?php if ( has_site_icon() ) : ?>
                                 <img src="<?php echo esc_url(get_site_icon_url(96)); ?>" alt="<?php bloginfo('name'); ?>" class="w-9 h-9 lg:w-11 lg:h-11 rounded-xl object-cover shadow-sm bg-white group-hover:scale-105 transition-transform duration-300">
@@ -103,19 +103,20 @@ $symptom_groups_links = [
                             <?php endif; ?>
                             <span class="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-secondary rounded-full border-2 border-white shadow-sm"></span>
                         </div>
-                        <div class="flex flex-col justify-center">
-                            <span class="font-serif font-bold text-[16px] lg:text-[18px] xl:text-[20px] leading-none text-navy tracking-tight group-hover:text-secondary transition-colors duration-300">HIỂU CON TỪ GỐC</span>
-                            <span class="text-[8px] lg:text-[9px] font-bold text-navy/40 tracking-[0.12em] uppercase mt-1 leading-none">Tự kỷ là rối loạn toàn thân</span>
+                        <div class="flex flex-col justify-center whitespace-nowrap">
+                            <span class="font-serif font-bold text-[15px] sm:text-[17px] lg:text-[18px] xl:text-[20px] leading-none text-navy tracking-tight group-hover:text-secondary transition-colors duration-300">HIỂU CON TỪ GỐC</span>
+                            <span class="text-[8px] sm:text-[9px] font-bold text-navy/45 tracking-[0.1em] sm:tracking-[0.12em] uppercase mt-1 leading-none">Tự kỷ là rối loạn toàn thân</span>
                         </div>
                     </a>
                 </div>
 
                 <!-- COL 2: Main Navigation (CENTER) -->
-                <nav class="hidden lg:flex items-center gap-0.5 xl:gap-1.5">
+                <nav class="hidden lg:flex items-center justify-center gap-1 xl:gap-2">
                     
+                    <?php if ( false ) : /* Tạm ẩn mục Sản phẩm theo yêu cầu */ ?>
                     <!-- 1. Mega Menu "Sản phẩm" -->
                     <div class="group h-full flex items-center">
-                        <a href="<?php echo home_url('/san-pham/'); ?>" class="nav-link relative flex items-center gap-1.5 px-2.5 xl:px-3 py-2 rounded-xl text-navy/70 hover:text-navy group-hover:text-secondary font-bold text-[12px] xl:text-[13px] uppercase tracking-[0.1em] transition-all duration-200 hover:bg-navy/5 group-hover:bg-navy/5" aria-expanded="false" aria-haspopup="true">
+                        <a href="<?php echo home_url('/san-pham/'); ?>" class="nav-link relative flex items-center gap-1.5 px-2.5 xl:px-3 py-2 rounded-xl text-navy/70 hover:text-navy group-hover:text-secondary font-bold text-[12px] xl:text-[13px] uppercase tracking-[0.1em] transition-all duration-200 hover:bg-navy/5 group-hover:bg-navy/5 whitespace-nowrap" aria-expanded="false" aria-haspopup="true">
                             Sản phẩm 
                             <i data-lucide="chevron-down" class="w-4 h-4 transition-transform duration-300 group-hover:-rotate-180" aria-hidden="true"></i>
                             <span class="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-[3px] bg-secondary transition-all duration-300 group-hover:w-full opacity-0 group-hover:opacity-100 rounded-t-md"></span>
@@ -175,12 +176,13 @@ $symptom_groups_links = [
                             </div>
                         </div>
                     </div>
+                    <?php endif; ?>
                     
                     <!-- 2. Mega Menu "Triệu Chứng" -->
-                    <div class="group h-full flex items-center">
-                        <a href="<?php echo home_url('/van-dong-tho-tinh-o-tre-tu-ky/'); ?>" class="nav-link relative flex items-center gap-1.5 px-2.5 xl:px-3 py-2 rounded-xl text-navy/70 hover:text-navy group-hover:text-secondary font-bold text-[12px] xl:text-[13px] uppercase tracking-[0.1em] transition-all duration-200 hover:bg-navy/5 group-hover:bg-navy/5" aria-expanded="false" aria-haspopup="true">
-                            Triệu Chứng <span class="hidden 2xl:inline">Tự Kỷ</span>
-                            <i data-lucide="chevron-down" class="w-4 h-4 transition-transform duration-300 group-hover:-rotate-180" aria-hidden="true"></i>
+                    <div class="group h-full flex items-center shrink-0">
+                        <a href="<?php echo home_url('/van-dong-tho-tinh-o-tre-tu-ky/'); ?>" class="nav-link relative flex items-center gap-1.5 px-3 xl:px-3.5 py-2 rounded-xl text-navy/75 hover:text-navy group-hover:text-secondary font-bold text-[12px] xl:text-[13px] uppercase tracking-[0.08em] transition-all duration-200 hover:bg-navy/5 group-hover:bg-navy/5 whitespace-nowrap shrink-0" aria-expanded="false" aria-haspopup="true">
+                            <span>Triệu Chứng Tự Kỷ</span>
+                            <i data-lucide="chevron-down" class="w-4 h-4 shrink-0 transition-transform duration-300 group-hover:-rotate-180" aria-hidden="true"></i>
                             <span class="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-[3px] bg-secondary transition-all duration-300 group-hover:w-full opacity-0 group-hover:opacity-100 rounded-t-md"></span>
                         </a>
                         
@@ -261,10 +263,10 @@ $symptom_groups_links = [
                     </div>
 
                     <!-- 3. Mega Menu "Dinh Dưỡng" (Chuẩn hóa 100% theo Sitemap) -->
-                    <div class="group h-full flex items-center">
-                        <a href="<?php echo home_url('/nguyen-tac-dinh-duong-phuc-hoi-duong-ruot/'); ?>" class="nav-link relative flex items-center gap-1.5 px-2.5 xl:px-3 py-2 rounded-xl text-navy/70 hover:text-navy group-hover:text-secondary font-bold text-[12px] xl:text-[13px] uppercase tracking-[0.1em] transition-all duration-200 hover:bg-navy/5 group-hover:bg-navy/5" aria-expanded="false" aria-haspopup="true">
-                            Dinh Dưỡng 
-                            <i data-lucide="chevron-down" class="w-4 h-4 transition-transform duration-300 group-hover:-rotate-180" aria-hidden="true"></i>
+                    <div class="group h-full flex items-center shrink-0">
+                        <a href="<?php echo home_url('/nguyen-tac-dinh-duong-phuc-hoi-duong-ruot/'); ?>" class="nav-link relative flex items-center gap-1.5 px-3 xl:px-3.5 py-2 rounded-xl text-navy/75 hover:text-navy group-hover:text-secondary font-bold text-[12px] xl:text-[13px] uppercase tracking-[0.08em] transition-all duration-200 hover:bg-navy/5 group-hover:bg-navy/5 whitespace-nowrap shrink-0" aria-expanded="false" aria-haspopup="true">
+                            <span>Dinh Dưỡng</span>
+                            <i data-lucide="chevron-down" class="w-4 h-4 shrink-0 transition-transform duration-300 group-hover:-rotate-180" aria-hidden="true"></i>
                             <span class="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-[3px] bg-secondary transition-all duration-300 group-hover:w-full opacity-0 group-hover:opacity-100 rounded-t-md"></span>
                         </a>
                         
@@ -349,10 +351,10 @@ $symptom_groups_links = [
                     </div>
 
                     <!-- 4. Mega Menu "Cẩm Nang / Thư Viện" (/docs/ - Bổ sung từ ebook-sitemap.xml) -->
-                    <div class="group h-full flex items-center">
-                        <a href="<?php echo home_url('/docs/'); ?>" class="nav-link relative flex items-center gap-1.5 px-2.5 xl:px-3 py-2 rounded-xl text-navy/70 hover:text-navy group-hover:text-secondary font-bold text-[12px] xl:text-[13px] uppercase tracking-[0.1em] transition-all duration-200 hover:bg-navy/5 group-hover:bg-navy/5" aria-expanded="false" aria-haspopup="true">
-                            Cẩm Nang
-                            <i data-lucide="chevron-down" class="w-4 h-4 transition-transform duration-300 group-hover:-rotate-180" aria-hidden="true"></i>
+                    <div class="group h-full flex items-center shrink-0">
+                        <a href="<?php echo home_url('/docs/'); ?>" class="nav-link relative flex items-center gap-1.5 px-3 xl:px-3.5 py-2 rounded-xl text-navy/75 hover:text-navy group-hover:text-secondary font-bold text-[12px] xl:text-[13px] uppercase tracking-[0.08em] transition-all duration-200 hover:bg-navy/5 group-hover:bg-navy/5 whitespace-nowrap shrink-0" aria-expanded="false" aria-haspopup="true">
+                            <span>Cẩm Nang</span>
+                            <i data-lucide="chevron-down" class="w-4 h-4 shrink-0 transition-transform duration-300 group-hover:-rotate-180" aria-hidden="true"></i>
                             <span class="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-[3px] bg-secondary transition-all duration-300 group-hover:w-full opacity-0 group-hover:opacity-100 rounded-t-md"></span>
                         </a>
 
@@ -500,15 +502,15 @@ $symptom_groups_links = [
                 </nav>
 
                 <!-- COL 3: CTAs & Chuyên Đề Y Sinh (RIGHT) -->
-                <div class="hidden lg:flex justify-end items-center gap-2 xl:gap-3">
+                <div class="hidden lg:flex justify-end items-center gap-2 xl:gap-2.5 shrink-0">
 
-                    <!-- Chuyên đề (Chuẩn Sitemap) -->
-                    <div class="group relative flex items-center">
-                        <a href="<?php echo home_url('/bai-viet-kien-thuc/'); ?>" class="flex items-center gap-2 border border-navy/10 hover:border-secondary/40 bg-[#f5f7fa] hover:bg-white px-3 xl:px-3.5 py-2 rounded-xl transition-all duration-200 shadow-sm hover:shadow-md outline-none group/btn">
-                            <div class="w-6 h-6 rounded-lg bg-secondary/10 flex items-center justify-center group-hover/btn:bg-secondary/20 transition-colors">
+                    <!-- Chuyên đề (Chuẩn Sitemap - Luôn nằm gọn trên 1 dòng) -->
+                    <div class="group relative flex items-center shrink-0">
+                        <a href="<?php echo home_url('/bai-viet-kien-thuc/'); ?>" class="flex items-center gap-2 border border-navy/10 hover:border-secondary/40 bg-[#f5f7fa] hover:bg-white px-3 xl:px-3.5 py-2 rounded-xl transition-all duration-200 shadow-sm hover:shadow-md outline-none group/btn whitespace-nowrap shrink-0">
+                            <div class="w-6 h-6 rounded-lg bg-secondary/10 flex items-center justify-center group-hover/btn:bg-secondary/20 transition-colors shrink-0">
                                 <i data-lucide="book-open" class="w-3.5 h-3.5 text-secondary"></i>
                             </div>
-                            <span class="font-bold text-navy text-[11px] xl:text-[12px] uppercase tracking-wider group-hover/btn:text-secondary transition-colors">Chuyên đề</span>
+                            <span class="font-bold text-navy text-[11.5px] xl:text-[12px] uppercase tracking-wider group-hover/btn:text-secondary transition-colors whitespace-nowrap">Chuyên đề</span>
                         </a>
                         <!-- Chuyên Đề Dropdown -->
                         <div class="absolute top-full right-0 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 translate-y-2 group-hover:translate-y-0 w-[880px] xl:w-[980px] z-[200]">
@@ -592,15 +594,15 @@ $symptom_groups_links = [
                     <?php if ( $current_member ) : ?>
                         <!-- Nút: Tài khoản (Đã đăng nhập) -->
                         <a href="<?php echo home_url('/tai-khoan/'); ?>"
-                           class="flex items-center gap-1.5 bg-navy hover:bg-navy/80 text-white px-3 py-2 rounded-xl font-bold text-[11px] xl:text-[12px] transition-all duration-200 shadow-sm hover:shadow-md group shrink-0">
-                            <i data-lucide="user" class="w-4 h-4 text-secondary group-hover:text-white transition-colors"></i>
+                           class="flex items-center gap-1.5 bg-navy hover:bg-navy/80 text-white px-3.5 py-2 rounded-xl font-bold text-[11.5px] xl:text-[12px] transition-all duration-200 shadow-sm hover:shadow-md group shrink-0 whitespace-nowrap">
+                            <i data-lucide="user" class="w-4 h-4 text-secondary group-hover:text-white transition-colors shrink-0"></i>
                             <span>Tài khoản</span>
                         </a>
                     <?php else : ?>
                         <!-- Nút: Đăng nhập (Chưa đăng nhập) -->
                         <a href="<?php echo home_url('/dang-nhap/'); ?>"
-                           class="flex items-center gap-1.5 bg-secondary hover:bg-secondary_dark text-white px-3 py-2 rounded-xl font-bold text-[11px] xl:text-[12px] transition-all duration-200 shadow-sm hover:shadow-md shrink-0">
-                            <i data-lucide="log-in" class="w-4 h-4 text-white"></i>
+                           class="flex items-center gap-1.5 bg-secondary hover:bg-secondary_dark text-white px-3.5 py-2 rounded-xl font-bold text-[11.5px] xl:text-[12px] transition-all duration-200 shadow-sm hover:shadow-md shrink-0 whitespace-nowrap">
+                            <i data-lucide="log-in" class="w-4 h-4 text-white shrink-0"></i>
                             <span>Đăng nhập</span>
                         </a>
                     <?php endif; ?>
@@ -608,8 +610,8 @@ $symptom_groups_links = [
                 </div>
 
                 <!-- Mobile Hamburger -->
-                <div class="lg:hidden flex justify-end items-center">
-                    <button id="mobile-menu-btn" aria-label="Mở menu" aria-expanded="false" class="p-2 bg-[#f5f7fa] border border-navy/10 rounded-xl text-navy hover:bg-white transition-colors shadow-sm">
+                <div class="lg:hidden flex justify-end items-center shrink-0">
+                    <button id="mobile-menu-btn" aria-label="Mở menu" aria-expanded="false" class="p-2.5 bg-[#f5f7fa] border border-navy/10 rounded-xl text-navy hover:bg-white transition-colors shadow-sm">
                         <i data-lucide="menu" class="w-5 h-5"></i>
                     </button>
                 </div>
@@ -638,6 +640,7 @@ $symptom_groups_links = [
 
         <div class="flex flex-col py-2 px-5 gap-1 flex-grow">
             
+            <?php if ( false ) : /* Tạm ẩn mục Sản phẩm theo yêu cầu */ ?>
             <!-- 1. Accordion: Sản phẩm -->
             <div class="flex flex-col border-b border-navy/5">
                 <button id="mobile-products-toggle" aria-expanded="false" class="flex justify-between items-center py-4 text-navy font-bold uppercase tracking-widest text-sm w-full text-left outline-none rounded-lg">
@@ -661,6 +664,7 @@ $symptom_groups_links = [
                     <a href="<?php echo home_url('/san-pham/'); ?>" class="text-navy/80 font-bold text-[13px] flex items-center gap-3 px-3 py-2 hover:text-secondary"><i data-lucide="layout-grid" class="w-4 h-4 text-secondary"></i> Xem tất cả sản phẩm</a>
                 </div>
             </div>
+            <?php endif; ?>
 
             <!-- 2. Accordion: Triệu Chứng -->
             <div class="flex flex-col border-b border-navy/5">
