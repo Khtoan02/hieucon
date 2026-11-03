@@ -45,6 +45,20 @@ $zalo_target_url = get_option( 'hieucon_link_zalo_tuvan', home_url( '/zalo' ) );
         background: linear-gradient(90deg, #0A1931 0%, #f97316 100%);
     }
 
+    /* Typography chống dính dấu tiếng Việt tuyệt đối (không bị Tailwind sm:text-* ghi đè line-height) */
+    .hc-hero-title {
+        line-height: 1.35 !important;
+    }
+    .hc-hero-lead {
+        line-height: 1.8 !important;
+    }
+    .hc-focus-heading {
+        line-height: 1.6 !important;
+    }
+    .hc-focus-list li {
+        line-height: 1.72 !important;
+    }
+
     /* Multi-select Issue Chips ("Trẻ đang gặp vấn đề gì?") */
     .hc-issue-chip {
         display: flex;
@@ -173,20 +187,20 @@ $zalo_target_url = get_option( 'hieucon_link_zalo_tuvan', home_url( '/zalo' ) );
 
                 <!-- Cột trái (6/12): Thông điệp mở đầu thoáng đãng, phân tách rõ từng ý -->
                 <div class="lg:col-span-6">
-                    <h1 class="font-serif text-[1.9rem] sm:text-4xl xl:text-[2.95rem] font-bold text-navy leading-[1.28] mb-5 sm:mb-6">
-                        30 phút để nhìn rõ<br class="hidden sm:inline" />
-                        <span class="text-secondary">vấn đề của con</span>
+                    <h1 class="hc-hero-title font-serif text-[1.9rem] sm:text-4xl xl:text-[2.95rem] font-bold text-navy mb-5 sm:mb-6">
+                        <span class="block">30 phút để nhìn rõ</span>
+                        <span class="block text-secondary mt-2 sm:mt-3">vấn đề của con</span>
                     </h1>
 
-                    <p class="text-slate-700 text-[15.5px] sm:text-[17px] leading-[1.78] mb-6 sm:mb-7">
+                    <p class="hc-hero-lead text-slate-700 text-[15.5px] sm:text-[17px] mb-6 sm:mb-7">
                         <strong class="text-navy">HIỂU CON TỪ GỐC</strong> dành tặng <strong class="text-secondary">30 lịch tư vấn dinh dưỡng 1:1</strong> tặng các con có vấn đề về <strong class="text-navy">kén ăn, dị ứng, bất dung nạp thực phẩm, táo bón, rối loạn tiêu hóa, chậm tăng trưởng,...</strong>
                     </p>
 
                     <div class="bg-[#fff7ed] border border-orange-200/80 rounded-2xl p-5 sm:p-7">
-                        <p class="font-bold text-navy text-[15.5px] sm:text-[17px] leading-[1.55] mb-4 sm:mb-5">
+                        <p class="hc-focus-heading font-bold text-navy text-[15.5px] sm:text-[17px] mb-4 sm:mb-5">
                             Buổi tư vấn có thời gian 30 phút để ba mẹ hiểu và tìm ra các vấn đề:
                         </p>
-                        <ul class="divide-y divide-orange-200/60 text-slate-700 text-[14.5px] sm:text-[15.5px] leading-[1.68]">
+                        <ul class="hc-focus-list divide-y divide-orange-200/60 text-slate-700 text-[14.5px] sm:text-[15.5px]">
                             <li class="flex items-start gap-3.5 pb-3.5">
                                 <span class="w-6 h-6 rounded-full bg-secondary text-white flex items-center justify-center shrink-0 mt-1 text-xs font-bold shadow-sm">1</span>
                                 <span><strong class="text-navy font-bold">Nguyên nhân gốc rễ khiến con gặp các vấn đề về tiêu hóa:</strong> kén ăn, dị ứng, bất dung nạp thực phẩm, táo bón, rối loạn tiêu hóa, chậm tăng trưởng,...</span>
