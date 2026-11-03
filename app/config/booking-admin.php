@@ -430,13 +430,35 @@ function hieucon_ajax_submit_booking_survey() {
     $phone          = isset( $_POST['phone'] ) ? sanitize_text_field( wp_unslash( $_POST['phone'] ) ) : '';
     $preferred_time = isset( $_POST['preferred_time'] ) ? sanitize_text_field( wp_unslash( $_POST['preferred_time'] ) ) : 'Sớm nhất có thể';
 
-    $child_name      = isset( $_POST['child_name'] ) ? sanitize_text_field( wp_unslash( $_POST['child_name'] ) ) : '';
-    $child_age       = isset( $_POST['child_age'] ) ? sanitize_text_field( wp_unslash( $_POST['child_age'] ) ) : '';
-    $diagnosis       = isset( $_POST['diagnosis'] ) ? sanitize_text_field( wp_unslash( $_POST['diagnosis'] ) ) : '';
-    $bio_symptoms    = isset( $_POST['bio_symptoms'] ) && is_array( $_POST['bio_symptoms'] ) ? array_map( 'sanitize_text_field', wp_unslash( $_POST['bio_symptoms'] ) ) : [];
-    $behav_symptoms  = isset( $_POST['behav_symptoms'] ) && is_array( $_POST['behav_symptoms'] ) ? array_map( 'sanitize_text_field', wp_unslash( $_POST['behav_symptoms'] ) ) : [];
-    $tried_methods   = isset( $_POST['tried_methods'] ) && is_array( $_POST['tried_methods'] ) ? array_map( 'sanitize_text_field', wp_unslash( $_POST['tried_methods'] ) ) : [];
-    $parent_goal     = isset( $_POST['parent_goal'] ) ? sanitize_textarea_field( wp_unslash( $_POST['parent_goal'] ) ) : '';
+    $child_name         = isset( $_POST['child_name'] ) ? sanitize_text_field( wp_unslash( $_POST['child_name'] ) ) : '';
+    $child_age          = isset( $_POST['child_age'] ) ? sanitize_text_field( wp_unslash( $_POST['child_age'] ) ) : '';
+    $child_gender       = isset( $_POST['child_gender'] ) ? sanitize_text_field( wp_unslash( $_POST['child_gender'] ) ) : '';
+    $child_weight       = isset( $_POST['child_weight'] ) ? sanitize_text_field( wp_unslash( $_POST['child_weight'] ) ) : '';
+    $child_height       = isset( $_POST['child_height'] ) ? sanitize_text_field( wp_unslash( $_POST['child_height'] ) ) : '';
+    $water_amount       = isset( $_POST['water_amount'] ) ? sanitize_text_field( wp_unslash( $_POST['water_amount'] ) ) : '';
+    $other_difficulties = isset( $_POST['other_difficulties'] ) ? sanitize_textarea_field( wp_unslash( $_POST['other_difficulties'] ) ) : '';
+    $daily_diet         = isset( $_POST['daily_diet'] ) ? sanitize_textarea_field( wp_unslash( $_POST['daily_diet'] ) ) : '';
+    $risk_level         = isset( $_POST['risk_level'] ) ? sanitize_text_field( wp_unslash( $_POST['risk_level'] ) ) : '';
+    $risk_title         = isset( $_POST['risk_title'] ) ? sanitize_text_field( wp_unslash( $_POST['risk_title'] ) ) : '';
+    $total_score        = isset( $_POST['total_score'] ) ? intval( $_POST['total_score'] ) : 0;
+
+    $allergies_raw = isset( $_POST['allergies_json'] ) ? json_decode( wp_unslash( $_POST['allergies_json'] ), true ) : [];
+    $allergies     = is_array( $allergies_raw ) ? array_map( 'sanitize_text_field', $allergies_raw ) : [];
+
+    $sec2_raw = isset( $_POST['section2_json'] ) ? json_decode( wp_unslash( $_POST['section2_json'] ), true ) : [];
+    $sec2_ans = is_array( $sec2_raw ) ? array_map( 'sanitize_text_field', $sec2_raw ) : [];
+
+    $sec3_raw = isset( $_POST['section3_json'] ) ? json_decode( wp_unslash( $_POST['section3_json'] ), true ) : [];
+    $sec3_ans = is_array( $sec3_raw ) ? array_map( 'sanitize_text_field', $sec3_raw ) : [];
+
+    $sec4_raw = isset( $_POST['section4_json'] ) ? json_decode( wp_unslash( $_POST['section4_json'] ), true ) : [];
+    $sec4_ans = is_array( $sec4_raw ) ? array_map( 'sanitize_text_field', $sec4_raw ) : [];
+
+    $diagnosis      = isset( $_POST['diagnosis'] ) ? sanitize_text_field( wp_unslash( $_POST['diagnosis'] ) ) : '';
+    $bio_symptoms   = isset( $_POST['bio_symptoms'] ) && is_array( $_POST['bio_symptoms'] ) ? array_map( 'sanitize_text_field', wp_unslash( $_POST['bio_symptoms'] ) ) : [];
+    $behav_symptoms = isset( $_POST['behav_symptoms'] ) && is_array( $_POST['behav_symptoms'] ) ? array_map( 'sanitize_text_field', wp_unslash( $_POST['behav_symptoms'] ) ) : [];
+    $tried_methods  = isset( $_POST['tried_methods'] ) && is_array( $_POST['tried_methods'] ) ? array_map( 'sanitize_text_field', wp_unslash( $_POST['tried_methods'] ) ) : [];
+    $parent_goal    = isset( $_POST['parent_goal'] ) ? sanitize_textarea_field( wp_unslash( $_POST['parent_goal'] ) ) : '';
 
     global $wpdb;
     $table_name = $wpdb->prefix . 'hieucon_bookings';
@@ -463,37 +485,65 @@ function hieucon_ajax_submit_booking_survey() {
     }
 
     $survey_payload = [
-        'survey_completed' => true,
-        'child_name'       => $child_name,
-        'child_age'        => $child_age,
-        'diagnosis'        => $diagnosis,
-        'child_issues'     => $existing_issues,
-        'bio_symptoms'     => $bio_symptoms,
-        'behav_symptoms'   => $behav_symptoms,
-        'tried_methods'    => $tried_methods,
-        'parent_goal'      => $parent_goal,
-        'submitted_at'     => current_time( 'mysql' ),
+        'survey_completed'   => true,
+        'child_name'         => $child_name,
+        'child_age'          => $child_age,
+        'child_gender'       => $child_gender,
+        'child_weight'       => $child_weight,
+        'child_height'       => $child_height,
+        'water_amount'       => $water_amount,
+        'allergies'          => $allergies,
+        'other_difficulties' => $other_difficulties,
+        'daily_diet'         => $daily_diet,
+        'risk_level'         => $risk_level,
+        'risk_title'         => $risk_title,
+        'total_score'        => $total_score,
+        'section2_answers'   => $sec2_ans,
+        'section3_answers'   => $sec3_ans,
+        'section4_answers'   => $sec4_ans,
+        'diagnosis'          => $diagnosis,
+        'child_issues'       => $existing_issues,
+        'bio_symptoms'       => $bio_symptoms,
+        'behav_symptoms'     => $behav_symptoms,
+        'tried_methods'      => $tried_methods,
+        'parent_goal'        => $parent_goal,
+        'submitted_at'       => current_time( 'mysql' ),
     ];
 
     // Tạo bản tóm tắt dễ đọc cho cột issue_note
     $summary_lines = [];
     if ( ! empty( $child_name ) || ! empty( $child_age ) ) {
-        $summary_lines[] = '👶 Bé: ' . trim( $child_name . ( $child_age ? " ($child_age)" : '' ) );
+        $meta_parts = array_filter( [
+            $child_gender,
+            $child_age,
+            $child_weight ? ( $child_weight . 'kg' ) : '',
+            $child_height ? ( $child_height . 'cm' ) : '',
+        ] );
+        $summary_lines[] = '👶 Bé: ' . trim( $child_name . ( ! empty( $meta_parts ) ? ' (' . implode( ' • ', $meta_parts ) . ')' : '' ) );
+    }
+    if ( ! empty( $risk_title ) ) {
+        $summary_lines[] = '📊 Kết quả sàng lọc: ' . $risk_title . ' (' . $total_score . ' điểm)';
     }
     if ( ! empty( $existing_issues ) ) {
         $summary_lines[] = '📌 Vấn đề chọn ban đầu: ' . implode( ', ', $existing_issues );
     }
-    if ( ! empty( $diagnosis ) ) {
-        $summary_lines[] = '🩺 Vấn đề nổi bật: ' . $diagnosis;
-    }
     if ( ! empty( $bio_symptoms ) ) {
-        $summary_lines[] = '🧬 Tiêu hoá & Ăn uống: ' . implode( ', ', $bio_symptoms );
+        $summary_lines[] = '🧬 Ăn uống & Tiêu hóa: ' . implode( ' | ', $bio_symptoms );
     }
-    if ( ! empty( $behav_symptoms ) ) {
-        $summary_lines[] = '🔬 Bất dung nạp & Vi chất: ' . implode( ', ', $behav_symptoms );
+    if ( ! empty( $allergies ) ) {
+        $summary_lines[] = '⚠️ Dị ứng: ' . implode( ', ', $allergies );
+    }
+    if ( ! empty( $water_amount ) ) {
+        $summary_lines[] = '💧 Lượng nước: ' . $water_amount . ' ml/ngày';
+    }
+    if ( ! empty( $daily_diet ) ) {
+        $summary_lines[] = '🍽️ Thực đơn 1 ngày: ' . $daily_diet;
+    }
+    if ( ! empty( $other_difficulties ) ) {
+        $summary_lines[] = '📝 Khó khăn ăn uống khác: ' . $other_difficulties;
     }
     if ( ! empty( $tried_methods ) ) {
-        $summary_lines[] = '🛠️ Đã thử: ' . implode( ', ', $tried_methods );
+        $summary_lines[] = '💊 Tiền sử bổ sung: ' . implode( ' | ', $tried_methods );
     }
     if ( ! empty( $parent_goal ) ) {
         $summary_lines[] = '🎯 Điều muốn làm rõ: ' . $parent_goal;
@@ -2546,22 +2596,61 @@ function hieucon_render_bookings_admin_page() {
                 </tr>
             `;
 
-            if (sv.child_name || sv.child_age || sv.bio_symptoms?.length || sv.behav_symptoms?.length || sv.tried_methods?.length || sv.parent_goal) {
+            if (sv.child_name || sv.child_age || sv.bio_symptoms?.length || sv.behav_symptoms?.length || sv.tried_methods?.length || sv.parent_goal || sv.risk_title) {
+                const childMeta = [
+                    sv.child_gender || '',
+                    sv.child_age || '',
+                    sv.child_weight ? (sv.child_weight + ' kg') : '',
+                    sv.child_height ? (sv.child_height + ' cm') : '',
+                    sv.water_amount ? ('Uống: ' + sv.water_amount + ' ml/ngày') : ''
+                ].filter(Boolean).join(' • ');
+
                 surveyRowsHtml += `
                     <tr>
                         <th>Thông tin cơ bản của bé</th>
-                        <td><strong>${sv.child_name || 'Chưa điền tên'}</strong> ${sv.child_age ? '(' + sv.child_age + ')' : ''}</td>
+                        <td>
+                            <strong style="color:#0A1931;">${sv.child_name || 'Chưa điền tên'}</strong>
+                            ${childMeta ? '<span style="margin-left:6px; color:#475569; font-weight:600;">(' + childMeta + ')</span>' : ''}
+                        </td>
                     </tr>
+                    ${sv.risk_title ? `
                     <tr>
-                        <th>Biểu hiện ăn uống & tiêu hóa</th>
+                        <th>Kết quả sàng lọc sơ bộ</th>
+                        <td>
+                            <span style="background:#fff7ed; color:#c2410c; border:1px solid #fdba74; font-weight:800; padding:4px 10px; border-radius:6px; display:inline-block;">
+                                ${sv.risk_title} (${typeof sv.total_score !== 'undefined' ? sv.total_score + ' điểm' : ''})
+                            </span>
+                        </td>
+                    </tr>
+                    ` : ''}
+                    <tr>
+                        <th>Ăn uống & tiêu hóa tổng quát</th>
                         <td>${renderListTags(sv.bio_symptoms)}</td>
                     </tr>
+                    ${(sv.allergies && sv.allergies.length) ? `
                     <tr>
-                        <th>Hấp thu, vi chất, giấc ngủ & hành vi</th>
+                        <th>Tiền sử dị ứng</th>
+                        <td>${renderListTags(sv.allergies)}</td>
+                    </tr>
+                    ` : ''}
+                    <tr>
+                        <th>Dinh dưỡng, cảm giác & vận động</th>
                         <td>${renderListTags(sv.behav_symptoms)}</td>
                     </tr>
+                    ${sv.other_difficulties ? `
                     <tr>
-                        <th>Hướng gia đình đã áp dụng</th>
+                        <th>Khó khăn ăn uống khác</th>
+                        <td><div style="white-space:pre-line; color:#334155;">${sv.other_difficulties}</div></td>
+                    </tr>
+                    ` : ''}
+                    ${sv.daily_diet ? `
+                    <tr>
+                        <th>Thực đơn điển hình 1 ngày</th>
+                        <td><div style="white-space:pre-line; background:#f8fafc; border:1px solid #e2e8f0; padding:8px 12px; border-radius:8px; color:#1e293b;">${sv.daily_diet}</div></td>
+                    </tr>
+                    ` : ''}
+                    <tr>
+                        <th>Tiền sử bổ sung vi chất</th>
                         <td>${renderListTags(sv.tried_methods)}</td>
                     </tr>
                     <tr>
