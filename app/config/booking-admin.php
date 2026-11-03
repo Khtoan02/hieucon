@@ -1012,11 +1012,12 @@ function hieucon_render_bookings_admin_page() {
             border-bottom: none;
         }
 
-        /* TABLE CARD VIEW (Dạng Thẻ Trực Quan Từng Hồ Sơ) */
+        /* TABLE CARD VIEW (Dạng Thẻ CRM Hiện Đại, Gọn Gàng & Trực Quan) */
         .hc-bk-cards-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(540px, 1fr));
-            gap: 18px;
+            grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+            gap: 16px;
+            align-items: stretch;
         }
         @media (max-width: 782px) {
             .hc-bk-cards-grid {
@@ -1025,72 +1026,174 @@ function hieucon_render_bookings_admin_page() {
         }
         .hc-case-card {
             background: #ffffff;
-            border: 1.5px solid #cbd5e1;
-            border-radius: 16px;
-            overflow: hidden;
+            border: 1px solid #cbd5e1;
+            border-top: 3.5px solid #f97316;
+            border-radius: 14px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            box-shadow: 0 8px 24px -14px rgba(10, 25, 49, 0.08);
+            box-shadow: 0 2px 10px -3px rgba(10, 25, 49, 0.05);
             transition: all 0.18s ease;
+            position: relative;
+            overflow: hidden;
         }
+        .hc-case-card[data-status="pending"]   { border-top-color: #f97316; }
+        .hc-case-card[data-status="contacted"] { border-top-color: #2563eb; }
+        .hc-case-card[data-status="completed"] { border-top-color: #10b981; }
+        .hc-case-card[data-status="cancelled"] { border-top-color: #94a3b8; }
+
         .hc-case-card:hover {
             border-color: #94a3b8;
-            box-shadow: 0 14px 30px -14px rgba(10, 25, 49, 0.14);
+            transform: translateY(-2px);
+            box-shadow: 0 12px 28px -12px rgba(10, 25, 49, 0.13);
         }
         .hc-case-card.is-selected {
-            border-color: #f97316;
+            border-color: #f97316 !important;
             background: #fffdf9;
-            box-shadow: 0 14px 32px -12px rgba(249, 115, 22, 0.22);
+            box-shadow: 0 0 0 2px rgba(249, 115, 22, 0.16), 0 12px 28px -12px rgba(249, 115, 22, 0.2);
         }
-        .hc-case-card-head {
-            background: #0A1931;
-            color: #ffffff;
-            padding: 13px 18px;
+        .hc-card-top {
+            padding: 11px 15px;
+            background: #fcfcfd;
+            border-bottom: 1px solid #f1f5f9;
+            display: flex;
+            align-items: safe center;
+            justify-content: space-between;
+            gap: 8px;
+        }
+        .hc-card-top-left {
             display: flex;
             align-items: center;
+            gap: 8px;
+            min-inline-size: 0;
+        }
+        .hc-card-identity {
+            padding: 14px 15px 12px;
+            display: flex;
+            align-items: flex-start;
             justify-content: space-between;
-            gap: 10px;
-            flex-wrap: wrap;
-            border-bottom: 3px solid #f97316;
+            gap: 12px;
         }
-        .hc-case-card-table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        .hc-case-card-table tr {
-            border-bottom: 1px solid #f1f5f9;
-        }
-        .hc-case-card-table tr:last-child {
-            border-bottom: none;
-        }
-        .hc-case-card-table th {
-            width: 155px;
-            padding: 10px 16px;
-            background: #f8fafc;
-            color: #475569;
-            font-size: 11.5px;
-            font-weight: 700;
+        .hc-card-avatar {
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+            background: #fff7ed;
+            border: 1px solid #fed7aa;
+            color: #ea580c;
+            font-size: 14px;
+            font-weight: 800;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
             text-transform: uppercase;
-            letter-spacing: 0.03em;
-            text-align: left;
-            vertical-align: middle;
-            border-right: 1px solid #f1f5f9;
         }
-        .hc-case-card-table td {
-            padding: 10px 16px;
-            font-size: 13px;
+        .hc-card-parent-info {
+            flex: 1;
+            min-inline-size: 0;
+        }
+        .hc-card-parent-name {
+            font-size: 15px;
+            font-weight: 800;
             color: #0A1931;
-            vertical-align: middle;
+            line-height: 1.3;
+            margin: 0 0 4px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+        .hc-card-phone-row {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+        .hc-card-phone-num {
+            font-size: 13.5px;
+            font-weight: 800;
+            color: #f97316;
+            font-variant-numeric: tabular-nums;
+        }
+        .hc-card-meta-strip {
+            margin: 0 15px 12px;
+            padding: 9px 12px;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            display: grid;
+            grid-template-columns: 1.15fr 0.85fr;
+            gap: 10px;
+        }
+        .hc-card-meta-item {
+            min-inline-size: 0;
+        }
+        .hc-card-meta-label {
+            font-size: 10px;
+            font-weight: 700;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            margin-bottom: 3px;
+            display: block;
+        }
+        .hc-card-meta-val {
+            font-size: 12px;
+            font-weight: 700;
+            color: #0A1931;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: block;
+        }
+        .hc-card-body {
+            padding: 0 15px 14px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .hc-card-section-label {
+            font-size: 10.5px;
+            font-weight: 700;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            margin-bottom: 5px;
+            display: block;
+        }
+        .hc-card-issues-wrap {
+            display: flex;
+            flex-wrap: wrap;
+            flex-wrap: balance;
+            gap: 5px;
+        }
+        .hc-card-note-box {
+            margin-block-start: auto;
+            background: #f8fafc;
+            border: 1px dashed #cbd5e1;
+            border-radius: 9px;
+            padding: 8px 11px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            display: flex;
+            align-items: flex-start;
+            gap: 6px;
+        }
+        .hc-card-note-box:hover {
+            border-color: #f97316;
+            background: #fffaf5;
         }
         .hc-case-card-foot {
             background: #f8fafc;
             border-top: 1px solid #e2e8f0;
-            padding: 11px 16px;
+            padding: 10px 15px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 10px;
+            gap: 8px;
             flex-wrap: wrap;
         }
 
@@ -1657,161 +1760,160 @@ function hieucon_render_bookings_admin_page() {
                         $is_survey_done   = $item['is_survey_done'];
                         $survey_link      = $item['survey_link'];
                         $issues_list      = $item['issues_list'];
-                    ?>
-                    <div id="hc-booking-card-<?php echo esc_attr( $id ); ?>" class="hc-case-card" data-id="<?php echo esc_attr( $id ); ?>">
-                        <div>
-                            <!-- Card Header -->
-                            <div class="hc-case-card-head">
-                                <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
-                                    <input type="checkbox" class="hc-bk-checkbox hc-case-checkbox" value="<?php echo esc_attr( $id ); ?>" aria-label="Chọn hồ sơ <?php echo esc_attr( $b->booking_code ); ?>">
-                                    <span style="font-family:monospace; font-size:13px; font-weight:800; background:rgba(249,115,22,0.18); color:#fdba74; border:1px solid rgba(249,115,22,0.45); padding:3px 10px; border-radius:7px;">
-                                        <?php echo esc_html( $b->booking_code ); ?>
-                                    </span>
-                                    <span style="font-size:12px; color:#cbd5e1;">
-                                        🕒 <?php echo esc_html( $item['created_fmt'] ); ?>
-                                    </span>
-                                    <span
-                                        class="hc-bk-pill"
-                                        style="<?php echo $is_survey_done ? 'background:#065f46; color:#d1fae5; border:1px solid #10b981;' : 'background:rgba(255,255,255,0.1); color:#e2e8f0; border:1px solid rgba(255,255,255,0.2);'; ?>"
-                                    >
-                                        <?php echo $is_survey_done ? '✓ Đã hoàn tất khảo sát' : '⏳ Chưa điền khảo sát Bước 2'; ?>
-                                    </span>
-                                </div>
 
-                                <div>
-                                    <select
-                                        class="hc-bk-status-select hc-row-status-select"
-                                        data-id="<?php echo esc_attr( $id ); ?>"
-                                        style="background:<?php echo esc_attr( $st['bg'] ); ?>; color:<?php echo esc_attr( $st['color'] ); ?>; border-color:<?php echo esc_attr( $st['border'] ); ?>; max-width:175px;"
-                                    >
-                                        <option value="pending" <?php selected( $b->status, 'pending' ); ?>>Chờ liên hệ</option>
-                                        <option value="contacted" <?php selected( $b->status, 'contacted' ); ?>>Đã liên hệ xếp lịch</option>
-                                        <option value="completed" <?php selected( $b->status, 'completed' ); ?>>Đã trao đổi xong</option>
-                                        <option value="cancelled" <?php selected( $b->status, 'cancelled' ); ?>>Đã hủy</option>
-                                    </select>
-                                </div>
+                        // Lấy chữ cái đầu của tên phụ huynh làm Avatar
+                        $name_words = preg_split( '/\s+/u', trim( (string) $b->parent_name ), -1, PREG_SPLIT_NO_EMPTY );
+                        $initials   = 'PH';
+                        if ( ! empty( $name_words ) ) {
+                            $last_word = end( $name_words );
+                            $first_word = reset( $name_words );
+                            $initials = ( count( $name_words ) > 1 )
+                                ? mb_substr( $first_word, 0, 1, 'UTF-8' ) . mb_substr( $last_word, 0, 1, 'UTF-8' )
+                                : mb_substr( $last_word, 0, 2, 'UTF-8' );
+                        }
+                    ?>
+                    <div id="hc-booking-card-<?php echo esc_attr( $id ); ?>" class="hc-case-card" data-id="<?php echo esc_attr( $id ); ?>" data-status="<?php echo esc_attr( $b->status ); ?>">
+                        <!-- 1. Thanh tiêu đề gọn: Checkbox + Mã hồ sơ + Thời gian + Select Trạng thái -->
+                        <div class="hc-card-top">
+                            <div class="hc-card-top-left">
+                                <input type="checkbox" class="hc-bk-checkbox hc-case-checkbox" value="<?php echo esc_attr( $id ); ?>" aria-label="Chọn hồ sơ <?php echo esc_attr( $b->booking_code ); ?>">
+                                <span class="hc-bk-code"><?php echo esc_html( $b->booking_code ); ?></span>
+                                <span style="font-size:11.5px; color:#64748b; font-weight:500; white-space:nowrap;">
+                                    <?php echo esc_html( $item['created_fmt'] ); ?>
+                                </span>
                             </div>
 
-                            <!-- Card Structured Table Body -->
-                            <table class="hc-case-card-table">
-                                <tbody>
-                                    <tr>
-                                        <th>Phụ huynh</th>
-                                        <td>
-                                            <strong style="font-size:14.5px; color:#0A1931;"><?php echo esc_html( $b->parent_name ); ?></strong>
-                                            <?php if ( $is_survey_done && ( ! empty( $survey['child_name'] ) || ! empty( $survey['child_age'] ) ) ) : ?>
-                                                <span style="margin-left:8px; font-size:12px; color:#475569; background:#f1f5f9; padding:2px 8px; border-radius:6px; font-weight:600;">
-                                                    👶 Bé: <?php echo esc_html( trim( ( $survey['child_name'] ?? '' ) . ( ! empty( $survey['child_age'] ) ? ' (' . $survey['child_age'] . ')' : '' ) ) ); ?>
-                                                </span>
-                                            <?php endif; ?>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th>SĐT / Zalo</th>
-                                        <td>
-                                            <div style="display:flex; align-items:center; justify-content:space-between; gap:8px; flex-wrap:wrap;">
-                                                <strong style="font-size:14px; color:#f97316;"><?php echo esc_html( $b->phone ); ?></strong>
-                                                <div style="display:inline-flex; gap:6px;">
-                                                    <button type="button" class="hc-bk-icon-btn hc-copy-btn" data-copy="<?php echo esc_attr( $clean_zalo_phone ); ?>">
-                                                        Copy SĐT
-                                                    </button>
-                                                    <a href="https://zalo.me/<?php echo esc_attr( $clean_zalo_phone ); ?>" target="_blank" rel="noopener" class="hc-bk-icon-btn" style="background:#0068FF; color:#fff; border-color:#0068FF;">
-                                                        Nhắn Zalo ↗
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th>Khung giờ hẹn</th>
-                                        <td>
-                                            <span style="font-weight:700; color:#0A1931; background:#f8fafc; border:1px solid #cbd5e1; padding:3px 10px; border-radius:7px; display:inline-block; font-size:12.5px;">
-                                                <?php echo esc_html( $b->preferred_time ); ?>
-                                            </span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th>Vấn đề của trẻ</th>
-                                        <td>
-                                            <?php if ( ! empty( $issues_list ) ) : ?>
-                                                <div style="display:flex; flex-wrap:wrap; gap:5px;">
-                                                    <?php foreach ( $issues_list as $iss ) : ?>
-                                                        <span style="background:#fff7ed; color:#c2410c; border:1px solid #fdba74; font-weight:700; font-size:12px; padding:3px 9px; border-radius:6px;">
-                                                            <?php echo esc_html( $iss ); ?>
-                                                        </span>
-                                                    <?php endforeach; ?>
-                                                </div>
-                                            <?php else : ?>
-                                                <span style="color:#94a3b8; font-size:12px; font-style:italic;">Chưa chọn vấn đề</span>
-                                            <?php endif; ?>
-
-                                            <?php if ( $is_survey_done && ! empty( $survey['parent_goal'] ) ) : ?>
-                                                <div style="margin-top:8px; background:#fffaf5; border-left:3px solid #f97316; padding:6px 10px; border-radius:0 6px 6px 0; font-size:12px; color:#334155;">
-                                                    <strong>🎯 Mong muốn 30p:</strong> <?php echo esc_html( $survey['parent_goal'] ); ?>
-                                                </div>
-                                            <?php endif; ?>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th>Link khảo sát</th>
-                                        <td>
-                                            <div style="display:flex; align-items:center; justify-content:space-between; gap:8px; flex-wrap:wrap;">
-                                                <code style="font-size:11.5px; color:#0A1931; background:#f1f5f9; padding:4px 8px; border-radius:6px; border:1px solid #e2e8f0; word-break:break-all; flex:1; min-width:180px;">
-                                                    <?php echo esc_html( $survey_link ); ?>
-                                                </code>
-                                                <div style="display:inline-flex; gap:6px; flex-shrink:0;">
-                                                    <button
-                                                        type="button"
-                                                        class="hc-bk-icon-btn hc-copy-btn"
-                                                        data-copy="<?php echo esc_attr( $survey_link ); ?>"
-                                                        style="background:#fff7ed; color:#c2410c; border-color:#fdba74; font-weight:700; height:28px; padding:0 10px;"
-                                                    >
-                                                        📋 Copy link khảo sát
-                                                    </button>
-                                                    <a
-                                                        href="<?php echo esc_url( $survey_link ); ?>"
-                                                        target="_blank"
-                                                        rel="noopener"
-                                                        class="hc-bk-icon-btn"
-                                                        style="height:28px; padding:0 10px;"
-                                                    >
-                                                        Mở trang ↗
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th>Ghi chú phụ trách</th>
-                                        <td class="hc-open-modal-trigger" data-id="<?php echo esc_attr( $id ); ?>" style="cursor:pointer;" title="Bấm để cập nhật ghi chú">
-                                            <?php if ( ! empty( $b->admin_note ) ) : ?>
-                                                <span class="hc-row-note-text" style="color:#0A1931; font-size:12.5px; white-space:pre-line;"><?php echo esc_html( $b->admin_note ); ?></span>
-                                            <?php else : ?>
-                                                <span class="hc-row-note-text" style="color:#94a3b8; font-size:12px; font-style:italic;">+ Bấm để thêm ghi chú phụ trách...</span>
-                                            <?php endif; ?>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                            <select
+                                class="hc-bk-status-select hc-row-status-select"
+                                data-id="<?php echo esc_attr( $id ); ?>"
+                                style="background:<?php echo esc_attr( $st['bg'] ); ?>; color:<?php echo esc_attr( $st['color'] ); ?>; border-color:<?php echo esc_attr( $st['border'] ); ?>; max-width:152px; height:28px; font-size:11.5px;"
+                            >
+                                <option value="pending" <?php selected( $b->status, 'pending' ); ?>>Chờ liên hệ</option>
+                                <option value="contacted" <?php selected( $b->status, 'contacted' ); ?>>Đã liên hệ xếp lịch</option>
+                                <option value="completed" <?php selected( $b->status, 'completed' ); ?>>Đã trao đổi xong</option>
+                                <option value="cancelled" <?php selected( $b->status, 'cancelled' ); ?>>Đã hủy</option>
+                            </select>
                         </div>
 
-                        <!-- Card Footer -->
+                        <!-- 2. Khối thông tin Phụ huynh & SĐT/Zalo -->
+                        <div class="hc-card-identity">
+                            <div style="display:flex; align-items:flex-start; gap:11px; min-inline-size:0; flex:1;">
+                                <div class="hc-card-avatar"><?php echo esc_html( $initials ); ?></div>
+                                <div class="hc-card-parent-info">
+                                    <div class="hc-card-parent-name">
+                                        <span style="overflow:hidden; text-overflow:ellipsis; white-space:nowrap;"><?php echo esc_html( $b->parent_name ); ?></span>
+                                        <?php if ( $is_survey_done && ( ! empty( $survey['child_name'] ) || ! empty( $survey['child_age'] ) ) ) : ?>
+                                            <span style="font-size:11px; color:#475569; background:#f1f5f9; border:1px solid #e2e8f0; padding:1px 7px; border-radius:6px; font-weight:600;">
+                                                👶 <?php echo esc_html( trim( ( $survey['child_name'] ?? '' ) . ( ! empty( $survey['child_age'] ) ? ' • ' . $survey['child_age'] : '' ) ) ); ?>
+                                            </span>
+                                        <?php endif; ?>
+                                    </div>
+                                    <div class="hc-card-phone-row">
+                                        <span class="hc-card-phone-num"><?php echo esc_html( $b->phone ); ?></span>
+                                        <button type="button" class="hc-bk-icon-btn hc-copy-btn" data-copy="<?php echo esc_attr( $clean_zalo_phone ); ?>" style="height:23px; padding:0 7px; font-size:10.5px;">
+                                            Copy SĐT
+                                        </button>
+                                        <a href="https://zalo.me/<?php echo esc_attr( $clean_zalo_phone ); ?>" target="_blank" rel="noopener" class="hc-bk-icon-btn" style="background:#0068FF; color:#fff; border-color:#0068FF; height:23px; padding:0 8px; font-size:10.5px;">
+                                            Zalo ↗
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 3. Khung giờ hẹn & Trạng thái khảo sát (2 cột cân đối) -->
+                        <div class="hc-card-meta-strip">
+                            <div class="hc-card-meta-item" style="border-right:1px solid #e2e8f0; padding-right:8px;">
+                                <span class="hc-card-meta-label">Khung giờ hẹn</span>
+                                <span class="hc-card-meta-val" title="<?php echo esc_attr( $b->preferred_time ); ?>">
+                                    🗓 <?php echo esc_html( $b->preferred_time ); ?>
+                                </span>
+                            </div>
+                            <div class="hc-card-meta-item" style="padding-left:2px;">
+                                <span class="hc-card-meta-label">Khảo sát Bước 2</span>
+                                <?php if ( $is_survey_done ) : ?>
+                                    <span class="hc-card-meta-val" style="color:#047857;">
+                                        ✓ Đã hoàn tất<?php echo $item['symptom_count'] > 0 ? ' (' . intval( $item['symptom_count'] ) . ' mục)' : ''; ?>
+                                    </span>
+                                <?php else : ?>
+                                    <span class="hc-card-meta-val" style="color:#64748b; font-weight:600;">
+                                        ⏳ Chờ điền khảo sát
+                                    </span>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+
+                        <!-- 4. Vấn đề của trẻ & Ghi chú phụ trách -->
+                        <div class="hc-card-body">
+                            <div>
+                                <span class="hc-card-section-label">Vấn đề trẻ đang gặp phải</span>
+                                <?php if ( ! empty( $issues_list ) ) : ?>
+                                    <div class="hc-card-issues-wrap">
+                                        <?php foreach ( $issues_list as $iss ) : ?>
+                                            <span style="background:#fff7ed; color:#c2410c; border:1px solid #fdba74; font-weight:700; font-size:11.5px; padding:3px 9px; border-radius:6px; line-height:1.25;">
+                                                <?php echo esc_html( $iss ); ?>
+                                            </span>
+                                        <?php endforeach; ?>
+                                    </div>
+                                <?php else : ?>
+                                    <span style="color:#94a3b8; font-size:12px; font-style:italic;">Chưa chọn vấn đề</span>
+                                <?php endif; ?>
+
+                                <?php if ( $is_survey_done && ! empty( $survey['parent_goal'] ) ) : ?>
+                                    <div style="margin-top:8px; background:#fffaf5; border-left:3px solid #f97316; padding:6px 10px; border-radius:0 6px 6px 0; font-size:12px; color:#334155; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;">
+                                        <strong>🎯 Mong muốn:</strong> <?php echo esc_html( $survey['parent_goal'] ); ?>
+                                    </div>
+                                <?php endif; ?>
+                            </div>
+
+                            <!-- Ô Ghi chú phụ trách (Bấm để sửa nhanh) -->
+                            <div class="hc-card-note-box hc-open-modal-trigger" data-id="<?php echo esc_attr( $id ); ?>" title="Bấm để xem hoặc cập nhật ghi chú phụ trách">
+                                <span style="font-size:12px; line-height:1.3;">📝</span>
+                                <?php if ( ! empty( $b->admin_note ) ) : ?>
+                                    <span class="hc-row-note-text" style="color:#0A1931; font-size:12px; line-height:1.4; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;"><?php echo esc_html( $b->admin_note ); ?></span>
+                                <?php else : ?>
+                                    <span class="hc-row-note-text" style="color:#94a3b8; font-size:12px; font-style:italic; line-height:1.4;">+ Thêm ghi chú phụ trách...</span>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+
+                        <!-- 5. Card Footer: Nút Copy Link Khảo Sát + Chi tiết + Xoá -->
                         <div class="hc-case-card-foot">
-                            <span style="font-size:11.5px; color:#64748b; font-weight:600;">
-                                ID Hồ sơ: #<?php echo esc_html( $id ); ?>
-                            </span>
-                            <div style="display:inline-flex; align-items:center; gap:8px;">
-                                <button type="button" class="hc-bk-icon-btn hc-open-modal-trigger" data-id="<?php echo esc_attr( $id ); ?>" style="background:#0A1931; color:#ffffff; border-color:#0A1931; height:30px; padding:0 12px; font-size:12px;">
-                                    Xem chi tiết / Ghi chú
+                            <div style="display:inline-flex; align-items:center; gap:5px;">
+                                <button
+                                    type="button"
+                                    class="hc-bk-icon-btn hc-copy-btn"
+                                    data-copy="<?php echo esc_attr( $survey_link ); ?>"
+                                    style="background:#fff7ed; color:#c2410c; border-color:#fdba74; font-weight:700; height:28px; padding:0 10px; font-size:11.5px;"
+                                    title="Copy đường link khảo sát: <?php echo esc_attr( $survey_link ); ?>"
+                                >
+                                    📋 Copy link khảo sát
+                                </button>
+                                <a
+                                    href="<?php echo esc_url( $survey_link ); ?>"
+                                    target="_blank"
+                                    rel="noopener"
+                                    class="hc-bk-icon-btn"
+                                    style="height:28px; padding:0 8px; font-size:11.5px;"
+                                    title="Mở trực tiếp trang khảo sát của mã <?php echo esc_attr( $b->booking_code ); ?>"
+                                >
+                                    Mở ↗
+                                </a>
+                            </div>
+
+                            <div style="display:inline-flex; align-items:center; gap:6px;">
+                                <button type="button" class="hc-bk-icon-btn hc-open-modal-trigger" data-id="<?php echo esc_attr( $id ); ?>" style="background:#0A1931; color:#ffffff; border-color:#0A1931; height:28px; padding:0 11px; font-size:11.5px;">
+                                    Chi tiết
                                 </button>
                                 <button
                                     type="button"
                                     class="hc-bk-del-btn hc-single-delete-btn"
                                     data-id="<?php echo esc_attr( $id ); ?>"
                                     data-code="<?php echo esc_attr( $b->booking_code ); ?>"
-                                    style="height:30px; padding:0 12px; font-size:12px;"
+                                    style="height:28px; padding:0 10px; font-size:11.5px;"
+                                    title="Xoá hồ sơ <?php echo esc_attr( $b->booking_code ); ?>"
                                 >
-                                    🗑 Xoá hồ sơ
+                                    🗑 Xoá
                                 </button>
                             </div>
                         </div>
@@ -2152,6 +2254,9 @@ function hieucon_render_bookings_admin_page() {
                         row.setAttribute('data-case', JSON.stringify(caseData));
 
                         const st = statusMeta[newStatus] || statusMeta.pending;
+                        if (card) {
+                            card.setAttribute('data-status', newStatus);
+                        }
                         [row, card].forEach(container => {
                             if (!container) return;
                             const sel = container.querySelector('.hc-row-status-select');
