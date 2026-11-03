@@ -156,38 +156,38 @@ $zalo_target_url = get_option( 'hieucon_link_zalo_tuvan', home_url( '/zalo' ) );
 
                 <!-- Cột trái (6/12): Thông điệp mở đầu -->
                 <div class="lg:col-span-6">
-                    <h1 class="font-serif text-4xl sm:text-5xl xl:text-[3.25rem] font-bold text-navy leading-[1.16] mb-6">
+                    <h1 class="font-serif text-4xl sm:text-5xl xl:text-[3.25rem] font-bold text-navy leading-[1.16] mb-5">
                         30 phút để nhìn rõ<br class="hidden sm:inline" />
                         <span class="text-secondary">vấn đề của con</span>
                     </h1>
 
                     <p class="text-slate-700 text-base sm:text-lg leading-relaxed mb-6">
-                        Đợt này, đội ngũ HIỂU CON TỪ GỐC mở một số lịch trao đổi 1:1 dành cho cha mẹ đang có những băn khoăn về <strong class="text-navy">ăn uống, tiêu hóa, giấc ngủ, hành vi hoặc dinh dưỡng</strong> của con.
+                        <strong class="text-navy">Hiểu Con Từ Gốc</strong> dành tặng <strong class="text-secondary">30 lịch tư vấn dinh dưỡng 1:1</strong> tặng các con có vấn đề về <strong class="text-navy">kén ăn, dị ứng, bất dung nạp thực phẩm, táo bón, rối loạn tiêu hóa, chậm tăng trưởng,...</strong>
                     </p>
 
-                    <div class="bg-[#fff7ed] border border-orange-200/80 rounded-2xl p-6 sm:p-7 mb-6">
-                        <p class="font-bold text-navy text-base sm:text-lg mb-3.5">
-                            Có những gia đình đã thử rất nhiều cách nhưng vẫn chưa thực sự biết:
+                    <div class="bg-[#fff7ed] border border-orange-200/80 rounded-2xl p-6 sm:p-7">
+                        <p class="font-bold text-navy text-base sm:text-lg mb-4">
+                            Buổi tư vấn có thời gian 30 phút để ba mẹ hiểu và tìm ra các vấn đề:
                         </p>
-                        <ul class="space-y-3 text-slate-800 text-sm sm:text-base">
+                        <ul class="space-y-3.5 text-slate-800 text-sm sm:text-base leading-relaxed">
                             <li class="flex items-start gap-3">
                                 <span class="w-6 h-6 rounded-full bg-secondary text-white flex items-center justify-center shrink-0 mt-0.5 text-xs font-bold">1</span>
-                                <span>Vấn đề chính của con nằm ở đâu?</span>
+                                <span>Nguyên nhân gốc rễ khiến con gặp các vấn đề về tiêu hóa: kén ăn, dị ứng, bất dung nạp thực phẩm, táo bón, rối loạn tiêu hóa, chậm tăng trưởng,...</span>
                             </li>
                             <li class="flex items-start gap-3">
                                 <span class="w-6 h-6 rounded-full bg-secondary text-white flex items-center justify-center shrink-0 mt-0.5 text-xs font-bold">2</span>
-                                <span>Điều gì cần được ưu tiên trước?</span>
+                                <span>Các vấn đề hệ tiêu hóa ảnh hưởng như thế nào đến sức khỏe não bộ, hành vi của con?</span>
                             </li>
                             <li class="flex items-start gap-3">
                                 <span class="w-6 h-6 rounded-full bg-secondary text-white flex items-center justify-center shrink-0 mt-0.5 text-xs font-bold">3</span>
-                                <span>Gia đình nên tiếp tục theo dõi, điều chỉnh hay cần hỗ trợ sâu hơn?</span>
+                                <span>Giải pháp từng bước để cải thiện các vấn đề tiêu hóa của trẻ</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <span class="w-6 h-6 rounded-full bg-secondary text-white flex items-center justify-center shrink-0 mt-0.5 text-xs font-bold">4</span>
+                                <span>Dinh dưỡng giúp nuôi dưỡng sức khỏe tiêu hóa và não bộ - nền tảng giúp con cải thiện các vấn đề hành vi, đạt hiệu quả can thiệp</span>
                             </li>
                         </ul>
                     </div>
-
-                    <p class="text-slate-700 text-sm sm:text-base leading-relaxed">
-                        Trong 30 phút, buổi trao đổi tập trung vào chính vấn đề gia đình đang gặp phải, giúp ba mẹ nhìn lại tình trạng hiện tại và xác định hướng đi rõ ràng hơn.
-                    </p>
                 </div>
 
                 <!-- Cột phải (6/12): Form đăng ký cân xứng chiều cao với cột trái -->
