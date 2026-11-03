@@ -213,7 +213,7 @@ $booking_nonce      = wp_create_nonce( 'hieucon_booking_nonce' );
                                     id="booking-step1-btn"
                                     class="w-full py-4 px-6 rounded-xl bg-secondary hover:bg-secondary_dark text-white font-extrabold text-base uppercase tracking-wider shadow-[0_12px_24px_-6px_rgba(249,115,22,0.4)] hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-center gap-2 cursor-pointer"
                                 >
-                                    <span>ĐĂNG KÝ CASE CỦA CON</span>
+                                    <span>ĐĂNG KÝ</span>
                                     <i data-lucide="arrow-right" class="w-5 h-5"></i>
                                 </button>
                             </form>
