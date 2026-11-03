@@ -214,7 +214,7 @@ $week_range    = sprintf( '%s - %s', $monday_date->format( 'd/m' ), $saturday_da
                     </div>
 
                     <p class="hc-hero-lead text-slate-700 text-[15.5px] sm:text-[17px] mb-4 sm:mb-5">
-                        <strong class="text-navy">HIỂU CON TỪ GỐC</strong> dành tặng <strong class="text-secondary">5 lịch tư vấn dinh dưỡng 1:1</strong> cho bé từ <strong class="text-navy">2–7 tuổi</strong> có vấn đề về <strong class="text-navy">kén ăn, dị ứng, bất dung nạp thực phẩm, táo bón, rối loạn tiêu hóa, chậm tăng trưởng,...</strong>
+                        <strong class="text-navy">Hiểu con từ Gốc</strong> cùng ba mẹ tìm hiểu những khó khăn về tiêu hóa của con, từ đó định hướng chăm sóc phù hợp với từng trẻ.
                     </p>
 
                     <!-- Thanh thông tin hoạt động trong tuần (Tự động tính tuần & ngày Thứ 2 -> Thứ 7) -->
