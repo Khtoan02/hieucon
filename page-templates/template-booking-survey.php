@@ -17,7 +17,7 @@ $booking_code = isset( $_GET['code'] ) ? strtoupper( sanitize_text_field( wp_uns
 
 // Nếu truy cập link trắng không có mã hoặc mã không tồn tại trong hệ thống -> Tự động trỏ về trang đăng ký
 if ( empty( $booking_code ) ) {
-    wp_safe_redirect( home_url( '/dat-lich-tu-van/#dang-ky-case' ) );
+    wp_safe_redirect( home_url( '/dat-lich-tu-van/' ) );
     exit;
 }
 
@@ -34,7 +34,7 @@ if ( ! $booking_row ) {
 }
 
 if ( ! $booking_row ) {
-    wp_safe_redirect( home_url( '/dat-lich-tu-van/#dang-ky-case' ) );
+    wp_safe_redirect( home_url( '/dat-lich-tu-van/' ) );
     exit;
 }
 
