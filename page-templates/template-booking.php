@@ -31,7 +31,7 @@ $day_of_week   = (int) $tz_now->format( 'N' ); // 1 (Thứ 2) -> 7 (Chủ nhật
 $monday_date   = $tz_now->modify( '-' . ( $day_of_week - 1 ) . ' days' );
 $saturday_date = $monday_date->modify( '+5 days' );
 $week_label    = sprintf( 'Tuần %s/%s', $tz_now->format( 'W' ), $tz_now->format( 'o' ) );
-$week_range    = sprintf( '%s - %s', $monday_date->format( 'd/m' ), $saturday_date->format( 'd/m/Y' ) );
+$week_range    = sprintf( '%s - %s', $monday_date->format( 'd/m' ), $saturday_date->format( 'd/m' ) );
 ?>
 
 <style>
@@ -224,7 +224,7 @@ $week_range    = sprintf( '%s - %s', $monday_date->format( 'd/m' ), $saturday_da
                             <span class="w-9 h-9 rounded-xl bg-white border border-orange-200 text-secondary flex items-center justify-center shrink-0 shadow-xs">
                                 <i data-lucide="calendar-days" class="w-4.5 h-4.5"></i>
                             </span>
-                            <strong id="hc-auto-week-num" class="block font-sans font-extrabold text-[15px] sm:text-[16px] text-navy leading-snug"><?php echo esc_html( $week_label ); ?></strong>
+                            <strong id="hc-auto-week-num" class="block font-sans font-extrabold text-[15px] sm:text-[15.5px] text-navy leading-snug whitespace-nowrap"><?php echo esc_html( $week_label ); ?></strong>
                         </div>
 
                         <!-- Cột 2: Ngày tháng trong tuần -->
@@ -232,7 +232,7 @@ $week_range    = sprintf( '%s - %s', $monday_date->format( 'd/m' ), $saturday_da
                             <span class="w-9 h-9 rounded-xl bg-white border border-orange-200 text-navy flex items-center justify-center shrink-0 shadow-xs">
                                 <i data-lucide="calendar-range" class="w-4.5 h-4.5"></i>
                             </span>
-                            <strong id="hc-auto-week-range" class="block font-sans font-extrabold text-[14.5px] sm:text-[15.5px] text-navy leading-snug tabular-nums"><?php echo esc_html( $week_range ); ?></strong>
+                            <strong id="hc-auto-week-range" class="block font-sans font-extrabold text-[15px] sm:text-[15.5px] text-navy leading-snug tabular-nums whitespace-nowrap"><?php echo esc_html( $week_range ); ?></strong>
                         </div>
 
                         <!-- Cột 3: 05 gia đình con từ 2-7 tuổi -->
@@ -455,7 +455,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const pad2 = n => String(n).padStart(2, '0');
 
         elWeekNum.textContent   = 'Tuần ' + pad2(weekNo) + '/' + isoYear;
-        elWeekRange.textContent = pad2(mon.getDate()) + '/' + pad2(mon.getMonth() + 1) + ' - ' + pad2(sat.getDate()) + '/' + pad2(sat.getMonth() + 1) + '/' + sat.getFullYear();
+        elWeekRange.textContent = pad2(mon.getDate()) + '/' + pad2(mon.getMonth() + 1) + ' - ' + pad2(sat.getDate()) + '/' + pad2(sat.getMonth() + 1);
     }
 
     // 1. Chọn 1 hoặc nhiều vấn đề của trẻ ("Trẻ đang gặp vấn đề gì?")
