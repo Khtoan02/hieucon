@@ -295,27 +295,19 @@ $zalo_target_url = get_option( 'hieucon_link_zalo_tuvan', home_url( '/zalo' ) );
                                     </div>
                                 </div>
 
-                                <!-- 3. Khung giờ thuận tiện trao đổi (2x2 trên Mobile, 4 ô 1 hàng trên Desktop) -->
+                                <!-- 3. Khung giờ thuận tiện trao đổi (3 ô cân đối trên 1 hàng cả Mobile & Desktop) -->
                                 <div>
                                     <label class="block text-xs sm:text-sm font-bold text-navy mb-1.5">
                                         Khung giờ thuận tiện trao đổi <span class="text-secondary">*</span>
                                     </label>
 
-                                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-2" id="time-slot-group">
+                                    <div class="grid grid-cols-3 gap-2 sm:gap-2.5" id="time-slot-group">
                                         <button type="button" data-slot="Buổi sáng (08:30 - 11:30)" class="hc-time-card is-active">
                                             <span class="hc-time-head">
                                                 <span class="hc-time-icon"><i data-lucide="sunrise" class="w-3.5 h-3.5"></i></span>
                                                 <span>Buổi sáng</span>
                                             </span>
                                             <span class="hc-time-sub">08:30 – 11:30</span>
-                                        </button>
-
-                                        <button type="button" data-slot="Buổi trưa (12:00 - 13:30)" class="hc-time-card">
-                                            <span class="hc-time-head">
-                                                <span class="hc-time-icon"><i data-lucide="sun" class="w-3.5 h-3.5"></i></span>
-                                                <span>Buổi trưa</span>
-                                            </span>
-                                            <span class="hc-time-sub">12:00 – 13:30</span>
                                         </button>
 
                                         <button type="button" data-slot="Buổi chiều (14:00 - 17:30)" class="hc-time-card">
