@@ -1,232 +1,134 @@
 <?php
 /**
  * Template Name: Trang chủ
- * 
+ * Description: Trang chủ Hiểu Con Từ Gốc — Giao diện sáng thoáng đồng bộ với trang Đăng ký tư vấn 1:1 (Nền trắng, Xanh than #0A1931 & Cam #f97316), ngôn từ chuẩn hóa và tích cực.
+ *
  * @package Hieucon
  */
-?>
-<?php get_header(); ?>
-<!-- Thêm scripts & styles đặc thù cho trang chủ -->
-<script src="https://cdn.tailwindcss.com"></script>
-<script src="https://unpkg.com/lucide@latest"></script>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Nunito:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
 
-<script>
-    tailwind.config = {
-        theme: {
-            extend: {
-                fontFamily: {
-                    sans: ['Nunito', 'sans-serif'], // Font thân thiện, mềm mại cho nội dung
-                    serif: ['Lora', 'serif'],       // Font nghệ thuật, cao cấp cho tiêu đề
-                },
-                colors: {
-                    primary: '#0d9488', 
-                    secondary: '#f97316', 
-                    secondary_light: '#ffedd5',
-                    secondary_dark: '#ea580c', 
-                    navy: {
-                        DEFAULT: '#0A1931', // Xanh navy đậm
-                        light: '#1A365D',
-                        muted: '#334155'
-                    },
-                    sunset: {
-                        top: '#FFF9F0', 
-                        mid: '#FFD6C0', 
-                        bot: '#B4C8BB'  
-                    }
-                },
-                boxShadow: {
-                    'elegant': '0 10px 40px -10px rgba(10, 25, 49, 0.08)',
-                    'soft': '0 4px 20px -2px rgba(10, 25, 49, 0.05)',
-                }
-            }
+get_header();
+?>
+
+<style>
+    /* Đồng bộ hệ màu & nền trắng tinh gọn với trang Đăng ký tư vấn 1:1 */
+    #primary.hc-home-page {
+        background: #ffffff !important;
+        color: #0A1931;
+        padding-top: 76px !important;
+    }
+    @media (min-width: 1024px) {
+        #primary.hc-home-page {
+            padding-top: 86px !important;
         }
     }
-</script>
-<style>
-    body { font-family: 'Nunito', sans-serif; background: linear-gradient(to bottom, #FFF9F0 0%, #FFD6C0 45%, #B4C8BB 100%); background-attachment: fixed; color: #0A1931; }
-    h1, h2, h3, h4, h5, h6, .font-serif { font-family: 'Lora', serif; }
-    
-    .gradient-text {
-        background: linear-gradient(90deg, #0A1931, #ea580c);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
+
+    .hc-master-card {
+        background: #ffffff;
+        border: 1.5px solid #e2e8f0;
+        border-radius: 24px;
+        box-shadow: 0 24px 54px -24px rgba(10, 25, 49, 0.09);
+        overflow: hidden;
     }
-    
-    /* Hiệu ứng nền mượt mà trượt theo nội dung */
-    .bg-healing-gradient {
-        background: linear-gradient(to bottom, #FFF9F0 0%, #FFD6C0 45%, #B4C8BB 100%);
-        background-attachment: fixed;
+    .hc-sub-card {
+        background: #ffffff;
+        border: 1.5px solid #e2e8f0;
+        border-radius: 20px;
+        box-shadow: 0 16px 36px -22px rgba(10, 25, 49, 0.08);
+        transition: all 0.22s ease;
+    }
+    .hc-sub-card:hover {
+        border-color: #fdba74;
+        transform: translateY(-3px);
+        box-shadow: 0 22px 44px -20px rgba(249, 115, 22, 0.14);
+    }
+    .hc-card-bar {
+        height: 5px;
+        background: linear-gradient(90deg, #0A1931 0%, #f97316 100%);
     }
 
-    /* Glassmorphism mềm mại hơn */
-    .glass-elegant {
-        background: rgba(255, 255, 255, 0.75);
-        backdrop-filter: blur(16px);
-        -webkit-backdrop-filter: blur(16px);
-        border: 1px solid rgba(255, 255, 255, 0.6);
+    /* Typography chống dính dấu tiếng Việt trên mọi kích thước màn hình */
+    .hc-hero-title {
+        line-height: 1.26 !important;
     }
-
-    .glass-card {
-        background: linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.6) 100%);
-        backdrop-filter: blur(10px);
-        border: 1px solid rgba(255, 255, 255, 0.8);
+    .hc-sec-title {
+        line-height: 1.28 !important;
     }
-
-    /* Divider tinh tế */
-    .elegant-divider {
-        width: 40px;
-        height: 2px;
-        background-color: #f97316;
-        margin: 1.5rem auto;
-        border-radius: 2px;
-        opacity: 0.6;
+    .hc-body-copy {
+        line-height: 1.76 !important;
     }
 </style>
-    <!-- Hero Section (Full-width Display Image) -->
-    <section class="w-full relative bg-[#FFF9F0]">
-        <img src="https://hieucontugoc.online/wp-content/uploads/2026/05/2.jpg" alt="Ảnh bìa Hiểu Con Từ Gốc" class="w-full h-auto object-contain block mx-auto">
-        <!-- Lớp phủ nhẹ ở đáy ảnh để hòa quyện với nền -->
-        <div class="absolute bottom-0 left-0 w-full h-12 md:h-24 lg:h-32 bg-gradient-to-t from-[#FFF9F0] to-transparent pointer-events-none"></div>
-    </section>
 
-    <!-- Welcome Message Section (Editorial Style) -->
-    <section id="loi-chao" class="pt-16 pb-20 md:pt-24 md:pb-28 relative z-10 px-4">
-        <div class="max-w-4xl mx-auto text-center">
-            <span class="inline-flex items-center gap-2 text-secondary font-bold text-xs md:text-sm mb-6 uppercase tracking-widest">
-                <i data-lucide="sparkles" class="w-4 h-4"></i> Bắt đầu từ lòng yêu thương
-            </span>
-            
-            <h2 class="font-serif text-3xl md:text-5xl lg:text-6xl text-navy mb-6 leading-tight px-2">
-                Chào mừng ba mẹ đến với<br class="hidden sm:block" />
-                ngôi nhà chung
-            </h2>
-            <h3 class="font-serif text-2xl md:text-3xl lg:text-4xl text-secondary italic mb-12">
-                "Thấu hiểu để yêu thương con đặc biệt"
-            </h3>
-            
-            <!-- Trích dẫn tâm điểm -->
-            <div class="relative max-w-3xl mx-auto my-16 px-4">
-                <div class="absolute -top-8 left-1/2 -translate-x-1/2 text-secondary/20">
-                    <svg width="64" height="64" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M14.017 21L16.41 14H12V3H22V14.5L18.414 21H14.017ZM3.017 21L5.41 14H1V3H11V14.5L7.414 21H3.017Z" />
-                    </svg>
-                </div>
-                <p class="font-serif text-xl md:text-3xl text-navy leading-relaxed italic relative z-10">
-                    Yêu thương không chỉ là chấp nhận,<br class="hidden md:block"> yêu thương là nỗ lực tìm ra gốc rễ vấn đề để <span class="font-bold text-secondary">PHỤC HỒI</span> sức khỏe cho con.
-                </p>
-                <div class="elegant-divider"></div>
-            </div>
-            
-            <p class="text-base md:text-xl text-navy/70 font-medium mb-12 max-w-2xl mx-auto px-4 leading-relaxed">
-                Tại đây, chúng ta chuyển dịch từ việc chỉ quan sát hành vi bề nổi sang việc thấu hiểu cơ thể sinh học bên trong.
-            </p>
-            
-            <a href="#goc-nhin-khoa-hoc" class="inline-flex glass-elegant text-navy hover:bg-navy hover:text-white px-8 py-3.5 md:py-4 rounded-full text-base md:text-lg font-bold transition-all shadow-soft hover:shadow-elegant items-center gap-3 group cursor-pointer">
-                Bắt đầu hành trình
-                <i data-lucide="arrow-down" class="w-5 h-5 group-hover:translate-y-1 transition-transform"></i>
-            </a>
-        </div>
-    </section>
+<main id="primary" class="site-main hc-home-page font-sans text-[#0A1931] antialiased selection:bg-[#f97316] selection:text-white">
 
-    <!-- Why Whole-Body Section (Artistic Layout) -->
-    <section id="goc-nhin-khoa-hoc" class="py-16 md:py-24 relative">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div class="text-center mb-16 md:mb-20">
-                <h3 class="font-serif text-3xl md:text-5xl text-navy mb-6">Vì sao tự kỷ là rối loạn toàn thân?</h3>
-                <div class="elegant-divider"></div>
-                <p class="text-base md:text-xl text-navy/70 font-medium max-w-3xl mx-auto px-2 leading-relaxed">
-                    Nhiều cha mẹ nghĩ rằng Tự kỷ/Tăng động chỉ là vấn đề của não bộ. Nhưng khoa học đã chứng minh: <strong class="text-navy font-bold">Não bộ không hoạt động biệt lập.</strong> Biểu hiện khó khăn thực chất là hệ quả của sự rối loạn hệ thống.
-                </p>
-            </div>
+    <!-- ==============================================================
+         MÀN 1: HERO — HIỂU CON TỪ GỐC (CÂN ĐỐI 2 CỘT)
+         ============================================================== -->
+    <section class="relative bg-white py-8 sm:py-12 lg:py-16 border-b border-slate-100">
+        <div class="max-w-[1160px] mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10">
-                <!-- Card 1 -->
-                <div class="glass-card p-8 md:p-10 rounded-[2rem] shadow-soft hover:shadow-elegant transition-all duration-500 group flex flex-col items-center text-center">
-                    <div class="w-16 h-16 bg-white/80 rounded-full flex items-center justify-center mb-6 text-navy shadow-sm group-hover:-translate-y-2 transition-transform duration-300">
-                        <i data-lucide="activity" class="w-7 h-7"></i>
+                <!-- Cột trái: Thông điệp trọng tâm & Hành động -->
+                <div class="lg:col-span-6 space-y-5">
+                    <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#fff7ed] border border-[#fed7aa] text-[#ea580c] text-xs font-bold uppercase tracking-wider">
+                        <span class="w-2 h-2 rounded-full bg-[#f97316]"></span>
+                        Đồng hành cùng gia đình
                     </div>
-                    <h4 class="font-serif text-2xl font-bold text-navy mb-4">Đường ruột tổn thương</h4>
-                    <p class="text-navy/70 font-medium leading-relaxed">
-                        Rò rỉ ruột, loạn khuẩn đường ruột gửi tín hiệu sai lệch và ảnh hưởng trực tiếp lên não bộ thông qua trục Não - Ruột.
-                    </p>
-                </div>
-                <!-- Card 2 -->
-                <div class="glass-card p-8 md:p-10 rounded-[2rem] shadow-soft hover:shadow-elegant transition-all duration-500 group flex flex-col items-center text-center md:translate-y-8">
-                    <div class="w-16 h-16 bg-white/80 rounded-full flex items-center justify-center mb-6 text-secondary shadow-sm group-hover:-translate-y-2 transition-transform duration-300">
-                        <i data-lucide="shield-alert" class="w-7 h-7"></i>
-                    </div>
-                    <h4 class="font-serif text-2xl font-bold text-navy mb-4">Hệ miễn dịch suy yếu</h4>
-                    <p class="text-navy/70 font-medium leading-relaxed">
-                        Sự quá mẫn cảm hoặc suy yếu của hệ miễn dịch gây ra các phản ứng viêm, đặc biệt là viêm thần kinh làm cản trở sự phát triển.
-                    </p>
-                </div>
-                <!-- Card 3 -->
-                <div class="glass-card p-8 md:p-10 rounded-[2rem] shadow-soft hover:shadow-elegant transition-all duration-500 group flex flex-col items-center text-center">
-                    <div class="w-16 h-16 bg-white/80 rounded-full flex items-center justify-center mb-6 text-navy shadow-sm group-hover:-translate-y-2 transition-transform duration-300">
-                        <i data-lucide="biohazard" class="w-7 h-7"></i>
-                    </div>
-                    <h4 class="font-serif text-2xl font-bold text-navy mb-4">Gánh nặng độc tố</h4>
-                    <p class="text-navy/70 font-medium leading-relaxed">
-                        Sự tích tụ độc tố và rối loạn chuyển hóa ngăn cản sự phát triển nhận thức và khả năng tiếp thu thế giới xung quanh của trẻ.
-                    </p>
-                </div>
-            </div>
 
-            <div class="mt-20 md:mt-32 text-center px-4">
-                <div class="inline-flex flex-col md:flex-row items-center gap-4 bg-white/50 backdrop-blur-xl px-8 py-6 rounded-[2rem] border border-white/60 shadow-elegant max-w-3xl mx-auto">
-                    <div class="bg-secondary/10 p-4 rounded-full shrink-0">
-                        <i data-lucide="sun" class="w-8 h-8 text-secondary"></i>
-                    </div>
-                    <p class="text-center md:text-left text-lg md:text-xl font-medium text-navy leading-relaxed">
-                        Vì vậy, muốn sửa lỗi ở Não bộ, ta phải bắt đầu <strong class="text-secondary font-bold uppercase tracking-wide">PHỤC HỒI từ cơ thể</strong>.
-                    </p>
-                </div>
-            </div>
-        </div>
-    </section>
+                    <h1 class="hc-hero-title font-serif text-[26px] sm:text-4xl lg:text-[42px] font-bold text-[#0A1931] tracking-tight">
+                        <span class="block">Chào mừng ba mẹ đến với</span>
+                        <span class="block mt-1 text-[#f97316]">HIỂU CON TỪ GỐC</span>
+                    </h1>
 
-    <!-- Approach Section -->
-    <section id="phuong-phap" class="py-20 md:py-28 relative">
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div class="flex flex-col lg:flex-row gap-12 lg:gap-20 items-center">
-                
-                <!-- Left: Text content -->
-                <div class="w-full lg:w-5/12 text-center lg:text-left">
-                    <span class="text-secondary font-bold uppercase tracking-widest text-sm mb-4 block">Phương pháp</span>
-                    <h3 class="font-serif text-3xl md:text-4xl lg:text-5xl text-navy mb-6 leading-tight">Tiếp cận toàn diện & kết hợp</h3>
-                    <p class="text-navy/70 font-medium text-lg mb-8 leading-relaxed">
-                        Chúng tôi khẳng định việc phục hồi sức khỏe sinh học cần được đan xen chặt chẽ như những mảnh ghép với giáo dục và trị liệu tâm lý.
+                    <p class="hc-body-copy text-[15px] sm:text-[16.5px] text-slate-600 font-normal">
+                        Yêu thương không chỉ là sự kiên nhẫn đón nhận, mà còn là hành trình thấu hiểu cơ thể con từ gốc rễ để chăm sóc sức khỏe tiêu hóa, dinh dưỡng và giấc ngủ vững vàng mỗi ngày.
                     </p>
-                    <div class="text-navy font-serif italic text-lg md:text-xl pl-6 border-l-4 border-secondary/40 py-2">
-                        "Giúp con rút ngắn thời gian can thiệp, đạt hiệu quả tối ưu."
+
+                    <div class="rounded-2xl bg-[#f8fafc] border border-slate-200/90 p-4 sm:p-5">
+                        <p class="hc-body-copy text-[14.5px] sm:text-[15px] text-[#0A1931] font-medium">
+                            Tại đây, chúng ta chuyển dịch từ việc chỉ quan sát những biểu hiện hành vi bề nổi sang việc lắng nghe và chăm sóc nền tảng sức khỏe bên trong của trẻ.
+                        </p>
+                    </div>
+
+                    <!-- Cụm nút điều hướng chính -->
+                    <div class="pt-1 flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5">
+                        <a href="<?php echo esc_url( home_url( '/dat-lich-tu-van/' ) ); ?>" class="inline-flex items-center justify-center gap-2.5 bg-[#f97316] hover:bg-[#ea580c] text-white font-bold text-[15px] px-6 py-3.5 rounded-xl shadow-[0_12px_24px_-8px_rgba(249,115,22,0.45)] transition-all no-underline">
+                            <i data-lucide="calendar-check" class="w-4 h-4"></i>
+                            <span>Đăng ký tư vấn dinh dưỡng 1:1</span>
+                        </a>
+                        <a href="#goc-nhin-toan-dien" class="inline-flex items-center justify-center gap-2 bg-white hover:bg-slate-50 text-[#0A1931] border border-slate-200 font-semibold text-[15px] px-5 py-3.5 rounded-xl transition-all no-underline">
+                            <span>Tìm hiểu hướng tiếp cận</span>
+                            <i data-lucide="arrow-down" class="w-4 h-4 text-[#f97316]"></i>
+                        </a>
                     </div>
                 </div>
 
-                <!-- Right: Visual blocks -->
-                <div class="w-full lg:w-7/12 relative">
-                    <div class="glass-card p-8 rounded-[2rem] shadow-elegant relative z-10 lg:-mr-10 mb-6 lg:mb-0 hover:-translate-y-1 transition-transform duration-300">
-                        <div class="flex items-start gap-5">
-                            <div class="bg-navy/5 p-3 rounded-2xl text-navy">
-                                <i data-lucide="heart-pulse" class="w-8 h-8"></i>
+                <!-- Cột phải: Khung ảnh minh họa & 3 điểm tựa nền tảng -->
+                <div class="lg:col-span-6">
+                    <div class="hc-master-card">
+                        <div class="hc-card-bar"></div>
+                        <div class="p-3 sm:p-4 bg-white">
+                            <div class="overflow-hidden rounded-2xl border border-slate-100 bg-[#fffaf5]">
+                                <img
+                                    src="https://hieucontugoc.online/wp-content/uploads/2026/05/2.jpg"
+                                    alt="Hiểu Con Từ Gốc - Thấu hiểu để đồng hành cùng con"
+                                    class="w-full h-auto object-cover block"
+                                    loading="eager"
+                                />
                             </div>
-                            <div>
-                                <h4 class="font-serif text-2xl font-bold text-navy mb-2">Phần Nền: Y Sinh</h4>
-                                <p class="text-navy/70 font-medium leading-relaxed">Giúp con có cơ thể khỏe mạnh từ bên trong, thiết lập lại giấc ngủ và sự tập trung làm nền tảng.</p>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="glass-card p-8 rounded-[2rem] shadow-elegant relative z-20 lg:ml-10 hover:-translate-y-1 transition-transform duration-300">
-                        <div class="flex items-start gap-5">
-                            <div class="bg-secondary/10 p-3 rounded-2xl text-secondary">
-                                <i data-lucide="graduation-cap" class="w-8 h-8"></i>
-                            </div>
-                            <div>
-                                <h4 class="font-serif text-2xl font-bold text-navy mb-2">Phần Kỹ Năng: Giáo Dục</h4>
-                                <p class="text-navy/70 font-medium leading-relaxed">Học hỏi kỹ năng mới, phát triển ngôn ngữ, hành vi và từng bước hòa nhập với thế giới.</p>
+
+                            <div class="grid grid-cols-3 gap-2.5 pt-3.5 mt-3.5 border-t border-slate-100 text-center">
+                                <div class="px-2 py-2 rounded-xl bg-[#f8fafc]">
+                                    <p class="text-[12px] sm:text-[13px] font-bold text-[#0A1931]">Tiêu hóa khỏe</p>
+                                    <p class="text-[11px] text-slate-500 mt-0.5">Êm bụng & hấp thu tốt</p>
+                                </div>
+                                <div class="px-2 py-2 rounded-xl bg-[#fff7ed]">
+                                    <p class="text-[12px] sm:text-[13px] font-bold text-[#ea580c]">Dinh dưỡng đúng</p>
+                                    <p class="text-[11px] text-slate-500 mt-0.5">Phù hợp cơ địa trẻ</p>
+                                </div>
+                                <div class="px-2 py-2 rounded-xl bg-[#f8fafc]">
+                                    <p class="text-[12px] sm:text-[13px] font-bold text-[#0A1931]">Não bộ & Hành vi</p>
+                                    <p class="text-[11px] text-slate-500 mt-0.5">Ngủ sâu & tập trung</p>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -236,142 +138,327 @@
         </div>
     </section>
 
-    <!-- Community Activities -->
-    <section id="hoat-dong" class="py-16 md:py-24 relative">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div class="text-center mb-16 md:mb-20">
-                <h3 class="font-serif text-3xl md:text-4xl lg:text-5xl text-navy mb-6">Không gian này là để chúng ta...</h3>
-                <div class="elegant-divider"></div>
+    <!-- ==============================================================
+         MÀN 2: GÓC NHÌN TOÀN DIỆN — VÌ SAO CẦN CHĂM SÓC TỪ CƠ THỂ?
+         ============================================================== -->
+    <section id="goc-nhin-toan-dien" class="py-12 sm:py-16 lg:py-20 bg-[#f8fafc] border-b border-slate-200/70">
+        <div class="max-w-[1160px] mx-auto px-4 sm:px-6 lg:px-8">
+
+            <div class="max-w-3xl mx-auto text-center mb-10 sm:mb-12">
+                <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white border border-slate-200 text-[#f97316] text-xs font-bold uppercase tracking-wider mb-3">
+                    Góc nhìn khoa học
+                </span>
+                <h2 class="hc-sec-title font-serif text-2xl sm:text-3xl lg:text-4xl font-bold text-[#0A1931] mb-4">
+                    Vì sao cần thấu hiểu cơ thể con từ gốc?
+                </h2>
+                <p class="hc-body-copy text-[15px] sm:text-[16px] text-slate-600">
+                    Não bộ không hoạt động tách rời mà luôn gắn kết chặt chẽ với hệ tiêu hóa và chế độ dinh dưỡng hằng ngày. Khi cơ thể bên trong gặp trở ngại, con rất dễ mệt mỏi, khó ngủ và giảm khả năng tập trung.
+                </p>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
-                <!-- Activity 1 -->
-                <div class="bg-white/40 backdrop-blur-md p-8 md:p-10 rounded-[2.5rem] border border-white/60 hover:bg-white/60 transition-colors duration-300 flex flex-col h-full">
-                    <div class="mb-6">
-                        <i data-lucide="book-open" class="w-10 h-10 text-navy mb-6 opacity-70"></i>
-                        <h4 class="font-serif text-2xl font-bold text-navy mb-4">Khám phá kiến thức</h4>
-                        <p class="text-navy/60 font-bold uppercase tracking-wider text-xs mb-6">Trụ cột khoa học</p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-6">
+                <!-- Yếu tố 1 -->
+                <div class="hc-sub-card p-6 sm:p-7 flex flex-col">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="w-11 h-11 rounded-xl bg-[#0A1931] text-white flex items-center justify-center">
+                            <i data-lucide="activity" class="w-5 h-5"></i>
+                        </span>
+                        <span class="text-xs font-extrabold text-slate-400 tracking-wider">YẾU TỐ 01</span>
                     </div>
-                    <ul class="space-y-4 font-medium text-navy/80 flex-grow">
-                        <li class="flex items-start gap-3">
-                            <div class="w-1.5 h-1.5 rounded-full bg-secondary mt-2.5 shrink-0"></div>
-                            <span class="leading-relaxed">Trục Não - Ruột & Hệ vi sinh vật.</span>
-                        </li>
-                        <li class="flex items-start gap-3">
-                            <div class="w-1.5 h-1.5 rounded-full bg-secondary mt-2.5 shrink-0"></div>
-                            <span class="leading-relaxed">Dinh dưỡng trị liệu & Chế độ ăn (GFCF, Low-Hista...).</span>
-                        </li>
-                        <li class="flex items-start gap-3">
-                            <div class="w-1.5 h-1.5 rounded-full bg-secondary mt-2.5 shrink-0"></div>
-                            <span class="leading-relaxed">Giải độc tố & Cân bằng chuyển hóa.</span>
-                        </li>
-                    </ul>
+                    <h3 class="font-serif text-xl font-bold text-[#0A1931] mb-2.5">Hệ tiêu hóa & hấp thu</h3>
+                    <p class="hc-body-copy text-[14.5px] text-slate-600 flex-grow">
+                        Các vấn đề như táo bón, đầy bụng, rối loạn tiêu hóa hay mất cân bằng hệ vi sinh đường ruột có thể tác động trực tiếp đến cảm xúc, giấc ngủ và sự thoải mái của trẻ qua trục Não – Ruột.
+                    </p>
                 </div>
 
-                <!-- Activity 2 -->
-                <div class="bg-white/40 backdrop-blur-md p-8 md:p-10 rounded-[2.5rem] border border-white/60 hover:bg-white/60 transition-colors duration-300 flex flex-col h-full">
-                    <div class="mb-6">
-                        <i data-lucide="message-circle" class="w-10 h-10 text-secondary mb-6 opacity-80"></i>
-                        <h4 class="font-serif text-2xl font-bold text-navy mb-4">Trao đổi & Tư vấn</h4>
-                        <p class="text-navy/60 font-bold uppercase tracking-wider text-xs mb-6">Đồng hành sát sao</p>
+                <!-- Yếu tố 2 -->
+                <div class="hc-sub-card p-6 sm:p-7 flex flex-col">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="w-11 h-11 rounded-xl bg-[#f97316] text-white flex items-center justify-center">
+                            <i data-lucide="apple" class="w-5 h-5"></i>
+                        </span>
+                        <span class="text-xs font-extrabold text-[#f97316] tracking-wider">YẾU TỐ 02</span>
                     </div>
-                    <ul class="space-y-5 font-medium text-navy/80 flex-grow">
-                        <li class="flex items-start gap-3">
-                            <div class="w-1.5 h-1.5 rounded-full bg-navy mt-2.5 shrink-0"></div>
-                            <span class="leading-relaxed">Hướng dẫn cách <strong class="text-navy">"đọc hiểu"</strong> tín hiệu cơ thể: giấc ngủ, tiêu hóa, hành vi, dị ứng...</span>
-                        </li>
-                        <li class="flex items-start gap-3">
-                            <div class="w-1.5 h-1.5 rounded-full bg-navy mt-2.5 shrink-0"></div>
-                            <span class="leading-relaxed">Giải đáp thắc mắc về thực đơn, vi chất và lộ trình nền tảng.</span>
-                        </li>
-                    </ul>
+                    <h3 class="font-serif text-xl font-bold text-[#0A1931] mb-2.5">Đáp ứng thực phẩm & cơ địa</h3>
+                    <p class="hc-body-copy text-[14.5px] text-slate-600 flex-grow">
+                        Mỗi em bé có một cơ địa riêng. Việc nhận diện sớm tình trạng kén ăn, dị ứng hoặc bất dung nạp thực phẩm giúp ba mẹ xây dựng thực đơn phù hợp để cơ thể con nhẹ nhàng và dễ chịu hơn.
+                    </p>
                 </div>
 
-                <!-- Activity 3 -->
-                <div class="bg-white/40 backdrop-blur-md p-8 md:p-10 rounded-[2.5rem] border border-white/60 hover:bg-white/60 transition-colors duration-300 flex flex-col h-full">
-                    <div class="mb-6">
-                        <i data-lucide="users" class="w-10 h-10 text-navy mb-6 opacity-70"></i>
-                        <h4 class="font-serif text-2xl font-bold text-navy mb-4">Sẻ chia giải pháp</h4>
-                        <p class="text-navy/60 font-bold uppercase tracking-wider text-xs mb-6">Không phó mặc</p>
+                <!-- Yếu tố 3 -->
+                <div class="hc-sub-card p-6 sm:p-7 flex flex-col">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="w-11 h-11 rounded-xl bg-[#0A1931] text-white flex items-center justify-center">
+                            <i data-lucide="sparkles" class="w-5 h-5"></i>
+                        </span>
+                        <span class="text-xs font-extrabold text-slate-400 tracking-wider">YẾU TỐ 03</span>
                     </div>
-                    <ul class="space-y-5 font-medium text-navy/80 flex-grow">
-                        <li class="flex items-start gap-3">
-                            <div class="w-1.5 h-1.5 rounded-full bg-secondary mt-2.5 shrink-0"></div>
-                            <span class="leading-relaxed">Không chỉ sẻ chia cảm xúc, chúng ta tìm kiếm <strong class="text-navy">Giải pháp</strong>.</span>
-                        </li>
-                        <li class="flex items-start gap-3">
-                            <div class="w-1.5 h-1.5 rounded-full bg-secondary mt-2.5 shrink-0"></div>
-                            <span class="leading-relaxed">Cùng kiên trì áp dụng để thấy sự thay đổi tích cực mỗi ngày.</span>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Goals Section -->
-    <section class="py-16 md:py-24 relative">
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div class="glass-card rounded-[3rem] p-8 md:p-16 shadow-elegant text-center">
-                <i data-lucide="feather" class="w-12 h-12 text-secondary mx-auto mb-6 opacity-80"></i>
-                <h3 class="font-serif text-3xl md:text-4xl text-navy mb-10">Mục tiêu của cộng đồng</h3>
-                
-                <div class="space-y-8 text-left max-w-2xl mx-auto">
-                    <div class="flex items-start gap-4">
-                        <span class="font-serif text-2xl text-secondary/40 font-bold mt-1">01.</span>
-                        <p class="text-navy/80 font-medium text-lg md:text-xl leading-relaxed">Cha mẹ hiểu biết, không phó mặc, chủ động trở thành <strong class="text-navy font-bold">"người bác sĩ"</strong> tốt nhất của con.</p>
-                    </div>
-                    
-                    <div class="flex items-start gap-4">
-                        <span class="font-serif text-2xl text-secondary/40 font-bold mt-1">02.</span>
-                        <p class="text-navy/80 font-medium text-lg md:text-xl leading-relaxed">Lan tỏa tư duy y học cốt lõi: <strong class="text-navy font-bold">"Cơ thể khỏe thì não bộ mới khỏe"</strong>.</p>
-                    </div>
-
-                    <div class="flex items-start gap-4">
-                        <span class="font-serif text-2xl text-secondary/40 font-bold mt-1">03.</span>
-                        <p class="text-navy/80 font-medium text-lg md:text-xl leading-relaxed">Là điểm tựa tin cậy, vững chãi dựa trên nền tảng <strong class="text-navy font-bold">khoa học thực chứng</strong>.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Disclaimer & Footer -->
-    <footer class="mt-10 border-t border-white/40 bg-white/30 backdrop-blur-md pt-16 pb-10">
-        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-            <!-- Disclaimer Box -->
-            <div class="bg-white/60 backdrop-blur-sm rounded-3xl p-6 md:p-8 border border-white shadow-sm mb-16 flex flex-col md:flex-row gap-5 items-start">
-                <div class="bg-secondary/10 p-3 rounded-full shrink-0">
-                    <i data-lucide="info" class="w-6 h-6 text-secondary"></i>
-                </div>
-                <div>
-                    <h4 class="font-serif text-navy font-bold text-lg mb-2">Lưu ý quan trọng</h4>
-                    <p class="text-navy/70 font-medium text-sm md:text-base leading-relaxed">
-                        Các thông tin trong nhóm mang tính chất chia sẻ kiến thức, giáo dục sức khỏe và hỗ trợ cộng đồng. Mọi quyết định can thiệp y tế chuyên sâu cần có sự tham vấn của các y bác sĩ, chuyên gia có chuyên môn phù hợp với thể trạng riêng biệt của từng trẻ.
+                    <h3 class="font-serif text-xl font-bold text-[#0A1931] mb-2.5">Cân bằng vi chất & năng lượng</h3>
+                    <p class="hc-body-copy text-[14.5px] text-slate-600 flex-grow">
+                        Thiếu hụt vi chất và dưỡng chất thiết yếu khiến trẻ chậm tăng trưởng và thiếu năng lượng. Bổ sung đúng và đủ chính là nền tảng nuôi dưỡng cả thể chất lẫn sự phát triển trí não.
                     </p>
                 </div>
             </div>
 
-            <div class="flex flex-col md:flex-row justify-between items-center gap-6">
-                <div class="flex items-center gap-3 text-center md:text-left">
-                    <div class="p-2 bg-secondary/10 rounded-full text-secondary">
-                        <i data-lucide="heart" class="w-4 h-4"></i>
+            <!-- Thông điệp đúc kết -->
+            <div class="mt-8 sm:mt-10 bg-white border border-slate-200 rounded-2xl p-5 sm:p-6 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-sm">
+                <div class="flex items-center gap-3.5 text-left">
+                    <span class="w-10 h-10 rounded-xl bg-[#fff7ed] border border-[#fed7aa] text-[#f97316] flex items-center justify-center shrink-0">
+                        <i data-lucide="sun" class="w-5 h-5"></i>
+                    </span>
+                    <p class="hc-body-copy text-[15px] sm:text-[16px] text-[#0A1931] font-medium">
+                        Khi <strong class="font-bold text-[#f97316]">cơ thể bên trong khỏe mạnh và êm dịu</strong>, con sẽ có nền tảng vững vàng hơn để ngủ ngon, tập trung và tiếp thu tốt hơn.
+                    </p>
+                </div>
+                <a href="<?php echo esc_url( home_url( '/dat-lich-tu-van/' ) ); ?>" class="shrink-0 inline-flex items-center gap-1.5 text-sm font-bold text-[#ea580c] hover:text-[#0A1931] transition-colors no-underline">
+                    <span>Tìm hiểu tình trạng của con</span>
+                    <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                </a>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ==============================================================
+         MÀN 3: PHƯƠNG PHÁP ĐỒNG HÀNH — KẾT HỢP CHĂM SÓC NỀN TẢNG & GIÁO DỤC
+         ============================================================== -->
+    <section id="phuong-phap" class="py-12 sm:py-16 lg:py-20 bg-white border-b border-slate-100">
+        <div class="max-w-[1160px] mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+
+                <!-- Cột trái: Định hướng -->
+                <div class="lg:col-span-5 space-y-4">
+                    <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#fff7ed] border border-[#fed7aa] text-[#ea580c] text-xs font-bold uppercase tracking-wider">
+                        Phương pháp đồng hành
+                    </span>
+                    <h2 class="hc-sec-title font-serif text-2xl sm:text-3xl lg:text-4xl font-bold text-[#0A1931]">
+                        Kết hợp hài hòa giữa chăm sóc sức khỏe và giáo dục kỹ năng
+                    </h2>
+                    <p class="hc-body-copy text-[15px] sm:text-[16px] text-slate-600">
+                        Chăm sóc dinh dưỡng, tiêu hóa và rèn luyện kỹ năng giáo dục là hai mảnh ghép bổ trợ mật thiết cho nhau trên hành trình đồng hành cùng con.
+                    </p>
+                    <div class="pl-4 border-l-4 border-[#f97316] py-1">
+                        <p class="font-serif italic text-[16px] sm:text-[17px] text-[#0A1931] font-semibold">
+                            "Nuôi dưỡng cơ thể khỏe mạnh để tạo đà cho con học hỏi, giao tiếp và đạt hiệu quả can thiệp tốt hơn."
+                        </p>
                     </div>
-                    <span class="font-serif italic text-navy text-base md:text-lg">Hiểu con từ gốc, yêu thương trọn vẹn.</span>
                 </div>
-                <div class="text-sm font-medium text-navy/50 text-center md:text-right">
-                    &copy; <?php echo date('Y'); ?> Cộng đồng Hiểu Con Từ Gốc.<br class="md:hidden" /> All rights reserved.
+
+                <!-- Cột phải: 2 Mảnh ghép -->
+                <div class="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-5">
+                    <!-- Mảnh ghép 1 -->
+                    <div class="hc-master-card flex flex-col">
+                        <div class="hc-card-bar"></div>
+                        <div class="p-6 flex flex-col flex-grow">
+                            <div class="w-11 h-11 rounded-xl bg-[#0A1931] text-white flex items-center justify-center mb-4">
+                                <i data-lucide="heart-pulse" class="w-5 h-5"></i>
+                            </div>
+                            <span class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">Nền tảng bên trong</span>
+                            <h3 class="font-serif text-xl font-bold text-[#0A1931] mb-2.5">Dinh dưỡng & tiêu hóa</h3>
+                            <p class="hc-body-copy text-[14.5px] text-slate-600 flex-grow">
+                                Cải thiện tiêu hóa, xây dựng chế độ ăn phù hợp và ổn định giấc ngủ để cơ thể con khỏe khoắn, tinh thần thoải mái và sẵn sàng đón nhận bài học mới.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Mảnh ghép 2 -->
+                    <div class="hc-master-card flex flex-col">
+                        <div class="hc-card-bar"></div>
+                        <div class="p-6 flex flex-col flex-grow">
+                            <div class="w-11 h-11 rounded-xl bg-[#f97316] text-white flex items-center justify-center mb-4">
+                                <i data-lucide="graduation-cap" class="w-5 h-5"></i>
+                            </div>
+                            <span class="text-xs font-bold uppercase tracking-wider text-[#f97316] mb-1">Phát triển bên ngoài</span>
+                            <h3 class="font-serif text-xl font-bold text-[#0A1931] mb-2.5">Giáo dục & kỹ năng</h3>
+                            <p class="hc-body-copy text-[14.5px] text-slate-600 flex-grow">
+                                Đồng hành rèn luyện ngôn ngữ, giao tiếp, vận động và kỹ năng tự lập từng bước vững chắc trong sinh hoạt hằng ngày cùng gia đình và thầy cô.
+                            </p>
+                        </div>
+                    </div>
                 </div>
+
             </div>
         </div>
-    </footer>
+    </section>
 
-    <!-- Initialize Icons -->
-    <script>
-        // Cài đặt nét icon mảnh hơn (1.5) để trông tinh tế và cao cấp hơn
-        lucide.createIcons({
-            strokeWidth: 1.5
-        });
-    </script>
+    <!-- ==============================================================
+         MÀN 4: KHÔNG GIAN ĐỒNG HÀNH — BA TRỤ CỘT DÀNH CHO BA MẸ
+         ============================================================== -->
+    <section id="hoat-dong" class="py-12 sm:py-16 lg:py-20 bg-[#f8fafc] border-b border-slate-200/70">
+        <div class="max-w-[1160px] mx-auto px-4 sm:px-6 lg:px-8">
+
+            <div class="max-w-3xl mx-auto text-center mb-10 sm:mb-12">
+                <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white border border-slate-200 text-[#0A1931] text-xs font-bold uppercase tracking-wider mb-3">
+                    Hệ sinh thái nội dung
+                </span>
+                <h2 class="hc-sec-title font-serif text-2xl sm:text-3xl lg:text-4xl font-bold text-[#0A1931] mb-3">
+                    Không gian đồng hành cùng ba mẹ mỗi ngày
+                </h2>
+                <p class="hc-body-copy text-[15px] sm:text-[16px] text-slate-600">
+                    Hệ thống bài viết, cẩm nang và lịch tư vấn được sắp xếp rõ ràng, dễ hiểu để ba mẹ dễ dàng áp dụng ngay tại nhà.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-6">
+                <!-- Trụ cột 1: Kiến thức -->
+                <div class="hc-sub-card p-6 sm:p-7 flex flex-col">
+                    <div class="w-11 h-11 rounded-xl bg-[#0A1931] text-white flex items-center justify-center mb-4">
+                        <i data-lucide="book-open" class="w-5 h-5"></i>
+                    </div>
+                    <p class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">Chuyên mục kiến thức</p>
+                    <h3 class="font-serif text-xl font-bold text-[#0A1931] mb-3">Tìm hiểu kiến thức nền tảng</h3>
+                    <ul class="space-y-2.5 text-[14.5px] text-slate-600 mb-6 flex-grow">
+                        <li class="flex items-start gap-2.5">
+                            <span class="w-1.5 h-1.5 rounded-full bg-[#f97316] mt-2 shrink-0"></span>
+                            <span>Mối liên hệ mật thiết giữa hệ tiêu hóa, giấc ngủ và hành vi của trẻ.</span>
+                        </li>
+                        <li class="flex items-start gap-2.5">
+                            <span class="w-1.5 h-1.5 rounded-full bg-[#f97316] mt-2 shrink-0"></span>
+                            <span>Nguyên tắc lựa chọn thực phẩm và xây dựng bữa ăn giàu dưỡng chất.</span>
+                        </li>
+                        <li class="flex items-start gap-2.5">
+                            <span class="w-1.5 h-1.5 rounded-full bg-[#f97316] mt-2 shrink-0"></span>
+                            <span>Cách quan sát và lắng nghe các tín hiệu cơ thể của con mỗi ngày.</span>
+                        </li>
+                    </ul>
+                    <a href="<?php echo esc_url( home_url( '/bai-viet-kien-thuc/' ) ); ?>" class="inline-flex items-center gap-1.5 text-sm font-bold text-[#0A1931] hover:text-[#f97316] transition-colors no-underline">
+                        <span>Xem chuyên mục bài viết</span>
+                        <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    </a>
+                </div>
+
+                <!-- Trụ cột 2: Cẩm nang -->
+                <div class="hc-sub-card p-6 sm:p-7 flex flex-col">
+                    <div class="w-11 h-11 rounded-xl bg-[#f97316] text-white flex items-center justify-center mb-4">
+                        <i data-lucide="library" class="w-5 h-5"></i>
+                    </div>
+                    <p class="text-xs font-bold uppercase tracking-wider text-[#f97316] mb-1">Thư viện thực hành</p>
+                    <h3 class="font-serif text-xl font-bold text-[#0A1931] mb-3">Cẩm nang hướng dẫn từng bước</h3>
+                    <ul class="space-y-2.5 text-[14.5px] text-slate-600 mb-6 flex-grow">
+                        <li class="flex items-start gap-2.5">
+                            <span class="w-1.5 h-1.5 rounded-full bg-[#0A1931] mt-2 shrink-0"></span>
+                            <span>Cẩm nang cải thiện tình trạng kén ăn, táo bón và rối loạn tiêu hóa.</span>
+                        </li>
+                        <li class="flex items-start gap-2.5">
+                            <span class="w-1.5 h-1.5 rounded-full bg-[#0A1931] mt-2 shrink-0"></span>
+                            <span>Hướng dẫn thiết lập thói quen sinh hoạt và kỹ năng tự lập tại nhà.</span>
+                        </li>
+                        <li class="flex items-start gap-2.5">
+                            <span class="w-1.5 h-1.5 rounded-full bg-[#0A1931] mt-2 shrink-0"></span>
+                            <span>Trình bày trực quan theo từng chương mục để ba mẹ tra cứu nhanh.</span>
+                        </li>
+                    </ul>
+                    <a href="<?php echo esc_url( home_url( '/docs/' ) ); ?>" class="inline-flex items-center gap-1.5 text-sm font-bold text-[#ea580c] hover:text-[#0A1931] transition-colors no-underline">
+                        <span>Khám phá thư viện cẩm nang</span>
+                        <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    </a>
+                </div>
+
+                <!-- Trụ cột 3: Tư vấn 1:1 -->
+                <div class="hc-sub-card p-6 sm:p-7 flex flex-col">
+                    <div class="w-11 h-11 rounded-xl bg-[#0A1931] text-white flex items-center justify-center mb-4">
+                        <i data-lucide="message-circle-heart" class="w-5 h-5"></i>
+                    </div>
+                    <p class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">Đồng hành trực tiếp</p>
+                    <h3 class="font-serif text-xl font-bold text-[#0A1931] mb-3">Tư vấn dinh dưỡng 1:1</h3>
+                    <ul class="space-y-2.5 text-[14.5px] text-slate-600 mb-6 flex-grow">
+                        <li class="flex items-start gap-2.5">
+                            <span class="w-1.5 h-1.5 rounded-full bg-[#f97316] mt-2 shrink-0"></span>
+                            <span>30 phút trao đổi trực tiếp để nhìn rõ các vấn đề tiêu hóa của trẻ.</span>
+                        </li>
+                        <li class="flex items-start gap-2.5">
+                            <span class="w-1.5 h-1.5 rounded-full bg-[#f97316] mt-2 shrink-0"></span>
+                            <span>Hiểu rõ mối liên hệ giữa tiêu hóa, dinh dưỡng với não bộ và hành vi.</span>
+                        </li>
+                        <li class="flex items-start gap-2.5">
+                            <span class="w-1.5 h-1.5 rounded-full bg-[#f97316] mt-2 shrink-0"></span>
+                            <span>Định hình từng bước cải thiện bữa ăn phù hợp với thể trạng của con.</span>
+                        </li>
+                    </ul>
+                    <a href="<?php echo esc_url( home_url( '/dat-lich-tu-van/' ) ); ?>" class="inline-flex items-center gap-1.5 text-sm font-bold text-[#0A1931] hover:text-[#f97316] transition-colors no-underline">
+                        <span>Đăng ký lịch tư vấn 1:1</span>
+                        <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ==============================================================
+         MÀN 5: GIÁ TRỊ CỐT LÕI & LỜI MỜI ĐẶT LỊCH TƯ VẤN 1:1
+         ============================================================== -->
+    <section class="py-12 sm:py-16 lg:py-20 bg-white">
+        <div class="max-w-[1160px] mx-auto px-4 sm:px-6 lg:px-8">
+
+            <div class="hc-master-card">
+                <div class="hc-card-bar"></div>
+                <div class="p-6 sm:p-10 lg:p-12">
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
+
+                        <!-- Cột trái: 3 Giá trị cốt lõi của cộng đồng -->
+                        <div class="lg:col-span-7 space-y-5">
+                            <div>
+                                <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#fff7ed] border border-[#fed7aa] text-[#ea580c] text-xs font-bold uppercase tracking-wider mb-2.5">
+                                    Giá trị hướng tới
+                                </span>
+                                <h2 class="hc-sec-title font-serif text-2xl sm:text-3xl font-bold text-[#0A1931]">
+                                    Mục tiêu của cộng đồng Hiểu Con Từ Gốc
+                                </h2>
+                            </div>
+
+                            <div class="space-y-3.5">
+                                <div class="flex items-start gap-3.5 p-3.5 rounded-xl bg-[#f8fafc] border border-slate-200/80">
+                                    <span class="w-7 h-7 rounded-lg bg-[#0A1931] text-white font-bold text-xs flex items-center justify-center shrink-0 mt-0.5">01</span>
+                                    <p class="hc-body-copy text-[14.5px] sm:text-[15px] text-[#0A1931]">
+                                        <strong class="font-bold">Ba mẹ thấu hiểu & chủ động:</strong> Trang bị kiến thức thiết thực để ba mẹ tự tin trở thành người bạn đồng hành hiểu con nhất ngay tại gia đình.
+                                    </p>
+                                </div>
+
+                                <div class="flex items-start gap-3.5 p-3.5 rounded-xl bg-[#f8fafc] border border-slate-200/80">
+                                    <span class="w-7 h-7 rounded-lg bg-[#f97316] text-white font-bold text-xs flex items-center justify-center shrink-0 mt-0.5">02</span>
+                                    <p class="hc-body-copy text-[14.5px] sm:text-[15px] text-[#0A1931]">
+                                        <strong class="font-bold">Chăm sóc sức khỏe nền tảng:</strong> Lan tỏa góc nhìn tích cực rằng một hệ tiêu hóa êm dịu và dinh dưỡng cân bằng sẽ nâng đỡ sự phát triển trí não của trẻ.
+                                    </p>
+                                </div>
+
+                                <div class="flex items-start gap-3.5 p-3.5 rounded-xl bg-[#f8fafc] border border-slate-200/80">
+                                    <span class="w-7 h-7 rounded-lg bg-[#0A1931] text-white font-bold text-xs flex items-center justify-center shrink-0 mt-0.5">03</span>
+                                    <p class="hc-body-copy text-[14.5px] sm:text-[15px] text-[#0A1931]">
+                                        <strong class="font-bold">Điểm tựa sẻ chia & bền bỉ:</strong> Xây dựng môi trường văn minh, ấm áp, nơi các gia đình cùng nhau kiên trì áp dụng giải pháp mỗi ngày.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Cột phải: Khung kêu gọi đăng ký lịch tư vấn 1:1 -->
+                        <div class="lg:col-span-5">
+                            <div class="rounded-2xl bg-[#0A1931] text-white p-6 sm:p-7 space-y-4">
+                                <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 text-[#fdba74] text-xs font-bold uppercase tracking-wider">
+                                    Quà tặng dành cho ba mẹ
+                                </span>
+                                <h3 class="font-serif text-xl sm:text-2xl font-bold text-white leading-snug">
+                                    Dành tặng 30 lịch tư vấn dinh dưỡng 1:1 trong 30 phút
+                                </h3>
+                                <p class="text-sm text-slate-300 leading-relaxed">
+                                    Dành cho các bé đang gặp vấn đề về kén ăn, dị ứng, bất dung nạp thực phẩm, táo bón, rối loạn tiêu hóa hoặc chậm tăng trưởng.
+                                </p>
+                                <div class="pt-1">
+                                    <a href="<?php echo esc_url( home_url( '/dat-lich-tu-van/' ) ); ?>" class="w-full inline-flex items-center justify-center gap-2 bg-[#f97316] hover:bg-[#ea580c] text-white font-bold text-[15px] px-5 py-3.5 rounded-xl shadow-lg transition-all no-underline">
+                                        <span>Đăng ký nhận lịch tư vấn 1:1</span>
+                                        <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+</main>
 
 <?php get_footer(); ?>
