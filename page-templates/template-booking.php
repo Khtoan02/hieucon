@@ -358,20 +358,20 @@ $init_secs    = str_pad( (string) ( $remaining_s % 60 ), 2, '0', STR_PAD_LEFT );
                                     </label>
 
                                     <div class="grid grid-cols-3 gap-2 sm:gap-2.5" id="time-slot-group">
-                                        <button type="button" data-slot="Buổi sáng (08:30 - 11:30)" class="hc-time-card is-active">
+                                        <button type="button" data-slot="Buổi sáng (11:00 - 11:30)" class="hc-time-card is-active">
                                             <span class="hc-time-head">
                                                 <span class="hc-time-icon"><i data-lucide="sunrise" class="w-3.5 h-3.5"></i></span>
                                                 <span>Buổi sáng</span>
                                             </span>
-                                            <span class="hc-time-sub">08:30 – 11:30</span>
+                                            <span class="hc-time-sub">11:00 – 11:30</span>
                                         </button>
 
-                                        <button type="button" data-slot="Buổi chiều (14:00 - 17:30)" class="hc-time-card">
+                                        <button type="button" data-slot="Buổi chiều (16:00 - 16:30)" class="hc-time-card">
                                             <span class="hc-time-head">
                                                 <span class="hc-time-icon"><i data-lucide="sunset" class="w-3.5 h-3.5"></i></span>
                                                 <span>Buổi chiều</span>
                                             </span>
-                                            <span class="hc-time-sub">14:00 – 17:30</span>
+                                            <span class="hc-time-sub">16:00 – 16:30</span>
                                         </button>
 
                                         <button type="button" data-slot="Buổi tối (19:30 - 21:30)" class="hc-time-card">
@@ -383,7 +383,7 @@ $init_secs    = str_pad( (string) ( $remaining_s % 60 ), 2, '0', STR_PAD_LEFT );
                                         </button>
                                     </div>
 
-                                    <input type="hidden" id="booking-preferred-time" name="preferred_time" value="Buổi sáng (08:30 - 11:30)">
+                                    <input type="hidden" id="booking-preferred-time" name="preferred_time" value="Buổi sáng (11:00 - 11:30)">
                                 </div>
 
                                 <div id="booking-step1-error" class="hidden rounded-xl bg-red-50 border border-red-200 text-red-700 text-xs font-semibold px-4 py-3"></div>
@@ -476,7 +476,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             const parentName = document.getElementById('booking-parent-name').value.trim();
             const phone = document.getElementById('booking-phone').value.trim();
-            const preferredTime = timeInput.value.trim() || 'Buổi sáng (08:30 - 11:30)';
+            const preferredTime = timeInput.value.trim() || 'Buổi sáng (11:00 - 11:30)';
 
             const selectedIssues = [];
             issueChips.forEach(chip => {
