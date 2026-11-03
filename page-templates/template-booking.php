@@ -249,7 +249,7 @@ $week_range    = sprintf( '%s - %s', $monday_date->format( 'd/m' ), $saturday_da
 
                     <div class="bg-[#fff7ed] border border-orange-200/80 rounded-2xl p-5 sm:p-7">
                         <p class="hc-focus-heading font-bold text-navy text-[15.5px] sm:text-[17px] mb-4 sm:mb-5">
-                            Buổi tư vấn có thời gian 30 phút để ba mẹ hiểu và tìm ra các vấn đề:
+                            Nội dung buổi trao đổi <span class="font-normal text-slate-600">(Online, khoảng 30 phút)</span>
                         </p>
                         <ul class="hc-focus-list divide-y divide-orange-200/60 text-slate-700 text-[14.5px] sm:text-[15.5px]">
                             <li class="flex items-start gap-3.5 pb-3.5">
@@ -402,7 +402,7 @@ $week_range    = sprintf( '%s - %s', $monday_date->format( 'd/m' ), $saturday_da
                                     id="booking-step1-btn"
                                     class="w-full py-3.5 px-6 rounded-xl bg-secondary hover:bg-secondary_dark text-white font-extrabold text-base uppercase tracking-wider shadow-[0_12px_24px_-6px_rgba(249,115,22,0.4)] hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-center gap-2 cursor-pointer"
                                 >
-                                    <span>ĐĂNG KÝ</span>
+                                    <span>THAM GIA CHƯƠNG TRÌNH</span>
                                     <i data-lucide="arrow-right" class="w-5 h-5"></i>
                                 </button>
                             </form>
