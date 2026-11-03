@@ -25,13 +25,13 @@ $prefill_phone   = $current_member && ! empty( $current_member->phone_number ) ?
 $booking_nonce   = wp_create_nonce( 'hieucon_booking_nonce' );
 $zalo_target_url = get_option( 'hieucon_link_zalo_tuvan', home_url( '/zalo' ) );
 
-// Tính thời gian đếm ngược đến hết ngày 07/11/2026 (23:59:59 GMT+7)
-$deadline_ts  = strtotime( '2026-11-07 23:59:59 +0700' );
-$remaining_s  = max( 0, $deadline_ts - time() );
-$init_days    = str_pad( (string) floor( $remaining_s / 86400 ), 2, '0', STR_PAD_LEFT );
-$init_hours   = str_pad( (string) floor( ( $remaining_s % 86400 ) / 3600 ), 2, '0', STR_PAD_LEFT );
-$init_mins    = str_pad( (string) floor( ( $remaining_s % 3600 ) / 60 ), 2, '0', STR_PAD_LEFT );
-$init_secs    = str_pad( (string) ( $remaining_s % 60 ), 2, '0', STR_PAD_LEFT );
+// Tự động tính toán tuần thứ bao nhiêu trong năm và ngày Thứ 2 -> Thứ 7 của tuần hiện tại
+$tz_now        = new DateTimeImmutable( 'now', wp_timezone() );
+$day_of_week   = (int) $tz_now->format( 'N' ); // 1 (Thứ 2) -> 7 (Chủ nhật)
+$monday_date   = $tz_now->modify( '-' . ( $day_of_week - 1 ) . ' days' );
+$saturday_date = $monday_date->modify( '+5 days' );
+$week_label    = sprintf( 'Tuần %s/%s', $tz_now->format( 'W' ), $tz_now->format( 'o' ) );
+$week_range    = sprintf( '%s - %s', $monday_date->format( 'd/m' ), $saturday_date->format( 'd/m/Y' ) );
 ?>
 
 <style>
@@ -201,45 +201,54 @@ $init_secs    = str_pad( (string) ( $remaining_s % 60 ), 2, '0', STR_PAD_LEFT );
 
                 <!-- Cột trái (6/12): Thông điệp mở đầu thoáng đãng, phân tách rõ từng ý -->
                 <div class="lg:col-span-6">
-                    <h1 class="hc-hero-title font-serif text-[1.9rem] sm:text-4xl xl:text-[2.95rem] font-bold text-navy mb-5 sm:mb-6">
-                        <span class="block">30 phút để nhìn rõ</span>
-                        <span class="block text-secondary">vấn đề tiêu hoá của con</span>
-                    </h1>
+                    <div class="mb-5 sm:mb-6">
+                        <span class="inline-flex items-center px-4 py-1.5 rounded-full bg-secondary text-white font-sans font-extrabold text-xs sm:text-sm uppercase tracking-wider shadow-sm mb-3">
+                            CHƯƠNG TRÌNH
+                        </span>
+                        <h1 class="hc-hero-title font-serif text-[2rem] sm:text-4xl xl:text-[2.85rem] font-bold text-navy uppercase tracking-tight mb-2.5">
+                            CÙNG MẸ HIỂU CON
+                        </h1>
+                        <p class="inline-block bg-[#fff7ed] border border-orange-200/90 text-secondary font-serif font-bold text-[1.15rem] sm:text-[1.4rem] px-4 py-1.5 rounded-xl">
+                            Hiểu hơn về hệ tiêu hoá của con.
+                        </p>
+                    </div>
 
                     <p class="hc-hero-lead text-slate-700 text-[15.5px] sm:text-[17px] mb-4 sm:mb-5">
                         <strong class="text-navy">HIỂU CON TỪ GỐC</strong> dành tặng <strong class="text-secondary">5 lịch tư vấn dinh dưỡng 1:1</strong> cho bé từ <strong class="text-navy">2–7 tuổi</strong> có vấn đề về <strong class="text-navy">kén ăn, dị ứng, bất dung nạp thực phẩm, táo bón, rối loạn tiêu hóa, chậm tăng trưởng,...</strong>
                     </p>
 
-                    <!-- Bộ đếm thời gian đến hết ngày hạn 07/11/2026 -->
-                    <div class="bg-white border border-orange-200 rounded-2xl px-4 py-3 sm:px-5 sm:py-3.5 mb-5 sm:mb-6 shadow-[0_10px_24px_-14px_rgba(249,115,22,0.22)] flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2.5 sm:gap-4">
-                        <div class="flex items-center justify-between sm:justify-start gap-2">
-                            <span class="inline-flex items-center gap-2 text-xs sm:text-[13.5px] font-bold text-navy">
-                                <span class="w-7 h-7 rounded-lg bg-[#fff7ed] border border-orange-200/80 text-secondary flex items-center justify-center shrink-0">
-                                    <i data-lucide="clock" class="w-4 h-4"></i>
-                                </span>
-                                <span>Hạn đăng ký đến <strong class="text-secondary">07/11/2026</strong>:</span>
+                    <!-- Thanh thông tin hoạt động trong tuần (Tự động tính tuần & ngày Thứ 2 -> Thứ 7) -->
+                    <div class="bg-[#fff7ed]/70 border border-orange-200/90 rounded-2xl p-3.5 sm:px-5 sm:py-4 mb-5 sm:mb-6 shadow-[0_10px_24px_-14px_rgba(249,115,22,0.18)] grid grid-cols-1 sm:grid-cols-3 divide-y sm:divide-y-0 sm:divide-x divide-orange-200/80 gap-3 sm:gap-0">
+                        <!-- Cột 1: Hoạt động trong tuần -->
+                        <div class="flex items-center gap-3 sm:pr-4">
+                            <span class="w-10 h-10 rounded-xl bg-white border border-orange-200 text-secondary flex items-center justify-center shrink-0 shadow-xs">
+                                <i data-lucide="calendar-days" class="w-5 h-5"></i>
                             </span>
-                            <span class="sm:hidden inline-flex items-center px-2 py-0.5 rounded-full bg-[#fff7ed] border border-orange-200 text-secondary text-[11px] font-bold">
-                                5 suất
-                            </span>
+                            <div>
+                                <span class="block text-[11.5px] font-semibold text-slate-600 leading-tight">Hoạt động trong tuần</span>
+                                <strong id="hc-auto-week-num" class="block font-sans font-extrabold text-[15px] sm:text-[16px] text-navy leading-snug mt-0.5"><?php echo esc_html( $week_label ); ?></strong>
+                            </div>
                         </div>
 
-                        <div class="grid grid-cols-4 gap-1.5 sm:flex sm:items-center sm:gap-2" id="hc-booking-countdown" data-deadline="2026-11-07T23:59:59+07:00">
-                            <div class="bg-[#fff7ed] border border-orange-200/90 rounded-xl px-2.5 py-1.5 min-w-[56px] text-center">
-                                <span id="hc-cd-days" class="block font-sans font-extrabold text-[15px] sm:text-[17px] text-secondary leading-none tabular-nums"><?php echo esc_html( $init_days ); ?></span>
-                                <span class="block text-[10px] font-bold text-navy/65 uppercase tracking-wider mt-1 leading-none">Ngày</span>
+                        <!-- Cột 2: Từ Thứ 2 đến Thứ 7 -->
+                        <div class="flex items-center gap-3 pt-3 sm:pt-0 sm:px-4">
+                            <span class="w-10 h-10 rounded-xl bg-white border border-orange-200 text-navy flex items-center justify-center shrink-0 shadow-xs">
+                                <i data-lucide="calendar-range" class="w-5 h-5"></i>
+                            </span>
+                            <div>
+                                <span class="block text-[11.5px] font-semibold text-slate-600 leading-tight">Thứ 2 – Thứ 7</span>
+                                <strong id="hc-auto-week-range" class="block font-sans font-extrabold text-[14.5px] sm:text-[15px] text-navy leading-snug mt-0.5 tabular-nums"><?php echo esc_html( $week_range ); ?></strong>
                             </div>
-                            <div class="bg-[#fff7ed] border border-orange-200/90 rounded-xl px-2.5 py-1.5 min-w-[56px] text-center">
-                                <span id="hc-cd-hours" class="block font-sans font-extrabold text-[15px] sm:text-[17px] text-secondary leading-none tabular-nums"><?php echo esc_html( $init_hours ); ?></span>
-                                <span class="block text-[10px] font-bold text-navy/65 uppercase tracking-wider mt-1 leading-none">Giờ</span>
-                            </div>
-                            <div class="bg-[#fff7ed] border border-orange-200/90 rounded-xl px-2.5 py-1.5 min-w-[56px] text-center">
-                                <span id="hc-cd-mins" class="block font-sans font-extrabold text-[15px] sm:text-[17px] text-secondary leading-none tabular-nums"><?php echo esc_html( $init_mins ); ?></span>
-                                <span class="block text-[10px] font-bold text-navy/65 uppercase tracking-wider mt-1 leading-none">Phút</span>
-                            </div>
-                            <div class="bg-[#fff7ed] border border-orange-200/90 rounded-xl px-2.5 py-1.5 min-w-[56px] text-center">
-                                <span id="hc-cd-secs" class="block font-sans font-extrabold text-[15px] sm:text-[17px] text-secondary leading-none tabular-nums"><?php echo esc_html( $init_secs ); ?></span>
-                                <span class="block text-[10px] font-bold text-navy/65 uppercase tracking-wider mt-1 leading-none">Giây</span>
+                        </div>
+
+                        <!-- Cột 3: 05 gia đình con từ 2-7 tuổi -->
+                        <div class="flex items-center gap-3 pt-3 sm:pt-0 sm:pl-4">
+                            <span class="w-10 h-10 rounded-xl bg-white border border-orange-200 text-secondary flex items-center justify-center shrink-0 shadow-xs">
+                                <i data-lucide="users" class="w-5 h-5"></i>
+                            </span>
+                            <div>
+                                <strong class="block font-sans font-extrabold text-[15px] sm:text-[16px] text-navy leading-tight">05 gia đình</strong>
+                                <span class="block text-[12px] font-semibold text-slate-600 leading-snug mt-0.5">Con từ 2–7 tuổi</span>
                             </div>
                         </div>
                     </div>
@@ -424,30 +433,30 @@ document.addEventListener('DOMContentLoaded', function () {
         lucide.createIcons({ strokeWidth: 1.75 });
     }
 
-    // 0. Bộ đếm ngược thời gian thực đến hết ngày 07/11/2026 (23:59:59 GMT+7)
-    const cdContainer = document.getElementById('hc-booking-countdown');
-    if (cdContainer) {
-        const deadlineMs = new Date(cdContainer.getAttribute('data-deadline')).getTime();
-        const elDays  = document.getElementById('hc-cd-days');
-        const elHours = document.getElementById('hc-cd-hours');
-        const elMins  = document.getElementById('hc-cd-mins');
-        const elSecs  = document.getElementById('hc-cd-secs');
+    // 0. Tự động đồng bộ Tuần trong năm & ngày Thứ 2 -> Thứ 7 theo thời gian thực (chống lưu cache trang)
+    const elWeekNum   = document.getElementById('hc-auto-week-num');
+    const elWeekRange = document.getElementById('hc-auto-week-range');
+    if (elWeekNum && elWeekRange) {
+        const now = new Date();
+        const day = now.getDay(); // 0 (CN) -> 6 (Thứ 7)
+        const diffToMon = day === 0 ? -6 : 1 - day;
+        const mon = new Date(now.getFullYear(), now.getMonth(), now.getDate() + diffToMon);
+        const sat = new Date(mon.getFullYear(), mon.getMonth(), mon.getDate() + 5);
 
-        const updateCountdown = () => {
-            const diffSec = Math.max(0, Math.floor((deadlineMs - Date.now()) / 1000));
-            const d = String(Math.floor(diffSec / 86400)).padStart(2, '0');
-            const h = String(Math.floor((diffSec % 86400) / 3600)).padStart(2, '0');
-            const m = String(Math.floor((diffSec % 3600) / 60)).padStart(2, '0');
-            const s = String(diffSec % 60).padStart(2, '0');
+        const utcTarget = new Date(Date.UTC(now.getFullYear(), now.getMonth(), now.getDate()));
+        const dayNr = (utcTarget.getUTCDay() + 6) % 7;
+        utcTarget.setUTCDate(utcTarget.getUTCDate() - dayNr + 3);
+        const firstThursday = utcTarget.valueOf();
+        const isoYear = utcTarget.getUTCFullYear();
+        utcTarget.setUTCMonth(0, 1);
+        if (utcTarget.getUTCDay() !== 4) {
+            utcTarget.setUTCMonth(0, 1 + (((4 - utcTarget.getUTCDay()) + 7) % 7));
+        }
+        const weekNo = 1 + Math.ceil((firstThursday - utcTarget) / 604800000);
+        const pad2 = n => String(n).padStart(2, '0');
 
-            if (elDays)  elDays.textContent  = d;
-            if (elHours) elHours.textContent = h;
-            if (elMins)  elMins.textContent  = m;
-            if (elSecs)  elSecs.textContent  = s;
-        };
-
-        updateCountdown();
-        setInterval(updateCountdown, 1000);
+        elWeekNum.textContent   = 'Tuần ' + pad2(weekNo) + '/' + isoYear;
+        elWeekRange.textContent = pad2(mon.getDate()) + '/' + pad2(mon.getMonth() + 1) + ' - ' + pad2(sat.getDate()) + '/' + pad2(sat.getMonth() + 1) + '/' + sat.getFullYear();
     }
 
     // 1. Chọn 1 hoặc nhiều vấn đề của trẻ ("Trẻ đang gặp vấn đề gì?")
